@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: R Spin
+  m_EditorClassIdentifier: 
+  rarity: 0
+  name: Spin
+  manaCost: 1
+  range: 0
+  radius: 2
+  casterColor: 0
+  description: Attack -2 to every enemy in range
+  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  castType: 4
+  castShape: 0
+  targetType: 00000000
+  cardEffectName: 00000000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buffType: 00000000
+  effectValue: feffffff
+  effectDuration: 00000000
+  spawnObject:
+  - {fileID: 0}
