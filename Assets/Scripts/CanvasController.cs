@@ -8,6 +8,8 @@ public class CanvasController : MonoBehaviour
     public static CanvasController canvasController;
     public Canvas boardCanvas;
     public Canvas uiCanvas;
+    public Canvas selectedCardCanvas;
+    public Canvas endGameCanvas;
 
     // Start is called before the first frame update
     void Awake()
@@ -16,6 +18,8 @@ public class CanvasController : MonoBehaviour
             CanvasController.canvasController = this;
         else
             Destroy(this.gameObject);
+
+        endGameCanvas.enabled = false;
     }
 
     // Update is called once per frame

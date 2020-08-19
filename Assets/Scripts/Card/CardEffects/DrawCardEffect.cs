@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrawCardEffect : Effect
 {
-    public override void Process(GameObject caster, CardEffectsController effectController, GameObject target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         List<Card> spawnCards = new List<Card>();
         foreach (Card spawnCard in card.cards)
@@ -15,11 +15,22 @@ public class DrawCardEffect : Effect
                 HandController.handController.DrawAnyCard();
         else
             foreach (Card spawnCard in card.cards)   //Draw all the specified cards
-                HandController.handController.DrawSpecificCard(spawnCard);
+            {
+                CardController thisCard = new CardController();
+                thisCard.SetCard(spawnCard, false, false);
+                HandController.handController.DrawSpecificCard(thisCard);
+            }
+        yield return new WaitForSeconds(0);
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    {
+        for (int i = 0; i < effectValue; i++) //Draw effectValue number of random cards
+            HandController.handController.DrawAnyCard();
     }
 }

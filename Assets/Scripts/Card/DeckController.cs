@@ -1,21 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 //Wrapper used to contain decks of each color type
 [System.Serializable]
 public class ListWrapper
 {
-    public List<Card> deck;
+    public List<CardController> deck;
+
+    public void SetDeck(List<CardController> l)
+    {
+        deck = new List<CardController>();
+        deck = l.ConvertAll(x => x);
+    }
 }
 
 public class DeckController : MonoBehaviour
 {
     public static DeckController deckController;
 
-    public ListWrapper[] deck;
-    private List<Card> drawPile;
-    private List<Card> discardPile;
+    private ListWrapper[] deck;
+    private List<CardController> drawPile;
+    private List<CardController> discardPile;
 
     //Creates currentDeck and makes it a copy of the default deck
     private void Awake()
@@ -27,29 +34,82 @@ public class DeckController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        PopulateDecks();
-        ShuffleDrawPile();
     }
 
     public void PopulateDecks()
     {
-        drawPile = new List<Card>();
+        drawPile = new List<CardController>();
         foreach (ListWrapper cards in deck)
-            drawPile.AddRange(cards.deck);
-        discardPile = new List<Card>();
+            foreach (CardController c in cards.deck)
+                drawPile.Add(c);
+        discardPile = new List<CardController>();
     }
 
     //Draws any card
-    public Card DrawAnyCard()
+    public CardController DrawAnyCard()
     {
-        Card drawnCard = drawPile[0];
-        drawPile.RemoveAt(0);
         //If the draw deck is empty, fill it back up
         if (drawPile.Count == 0)
         {
             ResetDecks();
             ShuffleDrawPile();
         }
+        CardController drawnCard = drawPile[0];
+        drawPile.RemoveAt(0);
+
+        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
+        return drawnCard;
+    }
+
+    //Repopulate deck if empty, draw a mana card if there is one in the draw pile
+    public CardController DrawManaCard()
+    {
+        //If the draw deck is empty, fill it back up
+        if (drawPile.Count == 0)
+        {
+            ResetDecks();
+            ShuffleDrawPile();
+        }
+        CardController drawnCard = null;
+        int index = -1;
+        for (int i = 0; i < drawPile.Count; i++)
+        {
+            if (drawPile[i].GetCard().manaCost > 0)
+            {
+                drawnCard = drawPile[i];
+                index = i;
+                break;
+            }
+        }
+        if (index != -1)
+            drawPile.RemoveAt(index);
+
+        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
+
+        return drawnCard;
+    }
+
+    //Repopulate deck if empty, draw a energy card if there is one in the draw pile
+    public CardController DrawEnergyCard()
+    {
+        //If the draw deck is empty, fill it back up
+        if (drawPile.Count == 0)
+        {
+            ResetDecks();
+            ShuffleDrawPile();
+        }
+        CardController drawnCard = null;
+        int index = -1;
+        for (int i = 0; i < drawPile.Count; i++)
+            if (drawPile[i].GetCard().manaCost == 0)
+            {
+                drawnCard = drawPile[i];
+                index = i;
+                break;
+            }
+        if (index != -1)
+            drawPile.RemoveAt(index);
+
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
     }
@@ -57,40 +117,21 @@ public class DeckController : MonoBehaviour
     //Shuffles the draw pile
     public void ShuffleDrawPile()
     {
-        List<Card> output = new List<Card>();
-        while (drawPile.Count > 0)
-        {
-            int index = Random.Range(0, drawPile.Count);
-            output.Add(drawPile[index]);
-            drawPile.RemoveAt(index);
-        }
-        drawPile = output;
-    }
-
-    public void ShuffleDiscardPile()
-    {
-        List<Card> output = new List<Card>();
-        while (discardPile.Count > 0)
-        {
-            int index = Random.Range(0, discardPile.Count);
-            output.Add(discardPile[index]);
-            discardPile.RemoveAt(index);
-        }
-        discardPile = output;
+        drawPile = drawPile.OrderBy(x => System.Guid.NewGuid()).ToList();
     }
 
     //Makes a copy of the entire default deck, all colors
     public void ResetDecks()
     {
-        ShuffleDiscardPile();
-        drawPile.AddRange(discardPile);
-        discardPile = new List<Card>();
+        drawPile = new List<CardController>();
+        drawPile = discardPile;
+        discardPile = new List<CardController>();
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
 
-    public void ReportUsedCard(Card card)
+    public void ReportUsedCard(CardController card)
     {
-        if (!card.exhaust)
+        if (!card.GetCard().exhaust)
             discardPile.Add(card);
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
@@ -105,22 +146,42 @@ public class DeckController : MonoBehaviour
         return discardPile.Count;
     }
 
-    public void AddCard(Card newCard)
+    public void SetDecks(ListWrapper[] newList)
     {
-        switch (newCard.casterColor)
+        deck = newList;
+
+        PopulateDecks();
+        ShuffleDrawPile();
+    }
+
+    public List<CardController> GetDeck()
+    {
+        List<CardController> output = new List<CardController>();
+        foreach (ListWrapper cards in deck)
+            output.AddRange(cards.deck);
+        return output;
+    }
+
+    public void ResetCardValues()
+    {
+        foreach (ListWrapper list in deck)
         {
-            case Card.CasterColor.Red:
-                deck[0].deck.Add(newCard);
-                break;
-            case Card.CasterColor.Blue:
-                deck[1].deck.Add(newCard);
-                break;
-            case Card.CasterColor.Green:
-                deck[2].deck.Add(newCard);
-                break;
-            case Card.CasterColor.Gray:
-                deck[3].deck.Add(newCard);
-                break;
+            foreach (CardController card in list.deck)
+            {
+                card.GetCard().SetTempDuration(0);
+                card.GetCard().SetTempEffectValue(0);
+            }
+        }
+
+        foreach (CardController card in drawPile)
+        {
+            card.ResetEnergyCostDiscount();
+            card.ResetManaCostDiscount();
+        }
+        foreach (CardController card in discardPile)
+        {
+            card.ResetEnergyCostDiscount();
+            card.ResetManaCostDiscount();
         }
     }
 }

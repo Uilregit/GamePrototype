@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: R Bring It On
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 0
+  name: Bring It On
+  energyCost: 0
+  manaCost: 1
+  range: 2
+  radius: 0
+  casterColor: 0
+  description: Taunts all enemies in 2 range for 1 turn
+  art: {fileID: 21300000, guid: 0c5d7a1e84ba4f4449e5c98c8b1732bf, type: 3}
+  castType: 5
+  castShape: 0
+  targetType: 00000000
+  cardEffectName: 09000000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buffType: 00000000
+  effectValue: 00000000
+  effectDuration: 01000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  indicatorValue: 

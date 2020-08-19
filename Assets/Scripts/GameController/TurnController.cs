@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TurnController : MonoBehaviour
 {
     private bool playerTurn = true;
     public static TurnController turnController;
 
-    [SerializeField] private int maxMana;
-    private int currentMana;
+    [SerializeField] private int maxEnergy;
+    private int currentEnergy;
 
-    [SerializeField] private Text maxManaText;
-    [SerializeField] private Text currentManaText;
+    private int maxMana = 10;
+    private int currentMana = 0;
+
+    private List<int> manaCostCap;
+    private List<int> energyCostCap;
+    private List<int> manaReduction;
+    private List<int> energyReduction;
+
+    [SerializeField] private Text maxEnergyText;
+    [SerializeField] private Text currentEnergyText;
 
     public Text turnText;
+    public Image turnTextBack;
     public float turnChangeDuration;
     public float turnGracePeriod;
     public float enemyExecutionStagger;
 
+    public int turnID = 1;
+
     private List<EnemyController> enemies;
+    private List<EnemyController> queuedEnemies;
 
     private List<Card> cardsPlayed = new List<Card>();
     private List<Card> cardsPlayedThisTurn = new List<Card>();
@@ -33,10 +46,20 @@ public class TurnController : MonoBehaviour
             Destroy(this.gameObject);
 
         enemies = new List<EnemyController>();
+        queuedEnemies = new List<EnemyController>();
 
-        currentMana = maxMana;
+        manaCostCap = new List<int>();
+        energyCostCap = new List<int>();
+        manaReduction = new List<int>();
+        energyReduction = new List<int>();
 
-        ResetManaDisplay();
+        currentEnergy = maxEnergy;
+
+        ResetEnergyDisplay();
+        UIController.ui.ResetManaBar(currentMana);
+        turnID = 0;
+
+        HandController.handController.ResetReplaceCounter();
     }
 
     public bool GetIsPlayerTurn()
@@ -49,9 +72,9 @@ public class TurnController : MonoBehaviour
         playerTurn = newTurn;
         if (!playerTurn)
         {
-            StartCoroutine(EnemyTurn());
             //Clear the entire hand
             HandController.handController.ClearHand();
+            StartCoroutine(EnemyTurn());
         }
         else
         {
@@ -63,85 +86,174 @@ public class TurnController : MonoBehaviour
 
     public void ReportEnemy(EnemyController newEnemy)
     {
-        enemies.Add(newEnemy);
+        if (playerTurn)
+            enemies.Add(newEnemy);
+        else
+            queuedEnemies.Add(newEnemy);
     }
 
     public void RemoveEnemy(EnemyController thisEnemy)
     {
-        enemies.Remove(thisEnemy);
-        if (enemies.Count == 0)
-            StartCoroutine(GameController.gameController.Victory());
+        if (enemies.Contains(thisEnemy))
+            enemies.Remove(thisEnemy);
+        else
+            queuedEnemies.Remove(thisEnemy);
     }
 
-    private IEnumerator EnemyTurn()
+    public List<EnemyController> GetEnemies()
     {
+        return enemies;
+    }
+
+    public IEnumerator EnemyTurn()
+    {
+        turnID += 1;
+
         cardsPlayedThisTurn = new List<Card>();
+
+        yield return StartCoroutine(GridController.gridController.CheckDeath());
+
+        GridController.gridController.ResolveOverlap();
+        GridController.gridController.DebugGrid();
 
         //Disable Player and card movement, trigger all end of turn effects
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerMoveController>().SetMoveable(false);
+            player.GetComponent<PlayerMoveController>().CommitMove();
             player.GetComponent<HealthController>().AtEndOfTurn();
         }
+
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd);
+
+        int manaCardsPlayed = 0;
+        int energyCardsPlayed = 0;
+        foreach (Card c in cardsPlayedThisTurn)
+            if (c.manaCost == 0)
+                energyCardsPlayed += 1;
+            else
+                manaCardsPlayed += 1;
+        if (manaCardsPlayed == 0)
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed);
+        if (energyCardsPlayed == 0)
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed);
 
         //Enemy turn
         turnText.text = "Enemy Turn";
         turnText.enabled = true;
-        yield return new WaitForSeconds(turnChangeDuration);
+        turnTextBack.enabled = true;
+        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
         turnText.enabled = false;
-        yield return new WaitForSeconds(turnGracePeriod);
+        turnTextBack.enabled = false;
+        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
         //Trigger all begining of turn effects
         foreach (EnemyController thisEnemy in enemies)
             thisEnemy.GetComponent<HealthController>().AtStartOfTurn();
 
+        //Order all the enemies by their card execution priority. Solve ties by closest enemies to their target
+        enemies = enemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => GridController.gridController.GetManhattanDistance(x.GetTarget().transform.position, x.transform.position)).ToList();
+
         //Execute the turn for each enemy
         foreach (EnemyController thisEnemy in enemies)
         {
             yield return StartCoroutine(thisEnemy.ExecuteTurn());
-            yield return new WaitForSeconds(enemyExecutionStagger);
+            yield return new WaitForSeconds(TimeController.time.enemyExecutionStagger * TimeController.time.timerMultiplier);
         }
 
         //Trigger all enemy end of turn effects
         foreach (EnemyController thisEnemy in enemies)
             thisEnemy.GetComponent<HealthController>().AtEndOfTurn();
 
+        yield return StartCoroutine(GridController.gridController.CheckDeath());
+
+        GridController.gridController.ResolveOverlap();
+        enemies.AddRange(queuedEnemies);
+        queuedEnemies = new List<EnemyController>();
+
+        cardsPlayedThisTurn = new List<Card>();
+
         //Player turn
-        yield return new WaitForSeconds(turnGracePeriod);
+        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
         turnText.text = "Your Turn";
         turnText.enabled = true;
-        yield return new WaitForSeconds(turnChangeDuration);
+        turnTextBack.enabled = true;
+        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
         turnText.enabled = false;
-        yield return new WaitForSeconds(turnGracePeriod);
+        turnTextBack.enabled = false;
+        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
+
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart);
+
+        //Resolve broken
+        players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+            player.GetComponent<HealthController>().ResolveBroken();
+        foreach (EnemyController thisEnemy in enemies)
+            thisEnemy.GetComponent<HealthController>().ResolveBroken();
+
+        //Refresh the intents fo all enemies
+        foreach (EnemyController thisEnemy in enemies)
+            if (!thisEnemy.GetSacrificed())
+                thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
         //Allow players to move, reset mana, and draw a full hand
-        SetPlayerTurn(true);
-        currentMana = maxMana;
-        ResetManaDisplay();
-        HandController.handController.DrawFullHand();
-
-        //Trigger all player start of turn effects
-        foreach (GameObject player in players)
-            player.GetComponent<HealthController>().AtStartOfTurn();
+        SetPlayerTurn(true); //Trigger all player start of turn effects
+        currentEnergy = maxEnergy;
+        ResetEnergyDisplay();
+        HandController.handController.UnholdCard(true);
+        HandController.handController.ResetReplaceCounter();
+        HandController.handController.DrawFullHand(); //Must be called after unholdcard
     }
 
-    public void ResetManaDisplay()
+    public void ResetEnergyDisplay()
     {
-        maxManaText.text = maxMana.ToString();
-        currentManaText.text = currentMana.ToString();
+        maxEnergyText.text = maxEnergy.ToString();
+        currentEnergyText.text = currentEnergy.ToString();
     }
 
-    public void UseMana(int value)
+    public void UseResources(int energyValue, int manaValue)
     {
-        currentMana -= value;
-        ResetManaDisplay();
-        HandController.handController.ResetCardPlayability(currentMana);
+        currentEnergy -= energyValue;
+        currentMana += energyValue;
+        currentMana = Mathf.Clamp(currentMana - manaValue, 0, maxMana);
+
+        ResetEnergyDisplay();
+        UIController.ui.ResetManaBar(currentMana);
+
+        HandController.handController.ResetCardPlayability(currentEnergy, currentMana);
     }
 
-    public bool HasEnoughMana(int value)
+    public void GainMana(int manaValue)
     {
-        return value <= currentMana;
+        currentMana = Mathf.Clamp(currentMana + manaValue, 0, maxMana);
+        UIController.ui.ResetManaBar(currentMana);
+
+        HandController.handController.ResetCardPlayability(currentEnergy, currentMana);
+    }
+
+    public void GainEnergy(int energyValue)
+    {
+        currentEnergy += energyValue;
+        ResetEnergyDisplay();
+
+        HandController.handController.ResetCardPlayability(currentEnergy, currentMana);
+    }
+
+    public bool HasEnoughResources(int energy, int mana)
+    {
+        return energy <= currentEnergy && mana <= currentMana;
+    }
+
+    public int GetCurrentEnergy()
+    {
+        return currentEnergy;
+    }
+
+    public void ResetCurrentEnergy()
+    {
+        currentEnergy = maxEnergy;
     }
 
     public int GetCurrentMana()
@@ -158,5 +270,98 @@ public class TurnController : MonoBehaviour
     public int GetNumerOfCardsPlayedInTurn()
     {
         return cardsPlayedThisTurn.Count;
+    }
+
+    public int GetNumberOfEnemies()
+    {
+        return enemies.Count;
+    }
+
+    public void SetManaCostCap(int value)
+    {
+        manaCostCap.Add(value);
+    }
+
+    public void SetEnergyCostCap(int value)
+    {
+        energyCostCap.Add(value);
+    }
+
+    public void RemoveManaCostCap(int value)
+    {
+        manaCostCap.Remove(value);
+    }
+
+    public void RemoveEnergyCostCap(int value)
+    {
+        energyCostCap.Remove(value);
+    }
+
+    public int GetManaCostCap()
+    {
+        try
+        {
+            return manaCostCap.Min();
+        }
+        catch
+        {
+            return 999;
+        }
+    }
+
+    public int GetEnergyCostCap()
+    {
+        try
+        {
+            return energyCostCap.Min();
+        }
+        catch
+        {
+            return 999;
+        }
+    }
+
+    public void SetManaReduction(int value)
+    {
+        manaReduction.Add(value);
+    }
+
+    public void SetEnergyReduction(int value)
+    {
+        energyReduction.Add(value);
+    }
+
+    public void RemoveManaReduction(int value)
+    {
+        manaReduction.Remove(value);
+    }
+
+    public void RemoveEnergyReduction(int value)
+    {
+        energyReduction.Remove(value);
+    }
+
+    public int GetManaReduction()
+    {
+        try
+        {
+            return manaReduction.Sum();
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    public int GetEnergyReduction()
+    {
+        try
+        {
+            return energyReduction.Sum();
+        }
+        catch
+        {
+            return 0;
+        }
     }
 }

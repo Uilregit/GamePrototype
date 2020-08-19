@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class EnfeebleDebuff : Buff
 {
-    public override void OnApply(HealthController healthController, int value, int duration)
+    public override Color GetIconColor()
+    {
+        return Color.cyan;
+    }
+
+    public override string GetDescription()
+    {
+        return "Enfeeble: Take {v} more damage per hit for {d} turns".Replace("{v}", tempValue.ToString("+#;-#;0"));
+    }
+
+    public override void OnApply(HealthController healthController, int value, int duration, bool fromRelic)
     {
         healthController.SetEnfeeble(value);
         tempValue = value;

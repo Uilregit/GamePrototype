@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private int playerID;
     [SerializeField] private Card.CasterColor colorTag;
     [SerializeField] private int maxVit;
     [SerializeField] private int startingShield;
@@ -12,13 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int attackRange;
     private HealthController healthController;
     private PlayerMoveController moveController;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         healthController = GetComponent<HealthController>();
+
         healthController.SetMaxVit(maxVit);
-        healthController.SetMaxShield(startingShield);
-        healthController.SetAttack(attack);
+        healthController.SetStartingShield(startingShield);
+        healthController.SetStartingAttack(attack);
         healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
 
         moveController = GetComponent<PlayerMoveController>();
@@ -33,15 +37,11 @@ public class PlayerController : MonoBehaviour
         {
             x = Random.Range(GameController.gameController.playerSpawnBox[0], GameController.gameController.playerSpawnBox[1]+1);
             y = Random.Range(GameController.gameController.playerSpawnBox[2], GameController.gameController.playerSpawnBox[3]+1);
-            if (GridController.gridController.GetObjectAtLocation(new Vector2(x, y)) == null)
+            if (GridController.gridController.GetObjectAtLocation(new Vector2(x, y)).Count == 0)
             {
                 Vector2 location = new Vector2(x, y);
                 Spawn(location);
                 break;
-            }
-            else
-            {
-                Debug.Log("Tried player at: " + x.ToString() + ", " + y.ToString());
             }
         }
 
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     public int GetAttack()
     {
-        return healthController.GetAttack();
+        return healthController.GetCurrentAttack();
     }
 
     public int GetMoveRange()
@@ -73,8 +73,23 @@ public class PlayerController : MonoBehaviour
         return attackRange;
     }
 
-    public int GetVit()
+    public int GetCurrentVit()
     {
         return healthController.GetCurrentVit();
+    }
+
+    public int GetStartingShield()
+    {
+        return startingShield;
+    }
+
+    public HealthController GetHealthController()
+    {
+        return healthController;
+    }
+
+    public int GetPlayerID()
+    {
+        return playerID;
     }
 }

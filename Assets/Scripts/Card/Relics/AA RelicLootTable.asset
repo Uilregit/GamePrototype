@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03f14a4ea7dca645bbf05cfd3a7f1a8, type: 3}
+  m_Name: AA RelicLootTable
+  m_EditorClassIdentifier: 
+  relics:
+  - {fileID: 11400000, guid: 171a4971ba29bda44b8b3157f372d911, type: 2}
+  - {fileID: 11400000, guid: 5a5d4ca57decbee43adddf3cd1f4fe54, type: 2}
+  - {fileID: 11400000, guid: 94574659193d1b0408d91f270634cd04, type: 2}
+  - {fileID: 11400000, guid: 6ac4c2332a132ee42877efe08e932f36, type: 2}
+  - {fileID: 11400000, guid: 1d860e4c5f23793419b510b2d7604338, type: 2}
+  - {fileID: 11400000, guid: f7f1e0470bad0e443bb97be401e8849d, type: 2}
+  - {fileID: 11400000, guid: 554d43e2173febc4c8702be4ce9f3a01, type: 2}
+  - {fileID: 11400000, guid: 31a0649d72db81a4abcc40cf752d49ec, type: 2}
+  - {fileID: 11400000, guid: 2d8518f869ffc374aa68d0b5aa4ff1b9, type: 2}
+  - {fileID: 11400000, guid: a9c29c7583966474289b22a7934836c5, type: 2}

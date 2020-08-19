@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class ArmorBuff : Buff
 {
-    public override void OnApply(HealthController healthController, int value, int duration)
+    public override Color GetIconColor()
     {
-        healthController.SetBonusShield(value);
+        return Color.blue;
+    }
+
+    public override string GetDescription()
+    {
+        return "Armor: Modify armor by {v} for {d} turns".Replace("{v}", tempValue.ToString("+#;-#;0"));
+    }
+
+    public override void OnApply(HealthController healthController, int value, int duration, bool fromRelic)
+    {
+        healthController.SetBonusShield(value, fromRelic);
         tempValue = value;
         healthController.AddStartOfTurnBuff(this, duration);
     }

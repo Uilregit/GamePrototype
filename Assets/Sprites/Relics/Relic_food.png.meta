@@ -1,0 +1,1492 @@
+fileFormatVersion: 2
+guid: 7ee450faf52867945afb7125d0ef8a82
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1045181238759104467
+    second: food_0
+  - first:
+      213: 3046544090647025007
+    second: food_1
+  - first:
+      213: -314262122811554439
+    second: food_2
+  - first:
+      213: -6704000743581025313
+    second: food_3
+  - first:
+      213: 3783751772801332867
+    second: food_4
+  - first:
+      213: 3766231896858906920
+    second: food_5
+  - first:
+      213: 2806712619628358444
+    second: food_6
+  - first:
+      213: 6284960523649584348
+    second: food_7
+  - first:
+      213: 9134550221621171518
+    second: food_8
+  - first:
+      213: 6171289439109564095
+    second: food_9
+  - first:
+      213: 8770456580488607946
+    second: food_10
+  - first:
+      213: 5143833525945423608
+    second: food_11
+  - first:
+      213: -3793841646489435339
+    second: food_12
+  - first:
+      213: -4897304319320830578
+    second: food_13
+  - first:
+      213: 8188682129462126002
+    second: food_14
+  - first:
+      213: 6784085716475858719
+    second: food_15
+  - first:
+      213: -4983602957726838064
+    second: food_16
+  - first:
+      213: -6439128989154540140
+    second: food_17
+  - first:
+      213: -5680404220757449781
+    second: food_18
+  - first:
+      213: 7644853199718603292
+    second: food_19
+  - first:
+      213: -3369687117499917811
+    second: food_20
+  - first:
+      213: -7135672765138875634
+    second: food_21
+  - first:
+      213: -2482453126985324728
+    second: food_22
+  - first:
+      213: -6183249191612350019
+    second: food_23
+  - first:
+      213: 574030156352672554
+    second: food_24
+  - first:
+      213: -4352255054916484558
+    second: food_25
+  - first:
+      213: -1305362700967300462
+    second: food_26
+  - first:
+      213: -7405008127072048958
+    second: food_27
+  - first:
+      213: -5573602538110124529
+    second: food_28
+  - first:
+      213: 5081950557265883054
+    second: food_29
+  - first:
+      213: -2740453994096982339
+    second: food_30
+  - first:
+      213: -2338795330042068949
+    second: food_31
+  - first:
+      213: 7828774872276880640
+    second: food_32
+  - first:
+      213: -5645816947561156433
+    second: food_33
+  - first:
+      213: -3298120815708327825
+    second: food_34
+  - first:
+      213: 894278470888736208
+    second: food_35
+  - first:
+      213: 921432923612845049
+    second: food_36
+  - first:
+      213: 2581756548655252678
+    second: food_37
+  - first:
+      213: -6499568485660480054
+    second: food_38
+  - first:
+      213: -1733046323371713050
+    second: food_39
+  - first:
+      213: 6959230791685743482
+    second: food_40
+  - first:
+      213: 618911991188373686
+    second: food_41
+  - first:
+      213: -3543438821485655412
+    second: food_42
+  - first:
+      213: -4790780210486641948
+    second: food_43
+  - first:
+      213: 7126879686216102835
+    second: food_44
+  - first:
+      213: 4789223400788729153
+    second: Relic_food_0
+  - first:
+      213: -4338737075174767277
+    second: Relic_food_1
+  - first:
+      213: -8978258230085924874
+    second: Relic_food_2
+  - first:
+      213: -5884822582217764580
+    second: Relic_food_3
+  - first:
+      213: -8590128076115783353
+    second: Relic_food_4
+  - first:
+      213: -7668319952257071501
+    second: Relic_food_5
+  - first:
+      213: 734061512910311180
+    second: Relic_food_6
+  - first:
+      213: -3339751407544060914
+    second: Relic_food_7
+  - first:
+      213: -9201477679419983728
+    second: Relic_food_8
+  - first:
+      213: 4156554313646559339
+    second: Relic_food_9
+  - first:
+      213: -7848021341418411362
+    second: Relic_food_10
+  - first:
+      213: -2483321060903622667
+    second: Relic_food_11
+  - first:
+      213: -2397114496262715897
+    second: Relic_food_12
+  - first:
+      213: 6766544522354409182
+    second: Relic_food_13
+  - first:
+      213: 5481202287341539329
+    second: Relic_food_14
+  - first:
+      213: 3357418166732569347
+    second: Relic_food_15
+  - first:
+      213: -6936046198714596841
+    second: Relic_food_16
+  - first:
+      213: -2998218673484546541
+    second: Relic_food_17
+  - first:
+      213: -2454525840737931930
+    second: Relic_food_18
+  - first:
+      213: 7489484272813970003
+    second: Relic_food_19
+  - first:
+      213: 6031239526668947007
+    second: Relic_food_20
+  - first:
+      213: -3436531195905007721
+    second: Relic_food_21
+  - first:
+      213: 2876344236377286482
+    second: Relic_food_22
+  - first:
+      213: -248462843459346478
+    second: Relic_food_23
+  - first:
+      213: 6440244474106455101
+    second: Relic_food_24
+  - first:
+      213: 3868586039198127209
+    second: Relic_food_25
+  - first:
+      213: -2262272161010461755
+    second: Relic_food_26
+  - first:
+      213: -3509171272618353804
+    second: Relic_food_27
+  - first:
+      213: -2336611168864792157
+    second: Relic_food_28
+  - first:
+      213: 4112631938398831055
+    second: Relic_food_29
+  - first:
+      213: -7675047501336331254
+    second: Relic_food_30
+  - first:
+      213: -7025732015635367302
+    second: Relic_food_31
+  - first:
+      213: -4167710497919382449
+    second: Relic_food_32
+  - first:
+      213: -147620139616313575
+    second: Relic_food_33
+  - first:
+      213: 2439870695328454031
+    second: Relic_food_34
+  - first:
+      213: -1396755353657770354
+    second: Relic_food_35
+  - first:
+      213: 4530595672438986676
+    second: Relic_food_36
+  - first:
+      213: -7387954811627796586
+    second: Relic_food_37
+  - first:
+      213: -8677049105191215245
+    second: Relic_food_38
+  - first:
+      213: 722464435312042965
+    second: Relic_food_39
+  - first:
+      213: -427264169906405326
+    second: Relic_food_40
+  - first:
+      213: 7499924551537681095
+    second: Relic_food_41
+  - first:
+      213: -4663457575333833039
+    second: Relic_food_42
+  - first:
+      213: -7891429358363570923
+    second: Relic_food_43
+  - first:
+      213: 4409335243545352545
+    second: Relic_food_44
+  - first:
+      213: 7807971711509044386
+    second: Relic_food_0
+  - first:
+      213: 2817457136498443870
+    second: Relic_food_1
+  - first:
+      213: -8939925255432772992
+    second: Relic_food_2
+  - first:
+      213: 7978778629415228066
+    second: Relic_food_3
+  - first:
+      213: -4243125230844363376
+    second: Relic_food_4
+  - first:
+      213: 4379478507697939035
+    second: Relic_food_5
+  - first:
+      213: 6452224740801014776
+    second: Relic_food_6
+  - first:
+      213: 1128718959060525948
+    second: Relic_food_7
+  - first:
+      213: -19572946403693182
+    second: Relic_food_8
+  - first:
+      213: 7960392525049211171
+    second: Relic_food_9
+  - first:
+      213: 6074953250197172832
+    second: Relic_food_10
+  - first:
+      213: 7672642486111234568
+    second: Relic_food_11
+  - first:
+      213: -5494337407543945149
+    second: Relic_food_12
+  - first:
+      213: 8988100930421137824
+    second: Relic_food_13
+  - first:
+      213: -1000236185566733025
+    second: Relic_food_14
+  - first:
+      213: 5295078492635344912
+    second: Relic_food_15
+  - first:
+      213: 7209390001209874938
+    second: Relic_food_16
+  - first:
+      213: 900949846149348920
+    second: Relic_food_17
+  - first:
+      213: 7162559162541472879
+    second: Relic_food_18
+  - first:
+      213: 146920079825062119
+    second: Relic_food_19
+  - first:
+      213: -391035459963703469
+    second: Relic_food_20
+  - first:
+      213: -2372574990866824012
+    second: Relic_food_21
+  - first:
+      213: 7647940051391694787
+    second: Relic_food_22
+  - first:
+      213: -7031238430089862464
+    second: Relic_food_23
+  - first:
+      213: 6736966546958184021
+    second: Relic_food_24
+  - first:
+      213: -7506850219020731512
+    second: Relic_food_25
+  - first:
+      213: -6192610564140100998
+    second: Relic_food_26
+  - first:
+      213: -8552440878499475910
+    second: Relic_food_27
+  - first:
+      213: -5030792351972825813
+    second: Relic_food_28
+  - first:
+      213: -3092819073533219410
+    second: Relic_food_29
+  - first:
+      213: 8213493264572736100
+    second: Relic_food_30
+  - first:
+      213: -5846615641106912231
+    second: Relic_food_31
+  - first:
+      213: -1586308358480591388
+    second: Relic_food_32
+  - first:
+      213: -1177138294782191649
+    second: Relic_food_33
+  - first:
+      213: 8427777787243992002
+    second: Relic_food_34
+  - first:
+      213: 9067876256620502280
+    second: Relic_food_35
+  - first:
+      213: -8152266722742206552
+    second: Relic_food_36
+  - first:
+      213: 7706350073801880220
+    second: Relic_food_37
+  - first:
+      213: -5855890245351532591
+    second: Relic_food_38
+  - first:
+      213: 921398415665868187
+    second: Relic_food_39
+  - first:
+      213: 2931324864582442874
+    second: Relic_food_40
+  - first:
+      213: -3315522849111115364
+    second: Relic_food_41
+  - first:
+      213: 7872037215745175484
+    second: Relic_food_42
+  - first:
+      213: -402488718893499037
+    second: Relic_food_43
+  - first:
+      213: 5023470968720437184
+    second: Relic_food_44
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Relic_food_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ac9bc837ec7b5c60800000000000000
+      internalID: 7807971711509044386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5601ee865e991720800000000000000
+      internalID: 2817457136498443870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 082e26f88510fe380800000000000000
+      internalID: -8939925255432772992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2d5cbd3e05abe60800000000000000
+      internalID: 7978778629415228066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_4
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09d360665146d15c0800000000000000
+      internalID: -4243125230844363376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_5
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b522bc0df7807cc30800000000000000
+      internalID: 4379478507697939035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_6
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fb6e666738ea8950800000000000000
+      internalID: 6452224740801014776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_7
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c732d0eb9e30aaf00800000000000000
+      internalID: 1128718959060525948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_8
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28d666a42867abff0800000000000000
+      internalID: -19572946403693182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 329ab3853def87e60800000000000000
+      internalID: 7960392525049211171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_10
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0627b196bc19e4450800000000000000
+      internalID: 6074953250197172832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_11
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80aea3190b3ba7a60800000000000000
+      internalID: 7672642486111234568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_12
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 348d333fc3130c3b0800000000000000
+      internalID: -5494337407543945149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_13
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a12c1bdc262cbc70800000000000000
+      internalID: 8988100930421137824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_14
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1d9dcb1d727e12f0800000000000000
+      internalID: -1000236185566733025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_15
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0103753a5d5eb7940800000000000000
+      internalID: 5295078492635344912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_16
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af91e555206ec0460800000000000000
+      internalID: 7209390001209874938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_17
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83ebc249c11d08c00800000000000000
+      internalID: 900949846149348920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6cf0060c95866360800000000000000
+      internalID: 7162559162541472879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_19
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e84850c807f90200800000000000000
+      internalID: 146920079825062119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_20
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35f284a2253c29af0800000000000000
+      internalID: -391035459963703469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_21
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b44862cd9be21fd0800000000000000
+      internalID: -2372574990866824012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_22
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c74faac4f0f22a60800000000000000
+      internalID: 7647940051391694787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_23
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c22b63a6e50c6e90800000000000000
+      internalID: -7031238430089862464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_24
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55ee12761638e7d50800000000000000
+      internalID: 6736966546958184021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_25
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88bb431bf7f42d790800000000000000
+      internalID: -7506850219020731512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_26
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a721914708d6f0aa0800000000000000
+      internalID: -6192610564140100998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3e42827550af4980800000000000000
+      internalID: -8552440878499475910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_28
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2568e992090f2ab0800000000000000
+      internalID: -5030792351972825813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_29
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eadef7760791415d0800000000000000
+      internalID: -3092819073533219410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_30
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 462ebef6b903cf170800000000000000
+      internalID: 8213493264572736100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_31
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91c64951d06acdea0800000000000000
+      internalID: -5846615641106912231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_32
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5088cd3fc4cf9e0800000000000000
+      internalID: -1586308358480591388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_33
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd79ff725f6f9afe0800000000000000
+      internalID: -1177138294782191649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_34
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c31b96ce3b75f470800000000000000
+      internalID: 8427777787243992002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_35
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d5017696197dd70800000000000000
+      internalID: 9067876256620502280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8af76b4bb945dde80800000000000000
+      internalID: -8152266722742206552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_37
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9234c7ef8472fa60800000000000000
+      internalID: 7706350073801880220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_38
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d7952209d2bbbea0800000000000000
+      internalID: -5855890245351532591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_39
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9d2f5e2af679cc00800000000000000
+      internalID: 921398415665868187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_40
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7fd4bafe682ea820800000000000000
+      internalID: 2931324864582442874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_41
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c997a0ef885ecf1d0800000000000000
+      internalID: -3315522849111115364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_42
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbf652fc3281f3d60800000000000000
+      internalID: 7872037215745175484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_43
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36d304484a21a6af0800000000000000
+      internalID: -402488718893499037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_food_44
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cfa1160b34f6b540800000000000000
+      internalID: 5023470968720437184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

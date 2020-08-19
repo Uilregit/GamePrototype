@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using System.Linq;
+using System;
 
 /* This is the moveController for player characters
  * Called by MouseController
@@ -8,64 +11,76 @@ using UnityEngine;
 public class PlayerMoveController : MonoBehaviour
 {
     private PlayerController player;
+    private HealthController healthController;
     private int movedDistance = 0;
     public Color moveRangeIndicatorColor;
     public Color attackRangeIndicatorColor;
 
     private Vector2 originalPosition;
     private Vector2 lastGoodPosition;
+    private Vector2 lastHoverLocation;
     [SerializeField]
-    private GameObject moveShadow;
+    public GameObject moveShadow;
     private bool moveable = true;
-    private bool attackable = true;
-    private bool aboutToAttack = false;
-    private HealthController attackTarget;
     private List<Vector2> moveablePositions = new List<Vector2>();
     private List<Vector2> attackablePositions = new List<Vector2>();
     private List<Vector2> path = new List<Vector2>();
+    private Collider2D col2D;
+
+    private DateTime clickedTime;
+    private Vector2 clickedLocation;
+
+    private void Awake()
+    {
+        col2D = GetComponent<Collider2D>();
+        healthController = GetComponent<HealthController>();
+    }
 
     public void Spawn()
     {
         lastGoodPosition = transform.position;
+        lastHoverLocation = transform.position;
         originalPosition = transform.position;
-        moveShadow.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
+        //moveShadow.GetComponent<SpriteRenderer>().sprite = GetComponent<PlayerController>().sprite.sprite;
+        moveShadow.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     //Moves the moveshadow to the rounded unit tile
     public void UpdateMovePosition(Vector2 newlocation)
     {
-        Vector2 roundedPosition = new Vector2(Mathf.Round(newlocation.x), Mathf.Round(newlocation.y));
+        Vector2 roundedPosition = GridController.gridController.GetRoundedVector(newlocation, GetComponent<HealthController>().size);
+        int moveRangeLeft = Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0);
+
         if (CheckIfPositionValid(roundedPosition))
         {
-            if (GridController.gridController.GetObjectAtLocation(roundedPosition) == null)
+            if (GridController.gridController.GetObjectAtLocation(roundedPosition).Count == 0)
             {
                 moveShadow.transform.position = roundedPosition;
-                path.Add(roundedPosition);
-                aboutToAttack = false;
-            }
-            else
-            {
-                Vector2 attackFromPosition = FindViableAttackPosition(roundedPosition);
-                if (GridController.gridController.GetManhattanDistance(attackFromPosition, roundedPosition) <= player.GetAttackRange())
+                if (lastHoverLocation != roundedPosition)
                 {
-                    moveShadow.transform.position = attackFromPosition;
-                    aboutToAttack = true;
-                    attackTarget = GridController.gridController.GetObjectAtLocation(roundedPosition).GetComponent<HealthController>();
-                }
-                else
-                {
-                    moveShadow.transform.position = lastGoodPosition;
-                    aboutToAttack = false;
+                    lastHoverLocation = roundedPosition;
+
+                    path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player", "Enemy" }, new List<Vector2> { Vector2.zero }, 1);
+                    TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
+                    TileCreator.tileCreator.CreatePathTiles(player.GetPlayerID(), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, roundedPosition), moveRangeIndicatorColor);
                 }
             }
         }
         else
         {
-            aboutToAttack = false;
             moveShadow.transform.position = lastGoodPosition;
+            if (lastHoverLocation != lastGoodPosition)
+            {
+                lastHoverLocation = lastGoodPosition;
+
+                path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
+                TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
+                TileCreator.tileCreator.CreatePathTiles(player.GetPlayerID(), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
+            }
         }
     }
 
+    /*
     //Finds a viable attack position
     private Vector2 FindViableAttackPosition(Vector2 roundedPosition)
     {
@@ -81,7 +96,7 @@ public class PlayerMoveController : MonoBehaviour
             {
                 if (GridController.gridController.GetManhattanDistance(roundedPosition, position) <= player.GetAttackRange() &&
                     moveablePositions.Contains(position) && //Ranged characters are stll limited to their move ranges since path includes attackable but not moveable positions
-                    GridController.gridController.GetObjectAtLocation(position) == null)
+                    GridController.gridController.GetObjectAtLocation(position).Count == 0)
                 {
                     output = position;
                     foundPosition = true;
@@ -93,7 +108,7 @@ public class PlayerMoveController : MonoBehaviour
                 foreach (Vector2 position in moveablePositions)
                 {
                     if (GridController.gridController.GetManhattanDistance(roundedPosition, position) <= player.GetAttackRange() &&
-                    GridController.gridController.GetObjectAtLocation(position) == null)
+                    GridController.gridController.GetObjectAtLocation(position).Count == 0)
                     {
                         output = position;
                         foundPosition = true;
@@ -106,6 +121,7 @@ public class PlayerMoveController : MonoBehaviour
         }
         return output;
     }
+    */
 
     public Vector2 GetMoveLocation()
     {
@@ -115,21 +131,26 @@ public class PlayerMoveController : MonoBehaviour
     //Checks if the position is valid to move to by checking the move distance, if the space is empty, and if the position is out of bounds
     private bool CheckIfPositionValid(Vector2 newRoundedPositon)
     {
-        /*
-        return (GridController.gridController.GetManhattanDistance(originalPosition, newRoundedPositon) <= moveRange-movedDistance &&
-            GridController.gridController.GetObjectAtLocation(newRoundedPositon) == null &&
-            !GridController.gridController.CheckIfOutOfBounds(newRoundedPositon));
-            */
-        if (GridController.gridController.GetObjectAtLocation(newRoundedPositon) == null)
+        if (GridController.gridController.CheckIfOutOfBounds(newRoundedPositon))
+            return false;
+        else if (GridController.gridController.GetObjectAtLocation(newRoundedPositon).Count == 0)
             return moveablePositions.Contains(newRoundedPositon);
-        else if (GridController.gridController.GetObjectAtLocation(newRoundedPositon).tag == "Enemy")
+        else if (GridController.gridController.GetObjectAtLocation(newRoundedPositon).Any(x => x.tag == "Enemy"))
             return attackablePositions.Contains(newRoundedPositon);
         return false;
     }
 
     public void UpdateOrigin(Vector2 newOrigin)
     {
+        CommitMove();
+        lastGoodPosition = newOrigin;
+    }
+
+    public void TeleportTo(Vector2 newOrigin)
+    {
+        lastGoodPosition = newOrigin;
         originalPosition = newOrigin;
+        path = new List<Vector2>();
     }
 
     public void ResetTurn()
@@ -137,11 +158,12 @@ public class PlayerMoveController : MonoBehaviour
         UpdateOrigin(transform.position);
         movedDistance = 0;
         SetMoveable(true);
-        SetAttackable(true);
+        GetComponent<HealthController>().AtStartOfTurn();
     }
 
     public void SetMoveable(bool newMoveable)
     {
+        col2D.enabled = newMoveable;
         moveable = newMoveable;
     }
 
@@ -150,42 +172,24 @@ public class PlayerMoveController : MonoBehaviour
         return moveable;
     }
 
-    public void SetAttackable(bool newattackable)
-    {
-        attackable = newattackable;
-    }
-
-    public bool GetAttackable()
-    {
-        return attackable;
-    }
-
     public void CreateMoveRangeIndicator()
     {
+        moveShadow.GetComponent<SpriteRenderer>().enabled = true;
         /* Creates move range tiles and gets a list of all moveable locations
          */
         if (moveable)
         {
-            HealthController healthController = GetComponent<HealthController>();
-            GridController.gridController.RemoveFromPosition(transform.position);
-            TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance,
+            GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
+            TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
                                                 moveRangeIndicatorColor, new string[] { "Enemy", "Blockade" }, 0);
             moveablePositions = TileCreator.tileCreator.GetTilePositions();
-            if (attackable)
-            {
-                foreach (Vector2 position in moveablePositions)
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, player.GetAttackRange(),
-                                                        attackRangeIndicatorColor, new string[] { "" }, 1);
-                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance,
-                                                        attackRangeIndicatorColor, new string[] { "Enemy", "Blockade" }, 1);
-            }
-            attackablePositions = TileCreator.tileCreator.GetTilePositions(1);
         }
     }
 
     //Destroys the move and attack range indicators
     public void DestroyMoveRrangeIndicator()
     {
+        moveShadow.GetComponent<SpriteRenderer>().enabled = false;
         TileCreator.tileCreator.DestryTiles(this.gameObject);
         moveablePositions = new List<Vector2>();
         attackablePositions = new List<Vector2>();
@@ -199,9 +203,11 @@ public class PlayerMoveController : MonoBehaviour
     //Move perminantly sets the player location after action (called from cards)
     public void CommitMove()
     {
-        movedDistance += GridController.gridController.GetManhattanDistance(transform.position, originalPosition);
+        movedDistance += GridController.gridController.GetManhattanDistance(transform.position, originalPosition); //Allow movement after action
         originalPosition = transform.position;
         path = new List<Vector2>();
+        TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
+        //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
     }
 
     //Moves the player to the location
@@ -211,19 +217,31 @@ public class PlayerMoveController : MonoBehaviour
         transform.position = location;
         moveShadow.transform.position = location;
         lastGoodPosition = transform.position;
-        if (aboutToAttack)
+
+        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
         {
-            CommitMove();
-            Attack(attackTarget);
+            enemy.GetComponent<EnemyInformationController>().RefreshIntent();
         }
     }
 
-    private void Attack(HealthController target)
+    private void OnMouseDown()
     {
-        if (attackable)
+        clickedTime = DateTime.Now;
+        clickedLocation = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+
+        GetComponent<HealthController>().ShowHealthBar();
+    }
+
+    public void OnMouseUp()
+    {
+        GetComponent<HealthController>().HideHealthBar();
+
+        if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
-            target.TakeVitDamage(player.GetAttack(), GetComponent<HealthController>());
-            attackable = false;
+            HealthController hlth = GetComponent<HealthController>();
+            List<CardController> cards = new List<CardController>();
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.Show();
         }
     }
 }

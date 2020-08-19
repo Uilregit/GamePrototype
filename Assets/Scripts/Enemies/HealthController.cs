@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour //Eventualy split into buff, effect, and health controllers
 {
+    public int size = 1;
+    private int maxBrokenTurns = 2;
+    private int currentBrokenTurns = -99999;
+    private List<Vector2> occupiedSpaces;
+
     private int maxVit;
     private int currentVit = 0;
     private int currentShield;
+    private int startingShield;
+    private int startingAttack;
     private int currentAttack;
+    private int bonusAttack;
     private int bonusVit;
     private int bonusShield;
-    private int bonusAttack;
     private int knockBackDamage = 0;
     private int bonusMoveRange = 0;
     private int enfeeble = 0;
@@ -27,16 +35,50 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private List<Buff> oneTimeBuffs = new List<Buff>(); //AKA permanent buffs
     private List<Buff> oneTimeDebuffs = new List<Buff>();
 
+    public CharacterDisplayController charDisplay;
+    /*
+    public HealthBarController healthBar;
     public Text vitText;
     public Text shieldText;
     public Text attackText;
+    public List<Image> buffIcons;
+    */
+
+    private GameObject creator;
+    private AbilitiesController abilitiesController;
+
+    private bool wasBroken = false;
 
     //###################################################################################################
     //Health Section-------------------------------------------------------------------------------------
     //###################################################################################################
+    public void Awake()
+    {
+        ResetBuffIcons();
+        occupiedSpaces = new List<Vector2>();
+
+        if (size == 1)
+        {
+            occupiedSpaces.Add(new Vector2(0, 0));
+        }
+        else if (size == 2)
+        {
+            occupiedSpaces.Add(new Vector2(0.5f, 0.5f));
+            occupiedSpaces.Add(new Vector2(-0.5f, -0.5f));
+            occupiedSpaces.Add(new Vector2(-0.5f, 0.5f));
+            occupiedSpaces.Add(new Vector2(0.5f, -0.5f));
+        }
+
+        abilitiesController = GetComponent<AbilitiesController>();
+    }
+
+    public List<Vector2> GetOccupiedSpaces()
+    {
+        return occupiedSpaces;
+    }
+
     public void LoadCombatInformation(Card.CasterColor color)
     {
-        Debug.Log(color);
         int value = InformationController.infoController.GetCurrentVit(color);
         if ((InformationController.infoController.firstRoom == true && value == 0) || color == Card.CasterColor.Enemy)
         {
@@ -45,8 +87,22 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
         else
         {
-            currentVit = value;
-            ResetVitText(value);
+            int gotMaxVit = InformationController.infoController.GetMaxVit(color);
+            maxVit = gotMaxVit;
+
+            int gotCurrentVit = InformationController.infoController.GetCurrentVit(color);
+            currentVit = gotCurrentVit;
+            ResetVitText(gotCurrentVit);
+
+            int gotStartingAttack = InformationController.infoController.GetStartingAttack(color);
+            startingAttack = gotStartingAttack;
+            SetAttack(startingAttack);
+            ResetAttackText(startingAttack);
+
+            int gotStartingArmor = InformationController.infoController.GetStartingArmor(color);
+            startingShield = gotStartingArmor;
+            SetCurrentShield(startingShield, false);
+            ResetShieldText(gotStartingArmor);
         }
     }
 
@@ -81,10 +137,31 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return currentAttack;
     }
 
-    public void SetMaxShield(int newvalue)
+    public int GetBonusAttack()
     {
+        return bonusAttack;
+    }
+
+    public void SetStartingShield(int newvalue)
+    {
+        currentBrokenTurns = -99999;
+        startingShield = newvalue;
         currentShield = newvalue;
         ResetShieldText(currentShield);
+    }
+
+    public void SetCurrentShield(int newvalue, bool relative)
+    {
+        if (relative)
+            currentShield += newvalue;
+        else
+            currentShield = newvalue;
+        ResetShieldText(currentShield);
+    }
+
+    public int GetStartingShield()
+    {
+        return startingShield;
     }
 
     public int GetCurrentShield()
@@ -92,16 +169,28 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return currentShield;
     }
 
+    public void SetStartingAttack(int newvalue)
+    {
+        startingAttack = newvalue;
+        SetAttack(startingAttack);
+    }
+
+    public int GetStartingAttack()
+    {
+        return startingAttack;
+    }
+
     public void SetAttack(int newValue)
     {
         currentAttack = newValue;
-        attackText.text = currentAttack.ToString();
+        charDisplay.attackText.text = currentAttack.ToString();
     }
 
     public void SetBonusAttack(int newValue)
     {
         bonusAttack += newValue;
-        ResetAttackText(currentAttack + bonusAttack);
+        ResetAttackText(GetAttack());
+        //HandController.handController.ResetCardDisplays();
     }
 
     public void SetBonusVit(int newValue)
@@ -110,15 +199,52 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetVitText(currentVit + bonusVit);
     }
 
-    public void SetBonusShield(int newValue)
+    public void SetBonusShield(int newValue, bool fromRelic = false)
     {
-        bonusShield += newValue;
+        ShowShieldDamageNumber(-newValue);
+        bonusShield = Mathf.Max(0, bonusShield + newValue);
+
         ResetShieldText(currentShield + bonusShield);
+
+        if (!fromRelic)             //To prevent infinite loops on relics giving armor triggered by armor gain
+            if (newValue > 0)
+                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorGain);
+            else if (newValue < 0)
+                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorLoss);
+    }
+
+    public int GetBonusShield()
+    {
+        return bonusShield;
+    }
+
+    public GameObject CheckDeath()
+    {
+        if (currentVit <= 0)
+        {
+            OnDeath();
+            return this.gameObject;
+        }
+        return null;
     }
 
     public void OnDeath()
     {
-        Destroy(this.gameObject);
+        try
+        {
+            PlayerController player = GetComponent<PlayerController>();
+            GameController.gameController.ReportDeadChar(player.GetColorTag());
+            HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+            //GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
+        }
+        catch
+        {
+            GameController.gameController.ReportOverkillGold(0 - GetVit());
+            ScoreController.score.UpdateOverkill(0 - GetVit());
+        }
+
+        abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnDeath);
+        //Destroy(this.gameObject);
     }
 
     public int GetVit()
@@ -133,7 +259,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public int GetAttack()
     {
-        return currentAttack + bonusAttack;
+        return Mathf.Max(currentAttack + bonusAttack, 0); //Attack can't fall below 0
     }
 
     public void SetStunned(bool value)
@@ -151,6 +277,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         enfeeble += value;
     }
 
+    public int GetEnfeeble()
+    {
+        return enfeeble;
+    }
+
     public void SetRetaliate(int value)
     {
         retaliate += value;
@@ -158,88 +289,208 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     private void ResetVitText(int value)
     {
-        vitText.text = value.ToString();
-        if (currentVit == maxVit)
-            vitText.GetComponent<Outline>().effectColor = new Color(1, 1, 1, 0.5f);
+        charDisplay.vitText.text = value.ToString();
+        if (value > maxVit)
+            charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
+        else if (value == maxVit)
+            charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(1, 1, 1, 0.5f);
         else
-            vitText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
+            charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
     }
 
     private void ResetShieldText(int value)
     {
-        shieldText.text = value.ToString();
-        if (currentShield == 0)
-            shieldText.enabled = false;
+        charDisplay.shieldText.text = value.ToString();
+        if (value == 0)
+            charDisplay.sprite.color = Color.red;
         else
-            shieldText.enabled = true;
+            charDisplay.sprite.color = Color.white;
+        if (bonusShield == 0)
+            charDisplay.shieldText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
+        else
+            charDisplay.shieldText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
     }
 
     private void ResetAttackText(int value)
     {
-        attackText.text = value.ToString();
+        charDisplay.attackText.text = value.ToString();
         if (bonusAttack > 0)
-            attackText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
+            charDisplay.attackText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
         else if (bonusAttack < 0)
-            attackText.GetComponent<Outline>().effectColor = new Color(1, 0, 0, 0.5f);
+            charDisplay.attackText.GetComponent<Outline>().effectColor = new Color(1, 0, 0, 0.5f);
         else
-            attackText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
+            charDisplay.attackText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
     }
     //###################################################################################################
     //Effect Section-------------------------------------------------------------------------------------
     //###################################################################################################
     public void TakeVitDamage(int value, HealthController attacker)
     {
+        int oldHealth = currentVit + bonusVit;
         if (value > 0)
         {
-            Debug.Log("took " + Mathf.Max(value - GetShield(), 0) + " vit damage");
-            currentVit -= Mathf.Max(value - GetShield(), 0) + enfeeble;
-            TakeShieldDamage(Mathf.Min(currentShield, value));
+            int multiplier = 1;
+            if (GetShield() == 0)
+                multiplier = 2;
+            if (onDamageDebuffs.Keys.Any(x => x is DoubleDamageDebuff))
+                multiplier *= 2;
+
+            int damage = Mathf.Max((value * multiplier - GetShield()), 1);
+
+            if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
+            {
+                damage = 0;
+                charDisplay.healthBar.SetStatusText("Immune", Color.yellow);
+            }
+
+            if (damage != 0)
+            {
+                try
+                {
+                    GetComponent<PlayerController>();
+                    ScoreController.score.UpdateDamageShielded(Mathf.Max(GetShield() - 1, 0));
+                    ScoreController.score.UpdateDamageOverhealProtected(Mathf.Min(damage, bonusVit));
+                }
+                catch { }
+                currentVit = currentVit + Mathf.Min(0, bonusVit - damage); //Always takes at least 1 damage;
+                bonusVit = Mathf.Max(0, bonusVit - damage);
+            }
             ResetVitText(currentVit + bonusVit);
 
-            OnDamage(attacker);
+            OnDamage(attacker, damage, oldHealth);
 
-            if (currentVit <= 0)
-                OnDeath();
+            if (GetShield() > 0 && damage != 0)
+                TakeShieldDamage(1, attacker);
+
+            if (damage == 1)
+                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTook1VitDamage);
         }
+        else
+        {
+            OnDamage(attacker, 0, oldHealth);
+        }
+    }
+
+    public int GetSimulatedVitDamage(int value)
+    {
+        int multiplier = 1;
+        if (currentShield == 0)
+            multiplier *= 2;
+        if (onDamageDebuffs.Keys.Any(x => x is DoubleDamageDebuff))
+            multiplier *= 2;
+        if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
+            multiplier *= 0;
+        return Mathf.Max((value * multiplier - GetShield()), 1);
     }
 
     public SimHealthController SimulateTakeVitDamage(SimHealthController simH, int value)
     {
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
+        int multiplier = 1;
+        if (currentShield == 0)
+            multiplier = 2;
         if (value > 0)
-            output.currentVit -= Mathf.Max(value - output.currentShield, 0);//ToBeChangedLater
+            output.currentVit -= Mathf.Max(value - GetShield(), 0) * multiplier;//ToBeChangedLater
         return output;
     }
 
-    public void TakeShieldDamage(int value)
+    public void TakeShieldDamage(int value, HealthController attacker)
     {
-        Debug.Log("took " + value + " shield damage");
-        currentShield = Mathf.Max(currentShield - value - enfeeble, 0);
+        int damage = 0;
+        if (value > 0)
+            if (startOfTurnBuffs.Keys.Any(x => x is ProtectBuff))
+                damage = 0;
+            else
+                damage = value + enfeeble;
+        else
+            damage = value;
+
+        ShowShieldDamageNumber(damage);
+
+        if (bonusShield > 0)
+        {
+            currentShield -= Mathf.Max(0, damage - bonusShield);
+            currentShield = Mathf.Max(currentShield, 0);
+            bonusShield = Mathf.Max(0, bonusShield - damage);
+        }
+        else
+            currentShield = Mathf.Max(0, currentShield - damage);
         ResetShieldText(currentShield + bonusShield);
+
+        if (GetShield() <= 0)
+        {
+            if (!wasBroken)
+            {
+                currentBrokenTurns = 0;
+                wasBroken = true;
+
+                charDisplay.healthBar.SetStatusText("Broken", new Color(255, 102, 0));
+                charDisplay.sprite.color = new Color(1, 0, 0);
+
+                try
+                {
+                    GetComponent<EnemyController>();
+                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnEnemyBroken);
+                    ScoreController.score.UpdateEnemiesBroken();
+                }
+                catch
+                {
+                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnPlayerBroken);
+                }
+            }
+        }
+        else
+        {
+            wasBroken = false;
+        }
+    }
+
+    public int GetSimulatedShieldDamage(int value)
+    {
+        if (value > 0)
+            if (startOfTurnBuffs.Keys.Any(x => x is ProtectBuff))
+                return 0;
+            else
+                return Mathf.Min(value + enfeeble, currentShield);
+        return value;
     }
 
     public SimHealthController SimulateTakeShieldDamage(SimHealthController simH, int value)
     {
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
-        output.currentShield = Mathf.Max(output.currentShield - value, 0);
+        output.currentShield = Mathf.Max(currentShield - value - enfeeble, 0);
         return output;
     }
 
     //Simply remove value from health
     public void TakePiercingDamage(int value, HealthController attacker)
     {
+        int oldHealth = currentVit + bonusVit;
+        int damage = 0;
         if (value > 0)
-            currentVit -= value + enfeeble;
+        {
+            damage = value;
+            if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
+                damage = 0;
+        }
         else
-            currentVit = Mathf.Min(maxVit, currentVit - value); //Enfeeble does not amplify healing, and can't heal more than maxVit
+        {
+            int oldcurrentVit = currentVit;
+            currentVit = Mathf.Min(maxVit, currentVit + bonusVit - value);          //Always takes at least 1 damage;
+            bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - value - maxVit);     //Excess healing is moved to bonusVit
+            damage = value;                                                         //Enfeeble does not amplify healing, and can't heal more than maxVit
+        }
+
+        if (damage > 0)
+        {
+            currentVit = currentVit + Mathf.Min(0, bonusVit - damage); //Always takes at least 1 damage;
+            bonusVit = Mathf.Max(0, bonusVit - damage);
+        }
         ResetVitText(currentVit + bonusVit);
 
-        OnDamage(attacker);
-
-        if (currentVit <= 0)
-            OnDeath();
+        OnDamage(attacker, damage, oldHealth);
     }
 
     public SimHealthController SimulateTakePiercingDamage(SimHealthController simH, int value)
@@ -253,7 +504,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void ChangeAttack(int value)
     {
         currentAttack = Mathf.Max(currentAttack - value, 0); //Attack can never be lower than 0
-        attackText.text = (currentAttack + bonusAttack).ToString();
+        charDisplay.attackText.text = (currentAttack + bonusAttack).ToString();
     }
 
     public SimHealthController SimulateChangeAttack(SimHealthController simH, int value)
@@ -267,33 +518,57 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Force the object to move towards the finalLocation, value number of times
     //Value can be positive (towards) or negative (away) from the finalLocation
     //If there is an object in the way stop movement before colision and deal piercing knockback damage to both objects
-    public void ForcedMovement(Vector2 finalLocation, int steps)
+    public void ForcedMovement(Vector2 castFromLocation, int steps)
     {
+        if (size > 1)
+            return; //Show resist on UI
+
         Vector2 originalLocation = transform.position;
         for (int i = 1; i <= Mathf.Abs(steps); i++)
         {
-            Vector2 knockedToPosition = originalLocation + ((Vector2)transform.position - finalLocation).normalized * i * Mathf.Sign(steps);
-            GameObject objectInWay = GridController.gridController.GetObjectAtLocation(knockedToPosition);
-            if (knockedToPosition != finalLocation)
-                if (objectInWay == null && !GridController.gridController.CheckIfOutOfBounds(knockedToPosition))    //If knocked to position is occupied or is out of bounds
-                {
-                    GridController.gridController.RemoveFromPosition(transform.position);
-                    transform.position = knockedToPosition;
-                    GridController.gridController.ReportPosition(this.gameObject, transform.position);
-                }
-                else
-                {
-                    TakePiercingDamage(knockBackDamage, null);
-                    try
-                    {
-                        objectInWay.GetComponent<HealthController>().TakePiercingDamage(knockBackDamage, this);
-                    }
-                    catch
-                    {
-                    }
-                    return;
-                }
+            Vector2 knockedToCenter = originalLocation + ((Vector2)transform.position - castFromLocation).normalized * i * Mathf.Sign(steps);
+
+            List<Vector2> aboutToBePositions = new List<Vector2>();
+            foreach (Vector2 loc in occupiedSpaces)
+                aboutToBePositions.Add(knockedToCenter + loc);
+
+            if (GridController.gridController.CheckIfOutOfBounds(aboutToBePositions) || aboutToBePositions.Contains(castFromLocation)) //If knocked out of bounds, or about to be pulled onto the caster, don't
+            {
+                GridController.gridController.ResetOverlapOrder(transform.position);
+                return;
+            }
+
+            List<GameObject> objectInWay = GridController.gridController.GetObjectAtLocation(aboutToBePositions);
+
+            if (GridController.gridController.CheckIfOutOfBounds(aboutToBePositions) ||
+                GridController.gridController.GetObjectAtLocation(aboutToBePositions).Any(x => x.tag == "Blockade")) //If going to be knocked out of bounds or into a barrier, prevent movement
+            {
+                GridController.gridController.ResetOverlapOrder(transform.position);
+                return;
+            }
+
+            foreach (Vector2 loc in occupiedSpaces)
+                GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
+            transform.position = knockedToCenter;
+            foreach (Vector2 loc in aboutToBePositions)
+                GridController.gridController.ReportPosition(this.gameObject, loc);
+
+            try
+            {
+                GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
+            }
+            catch
+            {
+                GetComponent<EnemyInformationController>().RefreshIntent();
+            }
+
+            if (objectInWay.Count != 0)    //If knocked to position is occupied then stop (still allow overlap, but stop after)
+            {
+                GridController.gridController.ResetOverlapOrder(transform.position);
+                return;
+            }
         }
+        GridController.gridController.ResetOverlapOrder(transform.position);
     }
 
     public void SetKnockBackDamage(int value)
@@ -332,66 +607,179 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         if (!startOfTurnBuffs.ContainsKey(buff))
             startOfTurnBuffs.Add(buff, duration);
+        else
+            startOfTurnBuffs[buff] = Mathf.Max(duration, startOfTurnBuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AddStartOfTurnDebuff(Buff buff, int duration)
     {
         if (!startOfTurnDebuffs.ContainsKey(buff))
             startOfTurnDebuffs.Add(buff, duration);
+        else
+            startOfTurnDebuffs[buff] = Mathf.Max(duration, startOfTurnDebuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AddEndOfTurnBuff(Buff buff, int duration)
     {
         if (!endOfTurnBuffs.ContainsKey(buff))
             endOfTurnBuffs.Add(buff, duration);
+        else
+            endOfTurnBuffs[buff] = Mathf.Max(duration, endOfTurnBuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AddEndOfTurnDebuff(Buff buff, int duration)
     {
         if (!endOfTurnDebuffs.ContainsKey(buff))
             endOfTurnDebuffs.Add(buff, duration);
+        else
+            endOfTurnDebuffs[buff] = Mathf.Max(duration, endOfTurnDebuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AddOneTimeBuff(Buff buff)
     {
         oneTimeBuffs.Add(buff);
+        ResetBuffIcons();
     }
 
     public void AddOneTimeDebuff(Buff buff)
     {
         oneTimeDebuffs.Add(buff);
+        ResetBuffIcons();
     }
 
     public void AddOnDamageBuff(Buff buff, int duration)
     {
         if (!onDamageBuffs.ContainsKey(buff))
             onDamageBuffs.Add(buff, duration);
+        else
+            onDamageBuffs[buff] = Mathf.Max(duration, onDamageBuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AddOnDamangeDebuff(Buff buff, int duration)
     {
         if (!onDamageDebuffs.ContainsKey(buff))
             onDamageDebuffs.Add(buff, duration);
+        else
+            onDamageDebuffs[buff] = Mathf.Max(duration, onDamageDebuffs[buff]);
+        ResetBuffIcons();
     }
 
     public void AtEndOfTurn()
     {
         endOfTurnBuffs = ResolveBuffAndReturn(endOfTurnBuffs);
         endOfTurnDebuffs = ResolveBuffAndReturn(endOfTurnDebuffs);
+        ResetBuffIcons();
+    }
+
+    public void ResolveBroken()
+    {
+        currentBrokenTurns++;
+        if (currentBrokenTurns == maxBrokenTurns)
+        {
+            if (currentShield < startingShield)
+                SetStartingShield(startingShield);
+            else
+            {
+                currentBrokenTurns = -99999;
+                ResetShieldText(currentShield);
+            }
+        }
     }
 
     public void AtStartOfTurn()
     {
+        bonusVit = 0;
+        ResetVitText(currentVit + bonusVit);
+
         startOfTurnBuffs = ResolveBuffAndReturn(startOfTurnBuffs);
         startOfTurnDebuffs = ResolveBuffAndReturn(startOfTurnDebuffs);
         onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
+        ResetBuffIcons();
     }
 
-    public void OnDamage(HealthController attacker)
+    public void OnDamage(HealthController attacker, int damage, int oldHealth)
     {
+        //Handheld.Vibrate();
+
+        try
+        {
+            GetComponent<EnemyController>();
+            ScoreController.score.UpdateDamage(damage);
+        }
+        catch { }
+
+        ShowDamageNumber(damage, oldHealth);
         if (retaliate > 0)
             attacker.TakeVitDamage(retaliate, null);
+
+        onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
+        onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
+
+        if (currentVit + bonusVit <= 0)
+            try
+            {
+                GetComponent<EnemyInformationController>().HideIntent();
+            }
+            catch { }
+        else
+        {
+            try
+            {
+                GetComponent<EnemyInformationController>().RefreshIntent();
+            }
+            catch { }
+        }
+
+        GridController.gridController.ResetOverlapOrder(transform.position);
+    }
+
+    private void ShowDamageNumber(int damage, int oldHealth)
+    {
+        int maxSize = size;
+        Vector2 center = transform.position;
+        List<Vector2> overlappingAreas = new List<Vector2>();
+        foreach (Vector2 loc in occupiedSpaces)
+            overlappingAreas.Add((Vector2)transform.position + loc);
+        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(overlappingAreas))
+            if (obj.GetComponent<HealthController>().size > maxSize)
+            {
+                maxSize = obj.GetComponent<HealthController>().size;
+                center = obj.transform.position;
+            }
+        charDisplay.healthBar.SetBar(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetShield() <= 0);
+        charDisplay.healthBar.SetDamageImage(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetShield() <= 0);
+    }
+
+    private void ShowShieldDamageNumber(int shieldDamage)
+    {
+        charDisplay.healthBar.SetShieldDamageImage(GetShield(), shieldDamage, GetShield() <= 0);
+    }
+
+    public void ShowHealthBar()
+    {
+        int maxSize = size;
+        Vector2 center = transform.position;
+        List<Vector2> overlappingAreas = new List<Vector2>();
+        foreach (Vector2 loc in occupiedSpaces)
+            overlappingAreas.Add((Vector2)transform.position + loc);
+        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(overlappingAreas))
+            if (obj.GetComponent<HealthController>().size > maxSize)
+            {
+                maxSize = obj.GetComponent<HealthController>().size;
+                center = obj.transform.position;
+            }
+        charDisplay.healthBar.SetBar(currentVit + bonusVit, 0, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), currentShield <= 0, true);
+    }
+
+    public void HideHealthBar()
+    {
+        charDisplay.healthBar.RemoveHealthBar();
     }
 
     public void Cleanse()
@@ -415,6 +803,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         startOfTurnBuffs = new Dictionary<Buff, int>();
         endOfTurnBuffs = new Dictionary<Buff, int>();
         oneTimeBuffs = new List<Buff>();
+        ResetBuffIcons();
     }
 
     //Tick every buff down by 1 turn and reverts all expired buffs
@@ -423,12 +812,75 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         Dictionary<Buff, int> newBuffs = new Dictionary<Buff, int>();
         foreach (KeyValuePair<Buff, int> buff in buffList)
         {
-                buff.Key.Trigger(this);
+            buff.Key.Trigger(this);
             if (buff.Value > 1)
                 newBuffs[buff.Key] = buff.Value - 1;
             else
                 buff.Key.Revert(this);
         }
+        ResetBuffIcons();
         return newBuffs;
+    }
+
+    private void ResetBuffIcons()
+    {
+        List<Buff> allBuffs = new List<Buff>();
+        Dictionary<Buff, int> allDictBuffs = GetBuffs();
+
+        allBuffs.AddRange(oneTimeBuffs);
+        allBuffs.AddRange(oneTimeDebuffs);
+        allBuffs.AddRange(allDictBuffs.OrderBy(x => x.Value).ToDictionary(k => k.Key, v => v.Value).Keys);
+
+        int maxIcons = 5;
+
+        for (int i = 0; i < maxIcons; i++)
+        {
+            if (i < allBuffs.Count)
+            {
+                if (i == maxIcons - 1 && allBuffs.Count > maxIcons)
+                {
+                    charDisplay.buffIcons[i].color = Color.white;
+                    charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = "+";
+                }
+                if (allDictBuffs.ContainsKey(allBuffs[i]))
+                {
+                    charDisplay.buffIcons[i].color = allBuffs[i].GetIconColor();
+                    charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = allDictBuffs[allBuffs[i]].ToString();
+                }
+            }
+            else
+            {
+                charDisplay.buffIcons[i].color = new Color(0, 0, 0, 0);
+                charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = "";
+            }
+        }
+    }
+
+    public Dictionary<Buff, int> GetBuffs()
+    {
+        return startOfTurnBuffs
+               .Union(startOfTurnDebuffs)
+               .Union(endOfTurnBuffs)
+               .Union(endOfTurnDebuffs)
+               .Union(onDamageBuffs)
+               .Union(onDamageDebuffs)
+               .ToDictionary(k => k.Key, v => v.Value);
+    }
+
+    public void SetStatTexts(bool state)
+    {
+        charDisplay.vitText.enabled = state;
+        charDisplay.shieldText.enabled = state;
+        charDisplay.attackText.enabled = state;
+    }
+
+    public void SetCreator(GameObject obj)
+    {
+        creator = obj;
+    }
+
+    public GameObject GetCreator()
+    {
+        return creator;
     }
 }

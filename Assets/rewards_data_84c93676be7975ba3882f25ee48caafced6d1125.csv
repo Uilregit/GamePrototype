@@ -1,0 +1,169 @@
+deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,immediatelyUsedFlag
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,0,Medium Room 2,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,0,Medium Room 2,Red,Bring It On,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,0,Medium Room 2,Red,Overdrive,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,1,Midrange Swarm Room,Green,Explosive Trap,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,1,Midrange Swarm Room,Green,Arrow,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,1,Midrange Swarm Room,Red,Get Over Here,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,2,Aggro Big Room,Blue,Haste,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,2,Aggro Big Room,Red,Taunt,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:07,2,Aggro Big Room,Blue,Barrier,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,0,Medium Room,Red,Kick,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,0,Medium Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,0,Medium Room,Red,Overdrive,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,1,Midrange Large Room,Red,Massive Swing,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,1,Midrange Large Room,Red,Bring It On,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,1,Midrange Large Room,Green,Arrow,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,2,Aggro Big Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,2,Aggro Big Room,Green,Boomerang,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,2,Aggro Big Room,Green,Dampening Waves,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,3,Midrange Large Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,3,Midrange Large Room,Red,Taunt,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,3,Midrange Large Room,Green,Explosive Trap,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,4,Aggro Swarm Room,Blue,Shatter Shield,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,4,Aggro Swarm Room,Red,Overdrive,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,4,Aggro Swarm Room,Blue,Cleanse,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,5,Aggro Buff Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,5,Aggro Buff Room,Red,Taunt,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,5,Aggro Buff Room,Blue,Barrier,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,6,Aggro Buff Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,6,Aggro Buff Room,Red,Taunt,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,6,Aggro Buff Room,Blue,Power Overwhelming,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,7,Midrange Swarm Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,7,Midrange Swarm Room,Red,Massive Swing,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,7,Midrange Swarm Room,Red,Overdrive,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,8,Aggro Bomb Room,Red,Bring It On,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,8,Aggro Bomb Room,Blue,Marked for Death,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.0,4/13/2020 22:28,8,Aggro Bomb Room,Green,Rallying Cry,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,4/22/2020 21:59,0,Aggro Swarm Room,Red,Last Resort,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,4/22/2020 21:59,0,Aggro Swarm Room,Red,Get Over Here,FALSE,FALSE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,4/22/2020 21:59,0,Aggro Swarm Room,Blue,The Best Defence,TRUE,TRUE
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/4/2020 11:39:16 PM,0,Aggro Big Room,Green,Gust,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/4/2020 11:39:16 PM,0,Aggro Big Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/4/2020 11:39:16 PM,0,Aggro Big Room,Green,Swap,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,0,Midrange Swarm Room,Green,Hidden Knives,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,0,Midrange Swarm Room,Green,Haste,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,0,Midrange Swarm Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,0,Midrange Swarm Room,Green,Hidden Knives,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,1,Midrange Large Room,Green,Whirlwind,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,1,Midrange Large Room,Red,Shield Slam,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,1,Midrange Large Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 1:07:10 AM,1,Midrange Large Room,Green,Whirlwind,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,0,Midrange Swarm Room,Green,Gust,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,0,Midrange Swarm Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,0,Midrange Swarm Room,Blue,Foresight,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,0,Midrange Swarm Room,Blue,Foresight,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,1,Aggro Bomb Room,Red,Last Resort,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,1,Aggro Bomb Room,Blue,Inspire,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,1,Aggro Bomb Room,Red,Hunker Down,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,1,Aggro Bomb Room,Red,Hunker Down,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,2,Medium Room 2,Blue,Magic Missle,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,2,Medium Room 2,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,2,Medium Room 2,Red,Overdrive,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,2,Medium Room 2,Blue,Magic Missle,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,3,Medium Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,3,Medium Room,Blue,Resonance,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,3,Medium Room,Red,Shield Slam,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,3,Medium Room,Blue,Resonance,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,4,Medium Room 2,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,4,Medium Room 2,Blue,Gift of Life,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,4,Medium Room 2,Blue,Magic Missle,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,4,Medium Room 2,Blue,Gift of Life,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,5,Aggro Bomb Room,Red,Through the Pain,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,5,Aggro Bomb Room,Red,Shield Slam,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,5,Aggro Bomb Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,5,Aggro Bomb Room,Red,Shield Slam,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,6,Aggro Bomb Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,6,Aggro Bomb Room,Green,Arrow Storm,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,6,Aggro Bomb Room,Red,Protect,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,6,Aggro Bomb Room,Green,Arrow Storm,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,7,Medium Room 2,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,7,Medium Room 2,Red,Last Resort,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,7,Medium Room 2,Red,Through the Pain,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,7,Medium Room 2,Red,Through the Pain,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,8,Medium Room,Green,Volley,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,8,Medium Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,8,Medium Room,Green,Gust,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.2.2,7/5/2020 12:33:50 PM,8,Medium Room,Green,Volley,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,Aggro Bomb Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,Aggro Bomb Room,Green,Hidden Knives,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,Aggro Bomb Room,Green,Bise,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,Aggro Bomb Room,Green,Hidden Knives,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,Midrange Large Room,Green,Gust,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,Midrange Large Room,Blue,Channel Mana,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,Midrange Large Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,Midrange Large Room,Blue,Channel Mana,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,Aggro Bomb Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,Aggro Bomb Room,Red,Bash,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,Aggro Bomb Room,Blue,Crystallurgy,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,Aggro Bomb Room,Blue,Crystallurgy,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,Midrange Swarm Room,Green,Arrow Storm,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,Midrange Swarm Room,Green,Haste,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,Midrange Swarm Room,Red,Last Resort,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,Midrange Swarm Room,Green,Arrow Storm,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,4,Midrange Large Room,Green,Whirlwind,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,4,Midrange Large Room,Red,Bash,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,4,Midrange Large Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,4,Midrange Large Room,Green,Whirlwind,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,5,Midrange Large Room,Red,Overdrive,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,5,Midrange Large Room,Green,Haste,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,5,Midrange Large Room,Blue,Arcane Knowledge,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,5,Midrange Large Room,Blue,Arcane Knowledge,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,6,Medium Room,Blue,Thunder,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,6,Medium Room,Green,Swap,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,6,Medium Room,Green,Arrow Storm,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,6,Medium Room,Green,Swap,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,7,Midrange Large Room,Green,Wind Strike,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,7,Midrange Large Room,Green,Wind Walk,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,7,Midrange Large Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,7,Midrange Large Room,Green,Marked for Death,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,8,Aggro Bomb Room,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,8,Aggro Bomb Room,Red,Bash,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,8,Aggro Bomb Room,Green,Wind Strike,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,8,Aggro Bomb Room,Red,Bash,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Blue,Foresight,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Bash,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Bash,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Blue,Magic Missle,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Adrenaline,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Blue,Magic Missle,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Blue,Inspire,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Berserker's Rage,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Blue,Inspire,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Berserker's Rage,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Bolster,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Bolster,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Crystallurgy,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Foresight,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Foresight,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Red,Asserting Dominance,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Red,Shield Slam,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Red,Berserker's Rage,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Red,Shield Slam,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Blue,Gift of Life,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Blue,Crystallurgy,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Blue,Gift of Life,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Bise,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Red,Bolster,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Bise,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Whirlwind,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Gust,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,0,missing,Green,Marked for Death,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Channel Mana,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Red,War Cry,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Pray,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,1,missing,Blue,Channel Mana,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Blue,Crystallurgy,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Green,Marked for Death,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Red,Bolster,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,2,missing,Blue,Crystallurgy,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Red,War Cry,True,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.1,,3,missing,Red,War Cry,True,True

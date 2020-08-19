@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: R Spiked Armor
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 0
+  name: Spiked Armor
+  energyCost: 1
+  manaCost: 0
+  range: 0
+  radius: 0
+  casterColor: 0
+  description: Gain 3 armor and gain 1 <b>Retaliate</b> for 2 turns
+  art: {fileID: 21300000, guid: 4afe5cafb08fd0941a56cec78bea1e42, type: 3}
+  castType: 2
+  castShape: 0
+  targetType: 0100000002000000
+  cardEffectName: 010000000d000000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buffType: 0000000006000000
+  effectValue: feffffff02000000
+  effectDuration: 0000000002000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  indicatorValue: 

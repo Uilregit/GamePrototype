@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class EndTurnButtonController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    private bool mouseOnButton = false;
 
+    private void OnMouseDown()
+    {
+        mouseOnButton = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseExit()
     {
-
+        mouseOnButton = false;
     }
 
     private void OnMouseUp()
     {
-        if (TurnController.turnController.GetIsPlayerTurn())
+        if (TurnController.turnController.GetIsPlayerTurn() && mouseOnButton)
             TurnController.turnController.SetPlayerTurn(false);
     }
 }

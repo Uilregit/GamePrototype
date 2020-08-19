@@ -1,0 +1,2437 @@
+fileFormatVersion: 2
+guid: 0c29bc75526815d42aa16f9a63a1d2a8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2500582475382929605
+    second: clothing_0
+  - first:
+      213: 5830127694260991208
+    second: clothing_1
+  - first:
+      213: -2629467926874194787
+    second: clothing_2
+  - first:
+      213: -4110709456746568732
+    second: clothing_3
+  - first:
+      213: -2417300415685233566
+    second: clothing_4
+  - first:
+      213: 4316819436108083585
+    second: clothing_5
+  - first:
+      213: 8227484194632720773
+    second: clothing_6
+  - first:
+      213: 974719384802288970
+    second: clothing_7
+  - first:
+      213: -8962424266677249941
+    second: clothing_8
+  - first:
+      213: -8548691559314347941
+    second: clothing_9
+  - first:
+      213: 1113656406283041275
+    second: clothing_10
+  - first:
+      213: 2315023090791299157
+    second: clothing_11
+  - first:
+      213: -3890814825095703162
+    second: clothing_12
+  - first:
+      213: -2159373176059290864
+    second: clothing_13
+  - first:
+      213: 459065462705177917
+    second: clothing_14
+  - first:
+      213: -4483703013488849656
+    second: clothing_15
+  - first:
+      213: 2931348999111455933
+    second: clothing_16
+  - first:
+      213: 7754405003208829866
+    second: clothing_17
+  - first:
+      213: -1366283535895387389
+    second: clothing_18
+  - first:
+      213: -3920714029104526201
+    second: clothing_19
+  - first:
+      213: -3584154913295507448
+    second: clothing_20
+  - first:
+      213: -4676443488466879683
+    second: clothing_21
+  - first:
+      213: -1372623590197347799
+    second: clothing_22
+  - first:
+      213: -1896773002176408293
+    second: clothing_23
+  - first:
+      213: 1934128176534562272
+    second: clothing_24
+  - first:
+      213: -5945153318176195808
+    second: clothing_25
+  - first:
+      213: 3337542773973013513
+    second: clothing_26
+  - first:
+      213: 8152621320460828263
+    second: clothing_27
+  - first:
+      213: -3032442277875742351
+    second: clothing_28
+  - first:
+      213: 134243060877245332
+    second: clothing_29
+  - first:
+      213: 8323380992512511598
+    second: clothing_30
+  - first:
+      213: -1842709266873181855
+    second: clothing_31
+  - first:
+      213: 2281335996348860325
+    second: clothing_32
+  - first:
+      213: -2282956551670068765
+    second: clothing_33
+  - first:
+      213: 8617892357354114959
+    second: clothing_34
+  - first:
+      213: 3483731941122476146
+    second: clothing_35
+  - first:
+      213: -1042480965628789188
+    second: clothing_36
+  - first:
+      213: 1128651884870407965
+    second: clothing_37
+  - first:
+      213: -7266554961169106637
+    second: clothing_38
+  - first:
+      213: -8674928072271188028
+    second: clothing_39
+  - first:
+      213: 2543979731473763493
+    second: clothing_40
+  - first:
+      213: 9041647847387105255
+    second: clothing_41
+  - first:
+      213: 7150952075387331263
+    second: clothing_42
+  - first:
+      213: 6610301792403722851
+    second: clothing_43
+  - first:
+      213: -1158110008690358614
+    second: clothing_44
+  - first:
+      213: -2393988992063693310
+    second: clothing_45
+  - first:
+      213: 3876251589638551137
+    second: clothing_46
+  - first:
+      213: 5100032153330318531
+    second: clothing_47
+  - first:
+      213: -2216654585128752594
+    second: clothing_48
+  - first:
+      213: 2878393262340687796
+    second: clothing_49
+  - first:
+      213: -7900414455860530519
+    second: clothing_50
+  - first:
+      213: 2574272040180505298
+    second: clothing_51
+  - first:
+      213: -2572146627131037989
+    second: clothing_52
+  - first:
+      213: 3608811388172464904
+    second: clothing_53
+  - first:
+      213: 8517364378471188551
+    second: clothing_54
+  - first:
+      213: 4094090856342028733
+    second: clothing_55
+  - first:
+      213: -2097087813617668809
+    second: clothing_56
+  - first:
+      213: -7584394002321040592
+    second: clothing_57
+  - first:
+      213: 4562554530846851066
+    second: clothing_58
+  - first:
+      213: 3955909428793631811
+    second: clothing_59
+  - first:
+      213: 4829513449299468730
+    second: clothing_60
+  - first:
+      213: 5647150284605916845
+    second: clothing_61
+  - first:
+      213: 8875483287793910732
+    second: clothing_62
+  - first:
+      213: -2859520550531325817
+    second: clothing_63
+  - first:
+      213: 434314108097382359
+    second: clothing_64
+  - first:
+      213: -2823441743486278455
+    second: clothing_65
+  - first:
+      213: 5716840853887627386
+    second: clothing_66
+  - first:
+      213: -7264169810627790746
+    second: clothing_67
+  - first:
+      213: 1302899293989208101
+    second: clothing_68
+  - first:
+      213: 1916651141612216581
+    second: clothing_69
+  - first:
+      213: 3596686381061110029
+    second: clothing_70
+  - first:
+      213: 2359327670775906007
+    second: clothing_71
+  - first:
+      213: 6943395922920219135
+    second: clothing_72
+  - first:
+      213: -1746898471829525007
+    second: clothing_73
+  - first:
+      213: 5122498011043144545
+    second: clothing_74
+  - first:
+      213: -7913614809381896248
+    second: clothing_75
+  - first:
+      213: 4827457197599398356
+    second: clothing_76
+  - first:
+      213: -2013989717200184016
+    second: clothing_77
+  - first:
+      213: -5725557490417875245
+    second: clothing_78
+  - first:
+      213: 287433967648961490
+    second: clothing_79
+  - first:
+      213: 957473825376645653
+    second: clothing_80
+  - first:
+      213: -655096908618445162
+    second: clothing_81
+  - first:
+      213: -6536054380804428287
+    second: clothing_82
+  - first:
+      213: 4626967456590832601
+    second: clothing_83
+  - first:
+      213: 8825002419417303871
+    second: clothing_84
+  - first:
+      213: -5371539084890980948
+    second: Relic_clothing_0
+  - first:
+      213: 1282056452779663384
+    second: Relic_clothing_1
+  - first:
+      213: 2657917103191809947
+    second: Relic_clothing_2
+  - first:
+      213: 2123972782404343219
+    second: Relic_clothing_3
+  - first:
+      213: 2927282750187834236
+    second: Relic_clothing_4
+  - first:
+      213: 6257422090141905081
+    second: Relic_clothing_5
+  - first:
+      213: -1896077666798133493
+    second: Relic_clothing_6
+  - first:
+      213: 5224969375406196084
+    second: Relic_clothing_7
+  - first:
+      213: 6122368986394345009
+    second: Relic_clothing_8
+  - first:
+      213: -8604550828234928124
+    second: Relic_clothing_9
+  - first:
+      213: -510499064447812104
+    second: Relic_clothing_10
+  - first:
+      213: -7801432737189013584
+    second: Relic_clothing_11
+  - first:
+      213: -4382926210617247747
+    second: Relic_clothing_12
+  - first:
+      213: -8659014269182227099
+    second: Relic_clothing_13
+  - first:
+      213: -4653822249094400352
+    second: Relic_clothing_14
+  - first:
+      213: -1358157560991436899
+    second: Relic_clothing_15
+  - first:
+      213: -4868532235930700880
+    second: Relic_clothing_16
+  - first:
+      213: 1584714213813861575
+    second: Relic_clothing_17
+  - first:
+      213: 266408040672519758
+    second: Relic_clothing_18
+  - first:
+      213: 5550481889593922243
+    second: Relic_clothing_19
+  - first:
+      213: 8452373623170267621
+    second: Relic_clothing_20
+  - first:
+      213: 365912027818192961
+    second: Relic_clothing_21
+  - first:
+      213: -7652220112535743449
+    second: Relic_clothing_22
+  - first:
+      213: 1265141870087464294
+    second: Relic_clothing_23
+  - first:
+      213: 5773473297882747010
+    second: Relic_clothing_24
+  - first:
+      213: 1285731261010336559
+    second: Relic_clothing_25
+  - first:
+      213: 4995767915595385527
+    second: Relic_clothing_26
+  - first:
+      213: -2538322401776679006
+    second: Relic_clothing_27
+  - first:
+      213: -4517676384783822996
+    second: Relic_clothing_28
+  - first:
+      213: -3203311918318315374
+    second: Relic_clothing_29
+  - first:
+      213: 3147500095614733392
+    second: Relic_clothing_30
+  - first:
+      213: 8789651875341866947
+    second: Relic_clothing_31
+  - first:
+      213: 2703059591316912481
+    second: Relic_clothing_32
+  - first:
+      213: -261089919491089807
+    second: Relic_clothing_33
+  - first:
+      213: 3623586572124006282
+    second: Relic_clothing_34
+  - first:
+      213: 3407797559953330170
+    second: Relic_clothing_35
+  - first:
+      213: 5971612917954580484
+    second: Relic_clothing_36
+  - first:
+      213: -2645683532949095613
+    second: Relic_clothing_37
+  - first:
+      213: 6891034178878538892
+    second: Relic_clothing_38
+  - first:
+      213: 8000282315024108424
+    second: Relic_clothing_39
+  - first:
+      213: 6641709696750049570
+    second: Relic_clothing_40
+  - first:
+      213: -3261474085320846331
+    second: Relic_clothing_41
+  - first:
+      213: 6904312546201733129
+    second: Relic_clothing_42
+  - first:
+      213: 5926195443012521906
+    second: Relic_clothing_43
+  - first:
+      213: -3358335320688483660
+    second: Relic_clothing_44
+  - first:
+      213: -5999701856343333825
+    second: Relic_clothing_45
+  - first:
+      213: 6831016729150765282
+    second: Relic_clothing_46
+  - first:
+      213: -2986516134084814553
+    second: Relic_clothing_47
+  - first:
+      213: 9184931549460177279
+    second: Relic_clothing_48
+  - first:
+      213: -407622166588676633
+    second: Relic_clothing_49
+  - first:
+      213: 1723917019881147645
+    second: Relic_clothing_50
+  - first:
+      213: 998585296743251874
+    second: Relic_clothing_51
+  - first:
+      213: -3592611633607254555
+    second: Relic_clothing_52
+  - first:
+      213: -5306121996160856018
+    second: Relic_clothing_53
+  - first:
+      213: -8836774395811393826
+    second: Relic_clothing_54
+  - first:
+      213: 5822274173723557711
+    second: Relic_clothing_55
+  - first:
+      213: -1923793763513109395
+    second: Relic_clothing_56
+  - first:
+      213: 1206830138127171886
+    second: Relic_clothing_57
+  - first:
+      213: 4513038552442169051
+    second: Relic_clothing_58
+  - first:
+      213: 9124859701053366550
+    second: Relic_clothing_59
+  - first:
+      213: 6993971445409141178
+    second: Relic_clothing_60
+  - first:
+      213: 7927491940199467448
+    second: Relic_clothing_61
+  - first:
+      213: 3369671948627984831
+    second: Relic_clothing_62
+  - first:
+      213: 5616175980189763794
+    second: Relic_clothing_63
+  - first:
+      213: 4164761427523699511
+    second: Relic_clothing_64
+  - first:
+      213: -9173082523065598636
+    second: Relic_clothing_65
+  - first:
+      213: 198440621753491773
+    second: Relic_clothing_66
+  - first:
+      213: 4574497021349171894
+    second: Relic_clothing_67
+  - first:
+      213: -8732872719804147187
+    second: Relic_clothing_68
+  - first:
+      213: 2218942320780793250
+    second: Relic_clothing_69
+  - first:
+      213: -7779944271549483392
+    second: Relic_clothing_70
+  - first:
+      213: -7925355014136824957
+    second: Relic_clothing_71
+  - first:
+      213: 8250660941404407502
+    second: Relic_clothing_72
+  - first:
+      213: 4889102540657691855
+    second: Relic_clothing_73
+  - first:
+      213: 8394966055907913035
+    second: Relic_clothing_74
+  - first:
+      213: -8253185995347361492
+    second: Relic_clothing_75
+  - first:
+      213: 4269700536422630291
+    second: Relic_clothing_76
+  - first:
+      213: -7285952163561890561
+    second: Relic_clothing_77
+  - first:
+      213: 243428348274675649
+    second: Relic_clothing_78
+  - first:
+      213: 3111274331473698629
+    second: Relic_clothing_79
+  - first:
+      213: 3620244510750389951
+    second: Relic_clothing_80
+  - first:
+      213: -3381119709083889022
+    second: Relic_clothing_81
+  - first:
+      213: -6084973300152156826
+    second: Relic_clothing_82
+  - first:
+      213: -5021031937176219087
+    second: Relic_clothing_83
+  - first:
+      213: 5988141705742963083
+    second: Relic_clothing_84
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Relic_clothing_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 190
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cad32f379a57475b0800000000000000
+      internalID: -5371539084890980948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 190
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 810ede91d87cac110800000000000000
+      internalID: 1282056452779663384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 190
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9fde2ae581d2e420800000000000000
+      internalID: 2657917103191809947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_3
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 190
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b51fc70efdd97d10800000000000000
+      internalID: 2123972782404343219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_4
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 190
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7b0312e62ccf9820800000000000000
+      internalID: 2927282750187834236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b0379cdc34d6d650800000000000000
+      internalID: 6257422090141905081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_6
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0f12fb6867cfa5e0800000000000000
+      internalID: -1896077666798133493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_7
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 475816fb6f1d28840800000000000000
+      internalID: 5224969375406196084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_8
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13e37e9c72607f450800000000000000
+      internalID: 6122368986394345009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_9
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 180
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 400934f4c9e769880800000000000000
+      internalID: -8604550828234928124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 170
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fd3b6d3ec75ae8f0800000000000000
+      internalID: -510499064447812104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_11
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 170
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b7deb0624ebbb390800000000000000
+      internalID: -7801432737189013584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_12
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 170
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df7f86b45d7bc23c0800000000000000
+      internalID: -4382926210617247747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_13
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 170
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56dca5c466005d780800000000000000
+      internalID: -8659014269182227099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_14
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 170
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a63bea425d4a6fb0800000000000000
+      internalID: -4653822249094400352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_15
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 160
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f2814e4ead62de0800000000000000
+      internalID: -1358157560991436899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_16
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 160
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b3ffcbd9bf7f6cb0800000000000000
+      internalID: -4868532235930700880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_17
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 160
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cc33e86e290ef510800000000000000
+      internalID: 1584714213813861575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_18
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 160
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e46e79593b872b300800000000000000
+      internalID: 266408040672519758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_19
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 160
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c21c71fed5470d40800000000000000
+      internalID: 5550481889593922243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e9f1f5170ddc4570800000000000000
+      internalID: 8452373623170267621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_21
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1407525fc0bf31500800000000000000
+      internalID: 365912027818192961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_22
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7241531d95addc590800000000000000
+      internalID: -7652220112535743449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_23
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 665690de3dfae8110800000000000000
+      internalID: 1265141870087464294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_24
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2801180106f7f1050800000000000000
+      internalID: 5773473297882747010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_25
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2bd22115c5d7d110800000000000000
+      internalID: 1285731261010336559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_26
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ba4b555378845540800000000000000
+      internalID: 4995767915595385527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_27
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a74fa4693116ccd0800000000000000
+      internalID: -2538322401776679006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_28
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6f0ac2834dfd41c0800000000000000
+      internalID: -4517676384783822996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_29
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 140
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2989cdb38cc8b83d0800000000000000
+      internalID: -3203311918318315374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ccf9929aa2eab20800000000000000
+      internalID: 3147500095614733392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_31
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c71911afcd1bf970800000000000000
+      internalID: 8789651875341866947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_32
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 169382b7062338520800000000000000
+      internalID: 2703059591316912481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_33
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a5c4ef91c606cf0800000000000000
+      internalID: -261089919491089807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_34
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a87a35ce9c0994230800000000000000
+      internalID: 3623586572124006282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_35
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aff067353ddea4f20800000000000000
+      internalID: 3407797559953330170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_36
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40011d65f4e6fd250800000000000000
+      internalID: 5971612917954580484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_37
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34bf77e18d4a84bd0800000000000000
+      internalID: -2645683532949095613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_38
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c84812f431fd1af50800000000000000
+      internalID: 6891034178878538892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_39
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88b0ad1d066b60f60800000000000000
+      internalID: 8000282315024108424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 229dd08a7c71c2c50800000000000000
+      internalID: 6641709696750049570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_41
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5041f44799aecb2d0800000000000000
+      internalID: -3261474085320846331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_42
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90880ae1eab01df50800000000000000
+      internalID: 6904312546201733129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_43
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bfcc4a6b531e3250800000000000000
+      internalID: 5926195443012521906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_44
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 100
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b227bda1dbc461d0800000000000000
+      internalID: -3358335320688483660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_45
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 90
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34676e03f6ccbca0800000000000000
+      internalID: -5999701856343333825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_46
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 90
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e838cbd585acce50800000000000000
+      internalID: 6831016729150765282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_47
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 90
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729d6e73663cd86d0800000000000000
+      internalID: -2986516134084814553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_48
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 90
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f712ad3949e677f70800000000000000
+      internalID: 9184931549460177279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_49
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 90
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e528e59cc5d75af0800000000000000
+      internalID: -407622166588676633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 70
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfc044855659ce710800000000000000
+      internalID: 1723917019881147645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_51
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 70
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2af3f426900bbdd00800000000000000
+      internalID: 998585296743251874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_52
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 70
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed57e2f0ca742ec0800000000000000
+      internalID: -3592611633607254555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_53
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 70
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2012f3582edc56b0800000000000000
+      internalID: -5306121996160856018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_54
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 70
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede056991887d5580800000000000000
+      internalID: -8836774395811393826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_55
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 60
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4f39b5638fdcc050800000000000000
+      internalID: 5822274173723557711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_56
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 60
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6470b8c3cf4d45e0800000000000000
+      internalID: -1923793763513109395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_57
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 60
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e214e47dd958fb010800000000000000
+      internalID: 1206830138127171886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_58
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 60
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd665fff6a881ae30800000000000000
+      internalID: 4513038552442169051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_59
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 60
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61120927d8302ae70800000000000000
+      internalID: 9124859701053366550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab156d459f39f0160800000000000000
+      internalID: 6993971445409141178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_61
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b98c5ffaeb140e60800000000000000
+      internalID: 7927491940199467448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_62
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb1c193b8ca73ce20800000000000000
+      internalID: 3369671948627984831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_63
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d8ca475c4aa0fd40800000000000000
+      internalID: 5616175980189763794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_64
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7338cc5d3743cc930800000000000000
+      internalID: 4164761427523699511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_65
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45db45ddb0aa2b080800000000000000
+      internalID: -9173082523065598636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_66
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31ef90b1b001c200800000000000000
+      internalID: 198440621753491773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_67
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b2999fddc0eb7f30800000000000000
+      internalID: 4574497021349171894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_68
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0adf53b78a9ec680800000000000000
+      internalID: -8732872719804147187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_69
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 30
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a55837c8444bce10800000000000000
+      internalID: 2218942320780793250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08635f9a7e5180490800000000000000
+      internalID: -7779944271549483392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_71
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38b738fda9b730290800000000000000
+      internalID: -7925355014136824957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_72
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec6899e896c308270800000000000000
+      internalID: 8250660941404407502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_73
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcc8c5e6bd499d340800000000000000
+      internalID: 4889102540657691855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_74
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 20
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4d6adf3629e08470800000000000000
+      internalID: 8394966055907913035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_75
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c218712801bc67d80800000000000000
+      internalID: -8253185995347361492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_76
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39304ca1406014b30800000000000000
+      internalID: 4269700536422630291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_77
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc97602c1913ea90800000000000000
+      internalID: -7285952163561890561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_78
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cf0c230bc4d06300800000000000000
+      internalID: 243428348274675649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_79
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 10
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54fd74e25877d2b20800000000000000
+      internalID: 3111274331473698629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6b55f9331bd3230800000000000000
+      internalID: 3620244510750389951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_81
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2829bfcd989d311d0800000000000000
+      internalID: -3381119709083889022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_82
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66db1b8e505dd8ba0800000000000000
+      internalID: -6084973300152156826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_83
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13258b24e06b15ab0800000000000000
+      internalID: -5021031937176219087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Relic_clothing_84
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b81d283a7272a1350800000000000000
+      internalID: 5988141705742963083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

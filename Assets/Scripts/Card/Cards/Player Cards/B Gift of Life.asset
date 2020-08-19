@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: B Gift of Life
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 0
+  name: Gift of Life
+  energyCost: 1
+  manaCost: 0
+  range: 2
+  radius: 0
+  casterColor: 1
+  description: Deal <s>50% of ATK as</s> damage to the caster, restore <s>150% of
+    ATK as</s> health to the target
+  art: {fileID: 21300000, guid: 102925329d7611a4dae92c8fafe2513f, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 0200000003000000
+  cardEffectName: 0400000004000000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buffType: 0000000000000000
+  effectValue: 320000006affffff
+  effectDuration: 0000000000000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0

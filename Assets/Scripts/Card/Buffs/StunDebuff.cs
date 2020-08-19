@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class StunDebuff : Buff
 {
-    public override void OnApply(HealthController healthController, int value, int duration)
+    public override Color GetIconColor()
+    {
+        return new Color(136,0,21);
+    }
+
+    public override string GetDescription()
+    {
+        return "Stun: Can't act for {d} turns";
+    }
+
+    public override void OnApply(HealthController healthController, int value, int duration, bool fromRelic)
     {
         healthController.SetStunned(true);
         healthController.AddEndOfTurnBuff(this, duration);

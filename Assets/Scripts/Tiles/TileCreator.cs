@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using System.Linq;
 
 public class TileCreator : MonoBehaviour
 {
     public static TileCreator tileCreator;
 
-    public Sprite tileSprite;
+    [Header("Grids")]
+    public Sprite selectableTileSprite;
+    public Tilemap selectableTileMap;
     public Tilemap[] tileMap;
+
+    [Header("Select Range Sprites")]
     public Sprite uSprite;
     public Sprite dSprite;
     public Sprite lSprite;
@@ -25,10 +30,42 @@ public class TileCreator : MonoBehaviour
     public Sprite rudSprite;
     public Sprite ludSprite;
     public Sprite allSprite;
+    public Sprite noneSprite;
+
+    [Header("Path Grids")]
+    public Tilemap[] pathTileMap;
+    public Tilemap[] moveRangeTileMap;
+
+    [Header("Path Sprites")]
+    public Sprite pUStartSprite;
+    public Sprite pDStartSprite;
+    public Sprite pLStartSprite;
+    public Sprite pRStartSprite;
+    public Sprite pUEndSprite;
+    public Sprite pDEndSprite;
+    public Sprite pLEndSprite;
+    public Sprite pREndSprite;
+    public Sprite pUDSprite;
+    public Sprite pLRSprite;
+    public Sprite pULSprite;
+    public Sprite pDLSprite;
+    public Sprite pURSprite;
+    public Sprite pDRSprite;
+
+    [Header("Moverange Sprites")]
+    public Sprite left1Sprite;
+    public Sprite left2Sprite;
+    public Sprite left3Sprite;
+    public Sprite left4Sprite;
+    public Sprite left5Sprite;
 
     private Dictionary<Vector2, Tile>[] tiles;
     private Dictionary<Vector2, int>[] tilePositions;
-    private bool committed = false;
+    private List<Vector2> selectableTilePositions;
+
+    private Dictionary<Vector2, Tile>[] pathTiles;
+    private Dictionary<Vector2, Tile>[] moveRangeTiles;
+    //private bool committed = false;
 
     private GameObject creator;
 
@@ -47,12 +84,16 @@ public class TileCreator : MonoBehaviour
             tiles[i] = new Dictionary<Vector2, Tile>();
             tilePositions[i] = new Dictionary<Vector2, int>();
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        pathTiles = new Dictionary<Vector2, Tile>[pathTileMap.Length];
+        for (int i = 0; i < pathTileMap.Length; i++)
+            pathTiles[i] = new Dictionary<Vector2, Tile>();
 
+        moveRangeTiles = new Dictionary<Vector2, Tile>[moveRangeTileMap.Length];
+        for (int i = 0; i < moveRangeTileMap.Length; i++)
+            moveRangeTiles[i] = new Dictionary<Vector2, Tile>();
+
+        selectableTilePositions = new List<Vector2>();
     }
 
     public void CreateTiles(GameObject newCreator, Vector2 startLocation, Card.CastShape shape, int range, Color color, int layer = 0)
@@ -62,32 +103,79 @@ public class TileCreator : MonoBehaviour
 
     public void CreateTiles(GameObject newCreator, Vector2 startLocation, Card.CastShape shape, int range, Color color, string[] avoidTag, int layer = 0)
     {
-        if (!committed)
-        {
-            creator = newCreator;
-            InstantiateTiles(startLocation, shape, range, color, avoidTag, layer);
-            RefreshTiles(layer);
-        }
+        //if (!committed)
+        //{
+        creator = newCreator;
+        InstantiateTiles(startLocation, shape, range, color, avoidTag, layer);
+        RefreshTiles(layer);
+        //}
     }
 
     //Destroys tiles in ALL layers
     public void DestryTiles(GameObject destroyer)
     {
-        if (destroyer == creator) //Only allow the creator to destroy the tiles
+        //if (destroyer == creator) //Only allow the creator to destroy the tiles
+        //{
+        //Sets all tiles in all layers to null
+        for (int i = 0; i < tileMap.Length; i++)
+            foreach (Vector2 position in tilePositions[i].Keys)
+                tileMap[i].SetTile(Vector3Int.RoundToInt(position), null);
+        //Reset all tiles and positions to default
+        tiles = new Dictionary<Vector2, Tile>[tileMap.Length];
+        tilePositions = new Dictionary<Vector2, int>[tileMap.Length];
+        for (int i = 0; i < tileMap.Length; i++)
         {
-            //Sets all tiles in all layers to null
-            for (int i = 0; i < tileMap.Length; i++)
-                foreach (Vector2 position in tilePositions[i].Keys)
-                    tileMap[i].SetTile(Vector3Int.RoundToInt(position), null);
-            //Reset all tiles and positions to default
-            tiles = new Dictionary<Vector2, Tile>[tileMap.Length];
-            tilePositions = new Dictionary<Vector2, int>[tileMap.Length];
-            for (int i = 0; i < tileMap.Length; i++)
-            {
-                tiles[i] = new Dictionary<Vector2, Tile>();
-                tilePositions[i] = new Dictionary<Vector2, int>();
-            }
+            tiles[i] = new Dictionary<Vector2, Tile>();
+            tilePositions[i] = new Dictionary<Vector2, int>();
         }
+        //}
+    }
+
+    public void DestryTiles(GameObject destroyer, int layer)
+    {
+        //if (destroyer == creator) //Only allow the creator to destroy the tiles
+        //{
+        foreach (Vector2 position in tilePositions[layer].Keys)
+            tileMap[layer].SetTile(Vector3Int.RoundToInt(position), null);
+        //Reset all tiles and positions to default
+        tiles[layer] = new Dictionary<Vector2, Tile>();
+        tilePositions[layer] = new Dictionary<Vector2, int>();
+        //}
+    }
+
+    public void DestroySpecificTiles(GameObject destroyer, List<Vector2> locations, int layer = 0)
+    {
+        //if (destroyer == creator)
+        //{
+        foreach (Vector2 loc in locations)
+        {
+            tileMap[layer].SetTile(Vector3Int.RoundToInt(loc), null);
+            tiles[layer].Remove(loc);
+            tilePositions[layer].Remove(loc);
+        }
+        RefreshTiles(layer);
+        //}
+    }
+
+    public void CreateSelectableTile(Vector2 location)
+    {
+        Tile tile = ScriptableObject.CreateInstance<Tile>();
+        tile.sprite = selectableTileSprite;
+        tile.color = new Color(1, 0.8f, 0);
+        selectableTilePositions.Add(location);
+        selectableTileMap.SetTile(Vector3Int.RoundToInt(location), tile);
+    }
+
+    public List<Vector2> GetSelectableLocations()
+    {
+        return selectableTilePositions;
+    }
+
+    public void DestroySelectableTiles()
+    {
+        foreach (Vector2 loc in selectableTilePositions)
+            selectableTileMap.SetTile(Vector3Int.RoundToInt(loc), null);
+        selectableTilePositions = new List<Vector2>();
     }
 
     private void InstantiateTiles(Vector2 startLocation, Card.CastShape shape, int range, Color color, string[] avoidTag, int layer)
@@ -95,9 +183,11 @@ public class TileCreator : MonoBehaviour
         if (range >= 0)
         {
             //if there is an object that needs to be avoided, don't create a tile here
-            if (!Array.Exists(avoidTag, element => element == "None") && GridController.gridController.GetObjectAtLocation(startLocation) != null)
+            if (!GridController.gridController.CheckIfOutOfBounds(startLocation) && !Array.Exists(avoidTag, element => element == "None") &&
+                GridController.gridController.GetObjectAtLocation(startLocation).Count != 0)
             {
-                if (Array.Exists(avoidTag, element => element == GridController.gridController.GetObjectAtLocation(startLocation).tag))
+                if (GridController.gridController.GetObjectAtLocation(startLocation).Any(x => avoidTag.Contains(x.tag)) &&
+                    !creator.GetComponent<HealthController>().GetOccupiedSpaces().Any(x => x + (Vector2)creator.transform.position == startLocation)) //Always ignore creator for blocking
                     return;
             }
 
@@ -109,7 +199,6 @@ public class TileCreator : MonoBehaviour
                     Tile tile = ScriptableObject.CreateInstance<Tile>();
                     tiles[layer][startLocation] = tile;
                     tilePositions[layer][startLocation] = range;
-                    tile.sprite = tileSprite;
                     tile.color = color;
                     tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation), tile);
                     int x = (int)startLocation.x;
@@ -124,39 +213,47 @@ public class TileCreator : MonoBehaviour
             {
                 for (int i = 1; i < range + 1; i++)
                 {
-                    Tile tile1 = ScriptableObject.CreateInstance<Tile>();
-                    tiles[layer][startLocation + Vector2.right * i] = tile1;
-                    tilePositions[layer][startLocation + Vector2.right * i] = range;
-                    tile1.sprite = tileSprite;
-                    tile1.color = color;
-                    tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.right * i), tile1);
+                    if (!GridController.gridController.CheckIfOutOfBounds(startLocation + Vector2.right * i))
+                    {
+                        Tile tile1 = ScriptableObject.CreateInstance<Tile>();
+                        tiles[layer][startLocation + Vector2.right * i] = tile1;
+                        tilePositions[layer][startLocation + Vector2.right * i] = range;
+                        tile1.color = color;
+                        tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.right * i), tile1);
+                    }
 
-                    Tile tile2 = ScriptableObject.CreateInstance<Tile>();
-                    tiles[layer][startLocation + Vector2.left * i] = tile2;
-                    tilePositions[layer][startLocation + Vector2.left * i] = range;
-                    tile2.sprite = tileSprite;
-                    tile2.color = color;
-                    tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.left * i), tile2);
+                    if (!GridController.gridController.CheckIfOutOfBounds(startLocation + Vector2.left * i))
+                    {
+                        Tile tile2 = ScriptableObject.CreateInstance<Tile>();
+                        tiles[layer][startLocation + Vector2.left * i] = tile2;
+                        tilePositions[layer][startLocation + Vector2.left * i] = range;
+                        tile2.color = color;
+                        tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.left * i), tile2);
+                    }
 
-                    Tile tile3 = ScriptableObject.CreateInstance<Tile>();
-                    tiles[layer][startLocation + Vector2.up * i] = tile3;
-                    tilePositions[layer][startLocation + Vector2.up * i] = range;
-                    tile3.sprite = tileSprite;
-                    tile3.color = color;
-                    tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.up * i), tile3);
+                    if (!GridController.gridController.CheckIfOutOfBounds(startLocation + Vector2.up * i))
+                    {
+                        Tile tile3 = ScriptableObject.CreateInstance<Tile>();
+                        tiles[layer][startLocation + Vector2.up * i] = tile3;
+                        tilePositions[layer][startLocation + Vector2.up * i] = range;
+                        tile3.color = color;
+                        tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.up * i), tile3);
+                    }
 
-                    Tile tile4 = ScriptableObject.CreateInstance<Tile>();
-                    tiles[layer][startLocation + Vector2.down * i] = tile4;
-                    tilePositions[layer][startLocation + Vector2.down * i] = range;
-                    tile4.sprite = tileSprite;
-                    tile4.color = color;
-                    tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.down * i), tile4);
+                    if (!GridController.gridController.CheckIfOutOfBounds(startLocation + Vector2.down * i))
+                    {
+                        Tile tile4 = ScriptableObject.CreateInstance<Tile>();
+                        tiles[layer][startLocation + Vector2.down * i] = tile4;
+                        tilePositions[layer][startLocation + Vector2.down * i] = range;
+                        tile4.color = color;
+                        tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation + Vector2.down * i), tile4);
+                    }
                 }
             }
         }
     }
 
-    private void RefreshTiles(int layer)
+    public void RefreshTiles(int layer)
     {
         foreach (Vector2 location in tilePositions[layer].Keys)
         {
@@ -201,17 +298,12 @@ public class TileCreator : MonoBehaviour
             else if (u && d && !r && l)
                 tiles[layer][location].sprite = ludSprite;
             else if (!u && !d && !r && !l)
-                tiles[layer][location].color = new Color(1, 1, 1, 0);
+                tiles[layer][location].sprite = noneSprite;
             else
                 tiles[layer][location].sprite = allSprite;
 
             tileMap[layer].RefreshTile(Vector3Int.RoundToInt(location));
         }
-    }
-
-    public void SetCommitment(bool newCommitment)
-    {
-        committed = newCommitment;
     }
 
     public List<Vector2> GetTilePositions(int layer = 0)
@@ -220,5 +312,129 @@ public class TileCreator : MonoBehaviour
         foreach (Vector2 vec in tilePositions[layer].Keys)
             output.Add(vec);
         return output;
+    }
+
+    public void CreatePathTiles(int layer, List<Vector2> path, int moveRangeLeft, Color color)
+    {
+        Color tileColor = new Color(color.r, color.g, color.b, 0.3f);
+
+        if (path.Count > 1)
+        {
+            Tile tile;
+            foreach (Vector2 loc in path)
+            {
+                tile = ScriptableObject.CreateInstance<Tile>();
+                tile.sprite = selectableTileSprite;
+                tile.color = tileColor;
+                pathTiles[layer][loc] = tile;
+                pathTileMap[layer].SetTile(Vector3Int.RoundToInt(loc), tile);
+            }
+
+            if (moveRangeLeft > 0)
+            {
+                tile = ScriptableObject.CreateInstance<Tile>();
+                tile.color = tileColor;
+                tile.sprite = selectableTileSprite;
+                moveRangeTiles[layer][path[0]] = tile;
+                moveRangeTileMap[layer].SetTile(Vector3Int.RoundToInt(path[0]), tile);
+            }
+
+            RefreshPathTiles(layer, path[0], path[path.Count - 1], path.Count, moveRangeLeft);
+        }
+        else
+            DestroyPathTiles(layer);
+    }
+
+    public void RefreshPathTiles(int layer, Vector2 startingLoc, Vector2 endingLoc, int len, int moveRangeLeft)
+    {
+        foreach (Vector2 location in pathTiles[layer].Keys)
+        {
+            bool u, d, l, r;
+            u = d = l = r = false;
+
+            bool starting, ending;
+            starting = location == startingLoc;
+            ending = location == endingLoc;
+
+            if (pathTiles[layer].ContainsKey(location + new Vector2(0, 1)))
+                u = true;
+            if (pathTiles[layer].ContainsKey(location + new Vector2(0, -1)))
+                d = true;
+            if (pathTiles[layer].ContainsKey(location + new Vector2(1, 0)))
+                r = true;
+            if (pathTiles[layer].ContainsKey(location + new Vector2(-1, 0)))
+                l = true;
+
+            if (starting)
+            {
+                if (u)
+                    pathTiles[layer][location].sprite = pUStartSprite;
+                else if (d)
+                    pathTiles[layer][location].sprite = pDStartSprite;
+                else if (l)
+                    pathTiles[layer][location].sprite = pLStartSprite;
+                else if (r)
+                    pathTiles[layer][location].sprite = pRStartSprite;
+            }
+            else if (ending)
+            {
+                if (u)
+                    pathTiles[layer][location].sprite = pUEndSprite;
+                else if (d)
+                    pathTiles[layer][location].sprite = pDEndSprite;
+                else if (l)
+                    pathTiles[layer][location].sprite = pLEndSprite;
+                else if (r)
+                    pathTiles[layer][location].sprite = pREndSprite;
+            }
+            else
+            {
+                if (u && d)
+                    pathTiles[layer][location].sprite = pUDSprite;
+                else if (l && r)
+                    pathTiles[layer][location].sprite = pLRSprite;
+                else if (u && l)
+                    pathTiles[layer][location].sprite = pULSprite;
+                else if (u && r)
+                    pathTiles[layer][location].sprite = pURSprite;
+                else if (d && l)
+                    pathTiles[layer][location].sprite = pDLSprite;
+                else if (d && r)
+                    pathTiles[layer][location].sprite = pDRSprite;
+            }
+            pathTileMap[layer].RefreshTile(Vector3Int.RoundToInt(location));
+        }
+
+        if (moveRangeLeft > 0)
+            switch (moveRangeLeft)
+            {
+                case (1):
+                    moveRangeTiles[layer][startingLoc].sprite = left1Sprite;
+                    break;
+                case (2):
+                    moveRangeTiles[layer][startingLoc].sprite = left2Sprite;
+                    break;
+                case (3):
+                    moveRangeTiles[layer][startingLoc].sprite = left3Sprite;
+                    break;
+                case (4):
+                    moveRangeTiles[layer][startingLoc].sprite = left4Sprite;
+                    break;
+                default:
+                    moveRangeTiles[layer][startingLoc].sprite = left5Sprite;
+                    break;
+            }
+        moveRangeTileMap[layer].RefreshTile(Vector3Int.RoundToInt(startingLoc));
+    }
+
+    public void DestroyPathTiles(int layer)
+    {
+        foreach (Vector2 loc in pathTiles[layer].Keys)
+            pathTileMap[layer].SetTile(Vector3Int.RoundToInt(loc), null);
+        pathTiles[layer] = new Dictionary<Vector2, Tile>();
+
+        foreach (Vector2 loc in moveRangeTiles[layer].Keys)
+            moveRangeTileMap[layer].SetTile(Vector3Int.RoundToInt(loc), null);
+        moveRangeTiles[layer] = new Dictionary<Vector2, Tile>();
     }
 }

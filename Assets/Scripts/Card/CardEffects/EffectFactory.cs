@@ -56,6 +56,57 @@ public class EffectFactory
                 case Card.EffectType.DrawCards:
                     effects[i] = new DrawCardEffect();
                     break;
+                case Card.EffectType.GetCurrentShield:
+                    effects[i] = new GetCurrentShield();
+                    break;
+                case Card.EffectType.GetBonusShield:
+                    effects[i] = new GetBonusArmorEffect();
+                    break;
+                case Card.EffectType.GetNumberOfTargetsInRangeEffect:
+                    effects[i] = new GetNumberOfTargetsInRangeEffect();
+                    break;
+                case Card.EffectType.GetDamageDoneEffect:
+                    effects[i] = new GetDamageDoneEffect();
+                    break;
+                case Card.EffectType.GetNumberOfCardsPlayedInTurn:
+                    effects[i] = new GetNumberOfCardsPlayedEffect();
+                    break;
+                case Card.EffectType.Swap:
+                    effects[i] = new SwapEffect();
+                    break;
+                case Card.EffectType.Teleport:
+                    effects[i] = new TeleportEffect();
+                    break;
+                case Card.EffectType.ManaGain:
+                    effects[i] = new ManaGainEffect();
+                    break;
+                case Card.EffectType.EnergyGain:
+                    effects[i] = new EnergyGainEffect();
+                    break;
+                case Card.EffectType.SetDuration:
+                    effects[i] = new SetDurationEffect();
+                    break;
+                case Card.EffectType.GetNumberInStack:
+                    effects[i] = new GetNumberInStackEffect();
+                    break;
+                case Card.EffectType.GravityEffect:
+                    effects[i] = new GravityEffect();
+                    break;
+                case Card.EffectType.CardCostReductionDrawn:
+                    effects[i] = new CardCostReductionDrawn();
+                    break;
+                case Card.EffectType.DrawManaCards:
+                    effects[i] = new DrawManaCardEffect();
+                    break;
+                case Card.EffectType.Sacrifice:
+                    effects[i] = new SacrificeEffect();
+                    break;
+                case Card.EffectType.GetNumberOfAttackers:
+                    effects[i] = new GetNumberOfAttackersEffect();
+                    break;
+                case Card.EffectType.ModifyTempValue:
+                    effects[i] = new ModifyTempValueEffect();
+                    break;
                 default:
                     effects[i] = null;
                     break;

@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class TrapController : MonoBehaviour
 {
+    private GameObject caster;
     private Card card;
     private int effectIndex;
 
-    public void SetValues(Card newCard, int newEffectIndex)
+    public void SetValues(GameObject newCaster, Card newCard, int newEffectIndex)
     {
+        caster = newCaster;
         card = newCard;
         effectIndex = newEffectIndex;
     }
 
-    public virtual void Trigger(GameObject trappedObject)
+    public virtual void Trigger(List<GameObject> trappedObjects)
     {
-        trappedObject.GetComponent<HealthController>().SetStunned(true);        //Apply ministun to stop object's turn
-        trappedObject.GetComponent<HealthController>().AddEndOfTurnBuff(new StunDebuff(), 0);
-
+        foreach (GameObject trappedObject in trappedObjects)
+        {
+            trappedObject.GetComponent<HealthController>().SetStunned(true);        //Apply ministun to stop object's turn
+            trappedObject.GetComponent<HealthController>().AddEndOfTurnBuff(new StunDebuff(), 0);
+        }
         EffectFactory factory = new EffectFactory();
         Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);
-        effect.Process(this.gameObject, null, trappedObject, card, effectIndex);
+        effect.Process(caster, null, new List<Vector2>() { trappedObjects[0].transform.position }, card, effectIndex);
         Destroy(this.gameObject);
     }
 
@@ -29,7 +33,7 @@ public class TrapController : MonoBehaviour
         if (card.targetType[effectIndex] == Card.TargetType.Player && collision.gameObject.tag == "Player" ||
             card.targetType[effectIndex] == Card.TargetType.Enemy && collision.gameObject.tag == "Enemy")
         {
-            Trigger(collision.gameObject);
+            Trigger(GridController.gridController.GetObjectAtLocation(collision.transform.position, new string[] { "Enemy" }));
         }
     }
 }

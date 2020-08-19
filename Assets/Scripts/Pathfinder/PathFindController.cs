@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PathFindController : MonoBehaviour
 {
@@ -21,18 +22,12 @@ public class PathFindController : MonoBehaviour
         closedList = new List<AStarNode>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     //Use A* pathfinding to return the full path
-    public List<Vector2> PathFind(Vector2 startingLoc, Vector2 endingLoc)
+    public List<Vector2> PathFind(Vector2 startingLoc, Vector2 endingLoc, string[] pathThroughTag, List<Vector2> occupiedSpaces, int objectSize = 1)
     {
         List<Vector2> output = new List<Vector2>();
 
-        int hCost = GetHCost(startingLoc, endingLoc);
+        float hCost = GetHCost(startingLoc, endingLoc);
         int gCost = 0;
         AStarNode startingNode = new AStarNode();
         startingNode.position = startingLoc;
@@ -44,6 +39,9 @@ public class PathFindController : MonoBehaviour
         AStarNode currentNode = openList[0];
         for (int iteration = 0; iteration < 1000; iteration++)   //Runs for a max of 1000 iterations to prevent infinite loops if unpathable
         {
+            if (openList.Count == 0) //If trapped in an enclosed space, return early
+                return GetFinalPath(startingNode, currentNode);
+
             currentNode = openList[0];
             for (int i = 1; i < openList.Count; i++)
             {
@@ -57,13 +55,13 @@ public class PathFindController : MonoBehaviour
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            if (currentNode.position == endingLoc) //If pathfinding finds the ending, then return path list and end early
+            if (Mathf.Abs((currentNode.position - endingLoc).magnitude) <= Mathf.Pow(2 * Mathf.Pow((0.5f * objectSize - 0.5f), 2), 0.5f)) //If pathfinding finds the ending, then return path list and end early | distance less than one to account for size 2 objects
             {
                 output = GetFinalPath(startingNode, currentNode);
                 return output;
             }
 
-            foreach (AStarNode neighborNode in GetNeighbours(currentNode, endingLoc))
+            foreach (AStarNode neighborNode in GetNeighbours(currentNode, endingLoc, pathThroughTag, occupiedSpaces, objectSize))
             {
                 if (currentNode.gCost + 1 < neighborNode.gCost || !ContainsPosition(openList, neighborNode))
                 {
@@ -84,18 +82,31 @@ public class PathFindController : MonoBehaviour
     }
 
     //Return 4 nodes at neighbouring positions if they are valid positions for pathfinding
-    private List<AStarNode> GetNeighbours(AStarNode lastNode, Vector2 endingLoc)
+    private List<AStarNode> GetNeighbours(AStarNode lastNode, Vector2 endingLoc, string[] pathThroughTag, List<Vector2> occupiedSpaces, int objectSize)
     {
         List<AStarNode> output = new List<AStarNode>();
-        List <Vector2> directions = new List<Vector2>{ new Vector2(0, 1) , new Vector2(0, -1) , new Vector2(1,0) , new Vector2(-1,0) };
+        List<Vector2> directions = new List<Vector2> { new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0) };
 
         for (int i = 0; i < 4; i++)
         {
-            Vector2 direction = directions[Random.Range(0, directions.Count)]; //Add a random direction into the list first
+            Vector2 direction = directions[Random.Range(0, directions.Count)]; //Goes to a random direction in the list
             directions.Remove(direction);                                      //Allows for more randomness in eqi-distant paths
-            if ((GridController.gridController.GetObjectAtLocation(lastNode.position + direction) == null ||
-                lastNode.position + direction == endingLoc)&&
-                !GridController.gridController.CheckIfOutOfBounds(lastNode.position + direction))
+
+            List<Vector2> oldBoardSpaces = new List<Vector2>();
+            foreach (Vector2 vec in occupiedSpaces)
+                oldBoardSpaces.Add(lastNode.position + vec);
+
+            List<Vector2> newBoardSpaces = new List<Vector2>();
+            foreach (Vector2 vec in occupiedSpaces)
+                if (!oldBoardSpaces.Contains(lastNode.position + direction + vec))
+                    newBoardSpaces.Add(lastNode.position + direction + vec);
+
+            if (!GridController.gridController.CheckIfOutOfBounds(newBoardSpaces) &&
+                (
+                    (GridController.gridController.GetObjectAtLocation(newBoardSpaces).Count == 0 ||
+                     GridController.gridController.GetObjectAtLocation(newBoardSpaces).All(x => pathThroughTag.Contains(x.tag)))
+                ) ||
+                newBoardSpaces.Any(x => x == endingLoc))
             {
                 AStarNode upNode = new AStarNode();
                 upNode.position = lastNode.position + direction;
@@ -107,9 +118,9 @@ public class PathFindController : MonoBehaviour
         return output;
     }
 
-    private int GetHCost(Vector2 startingLoc, Vector2 endingLoc)
+    private float GetHCost(Vector2 startingLoc, Vector2 endingLoc)
     {
-        return (int)(Mathf.Abs(startingLoc.x - endingLoc.x) + Mathf.Abs(startingLoc.y - endingLoc.y));
+        return (Mathf.Abs(startingLoc.x - endingLoc.x) + Mathf.Abs(startingLoc.y - endingLoc.y));
     }
 
     private List<Vector2> GetFinalPath(AStarNode firstNode, AStarNode finalNode)
@@ -133,7 +144,7 @@ public class PathFindController : MonoBehaviour
         return output;
     }
 
-    private bool ContainsPosition (List<AStarNode> list, AStarNode node)
+    private bool ContainsPosition(List<AStarNode> list, AStarNode node)
     {
         foreach (AStarNode listNode in list)
         {

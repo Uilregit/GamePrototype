@@ -11,20 +11,28 @@ public class LootController : MonoBehaviour
 
     private List<Card> rareCards = new List<Card>();
     private List<Card> commonCards = new List<Card>();
+    private List<Card> starterCards = new List<Card>();
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (LootController.loot == null)
             LootController.loot = this;
         else
+        {
             Destroy(this.gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(this.gameObject);
 
         foreach (Card card in lootTable.cardLoot)
         {
             if (card.rarity == Card.Rarity.Rare)
                 rareCards.Add(card);
-            else
+            else if (card.rarity == Card.Rarity.Common)
                 commonCards.Add(card);
+            else if (card.rarity == Card.Rarity.Starter)
+                starterCards.Add(card);
         }
     }
 
@@ -35,6 +43,10 @@ public class LootController : MonoBehaviour
         else                            //Else roll based on rarity distribution
         {
             int roll = Random.Range(0, 100);
+            Debug.Log("----");
+            Debug.Log(Random.seed);
+            Debug.Log(Random.state);
+            Debug.Log(roll);
             if (roll <= rarePercentage)
                 return GetRareCard();
             else
@@ -51,6 +63,19 @@ public class LootController : MonoBehaviour
     private Card GetCommonCard()
     {
         int index = Random.Range(0, commonCards.Count);
+        List<Card> cards = new List<Card>();
+        foreach (CardController c in DeckController.deckController.GetDeck())
+            cards.Add(c.GetCard());
+        if (cards.Contains(commonCards[index])) //If card already in deck, reroll
+            index = Random.Range(0, commonCards.Count);
         return commonCards[index];
+    }
+
+    public Card GetCardWithName(string name)
+    {
+        foreach (Card c in lootTable.cardLoot)
+            if (c.name == name)
+                return c;
+        return null;
     }
 }

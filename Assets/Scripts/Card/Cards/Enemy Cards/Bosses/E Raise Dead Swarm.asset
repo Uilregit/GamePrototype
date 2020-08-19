@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: E Raise Dead Swarm
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 0
+  name: 'Raise Dead: Swarm'
+  energyCost: 0
+  manaCost: 4
+  range: 2
+  radius: 2
+  casterColor: 3
+  description: Summon 3 5 Attack/2 Armor/8 Health spawnlings
+  art: {fileID: 21300000, guid: a24483d458ff45c4f8323ca5975780b9, type: 3}
+  castType: 5
+  castShape: 0
+  targetType: 02000000
+  cardEffectName: 0f000000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buffType: 00000000
+  effectValue: 03000000
+  effectDuration: 03000000
+  spawnObject:
+  - {fileID: 1883166012356460042, guid: 6631a8678a73fa045ab1c8a4e0e21010, type: 3}
+  cards:
+  - {fileID: 0}
+  indicatorType: 4
+  targetBehaviour: 10
+  indicatorValue: 
+  executionPriority: -1

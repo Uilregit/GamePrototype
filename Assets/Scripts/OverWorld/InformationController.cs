@@ -8,6 +8,15 @@ public class CombatInfo
     public int redVit = 0;
     public int blueVit = 0;
     public int greenVit = 0;
+    public int redMaxVit = 0;
+    public int blueMaxVit = 0;
+    public int greenMaxVit = 0;
+    public int redAtk = 0;
+    public int blueAtk = 0;
+    public int greenAtk = 0;
+    public int redArmor = 0;
+    public int blueArmor = 0;
+    public int greenArmor = 0;
 }
 
 public class InformationController : MonoBehaviour
@@ -41,17 +50,26 @@ public class InformationController : MonoBehaviour
         {
             if (player.GetComponent<PlayerController>().GetColorTag() == Card.CasterColor.Red)
             {
-                combatInfo.redVit = player.GetComponent<PlayerController>().GetVit();
+                combatInfo.redVit = player.GetComponent<HealthController>().GetCurrentVit();
+                combatInfo.redMaxVit = player.GetComponent<HealthController>().GetMaxVit();
+                combatInfo.redAtk = player.GetComponent<HealthController>().GetStartingAttack();
+                combatInfo.redArmor = player.GetComponent<HealthController>().GetStartingShield();
                 playerColors.Add(Card.CasterColor.Red);
             }
             else if (player.GetComponent<PlayerController>().GetColorTag() == Card.CasterColor.Blue)
             {
-                combatInfo.blueVit = player.GetComponent<PlayerController>().GetVit();
+                combatInfo.blueVit = player.GetComponent<HealthController>().GetCurrentVit();
+                combatInfo.blueMaxVit = player.GetComponent<HealthController>().GetMaxVit();
+                combatInfo.blueAtk = player.GetComponent<HealthController>().GetStartingAttack();
+                combatInfo.blueArmor = player.GetComponent<HealthController>().GetStartingShield();
                 playerColors.Add(Card.CasterColor.Blue);
             }
             else if (player.GetComponent<PlayerController>().GetColorTag() == Card.CasterColor.Green)
             {
-                combatInfo.greenVit = player.GetComponent<PlayerController>().GetVit();
+                combatInfo.greenVit = player.GetComponent<HealthController>().GetCurrentVit();
+                combatInfo.greenMaxVit = player.GetComponent<HealthController>().GetMaxVit();
+                combatInfo.greenAtk = player.GetComponent<HealthController>().GetStartingAttack();
+                combatInfo.greenArmor = player.GetComponent<HealthController>().GetStartingShield();
                 playerColors.Add(Card.CasterColor.Green);
             }
         }
@@ -75,6 +93,65 @@ public class InformationController : MonoBehaviour
         if (color == Card.CasterColor.Green)
             return combatInfo.greenVit;
         return 0;
+    }
+
+    public int GetMaxVit(Card.CasterColor color)
+    {
+        if (color == Card.CasterColor.Red)
+            return combatInfo.redMaxVit;
+        if (color == Card.CasterColor.Blue)
+            return combatInfo.blueMaxVit;
+        if (color == Card.CasterColor.Green)
+            return combatInfo.greenMaxVit;
+        return 0;
+    }
+
+    public int GetStartingArmor(Card.CasterColor color)
+    {
+        if (color == Card.CasterColor.Red)
+            return combatInfo.redArmor;
+        if (color == Card.CasterColor.Blue)
+            return combatInfo.blueArmor;
+        if (color == Card.CasterColor.Green)
+            return combatInfo.greenArmor;
+        return 0;
+    }
+
+    public int GetStartingAttack(Card.CasterColor color)
+    {
+        if (color == Card.CasterColor.Red)
+            return combatInfo.redAtk;
+        if (color == Card.CasterColor.Blue)
+            return combatInfo.blueAtk;
+        if (color == Card.CasterColor.Green)
+            return combatInfo.greenAtk;
+        return 0;
+    }
+
+    public void ChangeCombatInfo(int attackChange, int armorChange, int maxVitChange)
+    {
+        combatInfo.redAtk += attackChange;
+        combatInfo.blueAtk += attackChange;
+        combatInfo.greenAtk += attackChange;
+        combatInfo.redArmor += armorChange;
+        combatInfo.blueArmor += armorChange;
+        combatInfo.greenArmor += armorChange;
+        combatInfo.redMaxVit += maxVitChange;
+        combatInfo.blueMaxVit += maxVitChange;
+        combatInfo.greenMaxVit += maxVitChange;
+        combatInfo.redVit += maxVitChange;
+        combatInfo.blueVit += maxVitChange;
+        combatInfo.greenVit += maxVitChange;
+    }
+
+    public CombatInfo GetCombatInfo()
+    {
+        return combatInfo;
+    }
+
+    public void SetCombatInfo(CombatInfo value)
+    {
+        combatInfo = value;
     }
 
     /*

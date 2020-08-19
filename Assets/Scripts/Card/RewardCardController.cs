@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class RewardCardController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnMouseDown()
     {
-        DeckController.deckController.AddCard(GetComponent<CardDisplay>().GetCard());
-        GameController.gameController.LoadMapScene();
+        CollectionController.collectionController.AddRewardsCard(GetComponent<CardDisplay>().GetCard());
+        int deckId = 0;
+        switch (GetComponent<CardDisplay>().GetCard().GetCard().casterColor)
+        {
+            case (Card.CasterColor.Red):
+                deckId = 0;
+                break;
+            case (Card.CasterColor.Blue):
+                deckId = 1;
+                break;
+            case (Card.CasterColor.Green):
+                deckId = 2;
+                break;
+        }
+        RewardsMenuController.rewardsMenu.SetDeckID(deckId);
+
+        RewardsMenuController.rewardsMenu.ReportRewardTaken(0);
+        RewardsMenuController.rewardsMenu.HideRewardCards();
+        RewardsMenuController.rewardsMenu.SetItemsClickable(true);
     }
 }

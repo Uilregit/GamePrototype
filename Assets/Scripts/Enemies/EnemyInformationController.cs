@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Linq;
 
 public class EnemyInformationController : MonoBehaviour
 {
@@ -9,52 +12,261 @@ public class EnemyInformationController : MonoBehaviour
     [SerializeField] private float cardStartingHeight;
     [SerializeField] private float minHeight;
     [SerializeField] private float maxHeight;
+    private IEnumerator displayCardCoroutine;
+
+    //[SerializeField] private Image targetColorIndicator;
+    [SerializeField] private Image intentTypeIndicator;
+    [SerializeField] private Text intentMultiplier;
+    private List<Image> currentIntentTypeIndicators;
+    private List<Text> currentIntentMultipliers;
+    //[SerializeField] private Text intentValueIndicator;
+    [SerializeField] private int[] attackIntentDamageCutoffs;
+    [SerializeField] private Sprite[] attackIntent;
+    [SerializeField] private Sprite blockIntent;
+    [SerializeField] private Sprite buffIntent;
+    [SerializeField] private Sprite debuffIntent;
+    [SerializeField] private Sprite otherIntent;
+
+    private List<Vector2> moveableLocations;
+    private List<Vector2> attackableLocations;
+
     private LineRenderer targetLine;
-    private GameObject[] displayedCards;
+    public GameObject[] displayedCards;
     private GameObject usedCard;
 
     private EnemyController enemyController;
 
+    private DateTime clickedTime;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         enemyController = GetComponent<EnemyController>();
         targetLine = GetComponent<LineRenderer>();
+        moveableLocations = new List<Vector2>();
+        attackableLocations = new List<Vector2>();
+
+        currentIntentTypeIndicators = new List<Image>();
+        currentIntentMultipliers = new List<Text>();
+        for (int i = 0; i < enemyController.attacksPerTurn; i++)
+        {
+            Image im = Instantiate(intentTypeIndicator);
+            Text tx = Instantiate(intentMultiplier);
+
+            currentIntentTypeIndicators.Add(im);
+            currentIntentTypeIndicators[i].transform.SetParent(transform);
+            currentIntentMultipliers.Add(tx);
+            currentIntentMultipliers[i].transform.SetParent(transform);
+            currentIntentMultipliers[i].enabled = true;
+
+            if (enemyController.attacksPerTurn % 2 == 0)
+            {
+                currentIntentTypeIndicators[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0.5f);  //Even
+                currentIntentMultipliers[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0.5f) + new Vector2(0.3f, -0.1f);
+            }
+            else
+            {
+                currentIntentTypeIndicators[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0.5f);  //Odd
+                currentIntentMultipliers[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0.5f) + new Vector2(0.3f, -0.1f);
+            }
+        }
+
         DrawCards();
     }
 
     //Create attack and move range and Display cards
     private void OnMouseDown()
     {
-        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
-        TileCreator.tileCreator.CreateTiles(this.gameObject, transform.position, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, enemyController.moveRangeColor, new string[] { "Player", "Blockade" }, 0);
-        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(0);
-        foreach (Vector2 position in movePositions)
+        clickedTime = DateTime.Now;
+
+        CreateRangeIndicators();
+
+        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
+            obj.GetComponent<HealthController>().ShowHealthBar();
+
+        displayCardCoroutine = ShowCards();
+        StartCoroutine(displayCardCoroutine);
+    }
+
+    private void CreateRangeIndicators(bool visible = true)
+    {
+        Color moveRangeColor = enemyController.moveRangeColor;
+        Color attackRangeColor = enemyController.attackRangeColor;
+
+        if (!visible)
         {
-            TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.attackRange, enemyController.attackRangeColor, new string[] { "" }, 1);
-            TileCreator.tileCreator.CreateTiles(this.gameObject, transform.position, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, enemyController.moveRangeColor, new string[] { "Player", "Blockade" }, 1);
+            moveRangeColor = Color.clear;
+            attackRangeColor = Color.clear;
         }
-        ShowCards();
+
+        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+        foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, new string[] { "Player", "Blockade" }, 1);
+        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
+        TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
+
+        foreach (Vector2 vec in movePositions)
+        {
+            int counter = 0;
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, vec, new string[] { "Enemy" }, GetComponent<HealthController>().GetOccupiedSpaces(), GetComponent<HealthController>().size);
+            foreach (Vector2 loc in path)
+            {
+                if (counter > enemyController.moveRange + bonusMoveRange)
+                    break;
+                List<Vector2> v = new List<Vector2>();
+                foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                    v.Add(loc + space);
+
+                List<GameObject> colissions = GridController.gridController.GetObjectAtLocation(v, new string[] { "Player", "Blockade" });
+                if (colissions.Count == 0)
+                    foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, loc + space, Card.CastShape.Circle, 0, moveRangeColor, new string[] { "None" }, 1);
+                counter += 1;
+            }
+        }
+
+        movePositions = TileCreator.tileCreator.GetTilePositions(1);
+        TileCreator.tileCreator.RefreshTiles(1);
+
+        if (displayedCards[0].GetComponent<CardController>().GetCard().castType == Card.CastType.AoE)
+            foreach (Vector2 position in movePositions)
+                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, displayedCards[0].GetComponent<CardController>().GetCard().radius, attackRangeColor, new string[] { "" }, 2);
+        else if (enemyController.attackRange > 0)
+            foreach (Vector2 position in movePositions)
+                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.attackRange, attackRangeColor, new string[] { "" }, 2);
+
+        moveableLocations = movePositions;
+        attackableLocations = TileCreator.tileCreator.GetTilePositions(2);
+
+        if (!visible)
+        {
+            TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
+            TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        }
+
+    }
+    /*
+
+    //Show intent and set the card
+    public void ShowIntent()
+    {
+        CreateRangeIndicators(false); //Refresh the attackable and moveable locations
+        RefreshIntentColors();
+        RefreshIntentImage();
+    }
+    */
+
+    public void RefreshIntentImage()
+    {
+        for (int i = 0; i < enemyController.attacksPerTurn; i++)
+        {
+            CardController card = displayedCards[i].GetComponent<CardController>();
+            switch (card.GetCard().indicatorType)
+            {
+                case Card.IndicatorType.Attack:
+                    int attackValue = card.GetSimulatedTotalAttackValue(i);
+                    currentIntentTypeIndicators[i].sprite = attackIntent[attackIntentDamageCutoffs.Length - 1];     //Default to the largest attack possible
+                    for (int j = 0; j < attackIntentDamageCutoffs.Length; j++)
+                        if (attackValue <= attackIntentDamageCutoffs[j])
+                        {
+                            currentIntentTypeIndicators[i].sprite = attackIntent[j];                            //If attack value is between specified range, use appropriate attack image
+                            break;
+                        }
+                    break;
+                case Card.IndicatorType.Guard:
+                    currentIntentTypeIndicators[i].sprite = blockIntent;
+                    break;
+                case Card.IndicatorType.Buff:
+                    currentIntentTypeIndicators[i].sprite = buffIntent;
+                    break;
+                case Card.IndicatorType.Debuff:
+                    currentIntentTypeIndicators[i].sprite = debuffIntent;
+                    break;
+                default:
+                    currentIntentTypeIndicators[i].sprite = otherIntent;
+                    break;
+            }
+            currentIntentMultipliers[i].text = card.GetCard().indicatorMultiplier;
+        }
+    }
+
+    //Refresh intent without having to call with card. Used for healthcontroller forced movement to update target color
+    public void RefreshIntent()
+    {
+        CreateRangeIndicators(false); //Refresh the attackable and moveable locations
+        RefreshIntentColors();
+        RefreshIntentImage();
+    }
+
+    //Refresh the colors of the intent to reflect the target's color
+    private void RefreshIntentColors()
+    {
+        for (int i = 0; i < enemyController.attacksPerTurn; i++)
+        {
+            Color intentColor = Color.white;
+            Vector2 targetLocation = enemyController.desiredTarget[i].transform.position;
+
+            try
+            {
+                intentColor = enemyController.desiredTarget[i].GetComponent<EnemyController>().moveRangeColor * 1.5f; //Brighten by 50% to ensure visibility when put against the stats texts from enemies above
+            }
+            catch
+            {
+                intentColor = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveRangeIndicatorColor * 1.5f;
+                targetLocation = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveShadow.transform.position;
+            }
+
+            if (!attackableLocations.Contains(new Vector2(Mathf.Round(targetLocation.x), Mathf.Round(targetLocation.y))) && enemyController.desiredTarget[i] != this.gameObject) //If target is self, always highlight
+                intentColor *= 0.5f;
+
+            currentIntentTypeIndicators[i].color = intentColor;
+        }
+    }
+
+    public void HideIntent()
+    {
+        for (int i = 0; i < enemyController.attacksPerTurn; i++)
+        {
+            currentIntentTypeIndicators[i].color = new Color(0, 0, 0, 0);
+            currentIntentMultipliers[i].text = "";
+        }
+
     }
 
     //Destroy attack and move range
-    private void OnMouseUp()
+    public void OnMouseUp()
     {
+        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
+            obj.GetComponent<HealthController>().HideHealthBar();
+
         TileCreator.tileCreator.DestryTiles(this.gameObject);
+        if (displayCardCoroutine != null)
+            StopCoroutine(displayCardCoroutine);
         HideCards();
-        HideCards();
+
+        if ((DateTime.Now - clickedTime).TotalSeconds < 0.2)
+        {
+            HealthController hlth = GetComponent<HealthController>();
+            List<CardController> cards = new List<CardController>();
+            cards.AddRange(enemyController.GetCard());
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.Show();
+        }
     }
 
     private void DrawCards()
     {
-        displayedCards = new GameObject[enemyController.attackSquence.Count];
+        int numCards = GetComponent<EnemyController>().attacksPerTurn;
+        //int numCards = enemyController.attackSequence.Count;
+        displayedCards = new GameObject[numCards];
+
         //Odd number of cards
-        if (enemyController.attackSquence.Count % 2 == 1)
+        if (numCards % 2 == 1)
         {
-            for (int i = 0; i < enemyController.attackSquence.Count; i++)
+            for (int i = 0; i < numCards; i++)
             {
                 //Place card evenly spaced centered around the middle
-                float cardLocationX = transform.position.x + (i - enemyController.attackSquence.Count / 2) * cardSpacing;
+                float cardLocationX = transform.position.x + (i - numCards / 2) * cardSpacing;
                 //Place the card between an acceptable range to be on the oppopsite vertical side of the caster
                 float cardLocationY = Mathf.Clamp(transform.position.y + Mathf.Sign(transform.position.y - 1) * -1 * cardStartingHeight, minHeight, maxHeight);
 
@@ -63,16 +275,17 @@ public class EnemyInformationController : MonoBehaviour
                 displayedCards[i] = Instantiate(enemyDisplayCard);
                 displayedCards[i].transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
                 displayedCards[i].transform.position = cardLocation;
-                displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSquence[i]);
+                displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
+                displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSequence[i]);
             }
         }
         //Even number of cards
         else
         {
-            for (int i = 0; i < enemyController.attackSquence.Count; i++)
+            for (int i = 0; i < numCards; i++)
             {
                 //Place card evenly spaced centered around the middle
-                float cardLocationX = transform.position.x + (i - enemyController.attackSquence.Count / 2 + 0.5f) * cardSpacing;
+                float cardLocationX = transform.position.x + (i - numCards / 2 + 0.5f) * cardSpacing;
                 //Place the card between an acceptable range to be on the oppopsite vertical side of the caster
                 float cardLocationY = Mathf.Clamp(transform.position.y + Mathf.Sign(transform.position.y - 1) * -1 * cardStartingHeight, minHeight, maxHeight);
 
@@ -81,10 +294,23 @@ public class EnemyInformationController : MonoBehaviour
                 displayedCards[i] = Instantiate(enemyDisplayCard);
                 displayedCards[i].transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
                 displayedCards[i].transform.position = cardLocation;
-                displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSquence[i]);
+                displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
+                displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSequence[i]);
             }
         }
         HideCards();
+    }
+
+    public void SetCards()
+    {
+        List<CardController> cards = enemyController.GetCard();
+        for (int i = 0; i < cards.Count; i++)
+        {
+            displayedCards[i].GetComponent<CardController>().SetCard(cards[i].GetCard());
+            displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
+            displayedCards[i].GetComponent<CardDisplay>().SetCard(cards[i]);
+            displayedCards[i].GetComponent<CardEffectsController>().SetCard(cards[i]);
+        }
     }
 
     private void HideCards()
@@ -93,15 +319,19 @@ public class EnemyInformationController : MonoBehaviour
             card.GetComponent<CardDisplay>().Hide();
     }
 
-    private void ShowCards()
+    private IEnumerator ShowCards()
     {
-        foreach (GameObject card in displayedCards)
-            card.GetComponent<CardDisplay>().Show();
+        yield return new WaitForSeconds(TimeController.time.timeTillCardDisplay * TimeController.time.timerMultiplier);
+        for (int i = 0; i < displayedCards.Length; i++)
+        {
+            displayedCards[i].GetComponent<CardDisplay>().Show();
+            displayedCards[i].GetComponent<LineRenderer>().enabled = false;
+        }
     }
 
-    public void TriggerCard(int cardIndex, GameObject target)
+    public IEnumerator TriggerCard(int cardIndex, List<Vector2> targets)
     {
-        displayedCards[cardIndex].GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, target.transform.position);
+        yield return StartCoroutine(displayedCards[cardIndex].GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, targets));
     }
 
     public SimHealthController SimulateTriggerCard(int cardIndex, GameObject target, SimHealthController simH)
@@ -109,36 +339,96 @@ public class EnemyInformationController : MonoBehaviour
         return displayedCards[cardIndex].GetComponent<CardEffectsController>().SimulateTriggerEffect(this.gameObject, target.transform.position, simH);
     }
 
-    public void ShowUsedCard(Card card, GameObject target)
+    public void ShowUsedCard(CardController card, Vector2 target)
     {
         //Place card to the opposite horrizontal side of the target from the caster
-        float cardLocationX = transform.position.x + (cardSpacing / 2 + 0.5f) * Mathf.Sign(transform.position.x - target.transform.position.x);
+        float cardLocationX = transform.position.x + (cardSpacing / 2 + 0.5f) * Mathf.Sign(transform.position.x - target.x);
+        cardLocationX = Mathf.Clamp(cardLocationX, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
         //Place the card at the caster height between an acceptable range
         float cardLocationY = Mathf.Clamp(transform.position.y, minHeight, maxHeight);
-
         Vector2 cardLocation = new Vector2(cardLocationX, cardLocationY);
+        if (cardLocationX != transform.position.x + (cardSpacing / 2 + 0.5f) * Mathf.Sign(transform.position.x - target.x))
+        {
+            cardLocationY = transform.position.y + (cardSpacing / 2 + 0.5f) * Mathf.Sign(transform.position.y - target.y) * 1.3f;
+            cardLocation = new Vector2(transform.position.x, cardLocationY);
+        }
 
         usedCard = Instantiate(enemyDisplayCard);
         usedCard.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         usedCard.transform.position = cardLocation;
-        usedCard.GetComponent<CardController>().SetCard(card);
+        card.SetCaster(this.gameObject);
+        usedCard.GetComponent<CardController>().SetCaster(this.gameObject);
+        usedCard.GetComponent<CardController>().SetCard(card.GetCard());
+
+        if (card.GetCard().castType == Card.CastType.AoE)
+            TileCreator.tileCreator.CreateTiles(this.gameObject, transform.position, Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
     }
 
     public void DestroyUsedCard()
     {
         HideTargetLine();
+        TileCreator.tileCreator.DestryTiles(this.gameObject, 0);
         Destroy(usedCard);
     }
 
-    public void ShowTargetLine(GameObject target)
+    public void ShowTargetLine(Vector2 target)
     {
         targetLine.SetPosition(0, transform.position);
-        targetLine.SetPosition(1, target.transform.position);
+        targetLine.SetPosition(1, target);
         targetLine.enabled = true;
     }
 
     private void HideTargetLine()
     {
         targetLine.enabled = false;
+    }
+
+    //Gets a list of all gameobjects that this enemy can attack this turn
+    public List<GameObject> GetAttackableTargets(string[] tags)
+    {
+        //Gets the moverange of this enemy ignoring all collisions
+        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+        foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, Color.clear, new string[] { "Player", "Enemy", "Blockade" }, 2);
+        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(2);
+        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+
+        //Get the locations of all points that this enemy can move to assuming no enemy in the way
+        // ~ probably can remove by taking out Enemy in the avoid tags in line 333 above
+        foreach (Vector2 vec in movePositions)
+        {
+            int counter = 0;
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, vec, new string[] { "Enemy" }, GetComponent<HealthController>().GetOccupiedSpaces(), GetComponent<HealthController>().size);
+            foreach (Vector2 loc in path)
+            {
+                if (counter > enemyController.moveRange + bonusMoveRange)
+                    break;
+                List<Vector2> v = new List<Vector2>();
+                foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                    v.Add(loc + space);
+
+                List<GameObject> colissions = GridController.gridController.GetObjectAtLocation(v, new string[] { "Player", "Blockade" });
+                if (colissions.Count == 0)
+                    foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, loc + space, Card.CastShape.Circle, 0, Color.clear, new string[] { "None" }, 2);
+                counter += 1;
+            }
+        }
+
+        movePositions = TileCreator.tileCreator.GetTilePositions(2);
+        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+
+        //Get the locations of all attack points from all moveable locations
+        if (displayedCards[0].GetComponent<CardController>().GetCard().castType == Card.CastType.AoE)
+            foreach (Vector2 position in movePositions)
+                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, displayedCards[0].GetComponent<CardController>().GetCard().radius, Color.clear, new string[] { "" }, 2);
+        else if (enemyController.attackRange > 0)
+            foreach (Vector2 position in movePositions)
+                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.attackRange, Color.yellow, new string[] { "" }, 2);
+
+        List<Vector2> attackablePositions = TileCreator.tileCreator.GetTilePositions(2);
+        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+
+        return GridController.gridController.GetObjectAtLocation(attackablePositions, tags);
     }
 }

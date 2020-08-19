@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class GetMissingHealth : Effect
 {
-    public override void Process(GameObject caster, CardEffectsController effectController, GameObject target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        HealthController targetHealth = target.GetComponent<HealthController>();
-        effectController.GetCard().SetTempEffectValue(targetHealth.GetCurrentVit() - targetHealth.GetMaxVit());
+        foreach (GameObject targ in target)
+        {
+            HealthController targetHealth = targ.GetComponent<HealthController>();
+            effectController.GetCard().GetCard().SetTempEffectValue(targetHealth.GetCurrentVit() - targetHealth.GetMaxVit());
+        }
+        yield return new WaitForSeconds(0);
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
