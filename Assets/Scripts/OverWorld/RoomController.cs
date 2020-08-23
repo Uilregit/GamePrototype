@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,6 +53,7 @@ public class RoomController : MonoBehaviour
     private Dictionary<int, int> numRoomsPerLevel;
 
     private bool initiated = false;
+    private RoomSetup currentRoomSetup;
     private List<Vector2> previousRoom;
     private List<Vector2> destroyedRooms;
 
@@ -209,6 +211,10 @@ public class RoomController : MonoBehaviour
                 dissapearedLevels.Add(room.GetLocation().y);
             }
         }
+        foreach (SmallRoom room in smallRooms)
+            if (room.GetRoomType() == roomType.combat)
+                room.SetSetup(GetRoomSetup((int)room.GetLocation().y));
+
         foreach (SmallRoom room in removedRooms)                                        //Set the boss room's setup
         {
             room.Hide();
@@ -234,46 +240,49 @@ public class RoomController : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    public RoomSetup GetRoomSetup()
+    public RoomSetup GetRoomSetup(int level)
     {
         if (debug)
             return debugRoom;
 
         RoomSetup setup;
 
-        if (selectedLevel < 3)
+        int index = -1;
+
+        if (level < 3)
         {
-            int index = Random.Range(0, firstRoomSetups.Length);
+            index = Random.Range(0, firstRoomSetups.Length);
             while (index == previousRoomIndex)
                 index = Random.Range(0, firstRoomSetups.Length);
             setup = firstRoomSetups[index];
-            previousRoomIndex = index;
         }
-        else if (selectedLevel < 7)
+        else if (level < 7)
         {
-            if (selectedLevel == 3)
+            if (level == 3)
                 previousRoomIndex = -99999;
-            int index = Random.Range(0, roomSetups.Length);
+            index = Random.Range(0, roomSetups.Length);
             while (index == previousRoomIndex)
                 index = Random.Range(0, roomSetups.Length);
             setup = roomSetups[index];
-            previousRoomIndex = index;
         }
-        else if (selectedLevel < 9)
+        else if (level < 9)
         {
-            if (selectedLevel == 7)
+            if (level == 7)
                 previousRoomIndex = -99999;
-            int index = Random.Range(0, hardRoomSetups.Length);
+            index = Random.Range(0, hardRoomSetups.Length);
             while (index == previousRoomIndex)
                 index = Random.Range(0, hardRoomSetups.Length);
             setup = hardRoomSetups[index];
-            previousRoomIndex = index;
         }
         else
         {
-            int index = Random.Range(0, bossRoomSetups.Length);
+            index = Random.Range(0, bossRoomSetups.Length);
             setup = bossRoomSetups[index];
+            return setup;
         }
+
+        previousRoomIndex = index;
+
         return setup;
     }
 
@@ -345,5 +354,15 @@ public class RoomController : MonoBehaviour
     public void SetDestroyedRooms(List<Vector2> value)
     {
         destroyedRooms = value;
+    }
+
+    public void SetCurrentRoomSetup(RoomSetup value)
+    {
+        currentRoomSetup = value;
+    }
+
+    public RoomSetup GetCurrentRoomSetup()
+    {
+        return currentRoomSetup;
     }
 }

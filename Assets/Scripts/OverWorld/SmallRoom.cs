@@ -20,14 +20,6 @@ public class SmallRoom : MonoBehaviour
 
     private RoomSetup setup;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        //highlight = GetComponent<Outline>();
-        //collider = GetComponent<Collider2D>();
-        setup = ScriptableObject.CreateInstance<RoomSetup>();
-    }
-
     private void OnMouseDown()
     {
         if (selectable)
@@ -38,6 +30,8 @@ public class SmallRoom : MonoBehaviour
 
     public void Enter()
     {
+        RoomController.roomController.SetCurrentRoomSetup(setup);
+
         InformationLogger.infoLogger.SaveGame(false);
 
         RoomController.roomController.selectedLevel = (int)location.y;
@@ -111,10 +105,5 @@ public class SmallRoom : MonoBehaviour
     public void SetDestroyed(bool value)
     {
         destroyed = value;
-    }
-
-    public bool GetDestroyed()
-    {
-        return destroyed;
     }
 }

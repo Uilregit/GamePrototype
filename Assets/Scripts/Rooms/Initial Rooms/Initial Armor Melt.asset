@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: Initial Armor Melt
   m_EditorClassIdentifier: 
-  roomName: 
+  relicReward: 0
+  roomName: initial armor
   enemies:
-  - {fileID: 5254162331261437790, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
-  - {fileID: 5254162331261437790, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
+  - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
+  - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   blockNumber: 8
   playwerSpawnLocations: []

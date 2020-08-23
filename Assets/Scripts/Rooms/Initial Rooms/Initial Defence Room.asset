@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: Initial Defence Room
   m_EditorClassIdentifier: 
-  roomName: 
+  relicReward: 0
+  roomName: initial defence
   enemies:
   - {fileID: 8004321289452204103, guid: 1a933e97b1c5e4e4988c9335722f8da4, type: 3}
   blockNumber: 3

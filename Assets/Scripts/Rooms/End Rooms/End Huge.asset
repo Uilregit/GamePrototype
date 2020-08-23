@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: End Huge
   m_EditorClassIdentifier: 
-  roomName: 
+  relicReward: 0
+  roomName: End Huge
   enemies:
-  - {fileID: 5254162331261437790, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
-  - {fileID: 5254162331261437790, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
+  - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
+  - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   - {fileID: 7954930865912147755, guid: ddf1fd5b7fee819448a0a9630f476808, type: 3}
   blockNumber: 0
   playwerSpawnLocations: []

@@ -18,6 +18,7 @@ public class SaveFile
     public string patchID;
 
     public int level;
+    //public int roomRandomizedIndex;
     public float[] previousRoomsX;
     public float[] previousRoomsY;
     public float[] destroyedRoomsX;
@@ -55,6 +56,7 @@ public class InformationLogger : MonoBehaviour
     public string gameID;
     public Text versionText;
     public Text seedText;
+    public int roomRandomizedIndex = -1;
 
     private bool loadGameOnLevelLoad = false;
     private int roomControllerRoomLevel;
@@ -270,6 +272,7 @@ public class InformationLogger : MonoBehaviour
             saveFile.patchID = patchID;
 
             saveFile.level = RoomController.roomController.selectedLevel;
+            //saveFile.roomRandomizedIndex = RoomController.roomController.GetRandomizedRoomIndex();
 
             List<Vector2> previousRoom = RoomController.roomController.GetPreviousRoom();
             float[] previousRoomX = new float[previousRoom.Count];
@@ -363,6 +366,7 @@ public class InformationLogger : MonoBehaviour
             gameID = saveFile.gameID;
 
             RoomController.roomController.selectedLevel = saveFile.level;
+            //roomRandomizedIndex = saveFile.roomRandomizedIndex;
 
             List<Vector2> previousRoom = new List<Vector2>();
             for (int i = 0; i < saveFile.previousRoomsX.Length; i++)

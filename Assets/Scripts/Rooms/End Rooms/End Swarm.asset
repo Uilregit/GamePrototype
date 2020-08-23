@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: End Swarm
   m_EditorClassIdentifier: 
-  roomName: 
+  relicReward: 0
+  roomName: End Swarm
   enemies:
   - {fileID: 6758998930905204883, guid: 78513c4c8d6a341429c199b8062184bd, type: 3}
   - {fileID: 6758998930905204883, guid: 78513c4c8d6a341429c199b8062184bd, type: 3}

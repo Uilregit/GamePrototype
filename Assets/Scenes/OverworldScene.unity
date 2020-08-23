@@ -2071,6 +2071,7 @@ MonoBehaviour:
   gameID: 
   versionText: {fileID: 0}
   seedText: {fileID: 0}
+  roomRandomizedIndex: -1
 --- !u!4 &350727684
 Transform:
   m_ObjectHideFlags: 0

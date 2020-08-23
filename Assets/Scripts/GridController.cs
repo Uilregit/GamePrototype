@@ -57,6 +57,13 @@ public class GridController : MonoBehaviour
 
         objects[xLoc + xOffset, yLoc + yOffset].Add(obj);
 
+        if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1 && objects[xLoc + xOffset, yLoc + yOffset].Any(x => x.tag == "Player"))
+            foreach (GameObject o in objects[xLoc + xOffset, yLoc + yOffset])
+                if (o.tag == "Player")
+                    o.GetComponent<Collider2D>().enabled = true;
+                else
+                    o.GetComponent<Collider2D>().enabled = false;
+
         /*
         if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
         {
@@ -82,6 +89,10 @@ public class GridController : MonoBehaviour
         int yLoc = Mathf.RoundToInt(location.y);
 
         objects[xLoc + xOffset, yLoc + yOffset].Remove(obj);
+
+        if (obj.tag == "Player" && objects[xLoc + xOffset, yLoc + yOffset].Count > 0)
+            foreach (GameObject o in objects[xLoc + xOffset, yLoc + yOffset])
+                o.GetComponent<Collider2D>().enabled = true;
     }
 
     //Return the object at the grid location. If nothing, returns null

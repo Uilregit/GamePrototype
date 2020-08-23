@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: Initial Space Deny Room
   m_EditorClassIdentifier: 
-  roomName: 
+  relicReward: 0
+  roomName: initial space deny
   enemies:
   - {fileID: 5347397629899767868, guid: 08ee67860e59dfa4bad1e1fd07becf22, type: 3}
   - {fileID: 5347397629899767868, guid: 08ee67860e59dfa4bad1e1fd07becf22, type: 3}

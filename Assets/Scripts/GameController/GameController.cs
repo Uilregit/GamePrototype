@@ -63,14 +63,16 @@ public class GameController : MonoBehaviour
 
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
-        GridController.gridController.DebugGrid();
+        if (RoomController.roomController.debug)
+            GridController.gridController.DebugGrid();
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart);
     }
 
     public void RandomizeRoom()
     {
-        setup = RoomController.roomController.GetRoomSetup();
+        setup = RoomController.roomController.GetCurrentRoomSetup();
+        Debug.Log(setup);
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> enemies = new List<GameObject>();

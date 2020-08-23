@@ -474,24 +474,97 @@
  * -- Bugs --
  * Fixed relics causing infinite loops on trigger
  * Fixed Shop and Reward cards from being affected by mana changing effects during combat
+ * Fixed combat rooms not remembering setup on load
  * 
  * --------------------------------------------------------------------------------------------------
- * Explore more move on attack and defend options
- * Add water/pits
- * Add terrain like traps and fires and events (falling rocks)
- * Think about preventing long term stalling
- * 
- * Add Mana Overflowing. 2 energy gain 2 additional mana
- * Add more support for playing lots of cards per turn in uncommon
- * More support for the piercing damage archytype
- * 
- * Add challenge modes: 10 health, etc
- * 
+
  * -- To dos --
- * Fix multi attack cards merging their attack numbers (feature?)
+ * bugs:
+ * Taunts should force self effects to apply to taunted target instead
+ * Taunts should change cast range to at least 1
+ * 
  * add options menu
  *      animation speeds
  * Add UI for key words explanation of cards
+ * 
+ * relic for permanent move range buff by 1
+ * 
+ * Fix multi attack cards merging their attack numbers (feature?)
+
+ * Add starting relic bonus to be only if last run ended above level 5, otherwise get a tiny stat boost instead (1 armor or 3 health)
+ * Have a bigger visual effect for recovering from broken
+ * 
+ * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
+ *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
+ *      retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
+ * 
+ * #####################
+ * ####### 0.4.4 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * 
+ * -- System --
+ * 
+ * -- UI --
+ * 
+ * -- Bugs --
+ * 
+ * 
+ * Add the other 3 colors
+ * 
+ * Add more support for playing lots of cards per turn in uncommon
+ * More support for the piercing damage archytype
+ * Add water/pits
+ * Add terrain like traps and fires and events (falling rocks)
+ * Think about preventing long term stalling
+ * Add more bosses
+ * Add elite minibosses (have hearthstone solo adventure style passive effects)
+ *      Huge stats, duplicate (split stats equally across the two spawns), attack, duplicate, attack
+ * tune all enemy values
+ * 
+ * #####################
+ * ####### 0.4.5 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * 
+ * -- System --
+ * 
+ * -- UI --
+ * 
+ * -- Bugs --
+ * 
+ * Uncommon: powerful but more complex, requires more setup to get the most out of them
+ * Add uncommon cards
+ *      Add Mana Overflowing. 2 energy gain 2 additional mana
+ *      Rupture: target looses 1 armor per each space knockbacked this turn
+ * 
+ * Add uncommon relics
+ *      relic for doubling passive gold and moving overkill gold to 0
+ *      relic for doubling overkill gold and moving passive gold to 0
+ * 
+ * add control cards to basic set
+ * 
+ * #####################
+ * ####### 0.4.6 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * 
+ * -- System --
+ * 
+ * -- UI --
+ * 
+ * -- Bugs --
+ * 
+ * solidify common cards, add uncommon cards
+ * 
+ * Add challenge modes: 10 health, etc
+ * 
  * Add permanent scoring save. Score translates to team levels at the end of each run
  *      unlock uncommon cards
  *      unlock more common relics
@@ -507,37 +580,6 @@
  *      give the player the option to unlock 1 card in their cardopedia to use in the customize card slot
  *          commons are cheap, uncommons are expensive, legendaries are INSANELY expensive/impossible? (potential monitization option)
  *          gold varieties have a discount
- * Add starting relic bonus to be only if last run reach the boss
- * It looks like sometimes you can cheat out move range after using a card
- * Have a bigger visual effect for recovering from broken
- * 
- * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
- *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
- *      retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
- *  
- * bugs:
- * make rewards cards unaffected by cost changing buffs/debuffs
- * Taunts should force self effects to apply to taunted target instead
- * Taunts should change cast range to at least 1
- * 
- * -- future --
- * relic for doubling passive gold and moving overkill gold to 0
- * relic for doubling overkill gold and moving passive gold to 0
- * Fix character controller causing missing component exception (caused by textmeshpro not allowing a canvas renderer)
- * 
- * #####################
- * ####### 0.4.4 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
  * Add achievements
  *      Take no damage in a boss encounter
  *      Take no damage in a run
@@ -585,42 +627,6 @@
  *      daily quests (do x damage)
  *      
  *      permanent story progression tied to expansions
- *      
- * Add the other 3 colors
- * Add more bosses
- * Add elite minibosses (have hearthstone solo adventure style passive effects)
- *      Huge stats, duplicate (split stats equally across the two spawns), attack, duplicate, attack
- * tune all enemy values
- * 
- * #####################
- * ####### 0.4.5 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * add control cards to basic set
- * 
- * #####################
- * ####### 0.4.6 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * solidify common cards, add uncommon cards
  * 
  * #####################
  * ####### 0.4.7 #######

@@ -30,7 +30,7 @@ MonoBehaviour:
   conditionType: 00000000
   conditionValue: 00000000
   buffType: 00000000
-  effectValue: 00000000
+  effectValue: 64000000
   effectDuration: 00000000
   spawnObject:
   - {fileID: 0}

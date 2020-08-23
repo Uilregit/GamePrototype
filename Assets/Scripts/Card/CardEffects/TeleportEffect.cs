@@ -8,8 +8,10 @@ public class TeleportEffect : Effect
     {
         try
         {
+            GridController.gridController.RemoveFromPosition(caster, caster.transform.position);
             caster.GetComponent<PlayerMoveController>().TeleportTo(target[0]);
             caster.transform.position = target[0];
+            GridController.gridController.ReportPosition(caster, caster.transform.position);
         }
         catch { }
 
