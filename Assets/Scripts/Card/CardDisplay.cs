@@ -213,6 +213,28 @@ public class CardDisplay : MonoBehaviour
         }
         else
         {
+            if (description.text.Contains("<s>"))
+            {
+                string descriptionText = description.text;
+                while (descriptionText.IndexOf("<s>") != -1)
+                {
+                    int s = descriptionText.IndexOf("<s>");
+                    int e = descriptionText.IndexOf("</s>");
+
+                    string attackText = descriptionText.Substring(s, e - s + 4);
+
+                    int percentage = 100;
+                    int.TryParse(descriptionText.Substring(s + 3, descriptionText.IndexOf("%") - s - 3), out percentage);
+
+                    string finalText = "";
+
+                    finalText = attackText.Replace("<s>", "").Replace("</s>", "") + "(" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(card.GetCard().casterColor) * percentage / 100.0f)).ToString() + ")";
+
+                    descriptionText = descriptionText.Replace(attackText, finalText);
+                }
+
+                description.text = descriptionText;
+            }
             description.text = description.text.Replace("<s>", "").Replace("</s>", "");
             int start = description.text.IndexOf("<c>");
             int end = description.text.IndexOf("</c>");

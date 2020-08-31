@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 1
-  description: Deal <s>300% of ATK as</s> damage
+  description: Deal <s>300% of ATK </s> as damage
   art: {fileID: 21300000, guid: a78d6b36a3f23c94c807b77b6cb22c69, type: 3}
   castType: 0
   castShape: 0
@@ -38,5 +38,5 @@ MonoBehaviour:
   - {fileID: 0}
   indicatorType: 0
   targetBehaviour: 10
-  indicatorValue: 
+  indicatorMultiplier: 
   executionPriority: 0

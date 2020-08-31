@@ -110,6 +110,7 @@ public class RoomController : MonoBehaviour
     //Set clickable rooms and set all cooresponding colors
     public void Refresh()
     {
+        Debug.Log(selectedLevel);
         if (previousRoom.Count == 0 && selectedLevel == -1)
         {
             foreach (SmallRoom firstRoom in smallRooms)
@@ -142,7 +143,7 @@ public class RoomController : MonoBehaviour
                         room.SetColor(viableColor);
                 }
             }
-            if (selectedLevel == 8)             //Enable the boss room when viable
+            if (selectedLevel == 7)             //Enable the boss room when viable
                 bossRoom.SetSelectable(true);
             else
                 bossRoom.SetSelectable(false);
@@ -265,7 +266,7 @@ public class RoomController : MonoBehaviour
                 index = Random.Range(0, roomSetups.Length);
             setup = roomSetups[index];
         }
-        else if (level < 9)
+        else if (level < 8)
         {
             if (level == 7)
                 previousRoomIndex = -99999;

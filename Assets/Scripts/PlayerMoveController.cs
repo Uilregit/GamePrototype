@@ -210,6 +210,11 @@ public class PlayerMoveController : MonoBehaviour
         //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
     }
 
+    public void ChangeMoveDistance(int value)
+    {
+        movedDistance += value;
+    }
+
     //Moves the player to the location
     public void MoveTo(Vector2 location)
     {

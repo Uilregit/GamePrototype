@@ -64,8 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVit: 20
-  startingShield: 4
+  maxVit: 15
+  startingShield: 2
   attack: 5
   moveRange: 4
   attackRange: 1
@@ -168,6 +168,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -179,6 +181,7 @@ LineRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -311,11 +314,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58674793945211945}
     m_Modifications:
-    - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7,
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
-      propertyPath: m_Name
-      value: CharacterDisplay
+      propertyPath: m_Size.x
+      value: 1.6666666
       objectReference: {fileID: 0}
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.6666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a503708984915d46bcb7e4b4fb385bb,
+        type: 3}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -371,22 +385,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+    - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
-      propertyPath: m_Size.x
-      value: 1.6666666
+      propertyPath: m_Name
+      value: CharacterDisplay
       objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.6666666
-      objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a503708984915d46bcb7e4b4fb385bb,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
 --- !u!4 &4947195064185923731 stripped

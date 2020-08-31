@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVit: 150
+  maxVit: 100
   startingShield: 5
   attack: 12
   moveRange: 4
@@ -65,6 +65,8 @@ MonoBehaviour:
   shieldAttackValue: 0
   randomStartRange: 0
   attacksPerTurn: 2
+  moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
+  attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
   - {fileID: 11400000, guid: e5dc4f7c4d7747240b62cb41deccbb4f, type: 2}
   - {fileID: 11400000, guid: 4741675b2d144634784788969a0a5224, type: 2}
@@ -76,10 +78,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7a3823d77233c444ab1a6bda34964ef, type: 2}
   - {fileID: 11400000, guid: eab5ae3f38e3ad34d8f2f3b10029ee6b, type: 2}
   - {fileID: 11400000, guid: bcd607155a0e43e4e975884adec5b7d4, type: 2}
-  moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
-  attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
-  attackCardHangTime: 2
-  moveStepTime: 0.5
   moveType: 1
   targetType: 2
   desiredTarget:
@@ -173,6 +171,8 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -184,6 +184,7 @@ LineRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -324,11 +325,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2096784925209648996}
     m_Modifications:
-    - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7,
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
-      propertyPath: m_Name
-      value: CharacterDisplay
+      propertyPath: m_Size.x
+      value: 1.6666666
       objectReference: {fileID: 0}
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.6666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 14b09e44acf84934083f8530a335544e,
+        type: 3}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -384,22 +396,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
+    - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7,
         type: 3}
-      propertyPath: m_Size.x
-      value: 1.6666666
+      propertyPath: m_Name
+      value: CharacterDisplay
       objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.6666666
-      objectReference: {fileID: 0}
-    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 14b09e44acf84934083f8530a335544e,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
 --- !u!4 &5507351293116451947 stripped

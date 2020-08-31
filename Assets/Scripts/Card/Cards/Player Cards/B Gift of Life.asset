@@ -21,8 +21,8 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 1
-  description: Deal <s>50% of ATK as</s> damage to the caster, restore <s>150% of
-    ATK as</s> health to the target
+  description: Deal <s>50% of ATK </s> as damage to the caster, restore <s>150% of
+    ATK </s> as health to the target
   art: {fileID: 21300000, guid: 102925329d7611a4dae92c8fafe2513f, type: 3}
   castType: 0
   castShape: 0

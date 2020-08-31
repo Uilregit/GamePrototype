@@ -445,6 +445,7 @@
  * 
  * -- Enemies --
  * Support now grants +1 moverange instead of +1 armor
+ * Nerfed enemy survivability across the board
  * 
  * -- System --
  * Added passive gold for completing a combat room
@@ -470,6 +471,9 @@
  * Added relic rewards to rewards menus, including descriptions on chosen.
  * Added UI for when a relic triggers
  * Added endgame score page
+ * Added damage number to card displays when it's not dynamic
+ * Adjusted many UI elements to adjust according to screen width
+ * Held card is no longer click or dragable during enemy turn
  * 
  * -- Bugs --
  * Fixed relics causing infinite loops on trigger

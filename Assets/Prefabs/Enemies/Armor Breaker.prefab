@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVit: 25
+  maxVit: 15
   startingShield: 2
   attack: 3
   moveRange: 4

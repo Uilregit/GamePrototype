@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 1
   radius: 2
   casterColor: 1
-  description: <b>AoE</b>|Restore <s>100% of ATK as</s> health to ALL in the radius
+  description: <b>AoE</b>|Restore <s>100% of ATK </s> as health to ALL in the radius
   art: {fileID: 21300000, guid: 5d9f8ae3e37db674ab56cf32e137715f, type: 3}
   castType: 5
   castShape: 0

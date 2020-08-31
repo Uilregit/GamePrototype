@@ -43,10 +43,6 @@ public class LootController : MonoBehaviour
         else                            //Else roll based on rarity distribution
         {
             int roll = Random.Range(0, 100);
-            Debug.Log("----");
-            Debug.Log(Random.seed);
-            Debug.Log(Random.state);
-            Debug.Log(roll);
             if (roll <= rarePercentage)
                 return GetRareCard();
             else

@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rarity: 0
   relicName: Poisoned Blade
-  description: If an enemy only took 1 damage from an non piercing attack, deal 1
-    additional piercing damage
+  description: If an enemy only took 1 damage, deal 1 additional piercing damage
   art: {fileID: -248462843459346478, guid: 7ee450faf52867945afb7125d0ef8a82, type: 3}
   color: {r: 0.15863469, g: 0.5660378, b: 0, a: 1}
   targetType: 0

@@ -127,6 +127,9 @@ public class TurnController : MonoBehaviour
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd);
 
+        if ((object)HandController.handController.GetHeldCard() != null)
+            HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
+
         int manaCardsPlayed = 0;
         int energyCardsPlayed = 0;
         foreach (Card c in cardsPlayedThisTurn)
@@ -173,6 +176,9 @@ public class TurnController : MonoBehaviour
         queuedEnemies = new List<EnemyController>();
 
         cardsPlayedThisTurn = new List<Card>();
+
+        if ((object)HandController.handController.GetHeldCard() != null)
+            HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
 
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);

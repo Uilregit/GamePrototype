@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 1
   radius: 2
   casterColor: 3
-  description: Raise the ATK of all in range by +2 for 2 turns
+  description: Raise the ATK of all allies in range by +2 for 2 turns
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 5
   castShape: 0
@@ -38,5 +38,5 @@ MonoBehaviour:
   - {fileID: 0}
   indicatorType: 2
   targetBehaviour: 12
-  indicatorValue: 
+  indicatorMultiplier: 
   executionPriority: 0

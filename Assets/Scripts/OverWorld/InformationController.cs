@@ -11,9 +11,9 @@ public class CombatInfo
     public int redMaxVit = 0;
     public int blueMaxVit = 0;
     public int greenMaxVit = 0;
-    public int redAtk = 0;
-    public int blueAtk = 0;
-    public int greenAtk = 0;
+    public int redAtk = 6;
+    public int blueAtk = 5;
+    public int greenAtk = 4;
     public int redArmor = 0;
     public int blueArmor = 0;
     public int greenArmor = 0;

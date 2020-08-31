@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 1
-  description: Deal <s>125% of ATK as</s> <b>piercing</b> damage
+  description: Deal <s>125% of ATK </s> as <b>piercing</b> damage
   art: {fileID: 21300000, guid: 86fc5c7321f190e4d8ef822a17c538ef, type: 3}
   castType: 0
   castShape: 0

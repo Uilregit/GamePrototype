@@ -72,7 +72,6 @@ public class GameController : MonoBehaviour
     public void RandomizeRoom()
     {
         setup = RoomController.roomController.GetCurrentRoomSetup();
-        Debug.Log(setup);
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> enemies = new List<GameObject>();

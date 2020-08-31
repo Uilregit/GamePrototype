@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 2
-  description: Deal <s>100% of ATK as</s> damage once for each <b>stacked</b> enemy
+  description: Deal <s>100% of ATK </s> as damage once for each <b>stacked</b> enemy
   art: {fileID: 21300000, guid: 7853a9883ba328f41b77d33f6768df6f, type: 3}
   castType: 0
   castShape: 0

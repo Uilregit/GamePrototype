@@ -556,6 +556,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             try
             {
                 GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
+                GetComponent<PlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
             }
             catch
             {

@@ -21,8 +21,8 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 2
-  description: Deal <s>125% of ATK as</s> damage and pull the target from up to 2
-    spaces away towards you
+  description: Deal <s>125% of ATK </s> as damage and pull the target from up to
+    2 spaces away towards you
   art: {fileID: 21300000, guid: 2e583364e122af141b2647c44b5e6cc5, type: 3}
   castType: 0
   castShape: 1
