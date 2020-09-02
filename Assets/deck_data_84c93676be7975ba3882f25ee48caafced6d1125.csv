@@ -1477,3 +1477,255 @@ deviceID,patchID,gameID,encounterLevel,cardColor,cardName,energyCost,manaCost,ch
 84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,8/24/2020 10:28:53 PM,7,Green,Arrow Storm,0,3,False,False,True
 84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,8/24/2020 10:28:53 PM,7,Green,Arrow Storm,0,3,False,False,True
 84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,8/27/2020 9:12:42 PM,-1,Red,Swing,1,0,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Cure,0,1,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Foresight,0,1,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,0,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Cure,0,1,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Resonance,0,4,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,1,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Fireball,0,3,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Crystallurgy,0,5,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,2,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,3,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Walk,0,0,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Marked for Death,0,0,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Resonance,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Marked for Death,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,4,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Resonance,0,4,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Inspire,0,3,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Inspire,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Blue,Crystallurgy,0,5,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Marked for Death,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,6,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Crystallurgy,0,5,False,True,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Pray,0,4,True,False,False
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Defend,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Swing,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Red,Hunker Down,0,2,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Thunder,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Cure,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Foresight,0,1,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Fireball,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Inspire,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Blue,Pray,0,4,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Marked for Death,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Wind Walk,0,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Wind Strike,1,0,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Arrow Storm,0,3,False,False,True
+84c93676be7975ba3882f25ee48caafced6d1125,0.4.3.2,9/1/2020 8:31:37 PM,7,Green,Arrow Storm,0,3,False,False,True

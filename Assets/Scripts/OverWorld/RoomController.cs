@@ -110,7 +110,6 @@ public class RoomController : MonoBehaviour
     //Set clickable rooms and set all cooresponding colors
     public void Refresh()
     {
-        Debug.Log(selectedLevel);
         if (previousRoom.Count == 0 && selectedLevel == -1)
         {
             foreach (SmallRoom firstRoom in smallRooms)

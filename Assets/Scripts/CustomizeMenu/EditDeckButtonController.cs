@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EditDeckButtonController : MonoBehaviour
 {
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         CameraController.camera.transform.position = new Vector3(7, 0, -10);
     }

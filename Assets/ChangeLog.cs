@@ -479,6 +479,9 @@
  * Fixed relics causing infinite loops on trigger
  * Fixed Shop and Reward cards from being affected by mana changing effects during combat
  * Fixed combat rooms not remembering setup on load
+ * Fixed layer ordering issues
+ * Fixed 0 number of energy cards played relics always triggering
+ * Fixed card display crashing when the card text had multiple '%' characters in it
  * 
  * --------------------------------------------------------------------------------------------------
 

@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   - {fileID: 7954930865912147755, guid: ddf1fd5b7fee819448a0a9630f476808, type: 3}
-  blockNumber: 0
+  blockNumber: 3
   playwerSpawnLocations: []

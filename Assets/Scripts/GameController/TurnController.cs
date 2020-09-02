@@ -109,6 +109,18 @@ public class TurnController : MonoBehaviour
     {
         turnID += 1;
 
+        int manaCardsPlayed = 0;
+        int energyCardsPlayed = 0;
+        foreach (Card c in cardsPlayedThisTurn)
+            if (c.manaCost == 0)
+                energyCardsPlayed += 1;
+            else
+                manaCardsPlayed += 1;
+        if (manaCardsPlayed == 0)
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed);
+        if (energyCardsPlayed == 0)
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed);
+
         cardsPlayedThisTurn = new List<Card>();
 
         yield return StartCoroutine(GridController.gridController.CheckDeath());
@@ -129,18 +141,6 @@ public class TurnController : MonoBehaviour
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
-
-        int manaCardsPlayed = 0;
-        int energyCardsPlayed = 0;
-        foreach (Card c in cardsPlayedThisTurn)
-            if (c.manaCost == 0)
-                energyCardsPlayed += 1;
-            else
-                manaCardsPlayed += 1;
-        if (manaCardsPlayed == 0)
-            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed);
-        if (energyCardsPlayed == 0)
-            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed);
 
         //Enemy turn
         turnText.text = "Enemy Turn";

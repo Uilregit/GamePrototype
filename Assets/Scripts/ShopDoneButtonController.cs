@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class ShopDoneButtonController : MonoBehaviour
 {
     private int deckID;
-    private Vector2 cameraLocation;
+    private Vector3 cameraLocation;
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        cameraLocation = new Vector3(0, 0, -10);
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         ShopController.shop.RecordShopInformation();
         //GameController.gameController.LoadScene("OverworldScene", ShopController.shop.GetBoughtCard(), ShopController.shop.GetLatestDeckID()); //Don't go to deck editing if a card was not bought
@@ -31,7 +32,11 @@ public class ShopDoneButtonController : MonoBehaviour
     {
         CollectionController.collectionController.SetDeck(deckID);
         if (SceneManager.GetActiveScene().name == "OverworldScene")
+        {
             CameraController.camera.transform.position = cameraLocation;
+            Debug.Log(cameraLocation);
+            Debug.Log(CameraController.camera.transform.position);
+        }
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);
     }
