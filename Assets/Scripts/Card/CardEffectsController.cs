@@ -7,6 +7,7 @@ public class CardEffectsController : MonoBehaviour
 {
     private CardController card;
     private Effect[] effects;
+    private Vector2 castLocation;
 
     public void SetCard(CardController info)
     {
@@ -18,6 +19,16 @@ public class CardEffectsController : MonoBehaviour
     public CardController GetCard()
     {
         return card;
+    }
+
+    public void SetCastLocation(Vector2 loc)
+    {
+        castLocation = loc;
+    }
+
+    public Vector2 GetCastLocation()
+    {
+        return castLocation;
     }
 
     public IEnumerator TriggerEffect(GameObject caster, List<Vector2> targets)
@@ -105,6 +116,8 @@ public class CardEffectsController : MonoBehaviour
             }
         }
 
+        caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, caster.GetComponent<HealthController>(), 1));
+
         if (card.GetCard().casterColor != Card.CasterColor.Enemy)
             DeckController.deckController.ReportUsedCard(card);
 
@@ -187,6 +200,24 @@ public class CardEffectsController : MonoBehaviour
                 return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentShield() == 0);
             case Card.ConditionType.TargetNotBroken:
                 return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentShield() > 0);
+            case Card.ConditionType.TargetAttackingCaster:
+                try
+                {
+                    foreach (GameObject targ in GridController.gridController.GetObjectAtLocation(targets))
+                        if (targ.GetComponent<EnemyController>().GetTarget() == caster)
+                            return true;
+                }
+                catch { }
+                return false;
+            case Card.ConditionType.TargetNotAttackingCaster:
+                try
+                {
+                    foreach (GameObject targ in GridController.gridController.GetObjectAtLocation(targets))
+                        if (targ.GetComponent<EnemyController>().GetTarget() == caster)
+                            return false;
+                }
+                catch { }
+                return true;
             case Card.ConditionType.CasterBroken:
                 return caster.GetComponent<HealthController>().GetCurrentShield() == 0;
             case Card.ConditionType.CasterNotBroken:
@@ -205,8 +236,26 @@ public class CardEffectsController : MonoBehaviour
                 int maxshield = 0;
                 foreach (GameObject obj in targs)
                     if (obj.GetComponent<HealthController>().GetShield() > maxshield)
-                        minShield = obj.GetComponent<HealthController>().GetShield();
+                        maxshield = obj.GetComponent<HealthController>().GetShield();
                 return caster.GetComponent<HealthController>().GetShield() < maxshield;
+            case Card.ConditionType.CasterHasBonusATK:
+                return caster.GetComponent<HealthController>().GetBonusAttack() != 0;
+            case Card.ConditionType.CasterHasNoBonusATK:
+                return caster.GetComponent<HealthController>().GetBonusAttack() == 0;
+            case Card.ConditionType.CasterHasHigherATK:
+                targs = GridController.gridController.GetObjectAtLocation(targets);
+                int minATK = 0;
+                foreach (GameObject obj in targs)
+                    if (obj.GetComponent<HealthController>().GetAttack() < minATK)
+                        minATK = obj.GetComponent<HealthController>().GetAttack();
+                return caster.GetComponent<HealthController>().GetAttack() > minATK;
+            case Card.ConditionType.CasterHasLowerATK:
+                targs = GridController.gridController.GetObjectAtLocation(targets);
+                int maxATK = 0;
+                foreach (GameObject obj in targs)
+                    if (obj.GetComponent<HealthController>().GetAttack() > maxATK)
+                        minATK = obj.GetComponent<HealthController>().GetAttack();
+                return caster.GetComponent<HealthController>().GetAttack() < maxATK;
             case Card.ConditionType.Else:
                 return !card.GetCard().GetPreviousConditionTrue();
             default:

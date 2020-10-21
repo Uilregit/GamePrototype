@@ -26,6 +26,8 @@ public class PiercingDamageEffect : Effect
                     damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f);
             }
             totalDamageValue += damageValue;
+            if (damageValue > 0)
+                caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), damageValue));
             targetHealthController.TakePiercingDamage(damageValue, caster.GetComponent<HealthController>());
         }
         yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);

@@ -11,6 +11,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int currentBrokenTurns = -99999;
     private List<Vector2> occupiedSpaces;
 
+    private int castRange = 1;
+    private int bonusCastRange = 0;
     private int maxVit;
     private int currentVit = 0;
     private int currentShield;
@@ -22,10 +24,23 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int bonusShield;
     private int knockBackDamage = 0;
     private int bonusMoveRange = 0;
+    private bool preserveBonusVit = false;
     private int enfeeble = 0;
     private int retaliate = 0;
     private bool stunned = false;
+    private bool silenced = false;
+    private bool disarmed = false;
 
+    private List<int> vitDamageMultipliers;
+    private List<int> shieldDamageMultipliers;
+    private List<int> healingMulitpliers;
+
+    private int energyCostReduction = 0;
+    private int manaCostReduction = 0;
+    private List<int> energyCostCap = new List<int>() { 99999 };
+    private List<int> manaCostCap = new List<int>() { 99999 };
+
+    /*
     private Dictionary<Buff, int> endOfTurnBuffs = new Dictionary<Buff, int>();
     private Dictionary<Buff, int> startOfTurnBuffs = new Dictionary<Buff, int>();
     private Dictionary<Buff, int> onDamageBuffs = new Dictionary<Buff, int>();
@@ -34,6 +49,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private Dictionary<Buff, int> onDamageDebuffs = new Dictionary<Buff, int>();
     private List<Buff> oneTimeBuffs = new List<Buff>(); //AKA permanent buffs
     private List<Buff> oneTimeDebuffs = new List<Buff>();
+    */
 
     public CharacterDisplayController charDisplay;
     /*
@@ -46,6 +62,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     private GameObject creator;
     private AbilitiesController abilitiesController;
+    public BuffController buffController;
 
     private bool wasBroken = false;
 
@@ -54,7 +71,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //###################################################################################################
     public void Awake()
     {
-        ResetBuffIcons();
+        ResetBuffIcons(new List<Buff>());
+
         occupiedSpaces = new List<Vector2>();
 
         if (size == 1)
@@ -69,7 +87,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             occupiedSpaces.Add(new Vector2(0.5f, -0.5f));
         }
 
+        vitDamageMultipliers = new List<int>();
+        shieldDamageMultipliers = new List<int>();
+        healingMulitpliers = new List<int>();
+
         abilitiesController = GetComponent<AbilitiesController>();
+        buffController = GetComponent<BuffController>();
     }
 
     public List<Vector2> GetOccupiedSpaces()
@@ -101,9 +124,25 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             int gotStartingArmor = InformationController.infoController.GetStartingArmor(color);
             startingShield = gotStartingArmor;
+
             SetCurrentShield(startingShield, false);
             ResetShieldText(gotStartingArmor);
         }
+    }
+
+    public void SetCastRange(int value)
+    {
+        castRange = value;
+    }
+
+    public int GetTotalCastRange()
+    {
+        return castRange + bonusCastRange;
+    }
+
+    public void SetBonusCastRange(int value)
+    {
+        bonusCastRange += value;
     }
 
     public void SetMaxVit(int newValue)
@@ -130,6 +169,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetCurrentVit()
     {
         return currentVit;
+    }
+
+    public int GetBonusVit()
+    {
+        return bonusVit;
     }
 
     public int GetCurrentAttack()
@@ -190,6 +234,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         bonusAttack += newValue;
         ResetAttackText(GetAttack());
+        try
+        {
+            GetComponent<EnemyInformationController>().RefreshIntent();
+        }
+        catch { };
         //HandController.handController.ResetCardDisplays();
     }
 
@@ -218,6 +267,56 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return bonusShield;
     }
 
+    public void SetManaCostCap(int value)
+    {
+        manaCostCap.Add(value);
+    }
+
+    public void RemoveManaCostCap(int value)
+    {
+        manaCostCap.Remove(value);
+    }
+
+    public int GetManaCostCap()
+    {
+        return manaCostCap.Min();
+    }
+
+    public void SetEnergyCostCap(int value)
+    {
+        energyCostCap.Add(value);
+    }
+
+    public void RemoveEnergyCostCap(int value)
+    {
+        energyCostCap.Remove(value);
+    }
+
+    public int GetEnergyCostCap()
+    {
+        return energyCostCap.Min();
+    }
+
+    public void SetManaCostReduction (int value)
+    {
+        manaCostReduction += value;
+    }
+
+    public int GetManaCostReduction()
+    {
+        return manaCostReduction;
+    }
+
+    public void SetEnergyCostReduction (int value)
+    {
+        energyCostReduction += value;
+    }
+
+    public int GetEnergyCostReduction()
+    {
+        return energyCostReduction;
+    }
+
     public GameObject CheckDeath()
     {
         if (currentVit <= 0)
@@ -244,7 +343,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
 
         abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnDeath);
-        //Destroy(this.gameObject);
+        //Destruction of the object in Gridcontroller.CheckDeaht();
     }
 
     public int GetVit()
@@ -265,11 +364,47 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetStunned(bool value)
     {
         stunned = value;
+        if (stunned)
+            try
+            {
+                GetComponent<EnemyInformationController>().HideIntent();
+            }
+            catch { }
     }
 
     public bool GetStunned()
     {
         return stunned;
+    }
+
+    public void SetSilenced(bool state)
+    {
+        silenced = state;
+    }
+
+    public bool GetSilenced()
+    {
+        return silenced;
+    }
+
+    public void SetPreserveBonusVit(bool state)
+    {
+        preserveBonusVit = state;
+    }
+
+    public bool GetPreserveBonusVit()
+    {
+        return preserveBonusVit;
+    }
+
+    public void SetDisarmed(bool state)
+    {
+        disarmed = state;
+    }
+
+    public bool GetDisarmed()
+    {
+        return disarmed;
     }
 
     public void SetEnfeeble(int value)
@@ -332,16 +467,14 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             int multiplier = 1;
             if (GetShield() == 0)
                 multiplier = 2;
-            if (onDamageDebuffs.Keys.Any(x => x is DoubleDamageDebuff))
-                multiplier *= 2;
+            foreach (int i in vitDamageMultipliers)
+            {
+                multiplier *= i;
+                if (i == 0)
+                    charDisplay.healthBar.SetStatusText("Immune", Color.yellow);
+            }
 
             int damage = Mathf.Max((value * multiplier - GetShield()), 1);
-
-            if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
-            {
-                damage = 0;
-                charDisplay.healthBar.SetStatusText("Immune", Color.yellow);
-            }
 
             if (damage != 0)
             {
@@ -376,10 +509,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         int multiplier = 1;
         if (currentShield == 0)
             multiplier *= 2;
-        if (onDamageDebuffs.Keys.Any(x => x is DoubleDamageDebuff))
-            multiplier *= 2;
-        if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
-            multiplier *= 0;
+        foreach (int i in vitDamageMultipliers)
+            multiplier *= i;
         return Mathf.Max((value * multiplier - GetShield()), 1);
     }
 
@@ -397,14 +528,17 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public void TakeShieldDamage(int value, HealthController attacker)
     {
-        int damage = 0;
+        int damage = value;
         if (value > 0)
-            if (startOfTurnBuffs.Keys.Any(x => x is ProtectBuff))
-                damage = 0;
-            else
+        {
+            foreach (int i in shieldDamageMultipliers)
+            {
+                Debug.Log(i);
+                damage *= i;
+            }
+            if (damage > 0)
                 damage = value + enfeeble;
-        else
-            damage = value;
+        }
 
         ShowShieldDamageNumber(damage);
 
@@ -430,7 +564,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
                 try
                 {
-                    GetComponent<EnemyController>();
+                    GetComponent<EnemyInformationController>().RefreshIntent();
                     RelicController.relic.OnNotify(this, Relic.NotificationType.OnEnemyBroken);
                     ScoreController.score.UpdateEnemiesBroken();
                 }
@@ -449,10 +583,14 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetSimulatedShieldDamage(int value)
     {
         if (value > 0)
-            if (startOfTurnBuffs.Keys.Any(x => x is ProtectBuff))
+        {
+            foreach (int i in shieldDamageMultipliers)
+                value *= i;
+            if (value == 0)
                 return 0;
             else
                 return Mathf.Min(value + enfeeble, currentShield);
+        }
         return value;
     }
 
@@ -472,15 +610,20 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (value > 0)
         {
             damage = value;
-            if (onDamageBuffs.Keys.Any(x => x is BarrierBuff))
-                damage = 0;
+            foreach (int i in vitDamageMultipliers)
+                damage *= i;
         }
         else
         {
             int oldcurrentVit = currentVit;
-            currentVit = Mathf.Min(maxVit, currentVit + bonusVit - value);          //Always takes at least 1 damage;
-            bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - value - maxVit);     //Excess healing is moved to bonusVit
-            damage = value;                                                         //Enfeeble does not amplify healing, and can't heal more than maxVit
+            damage = value;
+            foreach (int i in healingMulitpliers)
+                damage *= i;
+            currentVit = Mathf.Min(maxVit, currentVit + bonusVit - damage);
+            bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
+
+            if (damage < 0)
+                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage));
         }
 
         if (damage > 0)
@@ -550,6 +693,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             foreach (Vector2 loc in occupiedSpaces)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
             transform.position = knockedToCenter;
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
             foreach (Vector2 loc in aboutToBePositions)
                 GridController.gridController.ReportPosition(this.gameObject, loc);
 
@@ -604,6 +748,37 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return bonusMoveRange;
     }
 
+    public void AddVitDamageMultiplier(int i)
+    {
+        vitDamageMultipliers.Add(i);
+    }
+
+    public void AddShieldDamageMultiplier(int i)
+    {
+        shieldDamageMultipliers.Add(i);
+    }
+
+    public void RemoveVitDamageMultiplier(int i)
+    {
+        vitDamageMultipliers.Remove(i);
+    }
+
+    public void RemoveShieldDamageMultiplier(int i)
+    {
+        shieldDamageMultipliers.Remove(i);
+    }
+
+    public void AddHealingMultiplier(int i)
+    {
+        healingMulitpliers.Add(i);
+    }
+
+    public void RemoveHealingMultiplier(int i)
+    {
+        healingMulitpliers.Remove(i);
+    }
+
+    /*
     public void AddStartOfTurnBuff(Buff buff, int duration)
     {
         if (!startOfTurnBuffs.ContainsKey(buff))
@@ -669,13 +844,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             onDamageDebuffs[buff] = Mathf.Max(duration, onDamageDebuffs[buff]);
         ResetBuffIcons();
     }
-
-    public void AtEndOfTurn()
-    {
-        endOfTurnBuffs = ResolveBuffAndReturn(endOfTurnBuffs);
-        endOfTurnDebuffs = ResolveBuffAndReturn(endOfTurnDebuffs);
-        ResetBuffIcons();
-    }
+    */
 
     public void ResolveBroken()
     {
@@ -694,14 +863,18 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public void AtStartOfTurn()
     {
-        bonusVit = 0;
+        if (!preserveBonusVit)
+            bonusVit = 0;
         ResetVitText(currentVit + bonusVit);
 
+
+        /*
         startOfTurnBuffs = ResolveBuffAndReturn(startOfTurnBuffs);
         startOfTurnDebuffs = ResolveBuffAndReturn(startOfTurnDebuffs);
         onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
         ResetBuffIcons();
+        */
     }
 
     public void OnDamage(HealthController attacker, int damage, int oldHealth)
@@ -719,8 +892,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (retaliate > 0)
             attacker.TakeVitDamage(retaliate, null);
 
+        /*
         onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
+        */
+        if (damage > 0)
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage));
 
         if (currentVit + bonusVit <= 0)
             try
@@ -729,13 +906,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
             catch { }
         else
-        {
             try
             {
                 GetComponent<EnemyInformationController>().RefreshIntent();
             }
             catch { }
-        }
 
         GridController.gridController.ResetOverlapOrder(transform.position);
     }
@@ -782,7 +957,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         charDisplay.healthBar.RemoveHealthBar();
     }
-
+    /*
     public void Cleanse()
     {
         foreach (KeyValuePair<Buff, int> buff in startOfTurnBuffs)
@@ -822,15 +997,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetBuffIcons();
         return newBuffs;
     }
+    */
 
-    private void ResetBuffIcons()
+    public void ResetBuffIcons(List<Buff> allBuffs)
     {
-        List<Buff> allBuffs = new List<Buff>();
-        Dictionary<Buff, int> allDictBuffs = GetBuffs();
-
-        allBuffs.AddRange(oneTimeBuffs);
-        allBuffs.AddRange(oneTimeDebuffs);
-        allBuffs.AddRange(allDictBuffs.OrderBy(x => x.Value).ToDictionary(k => k.Key, v => v.Value).Keys);
+        allBuffs = allBuffs.OrderByDescending(x => x.duration).ToList<Buff>();
 
         int maxIcons = 5;
 
@@ -838,16 +1009,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             if (i < allBuffs.Count)
             {
-                if (i == maxIcons - 1 && allBuffs.Count > maxIcons)
-                {
-                    charDisplay.buffIcons[i].color = Color.white;
-                    charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = "+";
-                }
-                if (allDictBuffs.ContainsKey(allBuffs[i]))
-                {
-                    charDisplay.buffIcons[i].color = allBuffs[i].GetIconColor();
-                    charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = allDictBuffs[allBuffs[i]].ToString();
-                }
+                charDisplay.buffIcons[i].color = allBuffs[i].GetIconColor();
+                charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = allBuffs[i].GetDescription();
             }
             else
             {
@@ -855,17 +1018,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 charDisplay.buffIcons[i].transform.GetChild(0).GetComponent<Text>().text = "";
             }
         }
-    }
-
-    public Dictionary<Buff, int> GetBuffs()
-    {
-        return startOfTurnBuffs
-               .Union(startOfTurnDebuffs)
-               .Union(endOfTurnBuffs)
-               .Union(endOfTurnDebuffs)
-               .Union(onDamageBuffs)
-               .Union(onDamageDebuffs)
-               .ToDictionary(k => k.Key, v => v.Value);
     }
 
     public void SetStatTexts(bool state)

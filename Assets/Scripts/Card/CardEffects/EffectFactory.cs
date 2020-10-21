@@ -29,6 +29,15 @@ public class EffectFactory
                 case Card.EffectType.PiercingDamageAll:
                     effects[i] = new PiercingDamageAll();
                     break;
+                case Card.EffectType.VitDamageDivided:
+                    effects[i] = new VitDamageDivided();
+                    break;
+                case Card.EffectType.PiercingDamageDivided:
+                    effects[i] = new PiercingDamageDivided();
+                    break;
+                case Card.EffectType.ShieldDamageDivided:
+                    effects[i] = new ShieldDamageDivided();
+                    break;
                 case Card.EffectType.SetKnockBackDamage:
                     effects[i] = new SetKnockBackDamage();
                     break;
@@ -98,6 +107,9 @@ public class EffectFactory
                 case Card.EffectType.DrawManaCards:
                     effects[i] = new DrawManaCardEffect();
                     break;
+                case Card.EffectType.DrawEnergyCards:
+                    effects[i] = new DrawEnergyCardEffect();
+                    break;
                 case Card.EffectType.Sacrifice:
                     effects[i] = new SacrificeEffect();
                     break;
@@ -106,6 +118,81 @@ public class EffectFactory
                     break;
                 case Card.EffectType.ModifyTempValue:
                     effects[i] = new ModifyTempValueEffect();
+                    break;
+                case Card.EffectType.StealCardEffect:
+                    effects[i] = new StealCardEffect();
+                    break;
+                case Card.EffectType.GetStarterCardEffect:
+                    effects[i] = new GetStarterCardEffect();
+                    break;
+                case Card.EffectType.GetDrawnCardEnergy:
+                    effects[i] = new GetDrawnCardEnergy();
+                    break;
+                case Card.EffectType.GetDrawnCardMana:
+                    effects[i] = new GetDrawnCardMana();
+                    break;
+                case Card.EffectType.CopyBuffEffect:
+                    effects[i] = new CopyBuffsEffect();
+                    break;
+                case Card.EffectType.GiveBuffEffect:
+                    effects[i] = new GiveBuffsEffect();
+                    break;
+                case Card.EffectType.GetNumberOfCardsInHand:
+                    effects[i] = new GetNumberOfCardsInHand();
+                    break;
+                case Card.EffectType.GetBonusHealth:
+                    effects[i] = new GetBonusVit();
+                    break;
+                case Card.EffectType.ForceMovementFromCenter:
+                    effects[i] = new ForceMovementFromCastLocation();
+                    break;
+                case Card.EffectType.GetManaSpentTurn:
+                    effects[i] = new GetManaSpentTurn();
+                    break;
+                case Card.EffectType.GetEnergySpentTurn:
+                    effects[i] = new GetEnergySpentTurn();
+                    break;
+                case Card.EffectType.GetHighestHealthAlly:
+                    effects[i] = new GetHighestHealthAlly();
+                    break;
+                case Card.EffectType.AssimilateStatsEffect:
+                    effects[i] = new AssimilateStatsEffect();
+                    break;
+                case Card.EffectType.CopyStatsEffect:
+                    effects[i] = new CopyStatsEffect();
+                    break;
+                case Card.EffectType.GetDistanceMoved:
+                    effects[i] = new GetDistanceMovedEffect();
+                    break;
+                case Card.EffectType.DrawLastPlayedCardEffect:
+                    effects[i] = new DrawLastPlayedCardEffect();
+                    break;
+                case Card.EffectType.CardCostCapDrawn:
+                    effects[i] = new CardCostCapDrawn();
+                    break;
+                case Card.EffectType.CreateANYEnergyCard:
+                    effects[i] = new CreateANYEnergyCard();
+                    break;
+                case Card.EffectType.CreateANYManaCard:
+                    effects[i] = new CreateANYManaCard();
+                    break;
+                case Card.EffectType.ModifyBuffDuration:
+                    effects[i] = new ModifyBuffDurationEffect();
+                    break;
+                case Card.EffectType.GetNumberOfBuffsOnTarget:
+                    effects[i] = new GetNumberOfBuffsEffect();
+                    break;
+                case Card.EffectType.BuffValueAdd:
+                    effects[i] = new BuffValueAdd();
+                    break;
+                case Card.EffectType.BuffValueMultiply:
+                    effects[i] = new BuffValueMultiply();
+                    break;
+                case Card.EffectType.AbsoluteDamage:
+                    effects[i] = new AbsoluteDamageEffect();
+                    break;
+                case Card.EffectType.Resurrect:
+                    effects[i] = new ResurrectEffect();
                     break;
                 default:
                     effects[i] = null;

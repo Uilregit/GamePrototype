@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: L Soul Catcher
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 0
+  name: Soul Catcher
+  energyCost: 2
+  manaCost: 0
+  range: 2
+  radius: 0
+  casterColor: 5
+  description: Remove 3 armor from the target, target gains 1 back per turn for 3
+    turns
+  art: {fileID: 21300000, guid: b7f0d5225c93ea54d800b6f16b3e475c, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 0300000003000000
+  cardEffectName: 0a0000006e000000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buffType: 000000000a000000
+  effectValue: 03000000ffffffff
+  effectDuration: 0000000003000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0

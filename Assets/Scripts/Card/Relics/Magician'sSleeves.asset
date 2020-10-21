@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9dcdf5b0efe44fa7173b194d755e6, type: 3}
   m_Name: Magician'sSleeves
   m_EditorClassIdentifier: 
-  relicName: Magician's Sleeves
   rarity: 0
+  relicName: Magician's Sleeves
   description: Draw 2 extra cards at the start of every encounter
   art: {fileID: 2927282750187834236, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   color: {r: 0, g: 0.68806267, b: 1, a: 1}
-  targetType: 5000000
+  targetType: 4
   condition: 0
-  effect: 16
+  effect: 700
   buff: 0
   effectValue: 2
   effectDuration: 0

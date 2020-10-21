@@ -56,18 +56,7 @@ public class ShopController : MonoBehaviour
             card.ResetBuyable();
         }
 
-        switch (c.GetCard().casterColor)
-        {
-            case (Card.CasterColor.Red):
-                latestDeckID = 0;
-                break;
-            case (Card.CasterColor.Blue):
-                latestDeckID = 1;
-                break;
-            case (Card.CasterColor.Green):
-                latestDeckID = 2;
-                break;
-        }
+        latestDeckID = PartyController.party.GetPartyIndex(c.GetCard().casterColor);
     }
 
     public int GetLatestDeckID()

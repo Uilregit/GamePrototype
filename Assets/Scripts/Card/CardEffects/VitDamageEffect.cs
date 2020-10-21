@@ -9,10 +9,10 @@ public class VitDamageEffect : Effect
         int totalDamageValue = 0;
         int duration = 1;
 
-        if (card.effectDuration[effectIndex] != 0)
-            duration = card.effectDuration[effectIndex];
-        else if (card.GetTempDuration() != 0)
+        if (card.GetTempDuration() != 0)
             duration = card.GetTempDuration();
+        else if (card.effectDuration[effectIndex] != 0)
+            duration = card.effectDuration[effectIndex];
 
         for (int i = 0; i < duration; i++)
         {
@@ -30,13 +30,18 @@ public class VitDamageEffect : Effect
                         damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f);
                 }
 
-                totalDamageValue += targetHealthController.GetSimulatedVitDamage(damageValue);
+                int simulatedDamage = targetHealthController.GetSimulatedVitDamage(damageValue);
+                totalDamageValue += simulatedDamage;
+
                 targetHealthController.TakeVitDamage(damageValue, caster.GetComponent<HealthController>());
             }
             yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
         }
-
+        if (totalDamageValue > 0)
+            caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), totalDamageValue));
         card.SetDamageDone(totalDamageValue);
+
+        //new EffectFactory().GetEffect(Card.EffectType.VitDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex);
     }
 
     public override int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
@@ -69,23 +74,18 @@ public class VitDamageEffect : Effect
                         value += targetHealthController.GetSimulatedVitDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f));
                 }
 
-                if (targetHealthController.GetCurrentShield() > 0)
-                    output += Mathf.Max(value - targetHealthController.GetCurrentShield(), 1);
-                else
-                    output += value * 2;
+                output += targetHealthController.GetSimulatedVitDamage(value);
             }
         return output;
     }
 
     public override int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        int output = 1;
+        int output = 0;
         foreach (GameObject targ in target)
         {
             HealthController targetHealthController = targ.GetComponent<HealthController>();
-            output += targetHealthController.GetEnfeeble();
-            if (targetHealthController.GetCurrentShield() == 0)
-                output = 0;
+            output += targetHealthController.GetSimulatedShieldDamage(1);
             /*
             if (card.effectValue[effectIndex] != 0)
                 output += targetHealthController.GetSimulatedShieldDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.effectValue[effectIndex] / 100.0f));

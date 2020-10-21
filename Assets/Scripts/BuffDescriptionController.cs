@@ -12,7 +12,11 @@ public class BuffDescriptionController : MonoBehaviour
     public void SetBuff(Buff buff, int duration)
     {
         icon.color = buff.GetIconColor();
-        text.text = buff.GetDescription().Replace("{d}", duration.ToString());
+        Debug.Log(buff.GetDescription());
+        if (duration == 1)
+            text.text = buff.GetDescription().Replace("{d}", duration.ToString()).Replace("(s)", "");
+        else
+            text.text = buff.GetDescription().Replace("{d}", duration.ToString()).Replace("(s)", "s");
     }
 
     public void Show()

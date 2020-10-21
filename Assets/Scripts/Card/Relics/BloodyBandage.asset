@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9dcdf5b0efe44fa7173b194d755e6, type: 3}
   m_Name: BloodyBandage
   m_EditorClassIdentifier: 
-  relicName: Bloody Bandage
   rarity: 0
+  relicName: Bloody Bandage
   description: All allies have +2 attack for the first turn of every encounter
   art: {fileID: 1810974733907775739, guid: b06752fbee9a16c46b9158900697fcd5, type: 3}
   color: {r: 1, g: 0, b: 0, a: 1}
   targetType: 5
   condition: 0
-  effect: 13
-  buff: 2
+  effect: 110
+  buff: 100
   effectValue: 2
   effectDuration: 1

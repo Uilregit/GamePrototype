@@ -65,6 +65,9 @@ public class AbilitiesController : MonoBehaviour
 
                 foreach (GameObject obj in target)
                 {
+                    if (obj == null)    //If trying to access an object that's already dead
+                        continue;
+
                     switch (abilityTypes[i])
                     {
                         case AbilityType.VitChange:

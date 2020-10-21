@@ -193,6 +193,8 @@ public class EnemyInformationController : MonoBehaviour
     //Refresh intent without having to call with card. Used for healthcontroller forced movement to update target color
     public void RefreshIntent()
     {
+        if (GetComponent<HealthController>().GetStunned())
+            return;
         CreateRangeIndicators(false); //Refresh the attackable and moveable locations
         RefreshIntentColors();
         RefreshIntentImage();
@@ -205,21 +207,33 @@ public class EnemyInformationController : MonoBehaviour
         {
             Color intentColor = Color.white;
             Vector2 targetLocation = enemyController.desiredTarget[i].transform.position;
+            Color targetColor = Color.white;
 
             try
             {
-                intentColor = enemyController.desiredTarget[i].GetComponent<EnemyController>().moveRangeColor * 1.5f; //Brighten by 50% to ensure visibility when put against the stats texts from enemies above
+                targetColor = enemyController.desiredTarget[i].GetComponent<EnemyController>().moveRangeColor;
+                intentColor = targetColor * 1.5f; //Brighten by 50% to ensure visibility when put against the stats texts from enemies above
             }
             catch
             {
-                intentColor = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveRangeIndicatorColor * 1.5f;
+                targetColor = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveRangeIndicatorColor;
+                intentColor = targetColor * 1.5f;
                 targetLocation = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveShadow.transform.position;
             }
 
             if (!attackableLocations.Contains(new Vector2(Mathf.Round(targetLocation.x), Mathf.Round(targetLocation.y))) && enemyController.desiredTarget[i] != this.gameObject) //If target is self, always highlight
-                intentColor *= 0.5f;
+            {
+                if (intentColor == Color.black)
+                    intentColor.a = 0.2f;
+                else
+                    intentColor.a = 0.5f;
+            }
 
             currentIntentTypeIndicators[i].color = intentColor;
+            if ((targetColor.a + targetColor.b + targetColor.g) / 3.0f < 0.4f) //If the target color is too dark, make the outline white instead
+                currentIntentTypeIndicators[i].GetComponent<Outline>().effectColor = new Color(0.85f, 0.85f, 0.85f);
+            else
+                currentIntentTypeIndicators[i].GetComponent<Outline>().effectColor = Color.black;
         }
     }
 
@@ -249,7 +263,9 @@ public class EnemyInformationController : MonoBehaviour
             HealthController hlth = GetComponent<HealthController>();
             List<CardController> cards = new List<CardController>();
             cards.AddRange(enemyController.GetCard());
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffs(), GetComponent<AbilitiesController>());
+            foreach (CardController c in cards)
+                c.SetCaster(this.gameObject);
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.buffController.GetBuffs(), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
     }
@@ -308,7 +324,7 @@ public class EnemyInformationController : MonoBehaviour
         {
             displayedCards[i].GetComponent<CardController>().SetCard(cards[i].GetCard());
             displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
-            displayedCards[i].GetComponent<CardDisplay>().SetCard(cards[i]);
+            //displayedCards[i].GetComponent<CardDisplay>().SetCard(cards[i]);
             displayedCards[i].GetComponent<CardEffectsController>().SetCard(cards[i]);
         }
     }
@@ -331,7 +347,17 @@ public class EnemyInformationController : MonoBehaviour
 
     public IEnumerator TriggerCard(int cardIndex, List<Vector2> targets)
     {
-        yield return StartCoroutine(displayedCards[cardIndex].GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, targets));
+        CardController cc = displayedCards[cardIndex].GetComponent<CardController>();
+
+        if (enemyController.GetTaunt() != null)
+        {
+            Card card = cc.GetCard().GetCopy();
+            for (int i = 0; i < card.targetType.Length; i++)
+                if (card.targetType[i] == Card.TargetType.Self)
+                    card.targetType[i] = Card.TargetType.Any;
+            cc.SetCard(card, true, false);
+        }
+        yield return StartCoroutine(cc.GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, targets));
     }
 
     public SimHealthController SimulateTriggerCard(int cardIndex, GameObject target, SimHealthController simH)

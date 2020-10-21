@@ -147,17 +147,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 790
-        width: 243
+        y: 5
+        width: 249
         height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.53688174, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45330af7663f03348a43104353c7bda0
+      spriteID: 02305410000000000800000000000000
       internalID: 21300000
       vertices: []
       indices: 
@@ -167,271 +167,19 @@ TextureImporter:
       name: Red Card Template_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 1132
-        width: 240
+        x: 5
+        y: 347
+        width: 251
         height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.49170163, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6015bb094e204b84697be7092a2cca7f
+      spriteID: 22305410000000000800000000000000
       internalID: 21300002
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_2
-      rect:
-        serializedVersion: 2
-        x: 261
-        y: 790
-        width: 246
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23bcaeb49a2ec42469eb962823046de2
-      internalID: 21300004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_3
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 1132
-        width: 238
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 703a0d0f166cbc24fae88dee6c6914a8
-      internalID: 21300006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_4
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 790
-        width: 243
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23b16059eb2322642a83e7df0383cfbe
-      internalID: 21300008
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_5
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 1132
-        width: 239
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc3cb5b29bbf2a2408085162687137b2
-      internalID: 21300010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_6
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 790
-        width: 246
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea9e5196dc4919b4a9df66a20952bf19
-      internalID: 21300012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_7
-      rect:
-        serializedVersion: 2
-        x: 761
-        y: 1132
-        width: 238
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 431c21c76bdab4f4e9d0e4d509f2d369
-      internalID: 21300014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_8
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 408
-        width: 242
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e57bb7b486d8e624d8150c8362ff5463
-      internalID: 21300016
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_9
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 408
-        width: 245
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0ab43617c01c254bba72a5d3c6e589b
-      internalID: 21300018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_10
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 408
-        width: 243
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 21d71967bd214664f93a4f58a26023d8
-      internalID: 21300020
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_11
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 408
-        width: 246
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28d8d6cb32fb8374e8e6ad81e5549e73
-      internalID: 21300022
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_12
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 38
-        width: 252
-        height: 353
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ca7d18a4b8e4324982b7f3a90f59c94
-      internalID: 21300024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_13
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 38
-        width: 252
-        height: 353
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37154427c62bf1f4eac918d6dea13c9f
-      internalID: 21300026
       vertices: []
       indices: 
       edges: []

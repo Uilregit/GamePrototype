@@ -1,0 +1,17 @@
+deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,immediatelyUsedFlag
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,Green,Whirlwind,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,Green,Marked for Death,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,Blue,Resonance,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,Blue,Resonance,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Blue,Inspire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Red,Bolster,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Blue,Pray,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Red,War Cry,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Green,Bise,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Blue,Foresight,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,Red,War Cry,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,Blue,Gift of Life,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,Blue,Channel Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,Blue,Inspire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,Blue,Channel Mana,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,3,missing,Green,Haste,True,True

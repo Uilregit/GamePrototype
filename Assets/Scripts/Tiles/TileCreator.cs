@@ -106,7 +106,7 @@ public class TileCreator : MonoBehaviour
         //if (!committed)
         //{
         creator = newCreator;
-        InstantiateTiles(startLocation, shape, range, color, avoidTag, layer);
+        InstantiateTiles(startLocation, shape, range, color, avoidTag, layer, true);
         RefreshTiles(layer);
         //}
     }
@@ -178,7 +178,7 @@ public class TileCreator : MonoBehaviour
         selectableTilePositions = new List<Vector2>();
     }
 
-    private void InstantiateTiles(Vector2 startLocation, Card.CastShape shape, int range, Color color, string[] avoidTag, int layer)
+    private void InstantiateTiles(Vector2 startLocation, Card.CastShape shape, int range, Color color, string[] avoidTag, int layer, bool isFirstTile)
     {
         if (range >= 0)
         {
@@ -187,7 +187,8 @@ public class TileCreator : MonoBehaviour
                 GridController.gridController.GetObjectAtLocation(startLocation).Count != 0)
             {
                 if (GridController.gridController.GetObjectAtLocation(startLocation).Any(x => avoidTag.Contains(x.tag)) &&
-                    !creator.GetComponent<HealthController>().GetOccupiedSpaces().Any(x => x + (Vector2)creator.transform.position == startLocation)) //Always ignore creator for blocking
+                    !creator.GetComponent<HealthController>().GetOccupiedSpaces().Any(x => x + (Vector2)creator.transform.position == startLocation) &&  //Always ignore creator for blocking
+                    !isFirstTile) //Always create on the first time (in case an enemy was knocked there)
                     return;
             }
 
@@ -203,10 +204,10 @@ public class TileCreator : MonoBehaviour
                     tileMap[layer].SetTile(Vector3Int.RoundToInt(startLocation), tile);
                     int x = (int)startLocation.x;
                     int y = (int)startLocation.y;
-                    InstantiateTiles(new Vector2(x - 1, y), shape, range - 1, color, avoidTag, layer);
-                    InstantiateTiles(new Vector2(x + 1, y), shape, range - 1, color, avoidTag, layer);
-                    InstantiateTiles(new Vector2(x, y - 1), shape, range - 1, color, avoidTag, layer);
-                    InstantiateTiles(new Vector2(x, y + 1), shape, range - 1, color, avoidTag, layer);
+                    InstantiateTiles(new Vector2(x - 1, y), shape, range - 1, color, avoidTag, layer, false);
+                    InstantiateTiles(new Vector2(x + 1, y), shape, range - 1, color, avoidTag, layer, false);
+                    InstantiateTiles(new Vector2(x, y - 1), shape, range - 1, color, avoidTag, layer, false);
+                    InstantiateTiles(new Vector2(x, y + 1), shape, range - 1, color, avoidTag, layer, false);
                 }
             }
             else if (shape == Card.CastShape.Plus)

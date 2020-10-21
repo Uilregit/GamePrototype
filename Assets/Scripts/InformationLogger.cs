@@ -17,6 +17,10 @@ public class SaveFile
     public string gameID;
     public string patchID;
 
+    public string player1Color;
+    public string player2Color;
+    public string player3Color;
+
     public int level;
     //public int roomRandomizedIndex;
     public float[] previousRoomsX;
@@ -24,18 +28,22 @@ public class SaveFile
     public float[] destroyedRoomsX;
     public float[] destroyedRoomsY;
 
-    public int redVit;
-    public int blueVit;
-    public int greenVit;
-    public int redMaxVit;
-    public int blueMaxVit;
-    public int greenMaxVit;
-    public int redAtk;
-    public int blueAtk;
-    public int greenAtk;
-    public int redArmor;
-    public int blueArmor;
-    public int greenArmor;
+    public int lives;
+    public bool p1Dead;
+    public bool p2Dead;
+    public bool p3Dead;
+    public int p1Vit;
+    public int p2Vit;
+    public int p3Vit;
+    public int p1MaxVit;
+    public int p2MaxVit;
+    public int p3MaxVit;
+    public int p1Atk;
+    public int p2Atk;
+    public int p3Atk;
+    public int p1Armor;
+    public int p2Armor;
+    public int p3Armor;
 
     public string[][] collectionCardNames;
     public string[][] selectedCardNames;
@@ -45,6 +53,24 @@ public class SaveFile
     public string[] relicNames;
     public int[] validChoices;
     public int gold;
+
+    public int overkill;
+    public int damage;
+    public int damageShielded;
+    public int damageOverhealedProtected;
+    public int damageAvoided;
+    public int enemiesBroken;
+    public int goldUsed;
+    public int bossesDefeated;
+    public float secondsInGame;
+}
+
+[System.Serializable]
+public class PlayerPreferences
+{
+    public string party1;
+    public string party2;
+    public string party3;
 }
 
 public class InformationLogger : MonoBehaviour
@@ -74,14 +100,20 @@ public class InformationLogger : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
+        LoadPlayerPreferences();                //Load player preferences on startup
+
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
-        versionText.text = "Version: " + patchID;
         if (seed == 0)
             seed = Random.Range(1, 1000000000);
         Random.InitState(seed);
-        seedText.text = "Seed: " + seed;
+
         gameID = System.DateTime.Now.ToString();
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+
     }
 
     public void SaveCombatInfo(string patchID, string gameID, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
@@ -260,6 +292,7 @@ public class InformationLogger : MonoBehaviour
         //return Application.dataPath + "/" + "Saved_data.csv";
     }
 
+    //Save/Load Game
     private SaveFile GetSaveFile(bool endOfGame)
     {
         SaveFile saveFile = new SaveFile();
@@ -270,6 +303,11 @@ public class InformationLogger : MonoBehaviour
             saveFile.stateSeed = Random.seed;
             saveFile.gameID = gameID;
             saveFile.patchID = patchID;
+
+            string[] playerColors = PartyController.party.GetPlayerColorTexts();
+            saveFile.player1Color = playerColors[0];
+            saveFile.player2Color = playerColors[1];
+            saveFile.player3Color = playerColors[2];
 
             saveFile.level = RoomController.roomController.selectedLevel;
             //saveFile.roomRandomizedIndex = RoomController.roomController.GetRandomizedRoomIndex();
@@ -297,18 +335,22 @@ public class InformationLogger : MonoBehaviour
             saveFile.destroyedRoomsY = destroyedRoomsY;
 
             CombatInfo combatInfo = InformationController.infoController.GetCombatInfo();
-            saveFile.redVit = combatInfo.redVit;
-            saveFile.blueVit = combatInfo.blueVit;
-            saveFile.greenVit = combatInfo.greenVit;
-            saveFile.redMaxVit = combatInfo.redMaxVit;
-            saveFile.blueMaxVit = combatInfo.blueMaxVit;
-            saveFile.greenMaxVit = combatInfo.greenMaxVit;
-            saveFile.redAtk = combatInfo.redAtk;
-            saveFile.blueAtk = combatInfo.blueAtk;
-            saveFile.greenAtk = combatInfo.greenAtk;
-            saveFile.redArmor = combatInfo.redArmor;
-            saveFile.blueArmor = combatInfo.blueArmor;
-            saveFile.greenArmor = combatInfo.greenArmor;
+            saveFile.lives = combatInfo.lives;
+            saveFile.p1Dead = combatInfo.deadChars[0];
+            saveFile.p2Dead = combatInfo.deadChars[1];
+            saveFile.p3Dead = combatInfo.deadChars[2];
+            saveFile.p1Vit = combatInfo.vit[0];
+            saveFile.p2Vit = combatInfo.vit[1];
+            saveFile.p3Vit = combatInfo.vit[2];
+            saveFile.p1MaxVit = combatInfo.maxVit[0];
+            saveFile.p2MaxVit = combatInfo.maxVit[1];
+            saveFile.p3MaxVit = combatInfo.maxVit[2];
+            saveFile.p1Atk = combatInfo.atk[0];
+            saveFile.p2Atk = combatInfo.atk[1];
+            saveFile.p3Atk = combatInfo.atk[2];
+            saveFile.p1Armor = combatInfo.armor[0];
+            saveFile.p2Armor = combatInfo.armor[1];
+            saveFile.p3Armor = combatInfo.armor[2];
 
             saveFile.collectionCardNames = CollectionController.collectionController.GetCompleteDeckNames();
             saveFile.selectedCardNames = CollectionController.collectionController.GetSelectedDeckNames();
@@ -321,6 +363,16 @@ public class InformationLogger : MonoBehaviour
             saveFile.relicNames = relicNames;
             saveFile.validChoices = RelicController.relic.GetValidChoices();
             saveFile.gold = ResourceController.resource.GetGold();
+
+            saveFile.overkill = ScoreController.score.GetOverKill();
+            saveFile.damage = ScoreController.score.GetDamage();
+            saveFile.damageShielded = ScoreController.score.GetDamageShielded();
+            saveFile.damageOverhealedProtected = ScoreController.score.GetDamageOverhealProtected();
+            saveFile.damageAvoided = ScoreController.score.GetDamageAvoided();
+            saveFile.enemiesBroken = ScoreController.score.GetEnemiesBroken();
+            saveFile.goldUsed = ScoreController.score.GetGoldUsed();
+            saveFile.bossesDefeated = ScoreController.score.GetBossesDefeated();
+            saveFile.secondsInGame = ScoreController.score.GetSecondsInGame();
         }
         return saveFile;
     }
@@ -356,6 +408,17 @@ public class InformationLogger : MonoBehaviour
         return saveFile;
     }
 
+    public string[] GetLoadPartyColors()
+    {
+        SaveFile savefile = LoadGameFile();
+        string[] output = new string[3];
+        output[0] = savefile.player1Color;
+        output[1] = savefile.player2Color;
+        output[2] = savefile.player3Color;
+
+        return output;
+    }
+
     public void LoadGame()
     {
         SaveFile saveFile = LoadGameFile();
@@ -364,6 +427,12 @@ public class InformationLogger : MonoBehaviour
         {
             seed = saveFile.gameSeed;
             gameID = saveFile.gameID;
+
+            string[] playerColors = new string[3];
+            playerColors[0] = saveFile.player1Color;
+            playerColors[1] = saveFile.player2Color;
+            playerColors[2] = saveFile.player3Color;
+            PartyController.party.SetPlayerColors(playerColors);
 
             RoomController.roomController.selectedLevel = saveFile.level;
             //roomRandomizedIndex = saveFile.roomRandomizedIndex;
@@ -381,18 +450,24 @@ public class InformationLogger : MonoBehaviour
             Random.InitState(saveFile.stateSeed);   //Set seed back for all other purposes after room generation
 
             CombatInfo combatInfo = new CombatInfo();
-            combatInfo.redVit = saveFile.redVit;
-            combatInfo.blueVit = saveFile.blueVit;
-            combatInfo.greenVit = saveFile.greenVit;
-            combatInfo.redMaxVit = saveFile.redMaxVit;
-            combatInfo.blueMaxVit = saveFile.blueMaxVit;
-            combatInfo.greenMaxVit = saveFile.greenMaxVit;
-            combatInfo.redAtk = saveFile.redAtk;
-            combatInfo.blueAtk = saveFile.blueAtk;
-            combatInfo.greenAtk = saveFile.greenAtk;
-            combatInfo.redArmor = saveFile.redArmor;
-            combatInfo.blueArmor = saveFile.blueArmor;
-            combatInfo.greenArmor = saveFile.greenArmor;
+            combatInfo.lives = saveFile.lives;
+            bool[] deadChars = new bool[3];
+            deadChars[0] = saveFile.p1Dead;
+            deadChars[1] = saveFile.p2Dead;
+            deadChars[2] = saveFile.p3Dead;
+            combatInfo.deadChars = deadChars;
+            combatInfo.vit[0] = saveFile.p1Vit;
+            combatInfo.vit[1] = saveFile.p2Vit;
+            combatInfo.vit[2] = saveFile.p3Vit;
+            combatInfo.maxVit[0] = saveFile.p1MaxVit;
+            combatInfo.maxVit[1] = saveFile.p2MaxVit;
+            combatInfo.maxVit[2] = saveFile.p3MaxVit;
+            combatInfo.atk[0] = saveFile.p1Atk;
+            combatInfo.atk[1] = saveFile.p2Atk;
+            combatInfo.atk[2] = saveFile.p3Atk;
+            combatInfo.armor[0] = saveFile.p1Armor;
+            combatInfo.armor[1] = saveFile.p2Armor;
+            combatInfo.armor[2] = saveFile.p3Armor;
             InformationController.infoController.SetCombatInfo(combatInfo);
 
             CollectionController.collectionController.SetCompleteDeck(saveFile.collectionCardNames);
@@ -412,6 +487,16 @@ public class InformationLogger : MonoBehaviour
             RelicController.relic.SetValidChoices(saveFile.validChoices);
 
             ResourceController.resource.LoadGold(saveFile.gold);
+
+            ScoreController.score.SetOverkill(saveFile.overkill);
+            ScoreController.score.SetDamage(saveFile.damage);
+            ScoreController.score.SetDamageShielded(saveFile.damageShielded);
+            ScoreController.score.SetDamageOverhealProtected(saveFile.damageOverhealedProtected);
+            ScoreController.score.SetDamageAvoided(saveFile.damageAvoided);
+            ScoreController.score.SetEnemiesBroken(saveFile.enemiesBroken);
+            ScoreController.score.SetGoldUsed(saveFile.goldUsed);
+            ScoreController.score.SetBossesDefeated(saveFile.bossesDefeated);
+            ScoreController.score.SetSecondsInGame(saveFile.secondsInGame);
         }
     }
 
@@ -447,5 +532,75 @@ public class InformationLogger : MonoBehaviour
             InformationLogger.infoLogger.LoadGame();
             loadGameOnLevelLoad = false;
         }
+        if (SceneManager.GetActiveScene().name == "MainMenuScene")
+        {
+            try                 //For debugging purposes, prevents crashes when running from overworldScene
+            {
+                versionText.text = "Version: " + patchID;
+                seedText.text = "Seed: " + seed;
+                versionText.enabled = true;
+                seedText.enabled = true;
+            }
+            catch { }
+        }
+        else
+        {
+            versionText.enabled = false;
+            seedText.enabled = false;
+        }
+    }
+
+    //Player Preferences
+    private PlayerPreferences GetPlayerPreferences()
+    {
+        PlayerPreferences preferences = new PlayerPreferences();
+        string[] colors = PartyController.party.GetPlayerColorTexts();
+        preferences.party1 = colors[0];
+        preferences.party2 = colors[1];
+        preferences.party3 = colors[2];
+        return preferences;
+    }
+
+    public void SavePlayerPreferences()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = GetCombatPath() + "/playerpreferences" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+
+        formatter.Serialize(stream, GetPlayerPreferences());
+        stream.Close();
+    }
+
+    public void LoadPlayerPreferences()
+    {
+        PlayerPreferences preferences = GetHasPlayerPreferences();
+
+        string[] colors = new string[3];
+        colors[0] = preferences.party1;
+        colors[1] = preferences.party2;
+        colors[2] = preferences.party3;
+
+        PartyController.party.SetPlayerColors(colors);
+    }
+    private PlayerPreferences GetHasPlayerPreferences()
+    {
+        string path = GetCombatPath() + "/playerpreferences" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        PlayerPreferences playerPreferences = null;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            playerPreferences = formatter.Deserialize(stream) as PlayerPreferences;
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.Log("player preferences file not found in: " + path);
+            playerPreferences = GetPlayerPreferences();
+        }
+
+        return playerPreferences;
     }
 }

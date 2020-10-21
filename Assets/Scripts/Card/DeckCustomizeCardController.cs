@@ -14,30 +14,35 @@ public class DeckCustomizeCardController : MonoBehaviour
     public Outline highlight;
     public Collider2D col;
 
+    public Canvas selectedCardCanvas;
+    private Canvas originalCanvas;
+    private Vector2 localScale;
+    private Vector2 originalLocation;
+    private int originalSorterOrder;
+
     private void Awake()
     {
         //col = GetComponent<Collider2D>();
+        localScale = transform.localScale;
+        originalLocation = transform.position;
+        originalCanvas = transform.parent.GetComponent<Canvas>();
+        originalSorterOrder = GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder;
     }
 
     public void OnMouseDown()
     {
         clickedTime = Time.time;
+        StartCoroutine(EnlargeCard());
         highlight.enabled = false;
         CollectionController.collectionController.RemoveCardFromNew(card);
-        /*
-        //Enlarge for easy viewing
-        transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
-        //col.size = colliderSize / HandController.handController.cardHighlightSize * HandController.handController.cardStartingSize;
-        float x = Mathf.Clamp(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).x, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
-        float y = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).y + HandController.handController.cardHighlightHeight;
-        transform.position = new Vector2(x, y);
-        transform.SetAsLastSibling();
-
-        base.OnMouseDown();*/
     }
 
     public void OnMouseUp()
     {
+        StopAllCoroutines();
+        transform.SetParent(originalCanvas.transform);
+        transform.localScale = localScale;
+        transform.position = originalLocation;
         if (Time.time - clickedTime <= clickThreshold)
             SelectCard();
     }
@@ -70,5 +75,14 @@ public class DeckCustomizeCardController : MonoBehaviour
         count.enabled = true;
         GetComponent<CardDisplay>().Show();
         col.enabled = true;
+    }
+
+    private IEnumerator EnlargeCard()
+    {
+        yield return new WaitForSeconds(0.3f);
+        transform.SetParent(selectedCardCanvas.transform);
+        GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
+        transform.position = new Vector2(originalLocation.x, originalLocation.y + HandController.handController.cardHighlightHeight);
+        transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
     }
 }

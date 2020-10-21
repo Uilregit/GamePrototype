@@ -17,6 +17,16 @@ public class NewGameButton : MonoBehaviour
             loadGameButton.enabled = false;
             loadGameButton.GetComponent<Collider2D>().enabled = false;
             loadGameButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
+            loadGameButton.transform.GetChild(1).GetComponent<Image>().enabled = false;
+            loadGameButton.transform.GetChild(2).GetComponent<Image>().enabled = false;
+            loadGameButton.transform.GetChild(3).GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            string[] partyColors = InformationLogger.infoLogger.GetLoadPartyColors();
+            loadGameButton.transform.GetChild(1).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[0]));
+            loadGameButton.transform.GetChild(2).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[1]));
+            loadGameButton.transform.GetChild(3).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[2]));
         }
     }
 
@@ -32,5 +42,6 @@ public class NewGameButton : MonoBehaviour
         thisRelic = RelicController.relic.GetRandomRelic();
         RewardsMenuController.rewardsMenu.ShowRelicRewardMenu(thisRelic);
         InformationLogger.infoLogger.SaveGame(true);
+        InformationLogger.infoLogger.SavePlayerPreferences();
     }
 }

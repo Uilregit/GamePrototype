@@ -20,7 +20,7 @@ MonoBehaviour:
   manaCost: 0
   range: 1
   radius: 0
-  casterColor: 3
+  casterColor: 6
   description: Deal <s>100% of ATK as</s> damage. |If caster is <b>broken</b>, deal
     <s>33% of ATK as</s> damage instead
   art: {fileID: 21300000, guid: 09f4703c47b90a0419e6d6e8a2486cdf, type: 3}
@@ -28,7 +28,7 @@ MonoBehaviour:
   castShape: 0
   targetType: 0100000001000000
   cardEffectName: 0000000000000000
-  conditionType: 0700000006000000
+  conditionType: 2d0100002c010000
   conditionValue: 0000000000000000
   buffType: 0000000000000000
   effectValue: 6400000021000000

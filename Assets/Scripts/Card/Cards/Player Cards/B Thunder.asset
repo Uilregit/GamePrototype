@@ -14,23 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exhaust: 0
   returnOnCancel: 1
-  rarity: 3
+  rarity: 4
   name: Thunder
   energyCost: 1
   manaCost: 0
   range: 2
-  radius: 0
+  radius: 1
   casterColor: 1
-  description: Deal <s>125% of ATK </s> as <b>piercing</b> damage
-  art: {fileID: 21300000, guid: 86fc5c7321f190e4d8ef822a17c538ef, type: 3}
-  castType: 0
+  description: <b>Targeted AoE|</b>Deal <s>80% of ATK as</s> damage to <b>ALL</b>
+    in 1 radius
+  art: {fileID: 21300000, guid: 8c163b5fdd796fd4395fcf3415a0ac78, type: 3}
+  castType: 7
   castShape: 0
   targetType: 03000000
-  cardEffectName: 04000000
+  cardEffectName: 00000000
   conditionType: 00000000
   conditionValue: 00000000
   buffType: 00000000
-  effectValue: 7d000000
+  effectValue: 50000000
   effectDuration: 00000000
   spawnObject:
   - {fileID: 0}

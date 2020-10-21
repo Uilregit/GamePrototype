@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private int playerID;
     [SerializeField] private Card.CasterColor colorTag;
+    [SerializeField] private int castRange = 1;
     [SerializeField] private int maxVit;
     [SerializeField] private int startingShield;
     [SerializeField] private int attack;
@@ -18,15 +19,21 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        healthController = GetComponent<HealthController>();
+        if (!PartyController.party.partyColors.Contains(colorTag))
+            Destroy(this.gameObject);
+        else
+        {
+            healthController = GetComponent<HealthController>();
 
-        healthController.SetMaxVit(maxVit);
-        healthController.SetStartingShield(startingShield);
-        healthController.SetStartingAttack(attack);
-        healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
+            healthController.SetCastRange(castRange);
+            healthController.SetMaxVit(maxVit);
+            healthController.SetStartingShield(startingShield);
+            healthController.SetStartingAttack(attack);
+            healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
 
-        moveController = GetComponent<PlayerMoveController>();
-        moveController.SetPlayerController(this);
+            moveController = GetComponent<PlayerMoveController>();
+            moveController.SetPlayerController(this);
+        }
     }
 
     public void Spawn()
@@ -86,10 +93,5 @@ public class PlayerController : MonoBehaviour
     public HealthController GetHealthController()
     {
         return healthController;
-    }
-
-    public int GetPlayerID()
-    {
-        return playerID;
     }
 }

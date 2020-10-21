@@ -146,40 +146,19 @@ TextureImporter:
       name: Green Card Template_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 790
-        width: 243
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e59c4705ffc57c4a8a32e1d58ed7d2f
-      internalID: 21300000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 1132
-        width: 240
+        x: 2
+        y: 362
+        width: 253
         height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.34492075, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9beb2790ec272274dad975e9e9a444e2
-      internalID: 21300002
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -188,250 +167,19 @@ TextureImporter:
       name: Green Card Template_2
       rect:
         serializedVersion: 2
-        x: 261
-        y: 790
-        width: 246
+        x: 12
+        y: 20
+        width: 252
         height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.52324796, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d5007d847488224db7d39266fccb04f
+      spriteID: 42305410000000000800000000000000
       internalID: 21300004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_3
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 1132
-        width: 238
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ba6285a099f89e4a9d890145b1c2e92
-      internalID: 21300006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_4
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 790
-        width: 243
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4498d4c936c69cb48be25b943bb1dcb2
-      internalID: 21300008
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_5
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 1132
-        width: 239
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 33a6752dd97c70643bbf5affe43bd4bb
-      internalID: 21300010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_6
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 790
-        width: 246
-        height: 343
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f12c3108c267da84699fe164cd12975a
-      internalID: 21300012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_7
-      rect:
-        serializedVersion: 2
-        x: 761
-        y: 1132
-        width: 238
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf3d1933bb9f26f4c91779197f801278
-      internalID: 21300014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_8
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 408
-        width: 242
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04f3a3b50f0cecd4295237d516223805
-      internalID: 21300016
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_9
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 408
-        width: 245
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 968f465516b9cdd49ba6c96054a03650
-      internalID: 21300018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_10
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 408
-        width: 243
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0cf29148b66bcce48a4afad4ad0c6e01
-      internalID: 21300020
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_11
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 408
-        width: 246
-        height: 342
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f113f0765835fe4894212d062aa6a80
-      internalID: 21300022
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_12
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 38
-        width: 252
-        height: 353
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 158cb26db0562c7439e6a77b8808d813
-      internalID: 21300024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green Card Template_13
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 38
-        width: 252
-        height: 353
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2315ccf746500be4aa80e5eab4d085f2
-      internalID: 21300026
       vertices: []
       indices: 
       edges: []

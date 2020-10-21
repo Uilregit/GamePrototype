@@ -35,6 +35,7 @@ public class Relic : ScriptableObject
         Effect thisEffect = factory.GetEffects(effectList)[0];
 
         List<GameObject> targets = new List<GameObject>();
+        
         if (targetType == Card.TargetType.None)
             targets = null;
         else if (targetType == Card.TargetType.AllEnemies)

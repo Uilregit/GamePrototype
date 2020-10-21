@@ -210,7 +210,7 @@ public class CardDragController : DragController
             if (trn.tag == "Replace" || (trn.tag == "Hold" && (HandController.handController.GetHeldCard() == this || HandController.handController.GetHeldCard() == null)))
             {
                 transform.position = trn.position;
-                transform.localScale = new Vector2(0.4f, 0.4f);
+                transform.localScale = new Vector2(HandController.handController.cardHoldSize, HandController.handController.cardHoldSize);
             }
             else
                 base.OnMouseDrag();
@@ -220,7 +220,8 @@ public class CardDragController : DragController
             transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
 
             //Allow drag above threshold only if there is enough mana left over
-            if (TurnController.turnController.HasEnoughResources(cardController.GetNetEnergyCost(), cardController.GetNetManaCost()) && !GameController.gameController.GetDeadChars().Contains(cardController.GetCard().casterColor))
+            if (TurnController.turnController.HasEnoughResources(cardController.GetNetEnergyCost(), cardController.GetNetManaCost()) &&
+                (!GameController.gameController.GetDeadChars().Contains(cardController.GetCard().casterColor) || ResourceController.resource.GetLives() > 0))       //And there's enough lives to cast
             {
                 if (!isCasting)
                 {
@@ -249,7 +250,8 @@ public class CardDragController : DragController
         cardController.DeleteRangeIndicator();
 
         Card card = cardController.GetCard();
-        List<GameObject> target = GridController.gridController.GetObjectAtLocation(castLocation);
+        cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
+        List<GameObject> target = GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "Player", "Enemy" });
         List<Vector2> targetedLocs = new List<Vector2>();
         if (card.castType == Card.CastType.TargetedAoE)
             target.AddRange(GridController.gridController.GetObjectsInAoE(castLocation, card.radius, new string[] { "All" }));
@@ -320,8 +322,9 @@ public class CardDragController : DragController
         moveShadow.GetComponent<SpriteRenderer>().enabled = false;
 
         StartCoroutine(OnPlay(targetedLocs));
-        TurnController.turnController.ReportPlayedCard(card);
+        TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
         GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
+        //HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
     }
 
     private IEnumerator OnPlay(Vector2 location)

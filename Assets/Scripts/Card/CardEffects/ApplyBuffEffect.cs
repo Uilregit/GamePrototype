@@ -9,10 +9,13 @@ public class ApplyBuffEffect : Effect
         foreach (GameObject targ in target)
         {
             HealthController targetH = targ.GetComponent<HealthController>();
+            Buff buff = GetBuff(card.buffType[effectIndex]);
             if (card.effectValue[effectIndex] != 0)
-                GetBuff(card.buffType[effectIndex]).OnApply(targetH, card.effectValue[effectIndex], card.effectDuration[effectIndex], false);
+                buff.OnApply(targetH, card.effectValue[effectIndex], card.effectDuration[effectIndex], false);
             else
-                GetBuff(card.buffType[effectIndex]).OnApply(targetH, card.GetTempEffectValue(), card.effectDuration[effectIndex], false);
+                buff.OnApply(targetH, card.GetTempEffectValue(), card.effectDuration[effectIndex], false);
+            if (buff is VitDamageOverTime || buff is PiercingDamageOverTime)
+                caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), 0));
         }
         yield return new WaitForSeconds(0);
     }
@@ -44,14 +47,58 @@ public class ApplyBuffEffect : Effect
                 return new BarrierBuff();
             case Card.BuffType.ProtectBuff:
                 return new ProtectBuff();
-            case Card.BuffType.EnergyCostCapTurnBuff:
-                return new EnergyCostCapTurnBuff();
-            case Card.BuffType.ManaCostCapTurnBuff:
-                return new ManaCostCapTurnBuff();
-            case Card.BuffType.EnergyCostReductionBuff:
-                return new EnergyCostReductionBuff();
-            case Card.BuffType.ManaCostReductionBuff:
-                return new ManaCostReductionBuff();
+            case Card.BuffType.PartyEnergyCostCapTurnBuff:
+                return new PartyEnergyCostCapTurnBuff();
+            case Card.BuffType.PartyManaCostCapTurnBuff:
+                return new PartyManaCostCapTurnBuff();
+            case Card.BuffType.PartyEnergyCostReductionBuff:
+                return new PartyEnergyCostReductionBuff();
+            case Card.BuffType.PartyManaCostReductionBuff:
+                return new PartyManaCostReductionBuff();
+            case Card.BuffType.VitDamageOverTime:
+                return new VitDamageOverTime();
+            case Card.BuffType.ShieldDamageOverTime:
+                return new ShieldDamageOverTime();
+            case Card.BuffType.PiercingDamageOverTime:
+                return new PiercingDamageOverTime();
+            case Card.BuffType.LifestealBuff:
+                return new LifeStealBuff();
+            case Card.BuffType.DivineShieldBuff:
+                return new DivineShieldBuff();
+            case Card.BuffType.CastRangeBuff:
+                return new CastRangeBuff();
+            case Card.BuffType.BonusHealing:
+                return new BonusHealingBuff();
+            case Card.BuffType.AmplifyDamageTurn:
+                return new AmplifyVitDamageTurn();
+            case Card.BuffType.AmplifyHealingTurn:
+                return new AmplifyHealingTurn();
+            case Card.BuffType.HealAttacker:
+                return new HealAttacker();
+            case Card.BuffType.Silence:
+                return new SilenceBuff();
+            case Card.BuffType.Disarm:
+                return new DisarmBuff();
+            case Card.BuffType.AttackChangeOnHeal:
+                return new AttackChangeOnHealBuff();
+            case Card.BuffType.RuptureBuff:
+                return new RuptureBuff();
+            case Card.BuffType.CriticalStrike:
+                return new CriticalStrikeBuff();
+            case Card.BuffType.AdditionalPiercingDamage:
+                return new AdditionalPiercingDamageBuff();
+            case Card.BuffType.Preserve:
+                return new PreserveBuff();
+            case Card.BuffType.AdditionalHealing:
+                return new AdditionalHealingBuff();
+            case Card.BuffType.CharEnergyCostCapTurnBuff:
+                return new CharEnergyCostCapTurnBuff();
+            case Card.BuffType.CharManaCostCapTurnBuff:
+                return new CharManaCostCapTurnBuff();
+            case Card.BuffType.CharEnergyCostReductionBuff:
+                return new CharEnergyCostReductionBuff();
+            case Card.BuffType.CharManaCostReductionBuff:
+                return new CharManaCostReductionBuff();
             default:
                 return null;
         }

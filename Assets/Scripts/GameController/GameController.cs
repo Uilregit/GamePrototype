@@ -59,6 +59,8 @@ public class GameController : MonoBehaviour
         DeckController.deckController.ShuffleDrawPile();
         HandController.handController.DrawFullHand();
 
+        InformationController.infoController.SaveCombatInformation();           //Save combat information at start of room as well in case char dies in the first room
+
         cameraLocation = new Vector3(0, 0, -10);
 
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
@@ -67,6 +69,21 @@ public class GameController : MonoBehaviour
             GridController.gridController.DebugGrid();
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart);
+
+        //Setup replace and hold areas
+        if (HandController.handController.maxReplaceCount == 0)
+        {
+            GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider2D>().enabled = false;
+            GameObject.FindGameObjectWithTag("Replace").GetComponent<Image>().enabled = false;
+            GameObject.FindGameObjectWithTag("Replace").transform.GetChild(0).GetComponent<Text>().enabled = false;
+            GameObject.FindGameObjectWithTag("Replace").transform.GetChild(1).GetComponent<Text>().enabled = false;
+        }
+        if (!HandController.handController.allowHold)
+        {
+            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider2D>().enabled = false;
+            GameObject.FindGameObjectWithTag("Hold").GetComponent<Image>().enabled = false;
+            GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
+        }
     }
 
     public void RandomizeRoom()
@@ -80,10 +97,24 @@ public class GameController : MonoBehaviour
         //Spawn players first. If specified location, at location, if not, spawn randomly
         foreach (GameObject player in players)
         {
+            if (!PartyController.party.partyColors.Contains(player.GetComponent<PlayerController>().GetColorTag()))
+            {
+                Destroy(player.gameObject);
+                continue;
+            }
             if (setup.playwerSpawnLocations.Count == 0)
                 player.GetComponent<PlayerController>().Spawn();
             else
                 player.GetComponent<PlayerController>().Spawn(setup.playwerSpawnLocations[counter]);
+
+            // If the player was dead from before, remove them
+            Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
+            if (InformationController.infoController.GetIfDead(colorTag))
+            {
+                GridController.gridController.RemoveFromPosition(player, player.transform.position);
+                ReportDeadChar(colorTag);
+                GridController.gridController.OnPlayerDeath(player, colorTag);
+            }
             counter += 1;
         }
         //Then spawn enemies
@@ -117,6 +148,9 @@ public class GameController : MonoBehaviour
             {
                 exit = true;
                 foreach (GameObject player in players)
+                {
+                    if (deadChars.Contains(player.GetComponent<PlayerController>().GetColorTag()))
+                        continue;
                     foreach (GameObject enemy in enemies)
                     {
                         EnemyController enemyController = enemy.GetComponent<EnemyController>();
@@ -124,12 +158,16 @@ public class GameController : MonoBehaviour
                         if (Mathf.Abs((path[path.Count - 1] - (Vector2)player.transform.position).magnitude) > Mathf.Pow(2 * Mathf.Pow((0.5f * enemy.GetComponent<HealthController>().size - 0.5f), 2), 0.5f))
                             exit = false;
                     }
+                }
                 if (exit)
                     break;
                 else
                     RearrangeBlocks(blockNumber);
             }
         }
+
+        foreach (GameObject enemy in enemies)
+            enemy.GetComponent<EnemyController>().RefreshIntent();
     }
 
     private void RearrangeBlocks(int blockNumber)
@@ -250,25 +288,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void ReportResurrectedChar(Card.CasterColor color)
+    {
+        deadChars.Remove(color);
+    }
+
     public List<Card.CasterColor> GetDeadChars()
     {
         return deadChars;
-    }
-
-    public Color GetColor(Card card)
-    {
-        Card.TargetType target = card.targetType[0];
-        switch (target)
-        {
-            case Card.TargetType.AllEnemies:
-                return allEnemiesColor;
-            case Card.TargetType.AllPlayers:
-                return allPlayersColor;
-            case Card.TargetType.Enemy:
-                return enemyColor;
-            default:
-                return new Color(0, 0, 0, 0);
-        }
     }
     /*
     public void RestartGame()
@@ -278,9 +305,4 @@ public class GameController : MonoBehaviour
         InformationController.infoController.RestartGame();
     }
     */
-
-    public void LoadEndGameScene()
-    {
-        SceneManager.LoadScene("EndScene");
-    }
 }

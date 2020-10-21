@@ -6,7 +6,12 @@ public class ModifyTempValueEffect : Effect
 {
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        card.SetTempEffectValue(Mathf.CeilToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100));
+        float value = card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f;
+        if (value > 0)
+            card.SetTempEffectValue(Mathf.CeilToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f));
+        else
+            card.SetTempEffectValue(Mathf.FloorToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f));
+
         yield return new WaitForSeconds(0);
     }
 

@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: E Pack Mentality
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Pack Mentality
   energyCost: 0
   manaCost: 3
   range: 1
   radius: 2
-  casterColor: 3
+  casterColor: 6
   description: Gain +1 Attack for each character in range for 3 turns
   art: {fileID: 21300000, guid: 475a496e8dce20043bc63c60d2935009, type: 3}
   castType: 5
   castShape: 0
   targetType: 0200000002000000
-  cardEffectName: 110000000d000000
+  cardEffectName: 1c0200006e000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000002000000
+  buffType: 0000000064000000
   effectValue: 0000000000000000
-  effectDuration: 0000000003000000
+  effectDuration: 0000000004000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}
@@ -39,4 +39,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   indicatorType: 2
-  indicatorValue: 
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

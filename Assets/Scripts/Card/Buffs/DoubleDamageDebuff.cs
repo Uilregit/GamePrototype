@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class DoubleDamageDebuff : Buff
 {
-    public override Color GetIconColor()
-    {
-        return Color.blue;
-    }
-
-    public override string GetDescription()
-    {
-        return "Shattered: Next {d} instance of damage dealt to this target is doubled";
-    }
-
     public override void OnApply(HealthController healthController, int value, int duration, bool fromRelic)
     {
-        healthController.AddOnDamangeDebuff(this, duration);
+        color = Color.blue;
+        description = "Shattered: Next {d} instance of damage dealt to this target is doubled";
+        triggerType = Buff.TriggerType.AtEndOfTurn;
+        durationType = Buff.DurationType.Turn;
+
+        base.duration = duration;
+        healthController.buffController.AddBuff(this);
+        healthController.AddVitDamageMultiplier(2);
     }
 
-    public override void Trigger(HealthController healthController)
+    public override IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value)
     {
+        yield return new WaitForSeconds(0);
     }
 
     public override void Revert(HealthController healthController)
     {
+        healthController.RemoveVitDamageMultiplier(2);
+    }
+
+    public override Buff GetCopy()
+    {
+        Buff output = new DoubleDamageDebuff();
+        output.tempValue = tempValue;
+        output.duration = duration;
+        output.value = value;
+        output.color = color;
+        output.description = description;
+        output.triggerType = triggerType;
+        output.durationType = durationType;
+
+        return output;
     }
 }

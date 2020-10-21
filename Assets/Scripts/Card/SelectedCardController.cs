@@ -15,6 +15,8 @@ public class SelectedCardController : MonoBehaviour
     public Image energyIcon;
     public Collider2D collider2d;
 
+    private int manacost = -1;
+
     public void SetCard(CardController card)
     {
         thisCard = card;
@@ -23,8 +25,11 @@ public class SelectedCardController : MonoBehaviour
         backImage.sprite = card.GetCard().art;
 
         cardName.text = card.GetCard().name;
-        manaCost.text = card.GetCard().manaCost.ToString();
-        energyCost.text = card.GetCard().energyCost.ToString();
+        manacost = card.GetCard().manaCost;
+        if (manacost > 0)
+            manaCost.text = card.GetCard().manaCost.ToString();
+        if (manacost == 0)
+            energyCost.text = card.GetCard().energyCost.ToString();
         /*
         switch (card.casterColor)
         {
@@ -57,10 +62,16 @@ public class SelectedCardController : MonoBehaviour
     {
         cardName.GetComponent<Renderer>().enabled = true;
         backImage.enabled = true;
-        manaIcon.enabled = true;
-        manaCost.enabled = true;
-        energyIcon.enabled = true;
-        energyCost.enabled = true;
+        if (manacost > 0)
+        {
+            manaIcon.enabled = true;
+            manaCost.enabled = true;
+        }
+        if (manacost == 0)
+        {
+            energyIcon.enabled = true;
+            energyCost.enabled = true;
+        }
         collider2d.enabled = true;
     }
 

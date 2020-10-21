@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: E Unholy Strength
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Unholy Strength
   energyCost: 0
   manaCost: 3
   range: 1
   radius: 2
-  casterColor: 3
+  casterColor: 6
   description: Raise the ATK of all allies in range by +2 for 2 turns
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 5
   castShape: 0
   targetType: 00000000
-  cardEffectName: 0d000000
+  cardEffectName: 6e000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 02000000
+  buffType: 64000000
   effectValue: 02000000
-  effectDuration: 02000000
+  effectDuration: 03000000
   spawnObject:
   - {fileID: 0}
   cards:
@@ -40,3 +40,4 @@ MonoBehaviour:
   targetBehaviour: 12
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

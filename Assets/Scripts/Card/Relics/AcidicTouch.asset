@@ -19,7 +19,7 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 0.39272022, a: 1}
   targetType: 4
   condition: 0
-  effect: 3
+  effect: 12
   buff: 0
   effectValue: 1
   effectDuration: 0

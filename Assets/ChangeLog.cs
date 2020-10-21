@@ -438,9 +438,23 @@
  * Fixed intent being greyed out when it should be at the beginning of every turn (character transforms are off by 0.007104, may want to check down the road)
  * Fixed vitdamage doing 100% of attack as damage in cards that have the potential to do 0 damage due to temporaryValue
  * Fixed incorrect showing of the broken status when there is bonus shield
+ * 
  * #####################
  * ####### 0.4.3 #######
  * #####################
+ * -- Features --
+ * Implimented all 6 colors' starting set common cards
+ * Can now choose between all 6 colors in the tavern
+ * Added Gold system. Passive and overkill
+ * Added Shops
+ * Added Relics
+ * Added score tracking
+ * Added save/load
+ * Added a lives system
+ *      If a player dies, their cards become a raise card that resurrect the player if there are lives left
+ *      If out of lives their cards are unplayable
+ *      *Players stay dead and no longer rez at 1 health if killed in combat. Dead players will stay dead
+ * 
  * -- Cards --
  * 
  * -- Enemies --
@@ -465,6 +479,16 @@
  *      New cards
  *      Relics
  *      Shrine stats bonuses
+ *      All score controller score values
+ *      Colors of the players in the game
+ * Added ability to choose the other 3 colors
+ * Added much more robust and futureproof sorting to card effects, condition types, and buff times
+ * Added cast range controlls to all characters
+ * Added tavern to allow players to choose their party
+ * Added save and load system for player preferences (party setup and settings)
+ * Check death now triggers after buffs
+ * Added trigger ticket system to buff triggers so removing of buffs only happens after the last buff has been triggered
+ *     Avoids issues where an end of turn buff triggers and deletes itself, but an on damage buff tries to access the modified list
  * 
  * -- UI --
  * Added to rewards screen gold gain for clearing combat, gold gain from overkill
@@ -474,6 +498,13 @@
  * Added damage number to card displays when it's not dynamic
  * Adjusted many UI elements to adjust according to screen width
  * Held card is no longer click or dragable during enemy turn
+ * Changed formatting code handeling for dynamic card text to be much more robust to adding new formatting codes
+ * Flipped card art for mana cards, and added better mana/energy cost display
+ * Changed energy icons to red in card and in combat UI
+ * Recentered and improved card text positioning and wrapping
+ * Added conditional highlight options for cards to indicate they will use the alternate effect or their effect will trigger with no problem
+ * Buffs now trigger one at a time on each characters one at a time for greater clarity
+ * Added hover card enlarge to rewards cards, shop cards, and deck customize cards
  * 
  * -- Bugs --
  * Fixed relics causing infinite loops on trigger
@@ -482,28 +513,15 @@
  * Fixed layer ordering issues
  * Fixed 0 number of energy cards played relics always triggering
  * Fixed card display crashing when the card text had multiple '%' characters in it
+ * Fixed boss spawns not dying if killed after the boss
+ * Fixed tiles not being created for player movement if enemy was knocked onto the original position
+ * Fixed certain buff times not triggering due to not being called as coroutines
+ * Fixed player stats not saving if they died in the first room
  * 
  * --------------------------------------------------------------------------------------------------
 
  * -- To dos --
- * bugs:
- * Taunts should force self effects to apply to taunted target instead
- * Taunts should change cast range to at least 1
- * 
- * add options menu
- *      animation speeds
- * Add UI for key words explanation of cards
- * 
- * relic for permanent move range buff by 1
- * 
- * Fix multi attack cards merging their attack numbers (feature?)
-
- * Add starting relic bonus to be only if last run ended above level 5, otherwise get a tiny stat boost instead (1 armor or 3 health)
- * Have a bigger visual effect for recovering from broken
- * 
- * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
- *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
- *      retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
+ * Simplify common cards
  * 
  * #####################
  * ####### 0.4.4 #######
@@ -518,11 +536,31 @@
  * 
  * -- Bugs --
  * 
+ * Add permanent progression per character and per team
+ *  Unlocks tallents for each member (chose 1 tallent tree)
+ *  Unlocks uncommon cards for the char
+ *  Unlocks uncommon relics
+ *  Unlocks team based progression (
+ *  Unlocks characters for the party
  * 
- * Add the other 3 colors
+ * Add world 2
+ *  
+ * Add options menu
+ *      animation speeds
+ * Add UI for key words explanation of cards
+ * 
+ * Add encyclopedia of cards that've been encountered in the game
+ * 
+ * move buffs to ability controllers? or seperate buffs to follow the listener pattern
+ * 
+ * Add starting relic bonus to be only if last run ended above level 5, otherwise get a tiny stat boost instead (1 armor or 3 health)
+ * Have a bigger visual effect for recovering from broken
+ * 
+ * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
+ *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
+ *      retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
  * 
  * Add more support for playing lots of cards per turn in uncommon
- * More support for the piercing damage archytype
  * Add water/pits
  * Add terrain like traps and fires and events (falling rocks)
  * Think about preventing long term stalling

@@ -11,6 +11,7 @@ public class HandController : MonoBehaviour
 
     public int maxHandSize;
     public int startingHandSize;
+    public bool allowHold = true;
     public int maxReplaceCount;
     public int playerNumber;
 
@@ -18,16 +19,12 @@ public class HandController : MonoBehaviour
     public float cardHighlightHeight;
     public float cardStartingSize;
     public float cardHighlightSize;
+    public float cardHoldSize;
     public float cardHighlightXBoarder;
     public float cardSpacing;
     public float cardCastVertThreshold;
 
     //public GameObject cardTemplate;
-
-    public Color redCasterColor;
-    public Color blueCasterColor;
-    public Color greenCasterColor;
-    public Color enemyCasterColor;
 
     private int currentReplaceCount = 0;
     private CardController currentlyHeldCard;
@@ -240,10 +237,10 @@ public class HandController : MonoBehaviour
         hand.Remove(removedCard);
         ResetCardPositions();
         ResetCardDisplays();
+        ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
         //Disables movement of all players with the removed card casterColor
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        GameObject caster = players[0];
         foreach (GameObject player in players)
             if (player.GetComponent<PlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
                 player.GetComponent<PlayerMoveController>().CommitMove();
@@ -252,19 +249,8 @@ public class HandController : MonoBehaviour
     //Draw cards untill hand is full
     public void DrawFullHand()
     {
-        /*
-        for (int i = 0; i < playerNumber; i++)
-        {
-            for (int j = 0; j < startingHandSizePerPlayer; j++)
-            {
-                if (deck.GetCurrentDeckSize(i) == 0)
-                    deck.ResetDeck(i);
-                DrawCard(i);
-            }
-        }*/
         for (int i = hand.Count; i < startingHandSize; i++)
             DrawAnyCard();
-        ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
         ResetReplaceText();
     }
@@ -328,28 +314,10 @@ public class HandController : MonoBehaviour
     public void ResetCardPlayability(int energy, int mana)
     {
         foreach (CardController card in hand)
-        {
             card.ResetPlayability(energy, mana);
-        }
+
         if (currentlyHeldCard != null)
             currentlyHeldCard.ResetPlayability(energy, mana);
-    }
-
-    public Color GetCasterColor(Card.CasterColor color)
-    {
-        switch (color)
-        {
-            case Card.CasterColor.Red:
-                return redCasterColor;
-            case Card.CasterColor.Blue:
-                return blueCasterColor;
-            case Card.CasterColor.Green:
-                return greenCasterColor;
-            case Card.CasterColor.Enemy:
-                return enemyCasterColor;
-            default:
-                return enemyCasterColor;
-        }
     }
 
     public void ResetReplaceCounter()
@@ -378,8 +346,8 @@ public class HandController : MonoBehaviour
     public void ResetCardDisplays()
     {
         foreach (CardController c in hand)
-            c.SetCard(c.GetCard());
+            c.GetComponent<CardDisplay>().SetCard(c);
         if (currentlyHeldCard != null)
-            currentlyHeldCard.SetCard(currentlyHeldCard.GetCard());
+            currentlyHeldCard.GetComponent<CardDisplay>().SetCard(currentlyHeldCard);
     }
 }

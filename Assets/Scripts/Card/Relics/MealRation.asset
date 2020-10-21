@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9dcdf5b0efe44fa7173b194d755e6, type: 3}
   m_Name: MealRation
   m_EditorClassIdentifier: 
-  relicName: Meal Ration
   rarity: 0
+  relicName: Meal Ration
   description: At the start of every encounter, all allies heal 2
   art: {fileID: -4338737075174767277, guid: 7ee450faf52867945afb7125d0ef8a82, type: 3}
   color: {r: 0.8113208, g: 0, b: 0.21780083, a: 1}
   targetType: 5
   condition: 0
-  effect: 5
+  effect: 21
   buff: 0
   effectValue: -2
   effectDuration: 0

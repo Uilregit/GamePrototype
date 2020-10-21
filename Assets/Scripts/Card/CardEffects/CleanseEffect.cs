@@ -8,7 +8,7 @@ public class CleanseEffect : Effect
     {
         foreach (GameObject targ in target)
         {
-            targ.GetComponent<HealthController>().Cleanse();
+            targ.GetComponent<BuffController>().Cleanse(targ.GetComponent<HealthController>());
         }
         yield return new WaitForSeconds(0);
     }

@@ -25,6 +25,7 @@ public class TimeController : MonoBehaviour
 
     [Header("Card Effect Timer Settings")]
     public float attackBufferTime;
+    public float buffTriggerBufferTime;
 
     [Header("Health Bar Timer Settings")]
     public float barShownDuration;

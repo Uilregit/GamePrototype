@@ -1,0 +1,271 @@
+fileFormatVersion: 2
+guid: 0c9ee798e5c661143bc0ac6bfbb74189
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8597747564244595293
+    second: Black Card Template_0
+  - first:
+      213: 938513664079775433
+    second: Black Card Template_1
+  - first:
+      213: 5395221689188436138
+    second: Black Card Template_2
+  - first:
+      213: 1226104007027020191
+    second: Black Card Template_3
+  - first:
+      213: 8344593402034397804
+    second: Black Card Template_4
+  - first:
+      213: 3993833600803206004
+    second: Black Card Template_5
+  - first:
+      213: -8366823941925664714
+    second: Black Card Template_6
+  - first:
+      213: -3433142902226329552
+    second: Black Card Template_7
+  - first:
+      213: 8488604332127722596
+    second: Black Card Template_8
+  - first:
+      213: 1259355521363822125
+    second: Black Card Template_9
+  - first:
+      213: 6188998589327059051
+    second: Black Card Template_10
+  - first:
+      213: -8698886834928724326
+    second: Black Card Template_11
+  - first:
+      213: -7560236210720772073
+    second: Black Card Template_12
+  - first:
+      213: 7596103836133356139
+    second: Black Card Template_13
+  - first:
+      213: 4332898121360520519
+    second: Black Card Template_14
+  - first:
+      213: -391466151191712639
+    second: Black Card Template_0
+  - first:
+      213: -853890455172550981
+    second: Black Card Template_1
+  - first:
+      213: -7635662943625944817
+    second: Black Card Template_2
+  - first:
+      213: 5341624331825193870
+    second: Black Card Template_3
+  - first:
+      213: 7514299957243334739
+    second: Black Card Template_4
+  - first:
+      213: -3856186851753269719
+    second: Black Card Template_5
+  - first:
+      213: 9095261502249262773
+    second: Black Card Template_6
+  - first:
+      213: 7384834588031070452
+    second: Black Card Template_7
+  - first:
+      213: -3778453379629017135
+    second: Black Card Template_8
+  - first:
+      213: -1443152159843001240
+    second: Black Card Template_9
+  - first:
+      213: 8533271918464073470
+    second: Black Card Template_10
+  - first:
+      213: -5726485574819896188
+    second: Black Card Template_11
+  - first:
+      213: 4727454925561532920
+    second: Black Card Template_12
+  - first:
+      213: -5135214606590504912
+    second: Black Card Template_13
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 218
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Black Card Template_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 25
+        width: 250
+        height: 343
+      alignment: 9
+      pivot: {x: 0.5353093, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ad88b4a42aaea880800000000000000
+      internalID: -8597747564244595293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Black Card Template_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 367
+        width: 253
+        height: 334
+      alignment: 9
+      pivot: {x: 0.4841107, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c6435c7435460d00800000000000000
+      internalID: 938513664079775433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

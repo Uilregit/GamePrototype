@@ -54,13 +54,20 @@ public class HealthBarController : MonoBehaviour
     private bool hidingDamageImage = false;
     private bool hidingShieldDamageImage = false;
 
+    private IEnumerator healthBarHide;
+    private IEnumerator healthImageHide;
+    private IEnumerator statusTextHide;
+    private IEnumerator shieldDamageNumberHide;
+    private IEnumerator resetShieldImageHide;
     //private bool runningCoroutine = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         damageImagePosition = damageImage.transform.position - transform.position;
         shieldDamageImagePosition = shieldDamageImage.transform.position - transform.position;
+        shieldDamageImage.transform.position = (Vector2)transform.position + shieldDamageImagePosition;
+        shieldDamageImage2.transform.position = (Vector2)transform.position + shieldDamageImagePosition;
 
         backImage = GetComponent<Image>();
         backImage.enabled = false;
@@ -78,7 +85,8 @@ public class HealthBarController : MonoBehaviour
 
     public void SetBar(int initialHealth, int damage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken, bool permanent = false)
     {
-        StopCoroutine(HideHealthBar());
+        if (healthBarHide != null)
+            StopCoroutine(healthBarHide);
 
         int maxSize = Mathf.Max(new int[] { maxHealth, initialHealth - damage, initialHealth }); //The max between either damage, overheal, or the initial overhealed amount
         int bonusHealth = Mathf.Max(0, initialHealth - damage - maxHealth);
@@ -125,7 +133,10 @@ public class HealthBarController : MonoBehaviour
         barImage.enabled = true;
         //bonusHealthDamageBar.enabled = true;
         if (!permanent)
-            StartCoroutine(HideHealthBar());
+        {
+            healthBarHide = HideHealthBar();
+            StartCoroutine(healthBarHide);
+        }
     }
 
     //Called by other scripts to hide healthbars when letting go
@@ -155,7 +166,8 @@ public class HealthBarController : MonoBehaviour
         damageText.transform.localScale = originalDamagetextScale;
         if (hidingDamageImage)
         {
-            StopCoroutine(HideDamageNumber());
+            StopCoroutine(healthImageHide);
+            hidingDamageImage = false;
             damage += oldDamageInt;
         }
 
@@ -201,7 +213,8 @@ public class HealthBarController : MonoBehaviour
         damageText.enabled = true;
         damageText.text = Mathf.Abs(damage).ToString();
 
-        StartCoroutine(HideDamageNumber());
+        healthImageHide = HideDamageNumber();
+        StartCoroutine(healthImageHide);
     }
 
     private IEnumerator ResetDamageImage()
@@ -236,8 +249,8 @@ public class HealthBarController : MonoBehaviour
             shieldDamage += oldShieldDamgeInt;
             shieldValue = oldShieldAmount;
 
-            StopCoroutine(HideShieldDamageNumber());
-            StopCoroutine(ResetShieldDamageImage(shieldValue, shieldDamage));
+            StopCoroutine(shieldDamageNumberHide);
+            //StopCoroutine(resetShieldImageHide);
         }
 
         oldShieldDamgeInt = shieldDamage;
@@ -251,9 +264,10 @@ public class HealthBarController : MonoBehaviour
         shieldDamageImage2.enabled = true;
         shieldDamageText.enabled = true;
 
-        StartCoroutine(ResetShieldDamageImage(shieldValue, shieldDamage));
-
-        StartCoroutine(HideShieldDamageNumber());
+        shieldDamageNumberHide = HideShieldDamageNumber();
+        resetShieldImageHide = ResetShieldDamageImage(shieldValue, shieldDamage);
+        StartCoroutine(resetShieldImageHide);
+        StartCoroutine(shieldDamageNumberHide);
     }
 
     private IEnumerator ResetShieldDamageImage(int shieldValue, int shieldDamage)
@@ -303,13 +317,15 @@ public class HealthBarController : MonoBehaviour
 
     public void SetStatusText(string text, Color color)
     {
-        StopCoroutine(HideStatustText());
+        if (statusTextHide != null)
+            StopCoroutine(statusTextHide);
 
         statusText.text = text;
         statusText.color = color;
         statusText.enabled = true;
 
-        StartCoroutine(HideStatustText());
+        statusTextHide = HideStatustText();
+        StartCoroutine(statusTextHide);
     }
 
     public IEnumerator HideStatustText()

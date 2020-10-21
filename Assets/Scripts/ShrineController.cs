@@ -69,15 +69,15 @@ public class ShrineController : MonoBehaviour
     {
         if (statsBoost == StatsBoostType.AttackBoost)
         {
-            InformationController.infoController.ChangeCombatInfo(1, 0, 0);
+            InformationController.infoController.ChangeCombatInfo(0, 1, 0, 0);
         }
         else if (statsBoost == StatsBoostType.ArmorBoost)
         {
-            InformationController.infoController.ChangeCombatInfo(0, 2, 0);
+            InformationController.infoController.ChangeCombatInfo(0, 0, 2, 0);
         }
         else if (statsBoost == StatsBoostType.HealthBoost)
         {
-            InformationController.infoController.ChangeCombatInfo(0, 0, 5);
+            InformationController.infoController.ChangeCombatInfo(0, 0, 0, 5);
         }
 
         GameController.gameController.LoadScene("OverworldScene", false, 0);

@@ -39,8 +39,8 @@ public class ScoreDisplayController : MonoBehaviour
         goldUsed.text = "Gold Used (" + ScoreController.score.GetGoldUsed().ToString() + ")";
         if (ScoreController.score.GetBossesDefeated() > 0)
             bossesDefeated.text = "Bosses Defeated (" + ScoreController.score.GetBossesDefeated().ToString() + ")";
-        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetMinutesInGame() < 30)
-            secondsInGame.text = "Speed Bonus (" + ((int)ScoreController.score.GetMinutesInGame()).ToString() + " mins)";
+        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetSecondsInGame() / 60 < 30)
+            secondsInGame.text = "Speed Bonus (" + ((int)ScoreController.score.GetSecondsInGame() / 60).ToString() + " mins)";
 
         int scoreTotal = 0;
         overkillScore.text = (ScoreController.score.GetOverKill() * ScoreController.score.scorePerOverkill).ToString();
@@ -62,10 +62,10 @@ public class ScoreDisplayController : MonoBehaviour
             bossesDefeatedScore.text = (ScoreController.score.GetBossesDefeated() * ScoreController.score.scorePerBossesDefeated).ToString();
             scoreTotal += ScoreController.score.GetBossesDefeated() * ScoreController.score.scorePerBossesDefeated;
         }
-        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetMinutesInGame() < 30)
+        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetSecondsInGame() / 60 < 30)
         {
-            secondsInGameScore.text = ((int)ScoreController.score.GetMinutesInGame() * ScoreController.score.scorePerSecondsInGame).ToString();
-            scoreTotal += Mathf.Max(0, (30 - (int)ScoreController.score.GetMinutesInGame())) * ScoreController.score.scorePerSecondsInGame;
+            secondsInGameScore.text = ((int)ScoreController.score.GetSecondsInGame() / 60 * ScoreController.score.scorePerSecondsInGame).ToString();
+            scoreTotal += Mathf.Max(0, (30 - (int)ScoreController.score.GetSecondsInGame() / 60)) * ScoreController.score.scorePerSecondsInGame;
         }
 
         TotalScore.text = scoreTotal.ToString();

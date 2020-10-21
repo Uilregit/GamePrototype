@@ -64,6 +64,7 @@ public class CombatController : MonoBehaviour
         //c.GetComponent<CardDragController>().SetActive(false);
     }
 
+    /*
     public void RemoveCard(CardController cardController)
     {
         if (cardController.GetCard().returnOnCancel == true) //If allowed, draw the canceled card back
@@ -74,6 +75,7 @@ public class CombatController : MonoBehaviour
         queueCards.Remove(cardController);
         Destroy(cardController.gameObject);
     }
+    */
 
     public CardController RemoveLastCard()
     {

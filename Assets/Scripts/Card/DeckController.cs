@@ -24,6 +24,11 @@ public class DeckController : MonoBehaviour
     private List<CardController> drawPile;
     private List<CardController> discardPile;
 
+    private int numberOfManaCardsInDraw = 0;
+    private int numberOfEnergyCardsInDraw = 0;
+    private int numberOfManaCardsInDiscard = 0;
+    private int numberOfEnergyCardsInDiscard = 0;
+
     //Creates currentDeck and makes it a copy of the default deck
     private void Awake()
     {
@@ -38,11 +43,21 @@ public class DeckController : MonoBehaviour
 
     public void PopulateDecks()
     {
+        numberOfManaCardsInDraw = 0;
+        numberOfEnergyCardsInDraw = 0;
         drawPile = new List<CardController>();
         foreach (ListWrapper cards in deck)
             foreach (CardController c in cards.deck)
+            {
                 drawPile.Add(c);
+                if (c.GetCard().manaCost == 0)
+                    numberOfEnergyCardsInDraw += 1;
+                else
+                    numberOfManaCardsInDraw += 1;
+            }
         discardPile = new List<CardController>();
+        numberOfEnergyCardsInDiscard = 0;
+        numberOfManaCardsInDiscard = 0;
     }
 
     //Draws any card
@@ -58,6 +73,11 @@ public class DeckController : MonoBehaviour
         drawPile.RemoveAt(0);
 
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
+        if (drawnCard.GetCard().manaCost == 0)
+            numberOfEnergyCardsInDraw -= 1;
+        else
+            numberOfManaCardsInDraw -= 1;
+
         return drawnCard;
     }
 
@@ -82,7 +102,10 @@ public class DeckController : MonoBehaviour
             }
         }
         if (index != -1)
+        {
             drawPile.RemoveAt(index);
+            numberOfManaCardsInDraw -= 1;
+        }
 
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
 
@@ -108,7 +131,10 @@ public class DeckController : MonoBehaviour
                 break;
             }
         if (index != -1)
+        {
             drawPile.RemoveAt(index);
+            numberOfEnergyCardsInDraw -= 1;
+        }
 
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
@@ -126,13 +152,23 @@ public class DeckController : MonoBehaviour
         drawPile = new List<CardController>();
         drawPile = discardPile;
         discardPile = new List<CardController>();
+        numberOfEnergyCardsInDraw = numberOfEnergyCardsInDiscard;
+        numberOfManaCardsInDraw = numberOfManaCardsInDiscard;
+        numberOfEnergyCardsInDiscard = 0;
+        numberOfManaCardsInDiscard = 0;
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
 
     public void ReportUsedCard(CardController card)
     {
         if (!card.GetCard().exhaust)
+        {
             discardPile.Add(card);
+            if (card.GetCard().manaCost == 0)
+                numberOfEnergyCardsInDiscard += 1;
+            else
+                numberOfManaCardsInDiscard += 1;
+        }
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
 
@@ -168,6 +204,9 @@ public class DeckController : MonoBehaviour
         {
             foreach (CardController card in list.deck)
             {
+                //Debug.Log(card);
+                //Debug.Log(card.GetCard());
+                //Debug.Log(card.GetCard().name);
                 card.GetCard().SetTempDuration(0);
                 card.GetCard().SetTempEffectValue(0);
             }
@@ -177,11 +216,32 @@ public class DeckController : MonoBehaviour
         {
             card.ResetEnergyCostDiscount();
             card.ResetManaCostDiscount();
+            card.ResetEnergyCostCap();
+            card.ResetManaCostCap();
         }
         foreach (CardController card in discardPile)
         {
             card.ResetEnergyCostDiscount();
             card.ResetManaCostDiscount();
+            card.ResetEnergyCostCap();
+            card.ResetManaCostCap();
         }
+    }
+
+    public int GetNumberOfEnergyCardsInDraw()
+    {
+        return numberOfEnergyCardsInDraw;
+    }
+    public int GetNumberOfManaCardsInDraw()
+    {
+        return numberOfManaCardsInDraw;
+    }
+    public int GetNumberOfEnergyCardsInDiscard()
+    {
+        return numberOfEnergyCardsInDiscard;
+    }
+    public int GetNumberOfManaCardsInDiscard()
+    {
+        return numberOfManaCardsInDiscard;
     }
 }

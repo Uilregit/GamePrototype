@@ -7,8 +7,8 @@ public class VitDamageAll : Effect
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject thisTarget in targets)
-            thisTarget.GetComponent<HealthController>().TakeVitDamage(caster.GetComponent<HealthController>().GetAttack()+ card.effectValue[effectIndex], caster.GetComponent<HealthController>());
+        foreach (GameObject t in targets)
+            new EffectFactory().GetEffect(Card.EffectType.VitDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex);
         yield return new WaitForSeconds(0);
     }
 

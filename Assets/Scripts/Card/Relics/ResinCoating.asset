@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9dcdf5b0efe44fa7173b194d755e6, type: 3}
   m_Name: ResinCoating
   m_EditorClassIdentifier: 
-  relicName: Resin Coating
   rarity: 0
+  relicName: Resin Coating
   description: Whenever an ally gains temporary armor, gain +1 more
   art: {fileID: 346599949687136499, guid: b06752fbee9a16c46b9158900697fcd5, type: 3}
   color: {r: 1, g: 0.58082247, b: 0, a: 1}
   targetType: 1
   condition: 11
-  effect: 13
-  buff: 3
+  effect: 110
+  buff: 110
   effectValue: 1
   effectDuration: 1

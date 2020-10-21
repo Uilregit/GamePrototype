@@ -61,8 +61,8 @@ public class PlayerMoveController : MonoBehaviour
                     lastHoverLocation = roundedPosition;
 
                     path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player", "Enemy" }, new List<Vector2> { Vector2.zero }, 1);
-                    TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
-                    TileCreator.tileCreator.CreatePathTiles(player.GetPlayerID(), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, roundedPosition), moveRangeIndicatorColor);
+                    TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
+                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, roundedPosition), moveRangeIndicatorColor);
                 }
             }
         }
@@ -74,8 +74,8 @@ public class PlayerMoveController : MonoBehaviour
                 lastHoverLocation = lastGoodPosition;
 
                 path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
-                TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
-                TileCreator.tileCreator.CreatePathTiles(player.GetPlayerID(), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
+                TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
+                TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
             }
         }
     }
@@ -146,11 +146,19 @@ public class PlayerMoveController : MonoBehaviour
         lastGoodPosition = newOrigin;
     }
 
+    public void ResetMoveDistance(int value)
+    {
+        movedDistance = value;
+    }
+
     public void TeleportTo(Vector2 newOrigin)
     {
         lastGoodPosition = newOrigin;
         originalPosition = newOrigin;
         path = new List<Vector2>();
+
+        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
+            enemy.GetComponent<EnemyInformationController>().RefreshIntent();
     }
 
     public void ResetTurn()
@@ -206,7 +214,7 @@ public class PlayerMoveController : MonoBehaviour
         movedDistance += GridController.gridController.GetManhattanDistance(transform.position, originalPosition); //Allow movement after action
         originalPosition = transform.position;
         path = new List<Vector2>();
-        TileCreator.tileCreator.DestroyPathTiles(player.GetPlayerID());
+        TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
         //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
     }
 
@@ -224,9 +232,14 @@ public class PlayerMoveController : MonoBehaviour
         lastGoodPosition = transform.position;
 
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
-        {
             enemy.GetComponent<EnemyInformationController>().RefreshIntent();
-        }
+
+        HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+    }
+
+    public int GetMovedDistance()
+    {
+        return movedDistance + GridController.gridController.GetManhattanDistance(moveShadow.transform.position, originalPosition);
     }
 
     private void OnMouseDown()
@@ -234,7 +247,7 @@ public class PlayerMoveController : MonoBehaviour
         clickedTime = DateTime.Now;
         clickedLocation = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 
-        GetComponent<HealthController>().ShowHealthBar();
+        healthController.ShowHealthBar();
     }
 
     public void OnMouseUp()
@@ -243,10 +256,14 @@ public class PlayerMoveController : MonoBehaviour
 
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
-            HealthController hlth = GetComponent<HealthController>();
             List<CardController> cards = new List<CardController>();
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.buffController.GetBuffs(), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
+
+        if ((Vector2)transform.position != lastGoodPosition)
+            StartCoroutine(healthController.buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
+
+        HandController.handController.ResetCardDisplays();
     }
 }

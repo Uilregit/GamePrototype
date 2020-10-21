@@ -21,15 +21,15 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 0
-  description: Gain +2 temporary armor this turn
+  description: Give the target +2 temporary armor
   art: {fileID: 21300000, guid: a7e7c2c6860445e4989141bba9248ab8, type: 3}
   castType: 0
   castShape: 0
   targetType: 03000000
-  cardEffectName: 0d000000
+  cardEffectName: 6e000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 03000000
+  buffType: 6e000000
   effectValue: 02000000
   effectDuration: 01000000
   spawnObject:
@@ -37,6 +37,6 @@ MonoBehaviour:
   cards:
   - {fileID: 0}
   indicatorType: 0
-  targetBehaviour: 10
+  targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0

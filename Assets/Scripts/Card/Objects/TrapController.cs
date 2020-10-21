@@ -20,7 +20,7 @@ public class TrapController : MonoBehaviour
         foreach (GameObject trappedObject in trappedObjects)
         {
             trappedObject.GetComponent<HealthController>().SetStunned(true);        //Apply ministun to stop object's turn
-            trappedObject.GetComponent<HealthController>().AddEndOfTurnBuff(new StunDebuff(), 0);
+            trappedObject.GetComponent<BuffController>().AddBuff(new StunDebuff());
         }
         EffectFactory factory = new EffectFactory();
         Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);

@@ -8,6 +8,6 @@ public class AttackQueueCardController : MonoBehaviour
     {
         CardController cardController = GetComponent<CardController>();
         TurnController.turnController.UseResources(-cardController.GetCard().energyCost, -cardController.GetCard().manaCost);
-        CombatController.combatController.RemoveCard(GetComponent<CardController>());
+        //CombatController.combatController.RemoveCard(GetComponent<CardController>());
     }
 }

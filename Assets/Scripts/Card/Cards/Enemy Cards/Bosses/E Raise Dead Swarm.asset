@@ -20,13 +20,13 @@ MonoBehaviour:
   manaCost: 4
   range: 2
   radius: 2
-  casterColor: 3
+  casterColor: 6
   description: Summon a 5 Attack/2 Armor/8 Health fiend
   art: {fileID: 21300000, guid: a24483d458ff45c4f8323ca5975780b9, type: 3}
   castType: 5
   castShape: 0
   targetType: 02000000
-  cardEffectName: 0f000000
+  cardEffectName: 88130000
   conditionType: 00000000
   conditionValue: 00000000
   buffType: 00000000

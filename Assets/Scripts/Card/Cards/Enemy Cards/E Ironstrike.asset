@@ -20,13 +20,13 @@ MonoBehaviour:
   manaCost: 0
   range: 1
   radius: 0
-  casterColor: 3
+  casterColor: 6
   description: Deal <s>100% of ATK as</s> damage and gain +1 armor
   art: {fileID: 21300000, guid: e9b2e6cc01eba1444be7ec8a9b6cea06, type: 3}
   castType: 2
   castShape: 0
   targetType: 0100000002000000
-  cardEffectName: 0000000001000000
+  cardEffectName: 000000000a000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buffType: 0000000000000000

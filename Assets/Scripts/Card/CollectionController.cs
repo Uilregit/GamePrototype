@@ -29,10 +29,10 @@ public class CollectionController : MonoBehaviour
     public FinalizeButtonController finalizeButton;
     [SerializeField]
     public EditorCardsWrapper[] editorDeck;
-    private ListWrapper[] completeDeck;
-    private ListWrapper[] selectedDeck;
-    [SerializeField]
-    private ListWrapper[] newCards;
+    public EditorCardsWrapper[] debugDeck;
+    private ListWrapper[] completeDeck = new ListWrapper[3];
+    private ListWrapper[] selectedDeck = new ListWrapper[3];
+    private ListWrapper[] newCards = new ListWrapper[3];
     private CardController recentRewardsCard;
 
     private List<Dictionary<string, int>> uniqueCards;
@@ -48,21 +48,37 @@ public class CollectionController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        completeDeck = new ListWrapper[editorDeck.Length];
-        for (int i = 0; i < editorDeck.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
             completeDeck[i] = new ListWrapper();
+            newCards[i] = new ListWrapper();
+            newCards[i].deck = new List<CardController>();
+        }
+
+        //Create the completeDeck variable from decks in the editor
+        //Only includes decks from colors in the party and sorts them by their color order in the party
+        EditorCardsWrapper[] usedDeck;
+        if (RoomController.roomController.debug)
+            usedDeck = debugDeck;
+        else
+            usedDeck = editorDeck;
+
+        for (int i = 0; i < usedDeck.Length; i++)
+        {
+            if (!PartyController.party.partyColors.Contains(usedDeck[i].deck[0].casterColor))
+                continue;
+
             List<CardController> temp = new List<CardController>();
-            foreach (Card c in editorDeck[i].deck)
+            foreach (Card c in usedDeck[i].deck)
             {
                 CardController j = this.gameObject.AddComponent<CardController>();
                 j.SetCard(c, true, false);
                 temp.Add(j);
             }
-            completeDeck[i].SetDeck(temp);
+            completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
         }
 
-        selectedDeck = new ListWrapper[editorDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
+        selectedDeck = new ListWrapper[completeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
         for (int i = 0; i < completeDeck.Length; i++)
         {
             selectedDeck[i] = new ListWrapper();
@@ -86,19 +102,7 @@ public class CollectionController : MonoBehaviour
         for (int i = 0; i < 3; i++)
             foreach (CardController card in selectedDeck[i].deck)
             {
-                int deckIndex = 0;
-                switch (card.GetCard().casterColor)
-                {
-                    case Card.CasterColor.Red:
-                        deckIndex = 0;
-                        break;
-                    case Card.CasterColor.Blue:
-                        deckIndex = 1;
-                        break;
-                    case Card.CasterColor.Green:
-                        deckIndex = 2;
-                        break;
-                }
+                int deckIndex = PartyController.party.GetPartyIndex(card.GetCard().casterColor);
                 uniqueCards[deckIndex][card.GetCard().name] -= 1;
             }
     }
@@ -187,19 +191,7 @@ public class CollectionController : MonoBehaviour
 
     public void AddCard(CardController newCard)
     {
-        int deckIndex = 0;
-        switch (newCard.GetCard().casterColor)
-        {
-            case Card.CasterColor.Red:
-                deckIndex = 0;
-                break;
-            case Card.CasterColor.Blue:
-                deckIndex = 1;
-                break;
-            case Card.CasterColor.Green:
-                deckIndex = 2;
-                break;
-        }
+        int deckIndex = PartyController.party.GetPartyIndex(newCard.GetCard().casterColor);
         if (selectedDeck[deckIndex].deck.Count < 8)
         {
             selectedDeck[deckIndex].deck.Add(newCard);
@@ -223,19 +215,7 @@ public class CollectionController : MonoBehaviour
 
     public void RemoveCard(CardController newCard)
     {
-        int deckIndex = 0;
-        switch (newCard.GetCard().casterColor)
-        {
-            case Card.CasterColor.Red:
-                deckIndex = 0;
-                break;
-            case Card.CasterColor.Blue:
-                deckIndex = 1;
-                break;
-            case Card.CasterColor.Green:
-                deckIndex = 2;
-                break;
-        }
+        int deckIndex = PartyController.party.GetPartyIndex(newCard.GetCard().casterColor);
         selectedDeck[deckIndex].deck.Remove(newCard);
         uniqueCards[deckIndex][newCard.GetCard().name] += 1;
 
@@ -338,26 +318,14 @@ public class CollectionController : MonoBehaviour
         if (isRewardsCard)
             GameController.gameController.RecordRewardCards(newCard.GetCard());
         recentRewardsCard = newCard;
-        int deckIndex = 0;
-        switch (newCard.GetCard().casterColor)
-        {
-            case Card.CasterColor.Red:
-                deckIndex = 0;
-                break;
-            case Card.CasterColor.Blue:
-                deckIndex = 1;
-                break;
-            case Card.CasterColor.Green:
-                deckIndex = 2;
-                break;
-        }
+        int deckIndex = PartyController.party.GetPartyIndex(newCard.GetCard().casterColor);
 
         CardController c = this.gameObject.AddComponent<CardController>();
         c.SetCard(newCard.GetCard(), true, false);
 
         if (!newCards[deckIndex].deck.Contains(c))
             newCards[deckIndex].deck.Add(c);
-        completeDeck[deckIndex].deck.Add(newCard);
+        completeDeck[deckIndex].deck.Add(c);
         ReCountUniqueCards();
         ResolveSelectedList();
         RefreshDecks();
@@ -365,19 +333,7 @@ public class CollectionController : MonoBehaviour
 
     public void RemoveCardFromNew(CardController newCard)
     {
-        int deckIndex = 0;
-        switch (newCard.GetCard().casterColor)
-        {
-            case Card.CasterColor.Red:
-                deckIndex = 0;
-                break;
-            case Card.CasterColor.Blue:
-                deckIndex = 1;
-                break;
-            case Card.CasterColor.Green:
-                deckIndex = 2;
-                break;
-        }
+        int deckIndex = PartyController.party.GetPartyIndex(newCard.GetCard().casterColor);
         if (newCards[deckIndex].deck.Contains(newCard))
             newCards[deckIndex].deck.Remove(newCard);
 
@@ -410,22 +366,10 @@ public class CollectionController : MonoBehaviour
 
     public int GetCountOfCardInCollection(Card card)
     {
-        int index = 0;
-        switch (card.casterColor)
-        {
-            case Card.CasterColor.Red:
-                index = 0;
-                break;
-            case Card.CasterColor.Blue:
-                index = 1;
-                break;
-            case Card.CasterColor.Green:
-                index = 2;
-                break;
-        }
+        int deckIndex = PartyController.party.GetPartyIndex(card.casterColor);
 
         int counter = 0;
-        foreach (CardController c in completeDeck[index].deck)
+        foreach (CardController c in completeDeck[deckIndex].deck)
             if (c.GetCard().name == card.name)
                 counter++;
 
@@ -492,7 +436,7 @@ public class CollectionController : MonoBehaviour
         }
     }
 
-    public void SetNewCardsDeck(string [][] newCardDeckNames)
+    public void SetNewCardsDeck(string[][] newCardDeckNames)
     {
         for (int i = 0; i < newCardDeckNames.Length; i++)
         {

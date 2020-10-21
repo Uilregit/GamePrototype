@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
     private Card card;
+    private Card resurrectCard;
+    public bool isResurrectCard = false;
     private CardDisplay cardDisplay;
     private CardEffectsController cardEffects;
     private CardDragController cardDrag;
@@ -13,7 +17,11 @@ public class CardController : MonoBehaviour
     private int manaCostDiscount;
     private int energyCostDiscount;
 
+    private int manaCostCap = 99999;
+    private int energyCostCap = 99999;
+
     private GameObject caster;
+    private HealthController casterHealthController;
 
     // Start is called before the first frame update
     void Awake()
@@ -96,7 +104,10 @@ public class CardController : MonoBehaviour
 
     public Card GetCard()
     {
-        return card;
+        if (isResurrectCard)
+            return resurrectCard;
+        else
+            return card;
     }
 
     public void SetLocation(Vector2 startingLocation)
@@ -127,12 +138,19 @@ public class CardController : MonoBehaviour
 
             GameObject caster = FindCaster(card);
             if (card.castType == Card.CastType.AoE)
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, card.radius, HandController.handController.GetCasterColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, card.radius, PartyController.party.GetPlayerColor(card.casterColor));
             else
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, card.range, HandController.handController.GetCasterColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange(), PartyController.party.GetPlayerColor(card.casterColor));
+
+            if (!card.canCastOnSelf)
+                TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, new List<Vector2>() { (Vector2)caster.transform.position });
+
             List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
             foreach (Vector2 loc in castableLocations)
             {
+                if (!card.canCastOnSelf && loc == (Vector2)caster.transform.position)
+                    continue;
+
                 switch (card.castType)
                 {
                     case Card.CastType.Any:
@@ -158,6 +176,10 @@ public class CardController : MonoBehaviour
             }
             //}
         }
+        else if (ResourceController.resource.GetLives() > 0)
+        {
+            TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetDeathLocation(card.casterColor), resurrectCard.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange(), PartyController.party.GetPlayerColor(card.casterColor));
+        }
     }
 
     public void DeleteRangeIndicator()
@@ -179,10 +201,79 @@ public class CardController : MonoBehaviour
     //If there is enough mana to play the card, show highlight around the card
     public void ResetPlayability(int energy, int mana)
     {
+        bool highlight = false;
+
+        if ((!GameController.gameController.GetDeadChars().Contains(card.casterColor) && isResurrectCard) ||  //If this was a resurrect card and the player rezed, change it back to what it was
+            (ResourceController.resource.GetLives() == 0 && isResurrectCard))                                 //or if the team is out of lives, change it back too
+        {
+            isResurrectCard = false;
+            cardDisplay.SetCard(this);
+            cardEffects.SetCard(this);
+        }
+
         if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && !GameController.gameController.GetDeadChars().Contains(card.casterColor))
-            cardDisplay.SetHighLight(true);
+        {
+            if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
+                cardDisplay.SetHighLight(false);
+            else if (card.manaCost == 0 && GetCaster().GetComponent<HealthController>().GetDisarmed())
+                cardDisplay.SetHighLight(false);
+            else
+            {
+                cardDisplay.SetHighLight(true);
+                highlight = true;
+            }
+        }
+        else if (GameController.gameController.GetDeadChars().Contains(card.casterColor) && ResourceController.resource.GetLives() > 0)
+        {
+            isResurrectCard = true;
+            resurrectCard = LootController.loot.ResurrectCard.GetCopy();
+            resurrectCard.casterColor = card.casterColor;
+            resurrectCard.castShape = Card.CastShape.Circle;
+            cardDisplay.SetCard(this);
+            cardEffects.SetCard(this);
+            if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost())
+            {
+                cardDisplay.SetHighLight(true);
+                highlight = true;
+            }
+            else
+                cardDisplay.SetHighLight(false);
+        }
         else
             cardDisplay.SetHighLight(false);
+
+        if (highlight)
+            ResetConditionHighlight();              //Only allow conditional highlight if the card is playable
+        else
+            cardDisplay.SetConditionHighlight(false);
+    }
+
+    public void ResetConditionHighlight()
+    {
+        switch (card.highlightCondition)
+        {
+            case (Card.HighlightCondition.None):
+                cardDisplay.SetConditionHighlight(false);
+                break;
+            case (Card.HighlightCondition.HasBonusATK):
+                cardDisplay.SetConditionHighlight(casterHealthController.GetBonusAttack() > 0);
+                break;
+            case (Card.HighlightCondition.HasBonusArmor):
+                cardDisplay.SetConditionHighlight(casterHealthController.GetBonusShield() > 0);
+                break;
+            case (Card.HighlightCondition.HasBonusVit):
+                cardDisplay.SetConditionHighlight(casterHealthController.GetBonusVit() > 0);
+                break;
+            case (Card.HighlightCondition.HasEnergyCardInDrawDeck):
+                cardDisplay.SetConditionHighlight(DeckController.deckController.GetNumberOfEnergyCardsInDraw() != 0);
+                break;
+            case (Card.HighlightCondition.HasManaCardInDrawDeck):
+                cardDisplay.SetConditionHighlight(DeckController.deckController.GetNumberOfManaCardsInDraw() != 0);
+                break;
+            case (Card.HighlightCondition.PlayedCardsThisTurn):
+                cardDisplay.SetConditionHighlight(TurnController.turnController.GetNumerOfCardsPlayedInTurn() != 0);
+                break;
+        }
     }
 
     public GameObject FindCaster(Card thisCard)
@@ -197,7 +288,10 @@ public class CardController : MonoBehaviour
             foreach (GameObject player in players)
             {
                 if (player.GetComponent<PlayerController>().GetColorTag() == thisCard.casterColor)
+                {
                     caster = player;
+                    casterHealthController = player.GetComponent<HealthController>();
+                }
             }
             return caster;
         }
@@ -217,12 +311,14 @@ public class CardController : MonoBehaviour
                 GridController.gridController.GetManhattanDistance(caster.transform.position, location) >
                 GridController.gridController.GetManhattanDistance(player.transform.position, location))
                 caster = player;
+        casterHealthController = caster.GetComponent<HealthController>();
         return caster;
     }
 
     public void SetCaster(GameObject obj)
     {
         caster = obj;
+        casterHealthController = obj.GetComponent<HealthController>();
     }
 
     public GameObject GetCaster()
@@ -250,6 +346,26 @@ public class CardController : MonoBehaviour
         manaCostDiscount = 0;
     }
 
+    public void SetManaCostCap(int value)
+    {
+        manaCostCap = value;
+    }
+
+    public void SetEnergyCostCap(int value)
+    {
+        energyCostCap = value;
+    }
+
+    public void ResetManaCostCap()
+    {
+        manaCostCap = 99999;
+    }
+
+    public void ResetEnergyCostCap()
+    {
+        energyCostCap = 99999;
+    }
+
     public int GetEnergyCostDiscount()
     {
         return energyCostDiscount;
@@ -262,16 +378,36 @@ public class CardController : MonoBehaviour
 
     public int GetNetManaCost()
     {
-        if (card.manaCost == 0)
+        Card currentCard = card;
+        if (isResurrectCard)
+            currentCard = resurrectCard;
+
+        if (currentCard.manaCost == 0)
             return 0;
-        return Mathf.Max(Mathf.Min(card.manaCost, TurnController.turnController.GetManaCostCap()) - GetManaCostDiscount() - TurnController.turnController.GetManaReduction(), 0);
+        HealthController hlth = caster.GetComponent<HealthController>();
+        int cost = Mathf.Min(currentCard.manaCost, hlth.GetManaCostCap(), TurnController.turnController.GetManaCostCap(), manaCostCap); //Set cost to the minimum cap for the card
+        //Reduce all reduction sources from the cap
+        cost -= GetManaCostDiscount();
+        cost -= caster.GetComponent<HealthController>().GetManaCostReduction();
+        cost -= TurnController.turnController.GetManaReduction();
+        return cost;
     }
 
     public int GetNetEnergyCost()
     {
-        if (card.energyCost == 0 && card.manaCost != 0)
+        Card currentCard = card;
+        if (isResurrectCard)
+            currentCard = resurrectCard;
+
+        if (currentCard.energyCost == 0 && currentCard.manaCost != 0)
             return 0;
-        return Mathf.Max(Mathf.Min(card.energyCost, TurnController.turnController.GetEnergyCostCap()) - GetEnergyCostDiscount() - TurnController.turnController.GetEnergyReduction(), 0);
+        HealthController hlth = caster.GetComponent<HealthController>();
+        int cost = Mathf.Min(currentCard.energyCost, hlth.GetEnergyCostCap(), TurnController.turnController.GetEnergyCostCap(), energyCostCap); //Set cost to the minimum cap for the card
+        //Reduce all reduction sources from the cap
+        cost -= GetEnergyCostDiscount();
+        cost -= caster.GetComponent<HealthController>().GetEnergyCostReduction();
+        cost -= TurnController.turnController.GetEnergyReduction();
+        return cost;
     }
 
     public int GetSimulatedTotalAttackValue(int attackCardIndex)

@@ -14,6 +14,8 @@ public class GridController : MonoBehaviour
     //private GameObject[,] objects;
     public List<GameObject>[,] objects;
 
+    private Dictionary<Card.CasterColor, Vector2> deathLocation;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -26,6 +28,8 @@ public class GridController : MonoBehaviour
         for (int x = 0; x < xSize; x++)
             for (int y = 0; y < ySize; y++)
                 objects[x, y] = new List<GameObject>();
+
+        deathLocation = new Dictionary<Card.CasterColor, Vector2>();
     }
 
     public int[] GetRoomRange()
@@ -105,10 +109,11 @@ public class GridController : MonoBehaviour
             withTags = new string[] { "Player", "Enemy" };
 
         List<GameObject> output = new List<GameObject>();
+        if (CheckIfOutOfBounds(location))
+            return output;
         foreach (GameObject obj in objects[(xLoc + xOffset), (yLoc + yOffset)])
             if (withTags.Contains(obj.tag))
                 output.Add(obj);
-
         return output.Distinct().ToList();
     }
 
@@ -144,10 +149,6 @@ public class GridController : MonoBehaviour
 
     public List<GameObject> GetObjectsInAoE(Vector2 center, int range, string[] tag)
     {
-        //Used for debugging purposes
-        TileCreator.tileCreator.CreateTiles(this.gameObject, center, Card.CastShape.Circle, 1, Color.green, 2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
-        //end debgging
         TileCreator.tileCreator.CreateTiles(this.gameObject, center, Card.CastShape.Circle, range, Color.green, 2);
         List<Vector2> locations = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
@@ -223,14 +224,20 @@ public class GridController : MonoBehaviour
                         if (o != null)
                             deadObjects.Add(o);
                     }
-                    catch
-                    {
-                    }
+                    catch {}
 
         foreach (GameObject o in deadObjects)
         {
             RemoveFromPosition(o, o.transform.position);
-            Destroy(o);
+            try
+            {
+                Card.CasterColor color = o.GetComponent<PlayerController>().GetColorTag();
+                OnPlayerDeath(o, color);
+            }
+            catch
+            {
+                Destroy(o);
+            }
         }
 
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -249,6 +256,22 @@ public class GridController : MonoBehaviour
             yield return StartCoroutine(GameController.gameController.Victory());
         }
         yield return new WaitForSeconds(0);
+    }
+    
+    public void OnPlayerDeath(GameObject obj, Card.CasterColor color)
+    {
+        deathLocation[color] = obj.transform.position;
+        obj.transform.position = new Vector2(1000, 1000);     //Move out of the way for possible resurrection
+    }
+
+    public Vector2 GetDeathLocation(Card.CasterColor color)
+    {
+        return deathLocation[color];
+    }
+
+    public void RemoveDeathLocation(Card.CasterColor color)
+    {
+        deathLocation.Remove(color);
     }
 
     public void ResolveOverlap()

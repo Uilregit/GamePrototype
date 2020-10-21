@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: O Lifesteal
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  returnOnCancel: 1
+  rarity: 3
+  name: Lifesteal
+  energyCost: 0
+  manaCost: 1
+  range: 1
+  radius: 0
+  casterColor: 3
+  description: Give the target 25% lifesteal this turn
+  art: {fileID: 21300000, guid: e85dfc9da0536e44b854be233efbeaf8, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 03000000
+  cardEffectName: 6e000000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buffType: bc020000
+  effectValue: 19000000
+  effectDuration: 01000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0

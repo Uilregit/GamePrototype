@@ -9,7 +9,7 @@ public class GetCurrentAttackEffect : Effect
         foreach (GameObject targ in target)
         {
             HealthController targetHealth = targ.GetComponent<HealthController>();
-            effectController.GetCard().GetCard().SetTempEffectValue(targetHealth.GetAttack());
+            card.SetTempEffectValue(targetHealth.GetAttack());
         }
         yield return new WaitForSeconds(0);
     }

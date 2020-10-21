@@ -29,7 +29,7 @@ public class CharacterInformationController : MonoBehaviour
         Hide();
     }
 
-    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, Dictionary<Buff, int> buffs, AbilitiesController abilitiesController)
+    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<Buff> buffList, AbilitiesController abilitiesController)
     {
         int currentHealth = healthController.GetVit();
         int maxHealth = healthController.GetMaxVit();
@@ -63,17 +63,11 @@ public class CharacterInformationController : MonoBehaviour
         }
 
         //Buff section
-        List<Buff> buffList = new List<Buff>();
-        List<int> durationList = new List<int>();
-
-        buffList.AddRange(buffs.OrderBy(x => x.Value).ToDictionary(k => k.Key, v => v.Value).Keys);
-        durationList.AddRange(buffs.OrderBy(x => x.Value).ToDictionary(k => k.Key, v => v.Value).Values);
-
         for (int i = 0; i < buffDescriptions.Count; i++)
         {
-            if (i < buffs.Count)
+            if (i < buffList.Count)
             {
-                buffDescriptions[i].SetBuff(buffList[i], durationList[i]);
+                buffDescriptions[i].SetBuff(buffList[i], buffList[i].duration);
                 buffDescriptions[i].Show();
             }
             else

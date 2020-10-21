@@ -19,6 +19,10 @@ public class ResourceController : MonoBehaviour
 
     [Header("Gold UI Settings")]
     public Text goldCount;
+
+    [Header("Lives UI Settings")]
+    public Text livesCount;
+    private int lives = 0;
     //public Text goldText;
     //public Image goldUIBack;
     public Canvas canvas;
@@ -36,6 +40,7 @@ public class ResourceController : MonoBehaviour
         DontDestroyOnLoad(canvas);
         //DontDestroyOnLoad(goldText);
         //DontDestroyOnLoad(goldUIBack);
+        LoadLives(InformationController.infoController.GetCombatInfo().lives);
     }
 
     public void ChangeGold(int value)
@@ -53,5 +58,16 @@ public class ResourceController : MonoBehaviour
     {
         gold = value;
         goldCount.text = gold.ToString();
+    }
+
+    public void LoadLives(int value)
+    {
+        livesCount.text = value.ToString();
+        lives = value;
+    }
+
+    public int GetLives()
+    {
+        return lives;
     }
 }

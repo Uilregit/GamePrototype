@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: E Drain Strength
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Drain Strength
   energyCost: 0
   manaCost: 3
   range: 3
   radius: 0
-  casterColor: 3
+  casterColor: 6
   description: Drain 2 ATK from the target for 3 turns
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 2
   castShape: 0
   targetType: 0100000002000000
-  cardEffectName: 0d0000000d000000
+  cardEffectName: 6e0000006e000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0200000002000000
+  buffType: 6400000064000000
   effectValue: feffffff02000000
-  effectDuration: 0300000003000000
+  effectDuration: 0300000004000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}
@@ -40,5 +40,6 @@ MonoBehaviour:
   - {fileID: 0}
   indicatorType: 3
   targetBehaviour: 11
-  indicatorValue: 
+  indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

@@ -24,9 +24,7 @@ public class ScoreController : MonoBehaviour
     private int enemiesBroken;
     private int goldUsed;
     private int bossesDefeated;
-    private int secondsInGame;
-
-    private float gameStartTime;
+    private float secondsInGame;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +36,12 @@ public class ScoreController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        gameStartTime = Time.time;
+        secondsInGame = 0;
+    }
+
+    private void Update()
+    {
+        secondsInGame += Time.deltaTime;
     }
 
     public void UpdateOverkill(int value)
@@ -51,6 +54,11 @@ public class ScoreController : MonoBehaviour
         return overkill;
     }
 
+    public void SetOverkill(int value)
+    {
+        overkill = value;
+    }
+
     public void UpdateDamage(int value)
     {
         damage += value;
@@ -59,6 +67,11 @@ public class ScoreController : MonoBehaviour
     public int GetDamage()
     {
         return damage;
+    }
+
+    public void SetDamage(int value)
+    {
+        damage = value;
     }
 
     public void UpdateDamageShielded(int value)
@@ -71,6 +84,11 @@ public class ScoreController : MonoBehaviour
         return damageShielded;
     }
 
+    public void SetDamageShielded(int value)
+    {
+        damageShielded = value;
+    }
+
     public void UpdateDamageOverhealProtected(int value)
     {
         damageOverhealedProtected += value;
@@ -79,6 +97,11 @@ public class ScoreController : MonoBehaviour
     public int GetDamageOverhealProtected()
     {
         return damageOverhealedProtected;
+    }
+
+    public void SetDamageOverhealProtected(int value)
+    {
+        damageOverhealedProtected = value;
     }
 
     public void UpdateDamageAvoided(int value)
@@ -91,6 +114,11 @@ public class ScoreController : MonoBehaviour
         return damageAvoided;
     }
 
+    public void SetDamageAvoided(int value)
+    {
+        damageAvoided = value;
+    }
+
     public void UpdateEnemiesBroken()
     {
         enemiesBroken += 1;
@@ -99,6 +127,11 @@ public class ScoreController : MonoBehaviour
     public int GetEnemiesBroken()
     {
         return enemiesBroken;
+    }
+
+    public void SetEnemiesBroken(int value)
+    {
+        enemiesBroken = value;
     }
 
     public void UpdateGoldUsed(int value)
@@ -111,6 +144,11 @@ public class ScoreController : MonoBehaviour
         return goldUsed;
     }
 
+    public void SetGoldUsed(int value)
+    {
+        goldUsed = value;
+    }
+
     public void UpdateBossesDefeated()
     {
         bossesDefeated += 1;
@@ -121,8 +159,18 @@ public class ScoreController : MonoBehaviour
         return bossesDefeated;
     }
 
-    public float GetMinutesInGame()
+    public void SetBossesDefeated(int value)
     {
-        return (Time.time - gameStartTime) / 60.0f;
+        bossesDefeated = value;
+    }
+
+    public float GetSecondsInGame()
+    {
+        return (secondsInGame) / 60.0f;
+    }
+
+    public void SetSecondsInGame(float value)
+    {
+        secondsInGame = value;
     }
 }

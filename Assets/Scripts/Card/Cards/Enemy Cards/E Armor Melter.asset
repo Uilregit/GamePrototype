@@ -20,7 +20,7 @@ MonoBehaviour:
   manaCost: 0
   range: 2
   radius: 0
-  casterColor: 3
+  casterColor: 6
   description: Deal <s>100% of ATK as</s> damage 2 times
   art: {fileID: 21300000, guid: 0e41eddb035183d41a56e139d82a514b, type: 3}
   castType: 2

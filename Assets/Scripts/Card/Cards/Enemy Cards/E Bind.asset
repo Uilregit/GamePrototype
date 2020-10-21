@@ -13,25 +13,25 @@ MonoBehaviour:
   m_Name: E Bind
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Bind
   energyCost: 0
   manaCost: 2
   range: 2
   radius: 0
-  casterColor: 3
-  description: Target's energy cards costs 1 more in the next turn
+  casterColor: 6
+  description: Target's energy cards costs 2 more in the next turn
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 2
   castShape: 0
   targetType: 01000000
-  cardEffectName: 0d000000
+  cardEffectName: 6e000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 0c000000
-  effectValue: ffffffff
-  effectDuration: 02000000
+  buffType: 64020000
+  effectValue: feffffff
+  effectDuration: 01000000
   spawnObject:
   - {fileID: 0}
   cards:
@@ -40,3 +40,4 @@ MonoBehaviour:
   targetBehaviour: 0
   indicatorMultiplier: 
   executionPriority: 1
+  highlightCondition: 0

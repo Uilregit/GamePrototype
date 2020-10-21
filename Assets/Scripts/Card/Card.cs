@@ -5,16 +5,16 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Card : ScriptableObject
 {
-    public enum Rarity { Common, Rare, Legendary, Starter };
+    public enum Rarity { Common, Rare, Legendary, Starter, StarterAttack };
     public bool exhaust = false;
-    public bool returnOnCancel = true;
+    public bool canCastOnSelf = true;
     public Rarity rarity;
     public new string name;
     public int energyCost;
     public int manaCost;
     public int range = 1;
     public int radius;
-    public enum CasterColor { Red, Blue, Green, Enemy, Gray };
+    public enum CasterColor { Red, Blue, Green, Orange, White, Black, Enemy, Gray };
     public CasterColor casterColor;
     [TextArea]
     public string description;
@@ -30,17 +30,114 @@ public class Card : ScriptableObject
     //Name of the effect of the card
     public enum EffectType
     {
-        VitDamage = 0, ShieldDamage = 1, VitDamageAll = 2, ShieldDamageAll = 3, PiercingDamage = 4, PiercingDamageAll = 5,
-        SetKnockBackDamage = 7, ForcedMovement = 8, TauntEffect = 9, GetMissingHealth = 10, Buff = 13, Cleanse = 14,
-        CreateObject = 15, GetCurrentAttack = 11, DrawCards = 16, GetCurrentShield = 12, GetNumberOfTargetsInRangeEffect = 17,
-        GetDamageDoneEffect, GetNumberOfCardsPlayedInTurn, Swap, Teleport, ManaGain, EnergyGain, GetBonusShield, SetDuration, GetNumberInStack,
-        GravityEffect, DrawManaCards, DrawEnergyCards, CardCostReductionDrawn, CardCostReductionRandom, Sacrifice, GetNumberOfAttackers, ModifyTempValue
+        VitDamage = 0,
+        VitDamageAll = 1,
+        VitDamageDivided = 2,
+        AbsoluteDamage = 5,
+        ShieldDamage = 10,
+        ShieldDamageDivided = 11,
+        ShieldDamageAll = 12,
+        PiercingDamage = 20,
+        PiercingDamageAll = 21,
+        PiercingDamageDivided = 22,
+        _ = 99,
+        
+        Cleanse = 100,
+        Buff = 110,
+        ModifyBuffDuration = 115,
+        BuffValueAdd = 117,
+        BuffValueMultiply = 118,
+        CopyBuffEffect = 120,
+        GiveBuffEffect = 121,
+        CopyStatsEffect = 130,
+        AssimilateStatsEffect = 131,
+        __ = 199,
+        
+        SetKnockBackDamage = 200, 
+        ForcedMovement = 201,
+        ForceMovementFromCenter = 202,
+        Swap = 210,
+        Teleport = 211,
+        GravityEffect = 220,
+        ___ = 299,
+
+        TauntEffect = 300,
+        ____ = 399,
+
+        SetDuration = 400,
+        ModifyTempValue = 401,
+        _____ = 499,
+
+        GetMissingHealth = 500,
+        GetBonusHealth = 502,
+        GetCurrentAttack = 510,
+        GetCurrentShield = 522,
+        GetBonusShield = 521,
+        GetDistanceMoved = 527,
+        GetDamageDoneEffect = 530,
+        GetNumberOfTargetsInRangeEffect = 540,
+        GetNumberOfCardsPlayedInTurn= 541,
+        GetNumberOfAttackers = 542,
+        GetNumberInStack = 543,
+        GetNumberOfBuffsOnTarget = 545,
+        GetDrawnCardEnergy = 550,
+        GetDrawnCardMana = 551,
+        GetNumberOfCardsInHand = 560,
+        GetHighestHealthAlly = 570,
+        GetManaSpentTurn = 590,
+        GetEnergySpentTurn = 591,
+        ______ = 599,
+
+        ManaGain = 600, 
+        EnergyGain = 601,
+        _______ = 699,
+
+        DrawCards = 700,
+        DrawManaCards = 701, 
+        DrawEnergyCards = 702, 
+        CardCostReductionDrawn = 710, 
+        CardCostCapDrawn = 711,
+        CardCostReductionRandom = 720,
+        ________ = 799,
+
+        StealCardEffect = 800,
+        GetStarterCardEffect = 801,
+        DrawLastPlayedCardEffect = 810,
+        CreateANYEnergyCard = 820,
+        CreateANYManaCard = 821,
+        _________ = 899,
+
+        CreateObject = 5000,
+        Sacrifice = 5100,
+        Resurrect = 9999
     }
     public EffectType[] cardEffectName = new EffectType[1];
 
     public enum ConditionType
     {
-        None, Odd, Even, OnPlay, TargetBroken, TargetNotBroken, CasterBroken, CasterNotBroken, PreviousEffectSuccessful, CasterHasHigherShield, CasterHasLowerShield, Else
+        None = 0,
+        Odd = 2, 
+        Even = 3,
+        
+        OnPlay = 100,
+        
+        TargetBroken = 200, 
+        TargetNotBroken = 201,
+        TargetAttackingCaster = 202,
+        TargetNotAttackingCaster = 203,
+        
+        CasterBroken = 300, 
+        CasterNotBroken = 301, 
+        CasterHasHigherShield = 310,
+        CasterHasHigherATK = 311,
+        CasterHasLowerShield = 320,
+        CasterHasLowerATK = 321,
+
+        CasterHasBonusATK = 400,
+        CasterHasNoBonusATK = 401,
+
+        PreviousEffectSuccessful = 900,
+        Else = 1000
     }
     public ConditionType[] conditionType = new ConditionType[1];
     public int[] conditionValue = new int[1];
@@ -48,8 +145,50 @@ public class Card : ScriptableObject
     //The buff used if the card bestoes a buff or debuff
     public enum BuffType
     {
-        None, Stun, AttackChange, ArmorBuff, EnfeebleDebuff, MoveRangeBuff, RetaliateBuff, DoubleDamageBuff, BarrierBuff, ProtectBuff,
-        EnergyCostCapTurnBuff, ManaCostCapTurnBuff, EnergyCostReductionBuff, ManaCostReductionBuff
+        None = 0,
+        VitDamageOverTime = 1,
+        ShieldDamageOverTime = 10,
+        PiercingDamageOverTime = 20,
+        BonusHealing = 21,
+
+        AttackChange = 100, 
+        CriticalStrike = 105,
+        ArmorBuff = 110, 
+        EnfeebleDebuff = 111,
+        
+        MoveRangeBuff = 200,
+        RuptureBuff = 201,
+        CastRangeBuff = 210,
+
+        DoubleDamageBuff = 300,
+        AmplifyDamageTurn = 310,
+        AmplifyHealingTurn = 320,
+
+        Stun = 400,
+        Taunt = 401,
+        Disarm = 410,
+        Silence = 411,
+        AdditionalPiercingDamage = 420,
+        AdditionalHealing = 426,
+        Preserve = 425,
+
+        BarrierBuff = 500, 
+        ProtectBuff = 501,
+        RetaliateBuff = 502,
+        DivineShieldBuff = 503,
+
+        PartyEnergyCostCapTurnBuff = 600,
+        PartyManaCostCapTurnBuff = 601,
+        PartyEnergyCostReductionBuff = 602,
+        PartyManaCostReductionBuff = 603,
+        CharEnergyCostCapTurnBuff = 610,
+        CharManaCostCapTurnBuff = 611,
+        CharEnergyCostReductionBuff = 612,
+        CharManaCostReductionBuff = 613,
+
+        LifestealBuff = 700,
+        HealAttacker = 710,
+        AttackChangeOnHeal = 720
     }
     public BuffType[] buffType = new BuffType[1];
 
@@ -70,9 +209,26 @@ public class Card : ScriptableObject
     public string indicatorMultiplier;
     public int executionPriority = 0;
 
+    public enum HighlightCondition
+    {
+        None = 0,
+        
+        HasBonusATK = 1,
+        HasBonusArmor = 2,
+        HasBonusVit = 3,
+
+        HasManaCardInDrawDeck = 10,
+        HasEnergyCardInDrawDeck = 15,
+
+        PlayedCardsThisTurn = 20
+    }
+
+    public HighlightCondition highlightCondition = HighlightCondition.None;
+
     private Vector2 tempCenter;
     private int tempEffectValue = 0;
     private int tempDuration = 0;
+    private GameObject tempObject;
     private bool previousEffectSuccessful = true;
     private bool previousConditionTrue = true;
     private int damageDone = 0;
@@ -127,6 +283,16 @@ public class Card : ScriptableObject
         return tempDuration;
     }
 
+    public void SetTempObject(GameObject obj)
+    {
+        tempObject = obj;
+    }
+
+    public GameObject GetTempObject()
+    {
+        return tempObject;
+    }
+
     public void SetDamageDone(int value)
     {
         damageDone = value;
@@ -135,5 +301,38 @@ public class Card : ScriptableObject
     public int GetDamageDone()
     {
         return damageDone;
+    }
+
+    public Card GetCopy()
+    {
+        Card output = new Card();
+        output.exhaust = exhaust;
+        output.canCastOnSelf = canCastOnSelf;
+        output.rarity = rarity;
+        output.name = name;
+        output.energyCost = energyCost;
+        output.manaCost = manaCost;
+        output.range = range;
+        output.radius = radius;
+        output.casterColor = casterColor;
+        output.description = description;
+        output.art = art;
+        output.castType = castType;
+        output.castShape = castShape;
+        output.targetType = targetType;
+        output.cardEffectName = cardEffectName;
+        output.conditionType = conditionType;
+        output.conditionValue = conditionValue;
+        output.buffType = buffType;
+        output.effectValue = effectValue;
+        output.effectDuration = effectDuration;
+        output.spawnObject = spawnObject;
+        output.cards = cards;
+        output.indicatorType = indicatorType;
+        output.targetBehaviour = targetBehaviour;
+        output.indicatorMultiplier = indicatorMultiplier;
+        output.executionPriority = executionPriority;
+
+        return output;
     }
 }

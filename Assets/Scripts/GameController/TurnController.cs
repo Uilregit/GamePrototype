@@ -36,6 +36,8 @@ public class TurnController : MonoBehaviour
 
     private List<Card> cardsPlayed = new List<Card>();
     private List<Card> cardsPlayedThisTurn = new List<Card>();
+    private List<int> manaSpent = new List<int>();
+    private List<int> energySpent = new List<int>();
 
     // Start is called before the first frame update
     void Awake()
@@ -123,8 +125,6 @@ public class TurnController : MonoBehaviour
 
         cardsPlayedThisTurn = new List<Card>();
 
-        yield return StartCoroutine(GridController.gridController.CheckDeath());
-
         GridController.gridController.ResolveOverlap();
         GridController.gridController.DebugGrid();
 
@@ -134,13 +134,21 @@ public class TurnController : MonoBehaviour
         {
             player.GetComponent<PlayerMoveController>().SetMoveable(false);
             player.GetComponent<PlayerMoveController>().CommitMove();
-            player.GetComponent<HealthController>().AtEndOfTurn();
         }
+
+        //Trigger all end of turn buff effects
+        foreach (GameObject characters in players)
+            yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
+        foreach (EnemyController thisEnemy in enemies)
+            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd);
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
+
+        yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         //Enemy turn
         turnText.text = "Enemy Turn";
@@ -165,10 +173,6 @@ public class TurnController : MonoBehaviour
             yield return new WaitForSeconds(TimeController.time.enemyExecutionStagger * TimeController.time.timerMultiplier);
         }
 
-        //Trigger all enemy end of turn effects
-        foreach (EnemyController thisEnemy in enemies)
-            thisEnemy.GetComponent<HealthController>().AtEndOfTurn();
-
         yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         GridController.gridController.ResolveOverlap();
@@ -176,6 +180,8 @@ public class TurnController : MonoBehaviour
         queuedEnemies = new List<EnemyController>();
 
         cardsPlayedThisTurn = new List<Card>();
+        manaSpent = new List<int>();
+        energySpent = new List<int>();
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
@@ -190,10 +196,18 @@ public class TurnController : MonoBehaviour
         turnTextBack.enabled = false;
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
+        SetPlayerTurn(true); //Trigger all player start of turn effects
+
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart);
 
-        //Resolve broken
         players = GameObject.FindGameObjectsWithTag("Player");
+        //Trigger all start of turn buff effects
+        foreach (GameObject characters in players)
+            yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
+        foreach (EnemyController thisEnemy in enemies)
+            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+
+        //Resolve broken
         foreach (GameObject player in players)
             player.GetComponent<HealthController>().ResolveBroken();
         foreach (EnemyController thisEnemy in enemies)
@@ -205,7 +219,6 @@ public class TurnController : MonoBehaviour
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
         //Allow players to move, reset mana, and draw a full hand
-        SetPlayerTurn(true); //Trigger all player start of turn effects
         currentEnergy = maxEnergy;
         ResetEnergyDisplay();
         HandController.handController.UnholdCard(true);
@@ -267,10 +280,27 @@ public class TurnController : MonoBehaviour
         return currentMana;
     }
 
-    public void ReportPlayedCard(Card card)
+    public void ReportPlayedCard(Card card, int energy, int mana)
     {
         cardsPlayedThisTurn.Add(card);
         cardsPlayed.Add(card);
+        energySpent.Add(energy);
+        manaSpent.Add(mana);
+    }
+
+    public List<Card> GetCardsPlayedThisTurn()
+    {
+        return cardsPlayedThisTurn;
+    }
+
+    public int GetManaSpent()
+    {
+        return manaSpent.Sum();
+    }
+
+    public int GetEnergySpent()
+    {
+        return energySpent.Sum();
     }
 
     public int GetNumerOfCardsPlayedInTurn()

@@ -14,6 +14,7 @@ public class CardDisplay : MonoBehaviour
     public Text description;
     public Text manaCost;
     public Image outline;
+    private Outline conditionHighlight;
     public LineRenderer lineRenderer;
 
     [SerializeField] private Sprite redAttackBack;
@@ -22,8 +23,15 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private Sprite greenSkillBack;
     [SerializeField] private Sprite blueAttackBack;
     [SerializeField] private Sprite blueSkillBack;
-    [SerializeField] private Sprite blackCardBack;
-    [SerializeField] private Sprite greyCardBack;
+    [SerializeField] private Sprite orangeAttackBack;
+    [SerializeField] private Sprite orangeSkillBack;
+    [SerializeField] private Sprite whiteAttackBack;
+    [SerializeField] private Sprite whiteSkillBack;
+    [SerializeField] private Sprite blackAttackBack;
+    [SerializeField] private Sprite blackSkillBack;
+    [SerializeField] private Sprite enemyAttackCardBack;
+    [SerializeField] private Sprite enemySkillCardBack;
+    //[SerializeField] private Sprite greyCardBack;
 
     private CardController thisCard;
 
@@ -31,6 +39,7 @@ public class CardDisplay : MonoBehaviour
     void Awake()
     {
         thisCard = new CardController();
+        conditionHighlight = outline.GetComponent<Outline>();
         //lineRenderer = GetComponent<LineRenderer>();
     }
 
@@ -67,55 +76,67 @@ public class CardDisplay : MonoBehaviour
     public void SetCard(CardController card, bool dynamicNumbers = true)
     {
         thisCard = card;
-        Card.CasterColor casterColor;
+        Card.CasterColor casterColor = card.GetCard().casterColor;
         if (card.GetCard().manaCost == 0)
+        {
             switch (card.GetCard().casterColor)
             {
                 case (Card.CasterColor.Blue):
                     cardBack.sprite = blueAttackBack;
-                    casterColor = Card.CasterColor.Blue;
                     break;
                 case (Card.CasterColor.Red):
                     cardBack.sprite = redAttackBack;
-                    casterColor = Card.CasterColor.Red;
                     break;
                 case (Card.CasterColor.Green):
                     cardBack.sprite = greenAttackBack;
-                    casterColor = Card.CasterColor.Green;
+                    break;
+                case (Card.CasterColor.Orange):
+                    cardBack.sprite = orangeAttackBack;
+                    break;
+                case (Card.CasterColor.White):
+                    cardBack.sprite = whiteAttackBack;
+                    break;
+                case (Card.CasterColor.Black):
+                    cardBack.sprite = blackAttackBack;
                     break;
                 case (Card.CasterColor.Enemy):
-                    cardBack.sprite = blackCardBack;
-                    casterColor = Card.CasterColor.Enemy;
+                    cardBack.sprite = enemyAttackCardBack;
                     break;
                 default:
-                    cardBack.sprite = greyCardBack;
-                    casterColor = Card.CasterColor.Gray;
+                    cardBack.sprite = enemyAttackCardBack;
                     break;
             }
+        }
         else
+        {
             switch (card.GetCard().casterColor)
             {
                 case (Card.CasterColor.Blue):
                     cardBack.sprite = blueSkillBack;
-                    casterColor = Card.CasterColor.Blue;
                     break;
                 case (Card.CasterColor.Red):
                     cardBack.sprite = redSkillBack;
-                    casterColor = Card.CasterColor.Red;
                     break;
                 case (Card.CasterColor.Green):
                     cardBack.sprite = greenSkillBack;
-                    casterColor = Card.CasterColor.Green;
+                    break;
+                case (Card.CasterColor.Orange):
+                    cardBack.sprite = orangeSkillBack;
+                    break;
+                case (Card.CasterColor.White):
+                    cardBack.sprite = whiteSkillBack;
+                    break;
+                case (Card.CasterColor.Black):
+                    cardBack.sprite = blackSkillBack;
                     break;
                 case (Card.CasterColor.Enemy):
-                    cardBack.sprite = blackCardBack;
-                    casterColor = Card.CasterColor.Enemy;
+                    cardBack.sprite = enemySkillCardBack;
                     break;
                 default:
-                    cardBack.sprite = greyCardBack;
-                    casterColor = Card.CasterColor.Gray;
+                    cardBack.sprite = enemySkillCardBack;
                     break;
             }
+        }
         art.sprite = card.GetCard().art;
         outline.sprite = cardBack.sprite;
         cardGreyOut.sprite = cardBack.sprite;
@@ -133,8 +154,16 @@ public class CardDisplay : MonoBehaviour
             }
             catch { }
 
-        manaCost.text = netManaCost.ToString();
-        energyCost.text = netEnergyCost.ToString();
+        if (card.GetCard().manaCost > 0)
+        {
+            manaCost.text = netManaCost.ToString();
+            energyCost.text = "";
+        }
+        else
+        {
+            manaCost.text = "";
+            energyCost.text = netEnergyCost.ToString();
+        }
 
         if (netManaCost < card.GetCard().manaCost)
             manaCost.color = Color.green;
@@ -159,6 +188,10 @@ public class CardDisplay : MonoBehaviour
                 }
 
         description.text = card.GetCard().description.Replace('|', '\n');
+
+        //Formatting Codes for dynamic card text
+        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm" , "l"};
+
         if (dynamicNumbers)
         {
             string descriptionText = description.text;
@@ -185,30 +218,32 @@ public class CardDisplay : MonoBehaviour
 
                 descriptionText = descriptionText.Replace(attackText, finalText);
             }
-            while (descriptionText.IndexOf("<c>") != -1)
-            {
-                int start = descriptionText.IndexOf("<c>");
-                int end = descriptionText.IndexOf("</c>");
 
-                string cardText = descriptionText.Substring(start, end - start + 4);
-                string newCardText = cardText.Replace("x", TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString())
-                                             .Replace("<c>", "")
-                                             .Replace("</c>", "");
+            int dm = 0;
+            try { dm = card.FindCaster(thisCard.GetCard()).GetComponent<PlayerMoveController>().GetMovedDistance(); } catch { };
 
-                descriptionText = descriptionText.Replace(cardText, newCardText);
-            }
-            while (descriptionText.IndexOf("<ba>") != -1)
-            {
-                int start = descriptionText.IndexOf("<ba>");
-                int end = descriptionText.IndexOf("</ba>");
+            //Formatting Nums for dynamic card text
+            int[] formattingNums = new int[] { TurnController.turnController.GetNumerOfCardsPlayedInTurn(),
+                                               HandController.handController.GetHand().Count,
+                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusShield(),
+                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusVit(),
+                                               TurnController.turnController.GetManaSpent(),
+                                               TurnController.turnController.GetEnergySpent(),
+                                               dm,
+                                               ResourceController.resource.GetLives()};
+            for (int i = 0; i < formattingCodes.Length; i++)
+                while (descriptionText.IndexOf("<%>".Replace("%", formattingCodes[i])) != -1)
+                {
+                    int start = descriptionText.IndexOf("<%>".Replace("%", formattingCodes[i]));
+                    int end = descriptionText.IndexOf("</%>".Replace("%", formattingCodes[i]));
 
-                string cardText = descriptionText.Substring(start, end - start + 5);
-                string newCardText = cardText.Replace("x", card.GetCaster().GetComponent<HealthController>().GetBonusShield().ToString())
-                                             .Replace("<ba>", "")
-                                             .Replace("</ba>", "");
+                    string cardText = descriptionText.Substring(start, end - start + formattingCodes[i].Length + 3);
+                    string newCardText = cardText.Replace("x", formattingNums[i].ToString())
+                                                 .Replace("<%>".Replace("%", formattingCodes[i]), "")
+                                                 .Replace("</%>".Replace("%", formattingCodes[i]), "");
 
-                descriptionText = descriptionText.Replace(cardText, newCardText);
-            }
+                    descriptionText = descriptionText.Replace(cardText, newCardText);
+                }
             description.text = descriptionText;
         }
         else
@@ -221,6 +256,7 @@ public class CardDisplay : MonoBehaviour
                 {
                     int s = descriptionText.IndexOf("<s>");
                     int e = descriptionText.IndexOf("</s>");
+                    int a = descriptionText.IndexOf("ATK");
 
                     string attackText = descriptionText.Substring(s, e - s + 4);
 
@@ -229,7 +265,10 @@ public class CardDisplay : MonoBehaviour
 
                     string finalText = "";
 
-                    finalText = attackText.Replace("<s>", "").Replace("</s>", "") + "(" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(card.GetCard().casterColor) * percentage / 100.0f)).ToString() + ")";
+                    finalText = attackText.Replace("<s>", "").Replace("</s>", "");
+
+                    if (finalText.IndexOf("ATK as") != -1)
+                        finalText = finalText.Replace("ATK as", "ATK (" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(card.GetCard().casterColor) * percentage / 100.0f)).ToString() + ") as");
 
                     descriptionText = descriptionText.Replace(attackText, finalText);
 
@@ -239,15 +278,21 @@ public class CardDisplay : MonoBehaviour
                 description.text = descriptionText;
             }
             description.text = description.text.Replace("<s>", "").Replace("</s>", "");
-            int start = description.text.IndexOf("<c>");
-            int end = description.text.IndexOf("</c>");
-            if (start != -1)
-                description.text = description.text.Replace(description.text.Substring(start, end - start + 4), "");
-            start = description.text.IndexOf("<ba>");
-            end = description.text.IndexOf("</ba>");
-            if (start != -1)
-                description.text = description.text.Replace(description.text.Substring(start, end - start + 5), "");
+
+            for (int i = 0; i < formattingCodes.Length; i++)
+            {
+                int start = description.text.IndexOf("<%>".Replace("%", formattingCodes[i]));
+                int end = description.text.IndexOf("</%>".Replace("%", formattingCodes[i]));
+                if (start != -1)
+                    description.text = description.text.Replace(description.text.Substring(start, end - start + 3 + formattingCodes[i].Length), "");
+            }
         }
+    }
+
+    public void SetConditionHighlight(bool value)
+    {
+        outline.enabled = value;
+        conditionHighlight.enabled = value;
     }
 
     public void RefreshCardInfo()
@@ -262,7 +307,7 @@ public class CardDisplay : MonoBehaviour
 
     public void SetHighLight(bool value)
     {
-        outline.enabled = value;
+        //outline.enabled = value;
         cardGreyOut.enabled = !value;
     }
 }

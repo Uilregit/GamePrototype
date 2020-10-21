@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private List<Vector2> occupiedSpace;
 
     [Header("Stats Settings")]
+    public int castRange = 1;
     public int maxVit;
     public int startingShield;
     public int attack;
@@ -63,6 +64,7 @@ public class EnemyController : MonoBehaviour
 
         healthController = GetComponent<HealthController>();
         maxVit = Mathf.RoundToInt(maxVit * (1 + Random.Range(-0.1f, 0.1f)));
+        healthController.SetCastRange(castRange);
         healthController.SetMaxVit(maxVit);
         healthController.SetCurrentVit(maxVit);
         healthController.SetStartingShield(startingShield);
@@ -90,9 +92,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        if (!skipInitialIntent)
-            RefreshIntent(); //Keeps refresh intent in start to let blockades spawn before doing attackable range calculations
-        else
+        if (skipInitialIntent)
             enemyInformation.HideIntent();
     }
 
@@ -189,7 +189,7 @@ public class EnemyController : MonoBehaviour
                         targetLocs.Add(desiredTarget[i].transform.position);
                     else if (attackSequence[attackCardIndex].castType == Card.CastType.Player)
                     {
-                        int attack = enemyInformation.displayedCards[i].GetComponent<CardController>().GetSimulatedTotalAttackValue(attackCardIndex);
+                        int attack = enemyInformation.displayedCards[i].GetComponent<CardController>().GetSimulatedTotalAttackValue(i);
                         ScoreController.score.UpdateDamageAvoided(attack);
                     }
                     /*
@@ -323,6 +323,7 @@ public class EnemyController : MonoBehaviour
 
         traveledPath = traveledPath.GetRange(1, Mathf.Min(traveledPath.Count - 1, moveRange + GetComponent<HealthController>().GetBonusMoveRange())); //Leave at least 1 space so it never paths ON the target
 
+        BuffController buffController = GetComponent<BuffController>();
         foreach (Vector2 position in traveledPath)
         {
             if (healthController.GetStunned() ||   //In case that it is stunned while moving, stop turn
@@ -334,6 +335,7 @@ public class EnemyController : MonoBehaviour
             }
 
             transform.position = position;
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, 1));
             yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
 

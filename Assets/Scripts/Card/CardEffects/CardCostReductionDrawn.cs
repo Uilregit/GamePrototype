@@ -7,8 +7,11 @@ public class CardCostReductionDrawn : Effect
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         List<CardController> hand = HandController.handController.GetHand();
-        hand[hand.Count - 1].SetEnergyCostDiscount(card.effectValue[effectIndex]);
-        hand[hand.Count - 1].SetManaCostDiscount(card.effectValue[effectIndex]);
+        for (int i = hand.Count - 1; i > hand.Count - 1 - card.effectDuration[effectIndex]; i--)
+        {
+            hand[i].SetEnergyCostDiscount(card.effectValue[effectIndex]);
+            hand[i].SetManaCostDiscount(card.effectValue[effectIndex]);
+        }
         HandController.handController.ResetCardDisplays();
         HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
         yield return new WaitForSeconds(0);

@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: E Fiendfyre
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Fiendfyre
   energyCost: 0
   manaCost: 2
   range: 2
   radius: 0
-  casterColor: 3
-  description: Restore <s>100% of ATK as</s> health and gain 1 moverange for the next
-    turn
+  casterColor: 6
+  description: Restore <s>100% of ATK as</s> health and gain 1 moverange for the
+    next 2 turns
   art: {fileID: 21300000, guid: 64f1c356a9ace7d42b24158ccb0c9a83, type: 3}
   castType: 1
   castShape: 0
   targetType: 0000000000000000
-  cardEffectName: 040000000d000000
+  cardEffectName: 140000006e000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000005000000
+  buffType: 00000000c8000000
   effectValue: 9cffffff01000000
-  effectDuration: 0000000002000000
+  effectDuration: 0000000003000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}
@@ -43,3 +43,4 @@ MonoBehaviour:
   targetBehaviour: 6
   indicatorMultiplier: 
   executionPriority: 1
+  highlightCondition: 0
