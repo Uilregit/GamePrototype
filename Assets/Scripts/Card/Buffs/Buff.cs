@@ -44,7 +44,7 @@ public abstract class Buff : MonoBehaviour
         return description.Replace("{+-v}", tempValue.ToString("+#;-#;0")).Replace("{|v|}", Mathf.Abs(tempValue).ToString()).Replace("{v}", tempValue.ToString()); 
     }
     public abstract void OnApply(HealthController healthController, int value, int duration, bool fromRelic);
-    public abstract IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value);
+    public abstract IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<Buff> buffTrace);
     public abstract void Revert(HealthController healthController);
     public abstract Buff GetCopy();
 

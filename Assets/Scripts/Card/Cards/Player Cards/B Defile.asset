@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 2
   radius: 1
   casterColor: 1
-  description: <b>Targeted AoE|</b>You loose 5 health, deal <s>400% of ATK as</s>
+  description: <b>Targeted AoE|</b>You loose 5 health, deal <s>150% of ATK as</s>
     damage to <b>ALL</b> in range
   art: {fileID: 21300000, guid: c707b12e6dbb7754d9e2199d9689a2d0, type: 3}
   castType: 7
@@ -31,7 +31,7 @@ MonoBehaviour:
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buffType: 0000000000000000
-  effectValue: 0500000090010000
+  effectValue: 0500000096000000
   effectDuration: 0000000000000000
   spawnObject:
   - {fileID: 0}

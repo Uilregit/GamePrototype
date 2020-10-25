@@ -16,9 +16,40 @@ public class CharacterDisplayController : MonoBehaviour
 
     public List<Image> buffIcons;
 
+    private Animator anim;
+
     // Start is called before the first frame update
     void Awake()
     {
         shadow.sprite = sprite.sprite;
+        anim = GetComponent<Animator>();
+    }
+
+    public void SetCasting(bool state)
+    {
+        anim.SetBool("isCasting", state);
+    }
+
+    public void TriggerAttack()
+    {
+        anim.SetTrigger("isAttacking");
+    }
+
+    public void TriggerDeath()
+    {
+        anim.SetTrigger("isDead");
+    }
+
+    public void Destroy()
+    {
+        try
+        {
+            Card.CasterColor color = transform.parent.GetComponent<PlayerController>().GetColorTag();
+            GridController.gridController.OnPlayerDeath(this.gameObject, color);
+        }
+        catch
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

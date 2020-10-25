@@ -29,7 +29,7 @@ MonoBehaviour:
   cardEffectName: 6e000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 0a000000
+  buffType: 6e000000
   effectValue: 03000000
   effectDuration: 03000000
   spawnObject:

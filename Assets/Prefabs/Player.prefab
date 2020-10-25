@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorTag: 0
+  castRange: 1
   maxVit: 5
   startingShield: 5
   attack: 0
@@ -92,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 1
   charDisplay: {fileID: 5906611863220211931}
-  buffController: {fileID: 0}
+  buffController: {fileID: -7532519265793477426}
 --- !u!114 &408302936054317938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,15 +254,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.116104126
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.004058838
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2958984
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalRotation.x

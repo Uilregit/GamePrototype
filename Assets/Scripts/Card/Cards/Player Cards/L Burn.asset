@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L Burn
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Burn
   energyCost: 0
@@ -21,8 +21,8 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 5
-  description: Deal <s>200% of ATK as</s> damage. Target takes <s>50% of ATK as</s>
-    damage at the end fo the next 3 turns
+  description: At the end fo the next 3 turns, deal <s>200% of ATK as</s> damage.
+    Target takes <s>50% of ATK as</s> damage
   art: {fileID: 21300000, guid: f4e905d743e648d429ab1f454017a94f, type: 3}
   castType: 0
   castShape: 0
@@ -44,3 +44,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

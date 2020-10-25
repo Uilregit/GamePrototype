@@ -518,14 +518,22 @@
  * Fixed certain buff times not triggering due to not being called as coroutines
  * Fixed player stats not saving if they died in the first room
  * 
- * --------------------------------------------------------------------------------------------------
-
- * -- To dos --
- * Simplify common cards
- * 
  * #####################
  * ####### 0.4.4 #######
  * #####################
+ * -- Heroes --
+ * - Blue -
+ * Moverange from 4 -> 3
+ * 
+ * - Black -
+ * Castragne from 2 -> 3
+ * 
+ * - Yellow -
+ * Moverange from 3 -> 4
+ * 
+ * - Green -
+ * Armor from 6 -> 3
+ * 
  * -- Cards --
  * 
  * -- Enemies --
@@ -533,9 +541,28 @@
  * -- System --
  * 
  * -- UI --
+ * Recentered all character displays
+ * Added idle animations to all characters (player and enemy)
+ * Added casting animations to all players
+ * Added attackig animations to all players
+ * Added death animations to all players
+ * Added death animations to all characters
+ * Added running, attacking, and death to enemies
+ * All characters will not be destroyed after the death animation instead of immediately
+ * Enemies now move more smoothly
+ *      Will face the direction they're attacking/moving
+ *      Will return to face right at the end of their turn
  * 
  * -- Bugs --
+ * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
  * 
+ * --------------------------------------------------------------------------------------------------
+ * -- To dos --
+ * Finish all bugs from last playtest
+ * Add attack animation trigger for card effects
+ * Simplify common cards
+ * Add world 2
+ *      choose one of the gimics from the list, make one
  * Add permanent progression per character and per team
  *  Unlocks tallents for each member (chose 1 tallent tree)
  *  Unlocks uncommon cards for the char
@@ -543,7 +570,6 @@
  *  Unlocks team based progression (
  *  Unlocks characters for the party
  * 
- * Add world 2
  *  
  * Add options menu
  *      animation speeds
@@ -559,8 +585,7 @@
  * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
  *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
  *      retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
- * 
- * Add more support for playing lots of cards per turn in uncommon
+ *
  * Add water/pits
  * Add terrain like traps and fires and events (falling rocks)
  * Think about preventing long term stalling

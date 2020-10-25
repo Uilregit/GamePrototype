@@ -189,7 +189,7 @@ public class PlayerMoveController : MonoBehaviour
         {
             GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
             TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                moveRangeIndicatorColor, new string[] { "Enemy", "Blockade" }, 0);
+                                                PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
             moveablePositions = TileCreator.tileCreator.GetTilePositions();
         }
     }
@@ -198,7 +198,7 @@ public class PlayerMoveController : MonoBehaviour
     public void DestroyMoveRrangeIndicator()
     {
         moveShadow.GetComponent<SpriteRenderer>().enabled = false;
-        TileCreator.tileCreator.DestryTiles(this.gameObject);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject);
         moveablePositions = new List<Vector2>();
         attackablePositions = new List<Vector2>();
     }

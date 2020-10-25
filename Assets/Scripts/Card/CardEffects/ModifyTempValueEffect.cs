@@ -8,9 +8,9 @@ public class ModifyTempValueEffect : Effect
     {
         float value = card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f;
         if (value > 0)
-            card.SetTempEffectValue(Mathf.CeilToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f));
+            card.SetTempEffectValue(Mathf.CeilToInt(value));
         else
-            card.SetTempEffectValue(Mathf.FloorToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f));
+            card.SetTempEffectValue(Mathf.FloorToInt(value));
 
         yield return new WaitForSeconds(0);
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L Ignite
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 4
   name: Ignite
   energyCost: 1
@@ -21,7 +21,8 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 5
-  description: Deal <s>50% of ATK as</s> damage at the end of the next 3 turns
+  description: At the end of the next 3 turns, deal <s>50% of ATK as</s> damage to
+    the target
   art: {fileID: 21300000, guid: 1169bc8a162953c48a10661f78fdd56e, type: 3}
   castType: 0
   castShape: 0
@@ -42,3 +43,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

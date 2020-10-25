@@ -42,8 +42,10 @@ public class EnemyController : MonoBehaviour
 
     private HealthController healthController;
     private EnemyInformationController enemyInformation;
+    private SpriteRenderer spRenderer;
     //public SpriteRenderer outline;
     private Collider2D col2D;
+    private bool isFacingRight = true;
 
     private int tauntDuration = 0;
     private GameObject tauntTarget;
@@ -88,6 +90,7 @@ public class EnemyController : MonoBehaviour
 
         size = GetComponent<HealthController>().size;
         occupiedSpace = GetComponent<HealthController>().GetOccupiedSpaces();
+        spRenderer = healthController.charDisplay.GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -181,7 +184,7 @@ public class EnemyController : MonoBehaviour
 
                 if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)
                     foreach (Vector2 loc in occupiedSpace)
-                        targetLocs.AddRange(GridController.gridController.GetLocationsInAoE((Vector2)transform.position + loc, attackSequence[attackCardIndex].radius, new string[] { "All" }));
+                        targetLocs.AddRange(GridController.gridController.GetLocationsInAoE(GridController.gridController.GetRoundedVector((Vector2)transform.position + loc, 1), attackSequence[attackCardIndex].radius, new string[] { "All" }));
                 else if (attackSequence[attackCardIndex].castType == Card.CastType.Player ||
                          attackSequence[attackCardIndex].castType == Card.CastType.Enemy)
                 {
@@ -305,6 +308,8 @@ public class EnemyController : MonoBehaviour
     //Gets a list of pathfinding locations and step in one position after another to the final destination
     private IEnumerator Move(GameObject target)
     {
+        enemyInformation.SetRunning(true);
+
         if (target == this.gameObject) //If targeting self, still move towards the nearest player
             target = GridController.gridController.GetObjectAtLocation(GetNearest(Card.CastType.Player))[0];
 
@@ -334,13 +339,36 @@ public class EnemyController : MonoBehaviour
                 yield break;
             }
 
-            transform.position = position;
+            yield return StartCoroutine(MoveLerp(transform.position, position, TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier * 0.7f));
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, 1));
-            yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
+            //yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
 
         foreach (Vector2 vec in occupiedSpace)
             GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
+
+        enemyInformation.SetRunning(false);
+
+        yield return new WaitForSeconds(0);
+    }
+
+    private IEnumerator MoveLerp(Vector2 start, Vector2 end, float duration)
+    {
+        if (end.x > start.x && !isFacingRight)
+            FlipSpriteX();
+        else if (end.x < start.x && isFacingRight)
+            FlipSpriteX();
+
+        float elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector2.Lerp(start, end, Mathf.Pow(elapsedTime, 1.5f) / Mathf.Pow(duration, 1.5f));
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+        transform.position = end;   //Always move to the rounded vector2 to prevent floating point errors in the lerp
+        yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier * 0.3f);
     }
 
     //Show the attack card and target line, then trigger the attack card
@@ -348,6 +376,11 @@ public class EnemyController : MonoBehaviour
     {
         if (target.Count > 0)
         {
+            if (target[0].x > transform.position.x && !isFacingRight)
+                FlipSpriteX();
+            else if (target[0].x < transform.position.x && isFacingRight)
+                FlipSpriteX();
+
             enemyInformation.ShowUsedCard(attackSequenceControllers[attackCardIndex], target[0]);
             enemyInformation.ShowTargetLine(target[0]);
 
@@ -365,7 +398,7 @@ public class EnemyController : MonoBehaviour
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, moveRange + GetComponent<HealthController>().GetBonusMoveRange(), Color.clear, new string[] { "Player", "Enemy", "Blockade" }, 2);
         List<Vector2> moveablePositions = TileCreator.tileCreator.GetTilePositions(2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         //Get all the possible targets
         string[] tags = GetTargetTags(attackSequence[attackCardIndex].castType, attackSequence[attackCardIndex].targetType[0]);
@@ -379,7 +412,7 @@ public class EnemyController : MonoBehaviour
         {
             TileCreator.tileCreator.CreateTiles(this.gameObject, obj.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
             List<Vector2> attackFromLocation = TileCreator.tileCreator.GetTilePositions(2);
-            TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
             foreach (Vector2 loc in attackFromLocation)
                 if (moveablePositions.Contains(loc))
@@ -410,7 +443,7 @@ public class EnemyController : MonoBehaviour
             output = path.GetRange(0, Mathf.Min(moveRange + bonuseMoveRange + 1, path.Count));
         }
 
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
         if (RoomController.roomController.debug)
             foreach (Vector2 loc in output)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.red, 1);
@@ -427,7 +460,7 @@ public class EnemyController : MonoBehaviour
             if (GridController.gridController.GetObjectAtLocation(loc).Count == 0)
                 emptyInRangeLocations.Add(loc);
         inRangeLocations = emptyInRangeLocations;
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);                                            //Get all positions that can cast on the target
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);                                            //Get all positions that can cast on the target
 
         List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(attackSequence[attackCardIndex].range, 1)];      //Sort positions by distance to target
         for (int i = Mathf.Max(attackSequence[attackCardIndex].range - 1, 0); i >= 0; i--)
@@ -781,7 +814,6 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        TurnController.turnController.RemoveEnemy(this);
         foreach (Vector2 vec in occupiedSpace)
             if (!sacrificed)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + vec);
@@ -904,5 +936,11 @@ public class EnemyController : MonoBehaviour
     public int GetAttackCardIndex()
     {
         return currentAttackSquence % attackSequence.Count;
+    }
+
+    private void FlipSpriteX()
+    {
+        isFacingRight = !isFacingRight;
+        spRenderer.flipX = !isFacingRight;
     }
 }

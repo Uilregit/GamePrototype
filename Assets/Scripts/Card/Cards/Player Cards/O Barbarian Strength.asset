@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: O Barbarian Strength
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Barbarian Strength
   energyCost: 0
@@ -21,8 +21,7 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 3
-  description: Target gains 1 temporary ATK for each bonus health they have<bh>|(x
-    bonus health)</bh>
+  description: Target gains 1 temporary ATK for each bonus health they have
   art: {fileID: 21300000, guid: 64f1c356a9ace7d42b24158ccb0c9a83, type: 3}
   castType: 0
   castShape: 0
@@ -42,3 +41,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

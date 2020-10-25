@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: O Crush
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Crush
   energyCost: 2
@@ -28,7 +28,7 @@ MonoBehaviour:
   castShape: 0
   targetType: 0300000003000000
   cardEffectName: 0000000000000000
-  conditionType: 41010000e8030000
+  conditionType: 37010000e8030000
   conditionValue: 0000000000000000
   buffType: 0000000000000000
   effectValue: 2c01000096000000
@@ -42,3 +42,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

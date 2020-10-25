@@ -37,6 +37,5 @@ public class PlayerMouseController : DragController
     {
         moveController.MoveTo(moveController.GetMoveLocation());
         moveController.DestroyMoveRrangeIndicator();
-        //TileCreator.tileCreator.SetCommitment(false);
     }
 }

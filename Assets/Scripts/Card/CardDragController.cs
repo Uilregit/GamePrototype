@@ -91,7 +91,7 @@ public class CardDragController : DragController
 
             if (card.castType == Card.CastType.TargetedAoE)
             {
-                TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
+                TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
                 if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1)))
                     TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1), card.castShape, card.radius, Color.red, 1);
             }
@@ -127,6 +127,7 @@ public class CardDragController : DragController
 
     private void OnMouseUp()
     {
+        cardController.GetCaster().GetComponent<PlayerController>().SetCasting(false);
         UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
 
         //Resolve cast
@@ -191,6 +192,8 @@ public class CardDragController : DragController
             float y = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).y + HandController.handController.cardHighlightHeight;
             transform.position = new Vector2(x, y);
             transform.SetAsLastSibling();
+
+            cardController.GetCaster().GetComponent<PlayerController>().SetCasting(true);
         }
         cardController.CreateRangeIndicator();
 
@@ -320,6 +323,8 @@ public class CardDragController : DragController
         line.enabled = false;
         cardController.DeleteRangeIndicator();
         moveShadow.GetComponent<SpriteRenderer>().enabled = false;
+
+        cardController.GetCaster().GetComponent<PlayerController>().TriggerAttack();
 
         StartCoroutine(OnPlay(targetedLocs));
         TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());

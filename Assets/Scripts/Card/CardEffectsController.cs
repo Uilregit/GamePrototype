@@ -244,8 +244,8 @@ public class CardEffectsController : MonoBehaviour
                 return caster.GetComponent<HealthController>().GetBonusAttack() == 0;
             case Card.ConditionType.CasterHasHigherATK:
                 targs = GridController.gridController.GetObjectAtLocation(targets);
-                int minATK = 0;
-                foreach (GameObject obj in targs)
+                int minATK = 999999;
+                foreach(GameObject obj in targs)
                     if (obj.GetComponent<HealthController>().GetAttack() < minATK)
                         minATK = obj.GetComponent<HealthController>().GetAttack();
                 return caster.GetComponent<HealthController>().GetAttack() > minATK;

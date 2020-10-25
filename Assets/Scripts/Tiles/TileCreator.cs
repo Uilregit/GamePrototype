@@ -112,7 +112,7 @@ public class TileCreator : MonoBehaviour
     }
 
     //Destroys tiles in ALL layers
-    public void DestryTiles(GameObject destroyer)
+    public void DestroyTiles(GameObject destroyer)
     {
         //if (destroyer == creator) //Only allow the creator to destroy the tiles
         //{
@@ -131,7 +131,7 @@ public class TileCreator : MonoBehaviour
         //}
     }
 
-    public void DestryTiles(GameObject destroyer, int layer)
+    public void DestroyTiles(GameObject destroyer, int layer)
     {
         //if (destroyer == creator) //Only allow the creator to destroy the tiles
         //{
@@ -317,7 +317,7 @@ public class TileCreator : MonoBehaviour
 
     public void CreatePathTiles(int layer, List<Vector2> path, int moveRangeLeft, Color color)
     {
-        Color tileColor = new Color(color.r, color.g, color.b, 0.3f);
+        Color tileColor = new Color(color.r, color.g, color.b);
 
         if (path.Count > 1)
         {

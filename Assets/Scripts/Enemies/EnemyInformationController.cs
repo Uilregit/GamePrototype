@@ -38,9 +38,12 @@ public class EnemyInformationController : MonoBehaviour
 
     private DateTime clickedTime;
 
+    private Animator anim;
+
     // Start is called before the first frame update
     void Awake()
     {
+        anim = GetComponent<HealthController>().charDisplay.GetComponent<Animator>();
         enemyController = GetComponent<EnemyController>();
         targetLine = GetComponent<LineRenderer>();
         moveableLocations = new List<Vector2>();
@@ -100,11 +103,14 @@ public class EnemyInformationController : MonoBehaviour
         }
 
         int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, new string[] { "Player", "Blockade" }, 1);
-        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
 
+        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
+        //TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+
+        /*
         foreach (Vector2 vec in movePositions)
         {
             int counter = 0;
@@ -127,21 +133,23 @@ public class EnemyInformationController : MonoBehaviour
 
         movePositions = TileCreator.tileCreator.GetTilePositions(1);
         TileCreator.tileCreator.RefreshTiles(1);
+                */
 
+        //Create attackable locations
         if (displayedCards[0].GetComponent<CardController>().GetCard().castType == Card.CastType.AoE)
             foreach (Vector2 position in movePositions)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, displayedCards[0].GetComponent<CardController>().GetCard().radius, attackRangeColor, new string[] { "" }, 2);
         else if (enemyController.attackRange > 0)
             foreach (Vector2 position in movePositions)
-                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.attackRange, attackRangeColor, new string[] { "" }, 2);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.castRange, attackRangeColor, new string[] { "" }, 2);
 
         moveableLocations = movePositions;
         attackableLocations = TileCreator.tileCreator.GetTilePositions(2);
 
         if (!visible)
         {
-            TileCreator.tileCreator.DestryTiles(this.gameObject, 1);
-            TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
         }
 
     }
@@ -253,7 +261,7 @@ public class EnemyInformationController : MonoBehaviour
         foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
             obj.GetComponent<HealthController>().HideHealthBar();
 
-        TileCreator.tileCreator.DestryTiles(this.gameObject);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject);
         if (displayCardCoroutine != null)
             StopCoroutine(displayCardCoroutine);
         HideCards();
@@ -347,6 +355,8 @@ public class EnemyInformationController : MonoBehaviour
 
     public IEnumerator TriggerCard(int cardIndex, List<Vector2> targets)
     {
+        TriggerAttack();
+
         CardController cc = displayedCards[cardIndex].GetComponent<CardController>();
 
         if (enemyController.GetTaunt() != null)
@@ -387,13 +397,15 @@ public class EnemyInformationController : MonoBehaviour
         usedCard.GetComponent<CardController>().SetCard(card.GetCard());
 
         if (card.GetCard().castType == Card.CastType.AoE)
-            TileCreator.tileCreator.CreateTiles(this.gameObject, transform.position, Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
+        {
+            TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(transform.position, 1), Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
+        }
     }
 
     public void DestroyUsedCard()
     {
         HideTargetLine();
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 0);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
         Destroy(usedCard);
     }
 
@@ -417,7 +429,7 @@ public class EnemyInformationController : MonoBehaviour
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, Color.clear, new string[] { "Player", "Enemy", "Blockade" }, 2);
         List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         //Get the locations of all points that this enemy can move to assuming no enemy in the way
         // ~ probably can remove by taking out Enemy in the avoid tags in line 333 above
@@ -442,7 +454,7 @@ public class EnemyInformationController : MonoBehaviour
         }
 
         movePositions = TileCreator.tileCreator.GetTilePositions(2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         //Get the locations of all attack points from all moveable locations
         if (displayedCards[0].GetComponent<CardController>().GetCard().castType == Card.CastType.AoE)
@@ -453,8 +465,23 @@ public class EnemyInformationController : MonoBehaviour
                 TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, enemyController.attackRange, Color.yellow, new string[] { "" }, 2);
 
         List<Vector2> attackablePositions = TileCreator.tileCreator.GetTilePositions(2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         return GridController.gridController.GetObjectAtLocation(attackablePositions, tags);
+    }
+
+    public void TriggerAttack()
+    {
+        anim.SetTrigger("isAttacking");
+    }
+
+    public void SetRunning(bool state)
+    {
+        anim.SetBool("isRunning", state);
+    }
+
+    public void TriggerDeath()
+    {
+        anim.SetTrigger("isDead");
     }
 }

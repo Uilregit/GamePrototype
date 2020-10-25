@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L Blood Ritual
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Blood ritual
   energyCost: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 5
-  description: When the target is healed, they restore 2 more health for 3 turns
+  description: For 3 turns, when the target is healed, they restore 2 more health
   art: {fileID: 21300000, guid: 02aea84e03296054398f697eba6d711e, type: 3}
   castType: 0
   castShape: 0
@@ -40,3 +40,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

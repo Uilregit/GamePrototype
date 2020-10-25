@@ -2571,7 +2571,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d7edca33536c07479892588b2ad9442, type: 2}
   bossRoomSetups:
   - {fileID: 11400000, guid: d96ad6099ba85f648ae7d801daa5af9d, type: 2}
-  debug: 0
+  debug: 1
   debugRoom: {fileID: 11400000, guid: a87befa3bf78b8d4381597beffea86f4, type: 2}
 --- !u!114 &476133585
 MonoBehaviour:
@@ -4640,8 +4640,9 @@ MonoBehaviour:
   lootTable: {fileID: 11400000, guid: 8f1f20b8a0046a44aa4090b752c01bc2, type: 2}
   relics:
   - {fileID: 11400000, guid: 94574659193d1b0408d91f270634cd04, type: 2}
-  - {fileID: 11400000, guid: 171a4971ba29bda44b8b3157f372d911, type: 2}
-  - {fileID: 11400000, guid: a9c29c7583966474289b22a7934836c5, type: 2}
+  - {fileID: 11400000, guid: 2d8518f869ffc374aa68d0b5aa4ff1b9, type: 2}
+  - {fileID: 11400000, guid: 2d8518f869ffc374aa68d0b5aa4ff1b9, type: 2}
+  - {fileID: 11400000, guid: 2d8518f869ffc374aa68d0b5aa4ff1b9, type: 2}
   - {fileID: 11400000, guid: 2d8518f869ffc374aa68d0b5aa4ff1b9, type: 2}
 --- !u!114 &773657242 stripped
 MonoBehaviour:
@@ -5378,8 +5379,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bdc7cf3fe43433245a6f7b1b4871d140, type: 2}
     - {fileID: 11400000, guid: bdc7cf3fe43433245a6f7b1b4871d140, type: 2}
     - {fileID: 11400000, guid: bdc7cf3fe43433245a6f7b1b4871d140, type: 2}
-    - {fileID: 11400000, guid: 1bbade889a6e826439007334c41c9463, type: 2}
-    - {fileID: 11400000, guid: 1bbade889a6e826439007334c41c9463, type: 2}
+    - {fileID: 11400000, guid: a53f903a1bcbbad4c837f0556015b9e1, type: 2}
+    - {fileID: 11400000, guid: a53f903a1bcbbad4c837f0556015b9e1, type: 2}
   debugDeck:
   - deck:
     - {fileID: 11400000, guid: 0cd7716c0837aa54ca884bfbdd893618, type: 2}
@@ -5409,23 +5410,23 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
     - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
   - deck:
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
-    - {fileID: 11400000, guid: 49ff99c55c45e6d4697777d3e79a9c58, type: 2}
+    - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
+    - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
+    - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
+    - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
+    - {fileID: 11400000, guid: 755aa17a5f9d34645b829753d482c559, type: 2}
+    - {fileID: 11400000, guid: 755aa17a5f9d34645b829753d482c559, type: 2}
+    - {fileID: 11400000, guid: 755aa17a5f9d34645b829753d482c559, type: 2}
+    - {fileID: 11400000, guid: 755aa17a5f9d34645b829753d482c559, type: 2}
   - deck:
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
-    - {fileID: 11400000, guid: 0967c3d106602724fa274c3a3972f208, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
+    - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
   - deck:
     - {fileID: 11400000, guid: 2db151e3e9d901244babc0397492984a, type: 2}
     - {fileID: 11400000, guid: 2db151e3e9d901244babc0397492984a, type: 2}
@@ -11495,13 +11496,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b196ff556959d8446bdafcc819770c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyColors: 020000000000000005000000
+  partyColors: 030000000100000004000000
   potentialPlayerColors: 000000000100000002000000030000000400000005000000
   playerImageColors:
   - {r: 1, g: 0.25882354, b: 0.25882354, a: 1}
   - {r: 0, g: 0.4, b: 0.7921569, a: 1}
   - {r: 0.2509804, g: 0.7921569, b: 0.25882354, a: 1}
-  - {r: 0.7921569, g: 0.5053806, b: 0.2509804, a: 1}
+  - {r: 1, g: 0.6627451, b: 0, a: 1}
   - {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   - {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
 --- !u!4 &1705573832

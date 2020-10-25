@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: L Subdue
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
-  rarity: 3
+  canCastOnSelf: 1
+  rarity: 0
   name: Subdue
   energyCost: 0
-  manaCost: 1
+  manaCost: 2
   range: 2
   radius: 0
   casterColor: 5
-  description: Target loses -3 temporary ATK this turn
+  description: Target loses -6 temporary ATK
   art: {fileID: 21300000, guid: a7423f5aaca816c4099d3f08cee6b6a5, type: 3}
   castType: 0
   castShape: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   conditionType: 00000000
   conditionValue: 00000000
   buffType: 64000000
-  effectValue: fdffffff
+  effectValue: faffffff
   effectDuration: 01000000
   spawnObject:
   - {fileID: 0}
@@ -40,3 +40,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

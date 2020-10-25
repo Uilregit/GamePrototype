@@ -228,8 +228,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.06252861, a: 1}
-      key1: {r: 1, g: 0.28841394, b: 0, a: 1}
+      key0: {r: 1, g: 0, b: 0.06252861, a: 0.49019608}
+      key1: {r: 1, g: 0.28841394, b: 0, a: 0.49019608}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -341,15 +341,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b3c3c56eda9596c4db2a00b385e0a5c2, type: 3}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.116104126
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.004058838
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2958984
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalRotation.x
@@ -383,10 +383,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3665078615381570022, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4e92a6d1a6aebed4ca1af0aed7d7d7ce, type: 2}
     - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_Name
       value: CharacterDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 5076871346195981181, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2965478024826282422, guid: 756c098c354168842902bd8f14115cf5, type: 3}
+    - target: {fileID: 8324242397336363476, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4e92a6d1a6aebed4ca1af0aed7d7d7ce, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
 --- !u!4 &4754024237291417812 stripped

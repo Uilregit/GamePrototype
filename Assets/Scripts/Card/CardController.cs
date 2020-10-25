@@ -184,7 +184,7 @@ public class CardController : MonoBehaviour
 
     public void DeleteRangeIndicator()
     {
-        TileCreator.tileCreator.DestryTiles(this.gameObject);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject);
         TileCreator.tileCreator.DestroySelectableTiles();
     }
 
@@ -390,7 +390,7 @@ public class CardController : MonoBehaviour
         cost -= GetManaCostDiscount();
         cost -= caster.GetComponent<HealthController>().GetManaCostReduction();
         cost -= TurnController.turnController.GetManaReduction();
-        return cost;
+        return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 
     public int GetNetEnergyCost()
@@ -407,7 +407,7 @@ public class CardController : MonoBehaviour
         cost -= GetEnergyCostDiscount();
         cost -= caster.GetComponent<HealthController>().GetEnergyCostReduction();
         cost -= TurnController.turnController.GetEnergyReduction();
-        return cost;
+        return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 
     public int GetSimulatedTotalAttackValue(int attackCardIndex)

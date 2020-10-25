@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: W Drain Speed
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Drain Speed
   energyCost: 2
@@ -31,7 +31,7 @@ MonoBehaviour:
   conditionValue: 0000000000000000
   buffType: c8000000c8000000
   effectValue: feffffff02000000
-  effectDuration: 0000000000000000
+  effectDuration: 0100000001000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}
@@ -41,3 +41,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

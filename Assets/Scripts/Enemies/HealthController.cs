@@ -338,6 +338,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
         catch
         {
+            GetComponent<EnemyInformationController>().TriggerDeath();
             GameController.gameController.ReportOverkillGold(0 - GetVit());
             ScoreController.score.UpdateOverkill(0 - GetVit());
         }
@@ -603,7 +604,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     }
 
     //Simply remove value from health
-    public void TakePiercingDamage(int value, HealthController attacker)
+    public void TakePiercingDamage(int value, HealthController attacker, List<Buff> buffTrace = null)
     {
         int oldHealth = currentVit + bonusVit;
         int damage = 0;
@@ -623,7 +624,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
 
             if (damage < 0)
-                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage));
+                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, buffTrace));
         }
 
         if (damage > 0)
@@ -661,7 +662,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Force the object to move towards the finalLocation, value number of times
     //Value can be positive (towards) or negative (away) from the finalLocation
     //If there is an object in the way stop movement before colision and deal piercing knockback damage to both objects
-    public void ForcedMovement(Vector2 castFromLocation, int steps)
+    public void ForcedMovement(Vector2 castFromLocation, int steps, List<Buff> buffTrace = null)
     {
         if (size > 1)
             return; //Show resist on UI
@@ -693,7 +694,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             foreach (Vector2 loc in occupiedSpaces)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
             transform.position = knockedToCenter;
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1, buffTrace));
             foreach (Vector2 loc in aboutToBePositions)
                 GridController.gridController.ReportPosition(this.gameObject, loc);
 
@@ -877,7 +878,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         */
     }
 
-    public void OnDamage(HealthController attacker, int damage, int oldHealth)
+    public void OnDamage(HealthController attacker, int damage, int oldHealth, List<Buff> buffTrace = null)
     {
         //Handheld.Vibrate();
 
@@ -897,7 +898,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
         */
         if (damage > 0)
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
 
         if (currentVit + bonusVit <= 0)
             try

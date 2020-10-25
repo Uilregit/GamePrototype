@@ -61,6 +61,21 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerMoveController>().Spawn();
     }
 
+    public void SetCasting(bool state)
+    {
+        healthController.charDisplay.SetCasting(state);
+    }
+
+    public void TriggerAttack()
+    {
+        healthController.charDisplay.TriggerAttack();
+    }
+
+    public void TriggerDeath()
+    {
+        healthController.charDisplay.TriggerDeath();
+    }
+
     public Card.CasterColor GetColorTag()
     {
         return colorTag;

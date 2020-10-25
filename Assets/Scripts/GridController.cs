@@ -151,7 +151,7 @@ public class GridController : MonoBehaviour
     {
         TileCreator.tileCreator.CreateTiles(this.gameObject, center, Card.CastShape.Circle, range, Color.green, 2);
         List<Vector2> locations = TileCreator.tileCreator.GetTilePositions(2);
-        TileCreator.tileCreator.DestryTiles(this.gameObject, 2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         return GetObjectAtLocation(locations, tag).Distinct().ToList();
     }
@@ -232,11 +232,12 @@ public class GridController : MonoBehaviour
             try
             {
                 Card.CasterColor color = o.GetComponent<PlayerController>().GetColorTag();
-                OnPlayerDeath(o, color);
+                o.GetComponent<PlayerController>().TriggerDeath();
             }
             catch
             {
-                Destroy(o);
+                o.GetComponent<EnemyInformationController>().TriggerDeath();
+                TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
             }
         }
 
@@ -244,7 +245,10 @@ public class GridController : MonoBehaviour
         {
             EnemyController ec = o.GetComponent<EnemyController>();
             if (ec.GetSacrificed())
-                Destroy(o);
+            {
+                o.GetComponent<EnemyInformationController>().TriggerDeath();
+                TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
+            }
         }
 
         yield return new WaitForEndOfFrame();
