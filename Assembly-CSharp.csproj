@@ -244,7 +244,6 @@
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
     <Compile Include="Assets\Scripts\Card\Buffs\MoveRangeBuff.cs" />
-    <Compile Include="Assets\Scripts\Card\Buffs\AttackChangeOnHealBuff1.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

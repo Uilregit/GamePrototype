@@ -17,10 +17,10 @@ public class LifeStealBuff : Buff
         base.duration = duration;
     }
 
-    public override IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<Buff> buffTrace)
+    public override IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value)
     {
-        buffTrace.Add(this);
-        selfHealthController.TakePiercingDamage(-Mathf.CeilToInt(value * tempValue / 100.0f), selfHealthController, buffTrace);
+        //buffTrace.Add(this);
+        selfHealthController.TakePiercingDamage(-Mathf.CeilToInt(value * tempValue / 100.0f), selfHealthController);
         yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);
     }
 

@@ -624,7 +624,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
 
             if (damage < 0)
-                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, buffTrace));
+                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage));
         }
 
         if (damage > 0)
@@ -694,7 +694,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             foreach (Vector2 loc in occupiedSpaces)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
             transform.position = knockedToCenter;
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1, buffTrace));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
             foreach (Vector2 loc in aboutToBePositions)
                 GridController.gridController.ReportPosition(this.gameObject, loc);
 
@@ -898,7 +898,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
         */
         if (damage > 0)
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage));
 
         if (currentVit + bonusVit <= 0)
             try

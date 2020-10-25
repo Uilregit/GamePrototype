@@ -20,14 +20,15 @@ public class BuffController : MonoBehaviour
         queuedBuffList = new List<Buff>();
     }
 
-    public IEnumerator TriggerBuff(Buff.TriggerType type, HealthController healthController, int value, List<Buff> buffTrace)
+    public IEnumerator TriggerBuff(Buff.TriggerType type, HealthController healthController, int value)
     {
         triggerTickets += 1;
         foreach (Buff buff in buffList)
         {
+            /*
             if (buffTrace.Contains(buff)) //Prevent infinite loops of buffs triggering itself in chains. (heal on damage, damage on heal, triggering eachother in a loop)
                 continue;
-
+            */
             if (buff.triggerType == type)
             {
                 yield return StartCoroutine(buff.Trigger(selfHealthController, healthController, value));
