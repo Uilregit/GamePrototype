@@ -58,7 +58,7 @@ public class PiercingDamageEffect : Effect
         return output;
     }
 
-    public override int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         return 0;
     }
@@ -68,7 +68,7 @@ public class PiercingDamageEffect : Effect
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         return target[0].GetComponent<HealthController>().SimulateTakePiercingDamage(simH, value);
     }
-    public override void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration)
     {
         foreach (GameObject targ in targets)
             targ.GetComponent<HealthController>().TakePiercingDamage(effectValue, null);

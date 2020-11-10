@@ -7,8 +7,8 @@ public class GiveBuffsEffect : Effect
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         foreach (GameObject targ in target)
-            foreach (Buff buff in caster.GetComponent<BuffController>().GetBuffs())
-                buff.GetCopy().OnApply(targ.GetComponent<HealthController>(), buff.value, buff.duration, false);
+            foreach (BuffFactory buff in caster.GetComponent<BuffController>().GetBuffs())
+                buff.GetCopy().OnApply(targ.GetComponent<HealthController>(), buff.cardValue, buff.duration, false);
         yield return new WaitForSeconds(0);
     }
 

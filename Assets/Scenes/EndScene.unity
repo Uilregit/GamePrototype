@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overkill: {fileID: 1828778273}
   damage: {fileID: 1454758857}
-  damageShielded: {fileID: 194091286}
+  damageArmored: {fileID: 0}
   overhealProtected: {fileID: 687685391}
   damageAvoided: {fileID: 512832118}
   enemiesBroken: {fileID: 1380971398}
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   Total: {fileID: 1701949976}
   overkillScore: {fileID: 59537720}
   damageScore: {fileID: 15868345}
-  damageShieldedScore: {fileID: 969770273}
+  damageArmoredScore: {fileID: 0}
   overhealProtectedScore: {fileID: 381707632}
   damageAvoidedScore: {fileID: 1217392595}
   enemiesBrokenScore: {fileID: 6892485}
@@ -2293,7 +2293,7 @@ GameObject:
   - component: {fileID: 2020161858}
   - component: {fileID: 2020161857}
   m_Layer: 5
-  m_Name: New Game
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2351,7 +2351,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Game
+  m_Text: Main Menu
 --- !u!222 &2020161858
 CanvasRenderer:
   m_ObjectHideFlags: 0

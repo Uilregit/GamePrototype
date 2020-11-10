@@ -259,7 +259,7 @@ public class CardController : MonoBehaviour
                 cardDisplay.SetConditionHighlight(casterHealthController.GetBonusAttack() > 0);
                 break;
             case (Card.HighlightCondition.HasBonusArmor):
-                cardDisplay.SetConditionHighlight(casterHealthController.GetBonusShield() > 0);
+                cardDisplay.SetConditionHighlight(casterHealthController.GetBonusArmor() > 0);
                 break;
             case (Card.HighlightCondition.HasBonusVit):
                 cardDisplay.SetConditionHighlight(casterHealthController.GetBonusVit() > 0);

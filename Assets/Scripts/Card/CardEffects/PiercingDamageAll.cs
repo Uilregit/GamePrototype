@@ -17,7 +17,7 @@ public class PiercingDamageAll : Effect
         throw new System.NotImplementedException();
     }
 
-    public override void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration)
     {
         foreach (GameObject targ in targets)
             targ.GetComponent<HealthController>().TakePiercingDamage(effectValue, null);

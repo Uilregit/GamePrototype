@@ -12,12 +12,12 @@ public class EnemyController : MonoBehaviour
     [Header("Stats Settings")]
     public int castRange = 1;
     public int maxVit;
-    public int startingShield;
+    public int startingArmor;
     public int attack;
     public int moveRange;
     public int attackRange;
     public int vitAttackValue;
-    public int shieldAttackValue;
+    public int armorAttackValue;
     public int randomStartRange;
     public int attacksPerTurn = 1;
 
@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
     public enum MoveType { Kite, Hug }
     public MoveType moveType;
 
-    public enum TargetType { Nearest, Furthest, LowestVit, LowestShield, HighestShield, HighestVit, MostMissingHealth, RedPlayer, GreenPlayer, BluePlayer, Self, Default, HighestAttack, LowestAttack };
+    public enum TargetType { Nearest, Furthest, LowestVit, LowestArmor, HighestArmor, HighestVit, MostMissingHealth, RedPlayer, GreenPlayer, BluePlayer, Self, Default, HighestAttack, LowestAttack };
     public TargetType targetType = TargetType.Nearest;
 
     //public Card[] attackCards;
@@ -69,7 +69,7 @@ public class EnemyController : MonoBehaviour
         healthController.SetCastRange(castRange);
         healthController.SetMaxVit(maxVit);
         healthController.SetCurrentVit(maxVit);
-        healthController.SetStartingShield(startingShield);
+        healthController.SetStartingArmor(startingArmor);
         healthController.SetAttack(attack);
 
         enemyInformation = GetComponent<EnemyInformationController>();
@@ -287,10 +287,10 @@ public class EnemyController : MonoBehaviour
             return GetNearest(type);
         else if (currentTargetType == TargetType.Furthest)
             return GetFurthest(type);
-        else if (currentTargetType == TargetType.HighestShield)
-            return GetHighestShield(type);
-        else if (currentTargetType == TargetType.LowestShield)
-            return GetLowestShield(type);
+        else if (currentTargetType == TargetType.HighestArmor)
+            return GetHighestArmor(type);
+        else if (currentTargetType == TargetType.LowestArmor)
+            return GetLowestArmor(type);
         else if (currentTargetType == TargetType.HighestVit)
             return GetHighestVit(type);
         else if (currentTargetType == TargetType.LowestVit)
@@ -322,7 +322,7 @@ public class EnemyController : MonoBehaviour
         else
             traveledPath = FindPath(target, attackSequence[attackCardIndex].range);
 
-        if (RoomController.roomController.debug)
+        if (InformationLogger.infoLogger.debug)
             foreach (Vector2 loc in traveledPath)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.yellow, 2);
 
@@ -436,7 +436,7 @@ public class EnemyController : MonoBehaviour
         if (output.Count == 1)
         {
             List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "None" }, occupiedSpace, size);
-            if (RoomController.roomController.debug)
+            if (InformationLogger.infoLogger.debug)
                 foreach (Vector2 loc in path)
                     TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.blue, 0);
             int bonuseMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
@@ -444,7 +444,7 @@ public class EnemyController : MonoBehaviour
         }
 
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-        if (RoomController.roomController.debug)
+        if (InformationLogger.infoLogger.debug)
             foreach (Vector2 loc in output)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.red, 1);
 
@@ -623,7 +623,7 @@ public class EnemyController : MonoBehaviour
         return output.transform.position;
     }
 
-    private Vector2 GetHighestShield(Card.CastType type)
+    private Vector2 GetHighestArmor(Card.CastType type)
     {
         GameObject output = null;
 
@@ -635,16 +635,16 @@ public class EnemyController : MonoBehaviour
         int armor = -999999999;
         foreach (GameObject target in targets)
         {
-            if (target.GetComponent<HealthController>().GetShield() > armor && target.GetComponent<HealthController>().GetVit() > 0)
+            if (target.GetComponent<HealthController>().GetArmor() > armor && target.GetComponent<HealthController>().GetVit() > 0)
             {
-                armor = target.GetComponent<HealthController>().GetShield();
+                armor = target.GetComponent<HealthController>().GetArmor();
                 output = target;
             }
         }
         return output.transform.position;
     }
 
-    private Vector2 GetLowestShield(Card.CastType type)
+    private Vector2 GetLowestArmor(Card.CastType type)
     {
         GameObject output = null;
 
@@ -656,9 +656,9 @@ public class EnemyController : MonoBehaviour
         int armor = 999999999;
         foreach (GameObject target in targets)
         {
-            if (target.GetComponent<HealthController>().GetShield() < armor && target.GetComponent<HealthController>().GetVit() > 0)
+            if (target.GetComponent<HealthController>().GetArmor() < armor && target.GetComponent<HealthController>().GetVit() > 0)
             {
-                armor = target.GetComponent<HealthController>().GetShield();
+                armor = target.GetComponent<HealthController>().GetArmor();
                 output = target;
             }
         }
@@ -832,7 +832,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             score -= simH.currentVit * 1;   //1 point per health left
-            score -= simH.currentShield * 2;//2 points per shield left
+            score -= simH.currentArmor * 2;//2 points per armor left
         }
         return score;
     }

@@ -11,8 +11,8 @@ public class CharacterInformationController : MonoBehaviour
     public Image characterImage;
     public Text healthText;
     public Text armorText;
-    public Text shieldText;
     public Text attackText;
+    public Text attackQueueText;
     public List<Text> abilityTexts;
     public List<CardDisplay> attackCards;
     public List<BuffDescriptionController> buffDescriptions;
@@ -29,24 +29,24 @@ public class CharacterInformationController : MonoBehaviour
         Hide();
     }
 
-    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<Buff> buffList, AbilitiesController abilitiesController)
+    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<BuffFactory> buffList, AbilitiesController abilitiesController)
     {
         int currentHealth = healthController.GetVit();
         int maxHealth = healthController.GetMaxVit();
         int attack = healthController.GetAttack();
-        int shield = healthController.GetShield();
+        int armor = healthController.GetArmor();
         numOfCards = cards.Count;
 
         //Stats section
         characterImage.sprite = character;
         healthText.text = "Health: {c}/{m}".Replace("{c}", currentHealth.ToString()).Replace("{m}", maxHealth.ToString());
-        armorText.text = "Attack: {a}".Replace("{a}", attack.ToString());
-        shieldText.text = "Armor: {s}".Replace("{s}", shield.ToString());
+        attackText.text = "Attack: {a}".Replace("{a}", attack.ToString());
+        armorText.text = "Armor: {s}".Replace("{s}", armor.ToString());
 
         if (cards.Count == 0)
-            attackText.enabled = false;
+            attackQueueText.enabled = false;
         else
-            attackText.enabled = true;
+            attackQueueText.enabled = true;
 
         //Attack cards section
         for (int i = 0; i < attackCards.Count; i++)

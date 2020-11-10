@@ -19,6 +19,7 @@ public class HandController : MonoBehaviour
     public float cardHighlightHeight;
     public float cardStartingSize;
     public float cardHighlightSize;
+    public float cardAimSize;
     public float cardHoldSize;
     public float cardHighlightXBoarder;
     public float cardSpacing;
@@ -41,6 +42,12 @@ public class HandController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         hand = new List<CardController>();
+
+        if (InformationLogger.infoLogger.debug)
+        {
+            maxReplaceCount = 10;
+            allowHold = true;
+        }
     }
 
     /*
@@ -66,6 +73,7 @@ public class HandController : MonoBehaviour
     private CardController GetAnyCard()
     {
         GameObject card = Instantiate(cardTemplate);
+        card.GetComponent<RectTransform>().rotation = CameraController.camera.transform.rotation;
         card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         CardController cardController = card.GetComponent<CardController>();
         CardController drawnCard = DeckController.deckController.DrawAnyCard();
@@ -77,6 +85,7 @@ public class HandController : MonoBehaviour
     private CardController GetSpecificCard(CardController thisCard)
     {
         GameObject card = Instantiate(cardTemplate);
+        card.GetComponent<RectTransform>().rotation = CameraController.camera.transform.rotation;
         card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         CardController cardController = card.GetComponent<CardController>();
         cardController.SetCardController(thisCard);
@@ -151,7 +160,7 @@ public class HandController : MonoBehaviour
             {
                 Vector2 cardLocation = new Vector2((i - hand.Count / 2) * cardSpacing, cardStartingHeight);
                 hand[hand.Count - 1 - i].SetLocation(cardLocation);
-                hand[hand.Count - 1 - i].transform.localScale = new Vector2(cardStartingSize, cardStartingSize);
+                hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
             }
         }
         //Even number of cards
@@ -161,7 +170,7 @@ public class HandController : MonoBehaviour
             {
                 Vector2 cardLocation = new Vector2((i - hand.Count / 2 + 0.5f) * cardSpacing, cardStartingHeight);
                 hand[hand.Count - 1 - i].SetLocation(cardLocation);
-                hand[hand.Count - 1 - i].transform.localScale = new Vector2(cardStartingSize, cardStartingSize);
+                hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
             }
         }
     }
@@ -175,7 +184,7 @@ public class HandController : MonoBehaviour
             ResetCardPositions();
             heldCard.GetComponent<CardDragController>().SetHeld(true);
 
-            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider2D>().enabled = false;
+            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -189,7 +198,7 @@ public class HandController : MonoBehaviour
             Destroy(currentlyHeldCard.gameObject);
             currentlyHeldCard = null;
 
-            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider2D>().enabled = true;
+            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = true;
         }
     }
 
@@ -227,7 +236,8 @@ public class HandController : MonoBehaviour
                                 "None",
                                 "None",
                                 replacedCard.GetCard().energyCost.ToString(),
-                                replacedCard.GetCard().manaCost.ToString());
+                                replacedCard.GetCard().manaCost.ToString(),
+                                "0");
         }
     }
 
@@ -280,7 +290,8 @@ public class HandController : MonoBehaviour
                                 "None",
                                 "None",
                                 card.GetCard().energyCost.ToString(),
-                                card.GetCard().manaCost.ToString());
+                                card.GetCard().manaCost.ToString(),
+                                "0");
 
             Destroy(card.gameObject);
         }
@@ -305,7 +316,8 @@ public class HandController : MonoBehaviour
                         "None",
                         "None",
                         currentlyHeldCard.GetCard().energyCost.ToString(),
-                        currentlyHeldCard.GetCard().manaCost.ToString());
+                        currentlyHeldCard.GetCard().manaCost.ToString(),
+                        "0");
 
         ResetCardPositions();
     }
@@ -325,7 +337,7 @@ public class HandController : MonoBehaviour
         currentReplaceCount = 0;
         ResetReplaceText();
 
-        GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider2D>().enabled = true;
+        GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = true;
     }
 
     private void ResetReplaceText()

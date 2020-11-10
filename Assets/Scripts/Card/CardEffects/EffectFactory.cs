@@ -14,14 +14,14 @@ public class EffectFactory
                 case Card.EffectType.VitDamage:
                     effects[i] = new VitDamageEffect();
                     break;
-                case Card.EffectType.ShieldDamage:
-                    effects[i] = new ShieldDamageEffect();
+                case Card.EffectType.ArmorDamage:
+                    effects[i] = new ArmorDamageEffect();
                     break;
                 case Card.EffectType.VitDamageAll:
                     effects[i] = new VitDamageAll();
                     break;
-                case Card.EffectType.ShieldDamageAll:
-                    effects[i] = new ShieldDamageAll();
+                case Card.EffectType.ArmorDamageAll:
+                    effects[i] = new ArmorDamageAll();
                     break;
                 case Card.EffectType.PiercingDamage:
                     effects[i] = new PiercingDamageEffect();
@@ -35,8 +35,8 @@ public class EffectFactory
                 case Card.EffectType.PiercingDamageDivided:
                     effects[i] = new PiercingDamageDivided();
                     break;
-                case Card.EffectType.ShieldDamageDivided:
-                    effects[i] = new ShieldDamageDivided();
+                case Card.EffectType.ArmorDamageDivided:
+                    effects[i] = new ArmorDamageDivided();
                     break;
                 case Card.EffectType.SetKnockBackDamage:
                     effects[i] = new SetKnockBackDamage();
@@ -65,10 +65,10 @@ public class EffectFactory
                 case Card.EffectType.DrawCards:
                     effects[i] = new DrawCardEffect();
                     break;
-                case Card.EffectType.GetCurrentShield:
-                    effects[i] = new GetCurrentShield();
+                case Card.EffectType.GetCurrentArmor:
+                    effects[i] = new GetCurrentArmor();
                     break;
-                case Card.EffectType.GetBonusShield:
+                case Card.EffectType.GetBonusArmor:
                     effects[i] = new GetBonusArmorEffect();
                     break;
                 case Card.EffectType.GetNumberOfTargetsInRangeEffect:

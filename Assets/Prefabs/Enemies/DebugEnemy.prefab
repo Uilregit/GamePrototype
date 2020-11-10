@@ -66,13 +66,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 1
-  maxVit: 100
-  startingShield: 3
-  attack: 1
+  maxVit: 1
+  startingArmor: 100
+  attack: 100
   moveRange: 4
   attackRange: 2
   vitAttackValue: 0
-  shieldAttackValue: 0
+  armorAttackValue: 0
   randomStartRange: 0
   attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}

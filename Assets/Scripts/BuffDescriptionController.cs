@@ -9,10 +9,9 @@ public class BuffDescriptionController : MonoBehaviour
     public Image icon;
     public Text text;
 
-    public void SetBuff(Buff buff, int duration)
+    public void SetBuff(BuffFactory buff, int duration)
     {
         icon.color = buff.GetIconColor();
-        Debug.Log(buff.GetDescription());
         if (duration == 1)
             text.text = buff.GetDescription().Replace("{d}", duration.ToString()).Replace("(s)", "");
         else

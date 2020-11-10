@@ -28,6 +28,11 @@ public class GameController : MonoBehaviour
     public int[] playerSpawnBox = new int[4]; //(x1,x2,y1,y2)
     public int[] enemySpawnBox = new int[4];
 
+    [Header("Buffs")]
+    public Buff attackBuff;
+    public Buff armorBuff;
+    public Buff stunBuff;
+
     private Vector3 cameraLocation;
     private int deckID;
     private RoomSetup setup;
@@ -65,7 +70,7 @@ public class GameController : MonoBehaviour
 
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
-        if (RoomController.roomController.debug)
+        if (InformationLogger.infoLogger.debug)
             GridController.gridController.DebugGrid();
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart);

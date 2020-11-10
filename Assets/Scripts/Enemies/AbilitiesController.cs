@@ -14,7 +14,7 @@ public class AbilitiesController : MonoBehaviour
     }
     public enum AbilityType
     {
-        VitChange, ShieldChange, AttackChange
+        VitChange, ArmorChange, AttackChange
     }
 
     public List<TargetType> targetTypes = new List<TargetType>();
@@ -73,8 +73,8 @@ public class AbilitiesController : MonoBehaviour
                         case AbilityType.VitChange:
                             obj.GetComponent<HealthController>().TakePiercingDamage(abilityValue[i], GetComponent<HealthController>());
                             break;
-                        case AbilityType.ShieldChange:
-                            obj.GetComponent<HealthController>().SetBonusShield(abilityValue[i]);
+                        case AbilityType.ArmorChange:
+                            obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i]);
                             break;
                         case AbilityType.AttackChange:
                             obj.GetComponent<HealthController>().SetBonusAttack(abilityValue[i]);
@@ -129,7 +129,7 @@ public class AbilitiesController : MonoBehaviour
                 case AbilityType.AttackChange:
                     s += "ATK";
                     break;
-                case AbilityType.ShieldChange:
+                case AbilityType.ArmorChange:
                     s += "Armor";
                     break;
                 case AbilityType.VitChange:

@@ -1,363 +1,908 @@
-deviceID,patchID,gameID,encounterLevel,roomName,turnID,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,shieldDamageDone,manaGenerated,manaUsed
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,1,Red,Swing,False,False,False,True,Berzerker,1,|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Space Denyer(Clone)|,7,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,3,Blue,Thunder,False,False,False,True,Mage,1,|Space Denyer(Clone)|,7,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,4,Blue,Fireball,False,False,False,True,Mage,1,|Space Denyer(Clone)|,11,1,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,4,Green,Wind Walk,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,4,Red,Hunker Down,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,0,4,Red,Hunker Down,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,1,Green,Wind Strike,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,2,Green,Wind Strike,False,False,False,True,Archer,1,|Bombs(Clone)|Space Denyer(Clone)|Bombs(Clone)|Space Denyer(Clone)|,3,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,2,Green,Wind Walk,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,3,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,3,Red,Defend,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,1,3,Red,Defend,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,1,Green,Wind Strike,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,2,Blue,Fireball,False,False,False,True,Mage,1,|Space Denyer(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,3,Red,Swing,False,False,False,True,Berzerker,1,|Space Denyer(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,3,Green,Arrow Storm,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,2,3,Green,Wind Walk,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,0,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,0,Green,Wind Walk,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,1,Red,Swing,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,3,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,7,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,11,1,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Blue,Resonance,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Green,Wind Walk,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Red,Hunker Down,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,1,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,7,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,1,Red,Hunker Down,False,True,False,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,1,Green,Wind Walk,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,2,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,3,Red,Swing,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,3,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,3,Red,Defend,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,0,Red,Hunker Down,False,True,False,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,0,Red,Hunker Down,False,True,False,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,3,Red,Swing,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|,4,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Green,Arrow Storm,False,False,False,True,Archer,1,|Armor Breaker(Clone)|,3,1,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Green,Wind Walk,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Red,Defend,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,0,4,Blue,Cure,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,0,Blue,Resonance,False,True,False,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,1,Red,Swing,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,7,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,2,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,2,Green,Wind Walk,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,1,2,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,1,Red,Swing,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,1,Red,Defend,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,1,Green,Wind Walk,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,2,Green,Arrow Storm,False,False,False,True,Archer,1,|Armor Breaker(Clone)|,3,1,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,3,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,4,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,1,missing,2,4,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,1,Green,Wind Walk,False,False,False,True,Archer,1,|Archer|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,2,Green,Wind Walk,False,False,False,True,Archer,1,|Berzerker|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,3,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,4,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,5,Red,Swing,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,5,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,0,5,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,0,Red,Hunker Down,False,True,False,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,1,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,2,Red,Swing,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,3,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,4,Red,War Cry,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,0,0,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 7:22:23 PM,2,missing,1,4,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,1,White,White Attack,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,2,Black,Black Attack,False,False,False,True,Warlock,1,|Armor Breaker(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,3,Black,Black Attack,False,False,False,True,Warlock,1,|Armor Breaker(Clone)|,3,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,3,Orange,Orange Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,3,Orange,Orange Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,0,3,Orange,Orange Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Paladin|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Paladin|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,1,White,White Attack,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,2,White,White Attack,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,3,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,3,White,White Attack,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,3,Orange,Orange Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 11:40:04 PM,0,missing,1,3,Black,Black Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,0,1,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,0,2,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,0,3,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,4,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,0,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,0,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,1,Black,Black Attack,False,False,False,True,Warlock,1,|Space Denyer(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,2,Black,Black Attack,False,False,False,True,Warlock,1,|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,3,Black,Black Attack,False,False,False,True,Warlock,1,|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,1,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),3,|Bombs(Clone)|Bombs(Clone)|Space Denyer(Clone)|,30,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,1,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,4,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,2,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,3,Orange,Orange Attack,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,3,Black,Black Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,2,3,White,White Attack,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 4:50:29 PM,0,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:16:35 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,1,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:18:18 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Huge Damage(Clone)|Paladin|Huge Damage(Clone)|,70,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:18:55 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|Paladin|Armor Breaker(Clone)|,1,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:27:51 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Huge Damage(Clone)|Paladin|,0,0,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:29:25 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|Paladin|,0,0,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:30:19 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|Paladin|,0,0,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:41:02 PM,0,missing,0,1,Orange,Overconfidence,False,False,False,True,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:43:48 PM,0,missing,0,0,Black,Ignite,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:43:48 PM,0,missing,0,0,Black,Ignite,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44:14 PM,0,missing,0,0,Black,Regen,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44:14 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Paladin|Paladin|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44:14 PM,0,missing,0,2,Orange,Overconfidence,False,False,False,True,Paladin,1,|Huge Damage(Clone)|Paladin|Huge Damage(Clone)|,11,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:15 PM,0,missing,0,0,Black,Regen,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:15 PM,0,missing,0,0,Orange,Stun,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:30 PM,0,missing,0,0,Black,Regen,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:30 PM,0,missing,0,0,Black,Regen,False,True,False,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:45 PM,0,missing,0,1,White,Flex,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:45 PM,0,missing,0,2,White,Critical Strike,False,False,False,True,Mimic,1,|Paladin|Paladin|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:45 PM,0,missing,0,3,White,Critical Strike,False,False,False,True,Mimic,1,|Paladin|Paladin|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45:45 PM,0,missing,0,4,Orange,Overconfidence,False,False,False,True,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49:03 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49:03 PM,0,missing,0,2,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49:03 PM,0,missing,0,3,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51:18 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51:18 PM,0,missing,0,1,Orange,Stun,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51:18 PM,0,missing,0,1,Black,Subdue,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51:18 PM,0,missing,0,2,White,Critical Strike,False,False,False,True,Mimic,1,|Paladin|Paladin|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51:18 PM,0,missing,0,3,Orange,Overconfidence,False,False,False,True,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52:33 PM,0,missing,0,0,Orange,Lifesteal,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52:33 PM,0,missing,0,0,Black,Subdue,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52:33 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:54:47 PM,0,missing,0,0,Orange,Stun,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:54:47 PM,0,missing,0,0,Orange,Lifesteal,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:00 PM,0,missing,0,0,White,Steal,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:00 PM,0,missing,0,0,Orange,Overconfidence,False,True,False,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:15 PM,0,missing,0,0,Orange,Lifesteal,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:15 PM,0,missing,0,0,Black,Subdue,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,Orange,Lifesteal,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,Orange,Stun,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,0,0,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,1,0,Enemy,Ironstrike,False,False,False,True,Neutral(Clone),1,|Mimic|Neutral(Clone)|,6,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,1,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,1,2,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55:27 PM,0,missing,1,3,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:58:02 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Mimic|Mimic|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:07:49 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Paladin|Paladin|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:09:38 PM,0,missing,0,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:09:38 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:09:38 PM,0,missing,0,2,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:09:38 PM,0,missing,0,2,Orange,Stun,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:09:38 PM,0,missing,0,2,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Orange,Stun,False,True,False,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Black,Subdue,False,True,False,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Orange,Overconfidence,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,0,0,White,Critical Strike,True,False,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Paladin|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,1,1,White,Critical Strike,False,False,False,True,Mimic,1,|Warlock|Warlock|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,1,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,1,2,Orange,Overconfidence,False,True,False,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:17:13 PM,0,missing,1,2,White,Steal,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,0,0,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,0,0,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,0,0,Orange,Overwhelming Odds,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,0,0,White,Critical Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,1,0,Black,Subdue,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,1,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,1,0,Orange,Overwhelming Odds,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,1,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,1,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:29:27 PM,0,missing,2,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,0,0,White,Critical Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,0,0,White,Critical Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,0,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,0,0,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,0,0,White,Critical Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 1:32:08 PM,0,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 1:38:14 PM,0,missing,0,0,Orange,Strike,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 1:38:14 PM,0,missing,0,0,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 1:38:14 PM,0,missing,0,0,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 1:38:14 PM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 1:38:14 PM,0,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/11/2020 2:28:40 PM,0,missing,0,0,White,Steal,False,True,False,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/13/2020 10:28:22 PM,0,missing,0,1,Blue,Cycle Of Mana,False,False,False,True,Mage,1,|Warlock|Mage|,-2,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/13/2020 10:28:22 PM,0,missing,0,1,Blue,Cycle Of Mana,False,False,False,True,Mage,1,|Berzerker|Mage|,-2,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|Space Denyer(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,0,3,Green,Arrow Storm,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,6,2,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,0,4,Red,Sword and Board,False,False,False,True,Berzerker,1,|Space Denyer(Clone)|Space Denyer(Clone)|Berzerker|,48,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,0,4,Green,Wind Strike,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),6,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Space Denyer(Clone)|Berzerker|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,2,Green,Arrow Storm,False,False,False,True,Archer,1,|Space Denyer(Clone)|,24,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,2,Black,Regen,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,2,Red,Defend,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,1,2,Green,Haste,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 10:52:40 PM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/22/2020 11:30:27 PM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/22/2020 11:30:27 PM,0,missing,0,2,Black,Regen,False,False,False,True,Warlock,1,|Warlock|Warlock|Warlock|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:14:39 AM,0,missing,0,1,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:14:39 AM,0,missing,0,2,Black,Subdue,False,False,False,True,Warlock,1,|Huge Damage(Clone)|,0,0,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:14:39 AM,0,missing,0,3,Black,Regen,False,False,False,True,Warlock,1,|Warlock|Warlock|Warlock|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:14:39 AM,0,missing,0,4,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,24,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,0,3,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,0,3,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,0,3,Black,Subdue,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 12:17:06 AM,0,missing,1,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Archer|,1,1,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,1,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,2,White,Strike,False,False,False,True,Mimic,1,|Space Denyer(Clone)|,8,1,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,3,Orange,Strike,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,12,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,3,White,Steal,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,0,3,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,10,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,2,White,Flex,False,False,False,True,Mimic,1,|Mage|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,2,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,2,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,1,2,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23:40 AM,0,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,1,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,White,Steal,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,White,Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,0,2,White,Strike,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,1,White,Steal,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,2,White,Armor Melter,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,3,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,4,White,Strike,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,40,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,5,Blue,Cure,False,False,False,True,Mage,1,|Mage|,-5,0,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,5,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,1,5,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,2,1,White,Flex,False,False,False,True,Mimic,1,|Mage|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,2,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,2,3,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,4,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,2,4,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,84,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,0,missing,2,4,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,0,1,Blue,Thunder,False,False,False,True,Mage,2,|Space Denyer(Clone)|Space Denyer(Clone)|,2,2,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,0,1,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,0,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,0,1,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,0,1,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,1,Blue,Thunder,False,False,False,True,Mage,3,|Space Denyer(Clone)|Space Denyer(Clone)|Bombs(Clone)|,4,3,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,2,Orange,Massive Swing,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,19,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,2,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,2,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,1,2,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),9,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,1,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,2,Orange,Strike,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,48,0,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,3,White,Strike,False,False,False,True,Mimic,1,|Space Denyer(Clone)|,8,1,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,4,Blue,Fireball,False,False,False,True,Mage,1,|Space Denyer(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,4,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,2,4,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,1,missing,3,0,Enemy,Explode,False,False,False,True,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,0,1,White,Flex,False,False,False,True,Mimic,1,|Mage|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Neutral(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,0,2,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,0,2,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,0,2,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,1,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,2,Blue,Thunder,False,False,False,True,Mage,1,|Neutral(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,3,White,Flex,False,False,False,True,Mimic,1,|Mimic|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,4,White,Strike,False,False,False,True,Mimic,1,|Neutral(Clone)|,12,1,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,4,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,1,4,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29:57 AM,2,missing,2,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,|Neutral(Clone)|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,0,0,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,0,0,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,0,0,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,0,0,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46:07 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,0,0,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,0,0,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,0,0,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,0,0,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47:58 AM,0,missing,1,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Paladin|,2,1,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,0,0,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,0,0,White,Steal,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,0,0,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,0,0,White,Learn,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,0,0,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51:18 AM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,1,White,Steal,False,False,False,True,Mimic,1,|Neutral(Clone)|,0,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,2,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,3,White,Flex,False,False,False,True,Mimic,1,|Mimic|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,4,White,Ironstrike,False,False,False,True,Mimic,1,|Neutral(Clone)|Mimic|,1,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,5,White,Strike,False,False,False,True,Mimic,1,|Neutral(Clone)|,10,1,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,5,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,5,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,5,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,0,5,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Neutral(Clone)|,10,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,1,2,Blue,Thunder,False,False,False,True,Mage,1,|Neutral(Clone)|,16,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,1,3,Blue,Fireball,False,False,False,True,Mage,1,|Neutral(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,1,3,White,Steal,False,False,True,False,None,None,None,None,None,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,0,missing,1,3,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,3,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,3,White,Flex,False,False,True,False,None,None,None,None,None,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,0,3,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,1,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,2,White,Learn,False,False,False,True,Mimic,1,|Paladin|,0,0,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,3,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,1,1,1,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,4,White,Strike,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,8,1,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,5,White,Strike,False,False,False,True,Mimic,1,|Armor Breaker(Clone)|,40,0,0,0
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,6,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,60,0,0,3
-5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,1,6,White,Steal,False,False,True,False,None,None,None,None,None,0,0
+deviceID,patchID,gameID,encounterLevel,roomName,turnID,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,0,Blue,Cure,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,0,Green,Arrow Storm,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,1,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,7,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,7,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,4,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,11,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,4,Green,Wind Walk,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,4,Red,Hunker Down,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,0,4,Red,Hunker Down,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,0,Blue,Cure,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,2,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Bombs(Clone)|Space Denyer(Clone)|Bombs(Clone)|Space Denyer(Clone)|,3,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,2,Green,Wind Walk,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,3,Red,Defend,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Berzerker|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,3,Red,Defend,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,1,3,Red,Defend,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,2,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,3,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Space Denyer(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,3,Green,Arrow Storm,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,2,3,Green,Wind Walk,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,0,Green,Wind Walk,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,0,Blue,Cure,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,1,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,2,Red,Defend,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Mage|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,7,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,11,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Blue,Resonance,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Green,Wind Walk,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Red,Hunker Down,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,7,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,1,Red,Hunker Down,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,1,Green,Wind Walk,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,2,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,3,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Armor Breaker(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,3,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,3,Red,Defend,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,0,Red,Hunker Down,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,0,Red,Hunker Down,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,2,Red,Defend,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Mage|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,3,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Armor Breaker(Clone)|,4,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Green,Arrow Storm,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|,3,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Green,Wind Walk,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Red,Defend,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,0,4,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,0,Blue,Resonance,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,0,Blue,Cure,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,1,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Armor Breaker(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,7,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,2,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,2,Green,Wind Walk,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,1,2,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,1,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,1,Red,Defend,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,1,Green,Wind Walk,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,2,Green,Arrow Storm,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|,3,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,3,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,4,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,1,missing,2,4,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,1,Green,Wind Walk,FALSE,FALSE,FALSE,TRUE,Archer,1,|Archer|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,2,Green,Wind Walk,FALSE,FALSE,FALSE,TRUE,Archer,1,|Berzerker|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,3,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,4,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,5,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Huge Damage(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,5,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,0,5,Blue,Fireball,TRUE,FALSE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,0,Enemy,Grow,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,0,Red,Hunker Down,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,0,Blue,Cure,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,1,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,2,Red,Swing,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Huge Damage(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,3,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,4,Red,War Cry,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Huge Damage(Clone)|Berzerker|,0,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 19:22,2,missing,1,4,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,1,White,White Attack,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,2,Black,Black Attack,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,3,Black,Black Attack,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Armor Breaker(Clone)|,3,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,3,Orange,Orange Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,3,Orange,Orange Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,0,3,Orange,Orange Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Paladin|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Paladin|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,1,White,White Attack,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,2,White,White Attack,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,3,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,3,White,White Attack,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,3,Orange,Orange Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/12/2020 23:40,0,missing,1,3,Black,Black Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,0,1,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,0,2,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,0,3,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,4,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,0,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,0,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,1,Black,Black Attack,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,2,Black,Black Attack,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,3,Black,Black Attack,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,1,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),3,|Bombs(Clone)|Bombs(Clone)|Space Denyer(Clone)|,30,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,1,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,4,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,2,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,3,Orange,Orange Attack,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,3,Black,Black Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,2,3,White,White Attack,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.2,9/13/2020 16:50,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:16,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,1,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:18,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|Paladin|Huge Damage(Clone)|,70,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:18,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|Paladin|Armor Breaker(Clone)|,1,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:27,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|Paladin|,0,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:29,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|Paladin|,0,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:30,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|Paladin|,0,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:41,0,missing,0,1,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:43,0,missing,0,0,Black,Ignite,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:43,0,missing,0,0,Black,Ignite,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44,0,missing,0,0,Black,Regen,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|Paladin|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:44,0,missing,0,2,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|Paladin|Huge Damage(Clone)|,11,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,0,Black,Regen,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,0,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,0,Black,Regen,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,0,Black,Regen,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,1,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,2,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|Paladin|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,3,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|Paladin|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:45,0,missing,0,4,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49,0,missing,0,2,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:49,0,missing,0,3,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51,0,missing,0,1,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51,0,missing,0,1,Black,Subdue,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51,0,missing,0,2,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|Paladin|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:51,0,missing,0,3,Orange,Overconfidence,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|Paladin|Neutral(Clone)|,15,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52,0,missing,0,0,Orange,Lifesteal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52,0,missing,0,0,Black,Subdue,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:52,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:54,0,missing,0,0,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:54,0,missing,0,0,Orange,Lifesteal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,White,Steal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Overconfidence,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Lifesteal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Black,Subdue,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Lifesteal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,0,0,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,1,0,Enemy,Ironstrike,FALSE,FALSE,FALSE,TRUE,Neutral(Clone),1,|Mimic|Neutral(Clone)|,6,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,1,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,1,2,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:55,0,missing,1,3,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 12:58,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mimic|Mimic|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:07,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|Paladin|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:09,0,missing,0,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:09,0,missing,0,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:09,0,missing,0,2,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:09,0,missing,0,2,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:09,0,missing,0,2,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Black,Subdue,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Orange,Overconfidence,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,0,0,White,Critical Strike,TRUE,FALSE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Paladin|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,1,1,White,Critical Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Warlock|Warlock|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,1,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,1,2,Orange,Overconfidence,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:17,0,missing,1,2,White,Steal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,0,0,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,0,0,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,0,0,Orange,Overwhelming Odds,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,0,0,White,Critical Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,1,0,Black,Subdue,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,1,0,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,1,0,Orange,Overwhelming Odds,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,1,0,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,1,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:29,0,missing,2,0,Enemy,Grow,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,0,0,White,Critical Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,0,0,White,Critical Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,0,0,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,0,0,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,0,0,White,Critical Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,10/10/2020 13:32,0,missing,1,0,Enemy,Grow,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 13:38,0,missing,0,0,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 13:38,0,missing,0,0,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 13:38,0,missing,0,0,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 13:38,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/10/2020 13:38,0,missing,0,0,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/11/2020 14:28,0,missing,0,0,White,Steal,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/13/2020 22:28,0,missing,0,1,Blue,Cycle Of Mana,FALSE,FALSE,FALSE,TRUE,Mage,1,|Warlock|Mage|,-2,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.3,10/13/2020 22:28,0,missing,0,1,Blue,Cycle Of Mana,FALSE,FALSE,FALSE,TRUE,Mage,1,|Berzerker|Mage|,-2,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,0,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,0,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|Space Denyer(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,0,3,Green,Arrow Storm,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,6,2,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,0,4,Red,Sword and Board,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Space Denyer(Clone)|Space Denyer(Clone)|Berzerker|,48,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,0,4,Green,Wind Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),6,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,1,Red,Sword and Board,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Space Denyer(Clone)|Berzerker|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,2,Green,Arrow Storm,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|,24,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,2,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,2,Red,Defend,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,1,2,Green,Haste,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.3.4,10/19/2020 22:52,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/22/2020 23:30,0,missing,0,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/22/2020 23:30,0,missing,0,2,Black,Regen,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Warlock|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:14,0,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:14,0,missing,0,2,Black,Subdue,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Huge Damage(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:14,0,missing,0,3,Black,Regen,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Warlock|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:14,0,missing,0,4,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,0,1,Green,Wind Strike,FALSE,FALSE,FALSE,TRUE,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,0,2,Red,Sword and Board,FALSE,FALSE,FALSE,TRUE,Berzerker,1,|Huge Damage(Clone)|Berzerker|,24,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,0,3,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,0,3,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,0,3,Black,Subdue,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/23/2020 0:17,0,missing,1,0,Enemy,Bite,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Archer|,1,1,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,1,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,2,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Space Denyer(Clone)|,8,1,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,3,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,12,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,3,White,Steal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,3,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,0,3,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,2,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mage|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,2,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:23,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,1,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,White,Steal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,White,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,0,2,White,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,1,White,Steal,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,2,White,Armor Melter,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,3,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,4,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,40,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,5,Blue,Cure,FALSE,FALSE,FALSE,TRUE,Mage,1,|Mage|,-5,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,5,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,1,5,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,2,1,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mage|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,2,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,2,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,4,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,2,4,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,84,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,0,missing,2,4,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,0,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|Space Denyer(Clone)|Space Denyer(Clone)|,2,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,0,1,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,0,1,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,0,1,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,0,1,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,3,|Space Denyer(Clone)|Space Denyer(Clone)|Bombs(Clone)|,4,3,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,2,Orange,Massive Swing,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,19,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,2,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,2,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,1,2,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),9,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,1,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,3,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Space Denyer(Clone)|,8,1,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,4,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,4,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,2,4,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,1,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,0,1,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mage|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,0,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,0,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,0,2,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,0,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,1,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,3,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mimic|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,4,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Neutral(Clone)|,12,1,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,4,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,1,4,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:29,2,missing,2,0,Enemy,Harden,FALSE,FALSE,FALSE,TRUE,Neutral(Clone),1,|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,0,0,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,0,0,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,0,0,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,0,0,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:46,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,0,0,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,0,0,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,0,0,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,0,0,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:47,0,missing,1,0,Enemy,Bite,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Paladin|,2,1,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,0,0,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,0,0,White,Steal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,0,0,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,0,0,White,Learn,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,0,0,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 11:51,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,1,White,Steal,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Neutral(Clone)|,0,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,2,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,3,White,Flex,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Mimic|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,4,White,Ironstrike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Neutral(Clone)|Mimic|,1,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,5,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Neutral(Clone)|,10,1,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,5,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,5,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,5,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,0,5,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,1,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,1,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,1,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,1,3,White,Steal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,0,missing,1,3,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,3,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,3,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,3,White,Flex,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,0,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,1,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,2,White,Learn,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Paladin|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,4,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,8,1,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,5,White,Strike,FALSE,FALSE,FALSE,TRUE,Mimic,1,|Armor Breaker(Clone)|,40,0,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,6,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 15:50,1,missing,1,6,White,Steal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,1,Blue,Fireball,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,1,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,1,Orange,Stun,FALSE,TRUE,FALSE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,3,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,0,3,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,1,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,1,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,1,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 18:05,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:27,0,missing,0,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:27,0,missing,0,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,0,2,Black,Regen,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Mage|Mage|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,0,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,0,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,0,2,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,1,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,1,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,1,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,1,2,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,2,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,2,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,2,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,2,3,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,0,missing,2,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,0,0,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,0,0,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,0,0,Blue,Inner Fire,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,0,0,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,0,0,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,0,Enemy,Ironstrike,FALSE,FALSE,FALSE,TRUE,Neutral(Clone),1,|Paladin|Neutral(Clone)|,6,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|,4,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,1,2,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,2,0,Enemy,Harden,FALSE,FALSE,FALSE,TRUE,Neutral(Clone),1,|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:35,1,missing,2,1,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,11,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,0,1,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,0,1,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,0,1,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,0,1,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,3,|Bombs(Clone)|Space Denyer(Clone)|Space Denyer(Clone)|,4,3,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,2,Black,Prolonged Fate,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,2,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),3,|Bombs(Clone)|Space Denyer(Clone)|Space Denyer(Clone)|,30,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),7,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),11,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,1,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,1,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,1,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,2,1,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Bombs(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),8,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),10,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,8,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,3,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),8,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Space Denyer(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,2,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,3,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,4,3,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,5,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,0,missing,5,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),1,|Bombs(Clone)|,10,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,0,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,0,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,0,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,0,2,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,0,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,1,1,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,1,2,Black,Soul Catcher,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,0,2,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,1,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,1,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,1,missing,1,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,0,2,Black,Chill,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Armor Breaker(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,0,2,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,0,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,0,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,1,2,Blue,Cure,FALSE,FALSE,FALSE,TRUE,Mage,1,|Mage|,-5,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,1,2,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,2,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,2,2,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,3,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,3,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,3,2,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,3,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,2,missing,3,2,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,0,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|Agg XS Enemy Piercing(Clone)|Agg XS Enemy Piercing(Clone)|,2,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,0,1,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,0,1,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,0,1,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,0,1,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,1,1,Black,Soul Catcher,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Agg XS Enemy Piercing(Clone)|Agg XS Enemy Piercing(Clone)|,0,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,1,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Agg XS Enemy Piercing(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,1,3,Black,Subdue,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Agg XS Enemy Piercing(Clone)|,0,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,1,3,Black,Chill,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,1,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,0,Enemy,Bite,FALSE,FALSE,FALSE,TRUE,Agg XS Enemy Piercing(Clone),1,|Mage|,1,1,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|Agg XS Enemy Piercing(Clone)|Agg XS Enemy Piercing(Clone)|,17,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Agg XS Enemy Piercing(Clone)|,10,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,2,Black,Preserve,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,2,2,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,0,Enemy,Bite,FALSE,FALSE,FALSE,TRUE,Agg XS Enemy Piercing(Clone),1,|Paladin|,1,1,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,1,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Agg XS Enemy Piercing(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,2,Orange,Overwhelming Odds,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Agg XS Enemy Piercing(Clone)|Paladin|Agg XS Enemy Piercing(Clone)|,9,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,3,Blue,Cure,FALSE,FALSE,FALSE,TRUE,Mage,1,|Paladin|,-5,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,4,Blue,Cure,FALSE,FALSE,FALSE,TRUE,Mage,1,|Paladin|,-5,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,3,4,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,0,Enemy,Bite,FALSE,FALSE,FALSE,TRUE,Agg XS Enemy Piercing(Clone),1,|Paladin|,1,1,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Agg XS Enemy Piercing(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Agg XS Enemy Piercing(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,2,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,4,missing,4,2,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,0,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Neutral(Clone)|,1,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,0,2,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,0,3,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Neutral(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,0,3,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,0,3,Blue,Thunder,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,0,Enemy,Spreading Spores,FALSE,FALSE,FALSE,TRUE,Space Denyer(Clone),5,|Space Denyer(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Neutral(Clone)|,56,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,2,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Space Denyer(Clone)|,12,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,3,Black,Regen,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Paladin|Paladin|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,1,3,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,6,missing,2,0,Enemy,Explode,FALSE,FALSE,FALSE,TRUE,Bombs(Clone),2,|Bombs(Clone)|Space Denyer(Clone)|,20,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,0,2,Black,Soul Catcher,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,0,2,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,0,3,Orange,Stun,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,0,0,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,0,3,Black,Preserve,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,0,3,Black,Chill,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|RoadHog(Clone)|Armor Breaker(Clone)|,4,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,1,2,Orange,Lifesteal,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Mage|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,1,3,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|RoadHog(Clone)|Armor Breaker(Clone)|,23,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,1,4,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|Armor Breaker(Clone)|RoadHog(Clone)|,21,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,1,4,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,0,Enemy,Armor Melter,FALSE,FALSE,FALSE,TRUE,Armor Breaker(Clone),1,|Mage|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,1,Orange,Overwhelming Odds,FALSE,FALSE,FALSE,TRUE,Paladin,1,|RoadHog(Clone)|Paladin|RoadHog(Clone)|,60,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,2,Blue,Cure,FALSE,FALSE,FALSE,TRUE,Mage,1,|Warlock|,-6,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,3,Orange,Barbarian Strength,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Warlock|Warlock|,0,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,4,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,2,4,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,3,1,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Armor Breaker(Clone)|,56,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,3,2,Blue,Alacrity,FALSE,FALSE,FALSE,TRUE,Mage,1,|Mage|,0,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,3,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Armor Breaker(Clone)|,72,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,3,3,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,7,missing,3,3,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|NecromancerBoss(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,0,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|NecromancerBoss(Clone)|,4,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,0,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|NecromancerBoss(Clone)|,10,1,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,0,3,Black,Chill,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,0,3,Black,Ignite,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,0,Enemy,Raise Dead: Fiend,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),4,|NecromancerBoss(Clone)|,0,0,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,0,Enemy,Unholy Strength,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),5,|NecromancerBoss(Clone)|BossSpawnAttackers(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,2,|NecromancerBoss(Clone)|BossSpawnAttackers(Clone)|,2,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|NecromancerBoss(Clone)|,12,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,3,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|NecromancerBoss(Clone)|,72,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,3,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,1,3,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,0,Enemy,Raise Dead: Elemental,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),5,|NecromancerBoss(Clone)|,0,0,3,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,0,Enemy,Unholy Protection,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),1,|NecromancerBoss(Clone)|,0,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,1,Orange,Lifesteal,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Mage|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,2,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,3,|Paladin|BossSpawnBigGuy(Clone)|NecromancerBoss(Clone)|,13,2,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,3,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|NecromancerBoss(Clone)|,50,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,3,Blue,Alacrity,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,2,3,Black,Curse,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,0,Enemy,Raise Dead: Cultists,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),6,|NecromancerBoss(Clone)|,0,0,3,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,0,Enemy,Unholy Speed,FALSE,FALSE,FALSE,TRUE,NecromancerBoss(Clone),8,|NecromancerBoss(Clone)|BossSpawnAttackers(Clone)|BossSpawnBuffers(Clone)|BossSpawnBuffers(Clone)|BossSpawnBigGuy(Clone)|,0,0,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,0,Enemy,Last Resort,FALSE,FALSE,FALSE,TRUE,BossSpawnBigGuy(Clone),1,|Mage|,16,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|NecromancerBoss(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,2,Blue,Raise,FALSE,FALSE,FALSE,TRUE,Mage,1,|Mage|,0,0,0,5,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,2,Black,Subdue,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,2,Black,Prolonged Fate,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,3,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 22:42,9,missing,4,1,Orange,Overwhelming Odds,FALSE,FALSE,FALSE,TRUE,Paladin,1,|BossSpawnBigGuy(Clone)|Paladin|BossSpawnBigGuy(Clone)|,38,1,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,0,1,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,0,1,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,0,1,Orange,Stun,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,4,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,0,1,Blue,Fireball,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,0,1,Orange,Strike,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,1,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,16,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,1,2,Orange,Strike,FALSE,FALSE,FALSE,TRUE,Paladin,1,|Huge Damage(Clone)|,48,0,2,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,1,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,1,2,Orange,Lifesteal,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,1,2,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,0,Enemy,Grow,FALSE,FALSE,FALSE,TRUE,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,1,Blue,Thunder,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,2,1,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,2,Blue,Fireball,FALSE,FALSE,FALSE,TRUE,Mage,1,|Huge Damage(Clone)|,60,0,0,3,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,3,Black,Ignite,FALSE,FALSE,FALSE,TRUE,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,3,Blue,Cure,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,2,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 18:19,0,missing,2,3,Black,Regen,FALSE,FALSE,TRUE,FALSE,None,None,None,None,None,0,1,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:04:48 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,0,1,Blue,Thunder,False,False,False,True,Mage,2,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,0,2,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,13,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,0,3,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,0,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:21:12 PM,0,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,1,Orange,Strike,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,6,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,Space Denyer(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Space Denyer(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Black,Regen,False,False,False,True,Warlock,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Black,Regen,False,False,False,True,Warlock,1,|Warlock|Paladin|Paladin|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,Black,Regen,False,False,False,True,Warlock,1,Paladin,-2,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,Black,Ignite,False,False,False,True,Warlock,1,Space Denyer(Clone),1,2,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),6,|Space Denyer(Clone)|,0,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,1,Blue,Thunder,False,False,False,True,Mage,2,|Space Denyer(Clone)|Bombs(Clone)|,3,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,2,Orange,Strike,False,False,False,True,Paladin,1,|Space Denyer(Clone)|,48,0,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,1,Blue,Thunder,False,False,False,True,Mage,2,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,2,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,13,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,0,3,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,1,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,3,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,3,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,4,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,1,4,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,2,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),6,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,1,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,2,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,2,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,0,2,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),2,1,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,1,Blue,Thunder,False,False,False,True,Mage,2,|Armor Breaker(Clone)|Armor Breaker(Clone)|,17,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,2,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,1,3,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,2,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),6,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,2,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,2,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,2,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,0,1,Orange,Strike,False,False,False,True,Paladin,1,|Neutral(Clone)|,6,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,0,1,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,0,1,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,0,1,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,0,1,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,|Neutral(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,1,Blue,Thunder,False,False,False,True,Mage,1,|Neutral(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,2,Orange,Strike,False,False,False,True,Paladin,1,|Neutral(Clone)|,1,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,3,Blue,Fireball,False,False,False,True,Mage,1,|Neutral(Clone)|,5,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,3,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,1,3,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,0,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,0,0,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,0,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,1,missing,1,1,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,1,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,4,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,3,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,3,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,4,Blue,Cure,False,False,False,True,Mage,1,|Mage|,-7,0,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,0,4,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),10,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,1,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,1,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,1,Blue,Fireball,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,1,1,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,2,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,2,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,2,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,2,2,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,3,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),6,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,Blue,Thunder,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,0,0,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,24,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,2,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Armor Breaker(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,2,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,2,Black,Ignite,False,False,True,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,1,2,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),2,1,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,1,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,2,1,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Black,Ignite,False,False,False,True,Warlock,1,Armor Breaker(Clone),6,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,3,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Black,Burn,False,False,False,True,Warlock,1,Armor Breaker(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Black,Burn,False,False,False,True,Warlock,1,|Armor Breaker(Clone)|Warlock|Warlock|Armor Breaker(Clone)|,6,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,4,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,5,0,Black,Burn,False,False,False,True,Warlock,1,Armor Breaker(Clone),4,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Black,Regen,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Black,Burn,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,0,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),4,1,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Huge Damage(Clone)|,48,0,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,2,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,2,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,3,Black,Prolonged Fate,False,False,False,True,Warlock,1,|Huge Damage(Clone)|,0,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,3,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,1,3,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),10,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),6,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,1,Orange,Strike,False,False,False,True,Paladin,1,|Huge Damage(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,1,Black,Prolonged Fate,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,2,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),10,0,0,0,3
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),6,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Paladin|,5,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Black,Ignite,False,False,False,True,Warlock,1,|Warlock|Warlock|Huge Damage(Clone)|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,3,1,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,4,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),10,0,0,0,4
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,4,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),6,0,0,0,3
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,4,0,Black,Ignite,False,False,False,True,Warlock,1,Huge Damage(Clone),6,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,Blue,Raise,False,False,True,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,Black,Bleed,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,0,0,Black,Burn,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,1,0,Enemy,Ironstrike,False,False,False,True,Neutral(Clone),1,|Paladin|Neutral(Clone)|,6,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,3,missing,1,0,Enemy,Spreading Spores,False,False,False,True,Space Denyer(Clone),4,|Space Denyer(Clone)|,0,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,11/8/2020 1:41:18 PM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,11/8/2020 1:44:03 PM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Space Denyer(Clone)|Space Denyer(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.1,11/8/2020 1:44:03 PM,0,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Space Denyer(Clone)|Space Denyer(Clone)|,2,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,8,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,1,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,1,Orange,Strike,False,False,True,False,None,None,None,None,None,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,1,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,0,1,Orange,Stun,False,False,True,False,None,None,None,None,None,0,4,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Armor Breaker(Clone)|,10,1,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,2,Green,Arrow Storm,False,False,False,True,Archer,1,|Armor Breaker(Clone)|,3,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,3,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,3,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:49:32 PM,0,missing,1,3,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,3,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,4,Green,Arrow Storm,False,False,False,True,Archer,1,|Huge Damage(Clone)|,24,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,0,4,Blue,Cure,False,False,True,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,1,Orange,Strike,False,False,False,True,Paladin,1,|Huge Damage(Clone)|,48,0,2,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,1,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,2,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,3,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,60,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,3,Orange,Lifesteal,False,False,True,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,1,3,Green,Arrow Storm,False,False,True,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,1,missing,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1

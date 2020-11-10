@@ -34,7 +34,7 @@ public class CardEffectsController : MonoBehaviour
     public IEnumerator TriggerEffect(GameObject caster, List<Vector2> targets)
     {
         int vitDamage = 0;
-        int shieldDamage = 0;
+        int armorDamage = 0;
         string targetNames = "|";
 
         //Trigger each of the effects on the card
@@ -93,7 +93,7 @@ public class CardEffectsController : MonoBehaviour
                     foreach (GameObject obj in t)
                         locs.Add(obj.transform.position);
                 vitDamage += effects[i].GetSimulatedVitDamage(caster, this, t, card.GetCard(), i);
-                shieldDamage += effects[i].GetSimulatedShieldDamage(caster, this, t, card.GetCard(), i);
+                armorDamage += effects[i].GetSimulatedArmorDamage(caster, this, t, card.GetCard(), i);
 
                 if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
                     StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
@@ -137,9 +137,10 @@ public class CardEffectsController : MonoBehaviour
                                                     targets.Count.ToString(),
                                                     targetNames,
                                                     vitDamage.ToString(),
-                                                    shieldDamage.ToString(),
+                                                    armorDamage.ToString(),
                                                     card.GetCard().energyCost.ToString(),
-                                                    card.GetCard().manaCost.ToString());
+                                                    card.GetCard().manaCost.ToString(),
+                                                    "0");
     }
 
     public void TriggerOnPlayEffect(GameObject caster, List<Vector2> targets)
@@ -197,9 +198,9 @@ public class CardEffectsController : MonoBehaviour
             case Card.ConditionType.Odd:
                 return TurnController.turnController.GetNumerOfCardsPlayedInTurn() % 2 == 1;
             case Card.ConditionType.TargetBroken:
-                return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentShield() == 0);
+                return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentArmor() == 0);
             case Card.ConditionType.TargetNotBroken:
-                return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentShield() > 0);
+                return GridController.gridController.GetObjectAtLocation(targets).Any(x => x.GetComponent<HealthController>().GetCurrentArmor() > 0);
             case Card.ConditionType.TargetAttackingCaster:
                 try
                 {
@@ -219,25 +220,25 @@ public class CardEffectsController : MonoBehaviour
                 catch { }
                 return true;
             case Card.ConditionType.CasterBroken:
-                return caster.GetComponent<HealthController>().GetCurrentShield() == 0;
+                return caster.GetComponent<HealthController>().GetCurrentArmor() == 0;
             case Card.ConditionType.CasterNotBroken:
-                return caster.GetComponent<HealthController>().GetCurrentShield() > 0;
+                return caster.GetComponent<HealthController>().GetCurrentArmor() > 0;
             case Card.ConditionType.PreviousEffectSuccessful:
                 return card.GetCard().GetPreviousEffectSuccessful();
-            case Card.ConditionType.CasterHasHigherShield:
+            case Card.ConditionType.CasterHasHigherArmor:
                 targs = GridController.gridController.GetObjectAtLocation(targets);
-                int minShield = 9999999;
+                int minArmor = 9999999;
                 foreach (GameObject obj in targs)
-                    if (obj.GetComponent<HealthController>().GetShield() < minShield)
-                        minShield = obj.GetComponent<HealthController>().GetShield();
-                return caster.GetComponent<HealthController>().GetShield() > minShield;
-            case Card.ConditionType.CasterHasLowerShield:
+                    if (obj.GetComponent<HealthController>().GetArmor() < minArmor)
+                        minArmor = obj.GetComponent<HealthController>().GetArmor();
+                return caster.GetComponent<HealthController>().GetArmor() > minArmor;
+            case Card.ConditionType.CasterHasLowerArmor:
                 targs = GridController.gridController.GetObjectAtLocation(targets);
-                int maxshield = 0;
+                int maxarmor = 0;
                 foreach (GameObject obj in targs)
-                    if (obj.GetComponent<HealthController>().GetShield() > maxshield)
-                        maxshield = obj.GetComponent<HealthController>().GetShield();
-                return caster.GetComponent<HealthController>().GetShield() < maxshield;
+                    if (obj.GetComponent<HealthController>().GetArmor() > maxarmor)
+                        maxarmor = obj.GetComponent<HealthController>().GetArmor();
+                return caster.GetComponent<HealthController>().GetArmor() < maxarmor;
             case Card.ConditionType.CasterHasBonusATK:
                 return caster.GetComponent<HealthController>().GetBonusAttack() != 0;
             case Card.ConditionType.CasterHasNoBonusATK:

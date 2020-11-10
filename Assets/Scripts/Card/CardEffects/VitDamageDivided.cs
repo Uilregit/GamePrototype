@@ -42,7 +42,7 @@ public class VitDamageDivided : Effect
         return output;
     }
 
-    public override int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int originalTempValue = card.GetTempEffectValue();
 
@@ -54,7 +54,7 @@ public class VitDamageDivided : Effect
         int output = 0;
         card.SetTempEffectValue(Mathf.CeilToInt(card.effectValue[effectIndex] / (float)target.Count));
         foreach (GameObject t in target)
-            output += new EffectFactory().GetEffect(Card.EffectType.VitDamage).GetSimulatedShieldDamage(caster, effectController, new List<GameObject> { t }, card, effectIndex);
+            output += new EffectFactory().GetEffect(Card.EffectType.VitDamage).GetSimulatedArmorDamage(caster, effectController, new List<GameObject> { t }, card, effectIndex);
 
         card.SetTempEffectValue(originalTempValue);
         return output;

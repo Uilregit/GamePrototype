@@ -7,7 +7,7 @@ public class ScoreDisplayController : MonoBehaviour
 {
     public Text overkill;
     public Text damage;
-    public Text damageShielded;
+    public Text damageArmored;
     public Text overhealProtected;
     public Text damageAvoided;
     public Text enemiesBroken;
@@ -18,7 +18,7 @@ public class ScoreDisplayController : MonoBehaviour
 
     public Text overkillScore;
     public Text damageScore;
-    public Text damageShieldedScore;
+    public Text damageArmoredScore;
     public Text overhealProtectedScore;
     public Text damageAvoidedScore;
     public Text enemiesBrokenScore;
@@ -30,9 +30,11 @@ public class ScoreDisplayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ScoreController.score.timerPaused = true;
+
         overkill.text = "Overkill (" + ScoreController.score.GetOverKill().ToString() + ")";
         damage.text = "Damage Dealt (" + ScoreController.score.GetDamage().ToString() + ")";
-        damageShielded.text = "Shield Protected (" + ScoreController.score.GetDamageShielded().ToString() + ")";
+        damageArmored.text = "Armor Protected (" + ScoreController.score.GetDamageArmored().ToString() + ")";
         overhealProtected.text = "Overheal Protected (" + ScoreController.score.GetDamageOverhealProtected().ToString() + ")";
         damageAvoided.text = "Damage Avoided (" + ScoreController.score.GetDamageAvoided().ToString() + ")";
         enemiesBroken.text = "Enemies Broken (" + ScoreController.score.GetEnemiesBroken().ToString() + ")";
@@ -47,8 +49,8 @@ public class ScoreDisplayController : MonoBehaviour
         scoreTotal += ScoreController.score.GetOverKill() * ScoreController.score.scorePerOverkill;
         damageScore.text = (ScoreController.score.GetDamage() * ScoreController.score.scorePerDamage).ToString();
         scoreTotal += ScoreController.score.GetDamage() * ScoreController.score.scorePerDamage;
-        damageShieldedScore.text = (ScoreController.score.GetDamageShielded() * ScoreController.score.scorePerDamageShielded).ToString();
-        scoreTotal += ScoreController.score.GetDamageShielded() * ScoreController.score.scorePerDamageShielded;
+        damageArmoredScore.text = (ScoreController.score.GetDamageArmored() * ScoreController.score.scorePerDamageArmored).ToString();
+        scoreTotal += ScoreController.score.GetDamageArmored() * ScoreController.score.scorePerDamageArmored;
         overhealProtectedScore.text = (ScoreController.score.GetDamageOverhealProtected() * ScoreController.score.scorePerDamageOverhealedProtected).ToString();
         scoreTotal += ScoreController.score.GetDamageOverhealProtected() * ScoreController.score.scorePerDamageOverhealedProtected;
         damageAvoidedScore.text = (ScoreController.score.GetDamageAvoided() * ScoreController.score.scorePerDamageAvoided).ToString();
@@ -62,7 +64,7 @@ public class ScoreDisplayController : MonoBehaviour
             bossesDefeatedScore.text = (ScoreController.score.GetBossesDefeated() * ScoreController.score.scorePerBossesDefeated).ToString();
             scoreTotal += ScoreController.score.GetBossesDefeated() * ScoreController.score.scorePerBossesDefeated;
         }
-        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetSecondsInGame() / 60 < 30)
+        if (ScoreController.score.GetBossesDefeated() > 0 && (int)ScoreController.score.GetSecondsInGame() / 60.0f < 30)
         {
             secondsInGameScore.text = ((int)ScoreController.score.GetSecondsInGame() / 60 * ScoreController.score.scorePerSecondsInGame).ToString();
             scoreTotal += Mathf.Max(0, (30 - (int)ScoreController.score.GetSecondsInGame() / 60)) * ScoreController.score.scorePerSecondsInGame;
@@ -71,5 +73,22 @@ public class ScoreDisplayController : MonoBehaviour
         TotalScore.text = scoreTotal.ToString();
 
         InformationLogger.infoLogger.SaveGame(true);
+
+        InformationLogger.infoLogger.SaveGameScoreInfo(InformationLogger.infoLogger.patchID,
+                                InformationLogger.infoLogger.gameID,
+                                RoomController.roomController.selectedLevel.ToString(),
+                                RoomController.roomController.roomName,
+                                (ScoreController.score.GetBossesDefeated() == 1).ToString(),
+                                (ScoreController.score.GetBossesDefeated() != 1).ToString(),
+                                scoreTotal.ToString(),
+                                ScoreController.score.GetOverKill().ToString(),
+                                ScoreController.score.GetDamage().ToString(),
+                                ScoreController.score.GetDamageArmored().ToString(),
+                                ScoreController.score.GetDamageOverhealProtected().ToString(),
+                                ScoreController.score.GetDamageAvoided().ToString(),
+                                ScoreController.score.GetEnemiesBroken().ToString(),
+                                ScoreController.score.GetGoldUsed().ToString(),
+                                ScoreController.score.GetBossesDefeated().ToString(),
+                                ((int)ScoreController.score.GetSecondsInGame()).ToString());
     }
 }

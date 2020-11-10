@@ -13,10 +13,11 @@ public class ResurrectEffect : Effect
                 player = obj.GetComponent<HealthController>();
 
         player.SetAttack(InformationController.infoController.GetStartingAttack(card.casterColor));
-        player.SetCurrentShield(InformationController.infoController.GetStartingArmor(card.casterColor), false);
+        player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(card.casterColor), false);
         player.SetCurrentVit(InformationController.infoController.GetMaxVit(card.casterColor));
 
-        player.transform.parent.position = target[0];
+        Debug.Log(target[0]);
+        player.transform.position = target[0];
         player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
         player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
         GridController.gridController.RemoveDeathLocation(card.casterColor);

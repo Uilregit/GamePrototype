@@ -58,7 +58,7 @@ public class CollectionController : MonoBehaviour
         //Create the completeDeck variable from decks in the editor
         //Only includes decks from colors in the party and sorts them by their color order in the party
         EditorCardsWrapper[] usedDeck;
-        if (RoomController.roomController.debug)
+        if (InformationLogger.infoLogger.debug)
             usedDeck = debugDeck;
         else
             usedDeck = editorDeck;

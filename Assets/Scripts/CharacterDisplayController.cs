@@ -11,7 +11,7 @@ public class CharacterDisplayController : MonoBehaviour
 
     public HealthBarController healthBar;
     public Text vitText;
-    public Text shieldText;
+    public Text armorText;
     public Text attackText;
 
     public List<Image> buffIcons;
@@ -45,11 +45,11 @@ public class CharacterDisplayController : MonoBehaviour
         try
         {
             Card.CasterColor color = transform.parent.GetComponent<PlayerController>().GetColorTag();
-            GridController.gridController.OnPlayerDeath(this.gameObject, color);
+            GridController.gridController.OnPlayerDeath(this.transform.parent.gameObject, color);
         }
         catch
         {
-            Destroy(this.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
     }
 }

@@ -15,4 +15,18 @@ public class CameraController : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
+
+    public Vector3 ScreenToWorldPoint(Vector3 screenPosition)
+    {
+        return ScreenToWorldPoint(screenPosition, new Vector3(0, 0, 0));
+    }
+
+    public Vector3 ScreenToWorldPoint(Vector3 screenPosition, Vector3 plane)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane xy = new Plane(Vector3.forward, plane);
+        float distance;
+        xy.Raycast(ray, out distance);
+        return ray.GetPoint(distance);
+    }
 }

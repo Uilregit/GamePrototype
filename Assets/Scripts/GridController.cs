@@ -381,7 +381,7 @@ public class GridController : MonoBehaviour
         foreach (GameObject obj in objects)
         {
             int health = obj.GetComponent<HealthController>().GetCurrentVit();
-            int shield = obj.GetComponent<HealthController>().GetCurrentShield();
+            int armor = obj.GetComponent<HealthController>().GetCurrentArmor();
 
             try
             {
@@ -395,7 +395,7 @@ public class GridController : MonoBehaviour
             {
                 if (health == 0)                                 //If the object is already dead, send to back
                     obj.transform.SetAsFirstSibling();
-                else if (shield == 0)                            //If the object is broken, either set to top if it's the first broken enemy, or sort by health if there are multiple broken enemies
+                else if (armor == 0)                            //If the object is broken, either set to top if it's the first broken enemy, or sort by health if there are multiple broken enemies
                 {
                     if (anyBroken)
                     {

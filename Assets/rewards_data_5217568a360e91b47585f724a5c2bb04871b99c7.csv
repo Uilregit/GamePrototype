@@ -31,3 +31,68 @@ deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,im
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,Orange,Crush,False,False
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,White,Retaliate,False,False
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/24/2020 3:50:36 PM,1,missing,Orange,Crush,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 6:05:15 PM,0,missing,Orange,Overwhelming Odds,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 6:05:15 PM,0,missing,Black,Soul Catcher,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 6:05:15 PM,0,missing,Black,Dark Pact,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/25/2020 6:05:15 PM,0,missing,Black,Soul Catcher,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:35:26 PM,0,missing,Blue,Inner Fire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:35:26 PM,0,missing,Black,Belittle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:35:26 PM,0,missing,Black,Blood ritual,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:35:26 PM,0,missing,Blue,Inner Fire,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,0,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,0,missing,Black,Soul Catcher,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,0,missing,Orange,Redirect,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,0,missing,Black,Soul Catcher,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,1,missing,Black,Chill,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,1,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,1,missing,Blue,Inner Fire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,1,missing,Black,Chill,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,2,missing,Black,Subdue,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,2,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,2,missing,Black,Preserve,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,2,missing,Black,Subdue,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,3,missing,Orange,Overwhelming Odds,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,4,missing,Orange,Barbarian Strength,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,4,missing,Orange,Massive Swing,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,4,missing,Blue,Drain Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,4,missing,Orange,Barbarian Strength,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,6,missing,Black,Chill,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,6,missing,Black,Blood ritual,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,6,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,6,missing,Blue,Alacrity,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,7,missing,Black,Blood ritual,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,7,missing,Black,Curse,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,7,missing,Blue,Defile,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/26/2020 10:42:41 PM,7,missing,Black,Curse,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 6:19:37 PM,0,missing,Black,Soul Catcher,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 6:19:37 PM,0,missing,Orange,Barbarian Strength,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 6:19:37 PM,0,missing,Blue,Inner Fire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,10/27/2020 6:19:37 PM,0,missing,Orange,Barbarian Strength,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,Black,Amplify,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,Orange,Massive Swing,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,Orange,Finale,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:25:51 PM,0,missing,Orange,Finale,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,Blue,Inner Fire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,Black,Drain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4,11/2/2020 11:33:10 PM,0,missing,Blue,Meteor,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,Black,Preserve,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,Orange,Crush,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,Blue,Drain Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:41:26 PM,0,missing,Blue,Drain Mana,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,Black,Burn,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,Black,Soul Catcher,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,0,missing,Black,Burn,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,Orange,Redirect,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,Orange,Lifeforce,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,Black,Bleed,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,1,missing,Black,Bleed,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,Orange,Seeing Red,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,Orange,Redirect,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,Black,Drain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 12:43:39 PM,2,missing,Orange,Seeing Red,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Orange,Massive Swing,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Blue,Alacrity,True,True

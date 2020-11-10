@@ -298,7 +298,8 @@ public class EnemyInformationController : MonoBehaviour
 
                 displayedCards[i] = Instantiate(enemyDisplayCard);
                 displayedCards[i].transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-                displayedCards[i].transform.position = cardLocation;
+                displayedCards[i].transform.position = CameraController.camera.ScreenToWorldPoint(cardLocation, CanvasController.canvasController.uiCanvas.transform.position);
+                displayedCards[i].transform.rotation = CameraController.camera.transform.rotation;
                 displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
                 displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSequence[i]);
             }
@@ -316,8 +317,9 @@ public class EnemyInformationController : MonoBehaviour
                 Vector2 cardLocation = new Vector2(cardLocationX, cardLocationY);
 
                 displayedCards[i] = Instantiate(enemyDisplayCard);
+                displayedCards[i].transform.rotation = CameraController.camera.transform.rotation;
                 displayedCards[i].transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-                displayedCards[i].transform.position = cardLocation;
+                displayedCards[i].transform.position = CameraController.camera.ScreenToWorldPoint(cardLocation, CanvasController.canvasController.uiCanvas.transform.position);
                 displayedCards[i].GetComponent<CardController>().SetCaster(this.gameObject);
                 displayedCards[i].GetComponent<CardController>().SetCard(enemyController.attackSequence[i]);
             }
@@ -390,8 +392,9 @@ public class EnemyInformationController : MonoBehaviour
         }
 
         usedCard = Instantiate(enemyDisplayCard);
+        usedCard.transform.rotation = CameraController.camera.transform.rotation;
         usedCard.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-        usedCard.transform.position = cardLocation;
+        usedCard.transform.position = CameraController.camera.ScreenToWorldPoint(cardLocation, CanvasController.canvasController.uiCanvas.transform.position);
         card.SetCaster(this.gameObject);
         usedCard.GetComponent<CardController>().SetCaster(this.gameObject);
         usedCard.GetComponent<CardController>().SetCard(card.GetCard());

@@ -161,7 +161,7 @@ MonoBehaviour:
   cardBack: {fileID: 8476416657983364502}
   cardGreyOut: {fileID: 7197552912365019247}
   art: {fileID: 3098138333586235077}
-  cardName: {fileID: 6614853258998272698}
+  cardName: {fileID: 958620910400246330}
   energyCost: {fileID: 1383958317313980565}
   description: {fileID: 1922114210524979408}
   manaCost: {fileID: 955467088488782767}
@@ -487,14 +487,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6614853258998272698 stripped
+--- !u!114 &958620910400246330 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8729890432305477653, guid: aac6edea420a82741846302023910b8b, type: 3}
   m_PrefabInstance: {fileID: 8388932579118361135}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

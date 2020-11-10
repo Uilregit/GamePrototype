@@ -7,7 +7,7 @@ public class BuffValueAdd : Effect
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         foreach (GameObject targ in target)
-            foreach (Buff buff in targ.GetComponent<BuffController>().GetBuffs())
+            foreach (BuffFactory buff in targ.GetComponent<BuffController>().GetBuffs())
                 buff.AddToValue(targ.GetComponent<HealthController>(), card.effectValue[effectIndex]);
 
         yield return new WaitForSeconds(0);

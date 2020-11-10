@@ -43,7 +43,6 @@ public class RoomController : MonoBehaviour
     private RoomSetup[] hardRoomSetups;
     [SerializeField]
     private RoomSetup[] bossRoomSetups;
-    public bool debug;
     [SerializeField]
     private RoomSetup debugRoom;
 
@@ -242,7 +241,7 @@ public class RoomController : MonoBehaviour
 
     public RoomSetup GetRoomSetup(int level)
     {
-        if (debug)
+        if (InformationLogger.infoLogger.debug)
             return debugRoom;
 
         RoomSetup setup;

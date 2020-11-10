@@ -11,9 +11,9 @@ public class HealthBarController : MonoBehaviour
     public Color healingColor;
     //public Color healingBonusHealthColor;
     public Color brokenColor;
-    public Color shieldDefaultColor;
-    public Color shieldDownColor;
-    public Color shieldUpColor;
+    public Color armorDefaultColor;
+    public Color armorDownColor;
+    public Color armorUpColor;
 
     [Header("Health Bar")]
     [SerializeField]
@@ -32,42 +32,42 @@ public class HealthBarController : MonoBehaviour
     public Image damageImage2;
     public Text damageText;
 
-    [Header("Shield Damage Image")]
-    public Image shieldDamageImage;
-    public Image shieldDamageImage2;
-    public Text shieldDamageText;
+    [Header("Armor Damage Image")]
+    public Image armorDamageImage;
+    public Image armorDamageImage2;
+    public Text armorDamageText;
 
     [Header("Damage Sprites")]
     public Sprite normalDamageSprite;
     public Sprite brokenDamageSprite;
-    public Sprite shieldDamageSprite;
+    public Sprite armorDamageSprite;
 
     private Vector2 damageImagePosition;
-    private Vector2 shieldDamageImagePosition;
+    private Vector2 armorDamageImagePosition;
     private Vector2 originalDamageImageScale;
     private Vector2 originalDamagetextScale;
-    private Vector2 originalShieldDamageImageScale;
-    private Vector2 originalShieldDamagetextScale;
+    private Vector2 originalArmorDamageImageScale;
+    private Vector2 originalArmorDamagetextScale;
     private int oldDamageInt = 0;
-    private int oldShieldDamgeInt = 0;
-    private int oldShieldAmount = 0;
+    private int oldArmorDamgeInt = 0;
+    private int oldArmorAmount = 0;
     private bool hidingDamageImage = false;
-    private bool hidingShieldDamageImage = false;
+    private bool hidingArmorDamageImage = false;
 
     private IEnumerator healthBarHide;
     private IEnumerator healthImageHide;
     private IEnumerator statusTextHide;
-    private IEnumerator shieldDamageNumberHide;
-    private IEnumerator resetShieldImageHide;
+    private IEnumerator armorDamageNumberHide;
+    private IEnumerator resetArmorImageHide;
     //private bool runningCoroutine = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         damageImagePosition = damageImage.transform.position - transform.position;
-        shieldDamageImagePosition = shieldDamageImage.transform.position - transform.position;
-        shieldDamageImage.transform.position = (Vector2)transform.position + shieldDamageImagePosition;
-        shieldDamageImage2.transform.position = (Vector2)transform.position + shieldDamageImagePosition;
+        armorDamageImagePosition = armorDamageImage.transform.position - transform.position;
+        armorDamageImage.transform.position = (Vector2)transform.position + armorDamageImagePosition;
+        armorDamageImage2.transform.position = (Vector2)transform.position + armorDamageImagePosition;
 
         backImage = GetComponent<Image>();
         backImage.enabled = false;
@@ -78,8 +78,8 @@ public class HealthBarController : MonoBehaviour
         originalDamageImageScale = damageImage.transform.localScale;
         originalDamagetextScale = damageText.transform.localScale;
 
-        originalShieldDamageImageScale = shieldDamageImage.transform.localScale;
-        originalShieldDamagetextScale = shieldDamageText.transform.localScale;
+        originalArmorDamageImageScale = armorDamageImage.transform.localScale;
+        originalArmorDamagetextScale = armorDamageText.transform.localScale;
         //bonusHealthDamageBar.enabled = false;
     }
 
@@ -192,7 +192,7 @@ public class HealthBarController : MonoBehaviour
                 Color c = brokenColor;
                 damageImage.color = c;
                 damageText.color = c;
-                damageImage.sprite = shieldDamageSprite;
+                damageImage.sprite = armorDamageSprite;
                 damageImage2.sprite = brokenDamageSprite;
             }
             else                                                        //Not Broken Damage
@@ -238,81 +238,81 @@ public class HealthBarController : MonoBehaviour
         hidingDamageImage = false;
     }
 
-    public void SetShieldDamageImage(int shieldValue, int shieldDamage, bool broken)
+    public void SetArmorDamageImage(int armorValue, int armorDamage, bool broken)
     {
-        if (hidingShieldDamageImage)
+        if (hidingArmorDamageImage)
         {
-            shieldDamageImage.transform.localScale = originalShieldDamageImageScale;
-            shieldDamageImage2.transform.localScale = originalShieldDamageImageScale;
-            shieldDamageText.transform.localScale = originalShieldDamagetextScale;
+            armorDamageImage.transform.localScale = originalArmorDamageImageScale;
+            armorDamageImage2.transform.localScale = originalArmorDamageImageScale;
+            armorDamageText.transform.localScale = originalArmorDamagetextScale;
 
-            shieldDamage += oldShieldDamgeInt;
-            shieldValue = oldShieldAmount;
+            armorDamage += oldArmorDamgeInt;
+            armorValue = oldArmorAmount;
 
-            StopCoroutine(shieldDamageNumberHide);
-            //StopCoroutine(resetShieldImageHide);
+            StopCoroutine(armorDamageNumberHide);
+            //StopCoroutine(resetArmorImageHide);
         }
 
-        oldShieldDamgeInt = shieldDamage;
-        oldShieldAmount = shieldValue;
+        oldArmorDamgeInt = armorDamage;
+        oldArmorAmount = armorValue;
 
-        Vector2 newPosition = (Vector2)transform.position + shieldDamageImagePosition;
-        shieldDamageImage.transform.position = newPosition;
-        shieldDamageImage2.transform.position = newPosition;
+        Vector2 newPosition = (Vector2)transform.position + armorDamageImagePosition;
+        armorDamageImage.transform.position = newPosition;
+        armorDamageImage2.transform.position = newPosition;
 
-        shieldDamageImage.enabled = true;
-        shieldDamageImage2.enabled = true;
-        shieldDamageText.enabled = true;
+        armorDamageImage.enabled = true;
+        armorDamageImage2.enabled = true;
+        armorDamageText.enabled = true;
 
-        shieldDamageNumberHide = HideShieldDamageNumber();
-        resetShieldImageHide = ResetShieldDamageImage(shieldValue, shieldDamage);
-        StartCoroutine(resetShieldImageHide);
-        StartCoroutine(shieldDamageNumberHide);
+        armorDamageNumberHide = HideArmorDamageNumber();
+        resetArmorImageHide = ResetArmorDamageImage(armorValue, armorDamage);
+        StartCoroutine(resetArmorImageHide);
+        StartCoroutine(armorDamageNumberHide);
     }
 
-    private IEnumerator ResetShieldDamageImage(int shieldValue, int shieldDamage)
+    private IEnumerator ResetArmorDamageImage(int armorValue, int armorDamage)
     {
-        hidingShieldDamageImage = true;
+        hidingArmorDamageImage = true;
 
-        shieldDamageText.color = shieldDefaultColor;
-        shieldDamageImage.color = shieldDefaultColor;
-        shieldDamageText.text = shieldValue.ToString();
+        armorDamageText.color = armorDefaultColor;
+        armorDamageImage.color = armorDefaultColor;
+        armorDamageText.text = armorValue.ToString();
         yield return new WaitForSeconds(TimeController.time.numberShownDuration / 3.0f);
 
-        shieldDamageText.text = Mathf.Max(shieldValue - shieldDamage, 0).ToString();
-        shieldDamageImage.transform.localScale = originalShieldDamageImageScale * 1.25f;
-        shieldDamageImage2.transform.localScale = originalShieldDamageImageScale * 1.25f;
-        shieldDamageText.transform.localScale = originalShieldDamagetextScale * 1.25f;
-        if (shieldValue - shieldDamage <= 0)
+        armorDamageText.text = Mathf.Max(armorValue - armorDamage, 0).ToString();
+        armorDamageImage.transform.localScale = originalArmorDamageImageScale * 1.25f;
+        armorDamageImage2.transform.localScale = originalArmorDamageImageScale * 1.25f;
+        armorDamageText.transform.localScale = originalArmorDamagetextScale * 1.25f;
+        if (armorValue - armorDamage <= 0)
         {
-            shieldDamageImage.color = brokenColor;
-            shieldDamageText.color = brokenColor;
+            armorDamageImage.color = brokenColor;
+            armorDamageText.color = brokenColor;
         }
-        else if (shieldDamage > 0)
+        else if (armorDamage > 0)
         {
-            shieldDamageText.color = shieldDownColor;
-            shieldDamageImage.color = shieldDownColor;
+            armorDamageText.color = armorDownColor;
+            armorDamageImage.color = armorDownColor;
         }
-        else if (shieldDamage < 0)
+        else if (armorDamage < 0)
         {
-            shieldDamageText.color = shieldUpColor;
-            shieldDamageImage.color = shieldUpColor;
+            armorDamageText.color = armorUpColor;
+            armorDamageImage.color = armorUpColor;
         }
         yield return new WaitForSeconds(TimeController.time.numberExpandDuration);
 
-        shieldDamageImage.transform.localScale = originalShieldDamageImageScale;
-        shieldDamageImage2.transform.localScale = originalShieldDamageImageScale;
-        shieldDamageText.transform.localScale = originalShieldDamagetextScale;
+        armorDamageImage.transform.localScale = originalArmorDamageImageScale;
+        armorDamageImage2.transform.localScale = originalArmorDamageImageScale;
+        armorDamageText.transform.localScale = originalArmorDamagetextScale;
     }
 
-    public IEnumerator HideShieldDamageNumber()
+    public IEnumerator HideArmorDamageNumber()
     {
         yield return new WaitForSeconds(TimeController.time.numberShownDuration);
-        shieldDamageImage.enabled = false;
-        shieldDamageImage2.enabled = false;
-        shieldDamageText.enabled = false;
+        armorDamageImage.enabled = false;
+        armorDamageImage2.enabled = false;
+        armorDamageText.enabled = false;
 
-        hidingShieldDamageImage = false;
+        hidingArmorDamageImage = false;
     }
 
     public void SetStatusText(string text, Color color)

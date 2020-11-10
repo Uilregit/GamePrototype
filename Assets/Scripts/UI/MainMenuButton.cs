@@ -11,7 +11,7 @@ public class MainMenuButton : MonoBehaviour
         GameObject sacrificialLamb = new GameObject();
         DontDestroyOnLoad(sacrificialLamb);
 
-        foreach (GameObject obj in sacrificialLamb.scene.GetRootGameObjects())
+        foreach (GameObject obj in sacrificialLamb.scene.GetRootGameObjects())  //Destroy all don't destroy on load objects to start anew
             Destroy(obj);
 
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);

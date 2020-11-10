@@ -18,7 +18,7 @@ public class DeckCustomizeCardController : MonoBehaviour
     private Canvas originalCanvas;
     private Vector2 localScale;
     private Vector2 originalLocation;
-    private int originalSorterOrder;
+    //private int originalSorterOrder;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         localScale = transform.localScale;
         originalLocation = transform.position;
         originalCanvas = transform.parent.GetComponent<Canvas>();
-        originalSorterOrder = GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder;
+        //originalSorterOrder = GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder;
     }
 
     public void OnMouseDown()
@@ -81,7 +81,7 @@ public class DeckCustomizeCardController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         transform.SetParent(selectedCardCanvas.transform);
-        GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
+        //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
         transform.position = new Vector2(originalLocation.x, originalLocation.y + HandController.handController.cardHighlightHeight);
         transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
     }

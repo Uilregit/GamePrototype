@@ -66,7 +66,7 @@ MonoBehaviour:
   cardBack: {fileID: 2482172333409521543}
   cardGreyOut: {fileID: 3761317820042343038}
   art: {fileID: 9020418657289604308}
-  cardName: {fileID: 872738873364267179}
+  cardName: {fileID: 6529531439242477611}
   energyCost: {fileID: 4964361372089608836}
   description: {fileID: 5583480765795168961}
   manaCost: {fileID: 6526484270051183038}
@@ -103,6 +103,7 @@ MonoBehaviour:
   greyOut: {fileID: 3761317820042343038}
   highlight: {fileID: 5665633053048877719}
   col: {fileID: 4992455357062556152}
+  selectedCardCanvas: {fileID: 0}
 --- !u!61 &4992455357062556152
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc5ecf10e7e9fd4ba38018c68142e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isResurrectCard: 0
 --- !u!120 &5040915766395577212
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -355,15 +357,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.49773395
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47149658
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.041141644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -492,14 +494,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &872738873364267179 stripped
+--- !u!114 &6529531439242477611 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8729890432305477653, guid: aac6edea420a82741846302023910b8b, type: 3}
   m_PrefabInstance: {fileID: 2574725449446668350}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

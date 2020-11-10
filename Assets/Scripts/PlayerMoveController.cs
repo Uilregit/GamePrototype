@@ -245,7 +245,7 @@ public class PlayerMoveController : MonoBehaviour
     private void OnMouseDown()
     {
         clickedTime = DateTime.Now;
-        clickedLocation = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        clickedLocation = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 
         healthController.ShowHealthBar();
     }
@@ -254,7 +254,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         GetComponent<HealthController>().HideHealthBar();
 
-        if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
+        if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
             List<CardController> cards = new List<CardController>();
             CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.buffController.GetBuffs(), GetComponent<AbilitiesController>());

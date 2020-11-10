@@ -9,7 +9,7 @@ public class CardDisplay : MonoBehaviour
     public Image cardBack;
     public Image cardGreyOut;
     public Image art;
-    public TextMeshPro cardName;
+    public TextMeshProUGUI cardName;
     public Text energyCost;
     public Text description;
     public Text manaCost;
@@ -49,7 +49,7 @@ public class CardDisplay : MonoBehaviour
         cardBack.enabled = false;
         outline.enabled = false;
         cardGreyOut.enabled = false;
-        cardName.GetComponent<MeshRenderer>().enabled = false;
+        cardName.GetComponent<TextMeshProUGUI>().enabled = false;
         energyCost.enabled = false;
         description.enabled = false;
         manaCost.enabled = false;
@@ -66,7 +66,7 @@ public class CardDisplay : MonoBehaviour
         cardBack.enabled = true;
         outline.enabled = true; //Will only be asked to show when cast, therefore always will have enough mana
         cardGreyOut.enabled = false; //^
-        cardName.GetComponent<MeshRenderer>().enabled = true;
+        cardName.GetComponent<TextMeshProUGUI>().enabled = true;
         manaCost.enabled = true;
         description.enabled = true;
         energyCost.enabled = true;
@@ -225,7 +225,7 @@ public class CardDisplay : MonoBehaviour
             //Formatting Nums for dynamic card text
             int[] formattingNums = new int[] { TurnController.turnController.GetNumerOfCardsPlayedInTurn(),
                                                HandController.handController.GetHand().Count,
-                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusShield(),
+                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusArmor(),
                                                card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusVit(),
                                                TurnController.turnController.GetManaSpent(),
                                                TurnController.turnController.GetEnergySpent(),

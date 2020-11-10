@@ -8,7 +8,7 @@ public class ModifyBuffDurationEffect : Effect
     {
         foreach(GameObject targ in target)
         {
-            foreach (Buff buff in targ.GetComponent<BuffController>().GetBuffs())
+            foreach (BuffFactory buff in targ.GetComponent<BuffController>().GetBuffs())
                 buff.duration += card.effectValue[effectIndex];
         }
         yield return new WaitForSeconds(0);

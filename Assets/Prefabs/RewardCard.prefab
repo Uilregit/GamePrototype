@@ -65,7 +65,7 @@ MonoBehaviour:
   cardBack: {fileID: 3334584826431217890}
   cardGreyOut: {fileID: 4036987836916964635}
   art: {fileID: 8149922508900393905}
-  cardName: {fileID: 11319252501344206}
+  cardName: {fileID: 6244574665544658766}
   energyCost: {fileID: 5246788058940442081}
   description: {fileID: 4704048852033346980}
   manaCost: {fileID: 6243708101722711771}
@@ -251,19 +251,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_fontSize
-      value: 9.05
+      value: 9.7
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.49773395
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47149658
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.041141644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -381,14 +381,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11319252501344206 stripped
+--- !u!114 &6244574665544658766 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8729890432305477653, guid: aac6edea420a82741846302023910b8b, type: 3}
   m_PrefabInstance: {fileID: 3427206927419397979}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

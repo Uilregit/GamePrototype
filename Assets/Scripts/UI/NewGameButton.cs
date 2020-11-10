@@ -33,7 +33,26 @@ public class NewGameButton : MonoBehaviour
     public void StartGame()
     {
         RelicController.relic.AddRelic(thisRelic);
+        ScoreController.score.timerPaused = false;
+
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
+
+        InformationLogger.infoLogger.SaveGameScoreInfo(InformationLogger.infoLogger.patchID,
+                                                InformationLogger.infoLogger.gameID,
+                                                "0",
+                                                "Start of game",
+                                                "false",
+                                                "false",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0");
     }
 
     public void OnMouseDown()

@@ -7,7 +7,7 @@ using System.Linq;
 public class CardDragController : DragController
 {
     private LineRenderer line;
-    public GameObject moveShadow;
+    //public GameObject moveShadow;
     private CardDisplay cardDisplay;
     private bool active = true;
     private bool isHeld = false;
@@ -15,12 +15,21 @@ public class CardDragController : DragController
     private BoxCollider2D col;
     private Vector2 colliderSize;
 
-    private bool isCasting = false;
+    //private bool isSelected = false;
+    //private bool isCasting = false;
+    private bool isHolding;
     private bool isTriggeringEffect = false;
     private Vector2 castLocation;
-    private Vector2 originalLocation;
+    private Vector3 originalLocation;
+    private Vector3 previousMousePosition;
 
     private CardController cardController;
+    private RectTransform rectTransform;
+    private Vector3 originalRotation;
+    private Vector3 desiredRotation;
+
+    private enum State { Default, Highlighted, Aiming };
+    private State currentState = default;
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +40,43 @@ public class CardDragController : DragController
         cardDisplay = GetComponent<CardDisplay>();
         cardController = GetComponent<CardController>();
         col = GetComponent<BoxCollider2D>();
+        rectTransform = GetComponent<RectTransform>();
+        originalRotation = rectTransform.rotation.eulerAngles;
+        if (originalRotation.x > 180)
+            originalRotation.x = originalRotation.x - 360;
+        if (originalRotation.y > 180)
+            originalRotation.y = originalRotation.y - 360;
+        desiredRotation = Vector2.zero;
 
         colliderSize = col.size;
     }
 
+    //In fixedupdate to ensure equal card wiggle regardless of framerate
+    private void FixedUpdate()
+    {
+        if (currentState == State.Highlighted && !isHolding)
+        {
+            rectTransform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+
+            if (desiredRotation.magnitude > 2)
+            {
+                desiredRotation = desiredRotation.normalized * 20;
+                rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(desiredRotation + originalRotation), Time.deltaTime * 40); //Uses fixedDeltaTime (default 50 calls per second)
+            }
+            else
+                rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(originalRotation), Time.fixedDeltaTime * 10);
+        }
+        else if (currentState == State.Aiming)
+        {
+            Vector3 lookAtLocation = CameraController.camera.ScreenToWorldPoint(Input.mousePosition) - transform.position + new Vector3(0, 0, 2);
+            //lookAtLocation = new Vector3(0, lookAtLocation.z, lookAtLocation.x);
+            rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.LookRotation(lookAtLocation, new Vector3(0, 0, -1)) * Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime * 40);
+        }
+        else if (currentState == State.Default)
+        {
+            rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(originalRotation), Time.deltaTime * 40);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -42,34 +84,31 @@ public class CardDragController : DragController
             if (transform.position.y >= HandController.handController.cardCastVertThreshold)
             {
                 if (!isTriggeringEffect)
-                    if (!isCasting)
+                    if (currentState == State.Highlighted)
                         Cast();
                     else
                         Aim();
             }
-            else if (transform.position.y < HandController.handController.cardCastVertThreshold && isCasting)
+            else if (transform.position.y < HandController.handController.cardCastVertThreshold && currentState == State.Aiming)
                 UnCast();
     }
 
     private void Cast()
     {
-        isCasting = true;
-        cardDisplay.Hide();
+        currentState = State.Aiming;
+        //cardDisplay.Hide();
         line.enabled = true;
-        moveShadow.GetComponent<SpriteRenderer>().enabled = true;
+        transform.localScale = new Vector3(HandController.handController.cardAimSize, HandController.handController.cardAimSize, 1);
     }
 
     private void UnCast()
     {
-        isCasting = false;
+        currentState = State.Highlighted;
         isTriggeringEffect = false;
         castLocation = originalLocation;
-        transform.localScale = new Vector2(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize);
-        moveShadow.transform.position = castLocation;
+        rectTransform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         cardDisplay.Show();
         line.enabled = false;
-        moveShadow.GetComponent<SpriteRenderer>().enabled = false;
-        moveShadow.transform.localScale = new Vector2(1, 1);
 
         if (isHeld)
         {
@@ -83,32 +122,37 @@ public class CardDragController : DragController
 
     private void Aim()
     {
-        moveShadow.transform.localScale = new Vector2(1 / moveShadow.transform.parent.localScale.x, 1 / moveShadow.transform.parent.localScale.x);
         Card card = cardController.GetCard();
         if (card.castType != Card.CastType.None)
         {
             //if (card.castType == Card.CastType.AoE)
 
+            int castTileSize = 0;
             if (card.castType == Card.CastType.TargetedAoE)
-            {
-                TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-                if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1)))
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1), card.castShape, card.radius, Color.red, 1);
-            }
-            //else
-            line.enabled = true;
-            line.SetPosition(0, originalLocation);
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-            line.SetPosition(1, mousePosition);
+                castTileSize = card.radius;
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+            if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1)))
+                TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1), card.castShape, castTileSize, new Color(0.6f, 0, 0), 1);
+
+            Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
             if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
                 castLocation = GridController.gridController.GetRoundedVector(mousePosition, 1);
             else
                 castLocation = originalLocation;
-            moveShadow.transform.position = castLocation;
+
+            cardDisplay.transform.position = originalLocation + new Vector3(0, 0.5f, -1f);
+            line.enabled = true;
+            line.SetPosition(0, new Vector3(cardDisplay.transform.position.x, cardDisplay.transform.position.y, -1));
+            Color color = PartyController.party.GetPlayerColor(card.casterColor);
+            line.startColor = new Color(color.r, color.g, color.b, 0.8f);
+            line.endColor = new Color(color.r, color.g, color.b, 0f);
+            line.startWidth = 1.0f;
+            line.endWidth = 0.3f;
+            //line.SetWidth(1.3f, 0.3f);
+            line.SetPosition(1, mousePosition);
         }
         else
         {
-            moveShadow.transform.localScale = new Vector2(100, 100);
             line.enabled = false;
         }
     }
@@ -127,6 +171,8 @@ public class CardDragController : DragController
 
     private void OnMouseUp()
     {
+        desiredRotation = Vector2.zero;
+
         cardController.GetCaster().GetComponent<PlayerController>().SetCasting(false);
         UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
 
@@ -135,10 +181,13 @@ public class CardDragController : DragController
 
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-        cardDisplay.cardName.sortingOrder = 1;
+        //cardDisplay.cardName.sortingOrder = 1;
 
         // For hold and replace
-        Transform trn = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), Vector2.zero, 0.001f, LayerMask.GetMask("Raycast")).transform;
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out hit, 1000000, LayerMask.GetMask("Raycast"));
+        Transform trn = hit.transform;
         if (trn != null)
         {
             if (trn.tag == "Hold" && HandController.handController.GetHeldCard() == null)
@@ -146,7 +195,7 @@ public class CardDragController : DragController
             else if (trn.tag == "Hold" && HandController.handController.GetHeldCard() != null)
             {
                 //Shrunken
-                transform.localScale = new Vector2(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize);
+                transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
                 transform.position = originalLocation;
                 offset = Vector2.zero;
             }
@@ -156,10 +205,10 @@ public class CardDragController : DragController
         //For casting
         else
         {
-            if (!isCasting)
+            if (currentState == State.Highlighted)
             {
                 //Shrunken
-                transform.localScale = new Vector2(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize);
+                transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
                 transform.position = originalLocation;
                 offset = Vector2.zero;
 
@@ -176,25 +225,28 @@ public class CardDragController : DragController
                 Trigger();
             }
         }
+
+        currentState = State.Default;
     }
 
     public override void OnMouseDown()
     {
+        currentState = State.Highlighted;
+        previousMousePosition = Input.mousePosition;
         //Enlarge for easy viewing
-        if (!isCasting)
-        {
-            //Sort UI layering
-            transform.SetParent(CanvasController.canvasController.selectedCardCanvas.transform);
-            cardDisplay.cardName.sortingOrder = 3;
 
-            transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
-            float x = Mathf.Clamp(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).x, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
-            float y = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).y + HandController.handController.cardHighlightHeight;
-            transform.position = new Vector2(x, y);
-            transform.SetAsLastSibling();
+        //Sort UI layering
+        transform.SetParent(CanvasController.canvasController.selectedCardCanvas.transform);
+        //cardDisplay.cardName.sortingOrder = 3;
 
-            cardController.GetCaster().GetComponent<PlayerController>().SetCasting(true);
-        }
+        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        float x = Mathf.Clamp(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).x, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
+        float y = CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y + HandController.handController.cardHighlightHeight;
+        transform.position = new Vector2(x, y);
+        transform.SetAsLastSibling();
+
+        cardController.GetCaster().GetComponent<PlayerController>().SetCasting(true);
+
         cardController.CreateRangeIndicator();
 
         if (cardController.GetNetManaCost() > 0)
@@ -207,30 +259,40 @@ public class CardDragController : DragController
 
     public override void OnMouseDrag()
     {
-        Transform trn = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), Vector2.zero, 0.001f, LayerMask.GetMask("Raycast")).transform;
+        desiredRotation = new Vector2((Input.mousePosition - previousMousePosition).y, (previousMousePosition - Input.mousePosition).x);
+        //Debug.Log(Input.mousePosition - previousMousePosition);
+        previousMousePosition = Input.mousePosition;
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out hit, 1000000, LayerMask.GetMask("Raycast"));
+        Transform trn = hit.transform;
         if (trn != null)
         {
             if (trn.tag == "Replace" || (trn.tag == "Hold" && (HandController.handController.GetHeldCard() == this || HandController.handController.GetHeldCard() == null)))
             {
+                isHolding = true;
                 transform.position = trn.position;
-                transform.localScale = new Vector2(HandController.handController.cardHoldSize, HandController.handController.cardHoldSize);
+                transform.localScale = new Vector3(HandController.handController.cardHoldSize, HandController.handController.cardHoldSize, 1);
+                rectTransform.rotation = Quaternion.Euler(originalRotation);
             }
             else
                 base.OnMouseDrag();
         }
         else
         {
-            transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
+            isHolding = false;
+            //transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize,1);
 
             //Allow drag above threshold only if there is enough mana left over
             if (TurnController.turnController.HasEnoughResources(cardController.GetNetEnergyCost(), cardController.GetNetManaCost()) &&
                 (!GameController.gameController.GetDeadChars().Contains(cardController.GetCard().casterColor) || ResourceController.resource.GetLives() > 0))       //And there's enough lives to cast
             {
-                if (!isCasting)
+                if (currentState == State.Highlighted)
                 {
                     if (TurnController.turnController.GetIsPlayerTurn())
                     {
-                        newLocation = offset + (Vector2)Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+                        newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
                         transform.position = newLocation;
                     }
                 }
@@ -239,7 +301,7 @@ public class CardDragController : DragController
             }
             else
             {
-                newLocation = offset + (Vector2)Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+                newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
                 newLocation.y = Mathf.Min(HandController.handController.cardCastVertThreshold - 0.01f, newLocation.y);
                 transform.position = newLocation;
             }
@@ -322,7 +384,6 @@ public class CardDragController : DragController
         }
         line.enabled = false;
         cardController.DeleteRangeIndicator();
-        moveShadow.GetComponent<SpriteRenderer>().enabled = false;
 
         cardController.GetCaster().GetComponent<PlayerController>().TriggerAttack();
 

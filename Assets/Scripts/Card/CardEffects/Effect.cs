@@ -25,13 +25,13 @@ public abstract class Effect
         return 0;
     }
 
-    public virtual int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
+    public virtual int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
-        return GetSimulatedShieldDamage(caster, effectController, target, card, effectIndex);
+        return GetSimulatedArmorDamage(caster, effectController, target, card, effectIndex);
     }
 
-    public virtual int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public virtual int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         return 0;
     }
@@ -39,7 +39,7 @@ public abstract class Effect
     public abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex);
     public abstract SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH);
 
-    public virtual void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration)
     {
         throw new System.NotImplementedException();
     }

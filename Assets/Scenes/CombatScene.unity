@@ -1092,6 +1092,10 @@ PrefabInstance:
       propertyPath: castRange
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 408302936054317949, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.8
@@ -1607,7 +1611,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1847,7 +1851,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -2886,7 +2890,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -3089,7 +3093,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 79.5
-  orthographic: 1
+  orthographic: 0
   orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
@@ -3113,13 +3117,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0.17364825, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: -3.3, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
 --- !u!1 &527542385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3676,6 +3680,10 @@ PrefabInstance:
       propertyPath: castRange
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 408302936054317949, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.2
@@ -3935,7 +3943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -4.58}
+  m_AnchoredPosition: {x: 3.27, y: -5}
   m_SizeDelta: {x: 1.3, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &699536742
@@ -3976,32 +3984,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699536740}
   m_CullTransparentMesh: 0
---- !u!61 &699536744
-BoxCollider2D:
+--- !u!65 &699536744
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699536740}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.5}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.3, y: 1.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &708126528
 GameObject:
   m_ObjectHideFlags: 0
@@ -4277,6 +4272,9 @@ MonoBehaviour:
   block: {fileID: 9097029351722927811, guid: e842518572f58704c933de38fd61900a, type: 3}
   playerSpawnBox: feffffff02000000ffffffff00000000
   enemySpawnBox: feffffff020000000200000003000000
+  attackBuff: {fileID: 11400000, guid: 566bf7e44b83f1b4c8163915532f0081, type: 2}
+  armorBuff: {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
+  stunBuff: {fileID: 11400000, guid: 4f71dcf6c115fc9479562643c78c2dce, type: 2}
 --- !u!1 &751302413
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,7 +5226,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922887926}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 519420031}
@@ -5249,7 +5247,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922887926}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.17364825, y: 0, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5258,7 +5256,7 @@ RectTransform:
   - {fileID: 929055864}
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.3}
@@ -5605,6 +5603,10 @@ PrefabInstance:
     - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: castRange
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 408302936054317949, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -6006,7 +6008,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -6575,8 +6577,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232117699}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.17364825, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 0, z: 0.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431521821}
@@ -6592,10 +6594,10 @@ RectTransform:
   - {fileID: 1823944900}
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1.7}
+  m_AnchoredPosition: {x: 0, y: -1.53}
   m_SizeDelta: {x: 20, y: 13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1268121864
@@ -6816,7 +6818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 7.66}
+  m_AnchoredPosition: {x: 0, y: 5.95}
   m_SizeDelta: {x: 6.1, y: 0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295449132
@@ -6948,7 +6950,7 @@ GameObject:
   - component: {fileID: 1322031726}
   - component: {fileID: 1322031725}
   m_Layer: 5
-  m_Name: Shield Text
+  m_Name: Armor Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7006,7 +7008,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Shield: 6'
+  m_Text: 'Armor: 6'
 --- !u!222 &1322031726
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7343,6 +7345,10 @@ PrefabInstance:
       propertyPath: castRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 408302936054317949, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.8
@@ -7648,7 +7654,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -8329,7 +8335,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -8463,9 +8469,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631242664}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.17364825, y: 0, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 751302414}
   - {fileID: 675586292}
@@ -8495,10 +8501,10 @@ RectTransform:
   - {fileID: 182686560}
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.3}
+  m_AnchoredPosition: {x: 0, y: -1}
   m_SizeDelta: {x: 20, y: 13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1631242669
@@ -8515,9 +8521,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterImage: {fileID: 675586293}
   healthText: {fileID: 1979236701}
-  armorText: {fileID: 2116696510}
-  shieldText: {fileID: 1322031725}
-  attackText: {fileID: 1356034400}
+  armorText: {fileID: 1322031725}
+  attackText: {fileID: 2116696510}
+  attackQueueText: {fileID: 1356034400}
   abilityTexts:
   - {fileID: 2134668152}
   - {fileID: 46435642}
@@ -9239,7 +9245,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -9640,7 +9646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: -4.58}
+  m_AnchoredPosition: {x: -3.27, y: -5}
   m_SizeDelta: {x: 1.3, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1758505703
@@ -9681,32 +9687,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758505701}
   m_CullTransparentMesh: 0
---- !u!61 &1758505705
-BoxCollider2D:
+--- !u!65 &1758505705
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758505701}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_IsTrigger: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.5}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.3, y: 1.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1782356326
 GameObject:
   m_ObjectHideFlags: 0
@@ -9958,7 +9951,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: -4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -10895,7 +10888,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -991661475
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -11144,6 +11137,10 @@ PrefabInstance:
     - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: castRange
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 408302936054317949, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -11838,6 +11835,10 @@ PrefabInstance:
     - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: castRange
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408302936054317948, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
+      propertyPath: startingArmor
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 408302936054317951, guid: 3408fe25dc49f37479c144e44fe9f749, type: 3}
       propertyPath: m_LocalPosition.x

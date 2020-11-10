@@ -16,12 +16,12 @@
  * 
  * ##### 0.3.5 #####
  * --- Gameplay ---
- * Added bonus attack and shields tied to movement for enemies and players
- * Rebalanced shields and attacks for all units to adjust
+ * Added bonus attack and armors tied to movement for enemies and players
+ * Rebalanced armors and attacks for all units to adjust
  * 
  * ##### 0.3.6 #####
  * --- Gameplay ---
- * Removed bonus attack and shields tied to movement for enemies and players
+ * Removed bonus attack and armors tied to movement for enemies and players
  * Player can no longer attack without card
  *  * Player can no longer move after action
  * 
@@ -36,7 +36,7 @@
  *     - Blue
  *     - 1 energy
  *     - 0 mana
- *     - Raise a target's shield by 6
+ *     - Raise a target's armor by 6
  *     
  *     --- Changed ---
  *     -- Blue --
@@ -99,7 +99,7 @@
  *     
  *     --- Changed ---
  *     -- Blue --
- *     Shatter Shield
+ *     Shatter Armor
  *     - 1 -> 0 energy
  *     - 0 -> 1 mana
  *     - Lose 2 armor, deal 2 piercing damage to all enemies in range -> Lose all armor, deal that much damange damage to the target
@@ -118,7 +118,7 @@
  * 
  * --- System ---
  * pulled camera back a bit
- * Added GetCurrentShieldEffect()
+ * Added GetCurrentArmorEffect()
  * Added Barrier to Rewards loot table
  * 
  * --- Bugs ---
@@ -239,7 +239,7 @@
  * No longer logs information when in debug mode
  * Only objects with size 1 can be force moved
  * Healthbars that overlap is now scaled to the biggest enemy in the pile
- * Damage is reduced by shield and shield decreases by 1 (but never less than 1), when shield reaches 0 the character is broken and takes double damage
+ * Damage is reduced by armor and armor decreases by 1 (but never less than 1), when armor reaches 0 the character is broken and takes double damage
  * 
  * --- Bugs ---
  * Fixed initial card text not reflecting player attack
@@ -269,14 +269,14 @@
  *          - 1/0
  *          - Pull a target from up to 2 spaces away towards you and deal 80% of ATK as damange
  *          CRE02 - Damage - Erange
- *          - Shield Slam
+ *          - Armor Slam
  *          - 1/0
  *          - Lose half your armor, deal that much damage to a target
  *          CRE03 - Damage
  *          - Overdrive
  *          - 0/0
  *          - Deal 150% of ATK as damage, deal 50% of ATK as damage to self
- *          CRE04 - Shields
+ *          CRE04 - Armors
  *          - Taunt
  *          - 
  *      -- Blue --
@@ -303,7 +303,7 @@
  * Added ability to speedup all timers in the game
  * Added anticipated mana gain and loss when using cards
  * Added more opacity to tiles
- * Added shield damage image on shield damage
+ * Added armor damage image on armor damage
  * 
  * --- System ---
  * Added device ID to the information logged
@@ -313,7 +313,7 @@
  * Moved target selection into CardEffectController for both player and enemy cards
  * Enemies cards will now respect card execution priority, negative first, positive last. Default 0
  *      Ties will be resolved by moving enemies closest to their target first
- * ReImplimented bonus shields
+ * ReImplimented bonus armors
  * Effect process is now a coroutine to allow for delays and animations
  * Add slight pulse in hit damage number between multiple attacks
  * Ensure that card for enemy casts NEVER overlaps the target
@@ -325,7 +325,7 @@
  * Enemy intents will dissapear even if they didn't attack
  * Fixed bug where player start of turn effects are triggered twice per turn
  * Fixed cards being unable to uncast
- * Fixed targeting lowest vit targeting lowest shield instead
+ * Fixed targeting lowest vit targeting lowest armor instead
  * healing will no longer show the - sign
  * Fixed enemies multicasting on self
  * Fixed AoE cast counting blockades
@@ -367,7 +367,7 @@
  * Added flicker to gaining mana
  * Added Move Trail for all player characters
  * Taking 0 damage now also shows damage numbers
- * Bonus shield buffs now show bonus shield numbers
+ * Bonus armor buffs now show bonus armor numbers
  * Darkened cards in the deck collection section are no longer changeable, now must navigate to that color's tab to change that color's cards
  * Added UI showing number of moveranges remaining while adjusting to move
  * 
@@ -437,7 +437,7 @@
  * Fixed Massive Stomp not showing the correct intent image
  * Fixed intent being greyed out when it should be at the beginning of every turn (character transforms are off by 0.007104, may want to check down the road)
  * Fixed vitdamage doing 100% of attack as damage in cards that have the potential to do 0 damage due to temporaryValue
- * Fixed incorrect showing of the broken status when there is bonus shield
+ * Fixed incorrect showing of the broken status when there is bonus armor
  * 
  * #####################
  * ####### 0.4.3 #######
@@ -539,6 +539,11 @@
  * -- Enemies --
  * 
  * -- System --
+ * Officially changed all "armor" references in code to "armor". Card names can still contains "armor"
+ * Buff trigger chains will now no longer trigger buffs already triggered in the chain (prevents infinite buff trigger chains)
+ * Buffs apply/trigger/revert information are now tracked for analysis in combat logs
+ * Game score at the end of the game is now tracked for analysis
+ *      A blank score line is saved at the begining of every game to track if that run has been abandoned
  * 
  * -- UI --
  * Recentered all character displays
@@ -552,9 +557,13 @@
  * Enemies now move more smoothly
  *      Will face the direction they're attacking/moving
  *      Will return to face right at the end of their turn
+ * Timer for the game is now displayed on screen
+ * Cards now have a wiggle and point when dragged and while casting
  * 
  * -- Bugs --
  * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
+ * Fixed bug that would cause resurrected players to be rezed at the wrong location
+ * Fixed attack text not being shown in character information screen
  * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --

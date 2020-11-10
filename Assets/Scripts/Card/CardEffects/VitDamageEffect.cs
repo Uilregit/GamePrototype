@@ -79,20 +79,20 @@ public class VitDamageEffect : Effect
         return output;
     }
 
-    public override int GetSimulatedShieldDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int output = 0;
         foreach (GameObject targ in target)
         {
             HealthController targetHealthController = targ.GetComponent<HealthController>();
-            output += targetHealthController.GetSimulatedShieldDamage(1);
+            output += targetHealthController.GetSimulatedArmorDamage(1);
             /*
             if (card.effectValue[effectIndex] != 0)
-                output += targetHealthController.GetSimulatedShieldDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.effectValue[effectIndex] / 100.0f));
+                output += targetHealthController.GetSimulatedArmorDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.effectValue[effectIndex] / 100.0f));
             else if (card.GetTempEffectValue() != 0)
-                output += targetHealthController.GetSimulatedShieldDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f));
+                output += targetHealthController.GetSimulatedArmorDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f));
             else
-                output += targetHealthController.GetSimulatedShieldDamage(caster.GetComponent<HealthController>().GetAttack());
+                output += targetHealthController.GetSimulatedArmorDamage(caster.GetComponent<HealthController>().GetAttack());
                 */
         }
         return output;

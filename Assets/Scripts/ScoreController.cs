@@ -1,14 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
     public static ScoreController score;
 
+    public Text timerText;
+    public bool timerPaused = true; 
+
     public int scorePerOverkill;
     public int scorePerDamage;
-    public int scorePerDamageShielded;
+    public int scorePerDamageArmored;
     public int scorePerDamageOverhealedProtected;
     public int scorePerDamageAvoided;
     public int scorePerEnemiesBroken;
@@ -18,7 +23,7 @@ public class ScoreController : MonoBehaviour
 
     private int overkill;
     private int damage;
-    private int damageShielded;
+    private int damageArmored;
     private int damageOverhealedProtected;
     private int damageAvoided;
     private int enemiesBroken;
@@ -30,18 +35,24 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         if (ScoreController.score == null)
+        {
             ScoreController.score = this;
+            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(timerText.gameObject);
+
+            secondsInGame = 0;
+        }
         else
             Destroy(this.gameObject);
-
-        DontDestroyOnLoad(this.gameObject);
-
-        secondsInGame = 0;
     }
 
     private void Update()
     {
-        secondsInGame += Time.deltaTime;
+        if (!timerPaused)
+        {
+            secondsInGame += Time.deltaTime;
+            timerText.text = "Time: " + TimeSpan.FromSeconds(secondsInGame).ToString("hh':'mm':'ss");
+        }
     }
 
     public void UpdateOverkill(int value)
@@ -74,19 +85,19 @@ public class ScoreController : MonoBehaviour
         damage = value;
     }
 
-    public void UpdateDamageShielded(int value)
+    public void UpdateDamageArmored(int value)
     {
-        damageShielded += value;
+        damageArmored += value;
     }
 
-    public int GetDamageShielded()
+    public int GetDamageArmored()
     {
-        return damageShielded;
+        return damageArmored;
     }
 
-    public void SetDamageShielded(int value)
+    public void SetDamageArmored(int value)
     {
-        damageShielded = value;
+        damageArmored = value;
     }
 
     public void UpdateDamageOverhealProtected(int value)
@@ -166,7 +177,7 @@ public class ScoreController : MonoBehaviour
 
     public float GetSecondsInGame()
     {
-        return (secondsInGame) / 60.0f;
+        return secondsInGame;
     }
 
     public void SetSecondsInGame(float value)

@@ -14,8 +14,8 @@ public class BoardDebugButton : MonoBehaviour
         image = GetComponent<Image>();
         bc2d = GetComponent<BoxCollider2D>();
 
-        image.enabled = RoomController.roomController.debug;
-        bc2d.enabled = RoomController.roomController.debug;
+        image.enabled = InformationLogger.infoLogger.debug;
+        bc2d.enabled = InformationLogger.infoLogger.debug;
     }
 
     private void OnMouseDown()

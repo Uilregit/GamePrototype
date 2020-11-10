@@ -66,7 +66,7 @@ MonoBehaviour:
   cardBack: {fileID: 7518412836081477550}
   cardGreyOut: {fileID: 9085542296850176599}
   art: {fileID: 3966053683623322877}
-  cardName: {fileID: 5059830827320322178}
+  cardName: {fileID: 1205055991649527810}
   energyCost: {fileID: 1062922528472728237}
   description: {fileID: 529230239973284584}
   manaCost: {fileID: 1204164143253397911}
@@ -125,10 +125,10 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -935817297
   m_SortingLayer: 3
-  m_SortingOrder: 40
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: -7.89, y: 0, z: 1}
+  - {x: 48.78, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -145,17 +145,17 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.4422582
-        value: 0.47511655
-        inSlope: -3.6944888
-        outSlope: -3.6944888
+        time: 0.7650006
+        value: 0.730548
+        inSlope: -1.3816636
+        outSlope: -1.3816636
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.24405585
+        outWeight: 0.4157269
       - serializedVersion: 3
         time: 1
-        value: 0.18055725
+        value: 0.24578857
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -167,9 +167,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.06252861, a: 0.49019608}
-      key1: {r: 1, g: 0.28841394, b: 0, a: 0.49019608}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0, b: 0.06252861, a: 0.9490196}
+      key1: {r: 1, g: 0.28841394, b: 0, a: 0.34509805}
+      key2: {r: 0, g: 0, b: 0, a: 0.16078432}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -185,7 +185,7 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -195,7 +195,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 2
+    numCapVertices: 0
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
@@ -265,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999c1ed240b69764088892567350ddb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveShadow: {fileID: 5320722206935575323}
 --- !u!1001 &7611071354231574551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -279,15 +278,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.49773395
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47149658
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.041141644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -319,6 +318,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076750114502007359, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076750114502007359, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4534785129137717648, guid: aac6edea420a82741846302023910b8b, type: 3}
@@ -387,11 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5320722206935575323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2326379388527098636, guid: aac6edea420a82741846302023910b8b, type: 3}
-  m_PrefabInstance: {fileID: 7611071354231574551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1204164143253397911 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8730784208076566912, guid: aac6edea420a82741846302023910b8b, type: 3}
@@ -414,14 +416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5059830827320322178 stripped
+--- !u!114 &1205055991649527810 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8729890432305477653, guid: aac6edea420a82741846302023910b8b, type: 3}
   m_PrefabInstance: {fileID: 7611071354231574551}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

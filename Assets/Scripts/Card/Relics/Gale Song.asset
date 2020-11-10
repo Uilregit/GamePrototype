@@ -20,6 +20,6 @@ MonoBehaviour:
   targetType: 5
   condition: 0
   effect: 110
-  buff: 200
+  buff: {fileID: 11400000, guid: 7988e5a4cc727be46a84bb3bf0f02dc3, type: 2}
   effectValue: 2
   effectDuration: 1

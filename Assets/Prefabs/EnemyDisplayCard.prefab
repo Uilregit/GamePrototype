@@ -64,7 +64,7 @@ MonoBehaviour:
   cardBack: {fileID: 2842397590578280658}
   cardGreyOut: {fileID: 3545082479499871531}
   art: {fileID: 8660067905498053505}
-  cardName: {fileID: 656642067140196350}
+  cardName: {fileID: 6889879768812910462}
   energyCost: {fileID: 4748130219303837137}
   description: {fileID: 5223270901667530132}
   manaCost: {fileID: 6886832620968492779}
@@ -165,8 +165,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.06252861, a: 0.49019608}
-      key1: {r: 1, g: 0.28841394, b: 0, a: 0.49019608}
+      key0: {r: 0.7138634, g: 0, b: 1, a: 0.90588236}
+      key1: {r: 0.7137255, g: 0, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -258,15 +258,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.49773395
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47149658
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.041141644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -392,14 +392,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &656642067140196350 stripped
+--- !u!114 &6889879768812910462 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3433946638020802709, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8729890432305477653, guid: aac6edea420a82741846302023910b8b, type: 3}
   m_PrefabInstance: {fileID: 2790833452786143083}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

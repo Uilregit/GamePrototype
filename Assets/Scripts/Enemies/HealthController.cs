@@ -15,13 +15,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int bonusCastRange = 0;
     private int maxVit;
     private int currentVit = 0;
-    private int currentShield;
-    private int startingShield;
+    private int currentArmor;
+    private int startingArmor;
     private int startingAttack;
     private int currentAttack;
     private int bonusAttack;
     private int bonusVit;
-    private int bonusShield;
+    private int bonusArmor;
     private int knockBackDamage = 0;
     private int bonusMoveRange = 0;
     private bool preserveBonusVit = false;
@@ -32,7 +32,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private bool disarmed = false;
 
     private List<int> vitDamageMultipliers;
-    private List<int> shieldDamageMultipliers;
+    private List<int> armorDamageMultipliers;
     private List<int> healingMulitpliers;
 
     private int energyCostReduction = 0;
@@ -40,22 +40,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private List<int> energyCostCap = new List<int>() { 99999 };
     private List<int> manaCostCap = new List<int>() { 99999 };
 
-    /*
-    private Dictionary<Buff, int> endOfTurnBuffs = new Dictionary<Buff, int>();
-    private Dictionary<Buff, int> startOfTurnBuffs = new Dictionary<Buff, int>();
-    private Dictionary<Buff, int> onDamageBuffs = new Dictionary<Buff, int>();
-    private Dictionary<Buff, int> endOfTurnDebuffs = new Dictionary<Buff, int>();
-    private Dictionary<Buff, int> startOfTurnDebuffs = new Dictionary<Buff, int>();
-    private Dictionary<Buff, int> onDamageDebuffs = new Dictionary<Buff, int>();
-    private List<Buff> oneTimeBuffs = new List<Buff>(); //AKA permanent buffs
-    private List<Buff> oneTimeDebuffs = new List<Buff>();
-    */
-
     public CharacterDisplayController charDisplay;
     /*
     public HealthBarController healthBar;
     public Text vitText;
-    public Text shieldText;
+    public Text armorText;
     public Text attackText;
     public List<Image> buffIcons;
     */
@@ -71,7 +60,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //###################################################################################################
     public void Awake()
     {
-        ResetBuffIcons(new List<Buff>());
+        ResetBuffIcons(new List<BuffFactory>());
 
         occupiedSpaces = new List<Vector2>();
 
@@ -88,7 +77,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
 
         vitDamageMultipliers = new List<int>();
-        shieldDamageMultipliers = new List<int>();
+        armorDamageMultipliers = new List<int>();
         healingMulitpliers = new List<int>();
 
         abilitiesController = GetComponent<AbilitiesController>();
@@ -123,10 +112,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             ResetAttackText(startingAttack);
 
             int gotStartingArmor = InformationController.infoController.GetStartingArmor(color);
-            startingShield = gotStartingArmor;
+            startingArmor = gotStartingArmor;
 
-            SetCurrentShield(startingShield, false);
-            ResetShieldText(gotStartingArmor);
+            SetCurrentArmor(startingArmor, false);
+            ResetArmorText(gotStartingArmor);
         }
     }
 
@@ -186,31 +175,31 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return bonusAttack;
     }
 
-    public void SetStartingShield(int newvalue)
+    public void SetStartingArmor(int newvalue)
     {
         currentBrokenTurns = -99999;
-        startingShield = newvalue;
-        currentShield = newvalue;
-        ResetShieldText(currentShield);
+        startingArmor = newvalue;
+        currentArmor = newvalue;
+        ResetArmorText(currentArmor);
     }
 
-    public void SetCurrentShield(int newvalue, bool relative)
+    public void SetCurrentArmor(int newvalue, bool relative)
     {
         if (relative)
-            currentShield += newvalue;
+            currentArmor += newvalue;
         else
-            currentShield = newvalue;
-        ResetShieldText(currentShield);
+            currentArmor = newvalue;
+        ResetArmorText(currentArmor);
     }
 
-    public int GetStartingShield()
+    public int GetStartingArmor()
     {
-        return startingShield;
+        return startingArmor;
     }
 
-    public int GetCurrentShield()
+    public int GetCurrentArmor()
     {
-        return currentShield;
+        return currentArmor;
     }
 
     public void SetStartingAttack(int newvalue)
@@ -248,12 +237,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetVitText(currentVit + bonusVit);
     }
 
-    public void SetBonusShield(int newValue, bool fromRelic = false)
+    public void SetBonusArmor(int newValue, bool fromRelic = false)
     {
-        ShowShieldDamageNumber(-newValue);
-        bonusShield = Mathf.Max(0, bonusShield + newValue);
+        ShowArmorDamageNumber(-newValue);
+        bonusArmor = Mathf.Max(0, bonusArmor + newValue);
 
-        ResetShieldText(currentShield + bonusShield);
+        ResetArmorText(currentArmor + bonusArmor);
 
         if (!fromRelic)             //To prevent infinite loops on relics giving armor triggered by armor gain
             if (newValue > 0)
@@ -262,9 +251,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorLoss);
     }
 
-    public int GetBonusShield()
+    public int GetBonusArmor()
     {
-        return bonusShield;
+        return bonusArmor;
     }
 
     public void SetManaCostCap(int value)
@@ -297,7 +286,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return energyCostCap.Min();
     }
 
-    public void SetManaCostReduction (int value)
+    public void SetManaCostReduction(int value)
     {
         manaCostReduction += value;
     }
@@ -307,7 +296,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return manaCostReduction;
     }
 
-    public void SetEnergyCostReduction (int value)
+    public void SetEnergyCostReduction(int value)
     {
         energyCostReduction += value;
     }
@@ -352,9 +341,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return currentVit + bonusVit;
     }
 
-    public int GetShield()
+    public int GetArmor()
     {
-        return currentShield + bonusShield;
+        return currentArmor + bonusArmor;
     }
 
     public int GetAttack()
@@ -434,17 +423,17 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
     }
 
-    private void ResetShieldText(int value)
+    private void ResetArmorText(int value)
     {
-        charDisplay.shieldText.text = value.ToString();
+        charDisplay.armorText.text = value.ToString();
         if (value == 0)
             charDisplay.sprite.color = Color.red;
         else
             charDisplay.sprite.color = Color.white;
-        if (bonusShield == 0)
-            charDisplay.shieldText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
+        if (bonusArmor == 0)
+            charDisplay.armorText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
         else
-            charDisplay.shieldText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
+            charDisplay.armorText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
     }
 
     private void ResetAttackText(int value)
@@ -460,13 +449,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //###################################################################################################
     //Effect Section-------------------------------------------------------------------------------------
     //###################################################################################################
-    public void TakeVitDamage(int value, HealthController attacker)
+    public void TakeVitDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
     {
         int oldHealth = currentVit + bonusVit;
         if (value > 0)
         {
             int multiplier = 1;
-            if (GetShield() == 0)
+            if (GetArmor() == 0)
                 multiplier = 2;
             foreach (int i in vitDamageMultipliers)
             {
@@ -475,14 +464,14 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                     charDisplay.healthBar.SetStatusText("Immune", Color.yellow);
             }
 
-            int damage = Mathf.Max((value * multiplier - GetShield()), 1);
+            int damage = Mathf.Max((value * multiplier - GetArmor()), 1);
 
             if (damage != 0)
             {
                 try
                 {
                     GetComponent<PlayerController>();
-                    ScoreController.score.UpdateDamageShielded(Mathf.Max(GetShield() - 1, 0));
+                    ScoreController.score.UpdateDamageArmored(Mathf.Max(GetArmor() - 1, 0));
                     ScoreController.score.UpdateDamageOverhealProtected(Mathf.Min(damage, bonusVit));
                 }
                 catch { }
@@ -491,28 +480,28 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
             ResetVitText(currentVit + bonusVit);
 
-            OnDamage(attacker, damage, oldHealth);
+            OnDamage(attacker, damage, oldHealth, traceList);
 
-            if (GetShield() > 0 && damage != 0)
-                TakeShieldDamage(1, attacker);
+            if (GetArmor() > 0 && damage != 0)
+                TakeArmorDamage(1, attacker, traceList);
 
             if (damage == 1)
                 RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTook1VitDamage);
         }
         else
         {
-            OnDamage(attacker, 0, oldHealth);
+            OnDamage(attacker, 0, oldHealth, traceList);
         }
     }
 
     public int GetSimulatedVitDamage(int value)
     {
         int multiplier = 1;
-        if (currentShield == 0)
+        if (currentArmor == 0)
             multiplier *= 2;
         foreach (int i in vitDamageMultipliers)
             multiplier *= i;
-        return Mathf.Max((value * multiplier - GetShield()), 1);
+        return Mathf.Max((value * multiplier - GetArmor()), 1);
     }
 
     public SimHealthController SimulateTakeVitDamage(SimHealthController simH, int value)
@@ -520,19 +509,19 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
         int multiplier = 1;
-        if (currentShield == 0)
+        if (currentArmor == 0)
             multiplier = 2;
         if (value > 0)
-            output.currentVit -= Mathf.Max(value - GetShield(), 0) * multiplier;//ToBeChangedLater
+            output.currentVit -= Mathf.Max(value - GetArmor(), 0) * multiplier;//ToBeChangedLater
         return output;
     }
 
-    public void TakeShieldDamage(int value, HealthController attacker)
+    public void TakeArmorDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
     {
         int damage = value;
         if (value > 0)
         {
-            foreach (int i in shieldDamageMultipliers)
+            foreach (int i in armorDamageMultipliers)
             {
                 Debug.Log(i);
                 damage *= i;
@@ -541,19 +530,19 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 damage = value + enfeeble;
         }
 
-        ShowShieldDamageNumber(damage);
+        ShowArmorDamageNumber(damage);
 
-        if (bonusShield > 0)
+        if (bonusArmor > 0)
         {
-            currentShield -= Mathf.Max(0, damage - bonusShield);
-            currentShield = Mathf.Max(currentShield, 0);
-            bonusShield = Mathf.Max(0, bonusShield - damage);
+            currentArmor -= Mathf.Max(0, damage - bonusArmor);
+            currentArmor = Mathf.Max(currentArmor, 0);
+            bonusArmor = Mathf.Max(0, bonusArmor - damage);
         }
         else
-            currentShield = Mathf.Max(0, currentShield - damage);
-        ResetShieldText(currentShield + bonusShield);
+            currentArmor = Mathf.Max(0, currentArmor - damage);
+        ResetArmorText(currentArmor + bonusArmor);
 
-        if (GetShield() <= 0)
+        if (GetArmor() <= 0)
         {
             if (!wasBroken)
             {
@@ -579,32 +568,35 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             wasBroken = false;
         }
+
+        if (damage > 0)
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnShieldDamageRecieved, this, damage, traceList));
     }
 
-    public int GetSimulatedShieldDamage(int value)
+    public int GetSimulatedArmorDamage(int value)
     {
         if (value > 0)
         {
-            foreach (int i in shieldDamageMultipliers)
+            foreach (int i in armorDamageMultipliers)
                 value *= i;
             if (value == 0)
                 return 0;
             else
-                return Mathf.Min(value + enfeeble, currentShield);
+                return Mathf.Min(value + enfeeble, currentArmor);
         }
         return value;
     }
 
-    public SimHealthController SimulateTakeShieldDamage(SimHealthController simH, int value)
+    public SimHealthController SimulateTakeArmorDamage(SimHealthController simH, int value)
     {
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
-        output.currentShield = Mathf.Max(currentShield - value - enfeeble, 0);
+        output.currentArmor = Mathf.Max(currentArmor - value - enfeeble, 0);
         return output;
     }
 
     //Simply remove value from health
-    public void TakePiercingDamage(int value, HealthController attacker, List<Buff> buffTrace = null)
+    public void TakePiercingDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
     {
         int oldHealth = currentVit + bonusVit;
         int damage = 0;
@@ -624,7 +616,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
 
             if (damage < 0)
-                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage));
+                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, traceList));
         }
 
         if (damage > 0)
@@ -634,7 +626,18 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
         ResetVitText(currentVit + bonusVit);
 
-        OnDamage(attacker, damage, oldHealth);
+        OnDamage(attacker, damage, oldHealth, traceList);
+    }
+
+    public int GetSimulatedPiercingDamage(int value)
+    {
+        if (value < 0)
+        {
+            foreach (int i in healingMulitpliers)
+                value *= i;
+            return value;
+        }
+        return value;
     }
 
     public SimHealthController SimulateTakePiercingDamage(SimHealthController simH, int value)
@@ -731,7 +734,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         SimHealthController simSelf = new SimHealthController();
         simSelf.currentVit = currentVit;
-        simSelf.currentShield = currentShield;
+        simSelf.currentArmor = currentArmor;
         simSelf.maxVit = maxVit;
         return simSelf;
     }
@@ -754,9 +757,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         vitDamageMultipliers.Add(i);
     }
 
-    public void AddShieldDamageMultiplier(int i)
+    public void AddArmorDamageMultiplier(int i)
     {
-        shieldDamageMultipliers.Add(i);
+        armorDamageMultipliers.Add(i);
     }
 
     public void RemoveVitDamageMultiplier(int i)
@@ -764,9 +767,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         vitDamageMultipliers.Remove(i);
     }
 
-    public void RemoveShieldDamageMultiplier(int i)
+    public void RemoveArmorDamageMultiplier(int i)
     {
-        shieldDamageMultipliers.Remove(i);
+        armorDamageMultipliers.Remove(i);
     }
 
     public void AddHealingMultiplier(int i)
@@ -852,12 +855,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         currentBrokenTurns++;
         if (currentBrokenTurns == maxBrokenTurns)
         {
-            if (currentShield < startingShield)
-                SetStartingShield(startingShield);
+            if (currentArmor < startingArmor)
+                SetStartingArmor(startingArmor);
             else
             {
                 currentBrokenTurns = -99999;
-                ResetShieldText(currentShield);
+                ResetArmorText(currentArmor);
             }
         }
     }
@@ -878,7 +881,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         */
     }
 
-    public void OnDamage(HealthController attacker, int damage, int oldHealth, List<Buff> buffTrace = null)
+    public void OnDamage(HealthController attacker, int damage, int oldHealth, List<BuffFactory> buffTrace = null)
     {
         //Handheld.Vibrate();
 
@@ -898,7 +901,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
         */
         if (damage > 0)
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
 
         if (currentVit + bonusVit <= 0)
             try
@@ -929,13 +932,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 maxSize = obj.GetComponent<HealthController>().size;
                 center = obj.transform.position;
             }
-        charDisplay.healthBar.SetBar(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetShield() <= 0);
-        charDisplay.healthBar.SetDamageImage(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetShield() <= 0);
+        charDisplay.healthBar.SetBar(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0);
+        charDisplay.healthBar.SetDamageImage(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0);
     }
 
-    private void ShowShieldDamageNumber(int shieldDamage)
+    private void ShowArmorDamageNumber(int armorDamage)
     {
-        charDisplay.healthBar.SetShieldDamageImage(GetShield(), shieldDamage, GetShield() <= 0);
+        charDisplay.healthBar.SetArmorDamageImage(GetArmor(), armorDamage, GetArmor() <= 0);
     }
 
     public void ShowHealthBar()
@@ -951,7 +954,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 maxSize = obj.GetComponent<HealthController>().size;
                 center = obj.transform.position;
             }
-        charDisplay.healthBar.SetBar(currentVit + bonusVit, 0, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), currentShield <= 0, true);
+        charDisplay.healthBar.SetBar(currentVit + bonusVit, 0, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), currentArmor <= 0, true);
     }
 
     public void HideHealthBar()
@@ -1000,9 +1003,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     }
     */
 
-    public void ResetBuffIcons(List<Buff> allBuffs)
+    public void ResetBuffIcons(List<BuffFactory> allBuffs)
     {
-        allBuffs = allBuffs.OrderByDescending(x => x.duration).ToList<Buff>();
+        allBuffs = allBuffs.OrderByDescending(x => x.duration).ToList<BuffFactory>();
 
         int maxIcons = 5;
 
@@ -1024,7 +1027,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetStatTexts(bool state)
     {
         charDisplay.vitText.enabled = state;
-        charDisplay.shieldText.enabled = state;
+        charDisplay.armorText.enabled = state;
         charDisplay.attackText.enabled = state;
     }
 

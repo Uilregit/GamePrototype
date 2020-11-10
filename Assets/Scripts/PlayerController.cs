@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Card.CasterColor colorTag;
     [SerializeField] private int castRange = 1;
     [SerializeField] private int maxVit;
-    [SerializeField] private int startingShield;
+    [SerializeField] private int startingArmor;
     [SerializeField] private int attack;
     [SerializeField] private int moveRange;
     [SerializeField] private int attackRange;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
             healthController.SetCastRange(castRange);
             healthController.SetMaxVit(maxVit);
-            healthController.SetStartingShield(startingShield);
+            healthController.SetStartingArmor(startingArmor);
             healthController.SetStartingAttack(attack);
             healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
 
@@ -100,9 +100,9 @@ public class PlayerController : MonoBehaviour
         return healthController.GetCurrentVit();
     }
 
-    public int GetStartingShield()
+    public int GetStartingArmor()
     {
-        return startingShield;
+        return startingArmor;
     }
 
     public HealthController GetHealthController()

@@ -707,8 +707,7 @@ MonoBehaviour:
   attackColor: {r: 1, g: 0, b: 0, a: 1}
   armorImage: {fileID: 21300002, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   armorColor: {r: 0, g: 0.465055, b: 1, a: 1}
-  healthImage: {fileID: -8586809270922140202, guid: b06752fbee9a16c46b9158900697fcd5,
-    type: 3}
+  healthImage: {fileID: -8586809270922140202, guid: b06752fbee9a16c46b9158900697fcd5, type: 3}
   healthColor: {r: 1, g: 0, b: 0.4305086, a: 1}
   item1: {fileID: 1376487197}
   item2: {fileID: 2078522183}
@@ -1115,8 +1114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1648,8 +1646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2211,8 +2208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2320,7 +2316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 2
+  - eventID: 4
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -2435,8 +2431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2760,8 +2755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3285,7 +3279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 2
+  - eventID: 4
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -3479,8 +3473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3536,6 +3529,7 @@ MonoBehaviour:
   commonShopPercentage: 0
   rareShopPercentage: 0
   goldCount: {fileID: 1134558740}
+  livesCount: {fileID: 0}
   canvas: {fileID: 1716428888}
 --- !u!114 &1716428886
 MonoBehaviour:
@@ -3692,8 +3686,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4039,8 +4032,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8,
-    type: 3}
+  m_Sprite: {fileID: 4574497021349171894, guid: 0c29bc75526815d42aa16f9a63a1d2a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

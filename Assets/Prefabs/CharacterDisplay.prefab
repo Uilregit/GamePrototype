@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4117477462654036843}
   - component: {fileID: 5157865733489157523}
   m_Layer: 5
-  m_Name: ShieldText
+  m_Name: ArmorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,7 +512,7 @@ MonoBehaviour:
   outline: {fileID: 4217269979373065824}
   healthBar: {fileID: 8432545435863940180}
   vitText: {fileID: 7740180614324518524}
-  shieldText: {fileID: 4117477462654036843}
+  armorText: {fileID: 4117477462654036843}
   attackText: {fileID: 7740180612866065549}
   buffIcons:
   - {fileID: 5073766188977474047}

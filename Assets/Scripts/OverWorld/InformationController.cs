@@ -49,7 +49,7 @@ public class InformationController : MonoBehaviour
             combatInfo.vit[index] = player.GetComponent<HealthController>().GetCurrentVit();
             combatInfo.maxVit[index] = player.GetComponent<HealthController>().GetMaxVit();
             combatInfo.atk[index] = player.GetComponent<HealthController>().GetStartingAttack();
-            combatInfo.armor[index] = player.GetComponent<HealthController>().GetStartingShield();
+            combatInfo.armor[index] = player.GetComponent<HealthController>().GetStartingArmor();
 
             playerColors.Add(player.GetComponent<PlayerController>().GetColorTag());
         }

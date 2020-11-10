@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -24,7 +25,8 @@ public class Relic : ScriptableObject
     }
     public NotificationType condition = new NotificationType();
     public Card.EffectType effect = new Card.EffectType();
-    public Card.BuffType buff = new Card.BuffType();
+    //public Card.BuffType buff = new Card.BuffType();
+    public Buff buff;
     public int effectValue;
     public int effectDuration;
 

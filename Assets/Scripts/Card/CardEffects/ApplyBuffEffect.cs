@@ -9,12 +9,17 @@ public class ApplyBuffEffect : Effect
         foreach (GameObject targ in target)
         {
             HealthController targetH = targ.GetComponent<HealthController>();
-            Buff buff = GetBuff(card.buffType[effectIndex]);
+            //Buff buff = GetBuff(card.buffType[effectIndex]);
+            BuffFactory buff = new BuffFactory();
+            buff.SetBuff(card.buff[effectIndex]);
+            buff.cardName = card.name;
+            buff.casterColor = card.casterColor.ToString();
+            buff.casterName = caster.name;
             if (card.effectValue[effectIndex] != 0)
                 buff.OnApply(targetH, card.effectValue[effectIndex], card.effectDuration[effectIndex], false);
             else
                 buff.OnApply(targetH, card.GetTempEffectValue(), card.effectDuration[effectIndex], false);
-            if (buff is VitDamageOverTime || buff is PiercingDamageOverTime)
+            if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
                 caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), 0));
         }
         yield return new WaitForSeconds(0);
@@ -25,6 +30,7 @@ public class ApplyBuffEffect : Effect
         throw new System.NotImplementedException();
     }
 
+    /*
     private Buff GetBuff(Card.BuffType buff)
     {
         switch (buff)
@@ -57,14 +63,14 @@ public class ApplyBuffEffect : Effect
                 return new PartyManaCostReductionBuff();
             case Card.BuffType.VitDamageOverTime:
                 return new VitDamageOverTime();
-            case Card.BuffType.ShieldDamageOverTime:
-                return new ShieldDamageOverTime();
+            case Card.BuffType.ArmorDamageOverTime:
+                return new ArmorDamageOverTime();
             case Card.BuffType.PiercingDamageOverTime:
                 return new PiercingDamageOverTime();
             case Card.BuffType.LifestealBuff:
                 return new LifeStealBuff();
-            case Card.BuffType.DivineShieldBuff:
-                return new DivineShieldBuff();
+            case Card.BuffType.DivineArmorBuff:
+                return new DivineArmorBuff();
             case Card.BuffType.CastRangeBuff:
                 return new CastRangeBuff();
             case Card.BuffType.BonusHealing:
@@ -103,13 +109,16 @@ public class ApplyBuffEffect : Effect
                 return null;
         }
     }
+    */
 
-    public override void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    public override void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration)
     {
         foreach (GameObject targ in targets)
         {
             HealthController targetH = targ.GetComponent<HealthController>();
-            GetBuff(buffType).OnApply(targetH, effectValue, effectDuration, true);
+            BuffFactory buffFactory = new BuffFactory();
+            buffFactory.SetBuff(buff);
+            buffFactory.OnApply(targetH, effectValue, effectDuration, true);
         }
     }
 }

@@ -28,7 +28,7 @@ public class DrawCardEffect : Effect
         throw new System.NotImplementedException();
     }
 
-    public override void RelicProcess(List<GameObject> targets, Card.BuffType buffType, int effectValue, int effectDuration)
+    public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration)
     {
         for (int i = 0; i < effectValue; i++) //Draw effectValue number of random cards
             HandController.handController.DrawAnyCard();

@@ -34,9 +34,9 @@ public class Card : ScriptableObject
         VitDamageAll = 1,
         VitDamageDivided = 2,
         AbsoluteDamage = 5,
-        ShieldDamage = 10,
-        ShieldDamageDivided = 11,
-        ShieldDamageAll = 12,
+        ArmorDamage = 10,
+        ArmorDamageDivided = 11,
+        ArmorDamageAll = 12,
         PiercingDamage = 20,
         PiercingDamageAll = 21,
         PiercingDamageDivided = 22,
@@ -71,8 +71,8 @@ public class Card : ScriptableObject
         GetMissingHealth = 500,
         GetBonusHealth = 502,
         GetCurrentAttack = 510,
-        GetCurrentShield = 522,
-        GetBonusShield = 521,
+        GetCurrentArmor = 522,
+        GetBonusArmor = 521,
         GetDistanceMoved = 527,
         GetDamageDoneEffect = 530,
         GetNumberOfTargetsInRangeEffect = 540,
@@ -128,9 +128,9 @@ public class Card : ScriptableObject
         
         CasterBroken = 300, 
         CasterNotBroken = 301, 
-        CasterHasHigherShield = 310,
+        CasterHasHigherArmor = 310,
         CasterHasHigherATK = 311,
-        CasterHasLowerShield = 320,
+        CasterHasLowerArmor = 320,
         CasterHasLowerATK = 321,
 
         CasterHasBonusATK = 400,
@@ -142,12 +142,13 @@ public class Card : ScriptableObject
     public ConditionType[] conditionType = new ConditionType[1];
     public int[] conditionValue = new int[1];
 
+    /*
     //The buff used if the card bestoes a buff or debuff
     public enum BuffType
     {
         None = 0,
         VitDamageOverTime = 1,
-        ShieldDamageOverTime = 10,
+        ArmorDamageOverTime = 10,
         PiercingDamageOverTime = 20,
         BonusHealing = 21,
 
@@ -175,7 +176,7 @@ public class Card : ScriptableObject
         BarrierBuff = 500, 
         ProtectBuff = 501,
         RetaliateBuff = 502,
-        DivineShieldBuff = 503,
+        DivineArmorBuff = 503,
 
         PartyEnergyCostCapTurnBuff = 600,
         PartyManaCostCapTurnBuff = 601,
@@ -190,7 +191,9 @@ public class Card : ScriptableObject
         HealAttacker = 710,
         AttackChangeOnHeal = 720
     }
-    public BuffType[] buffType = new BuffType[1];
+    */
+    //public BuffType[] buffType = new BuffType[1];
+    public Buff[] buff = new Buff[1];
 
     //Value of the effect. ie. deal *1* damage
     public int[] effectValue = new int[1];
@@ -323,7 +326,7 @@ public class Card : ScriptableObject
         output.cardEffectName = cardEffectName;
         output.conditionType = conditionType;
         output.conditionValue = conditionValue;
-        output.buffType = buffType;
+        //output.buffType = buffType;
         output.effectValue = effectValue;
         output.effectDuration = effectDuration;
         output.spawnObject = spawnObject;
