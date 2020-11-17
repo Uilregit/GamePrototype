@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: DebugRoom
   m_EditorClassIdentifier: 
-  relicReward: 1
+  isBossRoom: 0
+  relicReward: 0
   roomName: Debug Room
   enemies:
-  - {fileID: 1545497641765028114, guid: 2c5af7474dfac204c93987e8e4e9f878, type: 3}
+  - {fileID: 3234652053163052453, guid: b2054bd1c3bbe02488e58a60c778554f, type: 3}
   blockNumber: 3
   playwerSpawnLocations:
   - {x: 0, y: 1}

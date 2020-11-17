@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: R Pain and Gain
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Pain And Gain
   energyCost: 0
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 0300000003000000
   cardEffectName: 7800000064000000
+  hitEffect: 2c010000f4010000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 0000000000000000
   effectDuration: 0000000000000000
   spawnObject:
@@ -41,3 +43,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

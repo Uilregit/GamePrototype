@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: O Redirect
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 0
   rarity: 0
   name: Redirect
   energyCost: 0
@@ -25,11 +25,14 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: e3c81dfced4158646b52ca4e17fb1d82, type: 3}
   castType: 0
   castShape: 0
-  targetType: 03000000
-  cardEffectName: 3a0200002c010000
+  targetType: 0300000003000000
+  cardEffectName: 3a0200006e000000
+  hitEffect: 3f420f002c010000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000000000000
+  buff:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 9978edeada19c064199f9d47fb6e084f, type: 2}
   effectValue: 0000000000000000
   effectDuration: 0000000001000000
   spawnObject:
@@ -41,3 +44,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

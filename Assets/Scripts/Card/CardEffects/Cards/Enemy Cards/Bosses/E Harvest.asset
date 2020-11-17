@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 00000000
   cardEffectName: ec130000
+  hitEffect: c8000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 00000000
+  buff:
+  - {fileID: 0}
   effectValue: 00000000
   effectDuration: 00000000
   spawnObject:

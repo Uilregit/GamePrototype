@@ -15,9 +15,6 @@ public class EnemyController : MonoBehaviour
     public int startingArmor;
     public int attack;
     public int moveRange;
-    public int attackRange;
-    public int vitAttackValue;
-    public int armorAttackValue;
     public int randomStartRange;
     public int attacksPerTurn = 1;
 
@@ -47,8 +44,8 @@ public class EnemyController : MonoBehaviour
     private Collider2D col2D;
     private bool isFacingRight = true;
 
-    private int tauntDuration = 0;
-    private GameObject tauntTarget;
+    //private int tauntDuration = 0;
+    //private GameObject tauntTarget;
     public GameObject[] desiredTarget;
     private bool sacrificed;
 
@@ -76,7 +73,6 @@ public class EnemyController : MonoBehaviour
 
         desiredTarget = new GameObject[attacksPerTurn];
         currentAttackSquence = Random.Range(0, randomStartRange + 1) * attacksPerTurn;
-        attackRange = 0;
         attackSequenceControllers = new List<CardController>();
 
         foreach (Card card in attackSequence) //Set the attack range indicator to be the highest range card
@@ -84,13 +80,11 @@ public class EnemyController : MonoBehaviour
             CardController temp = this.gameObject.AddComponent<CardController>();
             temp.SetCard(card, true, false);
             attackSequenceControllers.Add(temp); //Set the caster for the enemy cards for dynamic damage value display
-            if (card.range > attackRange)
-                attackRange = card.range;
         }
 
         size = GetComponent<HealthController>().size;
         occupiedSpace = GetComponent<HealthController>().GetOccupiedSpaces();
-        spRenderer = healthController.charDisplay.GetComponent<SpriteRenderer>();
+        spRenderer = healthController.charDisplay.sprite.GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -128,6 +122,7 @@ public class EnemyController : MonoBehaviour
                     break;
                 }
         }
+        enemyInformation.DrawCards();
     }
 
     public virtual void Spawn(Vector2 location)
@@ -144,6 +139,8 @@ public class EnemyController : MonoBehaviour
                 GridController.gridController.ReportPosition(this.gameObject, location + vec);
         }
         transform.SetParent(GameObject.FindGameObjectWithTag("BoardCanvas").transform);
+
+        enemyInformation.DrawCards();
     }
 
     //Moves, then if able to attack, attack
@@ -173,7 +170,6 @@ public class EnemyController : MonoBehaviour
 
                 if (healthController.GetStunned()) //In case that it is stunned while moving, stop turn
                 {
-                    tauntDuration -= 1;
                     healthController.charDisplay.outline.enabled = false;
                     yield break;
                 }
@@ -218,15 +214,12 @@ public class EnemyController : MonoBehaviour
         col2D.enabled = true;
 
         enemyInformation.HideIntent();
-        tauntDuration -= 1;
-        if (tauntDuration <= 0)
-            tauntTarget = null;
     }
 
     public GameObject GetCurrentTarget()
     {
-        if (tauntDuration > 0)          //Taunt target
-            return tauntTarget;
+        if (healthController.GetTauntedTarget() != null)          //Taunt target
+            return healthController.GetTauntedTarget().gameObject;
         return desiredTarget[currentAttackSquence % attackSequence.Count];
     }
 
@@ -234,8 +227,8 @@ public class EnemyController : MonoBehaviour
     public GameObject GetTarget()
     {
         GameObject target;
-        if (tauntDuration > 0)          //Taunt target
-            target = tauntTarget;
+        if (healthController.GetTauntedTarget() != null)          //Taunt target
+            target = healthController.GetTauntedTarget().gameObject;
         else
         {
             target = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex].castType))[0];                     //Get the target according to the card in question
@@ -262,15 +255,12 @@ public class EnemyController : MonoBehaviour
     public GameObject[] GetTargetArray()
     {
         GameObject[] target = new GameObject[attacksPerTurn];
-        if (tauntDuration > 0 && tauntTarget != null)          //Taunt target
+        if (healthController.GetTauntedTarget() != null)          //Taunt target
             for (int i = 0; i < attacksPerTurn; i++)
-                target[i] = tauntTarget;
+                target[i] = healthController.GetTauntedTarget().gameObject;
         else
-        {
-            tauntDuration = 0;
             for (int i = 0; i < attacksPerTurn; i++)
                 target[i] = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex + i].castType))[0];                     //Get the target according to the card in question
-        }
         return target;
     }
 
@@ -308,7 +298,7 @@ public class EnemyController : MonoBehaviour
     //Gets a list of pathfinding locations and step in one position after another to the final destination
     private IEnumerator Move(GameObject target)
     {
-        enemyInformation.SetRunning(true);
+        healthController.charDisplay.charAnimController.SetRunning(true);
 
         if (target == this.gameObject) //If targeting self, still move towards the nearest player
             target = GridController.gridController.GetObjectAtLocation(GetNearest(Card.CastType.Player))[0];
@@ -339,7 +329,10 @@ public class EnemyController : MonoBehaviour
                 yield break;
             }
 
+            CameraController.camera.ScreenShake(0.06f, 0.05f);
+
             yield return StartCoroutine(MoveLerp(transform.position, position, TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier * 0.7f));
+
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, 1));
             //yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
@@ -347,7 +340,7 @@ public class EnemyController : MonoBehaviour
         foreach (Vector2 vec in occupiedSpace)
             GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
 
-        enemyInformation.SetRunning(false);
+        healthController.charDisplay.charAnimController.SetRunning(false);
 
         yield return new WaitForSeconds(0);
     }
@@ -384,10 +377,19 @@ public class EnemyController : MonoBehaviour
             enemyInformation.ShowUsedCard(attackSequenceControllers[attackCardIndex], target[0]);
             enemyInformation.ShowTargetLine(target[0]);
 
-            yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime * TimeController.time.timerMultiplier);
-            yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
+            bool castable = true;
+            if (enemyInformation.displayedCards[displayCardIndex].GetComponent<CardController>().GetCard().manaCost > 0 && healthController.GetSilenced() ||
+                enemyInformation.displayedCards[displayCardIndex].GetComponent<CardController>().GetCard().manaCost == 0 && healthController.GetDisarmed())
+            {
+                enemyInformation.GreyOutUsedCard();
+                castable = false;
+            }
 
+            yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime * TimeController.time.timerMultiplier);
             enemyInformation.DestroyUsedCard();
+
+            if (castable)
+                yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
         }
     }
 
@@ -533,7 +535,6 @@ public class EnemyController : MonoBehaviour
         if (GetComponent<HealthController>().GetCurrentVit() <= 0)
             return;
         attackCardIndex = currentAttackSquence % attackSequence.Count;
-        attackRange = attackSequence[attackCardIndex].range;
         desiredTarget = GetTargetArray();
 
         enemyInformation.SetCards();                //Ensure that the cards to be triggered are up to date
@@ -769,24 +770,6 @@ public class EnemyController : MonoBehaviour
             }
         }
         return output.transform.position;
-    }
-
-    public void SetTaunt(GameObject target, int duration)
-    {
-        tauntTarget = target;
-        for (int i = 0; i < desiredTarget.Length; i++)
-            desiredTarget[i] = target;
-        tauntDuration = duration;
-        try
-        {
-            GetComponent<EnemyInformationController>().RefreshIntent();
-        }
-        catch { }
-    }
-
-    public GameObject GetTaunt()
-    {
-        return tauntTarget;
     }
 
     private int GetManhattanDistance(Vector2 startingLoc, Vector2 endingLoc)

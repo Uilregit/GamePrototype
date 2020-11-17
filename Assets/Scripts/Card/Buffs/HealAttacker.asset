@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.78431374, b: 0.39215687, a: 1}
   description: 'Heal Attacker: Attacker heals {v}% of their damage done for {d} turns'
-  triggerType: 110
+  triggerType: 100
   durationType: 0
   onApplyEffects: 0
   onTriggerTarget: 2

@@ -151,6 +151,7 @@ public class Buff : ScriptableObject
     {
         AtEndOfTurn = 0,
         AtStartOfTurn = 1,
+        OnApply = 10,
 
         OnDamageRecieved = 100,
         OnHealingRecieved = 101,
@@ -195,7 +196,7 @@ public class Buff : ScriptableObject
         Stun = 70,
         Retaliate = 71,
         Preserve = 72,
-        Enfeeble = 73,
+        Taunt = 73,
 
         ApplyBuff = 100
     }

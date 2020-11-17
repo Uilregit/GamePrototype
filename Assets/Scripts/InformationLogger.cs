@@ -18,6 +18,8 @@ public class SaveFile
     public string gameID;
     public string patchID;
 
+    public int worldLevel;
+
     public string player1Color;
     public string player2Color;
     public string player3Color;
@@ -125,8 +127,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/combat_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,roomName,turnID,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
@@ -167,8 +169,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/rewards_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,immediatelyUsedFlag";
@@ -197,8 +199,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/shop_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,goldUsed";
@@ -227,8 +229,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/gold_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,roomName,passiveGold,overkillGold,totalGoldAtRoomEnd";
@@ -268,8 +270,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/gameScore_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,roomName,gameWon,gameLost,totalScore,overkill,damage,damageArmored,damageOverhealedProtected,damageAvoided,enemiesBroken,goldUSed,bossesDefeated,secondsInGame";
@@ -306,8 +308,8 @@ public class InformationLogger : MonoBehaviour
             return;
 
         string filePath = GetCombatPath() + "/deck_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        DebugPlus.LogOnScreen(filePath).Duration(5);
-        DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
         string header = "deviceID,patchID,gameID,encounterLevel,cardColor,cardName,energyCost,manaCost,chosenFlag,removedFlag,finalDeckListFlag";
@@ -363,6 +365,7 @@ public class InformationLogger : MonoBehaviour
             saveFile.player3Color = playerColors[2];
 
             saveFile.level = RoomController.roomController.selectedLevel;
+            saveFile.worldLevel = RoomController.roomController.GetWorldLevel();
             //saveFile.roomRandomizedIndex = RoomController.roomController.GetRandomizedRoomIndex();
 
             List<Vector2> previousRoom = RoomController.roomController.GetPreviousRoom();
@@ -488,6 +491,7 @@ public class InformationLogger : MonoBehaviour
             PartyController.party.SetPlayerColors(playerColors);
 
             RoomController.roomController.selectedLevel = saveFile.level;
+            RoomController.roomController.SetWorldLevel(saveFile.worldLevel);
             //roomRandomizedIndex = saveFile.roomRandomizedIndex;
 
             List<Vector2> previousRoom = new List<Vector2>();

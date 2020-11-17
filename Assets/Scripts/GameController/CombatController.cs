@@ -129,10 +129,12 @@ public class CombatController : MonoBehaviour
         yield return new WaitForSeconds(0);
     }
 
+    /*
     IEnumerator PlayCard(CardController card)
     {
         card.transform.localScale = new Vector2(playCardSize, playCardSize);
         yield return new WaitForSeconds(playDuration);
         card.TriggerEffect();
     }
+    */
 }

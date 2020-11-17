@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: B Vitality
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Vitality
   energyCost: 0
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 020000000200000003000000
   cardEffectName: f60100009101000000000000
+  hitEffect: 3f420f003f420f0000000000
   conditionType: 000000000000000000000000
   conditionValue: 000000000000000000000000
-  buffType: 000000000000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 00000000c800000000000000
   effectDuration: 000000000000000000000000
   spawnObject:

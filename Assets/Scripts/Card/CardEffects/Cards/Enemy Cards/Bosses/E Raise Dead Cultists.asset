@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: E Raise Dead Cultists
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: 'Raise Dead: Cultists'
-  energyCost: 3
-  manaCost: 0
+  energyCost: 0
+  manaCost: 8
   range: 1
   radius: 2
   casterColor: 6
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 02000000
   cardEffectName: 88130000
+  hitEffect: c8000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 00000000
+  buff:
+  - {fileID: 0}
   effectValue: 02000000
   effectDuration: 02000000
   spawnObject:
@@ -40,3 +42,4 @@ MonoBehaviour:
   targetBehaviour: 10
   indicatorMultiplier: 
   executionPriority: -1
+  highlightCondition: 0

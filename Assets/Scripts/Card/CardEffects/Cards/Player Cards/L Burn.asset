@@ -21,16 +21,16 @@ MonoBehaviour:
   range: 2
   radius: 0
   casterColor: 5
-  description: At the end fo the next 3 turns, deal <s>200% of ATK as</s> damage.
-    Target takes <s>50% of ATK as</s> damage
+  description: Deal <s>200% of ATK as</s> damage. Then at the end fo the next 3 turns,
+    deal <s>50% of ATK as</s> damage
   art: {fileID: 21300000, guid: f4e905d743e648d429ab1f454017a94f, type: 3}
   castType: 0
   castShape: 0
   targetType: 03000000020000000200000003000000
   cardEffectName: 00000000fe010000910100006e000000
+  hitEffect: 000000003f420f003f420f002c010000
   conditionType: 00000000000000000000000000000000
   conditionValue: 00000000000000000000000000000000
-  buffType: 00000000000000000000000001000000
   buff:
   - {fileID: 0}
   - {fileID: 0}

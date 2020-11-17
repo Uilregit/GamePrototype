@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ShrineController : MonoBehaviour
 {
@@ -80,12 +81,18 @@ public class ShrineController : MonoBehaviour
             InformationController.infoController.ChangeCombatInfo(0, 0, 0, 5);
         }
 
-        GameController.gameController.LoadScene("OverworldScene", false, 0);
+        RoomController.roomController.Refresh();
+        RoomController.roomController.Show();
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+        SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 
     public void ChoseOption2()
     {
         RelicController.relic.AddRelic(relic);
-        GameController.gameController.LoadScene("OverworldScene", false, 0);
+        RoomController.roomController.Refresh();
+        RoomController.roomController.Show();
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+        SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: W Steal
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 3
   name: Steal
   energyCost: 0
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 00000000
   cardEffectName: 20030000
+  hitEffect: 3f420f00
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 00000000
+  buff:
+  - {fileID: 0}
   effectValue: 00000000
   effectDuration: 00000000
   spawnObject:
@@ -40,3 +42,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

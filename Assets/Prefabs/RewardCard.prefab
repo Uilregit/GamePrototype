@@ -70,6 +70,7 @@ MonoBehaviour:
   description: {fileID: 4704048852033346980}
   manaCost: {fileID: 6243708101722711771}
   outline: {fileID: 1252327829747341003}
+  disabledStatusText: {fileID: 2978762225387928343}
   lineRenderer: {fileID: 5923253506876990252}
   redAttackBack: {fileID: 21300000, guid: ff50fd8d801c31b47b7f19ffc22c1819, type: 3}
   redSkillBack: {fileID: 21300002, guid: ff50fd8d801c31b47b7f19ffc22c1819, type: 3}
@@ -390,5 +391,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2978762225387928343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 493516880251595852, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_PrefabInstance: {fileID: 3427206927419397979}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

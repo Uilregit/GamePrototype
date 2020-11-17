@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: G Power Shot
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Power Shot
   energyCost: 0
@@ -28,9 +28,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 030000000300000003000000
   cardEffectName: 1d0200009101000000000000
+  hitEffect: 3f420f003f420f0000000000
   conditionType: 000000000000000000000000
   conditionValue: 000000000000000000000000
-  buffType: 000000000000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 00000000
   effectDuration: 000000006400000000000000
   spawnObject:
@@ -43,3 +45,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

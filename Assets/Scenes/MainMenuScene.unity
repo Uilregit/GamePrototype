@@ -1460,8 +1460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70be7f95205dd57459c153927f006c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
-  patchID: 0.4.4.1
+  debug: 0
+  patchID: 0.4.4.3
   seed: 0
   gameID: 
   versionText: {fileID: 2125512850}

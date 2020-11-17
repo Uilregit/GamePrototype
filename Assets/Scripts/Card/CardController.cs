@@ -31,22 +31,6 @@ public class CardController : MonoBehaviour
         cardDrag = this.gameObject.GetComponent<CardDragController>();
     }
 
-    public void TriggerEffect()
-    {
-        Debug.Log("cardcontroller trigger");
-        /*
-        if (card.casterColor == Card.CasterColor.Gray)
-            foreach (Vector2 target in targets)
-            {
-                List<Vector2> temp = new List<Vector2>();
-                temp.Add(target);
-                GameController.gameController.StartCoroutine(cardEffects.TriggerEffect(FindClosestCaster(card.casterColor, target), temp));
-            }
-        else
-        */
-        GameController.gameController.StartCoroutine(cardEffects.TriggerEffect(FindCaster(card), targets));
-    }
-
     public void TriggerOnPlayEffect()
     {
         cardEffects.TriggerOnPlayEffect(FindCaster(card), targets);
@@ -142,15 +126,22 @@ public class CardController : MonoBehaviour
             else
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange(), PartyController.party.GetPlayerColor(card.casterColor));
 
-            if (!card.canCastOnSelf)
-                TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, new List<Vector2>() { (Vector2)caster.transform.position });
-
             List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
             foreach (Vector2 loc in castableLocations)
             {
+                //Only allow taunted target to be targeted if one exists
+                if (caster.GetComponent<HealthController>().GetTauntedTarget() != null)
+                    if (castableLocations.Contains(caster.GetComponent<HealthController>().GetTauntedTarget().transform.position))
+                    {
+                        TileCreator.tileCreator.CreateSelectableTile(caster.GetComponent<HealthController>().GetTauntedTarget().transform.position);
+                        break;
+                    }
+
+                //If the card can't be casted on self, then remove that from the castable locations
                 if (!card.canCastOnSelf && loc == (Vector2)caster.transform.position)
                     continue;
 
+                //Highlight castable locations for cards
                 switch (card.castType)
                 {
                     case Card.CastType.Any:
@@ -191,7 +182,7 @@ public class CardController : MonoBehaviour
     //If a cast tile has been made for the location, it's castable
     public bool CheckIfValidCastLocation(Vector2 castLocation)
     {
-        List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
+        List<Vector2> castableLocations = TileCreator.tileCreator.GetSelectableLocations();
         if (card.castShape == Card.CastShape.None)
             return true;
         else
@@ -213,10 +204,21 @@ public class CardController : MonoBehaviour
 
         if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && !GameController.gameController.GetDeadChars().Contains(card.casterColor))
         {
-            if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
+            if (caster.GetComponent<HealthController>().GetStunned())
+            {
                 cardDisplay.SetHighLight(false);
+                cardDisplay.SetDisableStats("Stunned");
+            }
+            else if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
+            { 
+                cardDisplay.SetHighLight(false);
+                cardDisplay.SetDisableStats("Silenced");
+            }
             else if (card.manaCost == 0 && GetCaster().GetComponent<HealthController>().GetDisarmed())
+            { 
                 cardDisplay.SetHighLight(false);
+                cardDisplay.SetDisableStats("Disarmed");
+            }
             else
             {
                 cardDisplay.SetHighLight(true);

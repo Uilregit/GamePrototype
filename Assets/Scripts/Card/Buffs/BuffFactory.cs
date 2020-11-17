@@ -14,6 +14,8 @@ public class BuffFactory : MonoBehaviour
     public string casterName;
     public int triggerCount = 1;
 
+    private bool reverted = false;
+
     public void SetBuff(Buff newBuff)
     {
         buff = newBuff;
@@ -24,9 +26,9 @@ public class BuffFactory : MonoBehaviour
         return buff.onTriggerEffects;
     }
 
-    public virtual void OnApply(HealthController healthController, int value, int newDuration, bool fromRelic, List<BuffFactory> traceList = null)
+    public virtual void OnApply(HealthController healthController, HealthController casterHealthController, int value, int newDuration, bool fromRelic, List<BuffFactory> traceList = null)
     {
-        healthController.buffController.AddBuff(this);
+        healthController.GetBuffController().AddBuff(this);
         cardValue = value;
         duration = newDuration;
 
@@ -110,13 +112,15 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(true);
                 break;
-            case Buff.BuffEffectType.Enfeeble:
-                healthController.SetEnfeeble(cardValue);
+            case Buff.BuffEffectType.Taunt:
+                healthController.SetTauntTarget(casterHealthController);
+                try { healthController.GetComponent<EnemyInformationController>().RefreshIntent(); }
+                catch { }
                 break;
             case Buff.BuffEffectType.ApplyBuff:
                 BuffFactory thisBuff = new BuffFactory();
                 thisBuff.SetBuff(buff.appliedBuff);
-                thisBuff.OnApply(healthController, cardValue, buff.appliedBuffDuration, false);
+                thisBuff.OnApply(healthController, casterHealthController, cardValue, buff.appliedBuffDuration, false);
                 break;
             default:
                 Debug.Log(buff.onApplyEffects);
@@ -194,7 +198,7 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.ApplyBuff:
                 BuffFactory thisBuff = new BuffFactory();
                 thisBuff.SetBuff(buff.appliedBuff);
-                thisBuff.OnApply(target, GetValue(value), buff.appliedBuffDuration, false, traceList);
+                thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, false, traceList);
                 break;
             default:
                 Debug.Log(buff.onApplyEffects);
@@ -228,6 +232,9 @@ public class BuffFactory : MonoBehaviour
     }
     public virtual void Revert(HealthController healthController)
     {
+        if (reverted)               //Prevent double reverting in special circumstances
+            return;
+
         int vitDamage = 0;
         int armorDamage = 0;
 
@@ -285,10 +292,10 @@ public class BuffFactory : MonoBehaviour
                 TurnController.turnController.SetManaCostCap(-cardValue);
                 break;
             case Buff.BuffEffectType.PartyEnergyReduction:
-                TurnController.turnController.SetEnergyCostCap(-cardValue);
+                TurnController.turnController.SetEnergyReduction(-cardValue);
                 break;
             case Buff.BuffEffectType.PartyManaReduction:
-                TurnController.turnController.SetManaCostCap(-cardValue);
+                TurnController.turnController.SetManaReduction(-cardValue);
                 break;
             case Buff.BuffEffectType.Disarm:
                 healthController.SetDisarmed(false);
@@ -305,8 +312,10 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(false);
                 break;
-            case Buff.BuffEffectType.Enfeeble:
-                healthController.SetEnfeeble(-cardValue);
+            case Buff.BuffEffectType.Taunt:
+                healthController.SetTauntTarget(null);
+                try { healthController.GetComponent<EnemyInformationController>().RefreshIntent(); }
+                catch { }
                 break;
             case Buff.BuffEffectType.BonusMoveRange:
                 healthController.SetBonusMoveRange(-cardValue);
@@ -337,6 +346,8 @@ public class BuffFactory : MonoBehaviour
                             0.ToString(),
                             0.ToString(),
                             triggerCount.ToString());
+
+        reverted = true;
     }
 
     private int GetValue(int triggerValue)
@@ -406,7 +417,7 @@ public class BuffFactory : MonoBehaviour
 
     public virtual void MultiplyValue(HealthController health, int multiplier)
     {
-        int diff = cardValue = Mathf.CeilToInt(cardValue * multiplier / 100.0f) - cardValue; 
+        int diff = cardValue = Mathf.CeilToInt(cardValue * multiplier / 100.0f) - cardValue;
         switch (buff.onApplyEffects)
         {
             case Buff.BuffEffectType.BonusAttack:
@@ -468,5 +479,10 @@ public class BuffFactory : MonoBehaviour
                 break;
         }
         cardValue += addition;
+    }
+
+    public Buff GetBuff()
+    {
+        return buff;
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: R Warcry
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 0
   rarity: 0
   name: Warcry
   energyCost: 3
@@ -26,10 +26,12 @@ MonoBehaviour:
   castType: 5
   castShape: 0
   targetType: 00000000
-  cardEffectName: 2c010000
+  cardEffectName: 6e000000
+  hitEffect: 2c010000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 00000000
+  buff:
+  - {fileID: 11400000, guid: 9978edeada19c064199f9d47fb6e084f, type: 2}
   effectValue: 00000000
   effectDuration: 02000000
   spawnObject:
@@ -40,3 +42,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

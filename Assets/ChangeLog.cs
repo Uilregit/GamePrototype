@@ -521,6 +521,9 @@
  * #####################
  * ####### 0.4.4 #######
  * #####################
+ * -- Features --
+ * Added World 2
+ * 
  * -- Heroes --
  * - Blue -
  * Moverange from 4 -> 3
@@ -544,6 +547,9 @@
  * Buffs apply/trigger/revert information are now tracked for analysis in combat logs
  * Game score at the end of the game is now tracked for analysis
  *      A blank score line is saved at the begining of every game to track if that run has been abandoned
+ * Implemented taunt on players
+ * Implemented stun on players
+ * Implemented silence and disarm on enemies
  * 
  * -- UI --
  * Recentered all character displays
@@ -559,11 +565,25 @@
  *      Will return to face right at the end of their turn
  * Timer for the game is now displayed on screen
  * Cards now have a wiggle and point when dragged and while casting
+ * All cards types during combat have been updated for the perspective camera
+ * Card processes are now tied to attack animation
+ * Added blood splatter to on damage effects
+ * Added on hit particle effect to all cards
+ * Added camera shake for all events in combat
+ * Added camera shake if card is targeting a castable location
+ * Added red overlay for when players take damage. Intensity tied to remaining health of the player
+ * Added disabled status text on cards UI for silenced, disarmed, and stunned
  * 
  * -- Bugs --
  * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
  * Fixed bug that would cause resurrected players to be rezed at the wrong location
  * Fixed attack text not being shown in character information screen
+ * Fixed card isTargetingCaster not looking at the current target
+ * Fixed card copies not copying the hiteffect
+ * Fixed damage recieved buff triggers not passing the attacker along
+ * Fixed temporary armor never allowing the armor to be reduced
+ * Fixed buffs sometimes double reverting
+ * On player hit overlay now only triggers when the card dealt damage instead of when any card targeted a player (buffs)
  * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --

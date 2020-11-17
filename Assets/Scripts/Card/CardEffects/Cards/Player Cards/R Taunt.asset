@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: R Taunt
   m_EditorClassIdentifier: 
   exhaust: 0
-  canCastOnSelf: 1
+  canCastOnSelf: 0
   rarity: 3
   name: Taunt
   energyCost: 0
@@ -27,12 +27,12 @@ MonoBehaviour:
   castType: 0
   castShape: 0
   targetType: 0300000002000000
-  cardEffectName: 2c0100006e000000
+  cardEffectName: 6e0000006e000000
+  hitEffect: 2c010000c8000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 000000006e000000
   buff:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 9978edeada19c064199f9d47fb6e084f, type: 2}
   - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
   effectValue: 0000000003000000
   effectDuration: 0200000001000000

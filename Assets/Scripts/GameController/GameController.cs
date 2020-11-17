@@ -9,13 +9,8 @@ public class GameController : MonoBehaviour
 {
     public static GameController gameController;
 
-    [Header("Color Settings")]
-    public Color redColor;
-    public Color blueColor;
-    public Color greenColor;
-    public Color allPlayersColor;
-    public Color enemyColor;
-    public Color allEnemiesColor;
+    public Sprite background;
+    public Image damageOverlay;
 
     public Text text;
     public CardDisplay[] rewardCards;
@@ -78,14 +73,14 @@ public class GameController : MonoBehaviour
         //Setup replace and hold areas
         if (HandController.handController.maxReplaceCount == 0)
         {
-            GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider2D>().enabled = false;
+            GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
             GameObject.FindGameObjectWithTag("Replace").GetComponent<Image>().enabled = false;
             GameObject.FindGameObjectWithTag("Replace").transform.GetChild(0).GetComponent<Text>().enabled = false;
             GameObject.FindGameObjectWithTag("Replace").transform.GetChild(1).GetComponent<Text>().enabled = false;
         }
         if (!HandController.handController.allowHold)
         {
-            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider2D>().enabled = false;
+            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = false;
             GameObject.FindGameObjectWithTag("Hold").GetComponent<Image>().enabled = false;
             GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
@@ -93,6 +88,7 @@ public class GameController : MonoBehaviour
 
     public void RandomizeRoom()
     {
+        GetComponent<SpriteRenderer>().sprite = RoomController.roomController.GetCombatBackground();
         setup = RoomController.roomController.GetCurrentRoomSetup();
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -206,16 +202,11 @@ public class GameController : MonoBehaviour
     private IEnumerator DisplayVictoryText()
     {
         InformationController.infoController.SaveCombatInformation();
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
         text.text = "VICTORY";
         text.enabled = true;
         yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
         text.enabled = false;
-
-        if (RoomController.roomController.selectedLevel >= 9)
-        {
-            ScoreController.score.UpdateBossesDefeated();
-            SceneManager.LoadScene("EndScene");
-        }
     }
 
     public IEnumerator Victory()
@@ -226,7 +217,17 @@ public class GameController : MonoBehaviour
         DeckController.deckController.ResetCardValues();
 
         yield return StartCoroutine(DisplayVictoryText());
-
+        if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+        {
+            ScoreController.score.UpdateBossesDefeated();
+            if (RoomController.roomController.GetWorldLevel() == 2)
+            {
+                SceneManager.LoadScene("EndScene");
+                yield break;
+            }
+            else
+                RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
+        }
         RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat);
         if (totalOverkillGold > 0)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
@@ -276,8 +277,10 @@ public class GameController : MonoBehaviour
         CollectionController.collectionController.SetDeck(deckID);
         if (SceneManager.GetActiveScene().name == "OverworldScene")
             CameraController.camera.transform.position = cameraLocation;
+        /*
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);
+        */
     }
 
     public void ReportDeadChar(Card.CasterColor color)
@@ -293,6 +296,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public List<GameObject> GetLivingPlayers()
+    {
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        List<GameObject> output = new List<GameObject>();
+        foreach (GameObject obj in players)
+            if (!deadChars.Contains(obj.GetComponent<PlayerController>().GetColorTag()))
+                output.Add(obj);
+        return output;
+    }
+
     public void ReportResurrectedChar(Card.CasterColor color)
     {
         deadChars.Remove(color);
@@ -301,6 +314,27 @@ public class GameController : MonoBehaviour
     public List<Card.CasterColor> GetDeadChars()
     {
         return deadChars;
+    }
+
+    public void SetDamageOverlay(float remainingHealthPercentage)
+    {
+        Debug.Log("trace");
+        damageOverlay.color = new Color(1, 0, 0, 1 - remainingHealthPercentage / 2);
+        StartCoroutine(FadeDamageOverlay(remainingHealthPercentage / 2));
+    }
+
+    private IEnumerator FadeDamageOverlay(float remainingHealthPercentage)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < 0.4f)
+        {
+            damageOverlay.color = Color.Lerp(new Color(1, 0, 0, 1 - remainingHealthPercentage), new Color(1, 0, 0, 0), elapsedTime / 0.4f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        damageOverlay.color = new Color(1, 0, 0, 0);
+
     }
     /*
     public void RestartGame()

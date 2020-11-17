@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: L Drain
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Drain
   energyCost: 0
@@ -28,9 +28,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 03000000030000000200000002000000
   cardEffectName: 21020000000000009101000014000000
+  hitEffect: 3f420f00000000003f420f0090010000
   conditionType: 00000000000000000000000000000000
   conditionValue: 00000000000000000000000000000000
-  buffType: 00000000000000000000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 00000000000000009cffffff00000000
   effectDuration: 00000000000000000000000000000000
   spawnObject:
@@ -44,3 +46,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

@@ -187,9 +187,31 @@ public class PlayerMoveController : MonoBehaviour
          */
         if (moveable)
         {
-            GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
-            TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+            if (healthController.GetStunned())
+            {
+                GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, 0, PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+            }
+            else
+            {
+                GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+
+                HealthController taunt = healthController.GetTauntedTarget();
+                if (taunt != null)
+                {
+                    int baseMovement = PathFindController.pathFinder.PathFind(originalPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count;
+                    List<Vector2> destroyLocs = new List<Vector2>();
+                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))
+                        if (PathFindController.pathFinder.PathFind(loc, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count > baseMovement)
+                            destroyLocs.Add(loc);
+                    TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
+
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.4f), new string[] { "Enemy", "Blockade" }, 1); ;
+                }
+            }
             moveablePositions = TileCreator.tileCreator.GetTilePositions();
         }
     }
@@ -244,6 +266,8 @@ public class PlayerMoveController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        CameraController.camera.ScreenShake(0.03f, 0.1f);
+
         clickedTime = DateTime.Now;
         clickedLocation = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 
@@ -252,17 +276,19 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnMouseUp()
     {
+        CameraController.camera.ScreenShake(0.03f, 0.1f);
+
         GetComponent<HealthController>().HideHealthBar();
 
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
             List<CardController> cards = new List<CardController>();
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.buffController.GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
 
         if ((Vector2)transform.position != lastGoodPosition)
-            StartCoroutine(healthController.buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
+            StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
 
         HandController.handController.ResetCardDisplays();
     }

@@ -75,6 +75,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         count.enabled = true;
         GetComponent<CardDisplay>().Show();
         col.enabled = true;
+        GetComponent<LineRenderer>().enabled = false;
     }
 
     private IEnumerator EnlargeCard()

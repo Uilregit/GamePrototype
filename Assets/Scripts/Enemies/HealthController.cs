@@ -30,6 +30,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private bool stunned = false;
     private bool silenced = false;
     private bool disarmed = false;
+    private HealthController tauntedTarget = null;
 
     private List<int> vitDamageMultipliers;
     private List<int> armorDamageMultipliers;
@@ -51,7 +52,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     private GameObject creator;
     private AbilitiesController abilitiesController;
-    public BuffController buffController;
+    private BuffController buffController;
 
     private bool wasBroken = false;
 
@@ -82,6 +83,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         abilitiesController = GetComponent<AbilitiesController>();
         buffController = GetComponent<BuffController>();
+    }
+
+    public BuffController GetBuffController()
+    {
+        return buffController;
     }
 
     public List<Vector2> GetOccupiedSpaces()
@@ -240,7 +246,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetBonusArmor(int newValue, bool fromRelic = false)
     {
         ShowArmorDamageNumber(-newValue);
-        bonusArmor = Mathf.Max(0, bonusArmor + newValue);
+        bonusArmor = Mathf.Max(-currentArmor, bonusArmor + newValue);
 
         ResetArmorText(currentArmor + bonusArmor);
 
@@ -327,7 +333,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
         catch
         {
-            GetComponent<EnemyInformationController>().TriggerDeath();
             GameController.gameController.ReportOverkillGold(0 - GetVit());
             ScoreController.score.UpdateOverkill(0 - GetVit());
         }
@@ -893,13 +898,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         catch { }
 
         ShowDamageNumber(damage, oldHealth);
-        if (retaliate > 0)
-            attacker.TakeVitDamage(retaliate, null);
 
-        /*
-        onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
-        onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
-        */
         if (damage > 0)
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
 
@@ -1039,5 +1038,21 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public GameObject GetCreator()
     {
         return creator;
+    }
+
+    public void SetTauntTarget(HealthController health)
+    {
+        tauntedTarget = health;
+        try
+        {
+            for (int i = 0; i < GetComponent<EnemyController>().desiredTarget.Length; i++)
+                GetComponent<EnemyController>().desiredTarget[i] = tauntedTarget.gameObject;
+        }
+        catch { }
+    }
+
+    public HealthController GetTauntedTarget()
+    {
+        return tauntedTarget;
     }
 }

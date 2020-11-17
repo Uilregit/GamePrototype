@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62e277e99ab91b4a87780de25baa52d, type: 3}
+  m_Name: SecondWorld
+  m_EditorClassIdentifier: 
+  combatBackground: {fileID: 21300000, guid: f3f8e2021c0eace41a625ce923bfc40e, type: 3}
+  cameraBackground: {r: 0.15307939, g: 0.754717, b: 0.7360901, a: 1}
+  roomLocations:
+  - {x: 0, y: 0}
+  - {x: -1, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}
+  - {x: -2, y: 2}
+  - {x: 0, y: 2}
+  - {x: 2, y: 2}
+  - {x: -2, y: 3}
+  - {x: -1, y: 3}
+  - {x: 0, y: 3}
+  - {x: 1, y: 3}
+  - {x: 2, y: 3}
+  - {x: -2, y: 4}
+  - {x: -1, y: 4}
+  - {x: 0, y: 4}
+  - {x: 1, y: 4}
+  - {x: 2, y: 4}
+  - {x: -2, y: 5}
+  - {x: 0, y: 5}
+  - {x: 2, y: 5}
+  - {x: -1, y: 6}
+  - {x: 0, y: 6}
+  - {x: 1, y: 6}
+  - {x: 0, y: 7}
+  innitialRooms:
+  - {fileID: 11400000, guid: 288afb5a79a427a48ac0960dcf5e25d5, type: 2}
+  - {fileID: 11400000, guid: ebec88d7b4cde6c4baf026036d278d2e, type: 2}
+  - {fileID: 11400000, guid: 4c7e289fbcbafbd44b0c9f16b28e7300, type: 2}
+  - {fileID: 11400000, guid: 4a89d10c65897da4aa5c7dc12250c9d3, type: 2}
+  midRooms:
+  - {fileID: 11400000, guid: ac72429c93fa08a48a050dec8e8fc8d5, type: 2}
+  - {fileID: 11400000, guid: 326006ad44237cb4c89cccf985be2347, type: 2}
+  - {fileID: 11400000, guid: d53a36cdedb085f4a8b680a651542cde, type: 2}
+  - {fileID: 11400000, guid: ca02ea8d912c6df45bde9b5c5e587f10, type: 2}
+  - {fileID: 11400000, guid: 67cd525f77e93ba45ad5098e85c3dfa6, type: 2}
+  - {fileID: 11400000, guid: 2c14241f316f529479ed510fd2a069e9, type: 2}
+  - {fileID: 11400000, guid: 80568eb96a0d3ea4ea045a874af893f5, type: 2}
+  - {fileID: 11400000, guid: c757846967adf9645b8cd5a9020ba291, type: 2}
+  - {fileID: 11400000, guid: ad0800047807c8d4dae6c8b050c2eab2, type: 2}
+  - {fileID: 11400000, guid: a0076f926b49d0e42adcc59ab3916d70, type: 2}
+  lateRooms:
+  - {fileID: 11400000, guid: 67ba2a7a717b2354dbbc42f61376789f, type: 2}
+  - {fileID: 11400000, guid: 4b64ab1b0426feb4ca342905e88e69b0, type: 2}
+  - {fileID: 11400000, guid: dc059d17e7fead946b3f2ee8e8588b96, type: 2}
+  - {fileID: 11400000, guid: 5803cc10bbe6e8e4c81d2e987b401f02, type: 2}
+  - {fileID: 11400000, guid: 64af0c65eba3c804da7b5b81189392d8, type: 2}
+  bossRooms:
+  - {fileID: 11400000, guid: d96ad6099ba85f648ae7d801daa5af9d, type: 2}
+  dissapearPercentage: 0
+  numOfShopPerWorld: 3
+  minShopLocation: 2
+  maxShopLocation: 6
+  numOfShrinePerWorld: 2
+  minShrineLocation: 2
+  maxShrineLocation: 6
+  shopPercentage: 0.1
+  shrinePercentage: 0.1

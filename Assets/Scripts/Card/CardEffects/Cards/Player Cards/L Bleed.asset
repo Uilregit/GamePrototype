@@ -28,9 +28,9 @@ MonoBehaviour:
   castShape: 0
   targetType: 03000000
   cardEffectName: 6e000000
+  hitEffect: 2c010000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: a4010000
   buff:
   - {fileID: 11400000, guid: 7b6b1df0f7b781d4da0163543ef5bc0c, type: 2}
   effectValue: 02000000

@@ -96,3 +96,41 @@ deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,im
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Orange,Massive Swing,False,False
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Blue,Alacrity,False,False
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.1,11/8/2020 1:53:04 PM,0,missing,Blue,Alacrity,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Red,The Best Defence,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Red,Divine Protection,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Red,The Best Defence,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,1,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,1,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,1,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,1,missing,Blue,Vitality,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,2,missing,Red,Divine Protection,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,2,missing,Red,Headcrack,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,2,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,2,missing,Blue,Alacrity,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,3,missing,Blue,Cycle Of Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,3,missing,Green,Pressure Point,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,3,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,3,missing,Blue,Cycle Of Mana,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,4,missing,Blue,Meteor,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,5,missing,Blue,Meteor,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,6,missing,Red,Divine Protection,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,6,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,6,missing,Red,Purify,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,6,missing,Red,Purify,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,7,missing,Green,Power Shot,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,7,missing,Blue,Arcane Defence,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,7,missing,Red,Warcry,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,7,missing,Blue,Arcane Defence,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Blue,Defile,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Green,Pressure Point,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Red,Rend Armor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/15/2020 10:39:43 PM,0,missing,Green,Pressure Point,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,7,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,7,missing,Blue,Blood Rite,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,7,missing,Blue,Telekinesis,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,7,missing,Blue,Telekinesis,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,0,missing,Green,Pressure Point,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,0,missing,Red,Bring It On,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,0,missing,Red,Purify,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.2,11/16/2020 12:33:00 AM,0,missing,Red,Purify,True,True

@@ -6,11 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SmallRoom : MonoBehaviour
 {
-    [SerializeField]
     private Outline highlight;
-    [SerializeField]
     private Collider2D collider;
-    [SerializeField]
     private Vector2 location;
 
     private bool destroyed = false;
@@ -19,6 +16,12 @@ public class SmallRoom : MonoBehaviour
     private RoomController.roomType type = RoomController.roomType.combat;
 
     private RoomSetup setup;
+
+    private void Awake()
+    {
+        highlight = GetComponent<Outline>();
+        collider = GetComponent<Collider2D>();
+    }
 
     private void OnMouseDown()
     {
@@ -100,6 +103,11 @@ public class SmallRoom : MonoBehaviour
     public Vector2 GetLocation()
     {
         return location;
+    }
+
+    public void SetLocation(Vector2 vec)
+    {
+        location = vec;
     }
 
     public void SetDestroyed(bool value)

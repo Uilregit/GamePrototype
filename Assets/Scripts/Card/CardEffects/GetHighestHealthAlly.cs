@@ -8,9 +8,12 @@ public class GetHighestHealthAlly : Effect
     {
         int highestHealth = -99999;
         GameObject highestHealthAlly = null;
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())
             if (obj.GetComponent<HealthController>().GetVit() > highestHealth)
+            {
+                highestHealth = obj.GetComponent<HealthController>().GetVit();
                 highestHealthAlly = obj;
+            }
         card.SetTempObject(highestHealthAlly);
         yield return new WaitForSeconds(0);
     }

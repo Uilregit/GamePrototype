@@ -25,6 +25,8 @@ public class HealthBarController : MonoBehaviour
     Image damageBarImage;
     //[SerializeField]
     //Image bonusHealthDamageBar;
+    [Header("Damage FXs")]
+    public Animator bloodSplatter;
 
     [Header("Damage Image")]
     public Text statusText;
@@ -174,6 +176,10 @@ public class HealthBarController : MonoBehaviour
         oldDamageInt = damage;
         if (backImage.enabled)
         {
+            if (broken)
+                bloodSplatter.SetTrigger("bigSplatter");
+            else
+                bloodSplatter.SetTrigger("mediumSplatter");
             StartCoroutine(ResetDamageImage());
             //return;
         }

@@ -14,6 +14,7 @@ public class CardDisplay : MonoBehaviour
     public Text description;
     public Text manaCost;
     public Image outline;
+    public Text disabledStatusText;
     private Outline conditionHighlight;
     public LineRenderer lineRenderer;
 
@@ -190,7 +191,7 @@ public class CardDisplay : MonoBehaviour
         description.text = card.GetCard().description.Replace('|', '\n');
 
         //Formatting Codes for dynamic card text
-        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm" , "l"};
+        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm", "l" };
 
         if (dynamicNumbers)
         {
@@ -309,5 +310,21 @@ public class CardDisplay : MonoBehaviour
     {
         //outline.enabled = value;
         cardGreyOut.enabled = !value;
+    }
+
+    public bool GetHighlight()
+    {
+        return !cardGreyOut.enabled;
+    }
+
+    public void SetDisableStats(string status)
+    {
+        if (disabledStatusText.text.Contains(status))   //If the status is already reflected, skip
+            return;
+
+        if (disabledStatusText.text == "")
+            disabledStatusText.text += status;
+        else
+            disabledStatusText.text += "\n" + status;
     }
 }

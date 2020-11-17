@@ -39,7 +39,11 @@ public class BuffController : MonoBehaviour
                 if (buff.GetDurationType() == Buff.DurationType.Use)                                            //Reduce duration for all use buffs
                     buff.duration -= 1;
 
-                yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);   //Only triggered buffs causes a pause
+                if (type != Buff.TriggerType.AtEndOfTurn)
+                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);   //Only triggered buffs causes a pause
+                else if (new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor }.Contains(buff.GetBuff().onApplyEffects) ||
+                    new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor, Buff.BuffEffectType.PiercingDamage, Buff.BuffEffectType.VitDamage }.Contains(buff.GetBuff().onTriggerEffects))
+                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);   //Only end of turn buffs that has UI changes causes a pause
             }
 
             if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn)     //Reduce duration for all turn buffs
@@ -59,6 +63,7 @@ public class BuffController : MonoBehaviour
 
         if (buffList != null)
             healthController.ResetBuffIcons(buffList);
+
         HandController.handController.ResetCardDisplays();
     }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: B Fireball
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 3
   name: Fireball
   energyCost: 0
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 03000000
   cardEffectName: 00000000
+  hitEffect: 00000000
   conditionType: 00000000
   conditionValue: 00000000
-  buffType: 00000000
+  buff:
+  - {fileID: 0}
   effectValue: 2c010000
   effectDuration: 00000000
   spawnObject:
@@ -40,3 +42,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

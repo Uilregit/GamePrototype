@@ -36,6 +36,7 @@ public class ShopDoneButtonController : MonoBehaviour
             CameraController.camera.transform.position = cameraLocation;
             Debug.Log(cameraLocation);
             Debug.Log(CameraController.camera.transform.position);
+            Destroy(this.gameObject);
         }
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);

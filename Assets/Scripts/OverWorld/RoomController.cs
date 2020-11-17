@@ -17,32 +17,19 @@ public class RoomController : MonoBehaviour
     public Color shopColor;
     public Color shrineColor;
 
-    public float dissapearPercentage;
-    public int numOfShopPerWorld;
-    public int minShopLocation;
-    public int maxShopLocation;
-    public int numOfShrinePerWorld;
-    public int minShrineLocation;
-    public int maxShrineLocation;
-    public float shopPercentage;
-    public float shrinePercentage;
-
     public EditDeckButtonController deckButton;
 
-    public enum roomType { combat, shop, shrine };
-
     [SerializeField]
-    private List<SmallRoom> smallRooms;
+    private GameObject smallRoomPrefab;
     [SerializeField]
     private BossRoom bossRoom;
     [SerializeField]
-    private RoomSetup[] firstRoomSetups;
-    [SerializeField]
-    private RoomSetup[] roomSetups;
-    [SerializeField]
-    private RoomSetup[] hardRoomSetups;
-    [SerializeField]
-    private RoomSetup[] bossRoomSetups;
+    private List<WorldSetup> worldSetups;
+    private int worldLevel = 0;
+
+    public enum roomType { combat, shop, shrine };
+
+    private List<SmallRoom> smallRooms;
     [SerializeField]
     private RoomSetup debugRoom;
 
@@ -73,24 +60,46 @@ public class RoomController : MonoBehaviour
 
         if (!initiated)
         {
-            canvas = GetComponent<Canvas>();
-
-            previousRoom = new List<Vector2>();
-            destroyedRooms = new List<Vector2>();
-
-            selectedLevel = -1;
-
-            numRoomsPerLevel = new Dictionary<int, int>();
-            foreach (SmallRoom room in smallRooms)
-                if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
-                    numRoomsPerLevel[(int)room.GetLocation().y] += 1;
-                else
-                    numRoomsPerLevel[(int)room.GetLocation().y] = 1;
-
-            RandomizeRooms();
-            Refresh();
+            InitializeWorld();
             initiated = true;
         }
+    }
+
+    private void InitializeWorld()
+    {
+        canvas = GetComponent<Canvas>();
+
+        previousRoom = new List<Vector2>();
+        destroyedRooms = new List<Vector2>();
+
+        selectedLevel = -1;
+        smallRooms = new List<SmallRoom>();
+
+        foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
+        {
+            GameObject obj = Instantiate(smallRoomPrefab);
+            obj.GetComponent<SmallRoom>().SetLocation(loc);
+            smallRooms.Add(obj.GetComponent<SmallRoom>());
+            obj.transform.SetParent(transform);
+            obj.transform.position = new Vector2(loc.x * 0.8f, loc.y * 0.8f - 3.37f);
+        }
+
+        numRoomsPerLevel = new Dictionary<int, int>();
+        foreach (SmallRoom room in smallRooms)
+            if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
+                numRoomsPerLevel[(int)room.GetLocation().y] += 1;
+            else
+                numRoomsPerLevel[(int)room.GetLocation().y] = 1;
+
+        RandomizeRooms();
+        Refresh();
+    }
+
+    public void LoadNewWorld(int level)
+    {
+        worldLevel = level;
+        selectedLevel = -1;
+        InitializeWorld();
     }
 
     public void LoadRooms()
@@ -166,20 +175,20 @@ public class RoomController : MonoBehaviour
         List<float> shrineLevels = new List<float>();
         int numOfShops = 0;
         int numOfShrines = 0;
-        int backupShopLocation = Random.Range(0, numRoomsPerLevel[maxShopLocation]);
-        int backupShrineLocation = Random.Range(0, numRoomsPerLevel[maxShrineLocation]);
+        int backupShopLocation = Random.Range(0, numRoomsPerLevel[worldSetups[worldLevel].maxShopLocation]);
+        int backupShrineLocation = Random.Range(0, numRoomsPerLevel[worldSetups[worldLevel].maxShrineLocation]);
         foreach (SmallRoom room in smallRooms)
         {
-            if (numOfShrines < numOfShrinePerWorld && room.GetLocation().y >= minShrineLocation && !shrineLevels.Contains(room.GetLocation().y))
+            if (numOfShrines < worldSetups[worldLevel].numOfShrinePerWorld && room.GetLocation().y >= worldSetups[worldLevel].minShrineLocation && !shrineLevels.Contains(room.GetLocation().y))
             {
-                if (room.GetLocation().y == maxShrineLocation && room.GetLocation().x + 0.5 * (numRoomsPerLevel[maxShrineLocation] - 1) == backupShrineLocation)
+                if (room.GetLocation().y == worldSetups[worldLevel].maxShrineLocation && room.GetLocation().x + 0.5 * (numRoomsPerLevel[worldSetups[worldLevel].maxShrineLocation] - 1) == backupShrineLocation)
                 {
                     room.SetType(roomType.shrine);
                     numOfShrines += 1;
                     shrineLevels.Add(room.GetLocation().y);
                     continue;
                 }
-                else if (Random.Range(0.0f, 1.0f) <= shrinePercentage)
+                else if (Random.Range(0.0f, 1.0f) <= worldSetups[worldLevel].shrinePercentage)
                 {
                     room.SetType(roomType.shrine);
                     numOfShrines += 1;
@@ -187,16 +196,16 @@ public class RoomController : MonoBehaviour
                     continue;
                 }
             }
-            if (numOfShops < numOfShopPerWorld && room.GetLocation().y >= minShopLocation && !shopLevels.Contains(room.GetLocation().y))
+            if (numOfShops < worldSetups[worldLevel].numOfShopPerWorld && room.GetLocation().y >= worldSetups[worldLevel].minShopLocation && !shopLevels.Contains(room.GetLocation().y))
             {
-                if (room.GetLocation().y == maxShopLocation && room.GetLocation().x + 0.5 * (numRoomsPerLevel[maxShopLocation] - 1) == backupShopLocation)
+                if (room.GetLocation().y == worldSetups[worldLevel].maxShopLocation && room.GetLocation().x + 0.5 * (numRoomsPerLevel[worldSetups[worldLevel].maxShopLocation] - 1) == backupShopLocation)
                 {
                     room.SetType(roomType.shop);
                     numOfShops += 1;
                     shopLevels.Add(room.GetLocation().y);
                     continue;
                 }
-                else if (Random.Range(0.0f, 1.0f) <= shopPercentage)
+                else if (Random.Range(0.0f, 1.0f) <= worldSetups[worldLevel].shopPercentage)
                 {
                     room.SetType(roomType.shop);
                     numOfShops += 1;
@@ -204,7 +213,7 @@ public class RoomController : MonoBehaviour
                     continue;
                 }
             }
-            if (Random.Range(0.0f, 1.0f) <= dissapearPercentage && room.GetLocation().y != 0 && !dissapearedLevels.Contains(room.GetLocation().y))//Never remove first levels and only 1 removed room per level
+            if (Random.Range(0.0f, 1.0f) <= worldSetups[worldLevel].dissapearPercentage && room.GetLocation().y != 0 && !dissapearedLevels.Contains(room.GetLocation().y))//Never remove first levels and only 1 removed room per level
             {
                 removedRooms.Add(room);
                 dissapearedLevels.Add(room.GetLocation().y);
@@ -222,7 +231,7 @@ public class RoomController : MonoBehaviour
             //smallRooms.Remove(room);
             //Destroy(room.gameObject);
         }
-        bossRoom.SetSetup(bossRoomSetups[Random.Range(0, bossRoomSetups.Length)]);
+        bossRoom.SetSetup(worldSetups[worldLevel].bossRooms[Random.Range(0, worldSetups[worldLevel].bossRooms.Count)]);
     }
     /*
     public void SetCurrentRoomSetup(RoomSetup newSetup)
@@ -250,33 +259,33 @@ public class RoomController : MonoBehaviour
 
         if (level < 3)
         {
-            index = Random.Range(0, firstRoomSetups.Length);
+            index = Random.Range(0, worldSetups[worldLevel].innitialRooms.Count);
             while (index == previousRoomIndex)
-                index = Random.Range(0, firstRoomSetups.Length);
-            setup = firstRoomSetups[index];
+                index = Random.Range(0, worldSetups[worldLevel].innitialRooms.Count);
+            setup = worldSetups[worldLevel].innitialRooms[index];
         }
         else if (level < 7)
         {
             if (level == 3)
                 previousRoomIndex = -99999;
-            index = Random.Range(0, roomSetups.Length);
+            index = Random.Range(0, worldSetups[worldLevel].midRooms.Count);
             while (index == previousRoomIndex)
-                index = Random.Range(0, roomSetups.Length);
-            setup = roomSetups[index];
+                index = Random.Range(0, worldSetups[worldLevel].midRooms.Count);
+            setup = worldSetups[worldLevel].midRooms[index];
         }
         else if (level < 8)
         {
             if (level == 7)
                 previousRoomIndex = -99999;
-            index = Random.Range(0, hardRoomSetups.Length);
+            index = Random.Range(0, worldSetups[worldLevel].lateRooms.Count);
             while (index == previousRoomIndex)
-                index = Random.Range(0, hardRoomSetups.Length);
-            setup = hardRoomSetups[index];
+                index = Random.Range(0, worldSetups[worldLevel].lateRooms.Count);
+            setup = worldSetups[worldLevel].lateRooms[index];
         }
         else
         {
-            index = Random.Range(0, bossRoomSetups.Length);
-            setup = bossRoomSetups[index];
+            index = Random.Range(0, worldSetups[worldLevel].bossRooms.Count);
+            setup = worldSetups[worldLevel].bossRooms[index];
             return setup;
         }
 
@@ -363,5 +372,25 @@ public class RoomController : MonoBehaviour
     public RoomSetup GetCurrentRoomSetup()
     {
         return currentRoomSetup;
+    }
+
+    public Sprite GetCombatBackground()
+    {
+        return worldSetups[worldLevel].combatBackground;
+    }
+
+    public int GetWorldLevel()
+    {
+        return worldLevel;
+    }
+
+    public WorldSetup GetCurrentWorldSetup()
+    {
+        return worldSetups[worldLevel];
+    }
+    
+    public void SetWorldLevel(int newLevel)
+    {
+        worldLevel = newLevel;
     }
 }

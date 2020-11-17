@@ -28,9 +28,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 0300000003000000
   cardEffectName: 0000000000000000
+  hitEffect: 0000000000000000
   conditionType: c9000000c8000000
   conditionValue: 0000000000000000
-  buffType: 0000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 96000000fa000000
   effectDuration: 0000000000000000
   spawnObject:

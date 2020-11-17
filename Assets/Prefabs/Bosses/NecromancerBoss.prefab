@@ -62,9 +62,6 @@ MonoBehaviour:
   startingArmor: 5
   attack: 12
   moveRange: 4
-  attackRange: 1
-  vitAttackValue: 0
-  shieldAttackValue: 0
   randomStartRange: 0
   attacksPerTurn: 2
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
@@ -100,7 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 1
   charDisplay: {fileID: 8124094990149397557}
-  buffController: {fileID: 0}
 --- !u!61 &3149853040009221859
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -337,6 +333,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2096784925209648996}
     m_Modifications:
+    - target: {fileID: 173437404813619435, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5dc8ebb055141d449874bdc6b3acf941, type: 2}
     - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_Size.x
       value: 1.6666666

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: Boss Room
   m_EditorClassIdentifier: 
+  isBossRoom: 1
+  relicReward: 1
   roomName: Boss Room
   enemies:
   - {fileID: 3199024419837817711, guid: d38f4b82f16ce814c90181439b919d69, type: 3}

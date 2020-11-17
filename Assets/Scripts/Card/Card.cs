@@ -113,6 +113,18 @@ public class Card : ScriptableObject
     }
     public EffectType[] cardEffectName = new EffectType[1];
 
+    public enum HitEffect
+    {
+        PlayerAttack = 0,
+        EnemyAttack = 100,
+        Buff = 200,
+        Debuff = 300,
+        Heal = 400,
+        Cleanse = 500,
+        None = 999999
+    }
+    public List<HitEffect> hitEffect;
+
     public enum ConditionType
     {
         None = 0,
@@ -326,7 +338,7 @@ public class Card : ScriptableObject
         output.cardEffectName = cardEffectName;
         output.conditionType = conditionType;
         output.conditionValue = conditionValue;
-        //output.buffType = buffType;
+        output.hitEffect = hitEffect;
         output.effectValue = effectValue;
         output.effectDuration = effectDuration;
         output.spawnObject = spawnObject;

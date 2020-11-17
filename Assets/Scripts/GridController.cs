@@ -224,21 +224,17 @@ public class GridController : MonoBehaviour
                         if (o != null)
                             deadObjects.Add(o);
                     }
-                    catch {}
+                    catch { }
 
         foreach (GameObject o in deadObjects)
         {
             RemoveFromPosition(o, o.transform.position);
+            o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
             try
             {
-                Card.CasterColor color = o.GetComponent<PlayerController>().GetColorTag();
-                o.GetComponent<PlayerController>().TriggerDeath();
-            }
-            catch
-            {
-                o.GetComponent<EnemyInformationController>().TriggerDeath();
                 TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
             }
+            catch { }
         }
 
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -246,7 +242,7 @@ public class GridController : MonoBehaviour
             EnemyController ec = o.GetComponent<EnemyController>();
             if (ec.GetSacrificed())
             {
-                o.GetComponent<EnemyInformationController>().TriggerDeath();
+                o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
                 TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
             }
         }
@@ -261,7 +257,7 @@ public class GridController : MonoBehaviour
         }
         yield return new WaitForSeconds(0);
     }
-    
+
     public void OnPlayerDeath(GameObject obj, Card.CasterColor color)
     {
         deathLocation[color] = obj.transform.position;
@@ -339,19 +335,19 @@ public class GridController : MonoBehaviour
                 if (!CheckIfOutOfBounds(newLocs) && GetObjectAtLocation(newLocs).Count == 0)
                     locations[GetManhattanDistance(startingLoc, newLoc)] = newLoc;
             }
-        DebugPlus.LogOnScreen(locations.Keys.ToString()).Duration(10);
+        //DebugPlus.LogOnScreen(locations.Keys.ToString()).Duration(10);
         return locations[locations.Keys.Min()];
     }
 
     public void DebugGrid()
     {
-        DebugPlus.LogOnScreen("########").Duration(10);
+        //DebugPlus.LogOnScreen("########").Duration(10);
         for (int y = 0; y < ySize; y++)
         {
             string s = "";
             for (int x = 0; x < xSize; x++)
                 s += objects[x, y].Count;
-            DebugPlus.LogOnScreen(s).Duration(10);
+            //DebugPlus.LogOnScreen(s).Duration(10);
         }
     }
 

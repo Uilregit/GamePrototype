@@ -80,7 +80,7 @@ public class TurnController : MonoBehaviour
         }
         else
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            List<GameObject> players = GameController.gameController.GetLivingPlayers();
             foreach (GameObject player in players)
                 player.GetComponent<PlayerMoveController>().ResetTurn();
         }
@@ -129,7 +129,7 @@ public class TurnController : MonoBehaviour
         GridController.gridController.DebugGrid();
 
         //Disable Player and card movement, trigger all end of turn effects
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
         {
             player.GetComponent<PlayerMoveController>().SetMoveable(false);
@@ -151,6 +151,7 @@ public class TurnController : MonoBehaviour
         yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         //Enemy turn
+        CameraController.camera.ScreenShake(0.03f, 0.05f);
         turnText.text = "Enemy Turn";
         turnText.enabled = true;
         turnTextBack.enabled = true;
@@ -188,6 +189,18 @@ public class TurnController : MonoBehaviour
 
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
+
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart);
+
+        players = GameController.gameController.GetLivingPlayers();
+        //Trigger all start of turn buff effects
+        foreach (GameObject characters in players)
+            yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
+
+        foreach (EnemyController thisEnemy in enemies)
+            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
         turnText.enabled = true;
         turnTextBack.enabled = true;
@@ -195,17 +208,6 @@ public class TurnController : MonoBehaviour
         turnText.enabled = false;
         turnTextBack.enabled = false;
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
-
-        SetPlayerTurn(true); //Trigger all player start of turn effects
-
-        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart);
-
-        players = GameObject.FindGameObjectsWithTag("Player");
-        //Trigger all start of turn buff effects
-        foreach (GameObject characters in players)
-            yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
-        foreach (EnemyController thisEnemy in enemies)
-            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
 
         //Resolve broken
         foreach (GameObject player in players)
@@ -219,6 +221,7 @@ public class TurnController : MonoBehaviour
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
         //Allow players to move, reset mana, and draw a full hand
+        SetPlayerTurn(true); //Trigger all player start of turn effects
         currentEnergy = maxEnergy;
         ResetEnergyDisplay();
         HandController.handController.UnholdCard(true);

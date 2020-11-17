@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
         int y;
         for (int j = 0; j < 100; j++)
         {
-            x = Random.Range(GameController.gameController.playerSpawnBox[0], GameController.gameController.playerSpawnBox[1]+1);
-            y = Random.Range(GameController.gameController.playerSpawnBox[2], GameController.gameController.playerSpawnBox[3]+1);
+            x = Random.Range(GameController.gameController.playerSpawnBox[0], GameController.gameController.playerSpawnBox[1] + 1);
+            y = Random.Range(GameController.gameController.playerSpawnBox[2], GameController.gameController.playerSpawnBox[3] + 1);
             if (GridController.gridController.GetObjectAtLocation(new Vector2(x, y)).Count == 0)
             {
                 Vector2 location = new Vector2(x, y);
@@ -59,21 +59,6 @@ public class PlayerController : MonoBehaviour
         transform.position = location;
         GridController.gridController.ReportPosition(this.gameObject, location);
         GetComponent<PlayerMoveController>().Spawn();
-    }
-
-    public void SetCasting(bool state)
-    {
-        healthController.charDisplay.SetCasting(state);
-    }
-
-    public void TriggerAttack()
-    {
-        healthController.charDisplay.TriggerAttack();
-    }
-
-    public void TriggerDeath()
-    {
-        healthController.charDisplay.TriggerDeath();
     }
 
     public Card.CasterColor GetColorTag()

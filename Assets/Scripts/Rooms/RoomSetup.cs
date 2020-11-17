@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class RoomSetup : ScriptableObject
 {
+    public bool isBossRoom = false;
     public bool relicReward = false;
     public string roomName;
     public GameObject[] enemies;

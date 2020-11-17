@@ -9,6 +9,7 @@ public class CardDragController : DragController
     private LineRenderer line;
     //public GameObject moveShadow;
     private CardDisplay cardDisplay;
+    private Card card;
     private bool active = true;
     private bool isHeld = false;
 
@@ -60,8 +61,10 @@ public class CardDragController : DragController
 
             if (desiredRotation.magnitude > 2)
             {
-                desiredRotation = desiredRotation.normalized * 20;
-                rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(desiredRotation + originalRotation), Time.deltaTime * 40); //Uses fixedDeltaTime (default 50 calls per second)
+                desiredRotation *= 2;
+                if (desiredRotation.magnitude > 30)
+                    desiredRotation = desiredRotation.normalized * 30;
+                rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(desiredRotation + originalRotation), Time.deltaTime * 35); //Uses fixedDeltaTime (default 50 calls per second)
             }
             else
                 rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(originalRotation), Time.fixedDeltaTime * 10);
@@ -69,7 +72,6 @@ public class CardDragController : DragController
         else if (currentState == State.Aiming)
         {
             Vector3 lookAtLocation = CameraController.camera.ScreenToWorldPoint(Input.mousePosition) - transform.position + new Vector3(0, 0, 2);
-            //lookAtLocation = new Vector3(0, lookAtLocation.z, lookAtLocation.x);
             rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.LookRotation(lookAtLocation, new Vector3(0, 0, -1)) * Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime * 40);
         }
         else if (currentState == State.Default)
@@ -95,6 +97,7 @@ public class CardDragController : DragController
 
     private void Cast()
     {
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
         currentState = State.Aiming;
         //cardDisplay.Hide();
         line.enabled = true;
@@ -103,6 +106,7 @@ public class CardDragController : DragController
 
     private void UnCast()
     {
+        CameraController.camera.ScreenShake(0.03f, 0.05f);
         currentState = State.Highlighted;
         isTriggeringEffect = false;
         castLocation = originalLocation;
@@ -116,13 +120,12 @@ public class CardDragController : DragController
             isHeld = false;
         }
 
-        //UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
         HandController.handController.ResetCardPositions();
     }
 
     private void Aim()
     {
-        Card card = cardController.GetCard();
+        card = cardController.GetCard();
         if (card.castType != Card.CastType.None)
         {
             //if (card.castType == Card.CastType.AoE)
@@ -130,15 +133,23 @@ public class CardDragController : DragController
             int castTileSize = 0;
             if (card.castType == Card.CastType.TargetedAoE)
                 castTileSize = card.radius;
-            TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-            if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1)))
-                TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)), 1), card.castShape, castTileSize, new Color(0.6f, 0, 0), 1);
-
             Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
-            if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
-                castLocation = GridController.gridController.GetRoundedVector(mousePosition, 1);
-            else
-                castLocation = originalLocation;
+
+            if (GridController.gridController.GetRoundedVector(mousePosition, 1) != castLocation)
+            {
+                if (TileCreator.tileCreator.GetSelectableLocations().Contains(GridController.gridController.GetRoundedVector(mousePosition, 1)))
+                    CameraController.camera.ScreenShake(0.03f, 0.05f);
+
+                TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+                if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(mousePosition, 1), card.castShape, castTileSize, new Color(0.6f, 0, 0), 1);
+
+
+                if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
+                    castLocation = GridController.gridController.GetRoundedVector(mousePosition, 1);
+                else
+                    castLocation = originalLocation;
+            }
 
             cardDisplay.transform.position = originalLocation + new Vector3(0, 0.5f, -1f);
             line.enabled = true;
@@ -173,11 +184,8 @@ public class CardDragController : DragController
     {
         desiredRotation = Vector2.zero;
 
-        cardController.GetCaster().GetComponent<PlayerController>().SetCasting(false);
+        cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.SetCasting(false);
         UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
-
-        //Resolve cast
-        cardController.DeleteRangeIndicator();
 
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
@@ -226,6 +234,7 @@ public class CardDragController : DragController
             }
         }
 
+        cardController.DeleteRangeIndicator();
         currentState = State.Default;
     }
 
@@ -237,7 +246,6 @@ public class CardDragController : DragController
 
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.selectedCardCanvas.transform);
-        //cardDisplay.cardName.sortingOrder = 3;
 
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         float x = Mathf.Clamp(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).x, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
@@ -245,7 +253,7 @@ public class CardDragController : DragController
         transform.position = new Vector2(x, y);
         transform.SetAsLastSibling();
 
-        cardController.GetCaster().GetComponent<PlayerController>().SetCasting(true);
+        cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.SetCasting(true);
 
         cardController.CreateRangeIndicator();
 
@@ -260,7 +268,6 @@ public class CardDragController : DragController
     public override void OnMouseDrag()
     {
         desiredRotation = new Vector2((Input.mousePosition - previousMousePosition).y, (previousMousePosition - Input.mousePosition).x);
-        //Debug.Log(Input.mousePosition - previousMousePosition);
         previousMousePosition = Input.mousePosition;
 
         RaycastHit hit;
@@ -285,8 +292,9 @@ public class CardDragController : DragController
             //transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize,1);
 
             //Allow drag above threshold only if there is enough mana left over
-            if (TurnController.turnController.HasEnoughResources(cardController.GetNetEnergyCost(), cardController.GetNetManaCost()) &&
-                (!GameController.gameController.GetDeadChars().Contains(cardController.GetCard().casterColor) || ResourceController.resource.GetLives() > 0))       //And there's enough lives to cast
+            //if (TurnController.turnController.HasEnoughResources(cardController.GetNetEnergyCost(), cardController.GetNetManaCost()) &&
+            //    (!GameController.gameController.GetDeadChars().Contains(cardController.GetCard().casterColor) || ResourceController.resource.GetLives() > 0))       //And there's enough lives to cast
+            if (cardDisplay.GetHighlight())
             {
                 if (currentState == State.Highlighted)
                 {
@@ -312,9 +320,7 @@ public class CardDragController : DragController
     {
         isTriggeringEffect = true;
 
-        cardController.DeleteRangeIndicator();
-
-        Card card = cardController.GetCard();
+        card = cardController.GetCard();
         cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "Player", "Enemy" });
         List<Vector2> targetedLocs = new List<Vector2>();
@@ -383,14 +389,14 @@ public class CardDragController : DragController
             return;
         }
         line.enabled = false;
-        cardController.DeleteRangeIndicator();
 
-        cardController.GetCaster().GetComponent<PlayerController>().TriggerAttack();
+        if (cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget() != null)
+            if (!targetedLocs.Contains(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position))
+                targetedLocs.Add(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position);        //Alwasy ensure that the taunted target is included in cast
 
-        StartCoroutine(OnPlay(targetedLocs));
-        TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
-        GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
-        //HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+        cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.TriggerAttack(this.gameObject, targetedLocs, null);
+
+        //StartCoroutine(OnPlay(targetedLocs));
     }
 
     private IEnumerator OnPlay(Vector2 location)
@@ -400,7 +406,7 @@ public class CardDragController : DragController
         yield return StartCoroutine(OnPlay(locations));
     }
 
-    private IEnumerator OnPlay(List<Vector2> locations)
+    public IEnumerator OnPlay(List<Vector2> locations)
     {
         //Get a unique list of locations to avoid double casting
         locations = locations.Distinct().ToList();
@@ -420,6 +426,9 @@ public class CardDragController : DragController
         cardDisplay.Hide();
 
         yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), locations));
+
+        TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
+        GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
 
         Destroy(this.gameObject);
     }

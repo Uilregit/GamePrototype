@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
+  m_Name: SwarmDebuff
+  m_EditorClassIdentifier: 
+  relicReward: 0
+  roomName: IceSwarmDebuff
+  enemies:
+  - {fileID: 3234652053163052453, guid: b2054bd1c3bbe02488e58a60c778554f, type: 3}
+  - {fileID: 3234652053163052453, guid: 238015dfe554ac04fad50cf9d69a7dc9, type: 3}
+  - {fileID: 3234652053163052453, guid: 238015dfe554ac04fad50cf9d69a7dc9, type: 3}
+  - {fileID: 3234652053163052453, guid: 238015dfe554ac04fad50cf9d69a7dc9, type: 3}
+  blockNumber: 6
+  playwerSpawnLocations: []

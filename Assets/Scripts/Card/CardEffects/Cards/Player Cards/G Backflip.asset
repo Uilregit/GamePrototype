@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: G Backflip
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Backflip
   energyCost: 0
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 0200000002000000
   cardEffectName: d300000059020000
+  hitEffect: 3f420f00c8000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 0000000001000000
   effectDuration: 0000000000000000
   spawnObject:
@@ -42,3 +44,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0

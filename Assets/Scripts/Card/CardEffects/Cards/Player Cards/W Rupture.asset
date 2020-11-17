@@ -28,6 +28,7 @@ MonoBehaviour:
   castShape: 0
   targetType: 03000000
   cardEffectName: 6e000000
+  hitEffect: 2c010000
   conditionType: 00000000
   conditionValue: 00000000
   buff:

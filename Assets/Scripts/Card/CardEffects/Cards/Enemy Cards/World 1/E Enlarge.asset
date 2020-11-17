@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: E Enlarge
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  canCastOnSelf: 1
+  rarity: 0
+  name: Enlarge
+  energyCost: 2
+  manaCost: 0
+  range: 0
+  radius: 0
+  casterColor: 6
+  description: Double this character's attack for 9 turns
+  art: {fileID: 21300000, guid: f54515328c84ccd4d967ce3bd5015abd, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 0200000002000000
+  cardEffectName: fe0100006e000000
+  hitEffect: 3f420f00c8000000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buff:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 566bf7e44b83f1b4c8163915532f0081, type: 2}
+  effectValue: 0000000000000000
+  effectDuration: 000000000a000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 2
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

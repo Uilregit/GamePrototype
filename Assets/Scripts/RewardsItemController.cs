@@ -66,6 +66,7 @@ public class RewardsItemController : MonoBehaviour
                 }
                 GameController.gameController.rewardCards[i].Show();
                 GameController.gameController.rewardCards[i].SetHighLight(true);
+                GameController.gameController.rewardCards[i].GetComponent<LineRenderer>().enabled = false;
                 GameController.gameController.rewardCards[i].gameObject.GetComponent<Collider2D>().enabled = true;
             }
 

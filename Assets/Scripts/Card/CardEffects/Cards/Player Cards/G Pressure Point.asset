@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: G Pressure Point
   m_EditorClassIdentifier: 
   exhaust: 0
-  returnOnCancel: 1
+  canCastOnSelf: 1
   rarity: 0
   name: Pressure Point
   energyCost: 1
@@ -27,9 +27,11 @@ MonoBehaviour:
   castShape: 0
   targetType: 0300000003000000
   cardEffectName: 0a00000000000000
+  hitEffect: 2c01000000000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
-  buffType: 0000000000000000
+  buff:
+  - {fileID: 0}
   effectValue: 0100000064000000
   effectDuration: 0000000000000000
   spawnObject:
@@ -41,3 +43,4 @@ MonoBehaviour:
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0
+  highlightCondition: 0
