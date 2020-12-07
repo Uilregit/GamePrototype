@@ -126,6 +126,8 @@ public class RewardsMenuController : MonoBehaviour
         numRewardsTaken += 1;
         if (numRewards == numRewardsTaken)
         {
+            if (RoomController.roomController.GetWorldLevel() != 1 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+                RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
             GameController.gameController.LoadScene("OverworldScene", true, deckId);
         }
     }
@@ -174,10 +176,5 @@ public class RewardsMenuController : MonoBehaviour
         relicRewardMenu.transform.GetChild(4).GetComponent<Image>().enabled = false;
         relicRewardMenu.transform.GetChild(4).GetComponent<Collider2D>().enabled = false;
         relicRewardMenu.transform.GetChild(5).GetComponent<Text>().enabled = false;
-    }
-
-    public void ObtainedRelic()
-    {
-        RelicController.relic.AddRelic(thisRelic);
     }
 }

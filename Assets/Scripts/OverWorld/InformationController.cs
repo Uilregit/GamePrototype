@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CombatInfo
 {
-    public int lives = 1;
+    public int lives = 0;
     public int[] vit = new int[3];
     public int[] maxVit = new int[3];
     public int[] atk = new int[3];

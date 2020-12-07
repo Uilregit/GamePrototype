@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.70051455, b: 1, a: 1}
   description: 'Amplify Healing: Restore {v} times more health for {d} turns'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 11
   onTriggerTarget: 0
   onTriggerEffects: 0

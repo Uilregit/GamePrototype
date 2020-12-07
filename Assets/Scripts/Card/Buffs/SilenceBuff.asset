@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   description: 'Silence: Can''t play mana cards for {d} turns'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 61
   onTriggerTarget: 0
   onTriggerEffects: 0

@@ -177,14 +177,13 @@ public class EnemyController : MonoBehaviour
                 //after moving, attack target if in range. If not, then attack nearest target in range
                 //Don't waste attack on turns on the way to it's target
                 List<Vector2> targetLocs = new List<Vector2>();
-
                 if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)
                     foreach (Vector2 loc in occupiedSpace)
                         targetLocs.AddRange(GridController.gridController.GetLocationsInAoE(GridController.gridController.GetRoundedVector((Vector2)transform.position + loc, 1), attackSequence[attackCardIndex].radius, new string[] { "All" }));
                 else if (attackSequence[attackCardIndex].castType == Card.CastType.Player ||
                          attackSequence[attackCardIndex].castType == Card.CastType.Enemy)
                 {
-                    if (GetDistanceFrom(desiredTarget[i].transform.position) <= attackSequence[attackCardIndex].range)
+                    if (GetDistanceFrom(desiredTarget[i].transform.position) <= castRange)
                         targetLocs.Add(desiredTarget[i].transform.position);
                     else if (attackSequence[attackCardIndex].castType == Card.CastType.Player)
                     {
@@ -310,7 +309,7 @@ public class EnemyController : MonoBehaviour
         if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)
             traveledPath = FindMostInAoE(target);
         else
-            traveledPath = FindPath(target, attackSequence[attackCardIndex].range);
+            traveledPath = FindPath(target, castRange);
 
         if (InformationLogger.infoLogger.debug)
             foreach (Vector2 loc in traveledPath)
@@ -326,6 +325,7 @@ public class EnemyController : MonoBehaviour
             {
                 foreach (Vector2 vec in occupiedSpace)
                     GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
+                healthController.charDisplay.charAnimController.SetRunning(false);
                 yield break;
             }
 
@@ -341,6 +341,9 @@ public class EnemyController : MonoBehaviour
             GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
 
         healthController.charDisplay.charAnimController.SetRunning(false);
+
+        if (InformationLogger.infoLogger.debug)
+            TileCreator.tileCreator.DestroyTiles(this.gameObject);
 
         yield return new WaitForSeconds(0);
     }
@@ -390,6 +393,8 @@ public class EnemyController : MonoBehaviour
 
             if (castable)
                 yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
+
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
         }
     }
 
@@ -410,7 +415,14 @@ public class EnemyController : MonoBehaviour
 
         //If a pathable position can attack a target, add it to the list. repeat for each target to get counts of how many targets that position can attack
         List<Vector2> viablePositions = new List<Vector2>();
-        foreach (GameObject obj in possibleTargets)
+
+        //If desired target is a single player, then always ensure that player is included in the AoE
+        List<GameObject> targets = new List<GameObject>();
+        if (desiredTarget[currentAttackSquence % attacksPerTurn].tag == "Player")
+            targets.Add(desiredTarget[currentAttackSquence % attacksPerTurn]);
+        else
+            targets = possibleTargets;
+        foreach (GameObject obj in targets)
         {
             TileCreator.tileCreator.CreateTiles(this.gameObject, obj.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
             List<Vector2> attackFromLocation = TileCreator.tileCreator.GetTilePositions(2);
@@ -424,7 +436,7 @@ public class EnemyController : MonoBehaviour
         //Return the position that can attack the most targets
         Vector2 finalLocation;
         if (viablePositions.Count == 0)
-            finalLocation = GetNearest(attackSequence[attackCardIndex].castType);
+            finalLocation = desiredTarget[currentAttackSquence % attacksPerTurn].transform.position;
         else
             finalLocation = viablePositions.GroupBy(x => x).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
         return PathFindController.pathFinder.PathFind(transform.position, finalLocation, new string[] { "None" }, occupiedSpace, size);
@@ -455,7 +467,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual List<Vector2> FindFurthestPointInRange(GameObject target)
     {
-        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].range, Color.clear, 2);
+        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, attackSequence[attackCardIndex].castShape, castRange, Color.clear, 2);
         List<Vector2> inRangeLocations = TileCreator.tileCreator.GetTilePositions(2);
         List<Vector2> emptyInRangeLocations = new List<Vector2>();
         foreach (Vector2 loc in inRangeLocations)
@@ -464,8 +476,8 @@ public class EnemyController : MonoBehaviour
         inRangeLocations = emptyInRangeLocations;
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);                                            //Get all positions that can cast on the target
 
-        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(attackSequence[attackCardIndex].range, 1)];      //Sort positions by distance to target
-        for (int i = Mathf.Max(attackSequence[attackCardIndex].range - 1, 0); i >= 0; i--)
+        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(castRange, 1)];      //Sort positions by distance to target
+        for (int i = Mathf.Max(castRange - 1, 0); i >= 0; i--)
             locationsByDistance[i] = new List<Vector2>();
 
         foreach (Vector2 loc in inRangeLocations)
@@ -480,12 +492,12 @@ public class EnemyController : MonoBehaviour
                 Debug.Log(target.transform.position);
                 Debug.Log(GetManhattanDistance(loc, target.transform.position) - 1);
                 Debug.Log(locationsByDistance.Length);
-                Debug.Log(attackSequence[attackCardIndex].range);
-                Debug.Log(Mathf.Max(attackSequence[attackCardIndex].range, 1));
+                Debug.Log(castRange);
+                Debug.Log(Mathf.Max(castRange, 1));
             }
 
         List<Vector2> pathableLocations = new List<Vector2>();                                              //Check if pathable within the allocated move distance or not
-        for (int i = Mathf.Max(attackSequence[attackCardIndex].range - 1, 0); i >= 0; i--)                                  //Prefer locations further from target if possible
+        for (int i = Mathf.Max(castRange - 1, 0); i >= 0; i--)                                  //Prefer locations further from target if possible
         {
             pathableLocations = new List<Vector2>();
             foreach (Vector2 loc in locationsByDistance[i])
@@ -742,9 +754,9 @@ public class EnemyController : MonoBehaviour
         int highestAttack = 0;
         foreach (GameObject target in targets)
         {
-            if (target.GetComponent<HealthController>().GetAttack() - target.GetComponent<HealthController>().GetAttack() > highestAttack)
+            if (target.GetComponent<HealthController>().GetAttack() > highestAttack)
             {
-                highestAttack = target.GetComponent<HealthController>().GetMaxVit() - target.GetComponent<HealthController>().GetCurrentVit();
+                highestAttack = target.GetComponent<HealthController>().GetAttack();
                 output = target;
             }
         }
@@ -763,9 +775,9 @@ public class EnemyController : MonoBehaviour
         int lowestAttack = 999999999;
         foreach (GameObject target in targets)
         {
-            if (target.GetComponent<HealthController>().GetAttack() - target.GetComponent<HealthController>().GetAttack() < lowestAttack)
+            if (target.GetComponent<HealthController>().GetAttack() < lowestAttack)
             {
-                lowestAttack = target.GetComponent<HealthController>().GetMaxVit() - target.GetComponent<HealthController>().GetCurrentVit();
+                lowestAttack = target.GetComponent<HealthController>().GetAttack();
                 output = target;
             }
         }
@@ -801,6 +813,27 @@ public class EnemyController : MonoBehaviour
             if (!sacrificed)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + vec);
         enemyInformation.DestroyUsedCard();
+    }
+
+    public void SetSacrificed(bool state)
+    {
+        sacrificed = true;
+    }
+
+    public bool GetSacrificed()
+    {
+        return sacrificed;
+    }
+
+    public int GetAttackCardIndex()
+    {
+        return currentAttackSquence % attackSequence.Count;
+    }
+
+    private void FlipSpriteX()
+    {
+        isFacingRight = !isFacingRight;
+        spRenderer.flipX = !isFacingRight;
     }
     /*
     //Scores the simulated outcome, highest score should be the most desired outcome
@@ -906,24 +939,4 @@ public class EnemyController : MonoBehaviour
         return output;
     }
     */
-    public void SetSacrificed(bool state)
-    {
-        sacrificed = true;
-    }
-
-    public bool GetSacrificed()
-    {
-        return sacrificed;
-    }
-
-    public int GetAttackCardIndex()
-    {
-        return currentAttackSquence % attackSequence.Count;
-    }
-
-    private void FlipSpriteX()
-    {
-        isFacingRight = !isFacingRight;
-        spRenderer.flipX = !isFacingRight;
-    }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.12997675, b: 1, a: 1}
   description: 'Attack: Modify attack by {+-v} for {d} turn(s)'
   triggerType: 1
-  durationType: 0
+  durationType: 1
   onApplyEffects: 30
   onTriggerTarget: 0
   onTriggerEffects: 0

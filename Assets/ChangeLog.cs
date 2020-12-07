@@ -550,6 +550,17 @@
  * Implemented taunt on players
  * Implemented stun on players
  * Implemented silence and disarm on enemies
+ * Enemy cards now use enemycontroller cast range instead of card castrange
+ * If enemy is AoE casting with a single player as the desired target, it will now move towards that desired player instead of maximizing number of ANY players in the AoE
+ * Now saves high score in each category as well as highest total score
+ * Added team and hero progression system
+ * Added currency rewards
+ * Added lives rewards
+ * Added replace rewards
+ * Added tavern contract rewards
+ * Added tavern hero unlocks
+ * New hand system: at the end of the turn, all unplayed cards are held, temporary cards are removed, starting hand size increased to 6
+ * Total EXP is stored for potential future patching
  * 
  * -- UI --
  * Recentered all character displays
@@ -573,6 +584,14 @@
  * Added camera shake if card is targeting a castable location
  * Added red overlay for when players take damage. Intensity tied to remaining health of the player
  * Added disabled status text on cards UI for silenced, disarmed, and stunned
+ * Drawing more cards in hand will now no longer overflow outside screen space
+ * Sped up attacking animation for all player characters
+ * Fixed none type cast cards
+ * Added shatter effect to shield UI on break
+ * Endscreen now shows past high scores
+ * Added tracking and saving of individual color hero levels and team levels
+ * Beating the boss now heals and resurrects all players for free
+ * Added more fanfair to beating the boss
  * 
  * -- Bugs --
  * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
@@ -584,14 +603,17 @@
  * Fixed temporary armor never allowing the armor to be reduced
  * Fixed buffs sometimes double reverting
  * On player hit overlay now only triggers when the card dealt damage instead of when any card targeted a player (buffs)
+ * Fixed bug where enemies would keep running animation past their turn
+ * Fixed cost display for selected cards not showing properly
+ * Fixed seed and version next not refreshing and staying after main menu scene upon new game after completing the last one
+ * Fixed buffs not triggering at the right time for the right duration
+ * Fixed death game end continue button not working
+ * Fixed error where clicking a specific part of the relic obtain button would load the game into the first room of the second world
+ * Fixed party energy and mana reduction being caps instead
  * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --
- * Finish all bugs from last playtest
- * Add attack animation trigger for card effects
  * Simplify common cards
- * Add world 2
- *      choose one of the gimics from the list, make one
  * Add permanent progression per character and per team
  *  Unlocks tallents for each member (chose 1 tallent tree)
  *  Unlocks uncommon cards for the char

@@ -15,7 +15,8 @@ MonoBehaviour:
   color: {r: 0, g: 0.030142752, b: 0.5019608, a: 1}
   description: 'Acid: Lose {v} armor at the end of the turn for {d} turns'
   triggerType: 0
-  durationType: 0
+  triggerModificationProtection: 1
+  durationType: 1
   onApplyEffects: 0
   onTriggerTarget: 0
   onTriggerEffects: 3

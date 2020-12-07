@@ -48,6 +48,11 @@ public class HandController : MonoBehaviour
             maxReplaceCount = 10;
             allowHold = true;
         }
+        else
+        {
+            maxReplaceCount = UnlocksController.unlock.GetUnlocks().replaceUnlocked;
+            allowHold = UnlocksController.unlock.GetUnlocks().holdUnlocked;
+        }
     }
 
     /*
@@ -153,14 +158,18 @@ public class HandController : MonoBehaviour
     //Redraw all card positions so they're centered
     public void ResetCardPositions()
     {
+        float spaceBetweenCards = cardSpacing;
+        if (hand.Count > 6)
+            spaceBetweenCards = cardSpacing * 6 / hand.Count;
         //Odd number of cards
         if (hand.Count % 2 == 1)
         {
             for (int i = 0; i < hand.Count; i++)
             {
-                Vector2 cardLocation = new Vector2((i - hand.Count / 2) * cardSpacing, cardStartingHeight);
+                Vector2 cardLocation = new Vector2((i - hand.Count / 2) * spaceBetweenCards, cardStartingHeight);
                 hand[hand.Count - 1 - i].SetLocation(cardLocation);
                 hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
+                hand[hand.Count - 1 - i].transform.SetAsLastSibling();
             }
         }
         //Even number of cards
@@ -168,9 +177,10 @@ public class HandController : MonoBehaviour
         {
             for (int i = 0; i < hand.Count; i++)
             {
-                Vector2 cardLocation = new Vector2((i - hand.Count / 2 + 0.5f) * cardSpacing, cardStartingHeight);
+                Vector2 cardLocation = new Vector2((i - hand.Count / 2 + 0.5f) * spaceBetweenCards, cardStartingHeight);
                 hand[hand.Count - 1 - i].SetLocation(cardLocation);
                 hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
+                hand[hand.Count - 1 - i].transform.SetAsLastSibling();
             }
         }
     }
@@ -216,7 +226,7 @@ public class HandController : MonoBehaviour
             ResetReplaceText();
 
             if (currentReplaceCount == maxReplaceCount)
-                GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider2D>().enabled = false;
+                GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
 
             InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                 InformationLogger.infoLogger.gameID,
@@ -259,14 +269,18 @@ public class HandController : MonoBehaviour
     //Draw cards untill hand is full
     public void DrawFullHand()
     {
-        for (int i = hand.Count; i < startingHandSize; i++)
+        for (int i = hand.Count; i < startingHandSize + TurnController.turnController.GetCardDrawChange(); i++)
             DrawAnyCard();
+
+        foreach (CardController card in hand)
+            card.GetComponent<Collider2D>().enabled = true;
 
         ResetReplaceText();
     }
 
     public void ClearHand()
     {
+        /*
         foreach (CardController card in hand)
         {
             if (!card.GetCard().exhaust) //Only put non exhaust cards into the draw pile, otherwise it's just destroyed
@@ -318,6 +332,44 @@ public class HandController : MonoBehaviour
                         currentlyHeldCard.GetCard().energyCost.ToString(),
                         currentlyHeldCard.GetCard().manaCost.ToString(),
                         "0");
+
+        ResetCardPositions();
+        */
+        List<CardController> exhaustCards = new List<CardController>();
+        foreach (CardController card in hand)
+        {
+            if (card.GetCard().exhaust) //Only put non exhaust cards into the draw pile, otherwise it's just destroyed
+            {
+                exhaustCards.Add(card);
+                Destroy(card.gameObject);
+            }
+            else
+                InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                    InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.selectedLevel.ToString(),
+                                    RoomController.roomController.roomName,
+                                    TurnController.turnController.turnID.ToString(),
+                                    TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                    card.GetCard().casterColor.ToString(),
+                                    card.GetCard().name,
+                                    "True",
+                                    "False",
+                                    "False",
+                                    "False",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    card.GetCard().energyCost.ToString(),
+                                    card.GetCard().manaCost.ToString(),
+                                    "0");
+        }
+        foreach (CardController card in exhaustCards)
+            hand.Remove(card);
+
+        foreach (CardController card in hand)
+            card.GetComponent<Collider2D>().enabled = false;
 
         ResetCardPositions();
     }

@@ -33,7 +33,7 @@ MonoBehaviour:
   buff:
   - {fileID: 11400000, guid: 566bf7e44b83f1b4c8163915532f0081, type: 2}
   effectValue: 03000000
-  effectDuration: 07000000
+  effectDuration: 06000000
   spawnObject:
   - {fileID: 0}
   cards:

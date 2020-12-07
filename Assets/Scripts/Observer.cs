@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Observer : MonoBehaviour
 {
-    public abstract void OnNotify(object value, Relic.NotificationType notificationType);
+    public abstract void OnNotify(object value, Relic.NotificationType notificationType, List<Relic> traceList);
 }
 
 public abstract class Subject:MonoBehaviour
@@ -16,9 +16,9 @@ public abstract class Subject:MonoBehaviour
         _observers.Add(observer);
     }
 
-    public void Notify(object value, Relic.NotificationType notificationType)
+    public void Notify(object value, Relic.NotificationType notificationType, List<Relic> traceList)
     {
         foreach (var observer in _observers)
-            observer.OnNotify(value, notificationType);
+            observer.OnNotify(value, notificationType, traceList);
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 'Mana Cap: Your mana cards that costs more than {v} cost {v} for {d}
     turn(s)'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 41
   onTriggerTarget: 0
   onTriggerEffects: 0

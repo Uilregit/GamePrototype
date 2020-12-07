@@ -39,7 +39,7 @@ public abstract class Effect
     public abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex);
     public abstract SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH);
 
-    public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration)
+    public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration, List<Relic> traceList)
     {
         throw new System.NotImplementedException();
     }

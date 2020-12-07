@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour //Eventualy split into buff, effect, and health controllers
 {
+    public bool isPlayer = false;
     public int size = 1;
     private int maxBrokenTurns = 2;
     private int currentBrokenTurns = -99999;
@@ -243,18 +244,17 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetVitText(currentVit + bonusVit);
     }
 
-    public void SetBonusArmor(int newValue, bool fromRelic = false)
+    public void SetBonusArmor(int newValue, List<Relic> relicTrace)
     {
         ShowArmorDamageNumber(-newValue);
         bonusArmor = Mathf.Max(-currentArmor, bonusArmor + newValue);
 
         ResetArmorText(currentArmor + bonusArmor);
 
-        if (!fromRelic)             //To prevent infinite loops on relics giving armor triggered by armor gain
-            if (newValue > 0)
-                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorGain);
-            else if (newValue < 0)
-                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorLoss);
+        if (newValue > 0)
+            RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorGain, relicTrace);
+        else if (newValue < 0)
+            RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTempArmorLoss, relicTrace);
     }
 
     public int GetBonusArmor()
@@ -454,7 +454,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //###################################################################################################
     //Effect Section-------------------------------------------------------------------------------------
     //###################################################################################################
-    public void TakeVitDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
+    public void TakeVitDamage(int value, HealthController attacker, List<BuffFactory> traceList = null, List<Relic> relicTrace = null)
     {
         int oldHealth = currentVit + bonusVit;
         if (value > 0)
@@ -473,13 +473,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             if (damage != 0)
             {
-                try
+                if (GetComponent<PlayerController>() != null)
                 {
-                    GetComponent<PlayerController>();
                     ScoreController.score.UpdateDamageArmored(Mathf.Max(GetArmor() - 1, 0));
                     ScoreController.score.UpdateDamageOverhealProtected(Mathf.Min(damage, bonusVit));
                 }
-                catch { }
                 currentVit = currentVit + Mathf.Min(0, bonusVit - damage); //Always takes at least 1 damage;
                 bonusVit = Mathf.Max(0, bonusVit - damage);
             }
@@ -491,7 +489,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 TakeArmorDamage(1, attacker, traceList);
 
             if (damage == 1)
-                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTook1VitDamage);
+                RelicController.relic.OnNotify(this.gameObject, Relic.NotificationType.OnTook1VitDamage, relicTrace);
         }
         else
         {
@@ -521,7 +519,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return output;
     }
 
-    public void TakeArmorDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
+    public void TakeArmorDamage(int value, HealthController attacker, List<BuffFactory> traceList = null, List<Relic> relicTrace = null)
     {
         int damage = value;
         if (value > 0)
@@ -560,12 +558,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 try
                 {
                     GetComponent<EnemyInformationController>().RefreshIntent();
-                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnEnemyBroken);
+                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnEnemyBroken, relicTrace);
                     ScoreController.score.UpdateEnemiesBroken();
                 }
                 catch
                 {
-                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnPlayerBroken);
+                    RelicController.relic.OnNotify(this, Relic.NotificationType.OnPlayerBroken, relicTrace);
                 }
             }
         }
@@ -601,7 +599,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     }
 
     //Simply remove value from health
-    public void TakePiercingDamage(int value, HealthController attacker, List<BuffFactory> traceList = null)
+    public void TakePiercingDamage(int value, HealthController attacker, List<BuffFactory> traceList = null, List<Relic> relicTrace = null)
     {
         int oldHealth = currentVit + bonusVit;
         int damage = 0;
@@ -875,27 +873,14 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (!preserveBonusVit)
             bonusVit = 0;
         ResetVitText(currentVit + bonusVit);
-
-
-        /*
-        startOfTurnBuffs = ResolveBuffAndReturn(startOfTurnBuffs);
-        startOfTurnDebuffs = ResolveBuffAndReturn(startOfTurnDebuffs);
-        onDamageBuffs = ResolveBuffAndReturn(onDamageBuffs);
-        onDamageDebuffs = ResolveBuffAndReturn(onDamageDebuffs);
-        ResetBuffIcons();
-        */
     }
 
     public void OnDamage(HealthController attacker, int damage, int oldHealth, List<BuffFactory> buffTrace = null)
     {
         //Handheld.Vibrate();
 
-        try
-        {
-            GetComponent<EnemyController>();
+        if (GetComponent<EnemyController>() != null)
             ScoreController.score.UpdateDamage(damage);
-        }
-        catch { }
 
         ShowDamageNumber(damage, oldHealth);
 

@@ -15,7 +15,8 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 0.20422673, a: 1}
   description: 'Regen: Restore {|v|} health at the end of the next {d} turn(s)'
   triggerType: 0
-  durationType: 0
+  triggerModificationProtection: 1
+  durationType: 1
   onApplyEffects: 0
   onTriggerTarget: 0
   onTriggerEffects: 2

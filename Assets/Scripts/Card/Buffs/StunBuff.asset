@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0.53333336, g: 0, b: 0.078431375, a: 1}
   description: 'Stun: Can''t act for {d} turn(s)'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 70
   onTriggerTarget: 0
   onTriggerEffects: 0

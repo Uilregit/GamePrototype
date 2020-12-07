@@ -30,7 +30,7 @@ public class Relic : ScriptableObject
     public int effectValue;
     public int effectDuration;
 
-    public void Process(object value)
+    public void Process(object value, List<Relic> traceList)
     {
         Card.EffectType[] effectList = new Card.EffectType[1];
         effectList[0] = effect;
@@ -51,6 +51,8 @@ public class Relic : ScriptableObject
         else if (targetType == Card.TargetType.Any)
             targets.Add((GameObject)value);
 
-        thisEffect.RelicProcess(targets, buff, effectValue, effectDuration);
+        if (traceList == null)
+            traceList = new List<Relic>() { this };
+        thisEffect.RelicProcess(targets, buff, effectValue, effectDuration, traceList);
     }
 }

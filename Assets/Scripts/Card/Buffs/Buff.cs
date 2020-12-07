@@ -11,6 +11,7 @@ public class Buff : ScriptableObject
     public string description = "";
     [SerializeField]
     private TriggerType triggerType;
+    public bool triggerModificationProtection = false;
     public DurationType durationType;
 
     public BuffEffectType onApplyEffects;
@@ -28,97 +29,6 @@ public class Buff : ScriptableObject
 
     public int duration;
     public int value;
-
-    public virtual void OnApply(HealthController healthController, int value, int newDuration, bool fromRelic)
-    {
-        /*
-        healthController.buffController.AddBuff(this);
-        tempValue = value;
-        duration = newDuration;
-        */
-    }
-
-    //public abstract IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<Buff> buffTrace);
-    public virtual IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value)
-    {
-        /*
-        Debug.Log("triggered");
-        HealthController target = null;
-        if (onTriggerTarget == TriggerTarget.Self)
-            target = selfHealthController;
-        else
-            target = attackerHealthController;
-
-        switch (onTriggerEffects)
-        {
-            case BuffEffectType.VitDamage:
-                target.TakeVitDamage(GetValue(value), selfHealthController);
-                break;
-            case BuffEffectType.PiercingDamage:
-                target.TakePiercingDamage(GetValue(value), selfHealthController);
-                break;
-            case BuffEffectType.ArmorDamage:
-                target.TakeArmorDamage(GetValue(value), selfHealthController);
-                break;
-        }
-
-
-        yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);
-        */
-        yield return new WaitForSeconds(0);
-    }
-    public virtual void Revert(HealthController healthController)
-    {
-    }
-    /*
-    private int GetValue(int triggerValue)
-    {
-        int output = 0;
-        switch (valueManipulationType)
-        {
-            case ValueManipulationType.TriggerValue:
-                output = triggerValue;
-                break;
-            case ValueManipulationType.NegativeTriggerValue:
-                output = -triggerValue;
-                break;
-            case ValueManipulationType.CardValue:
-                output = tempValue;
-                break;
-            case ValueManipulationType.NegativeCardValue:
-                output = -tempValue;
-                break;
-            case ValueManipulationType.Percentage:
-                output = -Mathf.CeilToInt(triggerValue * tempValue / 100.0f);
-                break;
-            case ValueManipulationType.NegativePercentage:
-                output = -Mathf.CeilToInt(triggerValue * tempValue / 100.0f);
-                break;
-            default:
-                output = triggerValue;
-                break;
-        }
-        return output;
-    }
-    */
-
-    public virtual Buff GetCopy()
-    {
-        /*
-        Buff output = new LifeStealBuff();
-        output.tempValue = tempValue;
-        output.duration = duration;
-        //output.value = value;
-        output.color = color;
-        output.description = description;
-        output.SetTriggerType(GetTriggerType());
-        output.durationType = durationType;
-
-        return output;
-        */
-        return null;
-    }
-
 
     public TriggerType GetTriggerType()
     {
@@ -190,6 +100,9 @@ public class Buff : ScriptableObject
         PartyManaCap = 46,
         PartyEnergyReduction = 47,
         PartyManaReduction = 48,
+
+        CardDrawChange = 50,
+        BonusCast = 55,
 
         Disarm = 60,
         Silence = 61,

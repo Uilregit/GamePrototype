@@ -17,7 +17,9 @@ public class DrawCardEffect : Effect
             foreach (Card spawnCard in card.cards)   //Draw all the specified cards
             {
                 CardController thisCard = new CardController();
-                thisCard.SetCard(spawnCard, false, false);
+                Card copy = spawnCard.GetCopy();
+                copy.casterColor = card.casterColor;            //Colors of the cards drawn will always be same color as the original card
+                thisCard.SetCard(copy, false, false);
                 HandController.handController.DrawSpecificCard(thisCard);
             }
         yield return new WaitForSeconds(0);
@@ -28,7 +30,7 @@ public class DrawCardEffect : Effect
         throw new System.NotImplementedException();
     }
 
-    public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration)
+    public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration, List<Relic> traceList)
     {
         for (int i = 0; i < effectValue; i++) //Draw effectValue number of random cards
             HandController.handController.DrawAnyCard();

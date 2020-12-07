@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.5223284, b: 1, a: 1}
   description: 'Protect: Prevent armor from decreasing for {d} turns'
-  triggerType: 0
-  durationType: 0
+  triggerType: 1
+  durationType: 1
   onApplyEffects: 12
   onTriggerTarget: 0
   onTriggerEffects: 0

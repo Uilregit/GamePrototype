@@ -22,13 +22,13 @@ public class CopyStatsEffect : Effect
         {
             BuffFactory buff = new BuffFactory();
             buff.SetBuff(GameController.gameController.attackBuff);
-            buff.OnApply(casterHealthController, caster.GetComponent<HealthController>(), maxATK - casterHealthController.GetAttack(), card.effectDuration[effectIndex], false);
+            buff.OnApply(casterHealthController, caster.GetComponent<HealthController>(), maxATK - casterHealthController.GetAttack(), card.effectDuration[effectIndex], false, null, null);
         }
         if (casterHealthController.GetArmor() != maxArmor)
         {
             BuffFactory buff = new BuffFactory();
             buff.SetBuff(GameController.gameController.armorBuff);
-            buff.OnApply(casterHealthController, caster.GetComponent<HealthController>(), maxArmor - casterHealthController.GetArmor(), card.effectDuration[effectIndex], false);
+            buff.OnApply(casterHealthController, caster.GetComponent<HealthController>(), maxArmor - casterHealthController.GetArmor(), card.effectDuration[effectIndex], false, null, null);
         }
 
         yield return new WaitForSeconds(0);

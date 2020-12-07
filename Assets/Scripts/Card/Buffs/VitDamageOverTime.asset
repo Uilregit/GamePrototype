@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: VitDamageOverTime
   m_EditorClassIdentifier: 
   color: {r: 0.5019608, g: 0, b: 0.5019608, a: 1}
-  description: 'Ignite: Take {v} damage at the end of the next {d} turn(s)'
-  triggerType: 0
-  durationType: 0
+  description: 'Ignite: Take {v} damage at the start of your next {d} turn(s)'
+  triggerType: 1
+  triggerModificationProtection: 1
+  durationType: 1
   onApplyEffects: 0
   onTriggerTarget: 0
   onTriggerEffects: 1

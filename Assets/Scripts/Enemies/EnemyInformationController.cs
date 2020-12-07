@@ -432,7 +432,6 @@ public class EnemyInformationController : MonoBehaviour
     public void DestroyUsedCard()
     {
         HideTargetLine();
-        TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
         Destroy(usedCard);
     }
 

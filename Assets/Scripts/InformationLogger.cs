@@ -74,6 +74,82 @@ public class PlayerPreferences
     public string party1;
     public string party2;
     public string party3;
+
+    public int teamLevel;
+    public int currentEXP;
+
+    public int redLevel;
+    public int redCurrentEXP;
+    public int blueLevel;
+    public int blueCurrentEXP;
+    public int greenLevel;
+    public int greenCurrentEXP;
+    public int orangeLevel;
+    public int orangeCurrentEXP;
+    public int whiteLevel;
+    public int whiteCurrentEXP;
+    public int blackLevel;
+    public int blackCurrentEXP;
+
+    public int highestOverkillScore;
+    public int highestDamageScore;
+    public int highestDamageArmoredScore;
+    public int highestDamageOverhealedProtectedScore;
+    public int highestDamageAvoidedScore;
+    public int highestEnemiesBrokenScore;
+    public int highestGoldUsedScore;
+    public int highestBossesDefeatedScore;
+    public int highestSecondsInGameScore;
+    public int highestTotalScore;
+}
+
+[System.Serializable]
+public class Unlocks
+{
+    public bool orangeUnlocked;
+    public bool whiteUnlocked;
+    public bool blackUnlocked;
+
+    public int tavernContracts;
+    public int largestBoss;
+
+    public int sand;
+    public int shards;
+
+    public int redGoldCardNum;
+    public int blueGoldCardNum;
+    public int greenGoldCardNum;
+    public int orangeGoldCardNum;
+    public int whiteGoldCardNum;
+    public int blackGoldCardNum;
+
+    public string[] unlockedCards;
+    public int[] unlockedCardsNumber;
+    public string[] unlockedRelics;
+    public string[] unlockedWeapons;
+    public string[] unlockedArmor;
+    public string[] unlockedSkins;
+
+    public bool holdUnlocked;
+    public int replaceUnlocked;
+    public int livesUnlocked;
+
+    public bool[] redTalentUnlocked;
+    public bool[] blueTalentUnlocked;
+    public bool[] greenTalentUnlocked;
+    public bool[] orangeTalentUnlocked;
+    public bool[] whtieTalentUnlocked;
+    public bool[] blackTalentUnlocked;
+
+    public int redCustomizableCardUnlocked;
+    public int blueCustomizableCardUnlocked;
+    public int greenCustomizableCardUnlocked;
+    public int orangeCustomizableCardUnlocked;
+    public int whiteCustomizableCardUnlocked;
+    public int blackCustomizableCardUnlocked;
+
+    public int ascentionTierUnlocked;
+    public int totalEXP;
 }
 
 public class InformationLogger : MonoBehaviour
@@ -88,7 +164,7 @@ public class InformationLogger : MonoBehaviour
     public Text seedText;
     public int roomRandomizedIndex = -1;
 
-    private bool loadGameOnLevelLoad = false;
+    public bool loadGameOnLevelLoad = false;
     private int roomControllerRoomLevel;
     private List<Vector2> roomControllerPreviousRooms;
 
@@ -113,11 +189,15 @@ public class InformationLogger : MonoBehaviour
         Random.InitState(seed);
 
         gameID = System.DateTime.Now.ToString();
-    }
 
-    private void OnLevelWasLoaded(int level)
-    {
-
+        try                 //For debugging purposes, prevents crashes when running from overworldScene
+        {
+            versionText.text = "Version: " + patchID;
+            seedText.text = "Seed: " + seed;
+            versionText.enabled = true;
+            seedText.enabled = true;
+        }
+        catch { }
     }
 
     public void SaveCombatInfo(string patchID, string gameID, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
@@ -131,10 +211,10 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,turnID,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
+        string header = "deviceID,patchID,gameID,encounterLevel,roomName,turnID,timestamp,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
 
         if (!File.Exists(filePath))
-            File.WriteAllText(filePath, header+"\n");
+            File.WriteAllText(filePath, header + "\n");
 
         string delimiter = ",";
         string line = SystemInfo.deviceUniqueIdentifier;
@@ -144,6 +224,7 @@ public class InformationLogger : MonoBehaviour
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + turnID;
+        line += delimiter + (int)ScoreController.score.GetSecondsInGame();
         line += delimiter + castOrder;
         line += delimiter + cardColor;
         line += delimiter + cardName;
@@ -251,17 +332,6 @@ public class InformationLogger : MonoBehaviour
 
         File.AppendAllText(filePath, line + "\n");
     }
-
-    /*    private int overkill;
-    private int damage;
-    private int damageArmored;
-    private int damageOverhealedProtected;
-    private int damageAvoided;
-    private int enemiesBroken;
-    private int goldUsed;
-    private int bossesDefeated;
-    private float secondsInGame;
-    */
 
     public void SaveGameScoreInfo(string patchID, string gameID, string encounterLevel, string roomName, string gameWon, string gameLost, string totalScore, string overkill, string damage,
                                     string damageArmored, string damageOverhealedProtected, string damageAvoided, string enemiesBroken, string goldUSed, string bossesDefeated, string secondsInGame)
@@ -502,7 +572,6 @@ public class InformationLogger : MonoBehaviour
             for (int i = 0; i < saveFile.destroyedRoomsX.Length; i++)
                 destroyedRooms.Add(new Vector2(saveFile.destroyedRoomsX[i], saveFile.destroyedRoomsY[i]));
             RoomController.roomController.SetDestroyedRooms(destroyedRooms);
-            RoomController.roomController.LoadRooms();
 
             Random.InitState(saveFile.stateSeed);   //Set seed back for all other purposes after room generation
 
@@ -588,20 +657,11 @@ public class InformationLogger : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OverworldScene" && loadGameOnLevelLoad)
         {
             InformationLogger.infoLogger.LoadGame();
+            RoomController.roomController.InitializeWorld();
+            RoomController.roomController.LoadRooms();
             loadGameOnLevelLoad = false;
         }
-        if (SceneManager.GetActiveScene().name == "MainMenuScene")
-        {
-            try                 //For debugging purposes, prevents crashes when running from overworldScene
-            {
-                versionText.text = "Version: " + patchID;
-                seedText.text = "Seed: " + seed;
-                versionText.enabled = true;
-                seedText.enabled = true;
-            }
-            catch { }
-        }
-        else
+        if (SceneManager.GetActiveScene().name != "MainMenuScene")
         {
             versionText.enabled = false;
             seedText.enabled = false;
@@ -616,6 +676,34 @@ public class InformationLogger : MonoBehaviour
         preferences.party1 = colors[0];
         preferences.party2 = colors[1];
         preferences.party3 = colors[2];
+
+        preferences.teamLevel = ScoreController.score.teamLevel;
+        preferences.currentEXP = ScoreController.score.currentEXP;
+
+        preferences.redLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Red)[0];
+        preferences.redCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Red)[1];
+        preferences.blueLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Blue)[0];
+        preferences.blueCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Blue)[1];
+        preferences.greenLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Green)[0];
+        preferences.greenCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Green)[1];
+        preferences.orangeLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Orange)[0];
+        preferences.orangeCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Orange)[1];
+        preferences.whiteLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.White)[0];
+        preferences.whiteCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.White)[1];
+        preferences.blackLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Black)[0];
+        preferences.blackCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Black)[1];
+
+        preferences.highestOverkillScore = ScoreController.score.highestScores[0];
+        preferences.highestDamageScore = ScoreController.score.highestScores[1];
+        preferences.highestDamageArmoredScore = ScoreController.score.highestScores[2];
+        preferences.highestDamageOverhealedProtectedScore = ScoreController.score.highestScores[3];
+        preferences.highestDamageAvoidedScore = ScoreController.score.highestScores[4];
+        preferences.highestEnemiesBrokenScore = ScoreController.score.highestScores[5];
+        preferences.highestGoldUsedScore = ScoreController.score.highestScores[6];
+        preferences.highestBossesDefeatedScore = ScoreController.score.highestScores[7];
+        preferences.highestSecondsInGameScore = ScoreController.score.highestScores[8];
+        preferences.highestTotalScore = ScoreController.score.highestTotalScore;
+
         return preferences;
     }
 
@@ -639,6 +727,30 @@ public class InformationLogger : MonoBehaviour
         colors[2] = preferences.party3;
 
         PartyController.party.SetPlayerColors(colors);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.Red, preferences.redLevel, preferences.redCurrentEXP);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.Blue, preferences.blueLevel, preferences.blueCurrentEXP);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.Green, preferences.greenLevel, preferences.greenCurrentEXP);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.Orange, preferences.orangeLevel, preferences.orangeCurrentEXP);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.White, preferences.whiteLevel, preferences.whiteCurrentEXP);
+        PartyController.party.SetPartyLevelInfo(Card.CasterColor.Black, preferences.blackLevel, preferences.blackCurrentEXP);
+
+        ScoreController.score.teamLevel = preferences.teamLevel;
+        ScoreController.score.currentEXP = preferences.currentEXP;
+
+        List<int> highestScores = new List<int>();
+
+        highestScores.Add(preferences.highestOverkillScore);
+        highestScores.Add(preferences.highestDamageScore);
+        highestScores.Add(preferences.highestDamageArmoredScore);
+        highestScores.Add(preferences.highestDamageOverhealedProtectedScore);
+        highestScores.Add(preferences.highestDamageAvoidedScore);
+        highestScores.Add(preferences.highestEnemiesBrokenScore);
+        highestScores.Add(preferences.highestGoldUsedScore);
+        highestScores.Add(preferences.highestBossesDefeatedScore);
+        highestScores.Add(preferences.highestSecondsInGameScore);
+
+        ScoreController.score.highestScores = highestScores;
+        ScoreController.score.highestTotalScore = preferences.highestTotalScore;
     }
     private PlayerPreferences GetHasPlayerPreferences()
     {
@@ -660,5 +772,47 @@ public class InformationLogger : MonoBehaviour
         }
 
         return playerPreferences;
+    }
+
+    //Unlocks
+    public void SaveUnlocks()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = GetCombatPath() + "/unlocks" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+
+        formatter.Serialize(stream, UnlocksController.unlock.GetUnlocks());
+        stream.Close();
+    }
+
+    public void LoadUnlocks()
+    {
+        UnlocksController.unlock.SetUnlocks(GetHasUnlocks());
+    }
+    private Unlocks GetHasUnlocks()
+    {
+        string path = GetCombatPath() + "/unlocks" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        Unlocks unlocks = null;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            unlocks = formatter.Deserialize(stream) as Unlocks;
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.Log("unlocks file not found in: " + path);
+            unlocks = UnlocksController.unlock.GetUnlocks();
+        }
+
+        return unlocks;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 }

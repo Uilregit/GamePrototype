@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 1}
   description: 'Disarm: Can''t play energy cards for {d} turns'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 60
   onTriggerTarget: 0
   onTriggerEffects: 0

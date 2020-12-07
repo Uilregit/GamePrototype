@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   description: 'Taunt: Forced to move towards and target the caster for {d} turn(s)'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 73
   onTriggerTarget: 0
   onTriggerEffects: 0

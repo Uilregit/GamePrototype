@@ -8,6 +8,13 @@ public class ScoreController : MonoBehaviour
 {
     public static ScoreController score;
 
+    public int teamLevel;
+    public int currentEXP;
+    public int teamEXPNeededToLevelAt1;
+    public int teamEXPNeededToLevelAt20;
+    public int heroEXPNeededToLevelAt1;
+    public int heroEXPNeededToLevelAt20;
+
     public Text timerText;
     public bool timerPaused = true; 
 
@@ -31,8 +38,11 @@ public class ScoreController : MonoBehaviour
     private int bossesDefeated;
     private float secondsInGame;
 
+    public List<int> highestScores = new List<int>();
+    public int highestTotalScore;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (ScoreController.score == null)
         {
@@ -183,5 +193,21 @@ public class ScoreController : MonoBehaviour
     public void SetSecondsInGame(float value)
     {
         secondsInGame = value;
+    }
+
+    public int GetTeamEXPNeededToLevel(int level)
+    {
+        if (level < 20)
+            return (int)Mathf.Lerp(teamEXPNeededToLevelAt1, teamEXPNeededToLevelAt20, level / 20.0f);
+        else
+            return teamEXPNeededToLevelAt20;
+    }
+
+    public int GetHeroEXPNeededToLevel(int level)
+    {
+        if (level < 20)
+            return (int)Mathf.Lerp(heroEXPNeededToLevelAt1, heroEXPNeededToLevelAt20, level / 20.0f);
+        else
+            return heroEXPNeededToLevelAt20;
     }
 }

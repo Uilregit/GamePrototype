@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.12997675, b: 1, a: 1}
   description: 'Cast Range: Modify cast range by {+-v} for {d} turns'
   triggerType: 1
-  durationType: 0
+  durationType: 1
   onApplyEffects: 35
   onTriggerTarget: 0
   onTriggerEffects: 0

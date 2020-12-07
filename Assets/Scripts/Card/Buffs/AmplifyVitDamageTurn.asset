@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.6194389, b: 1, a: 1}
   description: 'Amplify Damage: Take {v} times more damage for {d} turns'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 10
   onTriggerTarget: 0
   onTriggerEffects: 0

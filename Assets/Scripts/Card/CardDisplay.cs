@@ -269,7 +269,11 @@ public class CardDisplay : MonoBehaviour
                     finalText = attackText.Replace("<s>", "").Replace("</s>", "");
 
                     if (finalText.IndexOf("ATK as") != -1)
-                        finalText = finalText.Replace("ATK as", "ATK (" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(card.GetCard().casterColor) * percentage / 100.0f)).ToString() + ") as");
+                        try
+                        {
+                            finalText = finalText.Replace("ATK as", "ATK (" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(card.GetCard().casterColor) * percentage / 100.0f)).ToString() + ") as");
+                        }
+                        catch { }
 
                     descriptionText = descriptionText.Replace(attackText, finalText);
 

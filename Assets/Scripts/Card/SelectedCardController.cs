@@ -27,23 +27,26 @@ public class SelectedCardController : MonoBehaviour
         cardName.text = card.GetCard().name;
         manacost = card.GetCard().manaCost;
         if (manacost > 0)
-            manaCost.text = card.GetCard().manaCost.ToString();
-        if (manacost == 0)
-            energyCost.text = card.GetCard().energyCost.ToString();
-        /*
-        switch (card.casterColor)
         {
-            case Card.CasterColor.Red:
-                backImage.color = HandController.handController.redCasterColor;
-                break;
-            case Card.CasterColor.Blue:
-                backImage.color = HandController.handController.blueCasterColor;
-                break;
-            case Card.CasterColor.Green:
-                backImage.color = HandController.handController.greenCasterColor;
-                break;
+            manaCost.text = card.GetCard().manaCost.ToString();
+            manaIcon.enabled = true;
         }
-        */
+        else
+        {
+            manaCost.text = "";
+            manaIcon.enabled = false;
+        }
+
+        if (manacost == 0)
+        {
+            energyCost.text = card.GetCard().energyCost.ToString();
+            energyIcon.enabled = true;
+        }
+        else
+        {
+            energyCost.text = "";
+            energyIcon.enabled = false;
+        }
         Show();
     }
 

@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 11400000, guid: 62619f13cd9b85c47a3b537a5909554c, type: 2}
   effectValue: 000000009cffffff00000000
-  effectDuration: 000000000000000004000000
+  effectDuration: 000000000000000003000000
   spawnObject:
   - {fileID: 0}
   cards:

@@ -37,115 +37,145 @@ public class CardEffectsController : MonoBehaviour
         int armorDamage = 0;
         string targetNames = "|";
 
-        //Trigger each of the effects on the card
-        for (int i = 0; i < effects.Length; i++)
+        int bonusCast = 0;
+        if (card.GetCard().casterColor == Card.CasterColor.Enemy)
+            bonusCast += TurnController.turnController.GetEnemyBonusCast();
+        else
+            bonusCast += TurnController.turnController.GetPlayerBonusCast();
+
+        //If there are bonus casts, then process the card that many more times
+        for (int j = 0; j < 1 + bonusCast; j++)
         {
-            if (ConditionsMet(caster, targets, card.GetCard().conditionType[i], card.GetCard().conditionValue[i]))
+            //Trigger each of the effects on the card
+            for (int i = 0; i < effects.Length; i++)
             {
-                card.GetCard().SetPreviousConditionTrue(true);
+                if (ConditionsMet(caster, targets, card.GetCard().conditionType[i], card.GetCard().conditionValue[i]))
+                {
+                    card.GetCard().SetPreviousConditionTrue(true);
 
-                List<GameObject> t = new List<GameObject>();
-                List<Vector2> locs = new List<Vector2>();
+                    List<GameObject> t = new List<GameObject>();
+                    List<Vector2> locs = new List<Vector2>();
 
-                if (caster.GetComponent<HealthController>().GetTauntedTarget() != null)
-                    t = GridController.gridController.GetObjectAtLocation(targets, new string[] { caster.GetComponent<HealthController>().GetTauntedTarget().tag });    //If the caster is taunted, then it casts to the target's tag instead
-                else
-                    switch (card.GetCard().targetType[i])
-                    {
-                        //If the target of the effect is the self
-                        case Card.TargetType.Self:
-                            t.Add(caster);
-                            break;
-                        //If the target of the effect is not the self
-                        case Card.TargetType.AllEnemies:
-                            t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Enemy" });
-                            break;
-                        case Card.TargetType.AllPlayers:
-                            t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
-                            break;
-                        case Card.TargetType.Any:
-                            t = GridController.gridController.GetObjectAtLocation(targets);
-                            break;
-                        case Card.TargetType.Enemy:
-                            t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Enemy" });
-                            break;
-                        case Card.TargetType.None:
-                            break;
-                        case Card.TargetType.Player:
-                            t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
-                            break;
-                    }
-
-                foreach (GameObject obj in t)
-                    targetNames += obj.name + "|";
-
-                if (card.GetCard().targetType[i] == Card.TargetType.None || card.GetCard().castType == Card.CastType.EmptySpace)
-                    locs = targets;
-                else
-                    foreach (GameObject obj in t)
-                        locs.Add(obj.transform.position);
-                vitDamage += effects[i].GetSimulatedVitDamage(caster, this, t, card.GetCard(), i);
-                armorDamage += effects[i].GetSimulatedArmorDamage(caster, this, t, card.GetCard(), i);
-
-                float minHealthPercentage = 1;
-                bool hasPlayer = false;
-                foreach (Vector2 targ in locs)
-                    foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(targ))
-                    {
-                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger(card.GetCard().hitEffect[i].ToString());
-
-                        if (obj.GetComponent<PlayerController>() != null)
+                    if (caster.GetComponent<HealthController>().GetTauntedTarget() != null)
+                        t = GridController.gridController.GetObjectAtLocation(targets, new string[] { caster.GetComponent<HealthController>().GetTauntedTarget().tag });    //If the caster is taunted, then it casts to the target's tag instead
+                    else
+                        switch (card.GetCard().targetType[i])
                         {
-                            hasPlayer = true;
-                            if (effects[i].GetSimulatedVitDamage(caster, this, new List<GameObject>() { obj }, card.GetCard(), i) > 0)
+                            //If the target of the effect is the self
+                            case Card.TargetType.Self:
+                                t.Add(caster);
+                                break;
+                            //If the target of the effect is not the self
+                            case Card.TargetType.AllEnemies:
+                                t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Enemy" });
+                                break;
+                            case Card.TargetType.AllPlayers:
+                                t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
+                                break;
+                            case Card.TargetType.Any:
+                                t = GridController.gridController.GetObjectAtLocation(targets);
+                                break;
+                            case Card.TargetType.Enemy:
+                                t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Enemy" });
+                                break;
+                            case Card.TargetType.None:
+                                break;
+                            case Card.TargetType.Player:
+                                t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
+                                break;
+                        }
+
+                    foreach (GameObject obj in t)
+                        targetNames += obj.name + "|";
+
+                    if (card.GetCard().targetType[i] == Card.TargetType.None || card.GetCard().castType == Card.CastType.EmptySpace)
+                        locs = targets;
+                    else
+                        foreach (GameObject obj in t)
+                            locs.Add(obj.transform.position);
+                    int damage = effects[i].GetSimulatedVitDamage(caster, this, t, card.GetCard(), i);
+                    vitDamage += damage;
+                    armorDamage += effects[i].GetSimulatedArmorDamage(caster, this, t, card.GetCard(), i);
+
+                    float minHealthPercentage = 1;
+                    bool hasPlayer = false;
+                    foreach (Vector2 targ in locs)
+                        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(targ))
+                        {
+                            if (card.GetCard().hitEffect[i] == Card.HitEffect.PlayerAttack)
                             {
-                                float healthPercentage = (float)(obj.GetComponent<HealthController>().GetCurrentVit() - effects[i].GetSimulatedVitDamage(caster, this, new List<GameObject>() { obj }, card.GetCard(), i)) / (float)obj.GetComponent<HealthController>().GetMaxVit();
-                                if (healthPercentage < minHealthPercentage)
-                                    minHealthPercentage = healthPercentage;
+                                if (damage <= 5)
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("PlayerAttack");
+                                else if (damage <= 20)
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("MediumImpact");
+                                else
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("LargeImpact");
+                            }
+                            else if (card.GetCard().hitEffect[i] == Card.HitEffect.MagicAttack)
+                            {
+                                if (damage <= 5)
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("SmallMagic");
+                                else if (damage <= 20)
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("MediumMagic");
+                                else
+                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("LargeMagic");
+                            }
+                            else
+                                obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger(card.GetCard().hitEffect[i].ToString());
+
+                            if (obj.GetComponent<PlayerController>() != null)
+                            {
+                                hasPlayer = true;
+                                if (effects[i].GetSimulatedVitDamage(caster, this, new List<GameObject>() { obj }, card.GetCard(), i) > 0)
+                                {
+                                    float healthPercentage = (float)(obj.GetComponent<HealthController>().GetCurrentVit() - damage) / (float)obj.GetComponent<HealthController>().GetMaxVit();
+                                    if (healthPercentage < minHealthPercentage)
+                                        minHealthPercentage = healthPercentage;
+                                }
                             }
                         }
+
+                    if (hasPlayer && damage > 0)
+                    {
+                        GetComponent<PlayerController>();
+                        GameController.gameController.SetDamageOverlay(minHealthPercentage);
                     }
 
-                if (hasPlayer && effects[i].GetSimulatedVitDamage(caster, this, t, card.GetCard(), i) > 0)
-                {
-                    GetComponent<PlayerController>();
-                    GameController.gameController.SetDamageOverlay(minHealthPercentage);
+                    switch (card.GetCard().hitEffect[i])
+                    {
+                        case Card.HitEffect.PlayerAttack:
+                            CameraController.camera.ScreenShake(Mathf.Lerp(0.03f, 0.5f, 0.04f * vitDamage - 0.2f), 0.4f);
+                            break;
+                        case Card.HitEffect.EnemyAttack:
+                            CameraController.camera.ScreenShake(Mathf.Lerp(0.03f, 0.5f, 0.04f * vitDamage - 0.2f), 0.4f);
+                            break;
+                        case Card.HitEffect.None:
+                            break;
+                        default:
+                            CameraController.camera.ScreenShake(0.06f, 0.3f);
+                            break;
+                    }
+
+                    yield return new WaitForSeconds(0.3f);
+
+                    if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
+                        StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
+                    else
+                        yield return StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
+
+                    if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)
+                        i += 1;
                 }
-
-                switch (card.GetCard().hitEffect[i])
-                {
-                    case Card.HitEffect.PlayerAttack:
-                        CameraController.camera.ScreenShake(Mathf.Lerp(0.03f, 0.5f, 0.04f * vitDamage - 0.2f), 0.4f);
-                        break;
-                    case Card.HitEffect.EnemyAttack:
-                        CameraController.camera.ScreenShake(Mathf.Lerp(0.03f, 0.5f, 0.04f * vitDamage - 0.2f), 0.4f);
-                        break;
-                    case Card.HitEffect.None:
-                        break;
-                    default:
-                        CameraController.camera.ScreenShake(0.06f, 0.3f);
-                        break;
-                }
-
-                yield return new WaitForSeconds(0.3f);
-
-                if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
-                    StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
                 else
-                    yield return StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
-
-                if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)
-                    i += 1;
-            }
-            else
-            {
-                card.GetCard().SetPreviousConditionTrue(false);
-
-                if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)
                 {
-                    i += 2;
-                    if (i < effects.Length)
-                        break;
+                    card.GetCard().SetPreviousConditionTrue(false);
+
+                    if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)
+                    {
+                        i += 2;
+                        if (i < effects.Length)
+                            break;
+                    }
                 }
             }
         }

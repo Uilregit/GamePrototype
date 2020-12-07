@@ -116,6 +116,7 @@ public class Card : ScriptableObject
     public enum HitEffect
     {
         PlayerAttack = 0,
+        MagicAttack = 50,
         EnemyAttack = 100,
         Buff = 200,
         Debuff = 300,
@@ -123,7 +124,7 @@ public class Card : ScriptableObject
         Cleanse = 500,
         None = 999999
     }
-    public List<HitEffect> hitEffect;
+    public HitEffect[] hitEffect = new HitEffect[1];
 
     public enum ConditionType
     {
@@ -154,57 +155,6 @@ public class Card : ScriptableObject
     public ConditionType[] conditionType = new ConditionType[1];
     public int[] conditionValue = new int[1];
 
-    /*
-    //The buff used if the card bestoes a buff or debuff
-    public enum BuffType
-    {
-        None = 0,
-        VitDamageOverTime = 1,
-        ArmorDamageOverTime = 10,
-        PiercingDamageOverTime = 20,
-        BonusHealing = 21,
-
-        AttackChange = 100, 
-        CriticalStrike = 105,
-        ArmorBuff = 110, 
-        EnfeebleDebuff = 111,
-        
-        MoveRangeBuff = 200,
-        RuptureBuff = 201,
-        CastRangeBuff = 210,
-
-        DoubleDamageBuff = 300,
-        AmplifyDamageTurn = 310,
-        AmplifyHealingTurn = 320,
-
-        Stun = 400,
-        Taunt = 401,
-        Disarm = 410,
-        Silence = 411,
-        AdditionalPiercingDamage = 420,
-        AdditionalHealing = 426,
-        Preserve = 425,
-
-        BarrierBuff = 500, 
-        ProtectBuff = 501,
-        RetaliateBuff = 502,
-        DivineArmorBuff = 503,
-
-        PartyEnergyCostCapTurnBuff = 600,
-        PartyManaCostCapTurnBuff = 601,
-        PartyEnergyCostReductionBuff = 602,
-        PartyManaCostReductionBuff = 603,
-        CharEnergyCostCapTurnBuff = 610,
-        CharManaCostCapTurnBuff = 611,
-        CharEnergyCostReductionBuff = 612,
-        CharManaCostReductionBuff = 613,
-
-        LifestealBuff = 700,
-        HealAttacker = 710,
-        AttackChangeOnHeal = 720
-    }
-    */
-    //public BuffType[] buffType = new BuffType[1];
     public Buff[] buff = new Buff[1];
 
     //Value of the effect. ie. deal *1* damage

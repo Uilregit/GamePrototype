@@ -299,27 +299,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Blue_Attacking_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7706bbc4dd08a6d10800000000000000
-      internalID: 2119648262594715767
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Blue_Attacking_1
       rect:
         serializedVersion: 2
@@ -328,7 +307,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -349,7 +328,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -357,111 +336,6 @@ TextureImporter:
       bones: []
       spriteID: 92f563ad5f518f260800000000000000
       internalID: 7131474155613347625
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_3
-      rect:
-        serializedVersion: 2
-        x: 420
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e0595c7f98f8a6d0800000000000000
-      internalID: -2978857789635866393
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_4
-      rect:
-        serializedVersion: 2
-        x: 560
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1a7684e15e77aca0800000000000000
-      internalID: -6005692687883797986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_5
-      rect:
-        serializedVersion: 2
-        x: 700
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8e4403645dcd6cb00800000000000000
-      internalID: 848608388369630440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_6
-      rect:
-        serializedVersion: 2
-        x: 840
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28df1dd75f8e7ad90800000000000000
-      internalID: -7086439347568640638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_7
-      rect:
-        serializedVersion: 2
-        x: 980
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 511ebb49ddc9e50a0800000000000000
-      internalID: -6890897904333233899
       vertices: []
       indices: 
       edges: []
@@ -475,7 +349,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -496,7 +370,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -517,7 +391,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -538,7 +412,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -546,27 +420,6 @@ TextureImporter:
       bones: []
       spriteID: a9db2c09bc10c2a80800000000000000
       internalID: -8490409223681557094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_12
-      rect:
-        serializedVersion: 2
-        x: 1680
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca9acefa66baf8ce0800000000000000
-      internalID: -1400712501562398292
       vertices: []
       indices: 
       edges: []
@@ -580,7 +433,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -601,7 +454,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -622,7 +475,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -643,7 +496,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -664,7 +517,7 @@ TextureImporter:
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -677,232 +530,148 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_18
+      name: Blue_Attacking_0
       rect:
         serializedVersion: 2
-        x: 2520
+        x: 0
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d125146d8f571d60800000000000000
-      internalID: 7860856735472624083
+      spriteID: 7706bbc4dd08a6d10800000000000000
+      internalID: 2119648262594715767
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_19
+      name: Blue_Attacking_3
       rect:
         serializedVersion: 2
-        x: 2660
+        x: 420
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01e2d2558d6b113a0800000000000000
-      internalID: -6696370130665001456
+      spriteID: 7e0595c7f98f8a6d0800000000000000
+      internalID: -2978857789635866393
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_20
+      name: Blue_Attacking_4
       rect:
         serializedVersion: 2
-        x: 2800
+        x: 560
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e1a89992569ce4d0800000000000000
-      internalID: -3103940761656712735
+      spriteID: e1a7684e15e77aca0800000000000000
+      internalID: -6005692687883797986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_21
+      name: Blue_Attacking_5
       rect:
         serializedVersion: 2
-        x: 2940
+        x: 700
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99cb6512508aa4dc0800000000000000
-      internalID: -3653923407670100839
+      spriteID: 8e4403645dcd6cb00800000000000000
+      internalID: 848608388369630440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_22
+      name: Blue_Attacking_6
       rect:
         serializedVersion: 2
-        x: 3080
+        x: 840
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 074e76c028fd85a80800000000000000
-      internalID: -8477780548878080912
+      spriteID: 28df1dd75f8e7ad90800000000000000
+      internalID: -7086439347568640638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_23
+      name: Blue_Attacking_7
       rect:
         serializedVersion: 2
-        x: 3220
+        x: 980
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b65038e00357f0af0800000000000000
-      internalID: -427994590314560149
+      spriteID: 511ebb49ddc9e50a0800000000000000
+      internalID: -6890897904333233899
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue_Attacking_24
+      name: Blue_Attacking_12
       rect:
         serializedVersion: 2
-        x: 3360
+        x: 1680
         y: 0
         width: 140
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.26}
+      pivot: {x: 0.5, y: 0.38}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2fb000924ed39ba0800000000000000
-      internalID: -6083274294182232275
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_25
-      rect:
-        serializedVersion: 2
-        x: 3500
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 806e76051dc5a4600800000000000000
-      internalID: 453276766571062792
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_26
-      rect:
-        serializedVersion: 2
-        x: 3640
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 314259113f1f745b0800000000000000
-      internalID: -5384068803223804909
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_27
-      rect:
-        serializedVersion: 2
-        x: 3780
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 268c11d7699f04ad0800000000000000
-      internalID: -2719899750193051550
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Blue_Attacking_28
-      rect:
-        serializedVersion: 2
-        x: 3920
-        y: 0
-        width: 140
-        height: 80
-      alignment: 9
-      pivot: {x: 0.5, y: 0.26}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c20802fab505d750800000000000000
-      internalID: 6328971151821767366
+      spriteID: ca9acefa66baf8ce0800000000000000
+      internalID: -1400712501562398292
       vertices: []
       indices: 
       edges: []

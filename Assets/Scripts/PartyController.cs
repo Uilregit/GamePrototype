@@ -11,7 +11,9 @@ public class PartyController : MonoBehaviour
     public Card.CasterColor[] partyColors;
 
     public Card.CasterColor[] potentialPlayerColors;
+    public List<Card.CasterColor> unlockedPlayerColors;
     public Color[] playerImageColors;
+    public Dictionary<Card.CasterColor, List<int>> partyLevelInfo;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,6 +24,21 @@ public class PartyController : MonoBehaviour
             Destroy(this.gameObject);
 
         DontDestroyOnLoad(this.gameObject);
+
+        partyLevelInfo = new Dictionary<Card.CasterColor, List<int>>();
+
+        unlockedPlayerColors = potentialPlayerColors.ToList();
+    }
+
+    public void ResolveUnlockedColors()
+    {
+        Unlocks unlocked = UnlocksController.unlock.GetUnlocks();
+        if (!unlocked.blackUnlocked)
+            unlockedPlayerColors.Remove(Card.CasterColor.Black);
+        if (!unlocked.whiteUnlocked)
+            unlockedPlayerColors.Remove(Card.CasterColor.White);
+        if (!unlocked.orangeUnlocked)
+            unlockedPlayerColors.Remove(Card.CasterColor.Orange);
     }
 
     public Color GetPlayerColor(Card.CasterColor caster)
@@ -97,5 +114,15 @@ public class PartyController : MonoBehaviour
     public int GetPartyIndex(Card.CasterColor caster)
     {
         return Array.FindIndex(partyColors, x => x == caster);
+    }
+
+    public void SetPartyLevelInfo(Card.CasterColor color, int level, int currentExp)
+    {
+        partyLevelInfo[color] = new List<int>() { level, currentExp };
+    }
+
+    public List<int> GetPartyLevelInfo(Card.CasterColor color)
+    {
+        return partyLevelInfo[color];
     }
 }

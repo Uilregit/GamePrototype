@@ -22,7 +22,7 @@ MonoBehaviour:
   radius: 0
   casterColor: 3
   description: Deal 2 damage for every mana spent this turn<ms>|(x mana spent)</ms>
-  art: {fileID: 21300000, guid: 6b4f0bef4a1517646946318c148aeadf, type: 3}
+  art: {fileID: 21300000, guid: d01733078fc5bc740bbd235c4049a1fc, type: 3}
   castType: 0
   castShape: 0
   targetType: 020000000200000003000000

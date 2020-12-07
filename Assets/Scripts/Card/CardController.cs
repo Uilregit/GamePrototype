@@ -123,6 +123,8 @@ public class CardController : MonoBehaviour
             GameObject caster = FindCaster(card);
             if (card.castType == Card.CastType.AoE)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, card.radius, PartyController.party.GetPlayerColor(card.casterColor));
+            else if (card.castType == Card.CastType.None)
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, Card.CastShape.Circle, 20, PartyController.party.GetPlayerColor(card.casterColor));
             else
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange(), PartyController.party.GetPlayerColor(card.casterColor));
 
@@ -182,7 +184,7 @@ public class CardController : MonoBehaviour
     //If a cast tile has been made for the location, it's castable
     public bool CheckIfValidCastLocation(Vector2 castLocation)
     {
-        List<Vector2> castableLocations = TileCreator.tileCreator.GetSelectableLocations();
+        List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();       //Allows indicator on ALL locations in range, not just castable locations
         if (card.castShape == Card.CastShape.None)
             return true;
         else

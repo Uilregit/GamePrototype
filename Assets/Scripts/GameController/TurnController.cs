@@ -20,6 +20,11 @@ public class TurnController : MonoBehaviour
     private List<int> manaReduction;
     private List<int> energyReduction;
 
+    private int cardDrawChange = 0;
+
+    private int playerBonusCast = 0;
+    private int enemyBonusCast = 0;
+
     [SerializeField] private Text maxEnergyText;
     [SerializeField] private Text currentEnergyText;
 
@@ -119,9 +124,9 @@ public class TurnController : MonoBehaviour
             else
                 manaCardsPlayed += 1;
         if (manaCardsPlayed == 0)
-            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed);
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed, null);
         if (energyCardsPlayed == 0)
-            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed);
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed, null);
 
         cardsPlayedThisTurn = new List<Card>();
 
@@ -138,12 +143,15 @@ public class TurnController : MonoBehaviour
 
         //Trigger all end of turn buff effects
         foreach (GameObject characters in players)
+        {
+            characters.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
             yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
+        }
         foreach (EnemyController thisEnemy in enemies)
-            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
 
 
-        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd);
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd, null);
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
@@ -174,8 +182,6 @@ public class TurnController : MonoBehaviour
             yield return new WaitForSeconds(TimeController.time.enemyExecutionStagger * TimeController.time.timerMultiplier);
         }
 
-        yield return StartCoroutine(GridController.gridController.CheckDeath());
-
         GridController.gridController.ResolveOverlap();
         enemies.AddRange(queuedEnemies);
         queuedEnemies = new List<EnemyController>();
@@ -190,7 +196,7 @@ public class TurnController : MonoBehaviour
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
-        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart);
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart, null);
 
         players = GameController.gameController.GetLivingPlayers();
         //Trigger all start of turn buff effects
@@ -198,7 +204,12 @@ public class TurnController : MonoBehaviour
             yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
 
         foreach (EnemyController thisEnemy in enemies)
-            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+        {
+            thisEnemy.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
+            yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+        }
+
+        yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
@@ -402,5 +413,35 @@ public class TurnController : MonoBehaviour
         {
             return 0;
         }
+    }
+
+    public void SetCardDrawChange(int value)
+    {
+        cardDrawChange += value;
+    }
+
+    public int GetCardDrawChange()
+    {
+        return cardDrawChange;
+    }
+
+    public void SetPlayerBonusCast(int value)
+    {
+        playerBonusCast += value;
+    }
+
+    public int GetPlayerBonusCast()
+    {
+        return playerBonusCast;
+    }
+
+    public void SetEnemyBonusCast(int value)
+    {
+        enemyBonusCast += value;
+    }
+
+    public int GetEnemyBonusCast()
+    {
+        return enemyBonusCast;
     }
 }

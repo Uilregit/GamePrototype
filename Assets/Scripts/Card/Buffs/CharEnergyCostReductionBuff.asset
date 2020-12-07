@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.17089081, b: 1, a: 1}
   description: 'Energy Reduction: Your energy cards cost {v} less for {d} turn(s)'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 42
   onTriggerTarget: 0
   onTriggerEffects: 0

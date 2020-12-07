@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: E Eclipse
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  canCastOnSelf: 1
+  rarity: 0
+  name: Eclipse
+  energyCost: 0
+  manaCost: 10
+  range: 1
+  radius: 2
+  casterColor: 6
+  description: Summon a Luna and a Sol crystal
+  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  castType: 5
+  castShape: 0
+  targetType: 020000000600000002000000
+  cardEffectName: 88130000c700000088130000
+  hitEffect: c80000003f420f00c8000000
+  conditionType: 000000000000000000000000
+  conditionValue: 000000000000000000000000
+  buff:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  effectValue: 010000000000000001000000
+  effectDuration: 010000000000000001000000
+  spawnObject:
+  - {fileID: 3199024419837817711, guid: 9e4d286bf7174304c9ed0e2d6afddf24, type: 3}
+  - {fileID: 0}
+  - {fileID: 3199024419837817711, guid: 68599956a8be1614cad00744e89d326f, type: 3}
+  cards:
+  - {fileID: 0}
+  indicatorType: 4
+  targetBehaviour: 10
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

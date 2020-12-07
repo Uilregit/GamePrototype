@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5803cc10bbe6e8e4c81d2e987b401f02, type: 2}
   - {fileID: 11400000, guid: 64af0c65eba3c804da7b5b81189392d8, type: 2}
   bossRooms:
-  - {fileID: 11400000, guid: d96ad6099ba85f648ae7d801daa5af9d, type: 2}
+  - {fileID: 11400000, guid: 2aed53b396ca9c7408978ced71c68086, type: 2}
   dissapearPercentage: 0
   numOfShopPerWorld: 3
   minShopLocation: 2

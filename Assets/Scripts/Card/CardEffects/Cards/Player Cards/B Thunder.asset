@@ -28,7 +28,7 @@ MonoBehaviour:
   castShape: 0
   targetType: 03000000
   cardEffectName: 00000000
-  hitEffect: 00000000
+  hitEffect: 32000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:

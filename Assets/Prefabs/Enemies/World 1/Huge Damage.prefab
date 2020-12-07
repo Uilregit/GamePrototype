@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 1
-  maxVit: 70
+  maxVit: 50
   startingArmor: 1
   attack: 8
   moveRange: 4

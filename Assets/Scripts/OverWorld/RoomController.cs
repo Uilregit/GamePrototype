@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour
 {
@@ -58,14 +59,21 @@ public class RoomController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        if (!initiated)
+        
+        if (!initiated && !InformationLogger.infoLogger.loadGameOnLevelLoad)
         {
             InitializeWorld();
+            LoadRooms();
             initiated = true;
+
+            ResourceController.resource.GetComponent<Canvas>().enabled = true;
+            ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
+            ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
         }
+        
     }
 
-    private void InitializeWorld()
+    public void InitializeWorld()
     {
         canvas = GetComponent<Canvas>();
 
@@ -99,6 +107,8 @@ public class RoomController : MonoBehaviour
     {
         worldLevel = level;
         selectedLevel = -1;
+        foreach (SmallRoom room in smallRooms)
+            Destroy(room.gameObject);
         InitializeWorld();
     }
 
@@ -392,5 +402,6 @@ public class RoomController : MonoBehaviour
     public void SetWorldLevel(int newLevel)
     {
         worldLevel = newLevel;
+        Camera.main.backgroundColor = worldSetups[worldLevel].cameraBackground;
     }
 }

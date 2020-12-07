@@ -165,6 +165,7 @@ public class CardDragController : DragController
         else
         {
             line.enabled = false;
+            transform.rotation = Quaternion.Euler(originalRotation);
         }
     }
 
@@ -219,6 +220,7 @@ public class CardDragController : DragController
                 transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
                 transform.position = originalLocation;
                 offset = Vector2.zero;
+                HandController.handController.ResetCardPositions();
 
                 if (isHeld)
                 {

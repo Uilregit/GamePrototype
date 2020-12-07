@@ -7,7 +7,7 @@ public class EditDeckButtonController : MonoBehaviour
 {
     public void OnMouseDown()
     {
-        CameraController.camera.transform.position = new Vector3(7, 0, -10);
+        CameraController.camera.transform.position = new Vector3(8, 0, -10);
     }
 
     public void Hide()

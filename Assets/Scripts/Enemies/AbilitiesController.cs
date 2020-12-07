@@ -6,15 +6,24 @@ public class AbilitiesController : MonoBehaviour
 {
     public enum TargetType
     {
-        Creator
+        Self = 0,
+        AllPlayers = 10,
+        AllEnemies = 20,
+        Creator = 100,
     }
     public enum TriggerType
     {
-        OnDeath, OnSacrifice
+        OnDeath = 0,
+        OnSacrifice = 1,
+        AtEndOfTurn = 10,
     }
     public enum AbilityType
     {
-        VitChange, ArmorChange, AttackChange
+        VitChange = 0,
+        ArmorChange = 1,
+        AttackChange = 2,
+        FullHeal = 10,
+        Break = 11
     }
 
     public List<TargetType> targetTypes = new List<TargetType>();
@@ -74,10 +83,16 @@ public class AbilitiesController : MonoBehaviour
                             obj.GetComponent<HealthController>().TakePiercingDamage(abilityValue[i], GetComponent<HealthController>());
                             break;
                         case AbilityType.ArmorChange:
-                            obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i]);
+                            obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i], null);
                             break;
                         case AbilityType.AttackChange:
                             obj.GetComponent<HealthController>().SetBonusAttack(abilityValue[i]);
+                            break;
+                        case AbilityType.Break:
+                            obj.GetComponent<HealthController>().TakeArmorDamage(9999999, null);
+                            break;
+                        case AbilityType.FullHeal:
+                            obj.GetComponent<HealthController>().TakePiercingDamage(obj.GetComponent<HealthController>().GetCurrentVit() - obj.GetComponent<HealthController>().GetMaxVit(), obj.GetComponent<HealthController>());
                             break;
                     }
                 }
@@ -91,6 +106,13 @@ public class AbilitiesController : MonoBehaviour
         {
             case TargetType.Creator:
                 return new List<GameObject>() { GetComponent<HealthController>().GetCreator() };
+            case TargetType.AllEnemies:
+                List<GameObject> output = new List<GameObject>();
+                foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+                    output.Add(obj.gameObject);
+                return output;
+            case TargetType.AllPlayers:
+                return GameController.gameController.GetLivingPlayers();
             default:
                 return new List<GameObject>() { this.gameObject };
         }
@@ -110,6 +132,9 @@ public class AbilitiesController : MonoBehaviour
                 case TriggerType.OnSacrifice:
                     s += "Sacrifice: ";
                     break;
+                case TriggerType.AtEndOfTurn:
+                    s += "End of turn: ";
+                    break;
             }
 
             switch (targetTypes[i])
@@ -117,11 +142,20 @@ public class AbilitiesController : MonoBehaviour
                 case TargetType.Creator:
                     s += "Summoner ";
                     break;
+                case TargetType.AllEnemies:
+                    s += "All Enemies ";
+                    break;
+                case TargetType.AllPlayers:
+                    s += "All Players ";
+                    break;
+                //case TargetType.Self:
+                //    s += "You ";
+                //    break;
             }
 
             if (abilityValue[i] > 0)
                 s += "Gain " + abilityValue[i] + " ";
-            else
+            else if (abilityValue[i] < 0)
                 s += "Lose " + Mathf.Abs(abilityValue[i]) + " ";
 
             switch (abilityTypes[i])
@@ -134,6 +168,12 @@ public class AbilitiesController : MonoBehaviour
                     break;
                 case AbilityType.VitChange:
                     s += "Health";
+                    break;
+                case AbilityType.FullHeal:
+                    s += "Restore To Full Health";
+                    break;
+                case AbilityType.Break:
+                    s += "Become Broken";
                     break;
             }
 

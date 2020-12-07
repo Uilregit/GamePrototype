@@ -15,7 +15,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.57522726, b: 1, a: 1}
   description: 'Enfeeble: Take {v} more shield damage per hit for {d} turns'
   triggerType: 0
-  durationType: 0
+  durationType: 1
   onApplyEffects: 73
   onTriggerTarget: 0
   onTriggerEffects: 0

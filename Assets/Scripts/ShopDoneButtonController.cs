@@ -21,7 +21,7 @@ public class ShopDoneButtonController : MonoBehaviour
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
         if (ShopController.shop.GetBoughtCard())
-            cameraLocation = new Vector3(7, 0, -10);
+            cameraLocation = new Vector3(8, 0, -10);
         else
             cameraLocation = new Vector3(0, 0, -10);
         deckID = ShopController.shop.GetLatestDeckID();
@@ -34,11 +34,14 @@ public class ShopDoneButtonController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OverworldScene")
         {
             CameraController.camera.transform.position = cameraLocation;
-            Debug.Log(cameraLocation);
-            Debug.Log(CameraController.camera.transform.position);
             Destroy(this.gameObject);
         }
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 }

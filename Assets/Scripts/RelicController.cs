@@ -26,12 +26,17 @@ public class RelicController : Observer
             validChoices.Add(i);
     }
 
-    public override void OnNotify(object value, Relic.NotificationType notificationType)
+    public override void OnNotify(object value, Relic.NotificationType notificationType, List<Relic> traceList)
     {
         for (int i = 0; i < relics.Count; i++)
             if (relics[i].condition == notificationType)
             {
-                relics[i].Process(value);
+                if (traceList != null && traceList.Contains(relics[i]))
+                    continue;
+                else if (traceList == null)
+                    traceList = new List<Relic>();
+                traceList.Add(relics[i]);
+                relics[i].Process(value, traceList);
                 StartCoroutine(RelicDisplayController.relicDisplay.ShowRelicTrigger(i));
             }
         HandController.handController.ResetCardDisplays();

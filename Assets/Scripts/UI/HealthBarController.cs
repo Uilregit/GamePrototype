@@ -38,6 +38,7 @@ public class HealthBarController : MonoBehaviour
     public Image armorDamageImage;
     public Image armorDamageImage2;
     public Text armorDamageText;
+    public Animator armorBreakAnim;
 
     [Header("Damage Sprites")]
     public Sprite normalDamageSprite;
@@ -293,6 +294,8 @@ public class HealthBarController : MonoBehaviour
         {
             armorDamageImage.color = brokenColor;
             armorDamageText.color = brokenColor;
+            if (armorValue > 0)
+                armorBreakAnim.SetTrigger("PlayAnim");
         }
         else if (armorDamage > 0)
         {

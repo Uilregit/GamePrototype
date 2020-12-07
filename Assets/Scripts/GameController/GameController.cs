@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
         if (InformationLogger.infoLogger.debug)
             GridController.gridController.DebugGrid();
 
-        RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart);
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart, null);
 
         //Setup replace and hold areas
         if (HandController.handController.maxReplaceCount == 0)
@@ -216,17 +216,48 @@ public class GameController : MonoBehaviour
 
         DeckController.deckController.ResetCardValues();
 
-        yield return StartCoroutine(DisplayVictoryText());
         if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
         {
             ScoreController.score.UpdateBossesDefeated();
-            if (RoomController.roomController.GetWorldLevel() == 2)
+            
+            CameraController.camera.ScreenShake(0.4f, 2f);
+            yield return new WaitForSeconds(2.5f);
+
+            HealthController player = null;
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))     //At the end of all boss rooms, heal every player to full and resurrect all dead players for free
+            {
+                player = obj.GetComponent<HealthController>();
+                player.SetAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
+                player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
+                player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
+                foreach (Card.CasterColor deadCharColor in deadChars)
+                {
+                    if (obj.GetComponent<PlayerController>().GetColorTag() == deadCharColor)        //Resurrect all dead players for free
+                    {
+                        player.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
+                        player.GetComponent<HealthController>().charDisplay.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
+                        player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
+                        player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
+                        GridController.gridController.RemoveDeathLocation(deadCharColor);
+                        GridController.gridController.ReportPosition(player.gameObject, player.transform.position);
+                    }
+                }
+                player.charDisplay.hitEffectAnim.SetTrigger("Heal");
+                yield return new WaitForSeconds(0.5f);
+            }
+            deadChars = new List<Card.CasterColor>();
+            yield return new WaitForSeconds(1f);
+        }
+
+        yield return StartCoroutine(DisplayVictoryText());
+
+        if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+        {
+            if (RoomController.roomController.GetWorldLevel() == 1)
             {
                 SceneManager.LoadScene("EndScene");
                 yield break;
             }
-            else
-                RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
         }
         RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat);
         if (totalOverkillGold > 0)
@@ -265,18 +296,26 @@ public class GameController : MonoBehaviour
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
         if (goToDeck)
-            cameraLocation = new Vector3(7, 0, -10);
+            cameraLocation = new Vector3(8, 0, -10);
         else
             cameraLocation = new Vector3(0, 0, -10);
         deckID = newDeckID;
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public void LoadEndScene()
+    {
+        SceneManager.LoadScene("EndScene");
+    }
+
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         CollectionController.collectionController.SetDeck(deckID);
         if (SceneManager.GetActiveScene().name == "OverworldScene")
+        {
             CameraController.camera.transform.position = cameraLocation;
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
         /*
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);
@@ -318,7 +357,6 @@ public class GameController : MonoBehaviour
 
     public void SetDamageOverlay(float remainingHealthPercentage)
     {
-        Debug.Log("trace");
         damageOverlay.color = new Color(1, 0, 0, 1 - remainingHealthPercentage / 2);
         StartCoroutine(FadeDamageOverlay(remainingHealthPercentage / 2));
     }
@@ -335,6 +373,11 @@ public class GameController : MonoBehaviour
 
         damageOverlay.color = new Color(1, 0, 0, 0);
 
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
     /*
     public void RestartGame()

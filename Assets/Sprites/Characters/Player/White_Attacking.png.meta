@@ -178,7 +178,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -199,7 +199,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,7 +220,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -241,7 +241,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -262,7 +262,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -283,7 +283,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -304,7 +304,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -325,7 +325,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -346,7 +346,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -367,7 +367,7 @@ TextureImporter:
         width: 120
         height: 97
       alignment: 9
-      pivot: {x: 0.5, y: 0.23}
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -375,111 +375,6 @@ TextureImporter:
       bones: []
       spriteID: 6cefc8a5bcc51ba20800000000000000
       internalID: 3076342048938065606
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: White_Attacking_10
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 0
-        width: 120
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.23}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fc552fe392378ca0800000000000000
-      internalID: -6014783166376223502
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: White_Attacking_11
-      rect:
-        serializedVersion: 2
-        x: 1320
-        y: 0
-        width: 120
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.23}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aaa7e4380e9c66370800000000000000
-      internalID: 8315555728099015338
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: White_Attacking_12
-      rect:
-        serializedVersion: 2
-        x: 1440
-        y: 0
-        width: 120
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.23}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e5d814993ffe0de0800000000000000
-      internalID: -1364873014283807257
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: White_Attacking_13
-      rect:
-        serializedVersion: 2
-        x: 1560
-        y: 0
-        width: 120
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.23}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96ad3168568beee90800000000000000
-      internalID: -6994450425079145879
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: White_Attacking_14
-      rect:
-        serializedVersion: 2
-        x: 1680
-        y: 0
-        width: 120
-        height: 97
-      alignment: 9
-      pivot: {x: 0.5, y: 0.23}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87412e277b52ca0a0800000000000000
-      internalID: -6869073861810187144
       vertices: []
       indices: 
       edges: []
