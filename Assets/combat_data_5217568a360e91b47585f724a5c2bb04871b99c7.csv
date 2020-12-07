@@ -3202,3 +3202,9 @@ deviceID,patchID,gameID,encounterLevel,roomName,turnID,timestamp,castOrder,cardC
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/6/2020 11:43:40 PM,0,missing,0,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/6/2020 11:43:40 PM,0,missing,0,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/6/2020 11:43:40 PM,0,missing,0,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/6/2020 11:59:19 PM,0,missing,0,1,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
