@@ -22,6 +22,10 @@ public class UIController : MonoBehaviour
     public Text drawPileCount;
     public Text discardPileCount;
 
+    [Header("Manifest Cards")]
+    public List<ManifestCardController> manifestCards;
+    private Effect manifestEffect;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -32,6 +36,12 @@ public class UIController : MonoBehaviour
 
         foreach (Image icon in manaIcons)
             icon.GetComponent<Outline>().effectColor = anticipatedLooseOutlineColor;
+
+        for (int i = 0; i < manifestCards.Count; i++)
+        {
+            manifestCards[i].GetComponent<Collider2D>().enabled = false;
+            manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+        }
     }
 
     public void ResetPileCounts(int drawPile, int discardPile)
@@ -103,5 +113,28 @@ for (int i = 0; i < 10; i++)
                 }
             else
                 manaIcons[i].GetComponent<Outline>().enabled = false;
+    }
+
+    public void SetManifestCards(List<CardController> cards, Effect effect)
+    {
+        manifestEffect = effect;
+        for (int i = 0; i < cards.Count; i++)
+        {
+            manifestCards[i].SetCard(cards[i]);
+            manifestCards[i].GetComponent<Collider2D>().enabled = true;
+            manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Show();
+            manifestCards[i].transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
+        }
+    }
+
+    public void ReportChosenManifestCard(CardController card)
+    {
+        manifestEffect.chosenCard = card;
+
+        for (int i = 0; i < manifestCards.Count; i++)
+        {
+            manifestCards[i].GetComponent<Collider2D>().enabled = false;
+            manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+        }
     }
 }

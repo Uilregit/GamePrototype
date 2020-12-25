@@ -16,8 +16,8 @@ MonoBehaviour:
   relicReward: 1
   roomName: Debug Room
   enemies:
-  - {fileID: 1545497641765028114, guid: 2c5af7474dfac204c93987e8e4e9f878, type: 3}
-  blockNumber: 10
+  - {fileID: 3199024419837817711, guid: a9a8771333d099e44b6ce01e4d18c495, type: 3}
+  blockNumber: 5
   playwerSpawnLocations:
   - {x: 0, y: 1}
   - {x: -1, y: 1}

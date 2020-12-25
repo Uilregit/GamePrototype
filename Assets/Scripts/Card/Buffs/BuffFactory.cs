@@ -15,6 +15,7 @@ public class BuffFactory : MonoBehaviour
     public int triggerCount = 1;
 
     private bool reverted = false;
+    private HealthController casterHealthController;
 
     public void SetBuff(Buff newBuff)
     {
@@ -28,13 +29,14 @@ public class BuffFactory : MonoBehaviour
         return buff.onTriggerEffects;
     }
 
-    public virtual void OnApply(HealthController healthController, HealthController casterHealthController, int value, int newDuration, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
+    public virtual void OnApply(HealthController healthController, HealthController newCasterHealthController, int value, int newDuration, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
     {
+        casterHealthController = newCasterHealthController;
         healthController.GetBuffController().AddBuff(this);
         cardValue = value;
         duration = newDuration;
-        if (healthController != null && casterHealthController != null)
-            if (healthController.isPlayer != casterHealthController.isPlayer && buff.GetTriggerType() == Buff.TriggerType.AtStartOfTurn && !buff.triggerModificationProtection)   //Bonus duration used for when player puts buff on enemy or when enemy puts buff on player, avoids 1 extra turn issue
+        if (healthController != null && newCasterHealthController != null)
+            if (healthController.isPlayer != newCasterHealthController.isPlayer && buff.GetTriggerType() == Buff.TriggerType.AtStartOfTurn && !buff.triggerModificationProtection)   //Bonus duration used for when player puts buff on enemy or when enemy puts buff on player, avoids 1 extra turn issue
                 buff.SetTriggerType(Buff.TriggerType.AtEndOfTurn);
 
         int vitDamage = 0;
@@ -65,6 +67,9 @@ public class BuffFactory : MonoBehaviour
                 break;
             case Buff.BuffEffectType.ArmorDamageMultiplier:
                 healthController.AddArmorDamageMultiplier(cardValue);
+                break;
+            case Buff.BuffEffectType.PhasedMovement:
+                healthController.SetPhasedMovement(true);
                 break;
             case Buff.BuffEffectType.BonusAttack:
                 healthController.SetBonusAttack(cardValue);
@@ -178,8 +183,13 @@ public class BuffFactory : MonoBehaviour
         HealthController target = null;
         if (buff.onTriggerTarget == Buff.TriggerTarget.Self)
             target = selfHealthController;
-        else
+        else if (buff.onTriggerTarget == Buff.TriggerTarget.Attacker)
             target = attackerHealthController;
+        else if (buff.onTriggerTarget == Buff.TriggerTarget.Caster)
+            target = casterHealthController;
+
+        if (target == null)
+            yield break;
 
         if (traceList == null)
             traceList = new List<BuffFactory>();
@@ -218,6 +228,24 @@ public class BuffFactory : MonoBehaviour
                 BuffFactory thisBuff = new BuffFactory();
                 thisBuff.SetBuff(buff.appliedBuff);
                 thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, false, traceList, relicTrace);
+                break;
+            case Buff.BuffEffectType.DrawCard:
+                List<Card> spawnCards = new List<Card>();
+                foreach (Card spawnCard in buff.GetDrawnCards())
+                    if (spawnCard != null)
+                        spawnCards.Add(spawnCard);
+                if (spawnCards.Count == 0)
+                    HandController.handController.DrawAnyCard();
+                else
+                {
+                    foreach (Card card in spawnCards)
+                    {
+                        CardController temp = selfHealthController.gameObject.AddComponent<CardController>();
+                        temp.SetCard(card, true, false);
+                        HandController.handController.CreateSpecificCard(temp);
+                    }
+                }
+                yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
                 break;
             default:
                 Debug.Log(buff.onApplyEffects);
@@ -282,6 +310,9 @@ public class BuffFactory : MonoBehaviour
                 break;
             case Buff.BuffEffectType.ArmorDamageMultiplier:
                 healthController.RemoveArmorDamageMultiplier(-cardValue);
+                break;
+            case Buff.BuffEffectType.PhasedMovement:
+                healthController.SetPhasedMovement(false);
                 break;
             case Buff.BuffEffectType.BonusAttack:
                 healthController.SetBonusAttack(-cardValue);

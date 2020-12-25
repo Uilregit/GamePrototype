@@ -44,6 +44,15 @@ public class EffectFactory
                 case Card.EffectType.ForcedMovement:
                     effects[i] = new ForcedMovementEffect();
                     break;
+                case Card.EffectType.SelfForcedMovement:
+                    effects[i] = new SelfForcedMovementEffect();
+                    break;
+                case Card.EffectType.SetKnockBackSelfBuff:
+                    effects[i] = new SetKnockBackSelfBuffEffect();
+                    break;
+                case Card.EffectType.SetKnockBackOtherBuff:
+                    effects[i] = new SetKnockBackOtherBuffEffect();
+                    break;
                 case Card.EffectType.TauntEffect:
                     effects[i] = new TauntEffect();
                     break;
@@ -175,6 +184,15 @@ public class EffectFactory
                     break;
                 case Card.EffectType.CreateANYManaCard:
                     effects[i] = new CreateANYManaCard();
+                    break;
+                case Card.EffectType.ManifestDrawCards:
+                    effects[i] = new ManifestDrawEffect();
+                    break;
+                case Card.EffectType.ManifestDiscardCards:
+                    effects[i] = new ManifestDiscardEffect();
+                    break;
+                case Card.EffectType.ManifestANYEnergyCardEffect:
+                    effects[i] = new ManifestANYEnergyCardEffect();
                     break;
                 case Card.EffectType.ModifyBuffDuration:
                     effects[i] = new ModifyBuffDurationEffect();

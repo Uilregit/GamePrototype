@@ -25,6 +25,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int bonusArmor;
     private int knockBackDamage = 0;
     private int bonusMoveRange = 0;
+    private bool phasedMovement = false;
     private bool preserveBonusVit = false;
     private int enfeeble = 0;
     private int retaliate = 0;
@@ -32,6 +33,15 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private bool silenced = false;
     private bool disarmed = false;
     private HealthController tauntedTarget = null;
+
+    private Buff knockbackSelfBuff = null;
+    private int knockBackSelfValue = 0;
+    private int knockBackSelfDuration = 0;
+    private string knockbackSelfCardName = "missing";
+    private Buff knockbackOtherBuff = null;
+    private int knockBackOtherValue = 0;
+    private int knockBackOtherDuration = 0;
+    private string knockbackOtherCardName = "missing";
 
     private List<int> vitDamageMultipliers;
     private List<int> armorDamageMultipliers;
@@ -133,7 +143,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public int GetTotalCastRange()
     {
-        return castRange + bonusCastRange;
+        return Mathf.Max(castRange + bonusCastRange, 1);    //Ensure at least a cast range of 1
     }
 
     public void SetBonusCastRange(int value)
@@ -370,6 +380,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public bool GetStunned()
     {
         return stunned;
+    }
+
+    public void SetPhasedMovement(bool value)
+    {
+        phasedMovement = value;
+    }
+
+    public bool GetPhasedMovement()
+    {
+        return phasedMovement;
     }
 
     public void SetSilenced(bool state)
@@ -668,10 +688,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Force the object to move towards the finalLocation, value number of times
     //Value can be positive (towards) or negative (away) from the finalLocation
     //If there is an object in the way stop movement before colision and deal piercing knockback damage to both objects
-    public void ForcedMovement(Vector2 castFromLocation, int steps, List<Buff> buffTrace = null)
+    public IEnumerator ForcedMovement(Vector2 castFromLocation, int steps, bool canOverlap = true, List<Buff> buffTrace = null)
     {
         if (size > 1)
-            return; //Show resist on UI
+            yield break; //Show resist on UI
 
         Vector2 originalLocation = transform.position;
         for (int i = 1; i <= Mathf.Abs(steps); i++)
@@ -685,16 +705,22 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             if (GridController.gridController.CheckIfOutOfBounds(aboutToBePositions) || aboutToBePositions.Contains(castFromLocation)) //If knocked out of bounds, or about to be pulled onto the caster, don't
             {
                 GridController.gridController.ResetOverlapOrder(transform.position);
-                return;
+                yield break;
             }
 
             List<GameObject> objectInWay = GridController.gridController.GetObjectAtLocation(aboutToBePositions);
 
             if (GridController.gridController.CheckIfOutOfBounds(aboutToBePositions) ||
-                GridController.gridController.GetObjectAtLocation(aboutToBePositions).Any(x => x.tag == "Blockade")) //If going to be knocked out of bounds or into a barrier, prevent movement
+                GridController.gridController.GetObjectAtLocation(aboutToBePositions).Any(x => x.tag == "Blockade"))        //If going to be knocked out of bounds or into a barrier, prevent movement
             {
                 GridController.gridController.ResetOverlapOrder(transform.position);
-                return;
+                yield break;
+            }
+            else if (!canOverlap && GridController.gridController.GetObjectAtLocation(aboutToBePositions).Count != 0)      //If can't overlap, also stop if ANY object is in the way
+            {
+                ApplyKnockBackBuffs(aboutToBePositions);
+                GridController.gridController.ResetOverlapOrder(transform.position);
+                yield break;
             }
 
             foreach (Vector2 loc in occupiedSpaces)
@@ -703,6 +729,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
             foreach (Vector2 loc in aboutToBePositions)
                 GridController.gridController.ReportPosition(this.gameObject, loc);
+
+            yield return new WaitForSeconds(0.1f * TimeController.time.timerMultiplier);
 
             try
             {
@@ -716,11 +744,77 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             if (objectInWay.Count != 0)    //If knocked to position is occupied then stop (still allow overlap, but stop after)
             {
+                ApplyKnockBackBuffs(aboutToBePositions);
                 GridController.gridController.ResetOverlapOrder(transform.position);
-                return;
+                yield break;
             }
         }
         GridController.gridController.ResetOverlapOrder(transform.position);
+    }
+
+    public void ApplyKnockBackBuffs(List<Vector2> aboutToBePositions)
+    {
+        if (knockbackOtherBuff != null)
+        {
+            foreach (GameObject targ in GridController.gridController.GetObjectAtLocation(aboutToBePositions))
+            {
+                HealthController targetH = targ.GetComponent<HealthController>();
+                BuffFactory buff = new BuffFactory();
+                //card.buff[effectIndex].SetDrawnCards(card.cards);
+                buff.SetBuff(knockbackOtherBuff);
+                buff.cardName = knockbackOtherCardName;
+                try
+                {
+                    buff.casterColor = GetComponent<PlayerController>().GetColorTag().ToString();
+                }
+                catch
+                {
+                    buff.casterColor = Card.CasterColor.Enemy.ToString();
+                }
+                buff.casterName = this.name;
+                buff.OnApply(targetH, this, knockBackOtherValue, knockBackOtherDuration, false, null, null);
+                if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
+                    GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
+            }
+            knockbackOtherBuff = null;
+        }
+        if (knockbackSelfBuff != null)
+        {
+            BuffFactory buff = new BuffFactory();
+            //card.buff[effectIndex].SetDrawnCards(card.cards);
+            buff.SetBuff(knockbackSelfBuff);
+            buff.cardName = knockbackSelfCardName;
+            try
+            {
+                buff.casterColor = GetComponent<PlayerController>().GetColorTag().ToString();
+            }
+            catch
+            {
+                buff.casterColor = Card.CasterColor.Enemy.ToString();
+            }
+            buff.casterName = this.name;
+            buff.OnApply(this, this, knockBackSelfValue, knockBackSelfDuration, false, null, null);
+            if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
+                GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
+
+            knockbackSelfBuff = null;
+        }
+    }
+
+    public void SetKnockBackSelfBuff(Buff newBuff, int value, int duration, string cardName)
+    {
+        knockbackSelfBuff = newBuff;
+        knockBackSelfValue = value;
+        knockBackSelfDuration = duration;
+        knockbackSelfCardName = cardName;
+    }
+
+    public void SetKnockBackOtherBuff(Buff newBuff, int value, int duration, string cardName)
+    {
+        knockbackOtherBuff = newBuff;
+        knockBackOtherValue = value;
+        knockBackOtherDuration = duration;
+        knockbackOtherCardName = cardName;
     }
 
     public void SetKnockBackDamage(int value)
@@ -785,81 +879,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         healingMulitpliers.Remove(i);
     }
 
-    /*
-    public void AddStartOfTurnBuff(Buff buff, int duration)
-    {
-        if (!startOfTurnBuffs.ContainsKey(buff))
-            startOfTurnBuffs.Add(buff, duration);
-        else
-            startOfTurnBuffs[buff] = Mathf.Max(duration, startOfTurnBuffs[buff]);
-        ResetBuffIcons();
-    }
-
-    public void AddStartOfTurnDebuff(Buff buff, int duration)
-    {
-        if (!startOfTurnDebuffs.ContainsKey(buff))
-            startOfTurnDebuffs.Add(buff, duration);
-        else
-            startOfTurnDebuffs[buff] = Mathf.Max(duration, startOfTurnDebuffs[buff]);
-        ResetBuffIcons();
-    }
-
-    public void AddEndOfTurnBuff(Buff buff, int duration)
-    {
-        if (!endOfTurnBuffs.ContainsKey(buff))
-            endOfTurnBuffs.Add(buff, duration);
-        else
-            endOfTurnBuffs[buff] = Mathf.Max(duration, endOfTurnBuffs[buff]);
-        ResetBuffIcons();
-    }
-
-    public void AddEndOfTurnDebuff(Buff buff, int duration)
-    {
-        if (!endOfTurnDebuffs.ContainsKey(buff))
-            endOfTurnDebuffs.Add(buff, duration);
-        else
-            endOfTurnDebuffs[buff] = Mathf.Max(duration, endOfTurnDebuffs[buff]);
-        ResetBuffIcons();
-    }
-
-    public void AddOneTimeBuff(Buff buff)
-    {
-        oneTimeBuffs.Add(buff);
-        ResetBuffIcons();
-    }
-
-    public void AddOneTimeDebuff(Buff buff)
-    {
-        oneTimeDebuffs.Add(buff);
-        ResetBuffIcons();
-    }
-
-    public void AddOnDamageBuff(Buff buff, int duration)
-    {
-        if (!onDamageBuffs.ContainsKey(buff))
-            onDamageBuffs.Add(buff, duration);
-        else
-            onDamageBuffs[buff] = Mathf.Max(duration, onDamageBuffs[buff]);
-        ResetBuffIcons();
-    }
-
-    public void AddOnDamangeDebuff(Buff buff, int duration)
-    {
-        if (!onDamageDebuffs.ContainsKey(buff))
-            onDamageDebuffs.Add(buff, duration);
-        else
-            onDamageDebuffs[buff] = Mathf.Max(duration, onDamageDebuffs[buff]);
-        ResetBuffIcons();
-    }
-    */
-
     public void ResolveBroken()
     {
         currentBrokenTurns++;
         if (currentBrokenTurns == maxBrokenTurns)
         {
             if (currentArmor < startingArmor)
+            {
+                charDisplay.hitEffectAnim.SetTrigger("BreakRecovery");
                 SetStartingArmor(startingArmor);
+            }
             else
             {
                 currentBrokenTurns = -99999;

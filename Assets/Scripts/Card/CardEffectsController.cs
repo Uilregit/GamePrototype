@@ -56,7 +56,7 @@ public class CardEffectsController : MonoBehaviour
                     List<GameObject> t = new List<GameObject>();
                     List<Vector2> locs = new List<Vector2>();
 
-                    if (caster.GetComponent<HealthController>().GetTauntedTarget() != null)
+                    if (caster.GetComponent<HealthController>().GetTauntedTarget() != null && card.GetCard().cardEffectName[i] != Card.EffectType.CreateObject && card.GetCard().cardEffectName[i] != Card.EffectType.Sacrifice)
                         t = GridController.gridController.GetObjectAtLocation(targets, new string[] { caster.GetComponent<HealthController>().GetTauntedTarget().tag });    //If the caster is taunted, then it casts to the target's tag instead
                     else
                         switch (card.GetCard().targetType[i])
@@ -78,8 +78,6 @@ public class CardEffectsController : MonoBehaviour
                             case Card.TargetType.Enemy:
                                 t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Enemy" });
                                 break;
-                            case Card.TargetType.None:
-                                break;
                             case Card.TargetType.Player:
                                 t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
                                 break;
@@ -90,9 +88,14 @@ public class CardEffectsController : MonoBehaviour
 
                     if (card.GetCard().targetType[i] == Card.TargetType.None || card.GetCard().castType == Card.CastType.EmptySpace)
                         locs = targets;
+                    else if (card.GetCard().castType == Card.CastType.EmptyTargetedAoE && card.GetCard().targetType[i] == Card.TargetType.Center)
+                        locs = new List<Vector2>() { targets[0] };
                     else
+                    {
                         foreach (GameObject obj in t)
                             locs.Add(obj.transform.position);
+                        locs = locs.Distinct().ToList();
+                    }
                     int damage = effects[i].GetSimulatedVitDamage(caster, this, t, card.GetCard(), i);
                     vitDamage += damage;
                     armorDamage += effects[i].GetSimulatedArmorDamage(caster, this, t, card.GetCard(), i);
@@ -180,7 +183,9 @@ public class CardEffectsController : MonoBehaviour
             }
         }
 
-        caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, caster.GetComponent<HealthController>(), 1));
+        if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
+            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
 
         if (card.GetCard().casterColor != Card.CasterColor.Enemy)
             DeckController.deckController.ReportUsedCard(card);

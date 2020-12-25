@@ -222,6 +222,9 @@ public class TavernController : MonoBehaviour
 
     public void ResetLevelInfo()
     {
+        UnlocksController.unlock.ResetUnlocks();
+        InformationLogger.infoLogger.SavePlayerPreferences();
+
         foreach (Card.CasterColor color in PartyController.party.potentialPlayerColors)
             PartyController.party.partyLevelInfo[color] = new List<int>() { 0, 0 };
 
@@ -243,7 +246,12 @@ public class TavernController : MonoBehaviour
         contractText.text = "";
         contractText.transform.parent.GetComponent<Image>().enabled = false;
 
-        UnlocksController.unlock.ResetUnlocks();
-        InformationLogger.infoLogger.SavePlayerPreferences();
+        if (UnlocksController.unlock.GetUnlocks().tavernContracts <= 0)
+        {
+            recruitButton.enabled = false;
+            recruitButton.GetComponent<Collider2D>().enabled = false;
+            recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
+        }
+
     }
 }

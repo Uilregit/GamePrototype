@@ -58,29 +58,37 @@ public class RoomController : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
-        
-        if (!initiated && !InformationLogger.infoLogger.loadGameOnLevelLoad)
+        if (!initiated)
         {
+            smallRooms = new List<SmallRoom>();
             InitializeWorld();
             LoadRooms();
             initiated = true;
-
-            ResourceController.resource.GetComponent<Canvas>().enabled = true;
-            ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
-            ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
         }
-        
+
     }
 
-    public void InitializeWorld()
+    public void InitializeWorld(bool load = false)
     {
+        ResourceController.resource.GetComponent<Canvas>().enabled = true;
+        ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
+        ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
+
         canvas = GetComponent<Canvas>();
 
-        previousRoom = new List<Vector2>();
         destroyedRooms = new List<Vector2>();
 
-        selectedLevel = -1;
+        if (!load)
+        {
+            previousRoom = new List<Vector2>();
+            selectedLevel = -1;
+        }
+
+        foreach (SmallRoom room in smallRooms)
+            Destroy(room.gameObject);
+
         smallRooms = new List<SmallRoom>();
 
         foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
@@ -89,7 +97,7 @@ public class RoomController : MonoBehaviour
             obj.GetComponent<SmallRoom>().SetLocation(loc);
             smallRooms.Add(obj.GetComponent<SmallRoom>());
             obj.transform.SetParent(transform);
-            obj.transform.position = new Vector2(loc.x * 0.8f, loc.y * 0.8f - 3.37f);
+            obj.transform.position = transform.position + new Vector3(loc.x * 0.8f, loc.y * 0.8f - 3.37f, 0);
         }
 
         numRoomsPerLevel = new Dictionary<int, int>();
@@ -398,10 +406,23 @@ public class RoomController : MonoBehaviour
     {
         return worldSetups[worldLevel];
     }
-    
+
     public void SetWorldLevel(int newLevel)
     {
         worldLevel = newLevel;
         Camera.main.backgroundColor = worldSetups[worldLevel].cameraBackground;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().name == "OverworldScene")
+            transform.position = new Vector3(0, 0, 0);
+        else
+            transform.position = new Vector3(-10, 0, 0);
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 }

@@ -49,7 +49,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
   - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
   - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: 899b8f90cdab9d847b590848537b1d40, type: 2}
   midRooms:
   - {fileID: 11400000, guid: ad28cc2399940ce4799a0b785c2a04f7, type: 2}
   - {fileID: 11400000, guid: 46227c04f8900394aaf50cc2c78635fb, type: 2}

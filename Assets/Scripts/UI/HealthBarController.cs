@@ -177,10 +177,11 @@ public class HealthBarController : MonoBehaviour
         oldDamageInt = damage;
         if (backImage.enabled)
         {
-            if (broken)
-                bloodSplatter.SetTrigger("bigSplatter");
-            else
-                bloodSplatter.SetTrigger("mediumSplatter");
+            if (damage > 0)
+                if (broken)
+                    bloodSplatter.SetTrigger("bigSplatter");
+                else
+                    bloodSplatter.SetTrigger("mediumSplatter");
             StartCoroutine(ResetDamageImage());
             //return;
         }

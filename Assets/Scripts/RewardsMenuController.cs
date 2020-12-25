@@ -145,7 +145,7 @@ public class RewardsMenuController : MonoBehaviour
         for (int i = 0; i < GameController.gameController.rewardCards.Length; i++)
         {
             GameController.gameController.rewardCards[i].Hide();
-            GameController.gameController.rewardCards[i].gameObject.GetComponent<Collider2D>().enabled = false;
+            GameController.gameController.rewardCards[i].transform.parent.GetComponent<Collider2D>().enabled = false;
         }
     }
 

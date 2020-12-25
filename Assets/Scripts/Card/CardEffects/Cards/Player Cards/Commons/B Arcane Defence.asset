@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: B Arcane Defence
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Arcane Defence
+  energyCost: 0
+  manaCost: 3
+  range: 0
+  radius: 0
+  casterColor: 1
+  description: Draw a mana card, target gains temporary armor equal to it's cost
+  art: {fileID: 21300000, guid: 24e01eee6e584204ebbe67634a7253ea, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 020000000200000003000000
+  cardEffectName: bd020000270200006e000000
+  hitEffect: 3f420f003f420f00c8000000
+  conditionType: 000000008403000000000000
+  conditionValue: 000000000000000000000000
+  buff:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
+  effectValue: 010000000000000000000000
+  effectDuration: 000000000000000001000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 10

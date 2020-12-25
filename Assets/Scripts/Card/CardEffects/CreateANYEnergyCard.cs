@@ -14,9 +14,9 @@ public class CreateANYEnergyCard : Effect
 
             CardController cc = HandController.handController.gameObject.AddComponent<CardController>();
             cc.SetCard(c, true, false);
-            HandController.handController.DrawSpecificCard(cc);
+            HandController.handController.CreateSpecificCard(cc);
         }
-        yield return new WaitForSeconds(0);
+        yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)

@@ -49,10 +49,10 @@ public class EXPBarController : MonoBehaviour
     {
         while (exp > 0)
         {
-            if (exp > 10)
+            if (exp > 27)       //Set to a non multiple of 10 so singles digit changes as well as bar fills up
             {
-                numerator += 10;
-                exp -= 10;
+                numerator += 27;
+                exp -= 27;
             }
             else
             {

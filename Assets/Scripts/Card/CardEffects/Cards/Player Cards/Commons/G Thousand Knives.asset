@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: G Thousand Knives
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Thousand Knives
+  energyCost: 1
+  manaCost: 0
+  range: 0
+  radius: 0
+  casterColor: 2
+  description: At the start of the nex 3 turns, add a 'Knives' that deal <s>75% of
+    ATK as</s> damage and <b>knockback</b> 1 to your hand. They cost 0
+  art: {fileID: 21300000, guid: 11f9d67354b61fb43955067515c8ec68, type: 3}
+  castType: 3
+  castShape: 0
+  targetType: 02000000
+  cardEffectName: 6e000000
+  hitEffect: c8000000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buff:
+  - {fileID: 11400000, guid: 5426f15dd05d1b248b7f2ee2ddb47ff5, type: 2}
+  effectValue: 00000000
+  effectDuration: 03000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 11400000, guid: a1152feb819a52245b4693d646e9e10e, type: 2}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

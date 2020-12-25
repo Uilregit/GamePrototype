@@ -34,10 +34,13 @@ public class ShopDoneButtonController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OverworldScene")
         {
             CameraController.camera.transform.position = cameraLocation;
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
             Destroy(this.gameObject);
         }
+        /*
         else
             CameraController.camera.transform.position = new Vector3(0, 0, -10);
+        */
     }
 
     private void OnDestroy()

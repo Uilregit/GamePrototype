@@ -212,3 +212,89 @@ deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,im
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/1/2020 9:40:24 PM,1,missing,Orange,Overwhelming Odds,False,False
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/1/2020 9:40:24 PM,1,missing,Blue,Defile,True,True
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.4,12/1/2020 9:40:24 PM,2,missing,Black,Subdue,True,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Red,Suit Up,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Green,Hidden Knives,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Green,Quick Strike,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Blue,Blood Rite,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:09:49 PM,0,missing,Blue,Cycle Of Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:22:46 PM,0,missing,Blue,Blood Rite,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:22:46 PM,0,missing,Blue,Cycle Of Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/7/2020 6:22:46 PM,0,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 7:59:16 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 7:59:16 PM,0,missing,Red,Bring It On,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 7:59:16 PM,0,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 7:59:16 PM,0,missing,Blue,Meteor,True,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:06:42 PM,0,missing,Green,Quick Strike,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:06:42 PM,0,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:06:42 PM,0,missing,Red,Suit Up,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:45:06 PM,0,missing,Blue,Arcane Defence,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:45:06 PM,0,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:45:06 PM,0,missing,Blue,Cycle Of Mana,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Red,Suit Up,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Green,Hidden Knives,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Red,Bring It On,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Defile,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/10/2020 8:50:12 PM,0,missing,Blue,Meteor,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/12/2020 4:39:38 PM,0,missing,Blue,Arcane Missle,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/12/2020 4:39:38 PM,0,missing,Red,Rend Armor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/12/2020 4:39:38 PM,0,missing,Blue,Blood Rite,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.5,12/12/2020 4:39:38 PM,0,missing,Blue,Arcane Missle,True,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,0,missing,Green,Quick Strike,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,0,missing,Green,Power Shot,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,0,missing,Green,Debilitating Winds,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,0,missing,Green,Quick Strike,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,1,missing,Green,Boomerang,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,1,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,1,missing,Green,Debilitating Winds,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,1,missing,Green,Boomerang,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,2,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,2,missing,Green,Power Shot,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,2,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,2,missing,Blue,Alacrity,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/22/2020 7:24:10 PM,3,missing,Green,Thousand Knives,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Boomerang,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Red,Bring It On,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Boomerang,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,1,missing,Green,Hidden Knives,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,1,missing,Green,Swap,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,1,missing,Blue,Life Link,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,1,missing,Green,Hidden Knives,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,2,missing,Green,Backflip,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,2,missing,Blue,Alacrity,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,2,missing,Blue,Life Link,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,2,missing,Blue,Alacrity,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,3,missing,Red,Bring It On,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,3,missing,Blue,Inner Fire,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,3,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,3,missing,Blue,Inner Fire,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,5,missing,Red,Basic Instinct,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,5,missing,Blue,Meteor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,5,missing,Red,Purify,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,5,missing,Blue,Meteor,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,6,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,6,missing,Red,Warcry,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,6,missing,Blue,Telekinesis,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,6,missing,Blue,Telekinesis,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,7,missing,Red,Basic Instinct,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,7,missing,Blue,Defile,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,7,missing,Red,Rend Armor,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,7,missing,Blue,Defile,True,True
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Blue,Vitality,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Blue,Blood Rite,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Surge,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Blue,Life Link,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Red,Pain And Gain,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Thousand Knives,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Gale's Protection,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Red,Intimidate,False,False
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 6:50:59 PM,0,missing,Green,Thousand Knives,False,False

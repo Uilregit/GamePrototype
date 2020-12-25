@@ -73,7 +73,6 @@ public class UnlocksController : MonoBehaviour
     public void SetUnlocks(Unlocks value)
     {
         unlocks = value;
-        InformationController.infoController.ChangeCombatInfo(unlocks.livesUnlocked, 0, 0, 0);
     }
 
     public Unlocks GetUnlocks()

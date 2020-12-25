@@ -60,7 +60,12 @@ public class PlayerMoveController : MonoBehaviour
                 {
                     lastHoverLocation = roundedPosition;
 
-                    path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player", "Enemy" }, new List<Vector2> { Vector2.zero }, 1);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player", "Enemy" }, new List<Vector2> { Vector2.zero }, 1);
+                        if (path.Count < moveRangeLeft)
+                            break;
+                    }
                     TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
                     TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, roundedPosition), moveRangeIndicatorColor);
                 }
@@ -73,55 +78,17 @@ public class PlayerMoveController : MonoBehaviour
             {
                 lastHoverLocation = lastGoodPosition;
 
-                path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
+                for (int i = 0; i < 10; i++)
+                {
+                    path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
+                    if (path.Count < moveRangeLeft)
+                        break;
+                }
                 TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
                 TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
             }
         }
     }
-
-    /*
-    //Finds a viable attack position
-    private Vector2 FindViableAttackPosition(Vector2 roundedPosition)
-    {
-        Vector2 output = roundedPosition;
-        //If the player can attack without moving, attack without moving
-        if (GridController.gridController.GetManhattanDistance(roundedPosition, lastGoodPosition) <= player.GetAttackRange())
-            output = lastGoodPosition;
-        else
-        {
-            bool foundPosition = false;
-            //First checks if hovered over path positions are viable positions to attack from
-            foreach (Vector2 position in path)
-            {
-                if (GridController.gridController.GetManhattanDistance(roundedPosition, position) <= player.GetAttackRange() &&
-                    moveablePositions.Contains(position) && //Ranged characters are stll limited to their move ranges since path includes attackable but not moveable positions
-                    GridController.gridController.GetObjectAtLocation(position).Count == 0)
-                {
-                    output = position;
-                    foundPosition = true;
-                    break;
-                }
-            }
-            //If not then checks all moveable positions and returns the first viable one
-            if (!foundPosition)
-                foreach (Vector2 position in moveablePositions)
-                {
-                    if (GridController.gridController.GetManhattanDistance(roundedPosition, position) <= player.GetAttackRange() &&
-                    GridController.gridController.GetObjectAtLocation(position).Count == 0)
-                    {
-                        output = position;
-                        foundPosition = true;
-                        break;
-                    }
-                }
-            //If no viable attack position, then return to the last good position
-            if (!foundPosition)
-                return lastGoodPosition;
-        }
-        return output;
-    }
-    */
 
     public Vector2 GetMoveLocation()
     {
@@ -195,21 +162,45 @@ public class PlayerMoveController : MonoBehaviour
             else
             {
                 GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
-                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+
+                if (!healthController.GetPhasedMovement())
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                                                        PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+                else    //If phased movement, then player can move through, but not on enemies
+                {
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Blockade" }, 0);    //Does not avoid Enemies for move range calculation
+                    List<Vector2> destroyLocs = new List<Vector2>();
+                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies, can't move onto them
+                        if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                            destroyLocs.Add(loc);
+                    TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
+                }
 
                 HealthController taunt = healthController.GetTauntedTarget();
-                if (taunt != null)
+                if (taunt != null)      //If the player is taunted
                 {
-                    int baseMovement = PathFindController.pathFinder.PathFind(originalPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count;
+                    int baseMovement = PathFindController.pathFinder.PathFind(originalPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count;    //Find all positions the player could move if not taunted
+                    baseMovement = Mathf.Max(baseMovement, PathFindController.pathFinder.PathFind(lastGoodPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count);   //If the taunted target has been force moved, use lastGoodPosition or original location, whichever one is further away
                     List<Vector2> destroyLocs = new List<Vector2>();
-                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))
+                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))                                                                                                                //Remove all move positions that'll take the player further to the taunted target
                         if (PathFindController.pathFinder.PathFind(loc, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count > baseMovement)
                             destroyLocs.Add(loc);
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.4f), new string[] { "Enemy", "Blockade" }, 1); ;
+                    if (!healthController.GetPhasedMovement())
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.4f), new string[] { "Enemy", "Blockade" }, 1);
+                    else    //If phased movement, then player can move through, but not on enemies
+                    {
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.4f), new string[] { "Blockade" }, 1);    //Does not avoid Enemies for move range calculation
+                        destroyLocs = new List<Vector2>();
+                        foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
+                            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                                destroyLocs.Add(loc);
+                        TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
+                    }
                 }
             }
             moveablePositions = TileCreator.tileCreator.GetTilePositions();

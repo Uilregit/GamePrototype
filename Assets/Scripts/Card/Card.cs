@@ -7,12 +7,13 @@ public class Card : ScriptableObject
 {
     public enum Rarity { Common, Rare, Legendary, Starter, StarterAttack };
     public bool exhaust = false;
+    public bool shuffleToDiscardPile = true;
     public bool canCastOnSelf = true;
     public Rarity rarity;
     public new string name;
     public int energyCost;
     public int manaCost;
-    public int range = 1;
+    public int range = 0;
     public int radius;
     public enum CasterColor { Red, Blue, Green, Orange, White, Black, Enemy, Gray };
     public CasterColor casterColor;
@@ -20,12 +21,12 @@ public class Card : ScriptableObject
     public string description;
     public Sprite art;
     //Who viable targets of the card during cast
-    public enum CastType { Any, Enemy, Player, None, All, AoE, EmptySpace, TargetedAoE };
+    public enum CastType { Any, Enemy, Player, None, All, AoE, EmptySpace, TargetedAoE, EmptyTargetedAoE };
     public CastType castType;
     public enum CastShape { Circle, Plus, None };
     public CastShape castShape;
     //Who the target of the effect is
-    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None };
+    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None , Center};
     public TargetType[] targetType = new TargetType[1];
     //Name of the effect of the card
     public enum EffectType
@@ -53,12 +54,15 @@ public class Card : ScriptableObject
         AssimilateStatsEffect = 131,
         __ = 199,
         
-        SetKnockBackDamage = 200, 
-        ForcedMovement = 201,
-        ForceMovementFromCenter = 202,
-        Swap = 210,
-        Teleport = 211,
-        GravityEffect = 220,
+        SetKnockBackDamage = 200,
+        SetKnockBackSelfBuff = 205,
+        SetKnockBackOtherBuff = 210,
+        ForcedMovement = 220,
+        ForceMovementFromCenter = 225,
+        SelfForcedMovement = 230,
+        Swap = 250,
+        Teleport = 260,
+        GravityEffect = 270,
         ___ = 299,
 
         TauntEffect = 300,
@@ -98,6 +102,10 @@ public class Card : ScriptableObject
         CardCostReductionDrawn = 710, 
         CardCostCapDrawn = 711,
         CardCostReductionRandom = 720,
+
+        ManifestDrawCards = 750,
+        ManifestDiscardCards = 751,
+        ManifestANYEnergyCardEffect = 760,
         ________ = 799,
 
         StealCardEffect = 800,
@@ -272,6 +280,7 @@ public class Card : ScriptableObject
     {
         Card output = new Card();
         output.exhaust = exhaust;
+        output.shuffleToDiscardPile = shuffleToDiscardPile;
         output.canCastOnSelf = canCastOnSelf;
         output.rarity = rarity;
         output.name = name;
@@ -286,9 +295,10 @@ public class Card : ScriptableObject
         output.castShape = castShape;
         output.targetType = targetType;
         output.cardEffectName = cardEffectName;
+        output.hitEffect = hitEffect;
         output.conditionType = conditionType;
         output.conditionValue = conditionValue;
-        output.hitEffect = hitEffect;
+        output.buff = buff;
         output.effectValue = effectValue;
         output.effectDuration = effectDuration;
         output.spawnObject = spawnObject;
@@ -297,6 +307,7 @@ public class Card : ScriptableObject
         output.targetBehaviour = targetBehaviour;
         output.indicatorMultiplier = indicatorMultiplier;
         output.executionPriority = executionPriority;
+        output.highlightCondition = highlightCondition;
 
         return output;
     }

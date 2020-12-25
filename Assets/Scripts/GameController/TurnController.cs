@@ -196,6 +196,22 @@ public class TurnController : MonoBehaviour
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
+        turnText.text = "Your Turn";
+        turnText.enabled = true;
+        turnTextBack.enabled = true;
+        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
+        turnText.enabled = false;
+        turnTextBack.enabled = false;
+        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
+
+        //Allow players to move, reset mana, and draw a full hand
+        currentEnergy = maxEnergy;
+        ResetEnergyDisplay();
+        HandController.handController.UnholdCard(true);
+        HandController.handController.ResetReplaceCounter();
+        yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand()); //Must be called after unholdcard
+
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart, null);
 
         players = GameController.gameController.GetLivingPlayers();
@@ -211,15 +227,6 @@ public class TurnController : MonoBehaviour
 
         yield return StartCoroutine(GridController.gridController.CheckDeath());
 
-        CameraController.camera.ScreenShake(0.06f, 0.05f);
-        turnText.text = "Your Turn";
-        turnText.enabled = true;
-        turnTextBack.enabled = true;
-        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
-        turnText.enabled = false;
-        turnTextBack.enabled = false;
-        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
-
         //Resolve broken
         foreach (GameObject player in players)
             player.GetComponent<HealthController>().ResolveBroken();
@@ -231,13 +238,7 @@ public class TurnController : MonoBehaviour
             if (!thisEnemy.GetSacrificed())
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
-        //Allow players to move, reset mana, and draw a full hand
         SetPlayerTurn(true); //Trigger all player start of turn effects
-        currentEnergy = maxEnergy;
-        ResetEnergyDisplay();
-        HandController.handController.UnholdCard(true);
-        HandController.handController.ResetReplaceCounter();
-        HandController.handController.DrawFullHand(); //Must be called after unholdcard
     }
 
     public void ResetEnergyDisplay()

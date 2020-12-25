@@ -59,7 +59,7 @@ public class RewardsItemController : MonoBehaviour
                     Card reward = LootController.loot.GetCard();
                     if (!currentRewards.Contains(reward) && CollectionController.collectionController.GetCountOfCardInCollection(reward) < 4) //Ensures that all rewards are unique
                     {
-                        GameController.gameController.rewardCards[i].GetComponent<CardController>().SetCard(reward, false);
+                        GameController.gameController.rewardCards[i].transform.parent.GetComponent<CardController>().SetCard(reward, false, true, true);
                         currentRewards.Add(reward);
                         break;
                     }
@@ -67,7 +67,7 @@ public class RewardsItemController : MonoBehaviour
                 GameController.gameController.rewardCards[i].Show();
                 GameController.gameController.rewardCards[i].SetHighLight(true);
                 GameController.gameController.rewardCards[i].GetComponent<LineRenderer>().enabled = false;
-                GameController.gameController.rewardCards[i].gameObject.GetComponent<Collider2D>().enabled = true;
+                GameController.gameController.rewardCards[i].transform.parent.gameObject.GetComponent<Collider2D>().enabled = true;
             }
 
             //Does not report reward taken here, reports in rewardcardcontroller

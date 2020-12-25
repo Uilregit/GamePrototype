@@ -66,7 +66,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 0
-  maxVit: 5
+  maxVit: 10
+  vitVariate: 0
   startingArmor: 2
   attack: 10
   moveRange: 0
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb69054952ac409c6a98fab04356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   size: 1
   charDisplay: {fileID: 5485976251891708135}
 --- !u!61 &3844057031438846185

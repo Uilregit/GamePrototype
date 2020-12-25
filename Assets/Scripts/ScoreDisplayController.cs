@@ -263,6 +263,12 @@ public class ScoreDisplayController : MonoBehaviour
 
     public void ShowUnlocks(bool isTeam)
     {
+        continueButton.enabled = false;
+        continueButton.GetComponent<Collider2D>().enabled = false;
+        continueButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
+        mainMenuButton.enabled = false;
+        mainMenuButton.GetComponent<Collider2D>().enabled = false;
+        mainMenuButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
         StartCoroutine(ShowUnlockedCanvases(isTeam));
     }
 
@@ -294,6 +300,7 @@ public class ScoreDisplayController : MonoBehaviour
                         individualUnlockCanvas.transform.GetChild(3).GetComponent<Text>().color = PartyController.party.GetPlayerColor(queue.casterColor);
                     }
 
+                    Debug.Log("###################");
                     UnlocksController.unlock.GetUnlocks().livesUnlocked += 1;
                     UnlocksController.unlock.SetUnlocks(UnlocksController.unlock.GetUnlocks());
 

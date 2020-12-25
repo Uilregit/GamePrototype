@@ -6,8 +6,8 @@ public class RewardCardController : MonoBehaviour
 {
     private float clickedTime;
     private float clickSelectDuration = 0.2f;
-    private Vector2 localScale;
-    private Vector2 originalLocation;
+    private Vector3 localScale;
+    private Vector3 originalLocation;
 
     private void Awake()
     {
@@ -23,13 +23,14 @@ public class RewardCardController : MonoBehaviour
 
     private void OnMouseUp()
     {
+        transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), true);
         StopAllCoroutines();
         transform.localScale = localScale;
         transform.position = originalLocation;
         if (Time.time - clickedTime < clickSelectDuration)
         {
-            CollectionController.collectionController.AddRewardsCard(GetComponent<CardDisplay>().GetCard());
-            int deckId = PartyController.party.GetPartyIndex(GetComponent<CardDisplay>().GetCard().GetCard().casterColor);
+            CollectionController.collectionController.AddRewardsCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard());
+            int deckId = PartyController.party.GetPartyIndex(transform.GetChild(0).GetComponent<CardDisplay>().GetCard().GetCard().casterColor);
             RewardsMenuController.rewardsMenu.SetDeckID(deckId);
 
             RewardsMenuController.rewardsMenu.ReportRewardTaken(0);
@@ -42,7 +43,8 @@ public class RewardCardController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         transform.SetAsLastSibling();
-        transform.position = new Vector2(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight);
-        transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
+        transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight, 0);
+        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), false);
     }
 }

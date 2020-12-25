@@ -20,9 +20,9 @@ public class DrawCardEffect : Effect
                 Card copy = spawnCard.GetCopy();
                 copy.casterColor = card.casterColor;            //Colors of the cards drawn will always be same color as the original card
                 thisCard.SetCard(copy, false, false);
-                HandController.handController.DrawSpecificCard(thisCard);
+                HandController.handController.CreateSpecificCard(thisCard);
             }
-        yield return new WaitForSeconds(0);
+        yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue()); 
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)

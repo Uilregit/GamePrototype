@@ -106,8 +106,23 @@ public class EnemyInformationController : MonoBehaviour
 
         int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
 
+        string[] avoidTags = new string[0];
+        if (!GetComponent<HealthController>().GetPhasedMovement())
+            avoidTags = new string[] { "Player", "Blockade" };
+        else
+            avoidTags = new string[] { "Blockade" };
+
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
-            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, new string[] { "Player", "Blockade" }, 1);
+            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, avoidTags, 1);
+
+        if (GetComponent<HealthController>().GetPhasedMovement())
+        {
+            List<Vector2> destroyLocs = new List<Vector2>();
+            foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))
+                if (GridController.gridController.GetObjectAtLocation(loc).Count != 0)
+                    destroyLocs.Add(loc);
+            TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
+        }
 
         List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
         //TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
@@ -349,7 +364,7 @@ public class EnemyInformationController : MonoBehaviour
     private void HideCards()
     {
         foreach (GameObject card in displayedCards)
-            card.GetComponent<CardDisplay>().Hide();
+            card.transform.GetChild(0).GetComponent<CardDisplay>().Hide();
     }
 
     private IEnumerator ShowCards()
@@ -357,8 +372,8 @@ public class EnemyInformationController : MonoBehaviour
         yield return new WaitForSeconds(TimeController.time.timeTillCardDisplay * TimeController.time.timerMultiplier);
         for (int i = 0; i < displayedCards.Length; i++)
         {
-            displayedCards[i].GetComponent<CardDisplay>().Show();
-            displayedCards[i].GetComponent<LineRenderer>().enabled = false;
+            displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Show();
+            displayedCards[i].transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
         }
     }
 

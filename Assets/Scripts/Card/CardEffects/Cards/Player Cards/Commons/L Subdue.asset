@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: L Subdue
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Subdue
+  energyCost: 0
+  manaCost: 2
+  range: 0
+  radius: 0
+  casterColor: 5
+  description: Target loses -6 temporary ATK
+  art: {fileID: 21300000, guid: a7423f5aaca816c4099d3f08cee6b6a5, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 03000000
+  cardEffectName: 6e000000
+  hitEffect: 2c010000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buff:
+  - {fileID: 11400000, guid: 566bf7e44b83f1b4c8163915532f0081, type: 2}
+  effectValue: faffffff
+  effectDuration: 01000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

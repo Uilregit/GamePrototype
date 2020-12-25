@@ -6,6 +6,7 @@ using System.Linq;
 public abstract class Effect
 {
     public string effectName = "default";
+    public CardController chosenCard = null;
 
     //effect controller used to store temp values for effects that use get
     public virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex)

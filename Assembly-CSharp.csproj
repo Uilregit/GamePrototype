@@ -123,8 +123,10 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\Effect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDistanceMovedEffect.cs" />
     <Compile Include="Assets\Scripts\GameController\GameController.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\ManifestDiscardEffect.cs" />
     <Compile Include="Assets\Scripts\ScoreDisplayController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetNumberOfTargetsInRangeEffect.cs" />
+    <Compile Include="Assets\Scripts\UI\RecruitButtonController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageAll.cs" />
     <Compile Include="Assets\Scripts\BuffDescriptionController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\PiercingDamageAll.cs" />
@@ -154,12 +156,14 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetCurrentArmor.cs" />
     <Compile Include="Assets\Scripts\Observer.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ResurrectEffect.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\ManifestDrawEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\SacrificeEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ForceMovementFromCastLocation.cs" />
     <Compile Include="Assets\Scripts\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\CustomizeMenu\EditDeckButtonController.cs" />
     <Compile Include="Assets\Scripts\BoardObjects\BlockadeController.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuButton.cs" />
+    <Compile Include="Assets\Scripts\Card\ManifestCardController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\AbsoluteDamageEffect.cs" />
     <Compile Include="Assets\Scripts\Card\DeckController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ModifyBuffDurationEffect.cs" />
@@ -167,6 +171,7 @@
     <Compile Include="Assets\Scripts\CustomizeMenu\FinalizeButtonController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\EffectFactory.cs" />
     <Compile Include="Assets\Scripts\EndTurnButtonController.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\SelfForcedMovementEffect.cs" />
     <Compile Include="Assets\Scripts\UI\NewGameButton.cs" />
     <Compile Include="Assets\Scripts\DragController.cs" />
     <Compile Include="Assets\Scripts\GameController\TurnController.cs" />
@@ -184,6 +189,7 @@
     <Compile Include="Assets\Scripts\TavernButtonController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetManaSpentTurn.cs" />
     <Compile Include="Assets\Scripts\Card\Card.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\ManifestANYEnergyCardEffect.cs" />
     <Compile Include="Assets\Scripts\ScoreController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawEnergyCardEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CleanseEffect.cs" />
@@ -207,7 +213,8 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\UI\RecruitButtonController.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\SetKnockBackSelfBuffEffect.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\SetKnockBackOtherBuffEffect.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

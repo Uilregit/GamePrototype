@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: DamageBuff
   m_EditorClassIdentifier: 
+  isBossRoom: 0
   relicReward: 0
   roomName: IceDamageBuff
   enemies:
   - {fileID: 3234652053163052453, guid: 4b8a5e80e983f944e9013c1b20ac890a, type: 3}
   - {fileID: 3234652053163052453, guid: 1ae802f996459c049b954ad83504774c, type: 3}
-  - {fileID: 3234652053163052453, guid: 1ae802f996459c049b954ad83504774c, type: 3}
+  - {fileID: 3234652053163052453, guid: b2054bd1c3bbe02488e58a60c778554f, type: 3}
   blockNumber: 2
   playwerSpawnLocations: []

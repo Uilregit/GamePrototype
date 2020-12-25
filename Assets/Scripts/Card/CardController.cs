@@ -1,6 +1,7 @@
 ﻿using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class CardController : MonoBehaviour
     private Card card;
     private Card resurrectCard;
     public bool isResurrectCard = false;
-    private CardDisplay cardDisplay;
+    public CardDisplay cardDisplay;
     private CardEffectsController cardEffects;
     private CardDragController cardDrag;
     private List<Vector2> targets = new List<Vector2>();
@@ -26,7 +27,6 @@ public class CardController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        cardDisplay = this.gameObject.GetComponent<CardDisplay>();
         cardEffects = this.gameObject.GetComponent<CardEffectsController>();
         cardDrag = this.gameObject.GetComponent<CardDragController>();
     }
@@ -62,13 +62,13 @@ public class CardController : MonoBehaviour
         cardEffects = effect;
     }
 
-    public void SetCard(Card newCard, bool containsEffects = true, bool show = true)
+    public void SetCard(Card newCard, bool containsEffects = true, bool show = true, bool dynamicText = false)
     {
         card = newCard;
         if (!show)
             return;
         if (!containsEffects)
-            cardDisplay.SetCard(this, false);
+            cardDisplay.SetCard(this, dynamicText);
         else
         {
             cardDisplay.SetCard(this);
@@ -126,9 +126,15 @@ public class CardController : MonoBehaviour
             else if (card.castType == Card.CastType.None)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, Card.CastShape.Circle, 20, PartyController.party.GetPlayerColor(card.casterColor));
             else
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange(), PartyController.party.GetPlayerColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range, PartyController.party.GetPlayerColor(card.casterColor));
 
             List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
+            if (card.castType == Card.CastType.TargetedAoE)
+            {
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + card.radius, Color.clear, 1);
+                castableLocations = TileCreator.tileCreator.GetTilePositions(1);
+                TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+            }
             foreach (Vector2 loc in castableLocations)
             {
                 //Only allow taunted target to be targeted if one exists
@@ -154,6 +160,27 @@ public class CardController : MonoBehaviour
                         TileCreator.tileCreator.CreateSelectableTile(loc);
                         break;
                     case Card.CastType.EmptySpace:
+                        if (GridController.gridController.GetObjectAtLocation(loc).Count == 0)
+                            TileCreator.tileCreator.CreateSelectableTile(loc);
+                        break;
+                    case Card.CastType.TargetedAoE:
+                        List<string> tags = new List<string>();
+                        if (card.targetType.Any(x => x == Card.TargetType.Any))
+                        {
+                            tags.Add("Enemy");
+                            tags.Add("Player");
+                        }
+                        else
+                        {
+                            if (card.targetType.Any(x => x == Card.TargetType.AllEnemies || x == Card.TargetType.Enemy))
+                                tags.Add("Enemy");
+                            if (card.targetType.Any(x => x == Card.TargetType.AllPlayers || x == Card.TargetType.Player))
+                                tags.Add("Player");
+                        }
+                        if (GridController.gridController.GetObjectAtLocation(loc, tags.ToArray()).Count > 0)
+                            TileCreator.tileCreator.CreateSelectableTile(loc);
+                        break;
+                    case Card.CastType.EmptyTargetedAoE:
                         if (GridController.gridController.GetObjectAtLocation(loc).Count == 0)
                             TileCreator.tileCreator.CreateSelectableTile(loc);
                         break;
@@ -206,26 +233,8 @@ public class CardController : MonoBehaviour
 
         if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && !GameController.gameController.GetDeadChars().Contains(card.casterColor))
         {
-            if (caster.GetComponent<HealthController>().GetStunned())
-            {
-                cardDisplay.SetHighLight(false);
-                cardDisplay.SetDisableStats("Stunned");
-            }
-            else if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
-            { 
-                cardDisplay.SetHighLight(false);
-                cardDisplay.SetDisableStats("Silenced");
-            }
-            else if (card.manaCost == 0 && GetCaster().GetComponent<HealthController>().GetDisarmed())
-            { 
-                cardDisplay.SetHighLight(false);
-                cardDisplay.SetDisableStats("Disarmed");
-            }
-            else
-            {
-                cardDisplay.SetHighLight(true);
-                highlight = true;
-            }
+            cardDisplay.SetHighLight(true);
+            highlight = true;
         }
         else if (GameController.gameController.GetDeadChars().Contains(card.casterColor) && ResourceController.resource.GetLives() > 0)
         {
@@ -246,8 +255,31 @@ public class CardController : MonoBehaviour
         else
             cardDisplay.SetHighLight(false);
 
+        if (caster.GetComponent<HealthController>().GetStunned())
+        {
+            cardDisplay.SetHighLight(false);
+            cardDisplay.SetDisableStats("Stunned");
+            highlight = false;
+        }
+        if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
+        {
+            cardDisplay.SetHighLight(false);
+            cardDisplay.SetDisableStats("Silenced");
+            highlight = false;
+        }
+        if (card.manaCost == 0 && GetCaster().GetComponent<HealthController>().GetDisarmed())
+        {
+            cardDisplay.SetHighLight(false);
+            cardDisplay.SetDisableStats("Disarmed");
+            highlight = false;
+        }
+
         if (highlight)
+        {
             ResetConditionHighlight();              //Only allow conditional highlight if the card is playable
+            cardDisplay.disabledStatusText.enabled = false;
+            cardDisplay.disabledStatusText.text = "";
+        }
         else
             cardDisplay.SetConditionHighlight(false);
     }

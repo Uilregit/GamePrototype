@@ -68,7 +68,7 @@ MonoBehaviour:
   castRange: 3
   maxVit: 30
   startingArmor: 10
-  attack: 12
+  attack: 8
   moveRange: 3
   randomStartRange: 0
   attacksPerTurn: 1
@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb69054952ac409c6a98fab04356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   size: 1
   charDisplay: {fileID: 8464520558053597639}
 --- !u!61 &7581886792987532364

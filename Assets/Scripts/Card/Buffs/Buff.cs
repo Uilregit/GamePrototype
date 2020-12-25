@@ -30,6 +30,8 @@ public class Buff : ScriptableObject
     public int duration;
     public int value;
 
+    private Card[] drawnCards;
+
     public TriggerType GetTriggerType()
     {
         return triggerType;
@@ -44,7 +46,8 @@ public class Buff : ScriptableObject
     public enum TriggerTarget
     {
         Self = 0,
-        Attacker = 2
+        Attacker = 2,
+        Caster = 3
     }
 
     public enum ValueManipulationType
@@ -87,6 +90,8 @@ public class Buff : ScriptableObject
         //AdditionalPiercingDamage,
         //AdditionalHealing,
 
+        PhasedMovement = 20,
+
         BonusAttack = 30,
         BonusArmor = 31,
         BonusCastRange = 35,
@@ -111,6 +116,7 @@ public class Buff : ScriptableObject
         Preserve = 72,
         Taunt = 73,
 
+        DrawCard = 99,
         ApplyBuff = 100
     }
 
@@ -118,5 +124,15 @@ public class Buff : ScriptableObject
     {
         Turn = 0,
         Use = 1
+    }
+
+    public void SetDrawnCards(Card[] cards)
+    {
+        drawnCards = cards;
+    }
+
+    public Card[] GetDrawnCards()
+    {
+        return drawnCards;
     }
 }

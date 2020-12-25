@@ -61,50 +61,90 @@ public class DeckController : MonoBehaviour
     }
 
     //Draws any card
-    public CardController DrawAnyCard()
+    public CardController DrawAnyCard(bool fromDrawPile)
     {
-        //If the draw deck is empty, fill it back up
-        if (drawPile.Count == 0)
+        CardController drawnCard = null;
+
+        if (fromDrawPile)
         {
-            ResetDecks();
-            ShuffleDrawPile();
+            //If the draw deck is empty, fill it back up
+            if (drawPile.Count == 0)
+            {
+                ResetDecks();
+                ShuffleDrawPile();
+            }
+
+            drawnCard = drawPile[0];
+            drawPile.RemoveAt(0);
+
+            if (drawnCard.GetCard().manaCost == 0)
+                numberOfEnergyCardsInDraw -= 1;
+            else
+                numberOfManaCardsInDraw -= 1;
         }
-        CardController drawnCard = drawPile[0];
-        drawPile.RemoveAt(0);
-
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
-        if (drawnCard.GetCard().manaCost == 0)
-            numberOfEnergyCardsInDraw -= 1;
         else
-            numberOfManaCardsInDraw -= 1;
+        {
+            if (discardPile.Count == 0)
+                return null;
 
+            drawnCard = discardPile[0];
+            discardPile.RemoveAt(0);
+
+            if (drawnCard.GetCard().manaCost == 0)
+                numberOfEnergyCardsInDiscard -= 1;
+            else
+                numberOfManaCardsInDiscard -= 1;
+        }
+        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
     }
 
     //Repopulate deck if empty, draw a mana card if there is one in the draw pile
-    public CardController DrawManaCard()
+    public CardController DrawManaCard(bool fromDrawPile = true)
     {
-        //If the draw deck is empty, fill it back up
-        if (drawPile.Count == 0)
-        {
-            ResetDecks();
-            ShuffleDrawPile();
-        }
         CardController drawnCard = null;
-        int index = -1;
-        for (int i = 0; i < drawPile.Count; i++)
+
+        if (fromDrawPile)
         {
-            if (drawPile[i].GetCard().manaCost > 0)
+            //If the draw deck is empty, fill it back up
+            if (drawPile.Count == 0)
             {
-                drawnCard = drawPile[i];
-                index = i;
-                break;
+                ResetDecks();
+                ShuffleDrawPile();
+            }
+            int index = -1;
+            for (int i = 0; i < drawPile.Count; i++)
+            {
+                if (drawPile[i].GetCard().manaCost > 0)
+                {
+                    drawnCard = drawPile[i];
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1)
+            {
+                drawPile.RemoveAt(index);
+                numberOfManaCardsInDraw -= 1;
             }
         }
-        if (index != -1)
+        else 
         {
-            drawPile.RemoveAt(index);
-            numberOfManaCardsInDraw -= 1;
+            int index = -1;
+            for (int i = 0; i < discardPile.Count; i++)
+            {
+                if (discardPile[i].GetCard().manaCost > 0)
+                {
+                    drawnCard = discardPile[i];
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1)
+            {
+                discardPile.RemoveAt(index);
+                numberOfManaCardsInDiscard -= 1;
+            }
         }
 
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
@@ -113,31 +153,85 @@ public class DeckController : MonoBehaviour
     }
 
     //Repopulate deck if empty, draw a energy card if there is one in the draw pile
-    public CardController DrawEnergyCard()
+    public CardController DrawEnergyCard(bool fromDrawPile = true)
     {
-        //If the draw deck is empty, fill it back up
-        if (drawPile.Count == 0)
-        {
-            ResetDecks();
-            ShuffleDrawPile();
-        }
         CardController drawnCard = null;
-        int index = -1;
-        for (int i = 0; i < drawPile.Count; i++)
-            if (drawPile[i].GetCard().manaCost == 0)
-            {
-                drawnCard = drawPile[i];
-                index = i;
-                break;
-            }
-        if (index != -1)
+        if (fromDrawPile)
         {
-            drawPile.RemoveAt(index);
-            numberOfEnergyCardsInDraw -= 1;
+            //If the draw deck is empty, fill it back up
+            if (drawPile.Count == 0)
+            {
+                ResetDecks();
+                ShuffleDrawPile();
+            }
+            int index = -1;
+            for (int i = 0; i < drawPile.Count; i++)
+                if (drawPile[i].GetCard().manaCost == 0)
+                {
+                    drawnCard = drawPile[i];
+                    index = i;
+                    break;
+                }
+            if (index != -1)
+            {
+                drawPile.RemoveAt(index);
+                numberOfEnergyCardsInDraw -= 1;
+            }
+        }
+        else
+        {
+            int index = -1;
+            for (int i = 0; i < discardPile.Count; i++)
+                if (discardPile[i].GetCard().manaCost == 0)
+                {
+                    drawnCard = discardPile[i];
+                    index = i;
+                    break;
+                }
+            if (index != -1)
+            {
+                discardPile.RemoveAt(index);
+                numberOfEnergyCardsInDiscard -= 1;
+            }
         }
 
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
+    }
+
+    public CardController DrawSpecificCard(Card card, bool fromDrawPile = true)
+    {
+        CardController output = null;
+
+        if (fromDrawPile)
+        {
+            foreach (CardController draw in drawPile)
+                if (draw.GetCard().name == card.name)
+                {
+                    output = draw;
+                    drawPile.Remove(output);
+                    if (output.GetCard().manaCost > 0)
+                        numberOfManaCardsInDraw -= 1;
+                    else
+                        numberOfEnergyCardsInDraw -= 1;
+                    break;
+                }
+        }
+        else
+            foreach (CardController draw in discardPile)
+                if (draw.GetCard().name == card.name)
+                {
+                    output = draw;
+                    discardPile.Remove(output);
+                    if (output.GetCard().manaCost > 0)
+                        numberOfManaCardsInDiscard -= 1;
+                    else
+                        numberOfEnergyCardsInDiscard -= 1;
+                    break;
+                }
+
+        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
+        return output;
     }
 
     //Shuffles the draw pile
@@ -163,11 +257,23 @@ public class DeckController : MonoBehaviour
     {
         if (!card.GetCard().exhaust)
         {
-            discardPile.Add(card);
-            if (card.GetCard().manaCost == 0)
-                numberOfEnergyCardsInDiscard += 1;
+            if (card.GetCard().shuffleToDiscardPile)
+            {
+                discardPile.Add(card);
+                if (card.GetCard().manaCost == 0)
+                    numberOfEnergyCardsInDiscard += 1;
+                else
+                    numberOfManaCardsInDiscard += 1;
+            }
             else
-                numberOfManaCardsInDiscard += 1;
+            {
+                drawPile.Add(card);
+                ShuffleDrawPile();
+                if (card.GetCard().manaCost == 0)
+                    numberOfEnergyCardsInDraw += 1;
+                else
+                    numberOfManaCardsInDraw += 1;
+            }
         }
         UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
@@ -243,5 +349,14 @@ public class DeckController : MonoBehaviour
     public int GetNumberOfManaCardsInDiscard()
     {
         return numberOfManaCardsInDiscard;
+    }
+
+    public List<CardController> GetDrawPile()
+    {
+        return drawPile;
+    }
+    public List<CardController> GetDiscardPile()
+    {
+        return discardPile;
     }
 }

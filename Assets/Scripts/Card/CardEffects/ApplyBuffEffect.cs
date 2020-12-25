@@ -9,8 +9,8 @@ public class ApplyBuffEffect : Effect
         foreach (GameObject targ in target)
         {
             HealthController targetH = targ.GetComponent<HealthController>();
-            //Buff buff = GetBuff(card.buffType[effectIndex]);
             BuffFactory buff = new BuffFactory();
+            card.buff[effectIndex].SetDrawnCards(card.cards);
             buff.SetBuff(card.buff[effectIndex]);
             buff.cardName = card.name;
             buff.casterColor = card.casterColor.ToString();

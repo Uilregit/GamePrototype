@@ -80,7 +80,7 @@ public class AbilitiesController : MonoBehaviour
                     switch (abilityTypes[i])
                     {
                         case AbilityType.VitChange:
-                            obj.GetComponent<HealthController>().TakePiercingDamage(abilityValue[i], GetComponent<HealthController>());
+                            obj.GetComponent<HealthController>().TakePiercingDamage(-abilityValue[i], GetComponent<HealthController>());
                             break;
                         case AbilityType.ArmorChange:
                             obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i], null);

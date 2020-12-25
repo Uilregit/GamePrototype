@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: A Raise
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Raise
   energyCost: 0
   manaCost: 5
-  range: 2
+  range: 0
   radius: 0
   casterColor: 7
   description: Resurrect this player,|you lose 1 life<l>|(x lives left)</l>

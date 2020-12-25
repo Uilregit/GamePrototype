@@ -53,7 +53,7 @@ public class CharacterInformationController : MonoBehaviour
         {
             if (i < cards.Count)
             {
-                attackCards[i].GetComponent<CardController>().SetCaster(healthController.gameObject);
+                attackCards[i].transform.parent.GetComponent<CardController>().SetCaster(healthController.gameObject);
                 attackCards[i].SetCard(cards[i]);
                 attackCards[i].Show();
                 attackCards[i].GetComponent<LineRenderer>().enabled = false;

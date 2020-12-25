@@ -16,8 +16,9 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public Canvas selectedCardCanvas;
     private Canvas originalCanvas;
-    private Vector2 localScale;
-    private Vector2 originalLocation;
+    private Vector3 localScale;
+    private Vector3 originalLocation;
+    private CardDisplay cardDisplay;
     //private int originalSorterOrder;
 
     private void Awake()
@@ -26,7 +27,8 @@ public class DeckCustomizeCardController : MonoBehaviour
         localScale = transform.localScale;
         originalLocation = transform.position;
         originalCanvas = transform.parent.GetComponent<Canvas>();
-        //originalSorterOrder = GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder;
+        cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
+        //originalSorterOrder = transform.GetChild(0).GetComponent<CardDisplay>().Show();.cardName.GetComponent<MeshRenderer>().sortingOrder;
     }
 
     public void OnMouseDown()
@@ -46,7 +48,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         if (Time.time - clickedTime <= clickThreshold)
             SelectCard();
     }
-    
+
     public void SelectCard()
     {
         CollectionController.collectionController.AddCard(card);
@@ -55,10 +57,10 @@ public class DeckCustomizeCardController : MonoBehaviour
     public void SetCard(CardController newCard)
     {
         card = newCard;
-        GetComponent<CardDisplay>().SetCard(newCard, false);
+        cardDisplay.SetCard(newCard, false);
     }
 
-    public void SetCount (int newCount)
+    public void SetCount(int newCount)
     {
         count.text = "x" + newCount.ToString();
     }
@@ -66,24 +68,28 @@ public class DeckCustomizeCardController : MonoBehaviour
     public void Hide()
     {
         count.enabled = false;
-        GetComponent<CardDisplay>().Hide();
+        if ((object)cardDisplay == null)
+            cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
+        cardDisplay.Hide();
         col.enabled = false;
     }
 
     public void Show()
     {
         count.enabled = true;
-        GetComponent<CardDisplay>().Show();
+        if ((object)cardDisplay == null)
+            cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
+        cardDisplay.Show();
         col.enabled = true;
-        GetComponent<LineRenderer>().enabled = false;
+        cardDisplay.lineRenderer.enabled = false;
     }
 
     private IEnumerator EnlargeCard()
     {
         yield return new WaitForSeconds(0.3f);
         transform.SetParent(selectedCardCanvas.transform);
-        //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
-        transform.position = new Vector2(originalLocation.x, originalLocation.y + HandController.handController.cardHighlightHeight);
-        transform.localScale = new Vector2(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize);
+        //cardDisplay.cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
+        transform.position = new Vector3(originalLocation.x, originalLocation.y + HandController.handController.cardHighlightHeight, 0);
+        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
     }
 }

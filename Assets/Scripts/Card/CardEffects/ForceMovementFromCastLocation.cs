@@ -11,7 +11,7 @@ public class ForceMovementFromCastLocation : Effect
             deepCopy.Add(obj);
         foreach (GameObject targ in deepCopy)
             if (GridController.gridController.GetRoundedVector(targ.transform.position, 1) != effectController.GetCastLocation())
-                targ.GetComponent<HealthController>().ForcedMovement(effectController.GetCastLocation(), card.effectValue[effectIndex]);
+                yield return targ.GetComponent<HealthController>().StartCoroutine(targ.GetComponent<HealthController>().ForcedMovement(effectController.GetCastLocation(), card.effectValue[effectIndex]));
         yield return new WaitForSeconds(0);
     }
 

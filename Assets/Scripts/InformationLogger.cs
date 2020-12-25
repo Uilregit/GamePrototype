@@ -657,7 +657,7 @@ public class InformationLogger : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OverworldScene" && loadGameOnLevelLoad)
         {
             InformationLogger.infoLogger.LoadGame();
-            RoomController.roomController.InitializeWorld();
+            RoomController.roomController.InitializeWorld(true);
             RoomController.roomController.LoadRooms();
             loadGameOnLevelLoad = false;
         }

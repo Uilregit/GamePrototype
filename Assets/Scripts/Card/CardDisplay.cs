@@ -6,8 +6,10 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour
 {
+    public Animator anim;
     public Image cardBack;
     public Image cardGreyOut;
+    public Image cardWhiteOut;
     public Image art;
     public TextMeshProUGUI cardName;
     public Text energyCost;
@@ -18,6 +20,8 @@ public class CardDisplay : MonoBehaviour
     private Outline conditionHighlight;
     public LineRenderer lineRenderer;
 
+    [SerializeField] private Sprite attackGreyOut;
+    [SerializeField] private Sprite skillGreyOut;
     [SerializeField] private Sprite redAttackBack;
     [SerializeField] private Sprite redSkillBack;
     [SerializeField] private Sprite greenAttackBack;
@@ -50,6 +54,7 @@ public class CardDisplay : MonoBehaviour
         cardBack.enabled = false;
         outline.enabled = false;
         cardGreyOut.enabled = false;
+        cardWhiteOut.enabled = false;
         cardName.GetComponent<TextMeshProUGUI>().enabled = false;
         energyCost.enabled = false;
         description.enabled = false;
@@ -67,6 +72,7 @@ public class CardDisplay : MonoBehaviour
         cardBack.enabled = true;
         outline.enabled = true; //Will only be asked to show when cast, therefore always will have enough mana
         cardGreyOut.enabled = false; //^
+        cardWhiteOut.enabled = false;
         cardName.GetComponent<TextMeshProUGUI>().enabled = true;
         manaCost.enabled = true;
         description.enabled = true;
@@ -107,6 +113,8 @@ public class CardDisplay : MonoBehaviour
                     cardBack.sprite = enemyAttackCardBack;
                     break;
             }
+            cardGreyOut.sprite = attackGreyOut;
+            cardWhiteOut.sprite = attackGreyOut;
         }
         else
         {
@@ -137,10 +145,11 @@ public class CardDisplay : MonoBehaviour
                     cardBack.sprite = enemySkillCardBack;
                     break;
             }
+            cardGreyOut.sprite = skillGreyOut;
+            cardWhiteOut.sprite = skillGreyOut;
         }
         art.sprite = card.GetCard().art;
         outline.sprite = cardBack.sprite;
-        cardGreyOut.sprite = cardBack.sprite;
         cardName.text = card.GetCard().name;
 
         //Resolve energy and mana cost
@@ -209,8 +218,15 @@ public class CardDisplay : MonoBehaviour
                 string finalText = "";
                 int bonusAttack = 0;
 
-                finalText = (Mathf.CeilToInt(GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetAttack() * percentage / 100.0f)).ToString();
-                bonusAttack = GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusAttack();
+                try
+                {
+                    finalText = (Mathf.CeilToInt(transform.parent.GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetAttack() * percentage / 100.0f)).ToString();
+                    bonusAttack = transform.parent.GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusAttack();
+                }
+                catch
+                {
+                    finalText = (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(thisCard.GetCard().casterColor) * percentage / 100.0f)).ToString();
+                }
 
                 if (bonusAttack > 0)
                     finalText = "*" + finalText + "*";
@@ -224,7 +240,10 @@ public class CardDisplay : MonoBehaviour
             try { dm = card.FindCaster(thisCard.GetCard()).GetComponent<PlayerMoveController>().GetMovedDistance(); } catch { };
 
             //Formatting Nums for dynamic card text
-            int[] formattingNums = new int[] { TurnController.turnController.GetNumerOfCardsPlayedInTurn(),
+            int[] formattingNums = new int[0];
+            try
+            {
+                formattingNums = new int[] { TurnController.turnController.GetNumerOfCardsPlayedInTurn(),
                                                HandController.handController.GetHand().Count,
                                                card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusArmor(),
                                                card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusVit(),
@@ -232,6 +251,18 @@ public class CardDisplay : MonoBehaviour
                                                TurnController.turnController.GetEnergySpent(),
                                                dm,
                                                ResourceController.resource.GetLives()};
+            }
+            catch
+            {
+                formattingNums = new int[] { 0,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             0};
+            }
             for (int i = 0; i < formattingCodes.Length; i++)
                 while (descriptionText.IndexOf("<%>".Replace("%", formattingCodes[i])) != -1)
                 {
@@ -325,6 +356,8 @@ public class CardDisplay : MonoBehaviour
     {
         if (disabledStatusText.text.Contains(status))   //If the status is already reflected, skip
             return;
+
+        disabledStatusText.enabled = true;
 
         if (disabledStatusText.text == "")
             disabledStatusText.text += status;

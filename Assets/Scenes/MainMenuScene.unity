@@ -2700,7 +2700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  patchID: 0.4.4.5
+  patchID: 0.4.4.6
   seed: 0
   gameID: 
   versionText: {fileID: 2125512850}
@@ -5798,7 +5798,7 @@ MonoBehaviour:
   timerPaused: 1
   scorePerOverkill: 1
   scorePerDamage: 1
-  scorePerDamageArmored: 0
+  scorePerDamageArmored: 1
   scorePerDamageOverhealedProtected: 1
   scorePerDamageAvoided: 1
   scorePerEnemiesBroken: 10

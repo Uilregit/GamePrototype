@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     [Header("Stats Settings")]
     public int castRange = 1;
     public int maxVit;
+    public bool vitVariate = true;
     public int startingArmor;
     public int attack;
     public int moveRange;
@@ -62,7 +63,8 @@ public class EnemyController : MonoBehaviour
         col2D = GetComponent<Collider2D>();
 
         healthController = GetComponent<HealthController>();
-        maxVit = Mathf.RoundToInt(maxVit * (1 + Random.Range(-0.1f, 0.1f)));
+        if (vitVariate)
+            maxVit = Mathf.RoundToInt(maxVit * (1 + Random.Range(-0.1f, 0.1f)));
         healthController.SetCastRange(castRange);
         healthController.SetMaxVit(maxVit);
         healthController.SetCurrentVit(maxVit);
@@ -183,7 +185,7 @@ public class EnemyController : MonoBehaviour
                 else if (attackSequence[attackCardIndex].castType == Card.CastType.Player ||
                          attackSequence[attackCardIndex].castType == Card.CastType.Enemy)
                 {
-                    if (GetDistanceFrom(desiredTarget[i].transform.position) <= castRange)
+                    if (GetDistanceFrom(desiredTarget[i].transform.position) <= healthController.GetTotalCastRange())
                         targetLocs.Add(desiredTarget[i].transform.position);
                     else if (attackSequence[attackCardIndex].castType == Card.CastType.Player)
                     {
@@ -309,7 +311,7 @@ public class EnemyController : MonoBehaviour
         if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)
             traveledPath = FindMostInAoE(target);
         else
-            traveledPath = FindPath(target, castRange);
+            traveledPath = FindPath(target, healthController.GetTotalCastRange());
 
         if (InformationLogger.infoLogger.debug)
             foreach (Vector2 loc in traveledPath)
@@ -321,7 +323,7 @@ public class EnemyController : MonoBehaviour
         foreach (Vector2 position in traveledPath)
         {
             if (healthController.GetStunned() ||   //In case that it is stunned while moving, stop turn
-                GridController.gridController.GetObjectAtLocation(position).Count != 0)  //If position is filled, stop turn
+                (GridController.gridController.GetObjectAtLocation(position).Count != 0 && !healthController.GetPhasedMovement()))  //If position is filled and movement isn't phased, stop turn
             {
                 foreach (Vector2 vec in occupiedSpace)
                     GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
@@ -372,6 +374,8 @@ public class EnemyController : MonoBehaviour
     {
         if (target.Count > 0)
         {
+            GameController.gameController.SetCircleOverlay(true, transform.position);
+
             if (target[0].x > transform.position.x && !isFacingRight)
                 FlipSpriteX();
             else if (target[0].x < transform.position.x && isFacingRight)
@@ -395,15 +399,31 @@ public class EnemyController : MonoBehaviour
                 yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
 
             TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
+
+            GameController.gameController.SetCircleOverlay(false, transform.position);
         }
     }
 
     //Will move to the location to get the most amount of targets in the AoE range
     protected virtual List<Vector2> FindMostInAoE(GameObject target)
     {
+        string[] avoidTags = new string[0];
+        if (!healthController.GetPhasedMovement())
+            avoidTags = new string[] { "Player", "Enemy", "Blockade" };
+        else
+            avoidTags = new string[] { "Blockade" };
+
         //First find all positions that can actually be pathed to
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
-            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, moveRange + GetComponent<HealthController>().GetBonusMoveRange(), Color.clear, new string[] { "Player", "Enemy", "Blockade" }, 2);
+            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, moveRange + GetComponent<HealthController>().GetBonusMoveRange(), Color.clear, avoidTags, 2);
+        if (healthController.GetPhasedMovement())
+        {
+            List<Vector2> destroyLocs = new List<Vector2>();
+            foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(2))
+                if (GridController.gridController.GetObjectAtLocation(loc).Count != 0)
+                    destroyLocs.Add(loc);
+            TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 2);
+        }
         List<Vector2> moveablePositions = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
@@ -439,17 +459,28 @@ public class EnemyController : MonoBehaviour
             finalLocation = desiredTarget[currentAttackSquence % attacksPerTurn].transform.position;
         else
             finalLocation = viablePositions.GroupBy(x => x).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
-        return PathFindController.pathFinder.PathFind(transform.position, finalLocation, new string[] { "None" }, occupiedSpace, size);
+        string[] pathThroughTags = new string[0];
+        if (!healthController.GetPhasedMovement())
+            pathThroughTags = new string[] { "None" };
+        else
+            pathThroughTags = new string[] { "Player", "Enemy" };
+        return PathFindController.pathFinder.PathFind(transform.position, finalLocation, pathThroughTags, occupiedSpace, size);
     }
 
     //Find the closest point to the target with a kite distance using the return of pathinfinding
     protected virtual List<Vector2> FindPath(GameObject target, int kiteDistance = 0)
     {
-        List<Vector2> output = FindFurthestPointInRange(target);
+        string[] pathThroughTags = new string[0];
+        if (!healthController.GetPhasedMovement())
+            pathThroughTags = new string[] { "None" };
+        else
+            pathThroughTags = new string[] { "Player", "Enemy" };
+
+        List<Vector2> output = FindFurthestPointInRange(target, pathThroughTags);
 
         if (output.Count == 1)
         {
-            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "None" }, occupiedSpace, size);
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, pathThroughTags, occupiedSpace, size);
             if (InformationLogger.infoLogger.debug)
                 foreach (Vector2 loc in path)
                     TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.blue, 0);
@@ -465,19 +496,20 @@ public class EnemyController : MonoBehaviour
         return output;
     }
 
-    protected virtual List<Vector2> FindFurthestPointInRange(GameObject target)
+    protected virtual List<Vector2> FindFurthestPointInRange(GameObject target, string[] pathThroughTags)
     {
-        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, attackSequence[attackCardIndex].castShape, castRange, Color.clear, 2);
+        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, attackSequence[attackCardIndex].castShape, healthController.GetTotalCastRange(), Color.clear, 2);
+
         List<Vector2> inRangeLocations = TileCreator.tileCreator.GetTilePositions(2);
         List<Vector2> emptyInRangeLocations = new List<Vector2>();
-        foreach (Vector2 loc in inRangeLocations)
+        foreach (Vector2 loc in inRangeLocations)                                              //Find all locations that are in range and empty
             if (GridController.gridController.GetObjectAtLocation(loc).Count == 0)
                 emptyInRangeLocations.Add(loc);
         inRangeLocations = emptyInRangeLocations;
-        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);                                            //Get all positions that can cast on the target
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);                              //Get all positions that can cast on the target
 
-        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(castRange, 1)];      //Sort positions by distance to target
-        for (int i = Mathf.Max(castRange - 1, 0); i >= 0; i--)
+        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(healthController.GetTotalCastRange(), 1)];      //Sort positions by distance to target
+        for (int i = Mathf.Max(healthController.GetTotalCastRange() - 1, 0); i >= 0; i--)
             locationsByDistance[i] = new List<Vector2>();
 
         foreach (Vector2 loc in inRangeLocations)
@@ -492,18 +524,18 @@ public class EnemyController : MonoBehaviour
                 Debug.Log(target.transform.position);
                 Debug.Log(GetManhattanDistance(loc, target.transform.position) - 1);
                 Debug.Log(locationsByDistance.Length);
-                Debug.Log(castRange);
-                Debug.Log(Mathf.Max(castRange, 1));
+                Debug.Log(healthController.GetTotalCastRange());
+                Debug.Log(Mathf.Max(healthController.GetTotalCastRange(), 1));
             }
 
         List<Vector2> pathableLocations = new List<Vector2>();                                              //Check if pathable within the allocated move distance or not
-        for (int i = Mathf.Max(castRange - 1, 0); i >= 0; i--)                                  //Prefer locations further from target if possible
+        for (int i = Mathf.Max(healthController.GetTotalCastRange() - 1, 0); i >= 0; i--)                                  //Prefer locations further from target if possible
         {
             pathableLocations = new List<Vector2>();
             foreach (Vector2 loc in locationsByDistance[i])
             {
                 List<Vector2> path = new List<Vector2>();
-                path = PathFindController.pathFinder.PathFind(transform.position, loc, new string[] { "None" }, occupiedSpace, size);
+                path = PathFindController.pathFinder.PathFind(transform.position, loc, pathThroughTags, occupiedSpace, size);
                 if (path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
                     pathableLocations.Add(path[path.Count - 1]);
             }
@@ -539,7 +571,7 @@ public class EnemyController : MonoBehaviour
 
         Vector2 finalLoc = finalLocs[Random.Range(0, finalLocs.Count)];                                     //If there are multiple viable positions with the same distance, chose one at random
 
-        return PathFindController.pathFinder.PathFind(transform.position, finalLoc, new string[] { "None" }, occupiedSpace, size);  //Return the pathfind to the chosen location
+        return PathFindController.pathFinder.PathFind(transform.position, finalLoc, pathThroughTags, occupiedSpace, size);  //Return the pathfind to the chosen location
     }
 
     public void RefreshIntent()
@@ -598,10 +630,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int distance = 9999999;
         foreach (GameObject target in targets)
@@ -619,10 +651,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int distance = -99999999;
         foreach (GameObject target in targets)
@@ -640,10 +672,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int armor = -999999999;
         foreach (GameObject target in targets)
@@ -661,10 +693,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int armor = 999999999;
         foreach (GameObject target in targets)
@@ -682,10 +714,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int vit = 0;
         foreach (GameObject target in targets)
@@ -704,10 +736,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int vit = 999999999;
         foreach (GameObject target in targets)
@@ -725,10 +757,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int missingHealth = 0;
         foreach (GameObject target in targets)
@@ -746,10 +778,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int highestAttack = 0;
         foreach (GameObject target in targets)
@@ -767,10 +799,10 @@ public class EnemyController : MonoBehaviour
     {
         GameObject output = null;
 
-        string tag = "Player";
+        GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            tag = "Enemy";
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
         output = targets[0];
         int lowestAttack = 999999999;
         foreach (GameObject target in targets)

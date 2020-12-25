@@ -538,6 +538,7 @@
  * Armor from 6 -> 3
  * 
  * -- Cards --
+ * All 90 starting and common rarity cards implimented
  * 
  * -- Enemies --
  * 
@@ -561,6 +562,13 @@
  * Added tavern hero unlocks
  * New hand system: at the end of the turn, all unplayed cards are held, temporary cards are removed, starting hand size increased to 6
  * Total EXP is stored for potential future patching
+ * Added Manifest effect: Chose 1 of 3 cards to add to your hand
+ * CardDisplay is now consistently used as a prefab in all card prefabs, to simplify all future CardDisplay changes
+ * Added phased movement to players and enemies
+ * OnCardPlayed now triggers for all players, not just the player who casted the card
+ * Added possibility of applying buffs on forced movement collision
+ * Draw cards at start of each turn now happens before all start of turn buffs
+ * Minimum Castrange for all characters are capped at 1
  * 
  * -- UI --
  * Recentered all character displays
@@ -592,6 +600,13 @@
  * Added tracking and saving of individual color hero levels and team levels
  * Beating the boss now heals and resurrects all players for free
  * Added more fanfair to beating the boss
+ * Added card draw animation
+ * Added effect animation for characters recovering from break
+ * Added effect for drawing and destroying of temporary cards
+ * Added manifest effect for ANY energy cards
+ * Added targetable locations highlight for TargetedAoE cast types
+ * Added slight delay in movement per block for multi space forced movement
+ * Rewards and shop cards are now dynamic text unless held to enlarge
  * 
  * -- Bugs --
  * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
@@ -610,6 +625,28 @@
  * Fixed death game end continue button not working
  * Fixed error where clicking a specific part of the relic obtain button would load the game into the first room of the second world
  * Fixed party energy and mana reduction being caps instead
+ * Fixed crash on second world room
+ * Fixed saving always being 1 room behind
+ * Fixed debug enemy being in a room world 2
+ * Fixed cards still showing when all characters are defeated
+ * Fixed G Power Shot not working
+ * Fixed World 2 Damage enemy destroying itself in the idle animation
+ * Fixed BossSummonSupport healing the boss on death
+ * Fixed Relic/gold/lives UI not showing after load
+ * Fixed Disabled cards (stunned/silenced/disarmed) still showing the text after no longer being disabled
+ * Fixed rewards controllers sometimes going to rooms due to roomController overlap. RoomController is now moved out of the way in combatScenes
+ * Sacrifice and CreateObject effects now ignore taunt
+ * Fixed world 2 room spawn being too far to the right of where it's supposed to be
+ * Players can no longer be moved while a card is casting (avoid position and forcemove errors)
+ * Fixed copy cards not copying buffs or highlight conditions
+ * Fixed healing showing blood splatter
+ * Fixed names of various cards turning into white blocks
+ * Fixed drawing cards removing the card then drawing the card, now draws then removes
+ * Fixed steal card effect not drawing the card the turn it's used
+ * Fixed crash when enemy tries to target a dead player
+ * Fixed on card played buffs being triggered by enemy cards
+ * Fixed player getting double lives during level up
+ * Fixed relic unclickable after seeing the enemy information screen (due to card disabled status text being way too big)
  * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --

@@ -9,8 +9,9 @@ public class GameController : MonoBehaviour
 {
     public static GameController gameController;
 
-    public Sprite background;
+    //public Sprite background;
     public Image damageOverlay;
+    public Image circleHighlight;
 
     public Text text;
     public CardDisplay[] rewardCards;
@@ -50,14 +51,14 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < rewardCards.Length; i++)
         {
             rewardCards[i].Hide();
-            rewardCards[i].gameObject.GetComponent<Collider2D>().enabled = false;
+            rewardCards[i].transform.parent.GetComponent<Collider2D>().enabled = false;
         }
         RandomizeRoom();
 
-        DeckController.deckController.ResetCardValues();
         DeckController.deckController.PopulateDecks();
+        DeckController.deckController.ResetCardValues();
         DeckController.deckController.ShuffleDrawPile();
-        HandController.handController.DrawFullHand();
+        HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
 
         InformationController.infoController.SaveCombatInformation();           //Save combat information at start of room as well in case char dies in the first room
 
@@ -212,14 +213,15 @@ public class GameController : MonoBehaviour
     public IEnumerator Victory()
     {
         GridController.gridController.DisableAllPlayers();
-        HandController.handController.ClearHand();
+        //HandController.handController.ClearHand();
+        HandController.handController.EmptyHand();
 
         DeckController.deckController.ResetCardValues();
 
         if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
         {
             ScoreController.score.UpdateBossesDefeated();
-            
+
             CameraController.camera.ScreenShake(0.4f, 2f);
             yield return new WaitForSeconds(2.5f);
 
@@ -316,10 +318,6 @@ public class GameController : MonoBehaviour
             CameraController.camera.transform.position = cameraLocation;
             SceneManager.sceneLoaded -= OnLevelFinishedLoading;
         }
-        /*
-        else
-            CameraController.camera.transform.position = new Vector3(0, 0, -10);
-        */
     }
 
     public void ReportDeadChar(Card.CasterColor color)
@@ -328,6 +326,8 @@ public class GameController : MonoBehaviour
         if (deadChars.Count >= 3)
         {
             TurnController.turnController.StopAllCoroutines();
+            CanvasController.canvasController.uiCanvas.enabled = false;
+            HandController.handController.EmptyHand();
             CanvasController.canvasController.endGameCanvas.enabled = true;
             CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = false;
             CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
@@ -372,13 +372,43 @@ public class GameController : MonoBehaviour
         }
 
         damageOverlay.color = new Color(1, 0, 0, 0);
-
     }
 
-    private void OnDestroy()
+    public void SetCircleOverlay(bool value, Vector2 location)
     {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        circleHighlight.transform.position = location;
+        if (value)
+            StartCoroutine(FadeInDamageOverlay());
+        else
+            StartCoroutine(FadeOutDamageOverlay());
     }
+
+    private IEnumerator FadeInDamageOverlay()
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < 0.1f)
+        {
+            circleHighlight.color = Color.Lerp(new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.5f), elapsedTime / 0.1f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        damageOverlay.color = new Color(0, 0, 0, 0.5f);
+    }
+
+    private IEnumerator FadeOutDamageOverlay()
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < 0.1f)
+        {
+            circleHighlight.color = Color.Lerp(new Color(0, 0, 0, 0.5f), new Color(0, 0, 0, 0), elapsedTime / 0.1f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        damageOverlay.color = new Color(0, 0, 0, 0);
+    }
+
     /*
     public void RestartGame()
     {

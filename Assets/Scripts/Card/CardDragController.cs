@@ -37,8 +37,8 @@ public class CardDragController : DragController
     {
         originalLocation = transform.position;
         castLocation = transform.position;
-        line = GetComponent<LineRenderer>();
-        cardDisplay = GetComponent<CardDisplay>();
+        line = transform.GetChild(0).GetComponent<LineRenderer>();
+        cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
         cardController = GetComponent<CardController>();
         col = GetComponent<BoxCollider2D>();
         rectTransform = GetComponent<RectTransform>();
@@ -97,15 +97,20 @@ public class CardDragController : DragController
 
     private void Cast()
     {
+        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+            player.GetComponent<Collider2D>().enabled = false;
+
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         currentState = State.Aiming;
-        //cardDisplay.Hide();
         line.enabled = true;
         transform.localScale = new Vector3(HandController.handController.cardAimSize, HandController.handController.cardAimSize, 1);
     }
 
     private void UnCast()
     {
+        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+            player.GetComponent<Collider2D>().enabled = true;
+
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         currentState = State.Highlighted;
         isTriggeringEffect = false;
@@ -120,7 +125,7 @@ public class CardDragController : DragController
             isHeld = false;
         }
 
-        HandController.handController.ResetCardPositions();
+        HandController.handController.StartCoroutine(HandController.handController.ResetCardPositions());
     }
 
     private void Aim()
@@ -131,7 +136,7 @@ public class CardDragController : DragController
             //if (card.castType == Card.CastType.AoE)
 
             int castTileSize = 0;
-            if (card.castType == Card.CastType.TargetedAoE)
+            if (card.castType == Card.CastType.TargetedAoE || card.castType == Card.CastType.EmptyTargetedAoE)
                 castTileSize = card.radius;
             Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -151,9 +156,9 @@ public class CardDragController : DragController
                     castLocation = originalLocation;
             }
 
-            cardDisplay.transform.position = originalLocation + new Vector3(0, 0.5f, -1f);
+            transform.position = originalLocation + new Vector3(0, 0.5f, -1f);
             line.enabled = true;
-            line.SetPosition(0, new Vector3(cardDisplay.transform.position.x, cardDisplay.transform.position.y, -1));
+            line.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -1));
             Color color = PartyController.party.GetPlayerColor(card.casterColor);
             line.startColor = new Color(color.r, color.g, color.b, 0.8f);
             line.endColor = new Color(color.r, color.g, color.b, 0f);
@@ -220,7 +225,7 @@ public class CardDragController : DragController
                 transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
                 transform.position = originalLocation;
                 offset = Vector2.zero;
-                HandController.handController.ResetCardPositions();
+                HandController.handController.StartCoroutine(HandController.handController.ResetCardPositions());
 
                 if (isHeld)
                 {
@@ -328,6 +333,8 @@ public class CardDragController : DragController
         List<Vector2> targetedLocs = new List<Vector2>();
         if (card.castType == Card.CastType.TargetedAoE)
             target.AddRange(GridController.gridController.GetObjectsInAoE(castLocation, card.radius, new string[] { "All" }));
+        else if (card.castType == Card.CastType.EmptyTargetedAoE)       //For EmptyTargetedAoE, only the center needs to be empty
+            target.AddRange(GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "All" }));
         if (card.castType == Card.CastType.AoE)
         {
             Vector2 casterPosition = cardController.FindCaster(card).transform.position;
@@ -384,6 +391,15 @@ public class CardDragController : DragController
                 return;
             }
         }
+        else if (card.castType == Card.CastType.EmptyTargetedAoE)
+        {
+            targetedLocs.Add(castLocation);
+            TileCreator.tileCreator.CreateTiles(this.gameObject, castLocation, Card.CastShape.Circle, card.radius, Color.green, 2);
+            List<Vector2> locations = TileCreator.tileCreator.GetTilePositions(2);
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
+            locations.Remove(castLocation);
+            targetedLocs.AddRange(locations);
+        }
         else
         {
             UnCast();
@@ -432,6 +448,9 @@ public class CardDragController : DragController
         TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
         GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
 
+        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+            player.GetComponent<Collider2D>().enabled = true;
+
         Destroy(this.gameObject);
     }
 
@@ -443,6 +462,7 @@ public class CardDragController : DragController
     public void SetActive(bool state)
     {
         active = state;
+        GetComponent<Collider2D>().enabled = state;
     }
 
     public void SetHeld(bool state)

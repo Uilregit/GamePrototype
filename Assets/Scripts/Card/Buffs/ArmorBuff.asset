@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ArmorBuff
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.12997675, b: 1, a: 1}
-  description: 'Armor: Modify armor by {+-v} for {d} turn(s)'
+  description: 'Armor: Modify temporary armor by {+-v} for {d} turn(s)'
   triggerType: 1
+  triggerModificationProtection: 0
   durationType: 1
   onApplyEffects: 31
   onTriggerTarget: 0

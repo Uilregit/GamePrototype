@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: O Charge
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Charge
+  energyCost: 0
+  manaCost: 5
+  range: 0
+  radius: 0
+  casterColor: 3
+  description: Travel in the selected direction until you collide with an object.
+    Stun them for 1 turn
+  art: {fileID: 21300000, guid: d885f16454081f94089403b101b830f0, type: 3}
+  castType: 6
+  castShape: 1
+  targetType: 0200000002000000
+  cardEffectName: d2000000e6000000
+  hitEffect: 3f420f003f420f00
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buff:
+  - {fileID: 11400000, guid: 4f71dcf6c115fc9479562643c78c2dce, type: 2}
+  - {fileID: 0}
+  effectValue: 0000000063000000
+  effectDuration: 0100000000000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

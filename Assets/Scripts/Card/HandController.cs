@@ -31,6 +31,8 @@ public class HandController : MonoBehaviour
     private CardController currentlyHeldCard;
 
     private List<CardController> hand;
+    private List<CardController> drawnCards;
+    private List<CardController> drawQueue;
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,10 +44,12 @@ public class HandController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         hand = new List<CardController>();
+        drawnCards = new List<CardController>();
+        drawQueue = new List<CardController>();
 
         if (InformationLogger.infoLogger.debug)
         {
-            maxReplaceCount = 10;
+            maxReplaceCount = 20;
             allowHold = true;
         }
         else
@@ -75,19 +79,26 @@ public class HandController : MonoBehaviour
     */
 
     //Returns a random card from the deck fron ANY color
-    private CardController GetAnyCard()
+    private CardController InstantiateAnyCard(bool fromDrawPile)
     {
         GameObject card = Instantiate(cardTemplate);
         card.GetComponent<RectTransform>().rotation = CameraController.camera.transform.rotation;
         card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         CardController cardController = card.GetComponent<CardController>();
-        CardController drawnCard = DeckController.deckController.DrawAnyCard();
+        CardController drawnCard = DeckController.deckController.DrawAnyCard(fromDrawPile);
         cardController.SetCardController(drawnCard);
+
+        if (fromDrawPile)
+            cardController.transform.position = new Vector3(-5, -3, 0);
+        else
+            cardController.transform.position = new Vector3(5, -3, 0);
+        cardController.cardDisplay.SetHighLight(true);
+        cardController.GetComponent<CardDragController>().SetActive(false);
 
         return cardController;
     }
 
-    private CardController GetSpecificCard(CardController thisCard)
+    private CardController InstantiateSpecificCard(CardController thisCard, bool fromDrawPile, bool fromNothing)
     {
         GameObject card = Instantiate(cardTemplate);
         card.GetComponent<RectTransform>().rotation = CameraController.camera.transform.rotation;
@@ -95,32 +106,105 @@ public class HandController : MonoBehaviour
         CardController cardController = card.GetComponent<CardController>();
         cardController.SetCardController(thisCard);
 
+        if (fromNothing)
+        {
+            cardController.transform.position = new Vector3(10, 0);
+            cardController.cardDisplay.cardWhiteOut.enabled = true;
+        }
+        else
+        {
+            if (fromDrawPile)
+                cardController.transform.position = new Vector3(-5, -3, 0);
+            else
+                cardController.transform.position = new Vector3(5, -3, 0);
+        }
+        cardController.cardDisplay.SetHighLight(true);
+        cardController.GetComponent<CardDragController>().SetActive(false);
+
         return cardController;
     }
 
-    //Adds a new card to the hand and reorders card positions from ANY color
-    public void DrawAnyCard()
+    public IEnumerator ResolveDrawQueue()
     {
-        if (hand.Count < maxHandSize)
+        while (drawQueue.Count > 0)
         {
-            hand.Add(GetAnyCard());
-            ResetCardPositions();
-            ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+            drawnCards.Add(drawQueue[0]);
+            drawQueue.RemoveAt(0);
+            yield return StartCoroutine(AnimateDrawCard());
+        }
+
+        yield return new WaitForSeconds(0.3f * TimeController.time.timerMultiplier);
+
+        hand.AddRange(drawnCards);
+        drawnCards = new List<CardController>();
+        yield return StartCoroutine(ResetCardPositions());
+        foreach (CardController card in hand)
+            card.GetComponent<CardDragController>().SetActive(true);
+        ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+    }
+
+    private IEnumerator AnimateDrawCard()
+    {
+        float elapsedTime = 0;
+        float spaceBetweenCards = cardSpacing * 1.2f;
+        if (drawnCards.Count > 6)
+            spaceBetweenCards = cardSpacing * 6 / drawnCards.Count * 1.2f;
+
+        List<Vector3> originalPositions = new List<Vector3>();
+        List<Vector3> desiredPosition = new List<Vector3>();
+
+        foreach (CardController card in drawnCards)
+            originalPositions.Add(card.transform.position);
+
+        for (int i = 0; i < drawnCards.Count; i++)
+            if (drawnCards.Count % 2 == 1)
+                desiredPosition.Add(-new Vector3((i - drawnCards.Count / 2) * spaceBetweenCards, 0, 0));
+            //Even number of cards
+            else
+                desiredPosition.Add(-new Vector3((i - drawnCards.Count / 2 + 0.5f) * spaceBetweenCards, 0, 0));
+
+        while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
+        {
+            for (int i = 0; i < drawnCards.Count; i++)
+                if (drawnCards[i].cardDisplay.cardWhiteOut.enabled == false)
+                drawnCards[i].transform.position = Vector3.Lerp(originalPositions[i], desiredPosition[i], elapsedTime / 0.1f * TimeController.time.timerMultiplier);
+            else
+                {
+                    drawnCards[i].cardDisplay.cardWhiteOut.color = Color.Lerp(Color.white, Color.clear, elapsedTime / 0.1f * TimeController.time.timerMultiplier);
+                    drawnCards[i].transform.position = desiredPosition[i];
+                }    
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        for (int i = 0; i < drawnCards.Count; i++)
+        {
+            drawnCards[i].transform.position = desiredPosition[i];
+            drawnCards[i].cardDisplay.cardWhiteOut.enabled = false;
+        }
+
+        yield return new WaitForSeconds(0.1f * TimeController.time.timerMultiplier);
+    }
+
+    //Adds a new card to the hand and reorders card positions from ANY color
+    public void DrawAnyCard(bool fromDrawPile = true)
+    {
+        if (hand.Count + drawnCards.Count + drawQueue.Count < maxHandSize)
+        {
+            drawQueue.Add(InstantiateAnyCard(fromDrawPile));
         }
     }
 
     //Adds a new Mana card to the hand and reorders card positions from ANY color
     //Returns true if successful, false if not
-    public bool DrawManaCard()
+    public bool DrawManaCard(bool fromDrawPile = true)
     {
-        if (hand.Count < maxHandSize)
+        if (hand.Count + drawnCards.Count + drawQueue.Count < maxHandSize)
         {
-            CardController card = DeckController.deckController.DrawManaCard();
+            CardController card = DeckController.deckController.DrawManaCard(fromDrawPile);
             if ((object)card != null)
             {
-                hand.Add(GetSpecificCard(card));
-                ResetCardPositions();
-                ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+                drawQueue.Add(InstantiateSpecificCard(card, fromDrawPile, false));
                 return true;
             }
         }
@@ -129,59 +213,90 @@ public class HandController : MonoBehaviour
 
     //Adds a new card to the hand and reorders card positions from ANY color
     //Returns true if successful, false if not
-    public bool DrawEnergyCard()
+    public bool DrawEnergyCard(bool fromDrawPile = true)
     {
-        if (hand.Count < maxHandSize)
+        if (hand.Count + drawnCards.Count + drawQueue.Count < maxHandSize)
         {
-            CardController card = DeckController.deckController.DrawEnergyCard();
+            CardController card = DeckController.deckController.DrawEnergyCard(fromDrawPile);
             if ((object)card != null)
             {
-                hand.Add(GetSpecificCard(card));
-                ResetCardPositions();
-                ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+                drawQueue.Add(InstantiateSpecificCard(card, fromDrawPile, false));
                 return true;
             }
         }
         return false;
     }
 
-    public void DrawSpecificCard(CardController card)
+    public bool DrawSpecificCard(CardController card, bool fromDrawPile = true)
     {
-        if (hand.Count < maxHandSize)
+        if (hand.Count + drawnCards.Count + drawQueue.Count < maxHandSize)
         {
-            hand.Add(GetSpecificCard(card));
-            ResetCardPositions();
-            ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+            CardController c = DeckController.deckController.DrawSpecificCard(card.GetCard(), fromDrawPile);
+            if ((object)c != null)
+            {
+                drawQueue.Add(InstantiateSpecificCard(card, fromDrawPile, false));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void CreateSpecificCard(CardController card)
+    {
+        if (hand.Count + drawnCards.Count + drawQueue.Count < maxHandSize)
+        {
+            drawQueue.Add(InstantiateSpecificCard(card, true, true));
         }
     }
 
     //Redraw all card positions so they're centered
-    public void ResetCardPositions()
+    public IEnumerator ResetCardPositions()
     {
         float spaceBetweenCards = cardSpacing;
         if (hand.Count > 6)
             spaceBetweenCards = cardSpacing * 6 / hand.Count;
-        //Odd number of cards
-        if (hand.Count % 2 == 1)
+
+        List<Vector3> originalPositions = new List<Vector3>();
+        List<Vector3> originalSize = new List<Vector3>();
+        List<Vector3> desiredPosition = new List<Vector3>();
+        Vector3 desiredSize = new Vector3(cardStartingSize, cardStartingSize, 1);
+
+        foreach (CardController card in hand)
         {
-            for (int i = 0; i < hand.Count; i++)
-            {
-                Vector2 cardLocation = new Vector2((i - hand.Count / 2) * spaceBetweenCards, cardStartingHeight);
-                hand[hand.Count - 1 - i].SetLocation(cardLocation);
-                hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
-                hand[hand.Count - 1 - i].transform.SetAsLastSibling();
-            }
+            originalPositions.Add(card.transform.position);
+            originalSize.Add(card.transform.localScale);
+            card.GetComponent<CardDragController>().SetActive(false);
         }
-        //Even number of cards
-        else
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            //Odd number of cards
+            if (hand.Count % 2 == 1)
+                desiredPosition.Add(new Vector3(-(i - hand.Count / 2) * spaceBetweenCards, cardStartingHeight, 0));
+            //Even number of cards
+            else
+                desiredPosition.Add(new Vector3(-(i - hand.Count / 2 + 0.5f) * spaceBetweenCards, cardStartingHeight, 0));
+            hand[hand.Count - 1 - i].transform.SetAsLastSibling();
+        }
+
+        float elapsedTime = 0;
+        while (elapsedTime < 0.1f * TimeController.time.timerMultiplier)
         {
             for (int i = 0; i < hand.Count; i++)
             {
-                Vector2 cardLocation = new Vector2((i - hand.Count / 2 + 0.5f) * spaceBetweenCards, cardStartingHeight);
-                hand[hand.Count - 1 - i].SetLocation(cardLocation);
-                hand[hand.Count - 1 - i].transform.localScale = new Vector3(cardStartingSize, cardStartingSize, 1);
-                hand[hand.Count - 1 - i].transform.SetAsLastSibling();
+                hand[i].transform.position = Vector3.Lerp(originalPositions[i], desiredPosition[i], elapsedTime / 0.1f * TimeController.time.timerMultiplier);
+                hand[i].transform.localScale = Vector3.Lerp(originalSize[i], desiredSize, elapsedTime / 0.1f * TimeController.time.timerMultiplier);
             }
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            hand[i].transform.position = desiredPosition[i];
+            hand[i].transform.localScale = desiredSize;
+            hand[i].GetComponent<CardDragController>().SetActive(true);
+            hand[i].GetComponent<CardDragController>().SetOriginalLocation(desiredPosition[i]);
         }
     }
 
@@ -191,7 +306,7 @@ public class HandController : MonoBehaviour
         {
             currentlyHeldCard = heldCard;
             hand.Remove(heldCard);
-            ResetCardPositions();
+            StartCoroutine(ResetCardPositions());
             heldCard.GetComponent<CardDragController>().SetHeld(true);
 
             GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = false;
@@ -204,7 +319,7 @@ public class HandController : MonoBehaviour
         if (currentlyHeldCard != null)
         {
             if (returnToHand)
-                DrawSpecificCard(currentlyHeldCard);
+                CreateSpecificCard(currentlyHeldCard);
             Destroy(currentlyHeldCard.gameObject);
             currentlyHeldCard = null;
 
@@ -217,10 +332,12 @@ public class HandController : MonoBehaviour
         if (currentReplaceCount < maxReplaceCount)
         {
             hand.Remove(replacedCard);
-            ResetCardPositions();
+            //StartCoroutine(ResetCardPositions());
             DeckController.deckController.ReportUsedCard(replacedCard);
             DrawAnyCard();
             Destroy(replacedCard.gameObject);
+
+            StartCoroutine(ResolveDrawQueue());
 
             currentReplaceCount += 1;
             ResetReplaceText();
@@ -255,7 +372,7 @@ public class HandController : MonoBehaviour
     public void RemoveCard(CardController removedCard)
     {
         hand.Remove(removedCard);
-        ResetCardPositions();
+        StartCoroutine(ResetCardPositions());
         ResetCardDisplays();
         ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
@@ -267,7 +384,7 @@ public class HandController : MonoBehaviour
     }
 
     //Draw cards untill hand is full
-    public void DrawFullHand()
+    public IEnumerator DrawFullHand()
     {
         for (int i = hand.Count; i < startingHandSize + TurnController.turnController.GetCardDrawChange(); i++)
             DrawAnyCard();
@@ -276,72 +393,20 @@ public class HandController : MonoBehaviour
             card.GetComponent<Collider2D>().enabled = true;
 
         ResetReplaceText();
+
+        yield return StartCoroutine(ResolveDrawQueue());
+        //ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
     }
 
     public void ClearHand()
     {
-        /*
-        foreach (CardController card in hand)
-        {
-            if (!card.GetCard().exhaust) //Only put non exhaust cards into the draw pile, otherwise it's just destroyed
-                DeckController.deckController.ReportUsedCard(card);
-
-            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                InformationLogger.infoLogger.gameID,
-                                RoomController.roomController.selectedLevel.ToString(),
-                                RoomController.roomController.roomName,
-                                TurnController.turnController.turnID.ToString(),
-                                TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                card.GetCard().casterColor.ToString(),
-                                card.GetCard().name,
-                                "False",
-                                "False",
-                                "True",
-                                "False",
-                                "None",
-                                "None",
-                                "None",
-                                "None",
-                                "None",
-                                card.GetCard().energyCost.ToString(),
-                                card.GetCard().manaCost.ToString(),
-                                "0");
-
-            Destroy(card.gameObject);
-        }
-        hand = new List<CardController>();
-
-        if (currentlyHeldCard != null)
-            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                        InformationLogger.infoLogger.gameID,
-                        RoomController.roomController.selectedLevel.ToString(),
-                        RoomController.roomController.roomName,
-                        TurnController.turnController.turnID.ToString(),
-                        TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                        currentlyHeldCard.GetCard().casterColor.ToString(),
-                        currentlyHeldCard.GetCard().name,
-                        "True",
-                        "False",
-                        "False",
-                        "False",
-                        "None",
-                        "None",
-                        "None",
-                        "None",
-                        "None",
-                        currentlyHeldCard.GetCard().energyCost.ToString(),
-                        currentlyHeldCard.GetCard().manaCost.ToString(),
-                        "0");
-
-        ResetCardPositions();
-        */
         List<CardController> exhaustCards = new List<CardController>();
         foreach (CardController card in hand)
         {
             if (card.GetCard().exhaust) //Only put non exhaust cards into the draw pile, otherwise it's just destroyed
             {
                 exhaustCards.Add(card);
-                Destroy(card.gameObject);
+                StartCoroutine(ClearExhaustCard(card));
             }
             else
                 InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
@@ -371,7 +436,37 @@ public class HandController : MonoBehaviour
         foreach (CardController card in hand)
             card.GetComponent<Collider2D>().enabled = false;
 
-        ResetCardPositions();
+        StartCoroutine(ResetCardPositions());
+    }
+
+    private IEnumerator ClearExhaustCard(CardController card)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
+        {
+            card.cardDisplay.cardWhiteOut.enabled = true;
+            card.cardDisplay.cardWhiteOut.color = Color.Lerp(Color.clear, Color.white, elapsedTime / 0.5f);
+            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight, 0), new Vector3(card.transform.position.x, cardStartingHeight + 0.5f, 0), elapsedTime / 0.5f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        card.cardDisplay.Hide();
+        elapsedTime = 0;
+        card.cardDisplay.anim.SetTrigger("CardDisappear");
+        while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
+        {
+            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight+0.5f, 0), new Vector3(card.transform.position.x, cardStartingHeight + 1, 0), elapsedTime / 0.5f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(card.gameObject);
+    }
+
+    public void EmptyHand()
+    {
+        foreach (CardController card in hand)
+            Destroy(card.gameObject);
+        hand = new List<CardController>();
     }
 
     //Called from TurnController
@@ -410,7 +505,7 @@ public class HandController : MonoBehaviour
     public void ResetCardDisplays()
     {
         foreach (CardController c in hand)
-            c.GetComponent<CardDisplay>().SetCard(c);
+            c.cardDisplay.SetCard(c);
         if (currentlyHeldCard != null)
             currentlyHeldCard.GetComponent<CardDisplay>().SetCard(currentlyHeldCard);
     }

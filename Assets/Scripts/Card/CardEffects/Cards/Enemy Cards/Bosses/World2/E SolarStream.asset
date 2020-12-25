@@ -21,19 +21,21 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: Disarm the target for 1 turn
+  description: Deal <s>100% of ATK as</s> damage and <b>Disarm</b> the target for
+    1 turn
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 2
   castShape: 0
-  targetType: 01000000
-  cardEffectName: 6e000000
-  hitEffect: 2c010000
-  conditionType: 00000000
-  conditionValue: 00000000
+  targetType: 0100000001000000
+  cardEffectName: 000000006e000000
+  hitEffect: 320000002c010000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
   buff:
+  - {fileID: 0}
   - {fileID: 11400000, guid: bd87feba7fabe924a861b1556ff0ca4e, type: 2}
-  effectValue: 00000000
-  effectDuration: 01000000
+  effectValue: 6400000000000000
+  effectDuration: 0100000001000000
   spawnObject:
   - {fileID: 0}
   cards:
