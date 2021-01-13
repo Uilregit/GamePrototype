@@ -12,7 +12,7 @@ public class DrawEnergyCardEffect : Effect
             successful = HandController.handController.DrawEnergyCard(); //Draws the card and logs if it was successful
             card.SetPreviousEffectSuccessful(successful);
         }
-        yield return new WaitForSeconds(0);
+        yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)

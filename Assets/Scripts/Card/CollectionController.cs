@@ -21,6 +21,7 @@ public class CollectionController : MonoBehaviour
 {
     public static CollectionController collectionController;
 
+    public bool isSinglePlayer;
     public DeckCustomizeCardController[] custCardsDisplay;
     [SerializeField]
     public SelectedCardController[] selectedCardsDisplay;
@@ -30,6 +31,7 @@ public class CollectionController : MonoBehaviour
     [SerializeField]
     public EditorCardsWrapper[] editorDeck;
     public EditorCardsWrapper[] debugDeck;
+    public EditorCardsWrapper[] multiplayerDeck;
     private ListWrapper[] completeDeck = new ListWrapper[3];
     private ListWrapper[] selectedDeck = new ListWrapper[3];
     private ListWrapper[] newCards = new ListWrapper[3];
@@ -60,8 +62,10 @@ public class CollectionController : MonoBehaviour
         EditorCardsWrapper[] usedDeck;
         if (InformationLogger.infoLogger.debug)
             usedDeck = debugDeck;
-        else
+        else if (isSinglePlayer)
             usedDeck = editorDeck;
+        else
+            usedDeck = multiplayerDeck;
 
         for (int i = 0; i < usedDeck.Length; i++)
         {

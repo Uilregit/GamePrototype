@@ -56,18 +56,7 @@ public class InformationController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
             if (GameController.gameController.GetDeadChars().Contains(PartyController.party.partyColors[i]))
-            {
                 combatInfo.deadChars[i] = true;
-                /*
-                if (combatInfo.lives > 0)
-                {
-                    combatInfo.vit[i] = Mathf.CeilToInt(combatInfo.maxVit[i] * 0.5f);
-                    combatInfo.lives -= 1;
-                }
-                else
-                    combatInfo.vit[i] = 1;
-                */
-            }
             else
                 combatInfo.deadChars[i] = false;
         ResourceController.resource.LoadLives(combatInfo.lives);
@@ -75,6 +64,8 @@ public class InformationController : MonoBehaviour
 
     public int GetCurrentVit(Card.CasterColor color)
     {
+        if (PartyController.party.GetPartyIndex(color) == -1)
+            return 0;
         return combatInfo.vit[PartyController.party.GetPartyIndex(color)];
     }
 
@@ -120,7 +111,6 @@ public class InformationController : MonoBehaviour
     {
         return combatInfo.deadChars[PartyController.party.GetPartyIndex(color)];
     }
-
     /*
     public void LoadCombatInformation()
     {

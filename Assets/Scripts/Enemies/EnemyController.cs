@@ -157,8 +157,8 @@ public class EnemyController : MonoBehaviour
 
         for (int i = 0; i < attacksPerTurn; i++)
         {
-            if (desiredTarget[i] == null)                  //In case the desired target died before the turn happened
-                desiredTarget[i] = GetTarget();
+            if (desiredTarget[i].GetComponent<HealthController>().GetIsDead())                  //In case the desired target died before the turn happened
+                continue;
 
             yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
 
@@ -167,7 +167,6 @@ public class EnemyController : MonoBehaviour
             if (!healthController.GetStunned() && GetComponent<HealthController>().GetCurrentVit() > 0)
             {
                 //move towards target specified by TargetType
-                //GameObject target = GetTarget();
                 yield return StartCoroutine(Move(desiredTarget[i]));
 
                 if (healthController.GetStunned()) //In case that it is stunned while moving, stop turn
@@ -232,7 +231,14 @@ public class EnemyController : MonoBehaviour
             target = healthController.GetTauntedTarget().gameObject;
         else
         {
-            target = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex].castType))[0];                     //Get the target according to the card in question
+            try
+            {
+                target = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex].castType))[0];                     //Get the target according to the card in question
+            }
+            catch
+            {
+                target = this.gameObject;       //If the target is dead, then return self to avoid null errors
+            }
 
             /*
             List<GameObject> attackableTargets = enemyInformation.GetAttackableTargets(GetTargetTags(attackSequence[attackCardIndex].castType, attackSequence[attackCardIndex].targetType[0]));     //Will go to the nearest viable target to the actual target if
@@ -632,7 +638,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int distance = 9999999;
@@ -653,7 +663,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int distance = -99999999;
@@ -674,7 +688,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int armor = -999999999;
@@ -695,7 +713,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int armor = 999999999;
@@ -716,7 +738,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int vit = 0;
@@ -738,7 +764,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int vit = 999999999;
@@ -759,7 +789,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int missingHealth = 0;
@@ -780,7 +814,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int highestAttack = 0;
@@ -801,7 +839,11 @@ public class EnemyController : MonoBehaviour
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
         if (type == Card.CastType.Enemy)
-            targets = GameObject.FindGameObjectsWithTag("Enemy");
+        {
+            targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+            for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+                targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
+        }
 
         output = targets[0];
         int lowestAttack = 999999999;

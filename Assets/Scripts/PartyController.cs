@@ -13,6 +13,7 @@ public class PartyController : MonoBehaviour
     public Card.CasterColor[] potentialPlayerColors;
     public List<Card.CasterColor> unlockedPlayerColors;
     public Color[] playerImageColors;
+    public Color teamColor;
     public Dictionary<Card.CasterColor, List<int>> partyLevelInfo;
 
     // Start is called before the first frame update
@@ -43,6 +44,8 @@ public class PartyController : MonoBehaviour
 
     public Color GetPlayerColor(Card.CasterColor caster)
     {
+        if (caster == Card.CasterColor.Enemy)
+            return teamColor;
         return playerImageColors[Array.FindIndex(potentialPlayerColors, x => x == caster)];
     }
 
@@ -73,6 +76,35 @@ public class PartyController : MonoBehaviour
                     output[i] = "Black";
                     break;
             }
+        }
+
+        return output;
+    }
+
+    public string GetPlayerColorText(Card.CasterColor color)
+    {
+        string output = "";
+
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                output = "Red";
+                break;
+            case Card.CasterColor.Blue:
+                output = "Blue";
+                break;
+            case Card.CasterColor.Green:
+                output = "Green";
+                break;
+            case Card.CasterColor.Orange:
+                output = "Orange";
+                break;
+            case Card.CasterColor.White:
+                output = "White";
+                break;
+            case Card.CasterColor.Black:
+                output = "Black";
+                break;
         }
 
         return output;

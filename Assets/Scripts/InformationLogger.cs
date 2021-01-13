@@ -26,10 +26,17 @@ public class SaveFile
 
     public int level;
     //public int roomRandomizedIndex;
+    public float viableRoomX;
+    public float viableRoomY;
     public float[] previousRoomsX;
     public float[] previousRoomsY;
     public float[] destroyedRoomsX;
     public float[] destroyedRoomsY;
+
+    /*
+    public List<string> drawPileOrder;
+    public List<string> discardPileOrder;
+    */
 
     public int lives;
     public bool p1Dead;
@@ -101,6 +108,14 @@ public class PlayerPreferences
     public int highestBossesDefeatedScore;
     public int highestSecondsInGameScore;
     public int highestTotalScore;
+}
+
+[System.Serializable]
+public class Settings
+{
+    public int gameSpeedIndex;
+    public int screenShakeIndex;
+    public bool remainingMoveRangeIndicator;
 }
 
 [System.Serializable]
@@ -438,6 +453,9 @@ public class InformationLogger : MonoBehaviour
             saveFile.worldLevel = RoomController.roomController.GetWorldLevel();
             //saveFile.roomRandomizedIndex = RoomController.roomController.GetRandomizedRoomIndex();
 
+            saveFile.viableRoomX = RoomController.roomController.GetViableRoom().x;
+            saveFile.viableRoomY = RoomController.roomController.GetViableRoom().y;
+
             List<Vector2> previousRoom = RoomController.roomController.GetPreviousRoom();
             float[] previousRoomX = new float[previousRoom.Count];
             float[] previousRoomY = new float[previousRoom.Count];
@@ -563,6 +581,8 @@ public class InformationLogger : MonoBehaviour
             RoomController.roomController.selectedLevel = saveFile.level;
             RoomController.roomController.SetWorldLevel(saveFile.worldLevel);
             //roomRandomizedIndex = saveFile.roomRandomizedIndex;
+
+            RoomController.roomController.SetViableRoom(new Vector2(saveFile.viableRoomX, saveFile.viableRoomY));
 
             List<Vector2> previousRoom = new List<Vector2>();
             for (int i = 0; i < saveFile.previousRoomsX.Length; i++)
@@ -768,7 +788,37 @@ public class InformationLogger : MonoBehaviour
         else
         {
             Debug.Log("player preferences file not found in: " + path);
-            playerPreferences = GetPlayerPreferences();
+            playerPreferences = new PlayerPreferences();
+            playerPreferences.party1 = "Red";
+            playerPreferences.party2 = "Blue";
+            playerPreferences.party3 = "Green";
+
+            playerPreferences.teamLevel = 0;
+            playerPreferences.currentEXP = 0;
+
+            playerPreferences.redLevel = 0;
+            playerPreferences.redCurrentEXP = 0;
+            playerPreferences.blueLevel = 0;
+            playerPreferences.blueCurrentEXP = 0;
+            playerPreferences.greenLevel = 0;
+            playerPreferences.greenCurrentEXP = 0;
+            playerPreferences.orangeLevel = 0;
+            playerPreferences.orangeCurrentEXP = 0;
+            playerPreferences.whiteLevel = 0;
+            playerPreferences.whiteCurrentEXP = 0;
+            playerPreferences.blackLevel = 0;
+            playerPreferences.blackCurrentEXP = 0;
+
+            playerPreferences.highestOverkillScore = 0;
+            playerPreferences.highestDamageScore = 0;
+            playerPreferences.highestDamageArmoredScore = 0;
+            playerPreferences.highestDamageOverhealedProtectedScore = 0;
+            playerPreferences.highestDamageAvoidedScore = 0;
+            playerPreferences.highestEnemiesBrokenScore = 0;
+            playerPreferences.highestGoldUsedScore = 0;
+            playerPreferences.highestBossesDefeatedScore = 0;
+            playerPreferences.highestSecondsInGameScore = 0;
+            playerPreferences.highestTotalScore = 0;
         }
 
         return playerPreferences;
@@ -809,6 +859,58 @@ public class InformationLogger : MonoBehaviour
         }
 
         return unlocks;
+    }
+
+    //Settings
+    private Settings GetSettings()
+    {
+        Settings settings = new Settings();
+        settings.gameSpeedIndex = SettingsController.settings.GetGameSpeedIndex();
+        settings.screenShakeIndex = SettingsController.settings.GetScreenShakeIndex();
+        settings.remainingMoveRangeIndicator = SettingsController.settings.GetRemainingMoveRangeIndicator();
+
+        return settings;
+    }
+
+    public void SaveSettings()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = GetCombatPath() + "/settings" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+
+        formatter.Serialize(stream, GetSettings());
+        stream.Close();
+    }
+
+    public void LoadSettings()
+    {
+        Settings settings = GetHasSettings();
+
+        SettingsController.settings.SetGameSpeedIndex(settings.gameSpeedIndex);
+        SettingsController.settings.SetScreenShakeIndex(settings.screenShakeIndex);
+        SettingsController.settings.SetRemainingMoveRangeIndicator(settings.remainingMoveRangeIndicator);
+    }
+    private Settings GetHasSettings()
+    {
+        string path = GetCombatPath() + "/settings" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        Settings settings = null;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            settings = formatter.Deserialize(stream) as Settings;
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.Log("settings file not found in: " + path);
+            settings = GetSettings();
+            SaveSettings();
+        }
+
+        return settings;
     }
 
     private void OnDestroy()

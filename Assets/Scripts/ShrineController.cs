@@ -81,18 +81,22 @@ public class ShrineController : MonoBehaviour
             InformationController.infoController.ChangeCombatInfo(0, 0, 0, 5);
         }
 
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+        RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+        InformationLogger.infoLogger.SaveGame(false);
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
-        Camera.main.transform.position = new Vector3(0, 0, -10);
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 
     public void ChoseOption2()
     {
         RelicController.relic.AddRelic(relic);
+        Camera.main.transform.position = new Vector3(0, 0, -10);
+        RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+        InformationLogger.infoLogger.SaveGame(false);
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
-        Camera.main.transform.position = new Vector3(0, 0, -10);
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 }

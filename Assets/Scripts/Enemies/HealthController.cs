@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour //Eventualy split into buff, effect, and health controllers
 {
+    private bool isDead = false;
     public bool isPlayer = false;
     public int size = 1;
     private int maxBrokenTurns = 2;
@@ -1068,5 +1069,20 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public HealthController GetTauntedTarget()
     {
         return tauntedTarget;
+    }
+
+    public void ReportDead()
+    {
+        isDead = true;
+    }
+
+    public void ReportResurrect()
+    {
+        isDead = false;
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
     }
 }

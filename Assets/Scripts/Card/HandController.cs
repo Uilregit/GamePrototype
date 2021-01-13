@@ -82,7 +82,7 @@ public class HandController : MonoBehaviour
     private CardController InstantiateAnyCard(bool fromDrawPile)
     {
         GameObject card = Instantiate(cardTemplate);
-        card.GetComponent<RectTransform>().rotation = CameraController.camera.transform.rotation;
+        card.GetComponent<RectTransform>().rotation = Camera.main.transform.rotation;
         card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         CardController cardController = card.GetComponent<CardController>();
         CardController drawnCard = DeckController.deckController.DrawAnyCard(fromDrawPile);

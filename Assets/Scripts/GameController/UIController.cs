@@ -23,7 +23,9 @@ public class UIController : MonoBehaviour
     public Text discardPileCount;
 
     [Header("Manifest Cards")]
+    public Text choose1Text;
     public List<ManifestCardController> manifestCards;
+    public Image hideButton;
     private Effect manifestEffect;
 
     // Start is called before the first frame update
@@ -78,19 +80,6 @@ public class UIController : MonoBehaviour
                 manaIcons[i].color = anticipatedGainColor;
             else
                 manaIcons[i].color = missingManaColor;
-
-        /*
-for (int i = 0; i < 10; i++)
-    if (i < manaCount)
-        manaIcons[i].GetComponent<Outline>().enabled = false;
-    else if (i < manaCount + amount)
-    {
-        manaIcons[i].GetComponent<Outline>().effectColor = anticipatedGainColor;
-        manaIcons[i].GetComponent<Outline>().enabled = true;
-    }
-    else
-        manaIcons[i].GetComponent<Outline>().enabled = false;
-       */
     }
 
     public IEnumerator GainMana(int loc)
@@ -117,6 +106,10 @@ for (int i = 0; i < 10; i++)
 
     public void SetManifestCards(List<CardController> cards, Effect effect)
     {
+        choose1Text.enabled = true;
+        hideButton.enabled = true;
+        hideButton.transform.GetChild(0).GetComponent<Text>().enabled = true;
+
         manifestEffect = effect;
         for (int i = 0; i < cards.Count; i++)
         {
@@ -127,10 +120,33 @@ for (int i = 0; i < 10; i++)
         }
     }
 
+    public void ManifestHideButtonPressed()
+    {
+        choose1Text.enabled = !choose1Text.enabled;
+        foreach (ManifestCardController card in manifestCards)
+        {
+            if (card.GetHasCard())
+                if (card.GetComponent<Collider2D>().enabled)
+                {
+                    card.GetComponent<Collider2D>().enabled = false;
+                    card.transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+                }
+                else
+                {
+                    card.GetComponent<Collider2D>().enabled = true;
+                    card.transform.GetChild(0).GetComponent<CardDisplay>().Show();
+                    card.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
+                }
+        }
+    }
+
     public void ReportChosenManifestCard(CardController card)
     {
-        manifestEffect.chosenCard = card;
+        choose1Text.enabled = false;
+        hideButton.enabled = false;
+        hideButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
 
+        manifestEffect.chosenCard = card;
         for (int i = 0; i < manifestCards.Count; i++)
         {
             manifestCards[i].GetComponent<Collider2D>().enabled = false;

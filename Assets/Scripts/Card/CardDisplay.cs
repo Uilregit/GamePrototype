@@ -191,10 +191,26 @@ public class CardDisplay : MonoBehaviour
 
         if (casterColor != Card.CasterColor.Enemy && casterColor != Card.CasterColor.Gray)
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
-                if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor)
+                try
                 {
-                    card.SetCaster(obj);
-                    break;
+                    //Debug.Log("tried setting caster");
+                    if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor)
+                    {
+                        
+                        card.SetCaster(obj);
+                        break;
+                    }
+                }
+                catch
+                {
+                    //Debug.Log("tried setting caster");
+                    if (obj.GetComponent<MultiplayerPlayerController>().GetColorTag() == casterColor)
+                    {
+                        
+                        //Debug.Log(obj);
+                        card.SetCaster(obj);
+                        break;
+                    }
                 }
 
         description.text = card.GetCard().description.Replace('|', '\n');

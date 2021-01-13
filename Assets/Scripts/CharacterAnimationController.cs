@@ -58,7 +58,8 @@ public class CharacterAnimationController : MonoBehaviour
         }
         catch
         {
-            Destroy(this.transform.parent.parent.gameObject);
+            transform.parent.GetComponent<CharacterDisplayController>().Hide();
+            //Destroy(this.transform.parent.parent.gameObject);
         }
     }
 }

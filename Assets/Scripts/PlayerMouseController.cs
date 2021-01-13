@@ -21,6 +21,7 @@ public class PlayerMouseController : DragController
     public override void OnMouseDown()
     {
         moveController.CreateMoveRangeIndicator();
+
         //TileCreator.tileCreator.SetCommitment(true);
         base.OnMouseDown();
     }

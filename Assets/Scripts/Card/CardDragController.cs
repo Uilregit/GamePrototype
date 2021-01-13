@@ -97,9 +97,16 @@ public class CardDragController : DragController
 
     private void Cast()
     {
-        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
-            player.GetComponent<Collider2D>().enabled = false;
-
+        try
+        {
+            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                player.GetComponent<Collider2D>().enabled = false;
+        }
+        catch
+        {
+            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers(0))
+                player.GetComponent<Collider2D>().enabled = false;
+        }
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         currentState = State.Aiming;
         line.enabled = true;
@@ -108,8 +115,16 @@ public class CardDragController : DragController
 
     private void UnCast()
     {
-        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
-            player.GetComponent<Collider2D>().enabled = true;
+        try
+        {
+            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                player.GetComponent<Collider2D>().enabled = true;
+        }
+        catch
+        {
+            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers(0))
+                player.GetComponent<Collider2D>().enabled = true;
+        }
 
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         currentState = State.Highlighted;
@@ -195,7 +210,6 @@ public class CardDragController : DragController
 
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-        //cardDisplay.cardName.sortingOrder = 1;
 
         // For hold and replace
         RaycastHit hit;
@@ -232,8 +246,6 @@ public class CardDragController : DragController
                     HandController.handController.UnholdCard(true);
                     isHeld = false;
                 }
-
-                //UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
             }
             else
             {
@@ -330,6 +342,8 @@ public class CardDragController : DragController
         card = cardController.GetCard();
         cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "Player", "Enemy" });
+        if (!card.canCastOnSelf)
+            target.Remove(cardController.GetCaster());
         List<Vector2> targetedLocs = new List<Vector2>();
         if (card.castType == Card.CastType.TargetedAoE)
             target.AddRange(GridController.gridController.GetObjectsInAoE(castLocation, card.radius, new string[] { "All" }));

@@ -12,7 +12,11 @@ public class FinalizeButtonController : MonoBehaviour
     private void OnMouseDown()
     {
         CollectionController.collectionController.FinalizeDeck();
-        CollectionController.collectionController.LogInformation();
+        try
+        {
+            CollectionController.collectionController.LogInformation();
+        }
+        catch { }
         CameraController.camera.transform.position = new Vector3(0, 0, -10);
     }
 

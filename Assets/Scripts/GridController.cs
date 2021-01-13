@@ -226,6 +226,7 @@ public class GridController : MonoBehaviour
                     }
                     catch { }
 
+        //Resolve enemy deaths
         foreach (GameObject o in deadObjects)
         {
             RemoveFromPosition(o, o.transform.position);
@@ -233,10 +234,12 @@ public class GridController : MonoBehaviour
             try
             {
                 TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
+                o.GetComponent<HealthController>().ReportDead();
             }
             catch { }
         }
 
+        //Resolve sacrificed enemies
         foreach (GameObject o in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             EnemyController ec = o.GetComponent<EnemyController>();
@@ -244,6 +247,7 @@ public class GridController : MonoBehaviour
             {
                 o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
                 TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
+                o.GetComponent<HealthController>().ReportDead();
             }
         }
 
@@ -262,6 +266,7 @@ public class GridController : MonoBehaviour
     {
         deathLocation[color] = obj.transform.position;
         obj.transform.position = new Vector2(1000, 1000);     //Move out of the way for possible resurrection
+        obj.GetComponent<HealthController>().ReportDead();
     }
 
     public Vector2 GetDeathLocation(Card.CasterColor color)

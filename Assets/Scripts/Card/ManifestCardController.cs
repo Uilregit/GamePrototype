@@ -9,6 +9,7 @@ public class ManifestCardController : MonoBehaviour
     private Vector3 localScale;
     private Vector3 originalLocation;
     private CardController thisCard;
+    private bool hasCard;
 
     private void Awake()
     {
@@ -44,5 +45,11 @@ public class ManifestCardController : MonoBehaviour
     {
         thisCard = card;
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
+        hasCard = true;
+    }
+
+    public bool GetHasCard()
+    {
+        return hasCard;
     }
 }

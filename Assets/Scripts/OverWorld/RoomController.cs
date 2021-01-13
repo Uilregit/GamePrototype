@@ -31,6 +31,7 @@ public class RoomController : MonoBehaviour
     public enum roomType { combat, shop, shrine };
 
     private List<SmallRoom> smallRooms;
+    private List<int> roomSeeds;
     [SerializeField]
     private RoomSetup debugRoom;
 
@@ -41,6 +42,8 @@ public class RoomController : MonoBehaviour
 
     private bool initiated = false;
     private RoomSetup currentRoomSetup;
+    private SmallRoom currentSmallRoom;
+    private Vector2 viableRoom = new Vector2(-999, -999);
     private List<Vector2> previousRoom;
     private List<Vector2> destroyedRooms;
 
@@ -63,6 +66,7 @@ public class RoomController : MonoBehaviour
         if (!initiated)
         {
             smallRooms = new List<SmallRoom>();
+            roomSeeds = new List<int>();
             InitializeWorld();
             LoadRooms();
             initiated = true;
@@ -72,6 +76,8 @@ public class RoomController : MonoBehaviour
 
     public void InitializeWorld(bool load = false)
     {
+        Random.InitState(InformationLogger.infoLogger.seed);
+
         ResourceController.resource.GetComponent<Canvas>().enabled = true;
         ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
         ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
@@ -90,6 +96,7 @@ public class RoomController : MonoBehaviour
             Destroy(room.gameObject);
 
         smallRooms = new List<SmallRoom>();
+        roomSeeds = new List<int>();
 
         foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
         {
@@ -98,6 +105,8 @@ public class RoomController : MonoBehaviour
             smallRooms.Add(obj.GetComponent<SmallRoom>());
             obj.transform.SetParent(transform);
             obj.transform.position = transform.position + new Vector3(loc.x * 0.8f, loc.y * 0.8f - 3.37f, 0);
+
+            obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
         }
 
         numRoomsPerLevel = new Dictionary<int, int>();
@@ -158,7 +167,12 @@ public class RoomController : MonoBehaviour
                     room.SetColor(previousColor);
                 else if (room.GetLocation().y - lastRoom.y == 1 &&   //If within selection criteria, make rooms clickable
                     Mathf.Abs(room.GetLocation().x - lastRoom.x) <= 1)
-                    room.SetSelectable(true);
+                {
+                    if (viableRoom == room.GetLocation() || viableRoom == new Vector2(-999, -999))
+                        room.SetSelectable(true);
+                    else
+                        room.SetColor(unviableColor);
+                }
                 else                                                                    //For the rest, set yet to be reached levels one color, set past levels another
                 {
                     room.SetSelectable(false);
@@ -249,7 +263,10 @@ public class RoomController : MonoBehaviour
             //smallRooms.Remove(room);
             //Destroy(room.gameObject);
         }
-        bossRoom.SetSetup(worldSetups[worldLevel].bossRooms[Random.Range(0, worldSetups[worldLevel].bossRooms.Count)]);
+        if (InformationLogger.infoLogger.debug)
+            bossRoom.SetSetup(debugRoom);
+        else
+            bossRoom.SetSetup(worldSetups[worldLevel].bossRooms[Random.Range(0, worldSetups[worldLevel].bossRooms.Count)]);
     }
     /*
     public void SetCurrentRoomSetup(RoomSetup newSetup)
@@ -387,6 +404,16 @@ public class RoomController : MonoBehaviour
         currentRoomSetup = value;
     }
 
+    public void SetCurrentSmallRoom(SmallRoom value)
+    {
+        currentSmallRoom = value;
+    }
+
+    public SmallRoom GetCurrentSmallRoom()
+    {
+        return currentSmallRoom;
+    }
+
     public RoomSetup GetCurrentRoomSetup()
     {
         return currentRoomSetup;
@@ -411,6 +438,16 @@ public class RoomController : MonoBehaviour
     {
         worldLevel = newLevel;
         Camera.main.backgroundColor = worldSetups[worldLevel].cameraBackground;
+    }
+
+    public void SetViableRoom(Vector2 loc)
+    {
+        viableRoom = loc;
+    }
+
+    public Vector2 GetViableRoom()
+    {
+        return viableRoom;
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)

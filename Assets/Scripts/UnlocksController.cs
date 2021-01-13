@@ -18,6 +18,7 @@ public class UnlocksController : MonoBehaviour
     public UnlockTypes[] teamUnlockRewards = new UnlockTypes[20];
     public UnlockTypes[] heroUnlockRewards = new UnlockTypes[20];
 
+    public Sprite cardSprite;
     public Sprite livesSprite;
     public Sprite replaceSprite;
     public Sprite holdSprite;
@@ -68,6 +69,8 @@ public class UnlocksController : MonoBehaviour
 
         InformationLogger.infoLogger.LoadUnlocks();
         PartyController.party.ResolveUnlockedColors();
+        InformationController.infoController.ChangeCombatInfo(UnlocksController.unlock.GetUnlocks().livesUnlocked, 0, 0, 0);
+        ResourceController.resource.LoadLives(InformationController.infoController.GetCombatInfo().lives);
     }
 
     public void SetUnlocks(Unlocks value)
@@ -177,6 +180,12 @@ public class UnlocksController : MonoBehaviour
                 return customizeableCardSprite;
             case UnlockTypes.Contract:
                 return contractSprite;
+            case UnlockTypes.CardPack:
+                return cardSprite;
+            case UnlockTypes.EpicCardPack:
+                return cardSprite;
+            case UnlockTypes.LegendaryCardPack:
+                return cardSprite;
             default:
                 return errorSprite;
         }

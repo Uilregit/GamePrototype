@@ -12,7 +12,7 @@ public class TavernIconsController : MonoBehaviour
         color = value;
     }
 
-    public void ReportClickeD()
+    public virtual void ReportClickeD()
     {
         tavern.ReportSelected(color);
     }

@@ -102,7 +102,7 @@ public class HealthBarController : MonoBehaviour
         if (initialHealth <= 0)
             damagePercentage = 0;
 
-        backImage.rectTransform.position = center + new Vector2(0, 0.4f + index * 0.2f) * size;
+        backImage.rectTransform.position = center + new Vector2(0, 0.95f + index * 0.25f) * size;
         backImage.rectTransform.localScale = new Vector2(scale, 1);
 
         barImage.rectTransform.localScale = new Vector2(HPPercentage, 1);

@@ -40,7 +40,6 @@ public class ResourceController : MonoBehaviour
         DontDestroyOnLoad(canvas);
         //DontDestroyOnLoad(goldText);
         //DontDestroyOnLoad(goldUIBack);
-        LoadLives(InformationController.infoController.GetCombatInfo().lives);
     }
 
     public void ChangeGold(int value)

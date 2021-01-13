@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController camera;
 
+    public float screenShakeMultiplier = 1;
+
     private bool isShaking;
     private float strength = 0;
     private float duration = 0;
@@ -26,6 +28,8 @@ public class CameraController : MonoBehaviour
             Camera.main.backgroundColor = RoomController.roomController.GetCurrentWorldSetup().cameraBackground;
         }
         catch { }
+
+        screenShakeMultiplier = SettingsController.settings.GetScreenShakeMultiplier();
 
         originalLocation = transform.position;
         shakingStartTime = Time.time;
@@ -60,7 +64,7 @@ public class CameraController : MonoBehaviour
         return ray.GetPoint(distance);
     }
 
-    public void ScreenShake(float newStrength, float newDuration)
+    public void ScreenShake(float newStrength, float newDuration, bool overrideMultiplier = false)
     {
         isShaking = true;
         if (newDuration > duration - (Time.time - shakingStartTime))
@@ -69,6 +73,9 @@ public class CameraController : MonoBehaviour
             strength = Mathf.Max(strength, newStrength * 2);
         else
             strength = Mathf.Max(strength, newStrength);
+
+        if (!overrideMultiplier)
+            strength *= screenShakeMultiplier;
         duration = Mathf.Max(duration, newDuration);
     }
 }

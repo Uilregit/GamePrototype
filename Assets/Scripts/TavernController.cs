@@ -15,6 +15,9 @@ public class TavernController : MonoBehaviour
     public Text shardText;
     public Text contractText;
 
+    public BattlePassController teamBattlePass;
+    public BattlePassController heroBattlePass;
+
     public Canvas recruitCanvas;
     public Image recruitButton;
     public Sprite orangeCharacterSprite;
@@ -95,6 +98,9 @@ public class TavernController : MonoBehaviour
         characterCards[Card.CasterColor.White] = whiteStartingCards;
         characterCards[Card.CasterColor.Black] = blackStartingCards;
         cardControllers = new Dictionary<Card.CasterColor, CardController[]>();
+
+        teamBattlePass.SetBattlePass(Card.CasterColor.Enemy);
+        heroBattlePass.SetBattlePass(PartyController.party.partyColors[0]);
     }
 
     public void StartEditing(int index)
@@ -112,6 +118,9 @@ public class TavernController : MonoBehaviour
                 reserves[i].transform.GetChild(0).GetComponent<Text>().enabled = true;
                 i++;
             }
+
+        if (heroBattlePass != null)
+            heroBattlePass.SetBattlePass(PartyController.party.partyColors[index]);
     }
 
     public void ReportSelected(Card.CasterColor newColor)
@@ -125,6 +134,9 @@ public class TavernController : MonoBehaviour
             img.enabled = false;
             img.transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
+
+        if (heroBattlePass != null)
+            heroBattlePass.SetBattlePass(newColor);
     }
 
     public void ReportRecruitSelected(Card.CasterColor newColor)
@@ -148,6 +160,9 @@ public class TavernController : MonoBehaviour
         recruitCanvas.enabled = true;
         recruitCanvas.GetComponent<CanvasScaler>().enabled = false;
         recruitCanvas.GetComponent<CanvasScaler>().enabled = true;
+
+        teamBattlePass.GetComponent<Canvas>().enabled = false;
+        heroBattlePass.GetComponent<Canvas>().enabled = false;
 
         int i = 0;
         foreach (Card.CasterColor c in PartyController.party.potentialPlayerColors)
@@ -177,6 +192,9 @@ public class TavernController : MonoBehaviour
         GetComponent<Canvas>().enabled = true;
 
         PartyController.party.unlockedPlayerColors.Add(recruitColor);
+
+        teamBattlePass.GetComponent<Canvas>().enabled = true;
+        heroBattlePass.GetComponent<Canvas>().enabled = true;
 
         Unlocks unlocked = UnlocksController.unlock.GetUnlocks();
         unlocked.tavernContracts -= 1;
@@ -253,5 +271,9 @@ public class TavernController : MonoBehaviour
             recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
 
+        teamBattlePass.SetBattlePass(Card.CasterColor.Enemy);
+        heroBattlePass.SetBattlePass(PartyController.party.partyColors[0]);
+
+        InformationLogger.infoLogger.SaveGame(true);
     }
 }

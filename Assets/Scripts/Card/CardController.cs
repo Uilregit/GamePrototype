@@ -102,7 +102,18 @@ public class CardController : MonoBehaviour
 
     public void CreateRangeIndicator()
     {
-        if (!GameController.gameController.GetDeadChars().Contains(card.casterColor))
+        bool proceed = false;
+        try
+        {
+            if (!GameController.gameController.GetDeadChars().Contains(card.casterColor))
+                proceed = true;
+        }
+        catch
+        {
+            if (!MultiplayerGameController.gameController.GetDeadChars().Contains(card.casterColor))
+                proceed = true;
+        }
+        if (proceed)
         {
             /*
             if (card.casterColor == Card.CasterColor.Gray)
@@ -222,8 +233,20 @@ public class CardController : MonoBehaviour
     public void ResetPlayability(int energy, int mana)
     {
         bool highlight = false;
+        bool casterIsAlive = true;
 
-        if ((!GameController.gameController.GetDeadChars().Contains(card.casterColor) && isResurrectCard) ||  //If this was a resurrect card and the player rezed, change it back to what it was
+        try
+        {
+            if (GameController.gameController.GetDeadChars().Contains(card.casterColor))
+                casterIsAlive = false;
+        }
+        catch
+        {
+            if (MultiplayerGameController.gameController.GetDeadChars().Contains(card.casterColor))
+                casterIsAlive = false;
+        }
+
+        if ((casterIsAlive && isResurrectCard) ||  //If this was a resurrect card and the player rezed, change it back to what it was
             (ResourceController.resource.GetLives() == 0 && isResurrectCard))                                 //or if the team is out of lives, change it back too
         {
             isResurrectCard = false;
@@ -231,12 +254,12 @@ public class CardController : MonoBehaviour
             cardEffects.SetCard(this);
         }
 
-        if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && !GameController.gameController.GetDeadChars().Contains(card.casterColor))
+        if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && casterIsAlive)
         {
             cardDisplay.SetHighLight(true);
             highlight = true;
         }
-        else if (GameController.gameController.GetDeadChars().Contains(card.casterColor) && ResourceController.resource.GetLives() > 0)
+        else if (!casterIsAlive && ResourceController.resource.GetLives() > 0)
         {
             isResurrectCard = true;
             resurrectCard = LootController.loot.ResurrectCard.GetCopy();

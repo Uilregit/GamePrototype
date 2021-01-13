@@ -6,7 +6,9 @@ public class ArmorDamageAll : Effect
 {
     public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] targets = new GameObject[TurnController.turnController.GetEnemies().Count];
+        for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
+            targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
         foreach (GameObject thisTarget in targets)
             thisTarget.GetComponent<HealthController>().TakeArmorDamage(card.effectValue[effectIndex], caster.GetComponent<HealthController>());
         yield return new WaitForSeconds(0);

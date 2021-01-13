@@ -17,23 +17,18 @@ public class PlayerController : MonoBehaviour
     private PlayerMoveController moveController;
 
     // Start is called before the first frame update
-    void Awake()
+    public virtual void Awake()
     {
-        if (!PartyController.party.partyColors.Contains(colorTag))
-            Destroy(this.gameObject);
-        else
-        {
-            healthController = GetComponent<HealthController>();
+        healthController = GetComponent<HealthController>();
 
-            healthController.SetCastRange(castRange);
-            healthController.SetMaxVit(maxVit);
-            healthController.SetStartingArmor(startingArmor);
-            healthController.SetStartingAttack(attack);
-            healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
+        healthController.SetCastRange(castRange);
+        healthController.SetMaxVit(maxVit);
+        healthController.SetStartingArmor(startingArmor);
+        healthController.SetStartingAttack(attack);
+        healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
 
-            moveController = GetComponent<PlayerMoveController>();
-            moveController.SetPlayerController(this);
-        }
+        moveController = GetComponent<PlayerMoveController>();
+        moveController.SetPlayerController(this);
     }
 
     public void Spawn()
@@ -56,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     public void Spawn(Vector2 location)
     {
+        if (!PartyController.party.partyColors.Contains(colorTag))
+            Destroy(this.gameObject);
         transform.position = location;
         GridController.gridController.ReportPosition(this.gameObject, location);
         GetComponent<PlayerMoveController>().Spawn();

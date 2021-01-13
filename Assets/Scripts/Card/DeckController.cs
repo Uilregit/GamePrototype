@@ -20,6 +20,8 @@ public class DeckController : MonoBehaviour
 {
     public static DeckController deckController;
 
+    private int seedForShuffle = -1;
+
     private ListWrapper[] deck;
     private List<CardController> drawPile;
     private List<CardController> discardPile;
@@ -128,7 +130,7 @@ public class DeckController : MonoBehaviour
                 numberOfManaCardsInDraw -= 1;
             }
         }
-        else 
+        else
         {
             int index = -1;
             for (int i = 0; i < discardPile.Count; i++)
@@ -237,7 +239,23 @@ public class DeckController : MonoBehaviour
     //Shuffles the draw pile
     public void ShuffleDrawPile()
     {
-        drawPile = drawPile.OrderBy(x => System.Guid.NewGuid()).ToList();
+        try
+        {
+            if (seedForShuffle == -1)
+                seedForShuffle = RoomController.roomController.GetCurrentSmallRoom().GetSeed();
+
+            Random.InitState(seedForShuffle);
+            seedForShuffle = Random.Range(1, 1000000000);
+
+            for (int i = 0; i < drawPile.Count; i++)
+            {
+                int index = Random.Range(0, drawPile.Count - 1);
+                CardController c = drawPile[i];
+                drawPile[i] = drawPile[index];
+                drawPile[index] = c;
+            }
+        }
+        catch { }
     }
 
     //Makes a copy of the entire default deck, all colors

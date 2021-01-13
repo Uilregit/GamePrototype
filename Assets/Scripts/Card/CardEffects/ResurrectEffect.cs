@@ -18,6 +18,7 @@ public class ResurrectEffect : Effect
 
         player.transform.position = target[0];
         player.GetComponent<HealthController>().charDisplay.transform.position = target[0];
+        player.GetComponent<HealthController>().ReportResurrect();
         player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
         player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
         GridController.gridController.RemoveDeathLocation(card.casterColor);

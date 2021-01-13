@@ -222,7 +222,7 @@ public class GameController : MonoBehaviour
         {
             ScoreController.score.UpdateBossesDefeated();
 
-            CameraController.camera.ScreenShake(0.4f, 2f);
+            CameraController.camera.ScreenShake(0.4f, 2f, true);
             yield return new WaitForSeconds(2.5f);
 
             HealthController player = null;
@@ -238,6 +238,7 @@ public class GameController : MonoBehaviour
                     {
                         player.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
                         player.GetComponent<HealthController>().charDisplay.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
+                        player.GetComponent<HealthController>().ReportResurrect();
                         player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
                         player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
                         GridController.gridController.RemoveDeathLocation(deadCharColor);
@@ -345,12 +346,12 @@ public class GameController : MonoBehaviour
         return output;
     }
 
-    public void ReportResurrectedChar(Card.CasterColor color)
+    public virtual void ReportResurrectedChar(Card.CasterColor color)
     {
         deadChars.Remove(color);
     }
 
-    public List<Card.CasterColor> GetDeadChars()
+    public virtual List<Card.CasterColor> GetDeadChars()
     {
         return deadChars;
     }

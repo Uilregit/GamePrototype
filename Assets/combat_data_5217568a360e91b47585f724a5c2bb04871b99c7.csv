@@ -3998,3 +3998,17 @@ deviceID,patchID,gameID,encounterLevel,roomName,turnID,timestamp,castOrder,cardC
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 7:38:04 PM,0,missing,0,0,0,,,False,False,False,True,,1,Paladin,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 7:38:04 PM,0,missing,0,0,0,,,False,False,False,True,,1,Mimic,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/23/2020 7:38:04 PM,0,missing,0,0,0,,,False,False,False,True,,1,Warlock,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,10,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,10,0,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,4,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,14,1,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,14,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,24,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,16,2,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,16,2,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,16,2,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,0,16,2,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,20,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,20,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,22,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,23,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,23,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.6,12/26/2020 4:22:24 PM,0,missing,1,24,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,2

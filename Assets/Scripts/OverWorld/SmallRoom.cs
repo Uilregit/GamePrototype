@@ -17,6 +17,8 @@ public class SmallRoom : MonoBehaviour
 
     private RoomSetup setup;
 
+    private int seed;
+
     private void Awake()
     {
         highlight = GetComponent<Outline>();
@@ -35,6 +37,7 @@ public class SmallRoom : MonoBehaviour
     {
         RoomController.roomController.SetCurrentRoomSetup(setup);
 
+        RoomController.roomController.SetViableRoom(location);
         InformationLogger.infoLogger.SaveGame(false);
 
         RoomController.roomController.selectedLevel = (int)location.y;
@@ -43,6 +46,9 @@ public class SmallRoom : MonoBehaviour
 
         RoomController.roomController.Hide();
         RoomController.roomController.SetPreviousRoom(this);
+        RoomController.roomController.SetCurrentSmallRoom(this);
+
+        Random.InitState(seed);
 
         if (type == RoomController.roomType.combat)
             RoomController.roomController.EnterRoom("CombatScene");
@@ -113,5 +119,15 @@ public class SmallRoom : MonoBehaviour
     public void SetDestroyed(bool value)
     {
         destroyed = value;
+    }
+
+    public void SetSeed(int value)
+    {
+        seed = value;
+    }
+
+    public int GetSeed()
+    {
+        return seed;
     }
 }

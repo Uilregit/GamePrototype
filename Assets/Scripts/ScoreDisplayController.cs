@@ -303,6 +303,8 @@ public class ScoreDisplayController : MonoBehaviour
                     Debug.Log("###################");
                     UnlocksController.unlock.GetUnlocks().livesUnlocked += 1;
                     UnlocksController.unlock.SetUnlocks(UnlocksController.unlock.GetUnlocks());
+                    Debug.Log(UnlocksController.unlock.GetUnlocks().livesUnlocked);
+                    Debug.Log("###################");
 
                     individualUnlockCanvas.enabled = true;
                     currentCanvas = individualUnlockCanvas;

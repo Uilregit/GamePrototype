@@ -569,6 +569,10 @@
  * Added possibility of applying buffs on forced movement collision
  * Draw cards at start of each turn now happens before all start of turn buffs
  * Minimum Castrange for all characters are capped at 1
+ * Added settings menu and saving settings for game speed and screen shake amount
+ * Reset levels in tavern now resets the battle pass as well as eraces current save
+ * Room layout, room setup, rewards cards, relic rewards, card draw/shuffle, shop offerings and shrine rewards are now all predetermined by the initial seed (seed setting and loading game)
+ * Games is now saved while entering and exiting every room. Once entered, restarting only allows the entered room to be entered (prevent save scumming)
  * 
  * -- UI --
  * Recentered all character displays
@@ -607,6 +611,11 @@
  * Added targetable locations highlight for TargetedAoE cast types
  * Added slight delay in movement per block for multi space forced movement
  * Rewards and shop cards are now dynamic text unless held to enlarge
+ * Added Battlepass UI for team and hero unlocks in the tavern screen
+ * Boss screenshake now overrides setting for no screenshake
+ * Added options to enable remaining moverange indicator
+ * Character health bars are now higher up to avoid the finger on mobile
+ * Manifest card choices now have a "Choose 1" text and a button for hiding the cards to see the board
  * 
  * -- Bugs --
  * Fixed turn based duration buffs not reducing in duration if they arent start or end of turn trigger buffs
@@ -647,6 +656,10 @@
  * Fixed on card played buffs being triggered by enemy cards
  * Fixed player getting double lives during level up
  * Fixed relic unclickable after seeing the enemy information screen (due to card disabled status text being way too big)
+ * Fixed unlocked lives not being loaded
+ * Fixed crash when an enemy another enemy is targeting dies before the enemy turn starts
+ * Can't cast on self cards can now actually not be cast on self
+ * Fixed cleanse effects not making disabled cards immediately playable
  * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --
@@ -655,8 +668,6 @@
  *  Unlocks tallents for each member (chose 1 tallent tree)
  *  Unlocks uncommon cards for the char
  *  Unlocks uncommon relics
- *  Unlocks team based progression (
- *  Unlocks characters for the party
  * 
  *  
  * Add options menu

@@ -83,6 +83,7 @@ public class RewardsMenuController : MonoBehaviour
             }
             else if (rewardsTypes[i] == RewardType.Relic)
             {
+                Random.InitState(RoomController.roomController.GetCurrentSmallRoom().GetSeed());
                 Relic thisRelic = RelicController.relic.GetRandomRelic();
                 menuItemBack[i].transform.GetChild(0).GetComponent<Image>().sprite = thisRelic.art;
                 menuItemBack[i].transform.GetChild(0).GetComponent<Image>().color = thisRelic.color;
@@ -128,6 +129,9 @@ public class RewardsMenuController : MonoBehaviour
         {
             if (RoomController.roomController.GetWorldLevel() != 1 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
                 RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
+            RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+            RoomController.roomController.Refresh();
+            InformationLogger.infoLogger.SaveGame(false);
             GameController.gameController.LoadScene("OverworldScene", true, deckId);
         }
     }

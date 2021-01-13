@@ -648,6 +648,14 @@ MonoBehaviour:
   vitText: {fileID: 7740180614324518524}
   armorText: {fileID: 4117477462654036843}
   attackText: {fileID: 7740180612866065549}
+  statTextBacks:
+  - {fileID: 1436702823939694242}
+  - {fileID: 2032291988934066671}
+  - {fileID: 290487498419952437}
+  - {fileID: 4483698125169315772}
+  - {fileID: 5098276804002776575}
+  - {fileID: 4753805399507424731}
+  highlight: {fileID: 4918827048105304121}
   buffIcons:
   - {fileID: 5073766188977474047}
   - {fileID: 4494150072961789143}
@@ -1995,7 +2003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 768266192473886429, guid: 495946375ae5c904daa09ff31e7449cf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.5
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 768266192473886429, guid: 495946375ae5c904daa09ff31e7449cf, type: 3}
       propertyPath: m_SizeDelta.x

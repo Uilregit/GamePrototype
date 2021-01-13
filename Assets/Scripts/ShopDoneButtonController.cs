@@ -18,13 +18,15 @@ public class ShopDoneButtonController : MonoBehaviour
         ShopController.shop.RecordShopInformation();
         //GameController.gameController.LoadScene("OverworldScene", ShopController.shop.GetBoughtCard(), ShopController.shop.GetLatestDeckID()); //Don't go to deck editing if a card was not bought
 
-        RoomController.roomController.Refresh();
-        RoomController.roomController.Show();
         if (ShopController.shop.GetBoughtCard())
             cameraLocation = new Vector3(8, 0, -10);
         else
             cameraLocation = new Vector3(0, 0, -10);
         deckID = ShopController.shop.GetLatestDeckID();
+        RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+        InformationLogger.infoLogger.SaveGame(false);
+        RoomController.roomController.Refresh();
+        RoomController.roomController.Show();
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 

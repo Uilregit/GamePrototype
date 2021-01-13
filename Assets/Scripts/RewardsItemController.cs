@@ -52,6 +52,7 @@ public class RewardsItemController : MonoBehaviour
             RewardsMenuController.rewardsMenu.SetItemsClickable(false);
 
             List<Card> currentRewards = new List<Card>();
+            Random.InitState(RoomController.roomController.GetCurrentSmallRoom().GetSeed());
             for (int i = 0; i < GameController.gameController.rewardCards.Length; i++)
             {
                 for (int j = 0; j < 100; j++)

@@ -10,6 +10,7 @@ public class CleanseEffect : Effect
         {
             targ.GetComponent<BuffController>().Cleanse(targ.GetComponent<HealthController>());
         }
+        HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
         yield return new WaitForSeconds(0);
     }
 

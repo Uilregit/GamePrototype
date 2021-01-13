@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   name: Traveler
   energyCost: 0
-  manaCost: 4
+  manaCost: 3
   range: 0
   radius: 0
   casterColor: 4

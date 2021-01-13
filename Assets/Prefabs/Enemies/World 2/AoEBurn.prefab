@@ -67,8 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castRange: 3
   maxVit: 30
+  vitVariate: 1
   startingArmor: 10
-  attack: 8
+  attack: 4
   moveRange: 3
   randomStartRange: 0
   attacksPerTurn: 1
