@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Mirror;
 
 public class CardController : MonoBehaviour
 {
@@ -341,7 +342,28 @@ public class CardController : MonoBehaviour
             return caster;
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //Else return caster based on color. Will have to change if more colored players are added
-        try
+        try     //Multiplayer
+        {
+            players[0].GetComponent<PlayerController>().GetColorTag();
+        }
+        catch 
+        {
+            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)
+                players = GameObject.FindGameObjectsWithTag("Enemy");
+
+            caster = players[0];
+            foreach (GameObject player in players)
+            {
+                if (player.GetComponent<MultiplayerPlayerController>().GetColorTag() == thisCard.casterColor)
+                {
+                    caster = player;
+                    casterHealthController = player.GetComponent<HealthController>();
+                }
+            }
+            return caster;
+        }
+
+        try //Singleplayer
         {
             caster = players[0];
             foreach (GameObject player in players)

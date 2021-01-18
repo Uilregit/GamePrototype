@@ -6,6 +6,16 @@ using Mirror;
 
 public class MultiplayerInformationController : NetworkBehaviour
 {
+    private bool isServerTurn = true;
+
+    public int GetPlayerNumber()
+    {
+        if (isServer)
+            return 0;
+        else
+            return 1;
+    }
+
     [ClientRpc]
     public void ReportParty()
     {
@@ -32,5 +42,57 @@ public class MultiplayerInformationController : NetworkBehaviour
         foreach (string s in partycolors)
             colors.Add(PartyController.party.GetPlayerCasterColor(s));
         MultiplayerGameController.gameController.parties[playerNumber] = colors;
+    }
+    [Command]
+    public void ReportGrid(byte[] grid, int playerNumber)
+    {
+        SetGrid(grid);
+    }
+
+    [Command]
+    public void DebugReportGrid(string s, int playerNumber)
+    {
+        Debug.Log("player " + playerNumber + "sent this message");
+        Debug.Log(s);
+    }
+
+    [ClientRpc]
+    public void SetGrid(byte[] grid)
+    {
+        GridController.gridController.GetComponent<MultiplayerGridController>().SetGrid(grid);
+    }
+
+    [Command]
+    public void ReportCardUsed(string casterNetID, string cardName, List<Vector2> targetLocs, int playerNumber)
+    {
+        SetCardUsed(casterNetID, cardName, targetLocs, playerNumber);
+    }
+
+    [ClientRpc]
+    public void SetCardUsed(string casterNetID, string cardName, List<Vector2> targetLocs, int playerNumber)
+    {
+        if (playerNumber != GetPlayerNumber())
+        {
+
+        }
+    }
+
+    [Command]
+    public void ReportEndTurn()
+    {
+        SetTurn(!isServerTurn);
+    }
+
+    [ClientRpc]
+    public void SetTurn(bool serverTurn)
+    {
+        Debug.Log("turn set");
+        Debug.Log(serverTurn);
+        isServerTurn = serverTurn;
+        TurnController.turnController.SetEndTurnButtonEnabled(serverTurn == isServer);
+        if (isServerTurn)
+            StartCoroutine(TurnController.turnController.SetMultiplayerTurn(0));
+        else
+            StartCoroutine(TurnController.turnController.SetMultiplayerTurn(1));
     }
 }

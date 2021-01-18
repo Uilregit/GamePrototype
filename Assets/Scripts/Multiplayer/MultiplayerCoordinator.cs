@@ -11,6 +11,7 @@ public class MultiplayerCoordinator : NetworkManager
     public MultiplayerInformationController[] players = new MultiplayerInformationController[2];
     private NetworkConnection[] connections = new NetworkConnection[2];
     public MultiplayerGameController gameController;
+    public GridController[] grid = new GridController[2];
 
     private int partyInfosGotten = 0;
 

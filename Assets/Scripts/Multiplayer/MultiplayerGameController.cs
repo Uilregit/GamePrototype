@@ -85,9 +85,17 @@ public class MultiplayerGameController : NetworkBehaviour
 
     private IEnumerator DisplayVictoryText()
     {
-        InformationController.infoController.SaveCombatInformation();
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         text.text = "VICTORY";
+        text.enabled = true;
+        yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
+        text.enabled = false;
+    }
+
+    private IEnumerator DisplayDefeatText()
+    {
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
+        text.text = "DEFEAT";
         text.enabled = true;
         yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
         text.enabled = false;
@@ -108,8 +116,27 @@ public class MultiplayerGameController : NetworkBehaviour
         yield return StartCoroutine(DisplayVictoryText());
     }
 
-    public void ReportDeadChar(Card.CasterColor color, int playerNumber)
+    public IEnumerator Defeat()
     {
+        GridController.gridController.DisableAllPlayers();
+        //HandController.handController.ClearHand();
+        HandController.handController.EmptyHand();
+
+        DeckController.deckController.ResetCardValues();
+
+        CameraController.camera.ScreenShake(0.4f, 2f, true);
+        yield return new WaitForSeconds(2.5f);
+
+
+        yield return StartCoroutine(DisplayDefeatText());
+    }
+
+    public void ReportDeadChar(Card.CasterColor color)
+    {
+        int playerNumber = 0;
+        if (!isServer)
+            playerNumber = 1;
+
         deadChars[playerNumber].Add(color);
         if (deadChars[playerNumber].Count >= 3)
         {
@@ -121,6 +148,15 @@ public class MultiplayerGameController : NetworkBehaviour
             CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
             CanvasController.canvasController.endGameCanvas.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
         }
+    }
+
+    public List<GameObject> GetLivingPlayers()
+    {
+        int playerNumber = 0;
+        if (!isServer)
+            playerNumber = 1;
+
+        return GetLivingPlayers(playerNumber);
     }
 
     public List<GameObject> GetLivingPlayers(int playerNumber)
@@ -207,28 +243,20 @@ public class MultiplayerGameController : NetworkBehaviour
             playerNumber = 0;
         else
             playerNumber = 1;
-        foreach (Card.CasterColor c in parties[0])
-            Debug.Log(c);
-        Debug.Log("########");
-        foreach (Card.CasterColor c in parties[1])
-            Debug.Log(c);
+
         //parties[playerNumber] = PartyController.party.partyColors.ToList();
         for (int i = 0; i < 2; i++)
         {
             List<GameObject> removeList = new List<GameObject>();
             foreach (GameObject obj in players[i])
             {
-                Debug.Log("team " + i);
-                Debug.Log(obj.GetComponent<MultiplayerPlayerController>().GetColorTag());
                 if (!parties[i].Contains(obj.GetComponent<MultiplayerPlayerController>().GetColorTag()))
                 {
-                    Debug.Log("removed");
                     obj.gameObject.SetActive(false);
                     removeList.Add(obj);
                 }
-                else
+                else if (i == playerNumber)
                 {
-                    Debug.Log("spawned");
                     obj.GetComponent<MultiplayerPlayerController>().Spawn(i);
                 }
             }
@@ -250,6 +278,9 @@ public class MultiplayerGameController : NetworkBehaviour
                 obj.GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
             }
         }
+
+        GridController.gridController.GetComponent<NetworkIdentity>().RemoveClientAuthority();
+        GridController.gridController.GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
     }
 
     [ClientRpc]
@@ -270,6 +301,14 @@ public class MultiplayerGameController : NetworkBehaviour
     [ClientRpc]
     public void StartGame()
     {
+        DeckController.deckController.PopulateDecks();
+        DeckController.deckController.ResetCardValues();
+        DeckController.deckController.ShuffleDrawPile();
+
         HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+
+        //Set turn to server side
+        TurnController.turnController.SetEndTurnButtonEnabled(isServer);
+        StartCoroutine(TurnController.turnController.SetMultiplayerTurn(0));
     }
 }

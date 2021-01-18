@@ -148,6 +148,13 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
 
     public void CreateMoveRangeIndicator()
     {
+        string selfTag = "Player";
+        string otherTag = "Enemy";
+        if (!isServer)
+        {
+            selfTag = "Enemy";
+            otherTag = "Player";
+        }
         moveShadow.GetComponent<SpriteRenderer>().enabled = true;
         /* Creates move range tiles and gets a list of all moveable locations
          */
@@ -156,7 +163,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
             if (healthController.GetStunned())
             {
                 GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
-                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, 0, PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, 0, PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { otherTag, "Blockade" }, 0);
             }
             else
             {
@@ -165,10 +172,10 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
                 if (!healthController.GetPhasedMovement())
                 {
                     TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                        PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
+                                                        PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { otherTag, "Blockade" }, 0);
                     if (SettingsController.settings.GetRemainingMoveRangeIndicator() && path.Count > 1)       //If the option is enabled and player moved, create remaining move range indicator
                         TileCreator.tileCreator.CreateTiles(this.gameObject, lastGoodPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
-                                                            PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Enemy", "Blockade" }, 1);
+                                                            PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { otherTag, "Blockade" }, 1);
                 }
                 else    //If phased movement, then player can move through, but not on enemies
                 {
@@ -176,7 +183,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Blockade" }, 0);    //Does not avoid Enemies for move range calculation
                     List<Vector2> destroyLocs = new List<Vector2>();
                     foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies, can't move onto them
-                        if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                        if (GridController.gridController.GetObjectAtLocation(loc, new string[] { otherTag }).Count > 0)
                             destroyLocs.Add(loc);
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
@@ -186,7 +193,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Blockade" }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
-                            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { otherTag }).Count > 0)
                                 destroyLocs.Add(loc);
                         TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
                     }
@@ -196,24 +203,24 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
                 if (taunt != null)      //If the player is taunted
                 {
                     TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-                    int baseMovement = PathFindController.pathFinder.PathFind(originalPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count;    //Find all positions the player could move if not taunted
-                    baseMovement = Mathf.Max(baseMovement, PathFindController.pathFinder.PathFind(lastGoodPosition, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count);   //If the taunted target has been force moved, use lastGoodPosition or original location, whichever one is further away
+                    int baseMovement = PathFindController.pathFinder.PathFind(originalPosition, taunt.transform.position, new string[] { selfTag }, healthController.GetOccupiedSpaces(), 1).Count;    //Find all positions the player could move if not taunted
+                    baseMovement = Mathf.Max(baseMovement, PathFindController.pathFinder.PathFind(lastGoodPosition, taunt.transform.position, new string[] { selfTag }, healthController.GetOccupiedSpaces(), 1).Count);   //If the taunted target has been force moved, use lastGoodPosition or original location, whichever one is further away
                     List<Vector2> destroyLocs = new List<Vector2>();
                     foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))                                                                                                                //Remove all move positions that'll take the player further to the taunted target
-                        if (PathFindController.pathFinder.PathFind(loc, taunt.transform.position, new string[] { "Player" }, healthController.GetOccupiedSpaces(), 1).Count > baseMovement)
+                        if (PathFindController.pathFinder.PathFind(loc, taunt.transform.position, new string[] { selfTag }, healthController.GetOccupiedSpaces(), 1).Count > baseMovement)
                             destroyLocs.Add(loc);
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
                     if (!healthController.GetPhasedMovement())
                         TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Enemy", "Blockade" }, 1);
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { otherTag, "Blockade" }, 1);
                     else    //If phased movement, then player can move through, but not on enemies
                     {
                         TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Blockade" }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
-                            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { otherTag }).Count > 0)
                                 destroyLocs.Add(loc);
                         TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
                     }
@@ -274,7 +281,46 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
     private void OnMouseDown()
     {
         if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        {
+            string selfTag = "Player";
+            string otherTag = "Enemy";
+            if (!isServer)
+            {
+                selfTag = "Enemy";
+                otherTag = "Player";
+            }
+
+            Color moveRangeColor = PartyController.party.GetPlayerColor(Card.CasterColor.Enemy);
+            Color attackRangeColor = Color.red;
+
+            int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+
+            string[] avoidTags = new string[0];
+            if (!GetComponent<HealthController>().GetPhasedMovement())
+                avoidTags = new string[] { selfTag, "Blockade" };
+            else
+                avoidTags = new string[] { "Blockade" };
+
+            foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+                TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, player.GetMoveRange() + bonusMoveRange, moveRangeColor, avoidTags, 1);
+
+            if (GetComponent<HealthController>().GetPhasedMovement())
+            {
+                List<Vector2> destroyLocs = new List<Vector2>();
+                foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))
+                    if (GridController.gridController.GetObjectAtLocation(loc).Count != 0)
+                        destroyLocs.Add(loc);
+                TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
+            }
+
+            List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
+
+            //Create attackable locations
+                foreach (Vector2 position in movePositions)
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, player.GetAttackRange(), attackRangeColor, new string[] { "" }, 2);
+
             return;
+        }
 
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
@@ -287,7 +333,11 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
     public void OnMouseUp()
     {
         if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        {
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
             return;
+        }
 
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 

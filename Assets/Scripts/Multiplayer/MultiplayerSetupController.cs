@@ -44,8 +44,14 @@ public class MultiplayerSetupController : TavernController
             }
     }
 
-    public new void ReportSelected(Card.CasterColor newColor)
+    public new void ReportSelected(int index)
     {
+        List<Card.CasterColor> colors = new List<Card.CasterColor>();
+        foreach (Card.CasterColor c in PartyController.party.unlockedPlayerColors)
+            if (!PartyController.party.partyColors.Contains(c))
+                colors.Add(c);
+        Card.CasterColor newColor = colors[index];
+        Debug.Log("report selected");
         party[selectedIndex].color = PartyController.party.GetPlayerColor(newColor);
         party[selectedIndex].transform.GetChild(0).GetComponent<Text>().text = "Lv." + PartyController.party.GetPartyLevelInfo(newColor)[0].ToString();
         PartyController.party.partyColors[selectedIndex] = newColor;
@@ -55,13 +61,12 @@ public class MultiplayerSetupController : TavernController
             img.enabled = false;
             img.transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
+        CollectionController.collectionController.FinalizeMultiplayerDeck();
     }
 
     public void GoToDeckMenu()
     {
         Camera.main.transform.position = new Vector3(8, 0, -10);
-        //deckCanvas.enabled = true;
-        //GetComponent<Canvas>().enabled = false;
     }
     /*
     public void GoToMainMenu()
@@ -72,6 +77,8 @@ public class MultiplayerSetupController : TavernController
     */
     public void FindMatchButton()
     {
+        //DeckController.deckController.SetDecks()
+        CollectionController.collectionController.FinalizeMultiplayerDeck();
         SceneManager.LoadScene("MultiplayerScene", LoadSceneMode.Single);
     }
 }

@@ -155,26 +155,30 @@ public class BuffFactory : MonoBehaviour
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
             enemy.GetComponent<EnemyInformationController>().RefreshIntent();
 
-        InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                    InformationLogger.infoLogger.gameID,
-                                    RoomController.roomController.selectedLevel.ToString(),
-                                    RoomController.roomController.roomName,
-                                    TurnController.turnController.turnID.ToString(),
-                                    TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                    casterColor,
-                                    cardName,
-                                    "False",
-                                    "False",
-                                    "False",
-                                    "True",
-                                    casterName,
-                                    1.ToString(),
-                                    healthController.name,
-                                    vitDamage.ToString(),
-                                    armorDamage.ToString(),
-                                    0.ToString(),
-                                    0.ToString(),
-                                    triggerCount.ToString());
+        try
+        {
+            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                        InformationLogger.infoLogger.gameID,
+                                        RoomController.roomController.selectedLevel.ToString(),
+                                        RoomController.roomController.roomName,
+                                        TurnController.turnController.turnID.ToString(),
+                                        TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                        casterColor,
+                                        cardName,
+                                        "False",
+                                        "False",
+                                        "False",
+                                        "True",
+                                        casterName,
+                                        1.ToString(),
+                                        healthController.name,
+                                        vitDamage.ToString(),
+                                        armorDamage.ToString(),
+                                        0.ToString(),
+                                        0.ToString(),
+                                        triggerCount.ToString());
+        }
+        catch { }
     }
 
     //public abstract IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<Buff> buffTrace);

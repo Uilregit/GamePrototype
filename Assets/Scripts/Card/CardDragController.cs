@@ -104,7 +104,7 @@ public class CardDragController : DragController
         }
         catch
         {
-            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers(0))
+            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
                 player.GetComponent<Collider2D>().enabled = false;
         }
         CameraController.camera.ScreenShake(0.06f, 0.05f);
@@ -122,7 +122,7 @@ public class CardDragController : DragController
         }
         catch
         {
-            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers(0))
+            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
                 player.GetComponent<Collider2D>().enabled = true;
         }
 
@@ -320,8 +320,13 @@ public class CardDragController : DragController
                     if (TurnController.turnController.GetIsPlayerTurn())
                     {
                         newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-                        transform.position = newLocation;
                     }
+                    else
+                    {
+                        newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+                        newLocation.y = Mathf.Min(HandController.handController.cardCastVertThreshold - 0.01f, newLocation.y);
+                    }
+                    transform.position = newLocation;
                 }
                 else
                     base.OnMouseDrag();
@@ -462,8 +467,16 @@ public class CardDragController : DragController
         TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
         GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
 
-        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
-            player.GetComponent<Collider2D>().enabled = true;
+        try //Singleplayer
+        {
+            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                player.GetComponent<Collider2D>().enabled = true;
+        }
+        catch //Multiplayer
+        {
+            foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
+                player.GetComponent<Collider2D>().enabled = true;
+        }
 
         Destroy(this.gameObject);
     }

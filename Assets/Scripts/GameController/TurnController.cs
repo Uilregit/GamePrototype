@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Mirror;
 
 public class TurnController : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class TurnController : MonoBehaviour
     [SerializeField] private Text maxEnergyText;
     [SerializeField] private Text currentEnergyText;
 
+    public Image endTurnButton;
+    [SerializeField] private Color turnEnabledColor, turnDisabledColor;
     public Text turnText;
     public Image turnTextBack;
     public float turnChangeDuration;
@@ -239,6 +242,136 @@ public class TurnController : MonoBehaviour
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
         SetPlayerTurn(true); //Trigger all player start of turn effects
+    }
+
+    public void MultiplayerEndTurnButtonPressed()
+    {
+        if (playerTurn)
+            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportEndTurn();
+    }
+
+    public void SetEndTurnButtonEnabled(bool state)
+    {
+        if (state)
+            endTurnButton.color = turnEnabledColor;
+        else
+            endTurnButton.color = turnDisabledColor;
+    }
+
+    public IEnumerator SetMultiplayerTurn(int playerNumber)
+    {
+        if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() != playerNumber)
+        {
+            int manaCardsPlayed = 0;
+            int energyCardsPlayed = 0;
+            foreach (Card c in cardsPlayedThisTurn)
+                if (c.manaCost == 0)
+                    energyCardsPlayed += 1;
+                else
+                    manaCardsPlayed += 1;
+            if (manaCardsPlayed == 0)
+                RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoManaCardPlayed, null);
+            if (energyCardsPlayed == 0)
+                RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed, null);
+
+            cardsPlayedThisTurn = new List<Card>();
+
+            GridController.gridController.ResolveOverlap();
+            GridController.gridController.DebugGrid();
+
+            //Disable Player and card movement, trigger all end of turn effects
+            List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
+            foreach (GameObject player in players)
+            {
+                player.GetComponent<MultiplayerPlayerMoveController>().SetMoveable(false);
+                player.GetComponent<MultiplayerPlayerMoveController>().CommitMove();
+            }
+
+            //Trigger all end of turn buff effects
+            foreach (GameObject characters in players)
+            {
+                characters.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
+                yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
+            }
+            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+                yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+
+
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd, null);
+
+            if ((object)HandController.handController.GetHeldCard() != null)
+                HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
+
+            yield return StartCoroutine(GridController.gridController.CheckDeath());
+        }
+
+        CameraController.camera.ScreenShake(0.06f, 0.05f);
+        if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == playerNumber)
+            turnText.text = "Your Turn";
+        else
+            turnText.text = "Enemy Turn";
+        turnText.enabled = true;
+        turnTextBack.enabled = true;
+        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
+        turnText.enabled = false;
+        turnTextBack.enabled = false;
+        yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
+
+        playerTurn = ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == playerNumber;
+
+        if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == playerNumber)
+        {
+            currentEnergy = maxEnergy;
+            ResetEnergyDisplay();
+            HandController.handController.UnholdCard(true);
+            HandController.handController.ResetReplaceCounter();
+            if (turnID > 1)
+                yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand()); //Must be called after unholdcard
+
+            RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart, null);
+
+            List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
+            //Trigger all start of turn buff effects
+            foreach (GameObject characters in players)
+                yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
+
+            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+            {
+                thisEnemy.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
+                yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+            }
+
+            yield return StartCoroutine(GridController.gridController.CheckDeath());
+
+            //Resolve broken
+            foreach (GameObject player in players)
+                player.GetComponent<HealthController>().ResolveBroken();
+            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+                thisEnemy.GetComponent<HealthController>().ResolveBroken();
+
+            players = MultiplayerGameController.gameController.GetLivingPlayers();
+            foreach (GameObject player in players)
+                player.GetComponent<MultiplayerPlayerMoveController>().ResetTurn();
+        }
+        else
+        {
+            //Trigger all begining of turn effects
+            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+                thisEnemy.GetComponent<HealthController>().AtStartOfTurn();
+
+            GridController.gridController.ResolveOverlap();
+
+            cardsPlayedThisTurn = new List<Card>();
+            manaSpent = new List<int>();
+            energySpent = new List<int>();
+
+            if ((object)HandController.handController.GetHeldCard() != null)
+                HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
+
+            //Clear the entire hand
+            HandController.handController.ClearHand();
+        }
+        turnID += 1;
     }
 
     public void ResetEnergyDisplay()

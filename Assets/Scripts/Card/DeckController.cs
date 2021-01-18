@@ -239,7 +239,7 @@ public class DeckController : MonoBehaviour
     //Shuffles the draw pile
     public void ShuffleDrawPile()
     {
-        try
+        try     //Singleplayer
         {
             if (seedForShuffle == -1)
                 seedForShuffle = RoomController.roomController.GetCurrentSmallRoom().GetSeed();
@@ -255,7 +255,17 @@ public class DeckController : MonoBehaviour
                 drawPile[index] = c;
             }
         }
-        catch { }
+        catch //Multiplayer
+        {
+            //Debug.Log("Multiplayer shuffle");
+            for (int i = 0; i < drawPile.Count; i++)
+            {
+                int index = Random.Range(0, drawPile.Count - 1);
+                CardController c = drawPile[i];
+                drawPile[i] = drawPile[index];
+                drawPile[index] = c;
+            }
+        }
     }
 
     //Makes a copy of the entire default deck, all colors

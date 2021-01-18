@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using Mirror;
 
 public class HandController : MonoBehaviour
 {
@@ -167,12 +168,12 @@ public class HandController : MonoBehaviour
         {
             for (int i = 0; i < drawnCards.Count; i++)
                 if (drawnCards[i].cardDisplay.cardWhiteOut.enabled == false)
-                drawnCards[i].transform.position = Vector3.Lerp(originalPositions[i], desiredPosition[i], elapsedTime / 0.1f * TimeController.time.timerMultiplier);
-            else
+                    drawnCards[i].transform.position = Vector3.Lerp(originalPositions[i], desiredPosition[i], elapsedTime / 0.1f * TimeController.time.timerMultiplier);
+                else
                 {
                     drawnCards[i].cardDisplay.cardWhiteOut.color = Color.Lerp(Color.white, Color.clear, elapsedTime / 0.1f * TimeController.time.timerMultiplier);
                     drawnCards[i].transform.position = desiredPosition[i];
-                }    
+                }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -368,7 +369,7 @@ public class HandController : MonoBehaviour
         }
     }
 
-    //Removes the card from the hand and disable movement for the caster of the card
+    //Removes the card from the hand and commit movement for the caster of the card
     public void RemoveCard(CardController removedCard)
     {
         hand.Remove(removedCard);
@@ -377,10 +378,22 @@ public class HandController : MonoBehaviour
         ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
         //Disables movement of all players with the removed card casterColor
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject player in players)
-            if (player.GetComponent<PlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
-                player.GetComponent<PlayerMoveController>().CommitMove();
+        try //Singleplayer
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in players)
+                if (player.GetComponent<PlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
+                    player.GetComponent<PlayerMoveController>().CommitMove();
+        }
+        catch //Multiplayer
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)
+                players = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject player in players)
+                if (player.GetComponent<MultiplayerPlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
+                    player.GetComponent<MultiplayerPlayerMoveController>().CommitMove();
+        }
     }
 
     //Draw cards untill hand is full
@@ -409,26 +422,30 @@ public class HandController : MonoBehaviour
                 StartCoroutine(ClearExhaustCard(card));
             }
             else
-                InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                    InformationLogger.infoLogger.gameID,
-                                    RoomController.roomController.selectedLevel.ToString(),
-                                    RoomController.roomController.roomName,
-                                    TurnController.turnController.turnID.ToString(),
-                                    TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                    card.GetCard().casterColor.ToString(),
-                                    card.GetCard().name,
-                                    "True",
-                                    "False",
-                                    "False",
-                                    "False",
-                                    "None",
-                                    "None",
-                                    "None",
-                                    "None",
-                                    "None",
-                                    card.GetCard().energyCost.ToString(),
-                                    card.GetCard().manaCost.ToString(),
-                                    "0");
+                try
+                {
+                    InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                        InformationLogger.infoLogger.gameID,
+                                        RoomController.roomController.selectedLevel.ToString(),
+                                        RoomController.roomController.roomName,
+                                        TurnController.turnController.turnID.ToString(),
+                                        TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                        card.GetCard().casterColor.ToString(),
+                                        card.GetCard().name,
+                                        "True",
+                                        "False",
+                                        "False",
+                                        "False",
+                                        "None",
+                                        "None",
+                                        "None",
+                                        "None",
+                                        "None",
+                                        card.GetCard().energyCost.ToString(),
+                                        card.GetCard().manaCost.ToString(),
+                                        "0");
+                }
+                catch { }
         }
         foreach (CardController card in exhaustCards)
             hand.Remove(card);
@@ -455,7 +472,7 @@ public class HandController : MonoBehaviour
         card.cardDisplay.anim.SetTrigger("CardDisappear");
         while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
         {
-            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight+0.5f, 0), new Vector3(card.transform.position.x, cardStartingHeight + 1, 0), elapsedTime / 0.5f);
+            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight + 0.5f, 0), new Vector3(card.transform.position.x, cardStartingHeight + 1, 0), elapsedTime / 0.5f);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

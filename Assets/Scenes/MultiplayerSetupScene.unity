@@ -1810,14 +1810,14 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 417634817}
-          m_TargetAssemblyTypeName: TavernPartyController, Assembly-CSharp
-          m_MethodName: OnClick
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: StartEditing
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -3237,10 +3237,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 764802410}
-          m_TargetAssemblyTypeName: TavernPartyController, Assembly-CSharp
-          m_MethodName: OnClick
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: StartEditing
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4363,10 +4363,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1087780301}
-          m_TargetAssemblyTypeName: TavernIconsController, Assembly-CSharp
-          m_MethodName: ReportClickeD
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: ReportSelected
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6567,14 +6567,14 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1577378956}
-          m_TargetAssemblyTypeName: TavernPartyController, Assembly-CSharp
-          m_MethodName: OnClick
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: StartEditing
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 2
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -7241,14 +7241,14 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1856928700}
-          m_TargetAssemblyTypeName: TavernIconsController, Assembly-CSharp
-          m_MethodName: ReportClickeD
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: ReportSelected
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 2
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -7989,14 +7989,14 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1975308471}
-          m_TargetAssemblyTypeName: TavernIconsController, Assembly-CSharp
-          m_MethodName: ReportClickeD
-          m_Mode: 1
+        - m_Target: {fileID: 587794131}
+          m_TargetAssemblyTypeName: MultiplayerSetupController, Assembly-CSharp
+          m_MethodName: ReportSelected
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
+            m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

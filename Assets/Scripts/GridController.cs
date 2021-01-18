@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Mirror;
 
 public class GridController : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class GridController : MonoBehaviour
                 objects[x, y] = new List<GameObject>();
 
         deathLocation = new Dictionary<Card.CasterColor, Vector2>();
+
+        try
+        {
+            GetComponent<MultiplayerGridController>().SetSize(xSize, ySize);
+            GetComponent<MultiplayerGridController>().SetGrid(objects);
+        }
+        catch { }
     }
 
     public int[] GetRoomRange()
@@ -84,6 +92,14 @@ public class GridController : MonoBehaviour
             }
         }
         */
+        try
+        {
+            GetComponent<MultiplayerGridController>().SetGrid(objects);
+            //MultiplayerInformationController.player.DebugReportGrid(DebugGrid(), MultiplayerInformationController.player.GetPlayerNumber());
+            int playerNumber = ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber();
+            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportGrid(GetComponent<MultiplayerGridController>().GetGrid(), playerNumber);
+        }
+        catch { }
     }
 
     //Remove the object at the object grid location
@@ -97,6 +113,15 @@ public class GridController : MonoBehaviour
         if (obj.tag == "Player" && objects[xLoc + xOffset, yLoc + yOffset].Count > 0)
             foreach (GameObject o in objects[xLoc + xOffset, yLoc + yOffset])
                 o.GetComponent<Collider2D>().enabled = true;
+
+        try
+        {
+            GetComponent<MultiplayerGridController>().SetGrid(objects);
+            //MultiplayerInformationController.player.DebugReportGrid(DebugGrid(), MultiplayerInformationController.player.GetPlayerNumber());
+            int playerNumber = ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber();
+            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportGrid(GetComponent<MultiplayerGridController>().GetGrid(), playerNumber);
+        }
+        catch { }
     }
 
     //Return the object at the grid location. If nothing, returns null
@@ -240,24 +265,33 @@ public class GridController : MonoBehaviour
         }
 
         //Resolve sacrificed enemies
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (EnemyController ec in TurnController.turnController.GetEnemies())
         {
-            EnemyController ec = o.GetComponent<EnemyController>();
             if (ec.GetSacrificed())
             {
-                o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
-                TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
-                o.GetComponent<HealthController>().ReportDead();
+                ec.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
+                TurnController.turnController.RemoveEnemy(ec);
+                ec.GetComponent<HealthController>().ReportDead();
             }
         }
 
         yield return new WaitForEndOfFrame();
-        if (TurnController.turnController.GetNumberOfEnemies() <= 0)
+        if (GameController.gameController != null)
         {
-            TurnController.turnController.ResetCurrentEnergy();
-            TurnController.turnController.ResetEnergyDisplay();
-            TurnController.turnController.StopAllCoroutines();
-            yield return StartCoroutine(GameController.gameController.Victory());
+            if (TurnController.turnController.GetNumberOfEnemies() <= 0)
+            {
+                TurnController.turnController.ResetCurrentEnergy();
+                TurnController.turnController.ResetEnergyDisplay();
+                TurnController.turnController.StopAllCoroutines();
+                yield return StartCoroutine(GameController.gameController.Victory());
+            }
+        }
+        else
+        {
+            if (MultiplayerGameController.gameController.GetLivingPlayers(1 - ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber()).Count == 0)
+                MultiplayerGameController.gameController.Victory();
+            else if (MultiplayerGameController.gameController.GetLivingPlayers(ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber()).Count == 0)
+                MultiplayerGameController.gameController.Defeat();
         }
         yield return new WaitForSeconds(0);
     }
@@ -344,16 +378,19 @@ public class GridController : MonoBehaviour
         return locations[locations.Keys.Min()];
     }
 
-    public void DebugGrid()
+    public string DebugGrid()
     {
         //DebugPlus.LogOnScreen("########").Duration(10);
-        for (int y = 0; y < ySize; y++)
+        string s = "";
+        for (int y = ySize - 1; y >= 0; y--)
         {
-            string s = "";
             for (int x = 0; x < xSize; x++)
                 s += objects[x, y].Count;
+            s += "\n";
             //DebugPlus.LogOnScreen(s).Duration(10);
         }
+        Debug.Log(s);
+        return s;
     }
 
     public Vector2 GetRoundedVector(Vector2 input, int size)
@@ -433,5 +470,15 @@ public class GridController : MonoBehaviour
                     o.GetComponent<HealthController>().SetStatTexts(false);
             }
         }
+    }
+
+    public void SetGrid(List<GameObject>[,] value)
+    {
+        objects = value;
+        for (int x = 0; x < xSize; x++)
+            for (int y = 0; y < ySize; y++)
+                foreach (GameObject obj in value[x, y])
+                    obj.transform.position = new Vector3(x - xOffset, y - yOffset, 0);
+        //DebugGrid();
     }
 }

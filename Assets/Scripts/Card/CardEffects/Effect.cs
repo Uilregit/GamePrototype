@@ -12,7 +12,10 @@ public abstract class Effect
     public virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
-        yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex));
+        if (GameController.gameController != null)
+            yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex));
+        else
+            yield return MultiplayerGameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex));
     }
 
     public virtual int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)

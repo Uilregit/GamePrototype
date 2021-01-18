@@ -183,13 +183,24 @@ public class CardEffectsController : MonoBehaviour
             }
         }
 
-        if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
-            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
-                player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
+        try //Singleplayer
+        {
+            if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
+                foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                    player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
+        }
+        catch  //Multiplayer
+        {
+            if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
+                foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
+                    player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
+        }
 
         if (card.GetCard().casterColor != Card.CasterColor.Enemy)
             DeckController.deckController.ReportUsedCard(card);
 
+        try
+        { 
         InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                                     InformationLogger.infoLogger.gameID,
                                                     RoomController.roomController.selectedLevel.ToString(),
@@ -210,6 +221,8 @@ public class CardEffectsController : MonoBehaviour
                                                     card.GetCard().energyCost.ToString(),
                                                     card.GetCard().manaCost.ToString(),
                                                     "0");
+        }
+        catch { }
     }
 
     public void TriggerOnPlayEffect(GameObject caster, List<Vector2> targets)

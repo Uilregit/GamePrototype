@@ -243,6 +243,45 @@ public class CollectionController : MonoBehaviour
         DeckController.deckController.SetDecks(selectedDeck);
     }
 
+    public void FinalizeMultiplayerDeck()
+    {
+        EditorCardsWrapper[] usedDeck;
+        usedDeck = multiplayerDeck;
+
+        for (int i = 0; i < usedDeck.Length; i++)
+        {
+            if (!PartyController.party.partyColors.Contains(usedDeck[i].deck[0].casterColor))
+                continue;
+
+            List<CardController> temp = new List<CardController>();
+            foreach (Card c in usedDeck[i].deck)
+            {
+                CardController j = this.gameObject.AddComponent<CardController>();
+                j.SetCard(c, true, false);
+                temp.Add(j);
+            }
+            completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
+        }
+
+        selectedDeck = new ListWrapper[completeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
+        for (int i = 0; i < completeDeck.Length; i++)
+        {
+            selectedDeck[i] = new ListWrapper();
+            List<CardController> temp = new List<CardController>();
+            foreach (CardController c in completeDeck[i].deck)
+                temp.Add(c);
+            selectedDeck[i].SetDeck(temp);
+        }
+
+        ReCountUniqueCards();
+        SetDeck(0);
+        ResolveSelectedList();
+        FinalizeDeck();
+        CheckDeckComplete();
+        CheckPageButtons();
+        RefreshDecks();
+    }
+
     public void LogInformation()
     {
         if (RoomController.roomController.selectedLevel != -1)
@@ -304,7 +343,10 @@ public class CollectionController : MonoBehaviour
         deckButtons[deckID].GetComponent<RectTransform>().localScale = new Vector2(1, 1.3f);
 
         for (int i = 0; i < deckButtons.Length; i++)
+        {
             deckButtons[i].GetComponent<Outline>().enabled = newCards[i].deck.Count != 0;
+            deckButtons[i].GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.partyColors[i]);
+        }
 
         CheckPageButtons();
     }

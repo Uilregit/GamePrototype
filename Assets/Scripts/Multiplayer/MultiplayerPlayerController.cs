@@ -56,7 +56,7 @@ public class MultiplayerPlayerController : NetworkBehaviour
 
     }
 
-    [ClientRpc]
+    //[ClientRpc]
     public void Spawn(Vector2 location)
     {
         transform.position = location;
