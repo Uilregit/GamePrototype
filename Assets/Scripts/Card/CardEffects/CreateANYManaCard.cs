@@ -9,7 +9,14 @@ public class CreateANYManaCard : Effect
         for (int i = 0; i < card.effectValue[effectIndex]; i++) //Draw effectValue number of mana cards
         {
             Card c = LootController.loot.GetANYManaCard().GetCopy();
-            c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            try
+            {
+                c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            }
+            catch
+            {
+                c.casterColor = caster.GetComponent<MultiplayerPlayerController>().GetColorTag();
+            }
             c.exhaust = true;
 
             CardController cc = HandController.handController.gameObject.AddComponent<CardController>();

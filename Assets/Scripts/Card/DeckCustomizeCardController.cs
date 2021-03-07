@@ -23,6 +23,7 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(selectedCardCanvas);
         //col = GetComponent<Collider2D>();
         localScale = transform.localScale;
         originalLocation = transform.position;
@@ -45,6 +46,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         transform.SetParent(originalCanvas.transform);
         transform.localScale = localScale;
         transform.position = originalLocation;
+        cardDisplay.SetToolTip(false, -1, 1, false);
         if (Time.time - clickedTime <= clickThreshold)
             SelectCard();
     }
@@ -89,7 +91,8 @@ public class DeckCustomizeCardController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         transform.SetParent(selectedCardCanvas.transform);
         //cardDisplay.cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
-        transform.position = new Vector3(originalLocation.x, originalLocation.y + HandController.handController.cardHighlightHeight, 0);
+        transform.localPosition = new Vector3(0, 0, 0);
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        cardDisplay.SetToolTip(true, -1, 1, false);
     }
 }

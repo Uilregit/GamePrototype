@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Debilitate
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Debilitate
@@ -21,7 +22,7 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: For the next 2 turns, target looses 2 ATK and is disarmed
+  description: For the next 2 turns, target looses 2 ATK and is <b>Disarmed</b>
   art: {fileID: 0}
   castType: 2
   castShape: 0

@@ -22,8 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 3
-  description: Stun the target for 1 turn. if the target is not attacking you, stun
-    for 2 turns
+  description: <b>Stun</b> the target for 1 turn. if the target is not attacking
+    you, <b>Stun</b> for 2 turns
   art: {fileID: 21300000, guid: cfcdf5b1970fd394494d769e3b760d63, type: 3}
   castType: 0
   castShape: 0

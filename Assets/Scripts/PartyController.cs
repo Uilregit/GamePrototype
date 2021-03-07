@@ -34,12 +34,15 @@ public class PartyController : MonoBehaviour
     public void ResolveUnlockedColors()
     {
         Unlocks unlocked = UnlocksController.unlock.GetUnlocks();
-        if (!unlocked.blackUnlocked)
-            unlockedPlayerColors.Remove(Card.CasterColor.Black);
-        if (!unlocked.whiteUnlocked)
-            unlockedPlayerColors.Remove(Card.CasterColor.White);
-        if (!unlocked.orangeUnlocked)
-            unlockedPlayerColors.Remove(Card.CasterColor.Orange);
+        if (!InformationLogger.infoLogger.debug)
+        {
+            if (!unlocked.blackUnlocked)
+                unlockedPlayerColors.Remove(Card.CasterColor.Black);
+            if (!unlocked.whiteUnlocked)
+                unlockedPlayerColors.Remove(Card.CasterColor.White);
+            if (!unlocked.orangeUnlocked)
+                unlockedPlayerColors.Remove(Card.CasterColor.Orange);
+        }
     }
 
     public Color GetPlayerColor(Card.CasterColor caster)

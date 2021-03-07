@@ -4532,6 +4532,7 @@ MonoBehaviour:
   ySize: 7
   xOffset: 3
   yOffset: 2
+  traps: []
 --- !u!114 &749423178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9001,12 +9002,16 @@ MonoBehaviour:
   maxEnergy: 3
   maxEnergyText: {fileID: 1268121867}
   currentEnergyText: {fileID: 1567856008}
+  endTurnButton: {fileID: 0}
+  turnEnabledColor: {r: 0, g: 0, b: 0, a: 0}
+  turnDisabledColor: {r: 0, g: 0, b: 0, a: 0}
   turnText: {fileID: 48289542}
   turnTextBack: {fileID: 1503678777}
   turnChangeDuration: 2
   turnGracePeriod: 1
   enemyExecutionStagger: 1
   turnID: 0
+  multiplayerTurnPlayer: 0
 --- !u!1 &1615161986
 GameObject:
   m_ObjectHideFlags: 0

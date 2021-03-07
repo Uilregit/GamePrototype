@@ -26,29 +26,4 @@ public class CharacterDisplayController : MonoBehaviour
     {
         shadow.sprite = sprite.sprite;
     }
-
-    public void Hide()
-    {
-        sprite.enabled = false;
-        shadow.enabled = false;
-        outline.enabled = false;
-        vitText.enabled = false;
-        armorText.enabled = false;
-        attackText.enabled = false;
-        highlight.enabled = false;
-        foreach (Image i in buffIcons)
-        {
-            i.enabled = false;
-            i.transform.GetChild(0).GetComponent<Text>().enabled = false;
-        }
-        foreach (SpriteRenderer i in statTextBacks)
-            i.enabled = false;
-        transform.parent.GetComponent<Collider2D>().enabled = false;
-
-        try
-        {
-            transform.parent.GetComponent<EnemyInformationController>().HideIntent();
-        }
-        catch { }
-    }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
+  m_Name: DuplicatingMenace
+  m_EditorClassIdentifier: 
+  isBossRoom: 0
+  relicReward: 0
+  roomName: DuplicatingMenace
+  enemies:
+  - {fileID: 3234652053163052453, guid: c7b2589eb92f05e4d9cf683dc47eb259, type: 3}
+  - {fileID: 3234652053163052453, guid: c7b2589eb92f05e4d9cf683dc47eb259, type: 3}
+  - {fileID: 3234652053163052453, guid: 358f4ca3a16061044ab0cd43ab781861, type: 3}
+  - {fileID: 3234652053163052453, guid: 358f4ca3a16061044ab0cd43ab781861, type: 3}
+  blockNumber: 0
+  playwerSpawnLocations: []

@@ -229,7 +229,7 @@ public class GameController : MonoBehaviour
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))     //At the end of all boss rooms, heal every player to full and resurrect all dead players for free
             {
                 player = obj.GetComponent<HealthController>();
-                player.SetAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
+                player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
                 player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
                 player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
                 foreach (Card.CasterColor deadCharColor in deadChars)
@@ -256,7 +256,7 @@ public class GameController : MonoBehaviour
 
         if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
         {
-            if (RoomController.roomController.GetWorldLevel() == 1)
+            if (RoomController.roomController.GetWorldLevel() == 2)
             {
                 SceneManager.LoadScene("EndScene");
                 yield break;
@@ -341,7 +341,7 @@ public class GameController : MonoBehaviour
         List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
         List<GameObject> output = new List<GameObject>();
         foreach (GameObject obj in players)
-            if (!deadChars.Contains(obj.GetComponent<PlayerController>().GetColorTag()))
+            if (!deadChars.Contains(obj.GetComponent<PlayerController>().GetColorTag()) && PartyController.party.partyColors.Contains(obj.GetComponent<PlayerController>().GetColorTag()))
                 output.Add(obj);
         return output;
     }

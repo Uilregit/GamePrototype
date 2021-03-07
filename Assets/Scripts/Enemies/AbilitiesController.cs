@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Linq;
 
 public class AbilitiesController : MonoBehaviour
 {
@@ -11,6 +13,13 @@ public class AbilitiesController : MonoBehaviour
         AllEnemies = 20,
         Creator = 100,
     }
+
+    public enum ConditionType
+    {
+        None = 0,
+        AnotherCopyAlive = 50
+    }
+
     public enum TriggerType
     {
         OnDeath = 0,
@@ -23,10 +32,12 @@ public class AbilitiesController : MonoBehaviour
         ArmorChange = 1,
         AttackChange = 2,
         FullHeal = 10,
-        Break = 11
+        Break = 11,
+        Revive = 99
     }
 
     public List<TargetType> targetTypes = new List<TargetType>();
+    public List<ConditionType> conditionTypes = new List<ConditionType>();
     public List<TriggerType> triggerTypes = new List<TriggerType>();
     public List<AbilityType> abilityTypes = new List<AbilityType>();
     public List<int> abilityValue = new List<int>();
@@ -68,7 +79,7 @@ public class AbilitiesController : MonoBehaviour
     {
         for (int i = 0; i < abilityTypes.Count; i++)
         {
-            if (triggerTypes[i] == type)
+            if (triggerTypes[i] == type && CheckIfConditionMet(conditionTypes[i]))
             {
                 List<GameObject> target = GetTargets(targetTypes[i]);
 
@@ -94,10 +105,40 @@ public class AbilitiesController : MonoBehaviour
                         case AbilityType.FullHeal:
                             obj.GetComponent<HealthController>().TakePiercingDamage(obj.GetComponent<HealthController>().GetCurrentVit() - obj.GetComponent<HealthController>().GetMaxVit(), obj.GetComponent<HealthController>());
                             break;
+                        case AbilityType.Revive:
+                            GameObject newObj = GameObject.Instantiate(RoomController.roomController.GetObjectPrefab(obj), obj.transform.position, Quaternion.identity);
+
+                            newObj.transform.parent = CanvasController.canvasController.boardCanvas.transform;
+                            newObj.GetComponent<HealthController>().SetCreator(this.gameObject);
+                            try
+                            {
+                                newObj.GetComponent<EnemyController>().SetSkipInitialIntent(true);
+                                newObj.GetComponent<EnemyController>().Spawn(obj.transform.position);
+                            }
+                            catch
+                            {
+                                newObj.GetComponent<PlayerController>().Spawn(obj.transform.position);
+                            }
+                            break;
                     }
                 }
             }
         }
+    }
+
+    private bool CheckIfConditionMet(ConditionType type)
+    {
+        switch (type)
+        {
+            case ConditionType.None:
+                return true;
+            case ConditionType.AnotherCopyAlive:
+                if (TurnController.turnController.GetEnemies().Any(x => x.gameObject.name.Contains(this.gameObject.name) && x.GetComponent<HealthController>().GetCurrentVit() > 0))
+                    return true;
+                else
+                    return false;
+        }
+        return false;
     }
 
     private List<GameObject> GetTargets(TargetType type)
@@ -137,6 +178,13 @@ public class AbilitiesController : MonoBehaviour
                     break;
             }
 
+            switch (conditionTypes[i])
+            {
+                case ConditionType.AnotherCopyAlive:
+                    s += "If Another Copy Is Alive, ";
+                    break;
+            }
+
             switch (targetTypes[i])
             {
                 case TargetType.Creator:
@@ -148,9 +196,9 @@ public class AbilitiesController : MonoBehaviour
                 case TargetType.AllPlayers:
                     s += "All Players ";
                     break;
-                //case TargetType.Self:
-                //    s += "You ";
-                //    break;
+                    //case TargetType.Self:
+                    //    s += "You ";
+                    //    break;
             }
 
             if (abilityValue[i] > 0)
@@ -174,6 +222,9 @@ public class AbilitiesController : MonoBehaviour
                     break;
                 case AbilityType.Break:
                     s += "Become Broken";
+                    break;
+                case AbilityType.Revive:
+                    s += "Revive";
                     break;
             }
 

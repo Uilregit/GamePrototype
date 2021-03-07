@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTypes: 00000000
+  conditionTypes: 00000000
   triggerTypes: 0a000000
   abilityTypes: 0a000000
   abilityValue: 00000000

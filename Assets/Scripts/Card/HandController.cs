@@ -346,26 +346,30 @@ public class HandController : MonoBehaviour
             if (currentReplaceCount == maxReplaceCount)
                 GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
 
-            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                InformationLogger.infoLogger.gameID,
-                                RoomController.roomController.selectedLevel.ToString(),
-                                RoomController.roomController.roomName,
-                                TurnController.turnController.turnID.ToString(),
-                                TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                replacedCard.GetCard().casterColor.ToString(),
-                                replacedCard.GetCard().name,
-                                "False",
-                                "True",
-                                "False",
-                                "False",
-                                "None",
-                                "None",
-                                "None",
-                                "None",
-                                "None",
-                                replacedCard.GetCard().energyCost.ToString(),
-                                replacedCard.GetCard().manaCost.ToString(),
-                                "0");
+            try
+            {
+                InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                    InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.selectedLevel.ToString(),
+                                    RoomController.roomController.roomName,
+                                    TurnController.turnController.turnID.ToString(),
+                                    TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                    replacedCard.GetCard().casterColor.ToString(),
+                                    replacedCard.GetCard().name,
+                                    "False",
+                                    "True",
+                                    "False",
+                                    "False",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    "None",
+                                    replacedCard.GetCard().energyCost.ToString(),
+                                    replacedCard.GetCard().manaCost.ToString(),
+                                    "0");
+            }
+            catch { }
         }
     }
 
@@ -388,8 +392,6 @@ public class HandController : MonoBehaviour
         catch //Multiplayer
         {
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)
-                players = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject player in players)
                 if (player.GetComponent<MultiplayerPlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
                     player.GetComponent<MultiplayerPlayerMoveController>().CommitMove();
@@ -506,6 +508,11 @@ public class HandController : MonoBehaviour
 
     private void ResetReplaceText()
     {
+        if (MultiplayerGameController.gameController != null)
+        {
+            maxReplaceCount = 2;
+            allowHold = false;
+        }
         GameObject.FindGameObjectWithTag("Replace").transform.GetChild(1).GetComponent<Text>().text = "x" + (maxReplaceCount - currentReplaceCount).ToString();
     }
 
@@ -522,7 +529,9 @@ public class HandController : MonoBehaviour
     public void ResetCardDisplays()
     {
         foreach (CardController c in hand)
+        {
             c.cardDisplay.SetCard(c);
+        }
         if (currentlyHeldCard != null)
             currentlyHeldCard.GetComponent<CardDisplay>().SetCard(currentlyHeldCard);
     }

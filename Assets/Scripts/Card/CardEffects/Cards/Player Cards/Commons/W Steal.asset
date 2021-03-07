@@ -22,7 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 4
-  description: Transform into a temporary copy of the target enemy's next card
+  description: Transform into a <b>Temporary Copy</b> of the target enemy's next
+    card
   art: {fileID: 21300000, guid: 2c232edd4587a8d4d8a759378d0380ac, type: 3}
   castType: 1
   castShape: 0

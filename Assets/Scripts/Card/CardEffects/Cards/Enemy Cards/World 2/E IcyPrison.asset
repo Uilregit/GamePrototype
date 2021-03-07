@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E IcyPrison
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Icy Prison
@@ -21,7 +22,7 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: Stun the target for 1 turn
+  description: <b>Stun</b> the target for 1 turn
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 2
   castShape: 0

@@ -661,6 +661,42 @@
  * Can't cast on self cards can now actually not be cast on self
  * Fixed cleanse effects not making disabled cards immediately playable
  * 
+ * #####################
+ * ####### 0.4.5 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * Lowered health of all World 2 normal enemies by 25%
+ * 
+ * -- System --
+ * Added Multiplayer
+ * Added World 3
+ * Buff will now no longer trigger buffs of the same trigger type. (bleeds will not trigger a different bleed)
+ * Added traps and associated enemy movement
+ *      Enemies will try to avoid traps if possible
+ * Added gravity and knockback targeting for enemies
+ *      Enemies will always prioritize stacking players first. If that's not possible, knocking players into traps
+ * When two traps are created on top of eachother, the longer duration one stays
+ * 
+ * -- UI --
+ * Added tooltips to keywords in enemy AND player cards when cards have been selected
+ * 
+ * -- Bugs --
+ * Fixed traps not being spawn under characters in AoE cast
+ * Fixed traps spawning on top of eachother in AoE cast
+ * 
+ * Uncommon: powerful but more complex, requires more setup to get the most out of them
+ * Add uncommon cards
+ *      Add Mana Overflowing. 2 energy gain 2 additional mana
+ *      Rupture: target looses 1 armor per each space knockbacked this turn
+ * 
+ * Add uncommon relics
+ *      relic for doubling passive gold and moving overkill gold to 0
+ *      relic for doubling overkill gold and moving passive gold to 0
+ * 
+ * add control cards to basic set
+ * 
  * --------------------------------------------------------------------------------------------------
  * -- To dos --
  * Simplify common cards
@@ -672,7 +708,6 @@
  *  
  * Add options menu
  *      animation speeds
- * Add UI for key words explanation of cards
  * 
  * Add encyclopedia of cards that've been encountered in the game
  * 
@@ -692,30 +727,6 @@
  * Add elite minibosses (have hearthstone solo adventure style passive effects)
  *      Huge stats, duplicate (split stats equally across the two spawns), attack, duplicate, attack
  * tune all enemy values
- * 
- * #####################
- * ####### 0.4.5 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * Uncommon: powerful but more complex, requires more setup to get the most out of them
- * Add uncommon cards
- *      Add Mana Overflowing. 2 energy gain 2 additional mana
- *      Rupture: target looses 1 armor per each space knockbacked this turn
- * 
- * Add uncommon relics
- *      relic for doubling passive gold and moving overkill gold to 0
- *      relic for doubling overkill gold and moving passive gold to 0
- * 
- * add control cards to basic set
  * 
  * #####################
  * ####### 0.4.6 #######

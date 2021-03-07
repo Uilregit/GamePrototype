@@ -4015,3 +4015,35 @@ deviceID,patchID,gameID,encounterLevel,roomName,turnID,timestamp,castOrder,cardC
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.7,1/16/2021 11:31:17 PM,0,missing,0,28,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.7,1/16/2021 11:31:17 PM,0,missing,0,28,0,Red,Sword and Board,False,False,False,True,Berzerker,1,Berzerker,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.4.7,1/16/2021 11:31:17 PM,0,missing,0,28,0,Red,Sword and Board,False,False,False,True,Berzerker,1,|Mage|Berzerker|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,10,0,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,18,1,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,21,2,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,26,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,60,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,30,4,White,Steal,True,False,False,False,None,None,None,None,None,0,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,0,30,4,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,41,0,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,44,1,White,Steal,True,False,False,False,None,None,None,None,None,0,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,44,1,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,44,1,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,44,1,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,0,missing,1,44,1,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,58,0,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,64,0,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,66,1,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|Armor Breaker(Clone)|Armor Breaker(Clone)|,18,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,69,2,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,69,2,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,73,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,120,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,75,4,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,0,75,4,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,1,75,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,1,missing,1,75,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,121,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,130,0,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,16,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,140,1,White,Flex,False,False,False,True,Mimic,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,141,1,White,Flex,False,False,False,True,Mimic,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,146,2,White,Learn,False,False,False,True,Mimic,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,149,3,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,84,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,154,4,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,0,154,4,White,Steal,True,False,False,False,None,None,None,None,None,0,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,1,154,0,White,Flex,False,False,False,True,Mimic,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.0,3/6/2021 7:59:56 PM,2,missing,1,154,0,White,Flex,False,False,False,True,Mimic,1,Mage,0,0,0,0,2

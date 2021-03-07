@@ -27,6 +27,7 @@ public class RewardCardController : MonoBehaviour
         StopAllCoroutines();
         transform.localScale = localScale;
         transform.position = originalLocation;
+        transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(false);
         if (Time.time - clickedTime < clickSelectDuration)
         {
             CollectionController.collectionController.AddRewardsCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard());
@@ -46,5 +47,6 @@ public class RewardCardController : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight, 0);
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), false);
+        transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(true);
     }
 }

@@ -66,7 +66,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 2
-  maxVit: 5
+  maxVit: 4
+  vitVariate: 1
   startingArmor: 10
   attack: 5
   moveRange: 4
@@ -123,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTypes: 
+  conditionTypes: 
   triggerTypes: 
   abilityTypes: 
   abilityValue: 
@@ -138,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb69054952ac409c6a98fab04356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   size: 1
   charDisplay: {fileID: 8464520558053597639}
 --- !u!61 &7581886792987532364

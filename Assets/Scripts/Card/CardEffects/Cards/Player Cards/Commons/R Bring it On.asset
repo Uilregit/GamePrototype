@@ -17,8 +17,8 @@ MonoBehaviour:
   canCastOnSelf: 1
   rarity: 0
   name: Bring It On
-  energyCost: 0
-  manaCost: 2
+  energyCost: 2
+  manaCost: 0
   range: 0
   radius: 0
   casterColor: 0

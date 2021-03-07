@@ -1929,6 +1929,7 @@ MonoBehaviour:
   worldSetups:
   - {fileID: 11400000, guid: 8cbff891f7c2ed245b35864334f29027, type: 2}
   - {fileID: 11400000, guid: a37adb33646b44e4eaed79782de8f683, type: 2}
+  - {fileID: 11400000, guid: a5086a6d87bcb02428d193bc0bfba8e4, type: 2}
   debugRoom: {fileID: 11400000, guid: a87befa3bf78b8d4381597beffea86f4, type: 2}
 --- !u!1001 &485037366
 PrefabInstance:
@@ -4002,6 +4003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc055d1f53034b49aac83d19aff69bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSinglePlayer: 1
   custCardsDisplay:
   - {fileID: 3827845103651940198}
   - {fileID: 87601395}
@@ -4119,14 +4121,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
     - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
   - deck:
-    - {fileID: 11400000, guid: 99473f3016eea6e44b5ec502538e0a15, type: 2}
-    - {fileID: 11400000, guid: 99473f3016eea6e44b5ec502538e0a15, type: 2}
-    - {fileID: 11400000, guid: 99473f3016eea6e44b5ec502538e0a15, type: 2}
-    - {fileID: 11400000, guid: 99473f3016eea6e44b5ec502538e0a15, type: 2}
-    - {fileID: 11400000, guid: 68c7ba2da18a1e34397b87695b4db4c9, type: 2}
-    - {fileID: 11400000, guid: 68c7ba2da18a1e34397b87695b4db4c9, type: 2}
-    - {fileID: 11400000, guid: 68c7ba2da18a1e34397b87695b4db4c9, type: 2}
-    - {fileID: 11400000, guid: 68c7ba2da18a1e34397b87695b4db4c9, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+    - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
   - deck:
     - {fileID: 11400000, guid: 288647cee6334d04181a5f8f1c4cbf71, type: 2}
     - {fileID: 11400000, guid: 288647cee6334d04181a5f8f1c4cbf71, type: 2}
@@ -4137,14 +4139,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
     - {fileID: 11400000, guid: 4fdbc06ed5c332d4581f9a6f047d9d0e, type: 2}
   - deck:
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
-    - {fileID: 11400000, guid: 141684164e08e454ea792dfd2db63194, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
+    - {fileID: 11400000, guid: 3bdb1aef7df16064184df8ab022a1859, type: 2}
   - deck:
     - {fileID: 11400000, guid: b8fe881f3680b4847ba2ed9b0de9128f, type: 2}
     - {fileID: 11400000, guid: b8fe881f3680b4847ba2ed9b0de9128f, type: 2}

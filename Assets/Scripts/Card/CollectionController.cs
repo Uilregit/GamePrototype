@@ -67,38 +67,43 @@ public class CollectionController : MonoBehaviour
         else
             usedDeck = multiplayerDeck;
 
-        for (int i = 0; i < usedDeck.Length; i++)
+        if (!isSinglePlayer)
+            SetupMultiplayerDeck();
+        else
         {
-            if (!PartyController.party.partyColors.Contains(usedDeck[i].deck[0].casterColor))
-                continue;
-
-            List<CardController> temp = new List<CardController>();
-            foreach (Card c in usedDeck[i].deck)
+            for (int i = 0; i < usedDeck.Length; i++)
             {
-                CardController j = this.gameObject.AddComponent<CardController>();
-                j.SetCard(c, true, false);
-                temp.Add(j);
+                if (!PartyController.party.partyColors.Contains(usedDeck[i].deck[0].casterColor))
+                    continue;
+
+                List<CardController> temp = new List<CardController>();
+                foreach (Card c in usedDeck[i].deck)
+                {
+                    CardController j = this.gameObject.AddComponent<CardController>();
+                    j.SetCard(c, true, false);
+                    temp.Add(j);
+                }
+                completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
             }
-            completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
-        }
 
-        selectedDeck = new ListWrapper[completeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
-        for (int i = 0; i < completeDeck.Length; i++)
-        {
-            selectedDeck[i] = new ListWrapper();
-            List<CardController> temp = new List<CardController>();
-            foreach (CardController c in completeDeck[i].deck)
-                temp.Add(c);
-            selectedDeck[i].SetDeck(temp);
-        }
+            selectedDeck = new ListWrapper[completeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
+            for (int i = 0; i < completeDeck.Length; i++)
+            {
+                selectedDeck[i] = new ListWrapper();
+                List<CardController> temp = new List<CardController>();
+                foreach (CardController c in completeDeck[i].deck)
+                    temp.Add(c);
+                selectedDeck[i].SetDeck(temp);
+            }
 
-        ReCountUniqueCards();
-        SetDeck(0);
-        ResolveSelectedList();
-        FinalizeDeck();
-        CheckDeckComplete();
-        CheckPageButtons();
-        RefreshDecks();
+            ReCountUniqueCards();
+            SetDeck(0);
+            ResolveSelectedList();
+            FinalizeDeck();
+            CheckDeckComplete();
+            CheckPageButtons();
+            RefreshDecks();
+        }
     }
 
     public void ResolveSelectedList()
@@ -202,16 +207,20 @@ public class CollectionController : MonoBehaviour
             uniqueCards[deckIndex][newCard.GetCard().name] -= 1;
         }
 
-        InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
-                        InformationLogger.infoLogger.gameID,
-                        RoomController.roomController.selectedLevel.ToString(),
-                        newCard.GetCard().casterColor.ToString(),
-                        newCard.GetCard().name,
-                        newCard.GetCard().energyCost.ToString(),
-                        newCard.GetCard().manaCost.ToString(),
-                        "True",
-                        "False",
-                        "False");
+        try
+        {
+            InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
+                            InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.selectedLevel.ToString(),
+                            newCard.GetCard().casterColor.ToString(),
+                            newCard.GetCard().name,
+                            newCard.GetCard().energyCost.ToString(),
+                            newCard.GetCard().manaCost.ToString(),
+                            "True",
+                            "False",
+                            "False");
+        }
+        catch { }
 
         CheckDeckComplete();
         RefreshDecks();
@@ -223,16 +232,20 @@ public class CollectionController : MonoBehaviour
         selectedDeck[deckIndex].deck.Remove(newCard);
         uniqueCards[deckIndex][newCard.GetCard().name] += 1;
 
-        InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
-                        InformationLogger.infoLogger.gameID,
-                        RoomController.roomController.selectedLevel.ToString(),
-                        newCard.GetCard().casterColor.ToString(),
-                        newCard.GetCard().name,
-                        newCard.GetCard().energyCost.ToString(),
-                        newCard.GetCard().manaCost.ToString(),
-                        "False",
-                        "True",
-                        "False");
+        try
+        {
+            InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
+                            InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.selectedLevel.ToString(),
+                            newCard.GetCard().casterColor.ToString(),
+                            newCard.GetCard().name,
+                            newCard.GetCard().energyCost.ToString(),
+                            newCard.GetCard().manaCost.ToString(),
+                            "False",
+                            "True",
+                            "False");
+        }
+        catch { }
 
         CheckDeckComplete();
         RefreshDecks();
@@ -243,10 +256,11 @@ public class CollectionController : MonoBehaviour
         DeckController.deckController.SetDecks(selectedDeck);
     }
 
-    public void FinalizeMultiplayerDeck()
+    public void SetupMultiplayerDeck()
     {
         EditorCardsWrapper[] usedDeck;
         usedDeck = multiplayerDeck;
+        selectedDeck = new ListWrapper[completeDeck.Length];
 
         for (int i = 0; i < usedDeck.Length; i++)
         {
@@ -254,23 +268,26 @@ public class CollectionController : MonoBehaviour
                 continue;
 
             List<CardController> temp = new List<CardController>();
+            List<Card> allCards = LootController.loot.GetAllCards(usedDeck[i].deck[0].casterColor);
+            foreach (Card c in allCards)
+                for (int x = 0; x < 3; x++)
+                {
+                    CardController j = this.gameObject.AddComponent<CardController>();
+                    j.SetCard(c, true, false);
+                    temp.Add(j);
+                }
+
+            completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
+
+            temp = new List<CardController>();
             foreach (Card c in usedDeck[i].deck)
             {
                 CardController j = this.gameObject.AddComponent<CardController>();
                 j.SetCard(c, true, false);
                 temp.Add(j);
             }
-            completeDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
-        }
-
-        selectedDeck = new ListWrapper[completeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
-        for (int i = 0; i < completeDeck.Length; i++)
-        {
-            selectedDeck[i] = new ListWrapper();
-            List<CardController> temp = new List<CardController>();
-            foreach (CardController c in completeDeck[i].deck)
-                temp.Add(c);
-            selectedDeck[i].SetDeck(temp);
+            selectedDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)] = new ListWrapper();
+            selectedDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
         }
 
         ReCountUniqueCards();

@@ -22,7 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 4
-  description: Become a white temporary copy of the last card played this turn
+  description: Become a white <b>Temporary Copy</b> of the last card played this
+    turn
   art: {fileID: 21300000, guid: cdbe2251b2a51de4eafcffcf7740b048, type: 3}
   castType: 3
   castShape: 0

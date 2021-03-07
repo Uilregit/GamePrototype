@@ -30,6 +30,8 @@ public class Buff : ScriptableObject
     public int duration;
     public int value;
 
+    public GameObject obj;
+    public Card card;
     private Card[] drawnCards;
 
     public TriggerType GetTriggerType()
@@ -74,7 +76,9 @@ public class Buff : ScriptableObject
 
         OnMove = 200,
 
-        OnCardPlayed = 300
+        OnCardPlayed = 300,
+
+        Dummy = 99999
     }
 
     public enum BuffEffectType
@@ -112,12 +116,14 @@ public class Buff : ScriptableObject
         Disarm = 60,
         Silence = 61,
         Stun = 70,
-        Retaliate = 71,
+        //Retaliate = 71,
         Preserve = 72,
         Taunt = 73,
 
         DrawCard = 99,
-        ApplyBuff = 100
+        ApplyBuff = 100,
+
+        CreateFireTrap = 999
     }
 
     public enum DurationType

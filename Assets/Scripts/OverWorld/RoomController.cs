@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class RoomController : MonoBehaviour
 {
@@ -461,5 +462,16 @@ public class RoomController : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    public GameObject GetObjectPrefab(GameObject obj)
+    {
+        foreach(GameObject o in currentRoomSetup.enemies)
+        {
+            if (obj.gameObject.name.Contains(o.gameObject.name))
+                return o;
+        }
+
+        return null;
     }
 }

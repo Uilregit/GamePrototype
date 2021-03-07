@@ -1,8 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
+
+[System.Serializable]
+public class HealthInformation
+{
+    public int castRange = 1;
+    public int bonusCastRange = 0;
+    public int maxVit;
+    public int currentVit = 0;
+    public int currentArmor;
+    public int startingArmor;
+    public int startingAttack;
+    public int currentAttack;
+    public int bonusAttack;
+    public int bonusVit;
+    public int bonusArmor;
+    public int knockBackDamage = 0;
+    public int bonusMoveRange = 0;
+    public bool phasedMovement = false;
+    public bool preserveBonusVit = false;
+    public bool stunned = false;
+    public bool silenced = false;
+    public bool disarmed = false;
+    public string tauntedTarget = null;
+}
 
 public class HealthController : MonoBehaviour //Eventualy split into buff, effect, and health controllers
 {
@@ -28,8 +55,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int bonusMoveRange = 0;
     private bool phasedMovement = false;
     private bool preserveBonusVit = false;
-    private int enfeeble = 0;
-    private int retaliate = 0;
     private bool stunned = false;
     private bool silenced = false;
     private bool disarmed = false;
@@ -126,7 +151,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             int gotStartingAttack = InformationController.infoController.GetStartingAttack(color);
             startingAttack = gotStartingAttack;
-            SetAttack(startingAttack);
+            SetCurrentAttack(startingAttack);
             ResetAttackText(startingAttack);
 
             int gotStartingArmor = InformationController.infoController.GetStartingArmor(color);
@@ -223,7 +248,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetStartingAttack(int newvalue)
     {
         startingAttack = newvalue;
-        SetAttack(startingAttack);
+        SetCurrentAttack(startingAttack);
     }
 
     public int GetStartingAttack()
@@ -231,7 +256,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return startingAttack;
     }
 
-    public void SetAttack(int newValue)
+    public void SetCurrentAttack(int newValue)
     {
         currentAttack = newValue;
         charDisplay.attackText.text = currentAttack.ToString();
@@ -337,10 +362,22 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         try
         {
-            PlayerController player = GetComponent<PlayerController>();
-            GameController.gameController.ReportDeadChar(player.GetColorTag());
+            if (MultiplayerGameController.gameController != null)
+            {
+                MultiplayerPlayerController player = GetComponent<MultiplayerPlayerController>();
+                int playerNumber = 0;
+                if (gameObject.tag == "Enemy")
+                    playerNumber = 1;
+                MultiplayerGameController.gameController.ReportDeadChar(player.GetColorTag(), playerNumber);
+            }
+            else
+            {
+                PlayerController player = GetComponent<PlayerController>();
+                GameController.gameController.ReportDeadChar(player.GetColorTag());
+
+                //GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
+            }
             HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
-            //GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
         }
         catch
         {
@@ -349,7 +386,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
 
         abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnDeath);
-        //Destruction of the object in Gridcontroller.CheckDeaht();
+        //Destruction of the object in Gridcontroller.CheckDeath();
     }
 
     public int GetVit()
@@ -421,21 +458,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public bool GetDisarmed()
     {
         return disarmed;
-    }
-
-    public void SetEnfeeble(int value)
-    {
-        enfeeble += value;
-    }
-
-    public int GetEnfeeble()
-    {
-        return enfeeble;
-    }
-
-    public void SetRetaliate(int value)
-    {
-        retaliate += value;
     }
 
     private void ResetVitText(int value)
@@ -551,7 +573,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 damage *= i;
             }
             if (damage > 0)
-                damage = value + enfeeble;
+                damage = value;
         }
 
         ShowArmorDamageNumber(damage);
@@ -606,7 +628,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             if (value == 0)
                 return 0;
             else
-                return Mathf.Min(value + enfeeble, currentArmor);
+                return Mathf.Min(value, currentArmor);
         }
         return value;
     }
@@ -615,7 +637,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
-        output.currentArmor = Mathf.Max(currentArmor - value - enfeeble, 0);
+        output.currentArmor = Mathf.Max(currentArmor - value, 0);
         return output;
     }
 
@@ -726,22 +748,31 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             foreach (Vector2 loc in occupiedSpaces)
                 GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
+            Vector2 previousPosition = transform.position;
             transform.position = knockedToCenter;
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
             foreach (Vector2 loc in aboutToBePositions)
                 GridController.gridController.ReportPosition(this.gameObject, loc);
 
             yield return new WaitForSeconds(0.1f * TimeController.time.timerMultiplier);
 
-            try
+            if (MultiplayerGameController.gameController == null)   //Singleplayer
+                try
+                {
+                    GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
+                    GetComponent<PlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
+                }
+                catch
+                {
+                    GetComponent<EnemyInformationController>().RefreshIntent();
+                    GetComponent<EnemyController>().SetPreviousPosition(previousPosition);
+                }
+            else    //Multiplayer
             {
-                GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
-                GetComponent<PlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
+                GetComponent<MultiplayerPlayerMoveController>().UpdateOrigin(transform.position);
+                GetComponent<MultiplayerPlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
             }
-            catch
-            {
-                GetComponent<EnemyInformationController>().RefreshIntent();
-            }
+
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
 
             if (objectInWay.Count != 0)    //If knocked to position is occupied then stop (still allow overlap, but stop after)
             {
@@ -895,6 +926,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 currentBrokenTurns = -99999;
                 ResetArmorText(currentArmor);
             }
+            if (MultiplayerGameController.gameController != null) //Multiplayer component
+                ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportHealthController(GetComponent<NetworkIdentity>().netId.ToString(), GetHealthInformation(), ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
         }
     }
 
@@ -975,47 +1008,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         charDisplay.healthBar.RemoveHealthBar();
     }
-    /*
-    public void Cleanse()
-    {
-        foreach (KeyValuePair<Buff, int> buff in startOfTurnBuffs)
-        {
-            buff.Key.Revert(this);
-        }
-        foreach (KeyValuePair<Buff, int> buff in endOfTurnBuffs)
-        {
-            buff.Key.Revert(this);
-        }
-        foreach (Buff buff in oneTimeBuffs)
-        {
-            buff.Revert(this);
-        }
-        foreach (KeyValuePair<Buff, int> buff in onDamageBuffs)
-        {
-            buff.Key.Revert(this);
-        }
-        startOfTurnBuffs = new Dictionary<Buff, int>();
-        endOfTurnBuffs = new Dictionary<Buff, int>();
-        oneTimeBuffs = new List<Buff>();
-        ResetBuffIcons();
-    }
-
-    //Tick every buff down by 1 turn and reverts all expired buffs
-    private Dictionary<Buff, int> ResolveBuffAndReturn(Dictionary<Buff, int> buffList)
-    {
-        Dictionary<Buff, int> newBuffs = new Dictionary<Buff, int>();
-        foreach (KeyValuePair<Buff, int> buff in buffList)
-        {
-            buff.Key.Trigger(this);
-            if (buff.Value > 1)
-                newBuffs[buff.Key] = buff.Value - 1;
-            else
-                buff.Key.Revert(this);
-        }
-        ResetBuffIcons();
-        return newBuffs;
-    }
-    */
 
     public void ResetBuffIcons(List<BuffFactory> allBuffs)
     {
@@ -1084,5 +1076,92 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public bool GetIsDead()
     {
         return isDead;
+    }
+
+    public byte[] GetHealthInformation()
+    {
+        HealthInformation output = new HealthInformation();
+
+        output.castRange = castRange;
+        output.bonusCastRange = bonusCastRange;
+        output.maxVit = maxVit;
+        output.currentVit = currentVit;
+        output.currentArmor = currentArmor;
+        output.startingArmor = startingArmor;
+        output.startingAttack = startingAttack;
+        output.currentAttack = currentAttack;
+        output.bonusAttack = bonusAttack;
+        output.bonusVit = bonusVit;
+        output.bonusArmor = bonusArmor;
+        output.knockBackDamage = knockBackDamage;
+        output.bonusMoveRange = bonusMoveRange;
+        output.phasedMovement = phasedMovement;
+        output.preserveBonusVit = preserveBonusVit;
+        output.stunned = stunned;
+        output.silenced = silenced;
+        output.disarmed = disarmed;
+        if (tauntedTarget != null)
+            output.tauntedTarget = tauntedTarget.GetComponent<NetworkIdentity>().netId.ToString();
+        else
+            output.tauntedTarget = "none";
+
+        MemoryStream stream = new MemoryStream();
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        formatter.Serialize(stream, output);
+
+        byte[] final = stream.ToArray();
+        return final;
+    }
+
+    public void SetHealthInformation(HealthInformation info)
+    {
+        if (currentArmor + bonusArmor != info.currentArmor + info.bonusArmor)
+            ShowArmorDamageNumber((currentArmor + bonusArmor) - (info.currentArmor + info.bonusArmor));
+
+        if (currentVit + bonusVit != info.currentVit + info.bonusVit)
+            ShowDamageNumber((currentVit + bonusVit) - (info.currentVit + info.bonusVit), currentVit + bonusVit);
+
+        castRange = info.castRange;
+        bonusCastRange = info.bonusCastRange;
+        maxVit = info.maxVit;
+        currentVit = info.currentVit;
+        currentArmor = info.currentArmor;
+        startingArmor = info.startingArmor;
+        startingAttack = info.startingAttack;
+        currentAttack = info.currentAttack;
+        bonusAttack = info.bonusAttack;
+        bonusVit = info.bonusVit;
+        bonusArmor = info.bonusArmor;
+        knockBackDamage = info.knockBackDamage;
+        bonusMoveRange = info.bonusMoveRange;
+        phasedMovement = info.phasedMovement;
+        preserveBonusVit = info.preserveBonusVit;
+        stunned = info.stunned;
+        silenced = info.silenced;
+        disarmed = info.disarmed;
+
+        if (info.tauntedTarget != "none")
+            tauntedTarget = ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetObjectFromNetID(info.tauntedTarget).GetComponent<HealthController>();
+        else
+            tauntedTarget = null;
+
+        ResetAttackText(currentAttack + bonusAttack);
+        ResetArmorText(currentArmor + bonusArmor);
+        ResetVitText(currentVit + bonusVit);
+
+        HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+    }
+
+    public Vector2 GetPreviousPosition()
+    {
+        try
+        {
+            return GetComponent<PlayerMoveController>().GetPreviousPosition();
+        }
+        catch
+        {
+            return GetComponent<EnemyController>().GetPreviousPosition();
+        }
     }
 }

@@ -4,30 +4,58 @@ using UnityEngine;
 
 public class TrapController : MonoBehaviour
 {
+    public Color trapColor;
     private GameObject caster;
     private Card card;
     private int effectIndex;
+    private int duration;
 
     public void SetValues(GameObject newCaster, Card newCard, int newEffectIndex)
     {
         caster = newCaster;
         card = newCard;
         effectIndex = newEffectIndex;
+        duration = card.effectDuration[newEffectIndex - 1] * 2 + 1;
     }
 
-    public virtual void Trigger(List<GameObject> trappedObjects)
+    public int GetDuration()
     {
+        return duration;
+    }
+
+    public int GetEffectValue()
+    {
+        return card.effectValue[effectIndex];
+    }
+
+    public virtual IEnumerator Trigger()
+    {
+        /*
         foreach (GameObject trappedObject in trappedObjects)
         {
             trappedObject.GetComponent<HealthController>().SetStunned(true);        //Apply ministun to stop object's turn
             trappedObject.GetComponent<BuffController>().AddBuff(GameController.gameController.stunBuff);
         }
+        */
         EffectFactory factory = new EffectFactory();
         Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);
-        effect.Process(caster, null, new List<Vector2>() { trappedObjects[0].transform.position }, card, effectIndex);
-        Destroy(this.gameObject);
+        yield return StartCoroutine(effect.Process(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
+
+        if (GridController.gridController.GetObjectAtLocation(transform.position).Count > 0)        //Pause if characters are trapped for visual clarity
+            yield return new WaitForSeconds(0.5f * TimeController.time.timerMultiplier);
+
+        duration -= 1;
+        if (duration <= 0)
+        {
+            this.gameObject.SetActive(false);
+        }
+        else if (duration < 3)
+            GetComponent<SpriteRenderer>().color = trapColor * new Color(0.5f, 0.5f, 0.5f, 1);
+
+        Debug.Log("finished trap trigger");
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (card.targetType[effectIndex] == Card.TargetType.Player && collision.gameObject.tag == "Player" ||
@@ -36,4 +64,5 @@ public class TrapController : MonoBehaviour
             Trigger(GridController.gridController.GetObjectAtLocation(collision.transform.position, new string[] { "Enemy" }));
         }
     }
+    */
 }

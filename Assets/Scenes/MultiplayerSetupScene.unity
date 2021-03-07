@@ -6473,6 +6473,52 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7279703294496383873, guid: 71750d99b2765dc4daf53fd2993bb393, type: 3}
   m_PrefabInstance: {fileID: 1536100039}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1568381403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1568381405}
+  - component: {fileID: 1568381404}
+  m_Layer: 0
+  m_Name: LootController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1568381404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568381403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5dfd1d867f20b946a3fde5de42c7452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResurrectCard: {fileID: 11400000, guid: 69878ebc9e335a748a68637cfbf2a5d1, type: 2}
+  lootTable: {fileID: 11400000, guid: 0af409872f4f84a4c88ddf0f2115195e, type: 2}
+  rarePercentage: 30
+--- !u!4 &1568381405
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568381403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7774088, y: 0.25349703, z: -3.6666834}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1577378952
 GameObject:
   m_ObjectHideFlags: 0

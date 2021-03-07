@@ -68,6 +68,9 @@ public class EffectFactory
                 case Card.EffectType.CreateObject:
                     effects[i] = new CreateObjectEffect();
                     break;
+                case Card.EffectType.CreateDuplicateObject:
+                    effects[i] = new CreateDuplicateObjectsEffect();
+                    break;
                 case Card.EffectType.GetCurrentAttack:
                     effects[i] = new GetCurrentAttackEffect();
                     break;

@@ -127,7 +127,7 @@ public class RewardsMenuController : MonoBehaviour
         numRewardsTaken += 1;
         if (numRewards == numRewardsTaken)
         {
-            if (RoomController.roomController.GetWorldLevel() != 1 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+            if (RoomController.roomController.GetWorldLevel() != 2 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
                 RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
             RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
             RoomController.roomController.Refresh();

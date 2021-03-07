@@ -15,6 +15,7 @@ public class MultiplayerPlayerController : NetworkBehaviour
     [SerializeField] private int attackRange;
     private HealthController healthController;
     private MultiplayerPlayerMoveController moveController;
+    private Vector2 spawnedLocation;
 
     // Start is called before the first frame update
     public virtual void Awake()
@@ -59,9 +60,17 @@ public class MultiplayerPlayerController : NetworkBehaviour
     //[ClientRpc]
     public void Spawn(Vector2 location)
     {
+        spawnedLocation = location;
         transform.position = location;
         GridController.gridController.ReportPosition(this.gameObject, location);
         GetComponent<MultiplayerPlayerMoveController>().Spawn();
+    }
+
+    public void ResetSpawn()
+    {
+        GridController.gridController.RemoveFromPosition(gameObject, transform.position);
+        transform.position = spawnedLocation;
+        GridController.gridController.ReportPosition(gameObject, spawnedLocation);
     }
 
     public Card.CasterColor GetColorTag()

@@ -266,8 +266,8 @@ public class EnemyInformationController : MonoBehaviour
     {
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
         {
-            currentIntentTypeIndicators[i].color = new Color(0, 0, 0, 0);
-            currentIntentMultipliers[i].text = "";
+            currentIntentTypeIndicators[i].color = new Color(1, 0, 0, 0);
+            currentIntentMultipliers[i].text = "t";
         }
 
     }
@@ -363,8 +363,11 @@ public class EnemyInformationController : MonoBehaviour
 
     private void HideCards()
     {
-        foreach (GameObject card in displayedCards)
-            card.transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+        for (int i = 0; i < displayedCards.Length; i++)
+        {
+            displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+            displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(false, i, displayedCards.Length);
+        }
     }
 
     private IEnumerator ShowCards()
@@ -373,6 +376,7 @@ public class EnemyInformationController : MonoBehaviour
         for (int i = 0; i < displayedCards.Length; i++)
         {
             displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Show();
+            displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(true, i, displayedCards.Length);
             displayedCards[i].transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
         }
     }
@@ -397,7 +401,7 @@ public class EnemyInformationController : MonoBehaviour
                 targets.Add(enemyController.GetComponent<HealthController>().GetTauntedTarget().transform.position);            //Alwasy include the taunted target's location in cast
         charAnimController.TriggerAttack(this.gameObject, targets, cc.GetComponent<CardEffectsController>());
 
-        yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime*TimeController.time.timerMultiplier);
+        yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime * TimeController.time.timerMultiplier);
         //yield return StartCoroutine(cc.GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, targets));
     }
 
@@ -437,6 +441,8 @@ public class EnemyInformationController : MonoBehaviour
         {
             TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(transform.position, 1), Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
         }
+        else if (card.GetCard().castType == Card.CastType.TargetedAoE || card.GetCard().castType == Card.CastType.EmptyTargetedAoE)
+            TileCreator.tileCreator.CreateTiles(this.gameObject, target, Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
     }
 
     public void GreyOutUsedCard()
@@ -509,5 +515,10 @@ public class EnemyInformationController : MonoBehaviour
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
         return GridController.gridController.GetObjectAtLocation(attackablePositions, tags);
+    }
+
+    public List<Vector2> GetMoveablePositions()
+    {
+        return moveableLocations;
     }
 }

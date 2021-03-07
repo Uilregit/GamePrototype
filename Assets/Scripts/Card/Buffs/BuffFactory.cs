@@ -9,6 +9,10 @@ public class BuffFactory : MonoBehaviour
     public int duration;
     public int cardValue;
 
+    private Color dummyColor;
+    private string dummyDescription;
+    private bool isDummy;
+
     public string cardName = "";
     public string casterColor = "";
     public string casterName;
@@ -130,9 +134,6 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.Stun:
                 healthController.SetStunned(true);
                 break;
-            case Buff.BuffEffectType.Retaliate:
-                healthController.SetRetaliate(cardValue);
-                break;
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(true);
                 break;
@@ -251,32 +252,56 @@ public class BuffFactory : MonoBehaviour
                 }
                 yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
                 break;
+            case Buff.BuffEffectType.CreateFireTrap:
+                GameObject obj = GameObject.Instantiate(buff.obj, selfHealthController.GetPreviousPosition(), Quaternion.identity);
+                obj.transform.parent = CanvasController.canvasController.boardCanvas.transform;
+
+                foreach (TrapController t in GridController.gridController.traps)
+                    if (t.transform.position == obj.transform.position)
+                    {
+                        obj.gameObject.SetActive(false);
+                        break;
+                    }
+                int index = 0;
+                for (int i = 0; i < buff.card.cardEffectName.Length; i++)
+                    if (buff.card.cardEffectName[i] == Card.EffectType.CreateObject)
+                    {
+                        index = i;
+                        break;
+                    }
+                obj.GetComponent<TrapController>().SetValues(selfHealthController.gameObject, buff.card, index + 1);
+                GridController.gridController.traps.Add(obj.GetComponent<TrapController>());
+                break;
             default:
                 Debug.Log(buff.onApplyEffects);
                 Debug.Log("Trigger Not implimented");
                 break;
         }
 
-        InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                            InformationLogger.infoLogger.gameID,
-                                            RoomController.roomController.selectedLevel.ToString(),
-                                            RoomController.roomController.roomName,
-                                            TurnController.turnController.turnID.ToString(),
-                                            TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                            casterColor,
-                                            cardName,
-                                            "False",
-                                            "False",
-                                            "False",
-                                            "True",
-                                            casterName,
-                                            1.ToString(),
-                                            selfHealthController.name,
-                                            vitDamage.ToString(),
-                                            armorDamage.ToString(),
-                                            0.ToString(),
-                                            0.ToString(),
-                                            triggerCount.ToString());
+        try
+        {
+            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                                InformationLogger.infoLogger.gameID,
+                                                RoomController.roomController.selectedLevel.ToString(),
+                                                RoomController.roomController.roomName,
+                                                TurnController.turnController.turnID.ToString(),
+                                                TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                                casterColor,
+                                                cardName,
+                                                "False",
+                                                "False",
+                                                "False",
+                                                "True",
+                                                casterName,
+                                                1.ToString(),
+                                                selfHealthController.name,
+                                                vitDamage.ToString(),
+                                                armorDamage.ToString(),
+                                                0.ToString(),
+                                                0.ToString(),
+                                                triggerCount.ToString());
+        }
+        catch { }
         triggerCount += 1;
 
         yield return new WaitForSeconds(0);
@@ -374,9 +399,6 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.Stun:
                 healthController.SetStunned(false);
                 break;
-            case Buff.BuffEffectType.Retaliate:
-                healthController.SetRetaliate(-cardValue);
-                break;
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(false);
                 break;
@@ -394,26 +416,30 @@ public class BuffFactory : MonoBehaviour
                 break;
         }
 
-        InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                            InformationLogger.infoLogger.gameID,
-                            RoomController.roomController.selectedLevel.ToString(),
-                            RoomController.roomController.roomName,
-                            TurnController.turnController.turnID.ToString(),
-                            TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                            casterColor,
-                            cardName,
-                            "False",
-                            "False",
-                            "False",
-                            "True",
-                            casterName,
-                            1.ToString(),
-                            healthController.name,
-                            vitDamage.ToString(),
-                            armorDamage.ToString(),
-                            0.ToString(),
-                            0.ToString(),
-                            triggerCount.ToString());
+        try
+        {
+            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                InformationLogger.infoLogger.gameID,
+                                RoomController.roomController.selectedLevel.ToString(),
+                                RoomController.roomController.roomName,
+                                TurnController.turnController.turnID.ToString(),
+                                TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                casterColor,
+                                cardName,
+                                "False",
+                                "False",
+                                "False",
+                                "True",
+                                casterName,
+                                1.ToString(),
+                                healthController.name,
+                                vitDamage.ToString(),
+                                armorDamage.ToString(),
+                                0.ToString(),
+                                0.ToString(),
+                                triggerCount.ToString());
+        }
+        catch { }
 
         reverted = true;
     }
@@ -479,11 +505,15 @@ public class BuffFactory : MonoBehaviour
 
     public virtual Color GetIconColor()
     {
+        if (buff.GetTriggerType() == Buff.TriggerType.Dummy)
+            return dummyColor;
         return buff.color;
     }
 
     public virtual string GetDescription()
     {
+        if (buff.GetTriggerType() == Buff.TriggerType.Dummy)
+            return dummyDescription;
         return buff.description.Replace("{+-v}", cardValue.ToString("+#;-#;0")).Replace("{|v|}", Mathf.Abs(cardValue).ToString()).Replace("{v}", cardValue.ToString());
     }
 
@@ -556,5 +586,17 @@ public class BuffFactory : MonoBehaviour
     public Buff GetBuff()
     {
         return buff;
+    }
+
+    public void SetDummyInfo(Color color, string desc)
+    {
+        dummyColor = color;
+        dummyDescription = desc;
+        isDummy = true;
+    }
+
+    public bool GetIsDummy()
+    {
+        return isDummy;
     }
 }

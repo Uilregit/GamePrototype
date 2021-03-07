@@ -57,6 +57,7 @@ public class ShopCardController : MonoBehaviour
         transform.SetParent(originalCanvas.transform);
         transform.localScale = localScale;
         transform.position = originalLocation;
+        cardDisplay.SetToolTip(false, -1, 1, false);
         //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = originalSorterOrder;
         if (Time.time - clickedTime <= clickThreshold)
             SelectCard();
@@ -106,5 +107,6 @@ public class ShopCardController : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight, 0);
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, false);
+        cardDisplay.SetToolTip(true, -1, 1, false);
     }
 }

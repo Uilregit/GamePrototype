@@ -103,3 +103,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9c381a27d364bc2458c2d1b1738fe4e3, type: 2}
   - {fileID: 11400000, guid: ba33e0b39659cba4fac9e32b327127c9, type: 2}
   - {fileID: 11400000, guid: 55bd7ee5e50411848b5c4aae8d255d70, type: 2}
+  tokenCards:
+  - {fileID: 11400000, guid: a1152feb819a52245b4693d646e9e10e, type: 2}

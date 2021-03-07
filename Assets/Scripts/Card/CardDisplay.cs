@@ -6,6 +6,23 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour
 {
+    public Image toolTip;
+    private Dictionary<string, string> toolTipDict = new Dictionary<string, string>()
+    {
+        { "Knockback", "Move target away from the caster" },
+        { "Knock Away", "Move target's neighbours away from the target" },
+        { "Fire Trap", "Deals 5 damage to ALL on trap at start and end of turn" },
+        { "Targeted AoE", "Effects targets in 1 radius around the cast location" },
+        { "Stun", "Target unable to move or play cards" },
+        { "Taunt", "Target forced to move towards and target cards at the caster" },
+        { "Manifest", "Choose a card from 3 options to add to your hand" },
+        { "Temporary Copy", "Card only playable this turn, then card dissapears" },
+        { "Piercing", "Damage not blocked by or affects armor" },
+        { "Silence", "Target cannot play Mana cards" },
+        { "Disarm", "Target cannot play Energy cards" },
+    };
+    private List<Image> thisToolTips = new List<Image>();
+
     public Animator anim;
     public Image cardBack;
     public Image cardGreyOut;
@@ -196,7 +213,7 @@ public class CardDisplay : MonoBehaviour
                     //Debug.Log("tried setting caster");
                     if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor)
                     {
-                        
+
                         card.SetCaster(obj);
                         break;
                     }
@@ -206,7 +223,7 @@ public class CardDisplay : MonoBehaviour
                     //Debug.Log("tried setting caster");
                     if (obj.GetComponent<MultiplayerPlayerController>().GetColorTag() == casterColor)
                     {
-                        
+
                         //Debug.Log(obj);
                         card.SetCaster(obj);
                         break;
@@ -339,6 +356,25 @@ public class CardDisplay : MonoBehaviour
                     description.text = description.text.Replace(description.text.Substring(start, end - start + 3 + formattingCodes[i].Length), "");
             }
         }
+
+        //Tooltips
+        foreach (Image img in thisToolTips)
+            Destroy(img.gameObject);
+        thisToolTips = new List<Image>();
+
+        foreach (string name in toolTipDict.Keys)
+        {
+            if (description.text.ToLower().Contains(name.ToLower()))
+            {
+                Image tt = Instantiate(toolTip);
+                tt.transform.SetParent(transform);
+                tt.transform.localPosition = new Vector3(1.25f, 0.8f, 0);
+                tt.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+                tt.transform.GetChild(0).GetComponent<Text>().text = "<b>" + name + "</b>\n" + toolTipDict[name];
+                tt.gameObject.SetActive(false);
+                thisToolTips.Add(tt);
+            }
+        }
     }
 
     public void SetConditionHighlight(bool value)
@@ -366,6 +402,36 @@ public class CardDisplay : MonoBehaviour
     public bool GetHighlight()
     {
         return !cardGreyOut.enabled;
+    }
+
+    public void SetToolTip(bool value, int index = -1, int total = 1, bool inCombat = true)
+    {
+        for (int i = 0; i < thisToolTips.Count; i++)
+        {
+            if (thisToolTips[i].isActiveAndEnabled != value)
+            {
+                if (index == -1 && total == 1)
+                {
+                    if (inCombat)
+                    {
+                        if (transform.position.x > 0)
+                            thisToolTips[i].transform.localPosition = new Vector3(-1.25f, 0.8f - 0.4f * i, 0);
+                        else
+                            thisToolTips[i].transform.localPosition = new Vector3(1.25f, 0.8f - 0.4f * i, 0);
+                    }
+                    else
+                        thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.4f * i, 0);
+                }
+                else if (index == 0)
+                    thisToolTips[i].transform.localPosition = new Vector3(-1.25f, 0.8f - 0.4f * i, 0);
+                else if (index == total - 1)
+                    thisToolTips[i].transform.localPosition = new Vector3(1.25f, 0.8f - 0.4f * i, 0);
+
+                thisToolTips[i].gameObject.SetActive(value);
+                if (total > 1 && (index != total - 1 || index != 0))
+                    thisToolTips[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     public void SetDisableStats(string status)

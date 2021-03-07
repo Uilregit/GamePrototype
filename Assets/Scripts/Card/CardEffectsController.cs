@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Mirror;
 
 public class CardEffectsController : MonoBehaviour
 {
@@ -31,8 +32,18 @@ public class CardEffectsController : MonoBehaviour
         return castLocation;
     }
 
-    public IEnumerator TriggerEffect(GameObject caster, List<Vector2> targets)
+    public IEnumerator TriggerEffect(GameObject caster, List<Vector2> targets, bool propogateOverServer = true)
     {
+        if (MultiplayerGameController.gameController != null) //Multiplayer component
+        {
+            if (propogateOverServer)
+                ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportCardUsed(caster.GetComponent<NetworkIdentity>().netId.ToString(), card.GetCard().name, targets, ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
+            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)    //Will never play cards on client, always on server
+            {
+                DeckController.deckController.ReportUsedCard(card);     //Client should still add card to discard pile even if the effect isn't triggered
+                yield break;
+            }
+        }
         int vitDamage = 0;
         int armorDamage = 0;
         string targetNames = "|";
@@ -43,6 +54,7 @@ public class CardEffectsController : MonoBehaviour
         else
             bonusCast += TurnController.turnController.GetPlayerBonusCast();
 
+        List<GameObject> movedObjects = new List<GameObject>();
         //If there are bonus casts, then process the card that many more times
         for (int j = 0; j < 1 + bonusCast; j++)
         {
@@ -82,6 +94,11 @@ public class CardEffectsController : MonoBehaviour
                                 t = GridController.gridController.GetObjectAtLocation(targets, new string[] { "Player" });
                                 break;
                         }
+
+                    t.AddRange(movedObjects);       //Add force moved objects to list so they're still affected after the position change
+
+                    if (card.GetCard().cardEffectName[i] == Card.EffectType.ForcedMovement)
+                        movedObjects.AddRange(t);
 
                     foreach (GameObject obj in t)
                         targetNames += obj.name + "|";
@@ -168,6 +185,10 @@ public class CardEffectsController : MonoBehaviour
 
                     if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)
                         i += 1;
+
+                    if (MultiplayerGameController.gameController != null) //Multiplayer component
+                        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(locs))
+                            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportHealthController(obj.GetComponent<NetworkIdentity>().netId.ToString(), obj.GetComponent<HealthController>().GetHealthInformation(), ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
                 }
                 else
                 {
@@ -196,31 +217,36 @@ public class CardEffectsController : MonoBehaviour
                     player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
         }
 
-        if (card.GetCard().casterColor != Card.CasterColor.Enemy)
+        if (MultiplayerGameController.gameController != null) //Multiplayer component
+        {
+            if (TurnController.turnController.GetIsPlayerTurn() && ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0)
+                DeckController.deckController.ReportUsedCard(card);     //Only allow card to shuffle into discard pile if server played it on server's turn
+        }
+        else if (card.GetCard().casterColor != Card.CasterColor.Enemy)  //Singleplayer component
             DeckController.deckController.ReportUsedCard(card);
 
         try
-        { 
-        InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
-                                                    InformationLogger.infoLogger.gameID,
-                                                    RoomController.roomController.selectedLevel.ToString(),
-                                                    RoomController.roomController.roomName,
-                                                    TurnController.turnController.turnID.ToString(),
-                                                    TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                                    card.GetCard().casterColor.ToString(),
-                                                    card.GetCard().name,
-                                                    "False",
-                                                    "False",
-                                                    "False",
-                                                    "True",
-                                                    caster.name,
-                                                    targets.Count.ToString(),
-                                                    targetNames,
-                                                    vitDamage.ToString(),
-                                                    armorDamage.ToString(),
-                                                    card.GetCard().energyCost.ToString(),
-                                                    card.GetCard().manaCost.ToString(),
-                                                    "0");
+        {
+            InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
+                                                        InformationLogger.infoLogger.gameID,
+                                                        RoomController.roomController.selectedLevel.ToString(),
+                                                        RoomController.roomController.roomName,
+                                                        TurnController.turnController.turnID.ToString(),
+                                                        TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
+                                                        card.GetCard().casterColor.ToString(),
+                                                        card.GetCard().name,
+                                                        "False",
+                                                        "False",
+                                                        "False",
+                                                        "True",
+                                                        caster.name,
+                                                        targets.Count.ToString(),
+                                                        targetNames,
+                                                        vitDamage.ToString(),
+                                                        armorDamage.ToString(),
+                                                        card.GetCard().energyCost.ToString(),
+                                                        card.GetCard().manaCost.ToString(),
+                                                        "0");
         }
         catch { }
     }

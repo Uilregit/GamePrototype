@@ -23,16 +23,22 @@ public class MultiplayerPlayerMouseController : NetworkBehaviour
 
     public void OnMouseDown()
     {
-        if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        if ((gameObject.tag == "Enemy" && TurnController.turnController.GetIsPlayerTurn()) || (gameObject.tag == "Player" && !TurnController.turnController.GetIsPlayerTurn()))
+            multiMoveController.CreateEnemyRangeIndicator();
+
+        if (gameObject.tag == "Enemy")
             return;
-        multiMoveController.CreateMoveRangeIndicator();
+
         if (TurnController.turnController.GetIsPlayerTurn())
+        {
+            multiMoveController.CreateMoveRangeIndicator();
             offset = transform.position - CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        }
     }
 
     public void OnMouseDrag()
     {
-        if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        if (gameObject.tag == "Enemy")
             return;
         if (multiMoveController.GetMoveable())
         {
@@ -46,9 +52,12 @@ public class MultiplayerPlayerMouseController : NetworkBehaviour
     }
     private void OnMouseUp()
     {
-        if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        if (gameObject.tag == "Enemy")
             return;
-        multiMoveController.MoveTo(multiMoveController.GetMoveLocation());
+        if (TurnController.turnController.GetIsPlayerTurn())
+        {
+            multiMoveController.MoveTo(multiMoveController.GetMoveLocation());
+        }
         multiMoveController.DestroyMoveRrangeIndicator();
     }
 }

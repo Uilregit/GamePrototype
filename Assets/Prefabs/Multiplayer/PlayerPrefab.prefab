@@ -114,3 +114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  cardSpacing: 3.3
+  minHeight: 0
+  maxHeight: 2.5

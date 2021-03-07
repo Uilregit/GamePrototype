@@ -50,22 +50,19 @@ public class MultiplayerGridController : NetworkBehaviour
 
         List<GameObject>[,] output = new List<GameObject>[xSize, ySize];
 
-        List<GameObject> possibleObjects = GameObject.FindGameObjectsWithTag("Player").ToList();
-        possibleObjects.AddRange(GameObject.FindGameObjectsWithTag("Enemy").ToList());
-
         for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)
             {
                 output[x, y] = new List<GameObject>();
                 foreach (string id in value[x * xSize + y])
-                    foreach (GameObject obj in possibleObjects)
-                        if (obj.GetComponent<NetworkIdentity>().netId.ToString() == id)
-                            output[x, y].Add(obj);
+                    output[x, y].Add(ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetObjectFromNetID(id));
             }
         }
 
         GetComponent<GridController>().SetGrid(output);
+
+        //DebugGrid();
     }
 
     public byte[] GetGrid()

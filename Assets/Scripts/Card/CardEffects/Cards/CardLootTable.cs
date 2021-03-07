@@ -6,4 +6,5 @@ using UnityEngine;
 public class CardLootTable : ScriptableObject
 {
     public Card[] cardLoot;
+    public Card[] tokenCards;
 }

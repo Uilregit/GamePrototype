@@ -10,7 +10,7 @@ public class MultiplayerSetupController : TavernController
     public Canvas deckCanvas;
     public Image deckButton;
 
-    private int selectedIndex = -1;
+    private new int selectedIndex = -1;
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,7 +51,6 @@ public class MultiplayerSetupController : TavernController
             if (!PartyController.party.partyColors.Contains(c))
                 colors.Add(c);
         Card.CasterColor newColor = colors[index];
-        Debug.Log("report selected");
         party[selectedIndex].color = PartyController.party.GetPlayerColor(newColor);
         party[selectedIndex].transform.GetChild(0).GetComponent<Text>().text = "Lv." + PartyController.party.GetPartyLevelInfo(newColor)[0].ToString();
         PartyController.party.partyColors[selectedIndex] = newColor;
@@ -61,7 +60,7 @@ public class MultiplayerSetupController : TavernController
             img.enabled = false;
             img.transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
-        CollectionController.collectionController.FinalizeMultiplayerDeck();
+        CollectionController.collectionController.SetupMultiplayerDeck();
     }
 
     public void GoToDeckMenu()
@@ -78,7 +77,8 @@ public class MultiplayerSetupController : TavernController
     public void FindMatchButton()
     {
         //DeckController.deckController.SetDecks()
-        CollectionController.collectionController.FinalizeMultiplayerDeck();
+        CollectionController.collectionController.FinalizeDeck();
+        LootController.loot.ResetPartyLootTable();
         SceneManager.LoadScene("MultiplayerScene", LoadSceneMode.Single);
     }
 }

@@ -38,6 +38,11 @@ public class LootController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
+        ResetPartyLootTable();
+    }
+
+    public void ResetPartyLootTable()
+    {
         foreach (Card card in lootTable.cardLoot)
         {
             if (card.manaCost > 0)
@@ -90,9 +95,21 @@ public class LootController : MonoBehaviour
         return commonCards[index];
     }
 
+    public List<Card> GetAllCards(Card.CasterColor color)
+    {
+        List<Card> output = new List<Card>();
+        foreach (Card card in lootTable.cardLoot)
+            if (card.casterColor == color)
+                output.Add(card);
+        return output;
+    }
+
     public Card GetCardWithName(string name)
     {
         foreach (Card c in lootTable.cardLoot)
+            if (c.name == name)
+                return c;
+        foreach (Card c in lootTable.tokenCards)
             if (c.name == name)
                 return c;
         return null;

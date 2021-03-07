@@ -12,12 +12,14 @@ public class MultiplayerCoordinator : NetworkManager
     private NetworkConnection[] connections = new NetworkConnection[2];
     public MultiplayerGameController gameController;
     public GridController[] grid = new GridController[2];
+    public GameObject enemyCard;
 
     private int partyInfosGotten = 0;
 
     private void Awake()
     {
         MultiplayerCoordinator.networkManager = this;
+        enemyCard.transform.GetChild(0).GetComponent<CardDisplay>().Hide();
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)

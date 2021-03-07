@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 3
-  description: Teleport to the target empty location, <b>Knockaway</b> 1
+  description: Teleport to the target empty location, <b>Knock Away</b> 1
   art: {fileID: 21300000, guid: 0c62eae3f20fef34a8946a31aac7e3f4, type: 3}
   castType: 8
   castShape: 0

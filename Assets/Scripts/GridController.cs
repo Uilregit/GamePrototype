@@ -17,6 +17,8 @@ public class GridController : MonoBehaviour
 
     private Dictionary<Card.CasterColor, Vector2> deathLocation;
 
+    public List<TrapController> traps = new List<TrapController>();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -199,6 +201,19 @@ public class GridController : MonoBehaviour
         return output.Distinct().ToList();
     }
 
+    public List<Vector2> GetEmptyTrapLocationsInAoE(Vector2 center, int range)
+    {
+        TileCreator.tileCreator.CreateTiles(this.gameObject, center, Card.CastShape.Circle, range, Color.clear, 2);
+        List<Vector2> output = TileCreator.tileCreator.GetTilePositions(2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
+
+        foreach (TrapController t in traps)
+            if (GetManhattanDistance(t.transform.position, center) <= range)
+                output.Remove(t.transform.position);
+
+        return output;
+    }
+
     //Returns true for out of bounds positions, false if not
     public bool CheckIfOutOfBounds(Vector2 location)
     {
@@ -240,28 +255,39 @@ public class GridController : MonoBehaviour
     public IEnumerator CheckDeath()
     {
         List<GameObject> deadObjects = new List<GameObject>();
+        List<GameObject> viableObjects = new List<GameObject>();
         foreach (List<GameObject> obje in objects)
-            foreach (GameObject obj in obje)
-                if (obj != null)
-                    try
-                    {
-                        GameObject o = obj.GetComponent<HealthController>().CheckDeath();
-                        if (o != null)
-                            deadObjects.Add(o);
-                    }
-                    catch { }
+            viableObjects.AddRange(obje);
+
+        if (MultiplayerGameController.gameController != null)
+        {
+            viableObjects = MultiplayerGameController.gameController.GetLivingPlayers(0);
+            viableObjects.AddRange(MultiplayerGameController.gameController.GetLivingPlayers(1));
+        }
+        foreach (GameObject obj in viableObjects)
+            if (obj != null)
+                try
+                {
+                    GameObject o = obj.GetComponent<HealthController>().CheckDeath();
+                    if (o != null)
+                        deadObjects.Add(o);
+                }
+                catch { }
 
         //Resolve enemy deaths
         foreach (GameObject o in deadObjects)
         {
-            RemoveFromPosition(o, o.transform.position);
-            o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
-            try
+            if (o.transform.position != new Vector3(1000, 1000))
             {
-                TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
-                o.GetComponent<HealthController>().ReportDead();
+                RemoveFromPosition(o, o.transform.position);
+                o.GetComponent<HealthController>().charDisplay.charAnimController.TriggerDeath();
+                try
+                {
+                    TurnController.turnController.RemoveEnemy(o.GetComponent<EnemyController>());
+                    o.GetComponent<HealthController>().ReportDead();
+                }
+                catch { }
             }
-            catch { }
         }
 
         //Resolve sacrificed enemies
@@ -286,13 +312,7 @@ public class GridController : MonoBehaviour
                 yield return StartCoroutine(GameController.gameController.Victory());
             }
         }
-        else
-        {
-            if (MultiplayerGameController.gameController.GetLivingPlayers(1 - ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber()).Count == 0)
-                MultiplayerGameController.gameController.Victory();
-            else if (MultiplayerGameController.gameController.GetLivingPlayers(ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber()).Count == 0)
-                MultiplayerGameController.gameController.Defeat();
-        }
+
         yield return new WaitForSeconds(0);
     }
 

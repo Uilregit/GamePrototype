@@ -9,8 +9,15 @@ public class StealCardEffect : Effect
         foreach(GameObject targ in target)
         {
             Card c = targ.GetComponent<EnemyController>().GetCard()[0].GetCard().GetCopy();
-            c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
-            switch(c.castType)
+            try
+            {
+                c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            }
+            catch
+            {
+                c.casterColor = caster.GetComponent<MultiplayerPlayerController>().GetColorTag();
+            }
+            switch (c.castType)
             {
                 case Card.CastType.Player:
                     c.castType = Card.CastType.Any;

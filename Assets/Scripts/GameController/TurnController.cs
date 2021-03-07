@@ -47,6 +47,8 @@ public class TurnController : MonoBehaviour
     private List<int> manaSpent = new List<int>();
     private List<int> energySpent = new List<int>();
 
+    public int multiplayerTurnPlayer = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -133,6 +135,7 @@ public class TurnController : MonoBehaviour
 
         cardsPlayedThisTurn = new List<Card>();
 
+        yield return StartCoroutine(TriggerTraps());    //Trigger Traps
         GridController.gridController.ResolveOverlap();
         GridController.gridController.DebugGrid();
 
@@ -185,6 +188,7 @@ public class TurnController : MonoBehaviour
             yield return new WaitForSeconds(TimeController.time.enemyExecutionStagger * TimeController.time.timerMultiplier);
         }
 
+        yield return StartCoroutine(TriggerTraps());    //Trigger Traps
         GridController.gridController.ResolveOverlap();
         enemies.AddRange(queuedEnemies);
         queuedEnemies = new List<EnemyController>();
@@ -198,6 +202,8 @@ public class TurnController : MonoBehaviour
 
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
+
+        Debug.Log("start of player turn");
 
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
@@ -244,22 +250,44 @@ public class TurnController : MonoBehaviour
         SetPlayerTurn(true); //Trigger all player start of turn effects
     }
 
+    private IEnumerator TriggerTraps()
+    {
+        List<TrapController> removedTraps = new List<TrapController>();
+        foreach (TrapController trap in GridController.gridController.traps)    //Trigger Traps
+        {
+            if (trap.gameObject.active)
+                yield return StartCoroutine(trap.Trigger());
+            else
+                removedTraps.Add(trap);
+        }
+        foreach (TrapController t in removedTraps)
+            GridController.gridController.traps.Remove(t);
+    }
+
     public void MultiplayerEndTurnButtonPressed()
     {
         if (playerTurn)
-            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportEndTurn();
+            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportEndTurn(multiplayerTurnPlayer == 0);
     }
 
     public void SetEndTurnButtonEnabled(bool state)
     {
         if (state)
+        {
             endTurnButton.color = turnEnabledColor;
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "End Turn";
+        }
         else
+        {
             endTurnButton.color = turnDisabledColor;
+            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "Enemy Turn";
+        }
     }
 
     public IEnumerator SetMultiplayerTurn(int playerNumber)
     {
+        multiplayerTurnPlayer = playerNumber;
+
         if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() != playerNumber)
         {
             int manaCardsPlayed = 0;
@@ -277,7 +305,7 @@ public class TurnController : MonoBehaviour
             cardsPlayedThisTurn = new List<Card>();
 
             GridController.gridController.ResolveOverlap();
-            GridController.gridController.DebugGrid();
+            //GridController.gridController.DebugGrid();
 
             //Disable Player and card movement, trigger all end of turn effects
             List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
@@ -288,14 +316,16 @@ public class TurnController : MonoBehaviour
             }
 
             //Trigger all end of turn buff effects
-            foreach (GameObject characters in players)
+            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0)    //Only trigger buffs on server
             {
-                characters.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
-                yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
+                foreach (GameObject characters in players)
+                {
+                    characters.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
+                    yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
+                }
+                foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(playerNumber))
+                    yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
             }
-            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
-                yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
-
 
             RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnEnd, null);
 
@@ -307,9 +337,15 @@ public class TurnController : MonoBehaviour
 
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == playerNumber)
+        {
             turnText.text = "Your Turn";
+            GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = true;
+        }
         else
+        {
             turnText.text = "Enemy Turn";
+            GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
+        }
         turnText.enabled = true;
         turnTextBack.enabled = true;
         yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
@@ -332,13 +368,16 @@ public class TurnController : MonoBehaviour
 
             List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
             //Trigger all start of turn buff effects
-            foreach (GameObject characters in players)
-                yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
-
-            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0)    //Only trigger buffs on server
             {
-                thisEnemy.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
-                yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+                foreach (GameObject characters in players)
+                    yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, characters.GetComponent<HealthController>(), 0));
+
+                foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
+                {
+                    thisEnemy.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
+                    yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
+                }
             }
 
             yield return StartCoroutine(GridController.gridController.CheckDeath());
@@ -355,10 +394,6 @@ public class TurnController : MonoBehaviour
         }
         else
         {
-            //Trigger all begining of turn effects
-            foreach (GameObject thisEnemy in MultiplayerGameController.gameController.GetLivingPlayers(1 - playerNumber))
-                thisEnemy.GetComponent<HealthController>().AtStartOfTurn();
-
             GridController.gridController.ResolveOverlap();
 
             cardsPlayedThisTurn = new List<Card>();

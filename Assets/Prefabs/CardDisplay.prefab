@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9edf1dfc5f29a41b5ddcacf073d9f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolTip: {fileID: 4239978086154266541, guid: ac9a9306756a9464ba7dab6ac963a668, type: 3}
   anim: {fileID: 8881027740482283445}
   cardBack: {fileID: 128688703525648313}
   cardGreyOut: {fileID: 1696064334374193728}

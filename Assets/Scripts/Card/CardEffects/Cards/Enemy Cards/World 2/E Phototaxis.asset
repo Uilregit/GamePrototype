@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Phototaxis
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Phototaxis
@@ -21,7 +22,7 @@ MonoBehaviour:
   range: 1
   radius: 2
   casterColor: 6
-  description: Taunt all enemies in 2 radius for 1 turn
+  description: <b>Taunt</b> <b>ALL</b> enemies in 2 radius for 1 turn
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 5
   castShape: 0

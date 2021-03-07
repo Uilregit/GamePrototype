@@ -32,6 +32,8 @@ public class CardDragController : DragController
     private enum State { Default, Highlighted, Aiming };
     private State currentState = default;
 
+    private Coroutine showingToolTip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,17 +70,35 @@ public class CardDragController : DragController
             }
             else
                 rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(originalRotation), Time.fixedDeltaTime * 10);
+
+            showingToolTip = StartCoroutine(ShowToolTip());
         }
         else if (currentState == State.Aiming)
         {
+            if (showingToolTip != null)
+                StopCoroutine(showingToolTip);
+            cardDisplay.SetToolTip(false);
+
             Vector3 lookAtLocation = CameraController.camera.ScreenToWorldPoint(Input.mousePosition) - transform.position + new Vector3(0, 0, 2);
             rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.LookRotation(lookAtLocation, new Vector3(0, 0, -1)) * Quaternion.Euler(new Vector3(90, 0, 0)), Time.deltaTime * 40);
         }
         else if (currentState == State.Default)
         {
+            if (showingToolTip != null)
+                StopCoroutine(showingToolTip);
+            cardDisplay.SetToolTip(false);
+
             rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(originalRotation), Time.deltaTime * 40);
         }
     }
+
+    private IEnumerator ShowToolTip()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (currentState == State.Highlighted && isHolding == false)
+            cardDisplay.SetToolTip(true);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -297,6 +317,10 @@ public class CardDragController : DragController
         {
             if (trn.tag == "Replace" || (trn.tag == "Hold" && (HandController.handController.GetHeldCard() == this || HandController.handController.GetHeldCard() == null)))
             {
+                if (showingToolTip != null)
+                    StopCoroutine(showingToolTip);
+                cardDisplay.SetToolTip(false);
+
                 isHolding = true;
                 transform.position = trn.position;
                 transform.localScale = new Vector3(HandController.handController.cardHoldSize, HandController.handController.cardHoldSize, 1);

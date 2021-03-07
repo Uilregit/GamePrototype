@@ -346,6 +346,11 @@ public class TileCreator : MonoBehaviour
             DestroyPathTiles(layer);
     }
 
+    public List<Vector2> GetPathTilePositions(int layer)
+    {
+        return pathTiles[layer].Keys.ToList();
+    }    
+
     public void RefreshPathTiles(int layer, Vector2 startingLoc, Vector2 endingLoc, int len, int moveRangeLeft)
     {
         foreach (Vector2 location in pathTiles[layer].Keys)

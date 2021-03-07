@@ -34,6 +34,7 @@ public class MultiplayerGameController : NetworkBehaviour
     public Buff attackBuff;
     public Buff armorBuff;
     public Buff stunBuff;
+    public Buff dummyBuff;
 
     private List<Card.CasterColor>[] deadChars;
 
@@ -103,50 +104,54 @@ public class MultiplayerGameController : NetworkBehaviour
 
     public IEnumerator Victory()
     {
-        GridController.gridController.DisableAllPlayers();
-        //HandController.handController.ClearHand();
-        HandController.handController.EmptyHand();
-
-        DeckController.deckController.ResetCardValues();
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        players.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        foreach (GameObject player in players)
+            player.GetComponent<MultiplayerPlayerMoveController>().SetMoveable(false);
 
         CameraController.camera.ScreenShake(0.4f, 2f, true);
         yield return new WaitForSeconds(2.5f);
 
-
         yield return StartCoroutine(DisplayVictoryText());
+
+        ShowEndGameScreen();
     }
 
     public IEnumerator Defeat()
     {
-        GridController.gridController.DisableAllPlayers();
-        //HandController.handController.ClearHand();
-        HandController.handController.EmptyHand();
-
-        DeckController.deckController.ResetCardValues();
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        players.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        foreach (GameObject player in players)
+            player.GetComponent<MultiplayerPlayerMoveController>().SetMoveable(false);
 
         CameraController.camera.ScreenShake(0.4f, 2f, true);
         yield return new WaitForSeconds(2.5f);
 
-
         yield return StartCoroutine(DisplayDefeatText());
+
+        ShowEndGameScreen();
     }
 
-    public void ReportDeadChar(Card.CasterColor color)
+    public void ShowEndGameScreen()
     {
-        int playerNumber = 0;
-        if (!isServer)
-            playerNumber = 1;
+        TurnController.turnController.StopAllCoroutines();
+        CanvasController.canvasController.uiCanvas.enabled = false;
+        HandController.handController.EmptyHand();
+        CanvasController.canvasController.endGameCanvas.enabled = true;
+        CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = false;
+        CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
+    }
 
+    public void ReportDeadChar(Card.CasterColor color, int playerNumber)
+    {
         deadChars[playerNumber].Add(color);
+
         if (deadChars[playerNumber].Count >= 3)
         {
-            TurnController.turnController.StopAllCoroutines();
-            CanvasController.canvasController.uiCanvas.enabled = false;
-            HandController.handController.EmptyHand();
-            CanvasController.canvasController.endGameCanvas.enabled = true;
-            CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = false;
-            CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
-            CanvasController.canvasController.endGameCanvas.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
+            if (playerNumber != ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber())
+                StartCoroutine(MultiplayerGameController.gameController.Victory());
+            else
+                StartCoroutine(MultiplayerGameController.gameController.Defeat());
         }
     }
 
@@ -161,12 +166,8 @@ public class MultiplayerGameController : NetworkBehaviour
 
     public List<GameObject> GetLivingPlayers(int playerNumber)
     {
-        string tag = "Player";
-        if (playerNumber == 1)
-            tag = "Enemy";
-        List<GameObject> players = GameObject.FindGameObjectsWithTag(tag).ToList();
         List<GameObject> output = new List<GameObject>();
-        foreach (GameObject obj in players)
+        foreach (GameObject obj in players[playerNumber])
             if (!deadChars[playerNumber].Contains(obj.GetComponent<MultiplayerPlayerController>().GetColorTag()))
                 output.Add(obj);
         return output;
@@ -301,14 +302,42 @@ public class MultiplayerGameController : NetworkBehaviour
     [ClientRpc]
     public void StartGame()
     {
+        int playernumber = 0;
+        if (!isServer)
+            playernumber = 1;
+        foreach (GameObject obj in players[playernumber])
+            obj.GetComponent<MultiplayerPlayerController>().ResetSpawn();
         DeckController.deckController.PopulateDecks();
         DeckController.deckController.ResetCardValues();
         DeckController.deckController.ShuffleDrawPile();
 
         HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
 
+        InformationController.infoController.SaveMultiplayerCombatInformation();
         //Set turn to server side
         TurnController.turnController.SetEndTurnButtonEnabled(isServer);
         StartCoroutine(TurnController.turnController.SetMultiplayerTurn(0));
+
+        ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().FinalizeGrid(playernumber);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0)
+            NetworkManager.singleton.StopHost();
+        else
+            NetworkManager.singleton.StopClient();
+
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+    }
+
+    public void SetTurnPlayerTags(int playerNumber)
+    {
+        for (int i = 0; i < 2; i++)
+            foreach (GameObject obj in players[i])
+                if (i == playerNumber)
+                    obj.tag = "Player";
+                else
+                    obj.tag = "Enemy";
     }
 }

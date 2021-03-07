@@ -150,11 +150,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
     {
         string selfTag = "Player";
         string otherTag = "Enemy";
-        if (!isServer)
-        {
-            selfTag = "Enemy";
-            otherTag = "Player";
-        }
+
         moveShadow.GetComponent<SpriteRenderer>().enabled = true;
         /* Creates move range tiles and gets a list of all moveable locations
          */
@@ -280,48 +276,6 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
 
     private void OnMouseDown()
     {
-        if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
-        {
-            string selfTag = "Player";
-            string otherTag = "Enemy";
-            if (!isServer)
-            {
-                selfTag = "Enemy";
-                otherTag = "Player";
-            }
-
-            Color moveRangeColor = PartyController.party.GetPlayerColor(Card.CasterColor.Enemy);
-            Color attackRangeColor = Color.red;
-
-            int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
-
-            string[] avoidTags = new string[0];
-            if (!GetComponent<HealthController>().GetPhasedMovement())
-                avoidTags = new string[] { selfTag, "Blockade" };
-            else
-                avoidTags = new string[] { "Blockade" };
-
-            foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
-                TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, player.GetMoveRange() + bonusMoveRange, moveRangeColor, avoidTags, 1);
-
-            if (GetComponent<HealthController>().GetPhasedMovement())
-            {
-                List<Vector2> destroyLocs = new List<Vector2>();
-                foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))
-                    if (GridController.gridController.GetObjectAtLocation(loc).Count != 0)
-                        destroyLocs.Add(loc);
-                TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
-            }
-
-            List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
-
-            //Create attackable locations
-                foreach (Vector2 position in movePositions)
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, player.GetAttackRange(), attackRangeColor, new string[] { "" }, 2);
-
-            return;
-        }
-
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
         clickedTime = DateTime.Now;
@@ -330,17 +284,49 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
         healthController.ShowHealthBar();
     }
 
-    public void OnMouseUp()
+    public void CreateEnemyRangeIndicator()
     {
-        if (isServer && gameObject.tag == "Enemy" || !isServer && gameObject.tag == "Player")
+        string selfTag = "Player";
+        if (gameObject.tag == "Player")
+            selfTag = "Enemy";
+
+        string otherTag = "Enemy";
+
+        Color moveRangeColor = PartyController.party.GetPlayerColor(Card.CasterColor.Enemy);
+        Color attackRangeColor = Color.red;
+
+        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+
+        string[] avoidTags = new string[0];
+        if (!GetComponent<HealthController>().GetPhasedMovement())
+            avoidTags = new string[] { selfTag, "Blockade" };
+        else
+            avoidTags = new string[] { "Blockade" };
+
+        foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+            TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, player.GetMoveRange() + bonusMoveRange, moveRangeColor, avoidTags, 1);
+
+        if (GetComponent<HealthController>().GetPhasedMovement())
         {
-            TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
-            return;
+            List<Vector2> destroyLocs = new List<Vector2>();
+            foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))
+                if (GridController.gridController.GetObjectAtLocation(loc).Count != 0)
+                    destroyLocs.Add(loc);
+            TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 1);
         }
 
+        List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
+
+        //Create attackable locations
+        foreach (Vector2 position in movePositions)
+            TileCreator.tileCreator.CreateTiles(this.gameObject, position, Card.CastShape.Circle, player.GetAttackRange(), attackRangeColor, new string[] { "" }, 2);
+    }
+
+    public void OnMouseUp()
+    {
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
+        TileCreator.tileCreator.DestroyTiles(this.gameObject);
         GetComponent<HealthController>().HideHealthBar();
 
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
@@ -349,6 +335,9 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
             CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
+
+        if (gameObject.tag == "Enemy")
+            return;
 
         if ((Vector2)transform.position != lastGoodPosition)
             StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));

@@ -8,23 +8,37 @@ public class ResurrectEffect : Effect
     {
         HealthController player = null;
 
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
-            if (obj.GetComponent<PlayerController>().GetColorTag() == card.casterColor)
-                player = obj.GetComponent<HealthController>();
+        if (MultiplayerGameController.gameController != null)
+            player = caster.GetComponent<HealthController>();
+        else
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+                if (obj.GetComponent<PlayerController>().GetColorTag() == card.casterColor)
+                    player = obj.GetComponent<HealthController>();
 
-        player.SetAttack(InformationController.infoController.GetStartingAttack(card.casterColor));
+        player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(card.casterColor));
         player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(card.casterColor), false);
         player.SetCurrentVit(InformationController.infoController.GetMaxVit(card.casterColor));
 
         player.transform.position = target[0];
         player.GetComponent<HealthController>().charDisplay.transform.position = target[0];
         player.GetComponent<HealthController>().ReportResurrect();
-        player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
-        player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
+        if (MultiplayerGameController.gameController != null)
+        {
+            player.GetComponent<MultiplayerPlayerMoveController>().UpdateOrigin(player.transform.position);
+            player.GetComponent<MultiplayerPlayerMoveController>().ResetMoveDistance(0);
+        }
+        else
+        {
+            player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
+            player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
+        }
         GridController.gridController.RemoveDeathLocation(card.casterColor);
         GridController.gridController.ReportPosition(player.gameObject, player.transform.position);
 
-        GameController.gameController.ReportResurrectedChar(card.casterColor);
+        if (MultiplayerGameController.gameController != null)
+            MultiplayerGameController.gameController.ReportResurrectedChar(card.casterColor);
+        else
+            GameController.gameController.ReportResurrectedChar(card.casterColor);
 
         InformationController.infoController.ChangeCombatInfo(-1, 0, 0, 0);
         //HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());

@@ -348,9 +348,6 @@ public class CardController : MonoBehaviour
         }
         catch 
         {
-            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)
-                players = GameObject.FindGameObjectsWithTag("Enemy");
-
             caster = players[0];
             foreach (GameObject player in players)
             {

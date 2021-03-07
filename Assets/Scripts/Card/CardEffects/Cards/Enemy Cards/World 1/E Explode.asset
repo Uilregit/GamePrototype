@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Explode
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Explode
@@ -21,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 6
-  description: Deal <s>100% of ATK as</s> <b>piercing</b> damage to self and <b>all</b>
+  description: Deal <s>100% of ATK as</s> <b>Piercing</b> damage to self and <b>ALL</b>
     in range
   art: {fileID: 21300000, guid: c0a4899cde767c7458e2430bb9876d65, type: 3}
   castType: 5

@@ -18,6 +18,7 @@ public class PlayerMoveController : MonoBehaviour
 
     private Vector2 originalPosition;
     private Vector2 lastGoodPosition;
+    private Vector2 previousPosition;
     private Vector2 lastHoverLocation;
     [SerializeField]
     public GameObject moveShadow;
@@ -39,6 +40,7 @@ public class PlayerMoveController : MonoBehaviour
     public void Spawn()
     {
         lastGoodPosition = transform.position;
+        previousPosition = transform.position;
         lastHoverLocation = transform.position;
         originalPosition = transform.position;
         //moveShadow.GetComponent<SpriteRenderer>().sprite = GetComponent<PlayerController>().sprite.sprite;
@@ -110,6 +112,7 @@ public class PlayerMoveController : MonoBehaviour
     public void UpdateOrigin(Vector2 newOrigin)
     {
         CommitMove();
+        previousPosition = lastGoodPosition;
         lastGoodPosition = newOrigin;
     }
 
@@ -120,6 +123,7 @@ public class PlayerMoveController : MonoBehaviour
 
     public void TeleportTo(Vector2 newOrigin)
     {
+        previousPosition = lastGoodPosition;
         lastGoodPosition = newOrigin;
         originalPosition = newOrigin;
         path = new List<Vector2>();
@@ -259,6 +263,7 @@ public class PlayerMoveController : MonoBehaviour
         GridController.gridController.ReportPosition(this.gameObject, location);
         transform.position = location;
         moveShadow.transform.position = location;
+        previousPosition = lastGoodPosition;
         lastGoodPosition = transform.position;
 
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
@@ -296,8 +301,14 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         if ((Vector2)transform.position != lastGoodPosition)
-            StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
+            for (int i = 0; i < GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition) + 1; i++)
+                StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
 
         HandController.handController.ResetCardDisplays();
+    }
+
+    public Vector2 GetPreviousPosition()
+    {
+        return previousPosition;
     }
 }

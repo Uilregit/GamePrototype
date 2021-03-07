@@ -116,6 +116,7 @@ public class Card : ScriptableObject
         _________ = 899,
 
         CreateObject = 5000,
+        CreateDuplicateObject = 5050,
         Sacrifice = 5100,
         Resurrect = 9999
     }

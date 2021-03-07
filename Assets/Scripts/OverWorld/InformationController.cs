@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CombatInfo
@@ -11,6 +12,32 @@ public class CombatInfo
     public int[] atk = new int[3];
     public int[] armor = new int[3];
     public bool[] deadChars = new bool[3];
+}
+
+public class RNG
+{
+    public uint Get1dNoiseUnit(int positionX, uint seed)
+    {
+        uint BIT_Noise1 = 0x68E31DA4;
+        uint BIT_Noise2 = 0xB5297A4D;
+        uint BIT_Noise3 = 0x1B56C4E9;
+
+        uint mangledBits = (uint) positionX;
+        mangledBits *= BIT_Noise1;
+        mangledBits += seed;
+        mangledBits ^= (mangledBits >> 8);
+        mangledBits += BIT_Noise2;
+        mangledBits ^= (mangledBits << 8);
+        mangledBits *= BIT_Noise3;
+        mangledBits ^= (mangledBits >> 8);
+        return mangledBits;
+    }
+
+    public uint Get2dNoiseUnit(int positionX, int positionY, uint seed)
+    {
+        int prime = 198491317;
+        return Get1dNoiseUnit(positionX + (prime * positionY), seed);
+    }
 }
 
 public class InformationController : MonoBehaviour
@@ -60,6 +87,30 @@ public class InformationController : MonoBehaviour
             else
                 combatInfo.deadChars[i] = false;
         ResourceController.resource.LoadLives(combatInfo.lives);
+    }
+
+    public void SaveMultiplayerCombatInformation()
+    {
+        combatInfo.lives = 3;
+
+        List<Card.CasterColor> playerColors = new List<Card.CasterColor>();
+        List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
+        for (int i = 0; i < 3; i ++)
+        {
+            combatInfo.vit[i] = players[i].GetComponent<HealthController>().GetCurrentVit();
+            combatInfo.maxVit[i] = players[i].GetComponent<HealthController>().GetMaxVit();
+            combatInfo.atk[i] = players[i].GetComponent<HealthController>().GetStartingAttack();
+            combatInfo.armor[i] = players[i].GetComponent<HealthController>().GetStartingArmor();
+
+            playerColors.Add(players[i].GetComponent<MultiplayerPlayerController>().GetColorTag());
+
+            combatInfo.deadChars[i] = false;
+        }
+                
+        ResourceController.resource.LoadLives(combatInfo.lives);
+        ResourceController.resource.GetComponent<Canvas>().enabled = true;
+        ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
+        ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
     }
 
     public int GetCurrentVit(Card.CasterColor color)

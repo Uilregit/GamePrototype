@@ -8,8 +8,17 @@ public class GetStarterCardEffect : Effect
     {
         foreach (GameObject targ in target)
         {
-            Card c = LootController.loot.GetStarterAttackCard(targ.GetComponent<PlayerController>().GetColorTag()).GetCopy();
-            c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            Card c = null;
+            try
+            {
+                c = LootController.loot.GetStarterAttackCard(targ.GetComponent<PlayerController>().GetColorTag()).GetCopy();
+                c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            }
+            catch
+            {
+                c = LootController.loot.GetStarterAttackCard(targ.GetComponent<MultiplayerPlayerController>().GetColorTag()).GetCopy();
+                c.casterColor = caster.GetComponent<MultiplayerPlayerController>().GetColorTag();
+            }
             c.exhaust = true;
             c.manaCost = 0;
             c.energyCost = 0;

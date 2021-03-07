@@ -9,8 +9,18 @@ public class ManifestANYEnergyCardEffect : Effect
         List<CardController> manifestList = new List<CardController>();
         for (int i = 0; i < 3; i++) //Draw effectValue number of mana cards
         {
-            Card c = LootController.loot.GetANYEnergyCard().GetCopy();
-            c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            Card c = card;
+            while (c == card)   //Ensure you never manifest the card gotten
+                c = LootController.loot.GetANYEnergyCard().GetCopy();
+
+            try
+            {
+                c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            }
+            catch
+            {
+                c.casterColor = caster.GetComponent<MultiplayerPlayerController>().GetColorTag();
+            }
             c.exhaust = true;
 
             CardController cc = HandController.handController.gameObject.AddComponent<CardController>();

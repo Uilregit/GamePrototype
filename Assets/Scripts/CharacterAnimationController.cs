@@ -36,12 +36,16 @@ public class CharacterAnimationController : MonoBehaviour
     {
         try
         {
-            StartCoroutine(attacker.GetComponent<CardDragController>().OnPlay(targets));
+            try
+            {
+                StartCoroutine(attacker.GetComponent<CardDragController>().OnPlay(targets)); //Casted by player
+            }
+            catch
+            {
+                StartCoroutine(effectsController.TriggerEffect(attacker, targets)); //Casted by enemy
+            }
         }
-        catch
-        {
-            StartCoroutine(effectsController.TriggerEffect(attacker, targets));
-        }
+        catch { }   //Multiplayer
     }
 
     public void TriggerDeath()
@@ -51,15 +55,22 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void Destroy()
     {
-        try
+        if (MultiplayerGameController.gameController != null)
         {
-            Card.CasterColor color = transform.parent.parent.GetComponent<PlayerController>().GetColorTag();
+            Card.CasterColor color = transform.parent.parent.GetComponent<MultiplayerPlayerController>().GetColorTag();
             GridController.gridController.OnPlayerDeath(this.transform.parent.parent.gameObject, color);
         }
-        catch
-        {
-            transform.parent.GetComponent<CharacterDisplayController>().Hide();
-            //Destroy(this.transform.parent.parent.gameObject);
-        }
+        else
+            try
+            {
+                Card.CasterColor color = transform.parent.parent.GetComponent<PlayerController>().GetColorTag();
+                GridController.gridController.OnPlayerDeath(this.transform.parent.parent.gameObject, color);
+            }
+            catch
+            {
+                transform.parent.parent.gameObject.GetComponent<EnemyInformationController>().HideIntent();
+                transform.parent.parent.gameObject.SetActive(false);
+                //Destroy(this.transform.parent.parent.gameObject);
+            }
     }
 }
