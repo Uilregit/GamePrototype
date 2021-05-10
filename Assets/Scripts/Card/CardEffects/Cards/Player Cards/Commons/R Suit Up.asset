@@ -22,12 +22,12 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 0
-  description: Draw 1 energy card, target gains armor equal to 4x it's cost
+  description: Draw 1 energy card, target gains armor equal to 2x it's cost
   art: {fileID: 21300000, guid: 4afe5cafb08fd0941a56cec78bea1e42, type: 3}
   castType: 0
   castShape: 0
   targetType: 02000000020000000200000003000000
-  cardEffectName: be02000026020000910100006e000000
+  cardEffectName: be02000026020000910100000a000000
   hitEffect: 3f420f003f420f003f420f00c8000000
   conditionType: 00000000840300000000000000000000
   conditionValue: 00000000000000000000000000000000
@@ -35,8 +35,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
-  effectValue: 01000000000000009001000000000000
+  - {fileID: 0}
+  effectValue: 010000000000000038ffffff00000000
   effectDuration: 00000000000000000000000001000000
   spawnObject:
   - {fileID: 0}

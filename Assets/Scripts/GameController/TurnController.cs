@@ -46,6 +46,10 @@ public class TurnController : MonoBehaviour
     private List<Card> cardsPlayedThisTurn = new List<Card>();
     private List<int> manaSpent = new List<int>();
     private List<int> energySpent = new List<int>();
+    private List<int> cardPlayedEnergyReduction = new List<int>();
+    private List<int> cardPlayedManaReduction = new List<int>();
+    private List<int> cardPlayedEnergyCap = new List<int>();
+    private List<int> cardPlayedManaCap = new List<int>();
 
     public int multiplayerTurnPlayer = 0;
 
@@ -68,6 +72,8 @@ public class TurnController : MonoBehaviour
         currentEnergy = maxEnergy;
 
         ResetEnergyDisplay();
+        if (InformationLogger.infoLogger.debug)
+            currentMana = 10;
         UIController.ui.ResetManaBar(currentMana);
         turnID = 0;
 
@@ -84,16 +90,53 @@ public class TurnController : MonoBehaviour
         playerTurn = newTurn;
         if (!playerTurn)
         {
+            try
+            {
+                InformationLogger.infoLogger.SaveTimeInfo(InformationLogger.infoLogger.patchID,
+                                    InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.worldLevel.ToString(),
+                                    RoomController.roomController.selectedLevel.ToString(),
+                                    "CombatScene",
+                                    RoomController.roomController.roomName,
+                                    turnID.ToString() + "E");
+            }
+            catch { }
+
             //Clear the entire hand
             HandController.handController.ClearHand();
+
+            ReportTurnBasedAchievements();
+
             StartCoroutine(EnemyTurn());
         }
         else
         {
+            try
+            {
+                InformationLogger.infoLogger.SaveTimeInfo(InformationLogger.infoLogger.patchID,
+                                    InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.worldLevel.ToString(),
+                                    RoomController.roomController.selectedLevel.ToString(),
+                                    "CombatScene",
+                                    RoomController.roomController.roomName,
+                                    turnID.ToString() + "P");
+            }
+            catch { }
+
             List<GameObject> players = GameController.gameController.GetLivingPlayers();
             foreach (GameObject player in players)
                 player.GetComponent<PlayerMoveController>().ResetTurn();
         }
+    }
+
+    public void ReportTurnBasedAchievements()
+    {
+        AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
+        AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
+
+        List<GameObject> players = GameController.gameController.GetLivingPlayers();
+        foreach (GameObject player in players)
+            player.GetComponent<PlayerMoveController>().ReportTurnBasedAchievements();
     }
 
     public void ReportEnemy(EnemyController newEnemy)
@@ -134,6 +177,10 @@ public class TurnController : MonoBehaviour
             RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed, null);
 
         cardsPlayedThisTurn = new List<Card>();
+        cardPlayedEnergyReduction = new List<int>();
+        cardPlayedEnergyCap = new List<int>();
+        cardPlayedManaReduction = new List<int>();
+        cardPlayedManaCap = new List<int>();
 
         yield return StartCoroutine(TriggerTraps());    //Trigger Traps
         GridController.gridController.ResolveOverlap();
@@ -194,16 +241,21 @@ public class TurnController : MonoBehaviour
         queuedEnemies = new List<EnemyController>();
 
         cardsPlayedThisTurn = new List<Card>();
+        cardPlayedEnergyReduction = new List<int>();
+        cardPlayedEnergyCap = new List<int>();
+        cardPlayedManaReduction = new List<int>();
+        cardPlayedManaCap = new List<int>();
         manaSpent = new List<int>();
         energySpent = new List<int>();
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
 
+        foreach (EnemyController thisEnemy in enemies)
+            yield return StartCoroutine(thisEnemy.GetComponent<EnemyInformationController>().ShowAbilities());
+
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
-
-        Debug.Log("start of player turn");
 
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
@@ -255,11 +307,15 @@ public class TurnController : MonoBehaviour
         List<TrapController> removedTraps = new List<TrapController>();
         foreach (TrapController trap in GridController.gridController.traps)    //Trigger Traps
         {
-            if (trap.gameObject.active)
-                yield return StartCoroutine(trap.Trigger());
-            else
+            yield return StartCoroutine(trap.Trigger());
+        }
+        foreach (TrapController trap in GridController.gridController.traps)    //Trigger Traps
+        {
+            trap.ReduceDuration();
+            if (!trap.gameObject.active)
                 removedTraps.Add(trap);
         }
+
         foreach (TrapController t in removedTraps)
             GridController.gridController.traps.Remove(t);
     }
@@ -303,6 +359,10 @@ public class TurnController : MonoBehaviour
                 RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed, null);
 
             cardsPlayedThisTurn = new List<Card>();
+            cardPlayedEnergyReduction = new List<int>();
+            cardPlayedEnergyCap = new List<int>();
+            cardPlayedManaReduction = new List<int>();
+            cardPlayedManaCap = new List<int>();
 
             GridController.gridController.ResolveOverlap();
             //GridController.gridController.DebugGrid();
@@ -397,6 +457,10 @@ public class TurnController : MonoBehaviour
             GridController.gridController.ResolveOverlap();
 
             cardsPlayedThisTurn = new List<Card>();
+            cardPlayedEnergyReduction = new List<int>();
+            cardPlayedEnergyCap = new List<int>();
+            cardPlayedManaReduction = new List<int>();
+            cardPlayedManaCap = new List<int>();
             manaSpent = new List<int>();
             energySpent = new List<int>();
 
@@ -425,6 +489,17 @@ public class TurnController : MonoBehaviour
         UIController.ui.ResetManaBar(currentMana);
 
         HandController.handController.ResetCardPlayability(currentEnergy, currentMana);
+
+        foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+        {
+            player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnEnergyUSed, player.GetComponent<HealthController>(), energyValue);
+            player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnManaUsed, player.GetComponent<HealthController>(), manaValue);
+        }
+        foreach (EnemyController enemy in GetEnemies())
+        {
+            enemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnEnergyUSed, enemy.GetComponent<HealthController>(), energyValue);
+            enemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnManaUsed, enemy.GetComponent<HealthController>(), manaValue);
+        }
     }
 
     public void GainMana(int manaValue)
@@ -463,12 +538,33 @@ public class TurnController : MonoBehaviour
         return currentMana;
     }
 
-    public void ReportPlayedCard(Card card, int energy, int mana)
+    public void ReportPlayedCard(Card card, int energy, int mana, int energyReduction, int manaReduction, int energyCap, int manaCap)
     {
         cardsPlayedThisTurn.Add(card);
         cardsPlayed.Add(card);
         energySpent.Add(energy);
         manaSpent.Add(mana);
+        cardPlayedEnergyReduction.Add(energyReduction);
+        cardPlayedEnergyCap.Add(energyCap);
+        cardPlayedManaReduction.Add(manaReduction);
+        cardPlayedManaCap.Add(manaCap);
+    }
+
+    public List<int> GetCardPlayedEnergyReduction()
+    {
+        return cardPlayedEnergyReduction;
+    }
+    public List<int> GetCardPlayedEnergyCap()
+    {
+        return cardPlayedEnergyCap;
+    }
+    public List<int> GetCardPlayedManaReduction()
+    {
+        return cardPlayedManaReduction;
+    }
+    public List<int> GetCardPlayedManaCap()
+    {
+        return cardPlayedManaCap;
     }
 
     public List<Card> GetCardsPlayedThisTurn()

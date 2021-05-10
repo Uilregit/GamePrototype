@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CreateObjectEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         if (location.Count != 1)
         {
             Debug.Log("too many locations passed through to create object");
@@ -38,6 +41,9 @@ public class CreateObjectEffect : Effect
             else
                 obj = GameObject.Instantiate(card.spawnObject[effectIndex], loc, Quaternion.identity);
             obj.transform.parent = CanvasController.canvasController.boardCanvas.transform;
+
+            bool showAbilities = false;
+
             try
             {
                 foreach (TrapController t in GridController.gridController.traps)
@@ -76,8 +82,10 @@ public class CreateObjectEffect : Effect
         yield return new WaitForSeconds(0);
     }
 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
         throw new System.NotImplementedException();
     }
 

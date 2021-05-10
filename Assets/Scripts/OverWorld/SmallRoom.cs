@@ -36,6 +36,8 @@ public class SmallRoom : MonoBehaviour
     public void Enter()
     {
         RoomController.roomController.SetCurrentRoomSetup(setup);
+        if (setup != null)
+            RoomController.roomController.roomName = setup.roomName;
 
         RoomController.roomController.SetViableRoom(location);
         InformationLogger.infoLogger.SaveGame(false);
@@ -50,12 +52,31 @@ public class SmallRoom : MonoBehaviour
 
         Random.InitState(seed);
 
+        string roomString = "Error";
         if (type == RoomController.roomType.combat)
-            RoomController.roomController.EnterRoom("CombatScene");
+            roomString = "CombatScene";
         else if (type == RoomController.roomType.shop)
-            RoomController.roomController.EnterRoom("ShopScene");
+            roomString = "ShopScene";
         else if (type == RoomController.roomType.shrine)
-            RoomController.roomController.EnterRoom("ShrineScene");
+            roomString = "ShrineScene";
+
+        if (roomString == "CombatScene")
+            InformationLogger.infoLogger.SaveTimeInfo(InformationLogger.infoLogger.patchID,
+                                InformationLogger.infoLogger.gameID,
+                                RoomController.roomController.worldLevel.ToString(),
+                                RoomController.roomController.selectedLevel.ToString(),
+                                roomString,
+                                RoomController.roomController.roomName,
+                                "0P");
+        else
+            InformationLogger.infoLogger.SaveTimeInfo(InformationLogger.infoLogger.patchID,
+                                InformationLogger.infoLogger.gameID,
+                                RoomController.roomController.worldLevel.ToString(),
+                                RoomController.roomController.selectedLevel.ToString(),
+                                roomString,
+                                roomString);
+
+        RoomController.roomController.EnterRoom(roomString);
     }
 
     public void SetRoomType(RoomController.roomType newType)

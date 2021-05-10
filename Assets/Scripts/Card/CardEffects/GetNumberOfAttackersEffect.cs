@@ -5,13 +5,21 @@ using System.Linq;
 
 public class GetNumberOfAttackersEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
-        int count = 0;
+        if (waitTimeMultiplier == 0)
+            yield break;
+
+        int maxCount = 0;
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
-            if (enemy.desiredTarget.Any(o => o == caster))
-                count++;
-        card.SetTempEffectValue(count);
+        {
+            int count = 0;
+            foreach (GameObject targ in target)
+                if (enemy.desiredTarget.Any(o => o == targ))
+                    count++;
+            maxCount = Mathf.Max(count, maxCount);
+        }
+        card.SetTempEffectValue(maxCount);
         yield return new WaitForSeconds(0);
     }
 

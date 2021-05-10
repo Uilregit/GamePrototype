@@ -22,21 +22,21 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 0
-  description: Give the target 2 temporary armor for each enemy attacking it
+  description: Give the target 2 armor for each enemy attacking them
   art: {fileID: 21300000, guid: f6b4df14465a4ba49b7fa218cd9d2998, type: 3}
   castType: 0
   castShape: 0
   targetType: 030000000200000003000000
-  cardEffectName: 1e020000910100006e000000
+  cardEffectName: 1e020000910100000a000000
   hitEffect: 3f420f003f420f00c8000000
   conditionType: 000000000000000000000000
   conditionValue: 000000000000000000000000
   buff:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
-  effectValue: 00000000c800000000000000
-  effectDuration: 000000000000000001000000
+  - {fileID: 0}
+  effectValue: 0000000038ffffff00000000
+  effectDuration: 000000000000000000000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}

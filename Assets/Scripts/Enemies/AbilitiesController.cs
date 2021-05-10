@@ -36,6 +36,8 @@ public class AbilitiesController : MonoBehaviour
         Revive = 99
     }
 
+    public List<string> abilityNames = new List<string>();
+    public List<Sprite> abilitySprites = new List<Sprite>();
     public List<TargetType> targetTypes = new List<TargetType>();
     public List<ConditionType> conditionTypes = new List<ConditionType>();
     public List<TriggerType> triggerTypes = new List<TriggerType>();
@@ -67,13 +69,14 @@ public class AbilitiesController : MonoBehaviour
             hasAbility = false;
         startTime = Time.time;
     }
-
+    /*
     private void Update()
     {
         float t = Time.time - startTime;
         if (hasAbility)
             sprite.color = Color.Lerp(Color.white, new Color(0.6f, 0.6f, 0.6f), (Mathf.Sin(3 * t) + 1) / 2.0f);
     }
+    */
 
     public void TriggerAbilities(TriggerType type)
     {
@@ -94,10 +97,10 @@ public class AbilitiesController : MonoBehaviour
                             obj.GetComponent<HealthController>().TakePiercingDamage(-abilityValue[i], GetComponent<HealthController>());
                             break;
                         case AbilityType.ArmorChange:
-                            obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i], null);
+                            obj.GetComponent<HealthController>().SetBonusArmor(abilityValue[i], null, true);
                             break;
                         case AbilityType.AttackChange:
-                            obj.GetComponent<HealthController>().SetBonusAttack(abilityValue[i]);
+                            obj.GetComponent<HealthController>().SetBonusAttack(abilityValue[i], true);
                             break;
                         case AbilityType.Break:
                             obj.GetComponent<HealthController>().TakeArmorDamage(9999999, null);
@@ -168,13 +171,13 @@ public class AbilitiesController : MonoBehaviour
             switch (triggerTypes[i])
             {
                 case TriggerType.OnDeath:
-                    s += "Deathrattle: ";
+                    s += "<b>Deathrattle:</b> ";
                     break;
                 case TriggerType.OnSacrifice:
-                    s += "Sacrifice: ";
+                    s += "<b>Sacrifice:</b> ";
                     break;
                 case TriggerType.AtEndOfTurn:
-                    s += "End of turn: ";
+                    s += "<b>End of turn:</b> ";
                     break;
             }
 
@@ -229,6 +232,32 @@ public class AbilitiesController : MonoBehaviour
             }
 
             output.Add(s);
+        }
+        return output;
+    }
+
+    public List<string> GetAbilityNames()
+    {
+        return abilityNames;
+    }
+
+    public List<Sprite> GetAbilitySprites()
+    {
+        return abilitySprites;
+    }
+
+    public List<Card> GetAbilityCards()
+    {
+        List<Card> output = new List<Card>();
+        List<string> abilityStrings = GetAbilityStrings();
+        for (int i = 0; i < abilityTypes.Count; i++)
+        {
+            Card passive = new Card();
+            passive.casterColor = Card.CasterColor.Passive;
+            passive.name = abilityNames[i];
+            passive.art = abilitySprites[i];
+            passive.description = "<b>Passive</b>|" + abilityStrings[i];
+            output.Add(passive);
         }
         return output;
     }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GetEnergySpentTurn : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         card.SetTempEffectValue(TurnController.turnController.GetEnergySpent());
         yield return new WaitForSeconds(0);
     }

@@ -63,9 +63,9 @@
     <Compile Include="Assets\Scripts\ShopDoneButtonController.cs" />
     <Compile Include="Assets\Scripts\GameController\BoardDebugButton.cs" />
     <Compile Include="Assets\Scripts\GameController\CombatController.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\ChangeHandSizeEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetBonusArmorEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GiveBuffsEffect.cs" />
-    <Compile Include="Assets\Scripts\Card\CardEffects\ChangeAttackEffect.cs" />
     <Compile Include="Assets\Scripts\Pathfinder\PathFindController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\BuffValueMultiply.cs" />
     <Compile Include="Assets\Scripts\UI\EXPBarController.cs" />
@@ -79,7 +79,6 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\PiercingDamageEffect.cs" />
     <Compile Include="Assets\Scripts\GridController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CardCostReductionDrawn.cs" />
-    <Compile Include="Assets\Scripts\Card\CardEffects\AttackEffect.cs" />
     <Compile Include="Assets\Scripts\OverWorld\InformationController.cs" />
     <Compile Include="Assets\Scripts\Card\Buffs\Buff.cs" />
     <Compile Include="Assets\Scripts\Card\CardDragController.cs" />
@@ -87,10 +86,12 @@
     <Compile Include="Assets\Scripts\Enemies\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Tiles\TileCreator.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuSceneController.cs" />
+    <Compile Include="Assets\Scripts\StoryMode\StoryRoomSetup.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\TeleportEffect.cs" />
     <Compile Include="Assets\Scripts\TavernController.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MultiplayerPlayerController.cs" />
     <Compile Include="Assets\Scripts\TavernPartyController.cs" />
+    <Compile Include="Assets\Scripts\StoryMode\StoryRoomController.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyInformationController.cs" />
     <Compile Include="Assets\Scripts\Card\DeckCustomizeCardController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\VitDamageEffect.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Scripts\CharacterInformationController.cs" />
     <Compile Include="Assets\Scripts\TavernIconsController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\SwapEffect.cs" />
+    <Compile Include="Assets\Scripts\StoryMode\StoryModeController.cs" />
     <Compile Include="Assets\Scripts\PartyController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CreateObjectEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -141,6 +143,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageDivided.cs" />
     <Compile Include="Assets\Scripts\Card\Objects\ExplosiveTrap.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageEffect.cs" />
+    <Compile Include="Assets\Scripts\StoryMode\StoryModeSceneController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawManaCardEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\EnergyGainEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerMouseController.cs" />
@@ -185,7 +188,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\EffectFactory.cs" />
     <Compile Include="Assets\Scripts\EndTurnButtonController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\SelfForcedMovementEffect.cs" />
-    <Compile Include="Assets\Scripts\UI\NewGameButton.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\CreateDuplicateObjectsEffect.cs" />
     <Compile Include="Assets\Scripts\DragController.cs" />
     <Compile Include="Assets\Scripts\GameController\TurnController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CopyBuffsEffect.cs" />
@@ -207,7 +210,6 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawEnergyCardEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CleanseEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetNumberOfBuffsEffect.cs" />
-    <Compile Include="Assets\Scripts\Card\CardEffects\TauntEffect.cs" />
     <Compile Include="Assets\Scripts\Pathfinder\AStarNode.cs" />
     <Compile Include="Assets\Scripts\Rooms\World Setups\WorldSetup.cs" />
     <Compile Include="Assets\Scripts\ShrineController.cs" />
@@ -226,7 +228,8 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\Card\CardEffects\CreateDuplicateObjectsEffect.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryModeEndItemController.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryModeEndSceenController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

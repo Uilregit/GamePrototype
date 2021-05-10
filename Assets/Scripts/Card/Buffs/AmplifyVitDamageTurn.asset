@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: AmplifyVitDamageTurn
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.6194389, b: 1, a: 1}
-  description: 'Amplify Damage: Take {v} times more damage for {d} turns'
+  description: 'Amplify Damage: Take {v} times more health damage for {d} turns'
   triggerType: 0
+  triggerModificationProtection: 0
   durationType: 1
   onApplyEffects: 10
   onTriggerTarget: 0
@@ -26,3 +27,5 @@ MonoBehaviour:
   tempValue: 0
   duration: 0
   value: 0
+  obj: {fileID: 0}
+  card: {fileID: 0}

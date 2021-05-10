@@ -72,11 +72,17 @@ public class Buff : ScriptableObject
         OnHealingRecieved = 101,
         OnDamageDealt = 110,
 
+        OnDamageBlocked = 115,
+
         OnShieldDamageRecieved = 120,
 
         OnMove = 200,
 
         OnCardPlayed = 300,
+        OnManaUsed = 350,
+        OnEnergyUSed = 360,
+
+        OnCardDrawn = 400,
 
         Dummy = 99999
     }
@@ -90,6 +96,7 @@ public class Buff : ScriptableObject
         VitDamageMultiplier = 10,
         HealingMultiplier = 11,
         ArmorDamageMultiplier = 12,
+        AllDamageMultiplier = 13,
         //AdditionalVitDamage,
         //AdditionalPiercingDamage,
         //AdditionalHealing,

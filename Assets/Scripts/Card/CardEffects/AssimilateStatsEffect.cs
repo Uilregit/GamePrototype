@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class AssimilateStatsEffect : Effect
 { 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         foreach (GameObject targ in target)
         {
             HealthController targetHealthController = targ.GetComponent<HealthController>();

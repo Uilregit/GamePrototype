@@ -406,6 +406,7 @@ public class EnemyController : MonoBehaviour
             else if (target[0].x < transform.position.x && isFacingRight)
                 FlipSpriteX();
 
+            //enemyInformation.ShowUsedCard(attackSequenceControllers[attackCardIndex], transform.position);
             enemyInformation.ShowUsedCard(attackSequenceControllers[attackCardIndex], target[0]);
             enemyInformation.ShowTargetLine(target[0]);
             attackSequence[attackCardIndex].SetCenter(target[0]);
@@ -471,11 +472,11 @@ public class EnemyController : MonoBehaviour
             pathThroughTags = new string[] { "Player", "Enemy" };
 
         Vector2 finalLoc = Vector2.zero;
-        if (maxOverlap > 0)
+        if (maxOverlap > 0)                         //Prioritize overlaping targets over knocking to traps
             finalLoc = maxLoc;
-        else if (knockToTrapLocs.Count != 0)
+        else if (knockToTrapLocs.Count != 0)        //If can't overlap, try knocking into traps
             finalLoc = knockToTrapLocs[Random.Range(0, knockToTrapLocs.Count - 1)];
-        else
+        else                                        //Last option knock to a random location
             finalLoc = viablePositions[Random.Range(0, viablePositions.Count - 1)];
         return PathFindController.pathFinder.PathFind(transform.position, finalLoc, pathThroughTags, occupiedSpace, size);
     }
@@ -484,6 +485,7 @@ public class EnemyController : MonoBehaviour
     private List<Vector2> FindBestGravityLocation(GameObject target, int radius)
     {
         TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, Card.CastShape.Circle, radius, Color.clear, 2);
+        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, Card.CastShape.Circle, radius, Color.black, 1);
         List<Vector2> viableLocs = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
@@ -492,26 +494,13 @@ public class EnemyController : MonoBehaviour
             if (viableLocs.Contains(t.transform.position))
                 nearbyTraps.Add(t);
 
-        Vector2 finalLocation;
+        List<GameObject> nearbyPlayers = GridController.gridController.GetObjectsInAoE(target.transform.position, radius + 1, new string[] { target.tag }); //+1 to radius to include players just outside of range
 
-        if (nearbyTraps.Count > 0)
-        {
-            finalLocation = nearbyTraps[0].transform.position;
-            int maxTrappablePlayers = 1;
-            foreach (TrapController t in nearbyTraps)
-            {
-                int playerInTrapAoE = GridController.gridController.GetObjectsInAoE(t.transform.position, radius, new string[] { target.tag }).Count;
-                if (playerInTrapAoE > maxTrappablePlayers)
-                {
-                    maxTrappablePlayers = playerInTrapAoE;
-                    finalLocation = t.transform.position;
-                }
-            }
-        }
-        else
+        Vector2 finalLocation = target.transform.position;      //Default to not moving the player
+
+        if (nearbyPlayers.Count > 1)        //Prioritize knocking players into eachother
         {
             List<Vector2> viablePositions = new List<Vector2>();
-            List<GameObject> nearbyPlayers = GridController.gridController.GetObjectsInAoE(target.transform.position, radius + 1, new string[] { target.tag }); //+1 to radius to include players just outside of range
             foreach (GameObject obj in nearbyPlayers)
             {
                 TileCreator.tileCreator.CreateTiles(this.gameObject, obj.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
@@ -529,12 +518,26 @@ public class EnemyController : MonoBehaviour
             else
                 finalLocation = viablePositions.GroupBy(x => x).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
         }
+        else if (nearbyTraps.Count > 0)                         //Else prioritize knocking players into traps
+        {
+            finalLocation = nearbyTraps[0].transform.position;
+            int maxTrappablePlayers = 0;
+            foreach (TrapController t in nearbyTraps)
+            {
+                int playerInTrapAoE = GridController.gridController.GetObjectsInAoE(t.transform.position, radius, new string[] { target.tag }).Count;
+                if (playerInTrapAoE > maxTrappablePlayers)
+                {
+                    maxTrappablePlayers = playerInTrapAoE;
+                    finalLocation = t.transform.position;
+                }
+            }
+        }
 
         List<Vector2> output = new List<Vector2>();
         output.Add(finalLocation);
         List<Vector2> surroundingLocs = GridController.gridController.GetLocationsInAoE(finalLocation, radius, GetTargetTags(attackSequence[attackCardIndex].castType, attackSequence[attackCardIndex].targetType[0]));
         surroundingLocs.Remove(finalLocation);
-        output.AddRange(surroundingLocs);
+        output.AddRange(surroundingLocs);       //Ensure final location is at position index 0 for CardEffectController
         return output;
     }
 
@@ -762,14 +765,11 @@ public class EnemyController : MonoBehaviour
             case Card.CastType.Enemy:
                 tags = new string[] { "Enemy" };
                 break;
-            case Card.CastType.AoE:
+            default:
                 if (firstTargetType == Card.TargetType.Enemy)
                     tags = new string[] { "Enemy" };
                 else
                     tags = new string[] { "Player" };
-                break;
-            default:
-                tags = new string[] { "Player" };
                 break;
         }
 
@@ -781,7 +781,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -806,7 +806,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -831,7 +831,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -856,7 +856,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -881,7 +881,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -907,7 +907,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -932,7 +932,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -957,7 +957,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
@@ -982,7 +982,7 @@ public class EnemyController : MonoBehaviour
         GameObject output = null;
 
         GameObject[] targets = GameController.gameController.GetLivingPlayers().ToArray();
-        if (type == Card.CastType.Enemy)
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
         {
             targets = new GameObject[TurnController.turnController.GetEnemies().Count];
             for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)

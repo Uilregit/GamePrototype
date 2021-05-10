@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
         healthController.SetMaxVit(maxVit);
         healthController.SetStartingArmor(startingArmor);
         healthController.SetStartingAttack(attack);
-        healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
+        if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
+            healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
 
         moveController = GetComponent<PlayerMoveController>();
         moveController.SetPlayerController(this);

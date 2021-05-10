@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ForcedMovementEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         List<GameObject> deepCopy = new List<GameObject>();
         foreach (GameObject obj in target) //Prevent list modify error

@@ -12,6 +12,7 @@ public class HandController : MonoBehaviour
 
     public int maxHandSize;
     public int startingHandSize;
+    private int bonusHandSize;
     public bool allowHold = true;
     public int maxReplaceCount;
     public int playerNumber;
@@ -350,6 +351,7 @@ public class HandController : MonoBehaviour
             {
                 InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                     InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.worldLevel.ToString(),
                                     RoomController.roomController.selectedLevel.ToString(),
                                     RoomController.roomController.roomName,
                                     TurnController.turnController.turnID.ToString(),
@@ -371,6 +373,8 @@ public class HandController : MonoBehaviour
             }
             catch { }
         }
+
+        AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.ReplaceCards);
     }
 
     //Removes the card from the hand and commit movement for the caster of the card
@@ -384,14 +388,14 @@ public class HandController : MonoBehaviour
         //Disables movement of all players with the removed card casterColor
         try //Singleplayer
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray();
             foreach (GameObject player in players)
                 if (player.GetComponent<PlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
                     player.GetComponent<PlayerMoveController>().CommitMove();
         }
         catch //Multiplayer
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray();
             foreach (GameObject player in players)
                 if (player.GetComponent<MultiplayerPlayerController>().GetColorTag() == removedCard.GetCard().casterColor)
                     player.GetComponent<MultiplayerPlayerMoveController>().CommitMove();
@@ -401,7 +405,7 @@ public class HandController : MonoBehaviour
     //Draw cards untill hand is full
     public IEnumerator DrawFullHand()
     {
-        for (int i = hand.Count; i < startingHandSize + TurnController.turnController.GetCardDrawChange(); i++)
+        for (int i = hand.Count; i < startingHandSize + bonusHandSize + TurnController.turnController.GetCardDrawChange(); i++)
             DrawAnyCard();
 
         foreach (CardController card in hand)
@@ -428,6 +432,7 @@ public class HandController : MonoBehaviour
                 {
                     InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                         InformationLogger.infoLogger.gameID,
+                                        RoomController.roomController.worldLevel.ToString(),
                                         RoomController.roomController.selectedLevel.ToString(),
                                         RoomController.roomController.roomName,
                                         TurnController.turnController.turnID.ToString(),
@@ -534,5 +539,13 @@ public class HandController : MonoBehaviour
         }
         if (currentlyHeldCard != null)
             currentlyHeldCard.GetComponent<CardDisplay>().SetCard(currentlyHeldCard);
+    }
+
+    public void SetBonusHandSize(int value, bool relative)
+    {
+        if (relative)
+            bonusHandSize += value;
+        else
+            bonusHandSize = value;
     }
 }

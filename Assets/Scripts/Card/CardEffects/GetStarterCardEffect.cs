@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class GetStarterCardEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+        {
+            caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardDrawn, caster.GetComponent<HealthController>(), card.effectValue[effectIndex]);
+            yield break;
+        }
+
         foreach (GameObject targ in target)
         {
             Card c = null;

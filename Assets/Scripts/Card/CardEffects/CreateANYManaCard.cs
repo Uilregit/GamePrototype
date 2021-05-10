@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class CreateANYManaCard : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+        {
+            //caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardDrawn, caster.GetComponent<HealthController>(), card.effectValue[effectIndex]);
+            yield break;
+        }
+
         for (int i = 0; i < card.effectValue[effectIndex]; i++) //Draw effectValue number of mana cards
         {
             Card c = LootController.loot.GetANYManaCard().GetCopy();

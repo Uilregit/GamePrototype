@@ -18,27 +18,24 @@ MonoBehaviour:
   rarity: 0
   name: Blood Rite
   energyCost: 0
-  manaCost: 2
+  manaCost: 3
   range: 0
   radius: 0
   casterColor: 1
-  description: You take 3 damage, target heals 2 more whenever they're healed for
-    3 turns
+  description: Restore <s>50% of ATK as</s> health to the target three times
   art: {fileID: 21300000, guid: b54d9a58b2c7d9f4788c738c69f7bb68, type: 3}
   castType: 0
   castShape: 0
-  targetType: 0200000003000000
-  cardEffectName: 140000006e000000
-  hitEffect: 00000000c8000000
-  conditionType: 0000000000000000
-  conditionValue: 0000000000000000
+  targetType: 03000000
+  cardEffectName: 14000000
+  hitEffect: 90010000
+  conditionType: 00000000
+  conditionValue: 00000000
   buff:
   - {fileID: 0}
-  - {fileID: 11400000, guid: 6e2bf7fe941309a47979d6296537b704, type: 2}
-  effectValue: 0300000002000000
-  effectDuration: 0000000003000000
+  effectValue: ceffffff
+  effectDuration: 03000000
   spawnObject:
-  - {fileID: 0}
   - {fileID: 0}
   cards:
   - {fileID: 0}

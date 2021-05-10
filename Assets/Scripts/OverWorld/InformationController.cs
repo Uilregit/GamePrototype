@@ -66,7 +66,7 @@ public class InformationController : MonoBehaviour
         firstRoom = false;
 
         List<Card.CasterColor> playerColors = new List<Card.CasterColor>();
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray();
         foreach (GameObject player in players)
         {
             int index = PartyController.party.GetPartyIndex(player.GetComponent<PlayerController>().GetColorTag());
@@ -165,7 +165,7 @@ public class InformationController : MonoBehaviour
     /*
     public void LoadCombatInformation()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
         {
             if (player.GetComponent<PlayerController>().GetColorTag() == Card.CasterColor.Red)

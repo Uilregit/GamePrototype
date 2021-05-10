@@ -11,6 +11,7 @@ public class HealthBarController : MonoBehaviour
     public Color healingColor;
     //public Color healingBonusHealthColor;
     public Color brokenColor;
+    //public Color damageOverTimeColor;
     public Color armorDefaultColor;
     public Color armorDownColor;
     public Color armorUpColor;
@@ -23,6 +24,8 @@ public class HealthBarController : MonoBehaviour
     Image bonusHealthBar;
     [SerializeField]
     Image damageBarImage;
+    [SerializeField]
+    Image damageOverTimeBarImage;
     //[SerializeField]
     //Image bonusHealthDamageBar;
     [Header("Damage FXs")]
@@ -75,6 +78,7 @@ public class HealthBarController : MonoBehaviour
         backImage = GetComponent<Image>();
         backImage.enabled = false;
         damageBarImage.enabled = false;
+        damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
 
@@ -86,10 +90,12 @@ public class HealthBarController : MonoBehaviour
         //bonusHealthDamageBar.enabled = false;
     }
 
-    public void SetBar(int initialHealth, int damage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken, bool permanent = false)
+    public void SetBar(int initialHealth, int damage, int endOfTurnDamage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken, bool permanent = false, bool simulated = false)
     {
         if (healthBarHide != null)
             StopCoroutine(healthBarHide);
+
+        damage = Mathf.Min(damage, initialHealth);          //Always ensure that damage bar doesn't become bigger than the remaining health bar
 
         int maxSize = Mathf.Max(new int[] { maxHealth, initialHealth - damage, initialHealth }); //The max between either damage, overheal, or the initial overhealed amount
         int bonusHealth = Mathf.Max(0, initialHealth - damage - maxHealth);
@@ -97,6 +103,7 @@ public class HealthBarController : MonoBehaviour
         float HPPercentage = Mathf.Clamp((float)initialHealth - damage, 0.0f, maxHealth) / (float)maxSize;
         float bonusHealthPercentage = (float)bonusHealth / (float)maxSize;
         float damagePercentage = Mathf.Clamp((float)damage, initialHealth - maxSize, initialHealth) / (float)maxSize;
+        float damageOverTimePercentage = Mathf.Clamp((float)endOfTurnDamage, initialHealth - maxSize, initialHealth) / (float)maxSize;
         //float bonusHealthDamagePercentage = Mathf.Min(damage, bonusHealth) / (float) maxSize;
 
         if (initialHealth <= 0)
@@ -107,32 +114,42 @@ public class HealthBarController : MonoBehaviour
 
         barImage.rectTransform.localScale = new Vector2(HPPercentage, 1);
 
-        bonusHealthBar.rectTransform.localScale = new Vector2(bonusHealthPercentage, 1);
-        bonusHealthBar.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage) * 0.86f, 0, 0) * size;
-
-        damageBarImage.rectTransform.localScale = new Vector2(damagePercentage, 1);
-        damageBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
-
-        //bonusHealthDamageBar.rectTransform.localScale = new Vector2(bonusHealthDamagePercentage, 1);
-        //bonusHealthDamageBar.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
-
-        //backImage.color = Color.black;
-        if (broken)
-            damageBarImage.color = brokenColor;
-        else
+        if (initialHealth > 0)  //If overkill, don't show any other bar
         {
-            damageBarImage.color = damageColor;
-            //bonusHealthDamageBar.color = damageBonusHealthColor;
-        }
-        if (damage < 0)
-        {
-            damageBarImage.color = healingColor;
-            //bonusHealthDamageBar.color = healingBonusHealthColor;
-        }
+            bonusHealthBar.rectTransform.localScale = new Vector2(bonusHealthPercentage, 1);
+            bonusHealthBar.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage) * 0.86f, 0, 0) * size;
 
+            damageBarImage.rectTransform.localScale = new Vector2(damagePercentage, 1);
+            damageBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+
+            damageOverTimeBarImage.rectTransform.localScale = new Vector3(damageOverTimePercentage, 1);
+            damageOverTimeBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+            //bonusHealthDamageBar.rectTransform.localScale = new Vector2(bonusHealthDamagePercentage, 1);
+            //bonusHealthDamageBar.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+
+            //backImage.color = Color.black;
+            if (broken)
+                damageBarImage.color = brokenColor;
+            else
+            {
+                damageBarImage.color = damageColor;
+                //bonusHealthDamageBar.color = damageBonusHealthColor;
+            }
+            if (damage < 0)
+            {
+                damageBarImage.color = healingColor;
+                //bonusHealthDamageBar.color = healingBonusHealthColor;
+            }
+            if (endOfTurnDamage > 0)
+                damageOverTimeBarImage.color = damageColor * new Color(0.5f, 0.5f, 0.5f);
+            else
+                damageOverTimeBarImage.color = healingColor * new Color(0.5f, 0.5f, 0.5f);
+
+            damageBarImage.enabled = true;
+            damageOverTimeBarImage.enabled = true;
+            bonusHealthBar.enabled = true;
+        }
         backImage.enabled = true;
-        damageBarImage.enabled = true;
-        bonusHealthBar.enabled = true;
         barImage.enabled = true;
         //bonusHealthDamageBar.enabled = true;
         if (!permanent)
@@ -147,6 +164,7 @@ public class HealthBarController : MonoBehaviour
     {
         backImage.enabled = false;
         damageBarImage.enabled = false;
+        damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
         //bonusHealthDamageBar.enabled = false;
@@ -157,6 +175,7 @@ public class HealthBarController : MonoBehaviour
         yield return new WaitForSeconds(TimeController.time.barShownDuration);
         backImage.enabled = false;
         damageBarImage.enabled = false;
+        damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
         //bonusHealthDamageBar.enabled = false;

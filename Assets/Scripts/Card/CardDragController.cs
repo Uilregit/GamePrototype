@@ -21,6 +21,7 @@ public class CardDragController : DragController
     private bool isHolding;
     private bool isTriggeringEffect = false;
     private Vector2 castLocation;
+    private Vector2 lastGoodPosition;
     private Vector3 originalLocation;
     private Vector3 previousMousePosition;
 
@@ -175,20 +176,36 @@ public class CardDragController : DragController
                 castTileSize = card.radius;
             Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
 
-            if (GridController.gridController.GetRoundedVector(mousePosition, 1) != castLocation)
+            if (GridController.gridController.GetRoundedVector(mousePosition, 1) != lastGoodPosition)
             {
+                lastGoodPosition = GridController.gridController.GetRoundedVector(mousePosition, 1);
+
                 if (TileCreator.tileCreator.GetSelectableLocations().Contains(GridController.gridController.GetRoundedVector(mousePosition, 1)))
                     CameraController.camera.ScreenShake(0.03f, 0.05f);
 
                 TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-                if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(mousePosition, 1), card.castShape, castTileSize, new Color(0.6f, 0, 0), 1);
 
+                castLocation = originalLocation;
 
                 if (cardController.CheckIfValidCastLocation(GridController.gridController.GetRoundedVector(mousePosition, 1)))
+                {
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(mousePosition, 1), Card.CastShape.Circle, castTileSize, new Color(0.6f, 0, 0), 1);
                     castLocation = GridController.gridController.GetRoundedVector(mousePosition, 1);
+
+                    StopAllCoroutines();
+                    cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
+                    card.SetCenter(castLocation);
+                    StartCoroutine(ShowSimulatedHealthBar(TileCreator.tileCreator.GetTilePositions(1)));
+
+                    //StartCoroutine(ShowSimulatedHealthBar(new List<Vector2>() { castLocation }));
+                }
                 else
-                    castLocation = originalLocation;
+                {
+                    foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+                        obj.GetComponent<HealthController>().HideHealthBar();
+                    foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+                        obj.GetComponent<HealthController>().HideHealthBar();
+                }
             }
 
             transform.position = originalLocation + new Vector3(0, 0.5f, -1f);
@@ -366,10 +383,54 @@ public class CardDragController : DragController
 
     private void Trigger()
     {
+        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+            obj.GetComponent<HealthController>().HideHealthBar();
+        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+            obj.GetComponent<HealthController>().HideHealthBar();
+
         isTriggeringEffect = true;
 
+        List<Vector2> targetedLocs = GetTargetLocations();
+        if (targetedLocs.Count == 0)
+            return;
+
+        line.enabled = false;
+
+        if (cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget() != null)
+            if (!targetedLocs.Contains(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position))
+                targetedLocs.Add(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position);        //Alwasy ensure that the taunted target is included in cast
+
+        cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.TriggerAttack(this.gameObject, targetedLocs, null);
+
+        //StartCoroutine(OnPlay(targetedLocs));
+    }
+
+    private IEnumerator ShowSimulatedHealthBar(List<Vector2> locations)
+    {
+        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+            obj.GetComponent<HealthController>().HideHealthBar();
+        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+            obj.GetComponent<HealthController>().HideHealthBar();
+
+        foreach (Vector2 loc in locations)           //Show damage that would have been done
+        {
+            foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" }))
+            {
+                HealthController hlthController = obj.GetComponent<HealthController>();
+                HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+
+                yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true));
+
+                hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
+            }
+        }
+    }
+
+    public List<Vector2> GetTargetLocations()
+    {
         card = cardController.GetCard();
         cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
+        card.SetCenter(castLocation);
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "Player", "Enemy" });
         if (!card.canCastOnSelf)
             target.Remove(cardController.GetCaster());
@@ -387,7 +448,7 @@ public class CardDragController : DragController
             {
                 UnCast();
                 transform.position = originalLocation;
-                return;
+                return new List<Vector2>();
             }
         }
         else if (target.Count != 0)
@@ -405,7 +466,6 @@ public class CardDragController : DragController
             }
             else if (card.castType == Card.CastType.TargetedAoE)
             {
-                card.SetCenter(castLocation);
                 List<Vector2> locations = new List<Vector2>();
                 for (int i = 0; i < target.Count; i++)
                     foreach (Vector2 loc in target[i].GetComponent<HealthController>().GetOccupiedSpaces())
@@ -417,7 +477,7 @@ public class CardDragController : DragController
             {
                 UnCast();
                 transform.position = originalLocation;
-                return;
+                return new List<Vector2>();
             }
         }
         else if (card.castType == Card.CastType.None)
@@ -431,7 +491,7 @@ public class CardDragController : DragController
             {
                 UnCast();
                 transform.position = originalLocation;
-                return;
+                return new List<Vector2>();
             }
         }
         else if (card.castType == Card.CastType.EmptyTargetedAoE)
@@ -447,17 +507,10 @@ public class CardDragController : DragController
         {
             UnCast();
             transform.position = originalLocation;
-            return;
+            return new List<Vector2>();
         }
-        line.enabled = false;
 
-        if (cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget() != null)
-            if (!targetedLocs.Contains(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position))
-                targetedLocs.Add(cardController.GetCaster().GetComponent<HealthController>().GetTauntedTarget().transform.position);        //Alwasy ensure that the taunted target is included in cast
-
-        cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.TriggerAttack(this.gameObject, targetedLocs, null);
-
-        //StartCoroutine(OnPlay(targetedLocs));
+        return targetedLocs;
     }
 
     private IEnumerator OnPlay(Vector2 location)
@@ -488,7 +541,7 @@ public class CardDragController : DragController
 
         yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), locations));
 
-        TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost());
+        TurnController.turnController.ReportPlayedCard(card, cardController.GetNetEnergyCost(), cardController.GetNetManaCost(), cardController.GetEnergyCostDiscount(), cardController.GetManaCostDiscount(), cardController.GetEnergyCostCap(), cardController.GetManaCostCap());
         GameObject.FindGameObjectWithTag("Hand").GetComponent<HandController>().RemoveCard(cardController);
 
         try //Singleplayer

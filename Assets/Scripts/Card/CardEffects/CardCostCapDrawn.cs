@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CardCostCapDrawn : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         List<CardController> hand = HandController.handController.GetHand();
         for (int i = hand.Count - 1; i > hand.Count - 1 - card.effectDuration[effectIndex]; i--)
         {

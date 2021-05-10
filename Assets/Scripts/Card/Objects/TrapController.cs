@@ -37,13 +37,21 @@ public class TrapController : MonoBehaviour
             trappedObject.GetComponent<BuffController>().AddBuff(GameController.gameController.stunBuff);
         }
         */
-        EffectFactory factory = new EffectFactory();
-        Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);
-        yield return StartCoroutine(effect.Process(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
 
         if (GridController.gridController.GetObjectAtLocation(transform.position).Count > 0)        //Pause if characters are trapped for visual clarity
-            yield return new WaitForSeconds(0.5f * TimeController.time.timerMultiplier);
+        {
+            EffectFactory factory = new EffectFactory();
+            Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);
 
+            yield return StartCoroutine(effect.Process(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
+            yield return new WaitForSeconds(0.5f * TimeController.time.timerMultiplier);
+        }
+
+        Debug.Log("finished trap trigger");
+    }
+
+    public void ReduceDuration()
+    {
         duration -= 1;
         if (duration <= 0)
         {
@@ -51,8 +59,6 @@ public class TrapController : MonoBehaviour
         }
         else if (duration < 3)
             GetComponent<SpriteRenderer>().color = trapColor * new Color(0.5f, 0.5f, 0.5f, 1);
-
-        Debug.Log("finished trap trigger");
     }
 
     /*

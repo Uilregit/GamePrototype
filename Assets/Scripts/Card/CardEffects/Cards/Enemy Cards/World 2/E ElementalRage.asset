@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: E ElementalRage
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Elemental Rage
-  energyCost: 3
+  energyCost: 2
   manaCost: 0
   range: 1
   radius: 0

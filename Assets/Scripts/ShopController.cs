@@ -89,6 +89,7 @@ public class ShopController : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveShopCardInfo(InformationLogger.infoLogger.patchID,
                     InformationLogger.infoLogger.gameID,
+                    RoomController.roomController.worldLevel.ToString(),
                     RoomController.roomController.selectedLevel.ToString(),
                     RoomController.roomController.roomName,
                     chosenCards[i].casterColor.ToString(),
@@ -102,6 +103,7 @@ public class ShopController : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveShopCardInfo(InformationLogger.infoLogger.patchID,
                     InformationLogger.infoLogger.gameID,
+                    RoomController.roomController.worldLevel.ToString(),
                     RoomController.roomController.selectedLevel.ToString(),
                     RoomController.roomController.roomName,
                     allShopCards[i].casterColor.ToString(),

@@ -19,8 +19,8 @@ MonoBehaviour:
   name: Fire Trap
   energyCost: 0
   manaCost: 2
-  range: 2
-  radius: 0
+  range: 0
+  radius: 1
   casterColor: 6
   description: Create a <b>Fire Trap</b> at the target's location
   art: {fileID: 21300000, guid: dca4745e6e12c214288e87dc223619af, type: 3}
@@ -34,8 +34,8 @@ MonoBehaviour:
   buff:
   - {fileID: 0}
   - {fileID: 0}
-  effectValue: 0100000006000000
-  effectDuration: 0200000000000000
+  effectValue: 0500000003000000
+  effectDuration: 0200000002000000
   spawnObject:
   - {fileID: 8630214521550605354, guid: 935da8d03c4227d4fab2241811866500, type: 3}
   cards:

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PiercingDamageAll : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         GameObject[] targets = new GameObject[TurnController.turnController.GetEnemies().Count];
         for (int i = 0; i < TurnController.turnController.GetEnemies().Count; i++)
             targets[i] = TurnController.turnController.GetEnemies()[i].gameObject;
         foreach (GameObject t in targets)
-            new EffectFactory().GetEffect(Card.EffectType.PiercingDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex);
+            new EffectFactory().GetEffect(Card.EffectType.PiercingDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex, waitTimeMultiplier);
         yield return new WaitForSeconds(0);
     }
 

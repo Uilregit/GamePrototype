@@ -34,8 +34,8 @@ MonoBehaviour:
   buff:
   - {fileID: 0}
   - {fileID: 0}
-  effectValue: 0400000005000000
-  effectDuration: 0200000000000000
+  effectValue: 0400000003000000
+  effectDuration: 0200000002000000
   spawnObject:
   - {fileID: 8630214521550605354, guid: 935da8d03c4227d4fab2241811866500, type: 3}
   - {fileID: 0}

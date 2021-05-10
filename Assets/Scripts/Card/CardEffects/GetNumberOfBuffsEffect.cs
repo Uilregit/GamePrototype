@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetNumberOfBuffsEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int highestNumberOfBuffs = -99999;
         foreach (GameObject targ in target)

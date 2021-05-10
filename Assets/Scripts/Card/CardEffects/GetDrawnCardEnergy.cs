@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GetDrawnCardEnergy : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         List<CardController> hand = HandController.handController.GetHand();
         card.SetTempEffectValue(hand[hand.Count - 1].GetNetEnergyCost());
         yield return new WaitForSeconds(0);

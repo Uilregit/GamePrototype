@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: E Enlightenment
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Enlightenment
   energyCost: 0
-  manaCost: 6
+  manaCost: 3
   range: 1
   radius: 2
   casterColor: 6

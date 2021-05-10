@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   name: Meteor
   energyCost: 0
-  manaCost: 5
+  manaCost: 6
   range: 0
   radius: 1
   casterColor: 1

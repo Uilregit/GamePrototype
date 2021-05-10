@@ -177,6 +177,7 @@ public class ScoreDisplayController : MonoBehaviour
             InformationLogger.infoLogger.SavePlayerPreferences();
             InformationLogger.infoLogger.SaveGameScoreInfo(InformationLogger.infoLogger.patchID,
                                     InformationLogger.infoLogger.gameID,
+                                    RoomController.roomController.worldLevel.ToString(),
                                     RoomController.roomController.selectedLevel.ToString(),
                                     RoomController.roomController.roomName,
                                     (ScoreController.score.GetBossesDefeated() == 2).ToString(),
@@ -432,9 +433,9 @@ public class ScoreDisplayController : MonoBehaviour
                 break;
         }
 
-        Debug.Log("out of loop");
+        //Debug.Log("out of loop");
         UnlocksController.unlock.queue = new List<UnlocksController.UnlockedQueue>();
-        Debug.Log(UnlocksController.unlock.queue.Count);
+        //Debug.Log(UnlocksController.unlock.queue.Count);
         if (isTeam)
             ShowHeroExpBars();
         else
@@ -458,6 +459,9 @@ public class ScoreDisplayController : MonoBehaviour
         foreach (GameObject obj in sacrificialLamb.scene.GetRootGameObjects())  //Destroy all don't destroy on load objects to start anew
             Destroy(obj);
 
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        if (InformationLogger.infoLogger.isStoryMode)
+            SceneManager.LoadScene("StoryModeScene", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 }

@@ -35,8 +35,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  effectValue: 010000000100000005000000
-  effectDuration: 000000000200000000000000
+  effectValue: 010000000100000003000000
+  effectDuration: 000000000200000002000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 8630214521550605354, guid: 935da8d03c4227d4fab2241811866500, type: 3}

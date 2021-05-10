@@ -22,17 +22,17 @@ public abstract class Effect
     };
 
     //effect controller used to store temp values for effects that use get
-    public virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex)
+    public virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         if (GameController.gameController != null)
-            yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex));
+            yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
         else
         {
             if (clientEffects.Contains(card.cardEffectName[effectIndex]) && ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0 && TurnController.turnController.multiplayerTurnPlayer != 0)   //If multiplayer and effect should trigger only on client
                 ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ClientCardProcess(caster.GetComponent<NetworkIdentity>().netId.ToString(), location, card.name, effectIndex, card.GetTempEffectValue(), card.GetTempDuration());
             else
-                yield return MultiplayerGameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex));
+                yield return MultiplayerGameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
         }
     }
 
@@ -58,7 +58,7 @@ public abstract class Effect
         return 0;
     }
 
-    public abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex);
+    public abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1);
     public abstract SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH);
 
     public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration, List<Relic> traceList)

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ManifestDrawEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         List<CardController> drawPile = DeckController.deckController.GetDrawPile();
         List<CardController> manifestList = new List<CardController>();
         List<int> viableList = new List<int>();
@@ -31,7 +34,24 @@ public class ManifestDrawEffect : Effect
                 yield return null;
             }
 
-            HandController.handController.DrawSpecificCard(chosenCard);
+            Card c = chosenCard.GetCard().GetCopy();
+            try
+            {
+                c.casterColor = caster.GetComponent<PlayerController>().GetColorTag();
+            }
+            catch
+            {
+                c.casterColor = caster.GetComponent<MultiplayerPlayerController>().GetColorTag();
+            }
+            c.exhaust = true;
+
+            CardController cc = HandController.handController.gameObject.AddComponent<CardController>();
+            cc.SetCard(c, true, false);
+            cc.SetEnergyCostDiscount(chosenCard.GetEnergyCostDiscount());
+            cc.SetEnergyCostCap(chosenCard.GetEnergyCostCap());
+            cc.SetManaCostDiscount(chosenCard.GetManaCostDiscount());
+            cc.SetManaCostCap(chosenCard.GetManaCostCap());
+            HandController.handController.CreateSpecificCard(cc);
             yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
         }
         else

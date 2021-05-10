@@ -22,13 +22,12 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 0
-  description: All enemies in 1 radius loose ATK equal to your temporary armor this
-    turn
+  description: All enemies in 1 radius loose ATK equal to your armor this turn
   art: {fileID: 21300000, guid: 53b6c90b071b83a48857b0c87708176e, type: 3}
   castType: 5
   castShape: 0
   targetType: 020000000200000000000000
-  cardEffectName: 09020000910100006e000000
+  cardEffectName: 0a020000910100006e000000
   hitEffect: 3f420f003f420f002c010000
   conditionType: 000000000000000000000000
   conditionValue: 000000000000000000000000

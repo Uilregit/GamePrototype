@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ManifestANYEnergyCardEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         List<CardController> manifestList = new List<CardController>();
         for (int i = 0; i < 3; i++) //Draw effectValue number of mana cards
         {

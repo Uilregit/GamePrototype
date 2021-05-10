@@ -43,7 +43,7 @@ public class Relic : ScriptableObject
         else if (targetType == Card.TargetType.AllEnemies)
             targets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         else if (targetType == Card.TargetType.AllPlayers)
-            targets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+            targets = new List<GameObject>(GameController.gameController.GetLivingPlayers());
         else if (targetType == Card.TargetType.Enemy && ((GameObject) value).tag == "Enemy")
             targets.Add((GameObject) value);
         else if (targetType == Card.TargetType.Player && ((GameObject)value).tag == "Player")

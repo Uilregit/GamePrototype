@@ -25,6 +25,8 @@ public class CardController : MonoBehaviour
     private GameObject caster;
     private HealthController casterHealthController;
 
+    private bool startedInDeck = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -82,6 +84,8 @@ public class CardController : MonoBehaviour
         card = newCard.card;
         manaCostDiscount = newCard.manaCostDiscount;
         energyCostDiscount = newCard.energyCostDiscount;
+        manaCostCap = newCard.manaCostCap;
+        energyCostCap = newCard.energyCostCap;
         caster = newCard.caster;
         targets = newCard.targets;
         SetCard(newCard.GetCard());
@@ -341,7 +345,8 @@ public class CardController : MonoBehaviour
         if (thisCard.casterColor == Card.CasterColor.Enemy)   //If it's an enemy card, return caster stored in the card
             return caster;
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player"); //Else return caster based on color. Will have to change if more colored players are added
+        GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray(); //Else return caster based on color. Will have to change if more colored players are added
+
         try     //Multiplayer
         {
             players[0].GetComponent<PlayerController>().GetColorTag();
@@ -381,7 +386,7 @@ public class CardController : MonoBehaviour
 
     private GameObject FindClosestCaster(Card.CasterColor casterColorTag, Vector2 location)
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray();
         GameObject caster = players[0];
         foreach (GameObject player in players)
             if ((player.GetComponent<PlayerController>().GetColorTag() == casterColorTag ||
@@ -454,6 +459,16 @@ public class CardController : MonoBehaviour
         return manaCostDiscount;
     }
 
+    public int GetEnergyCostCap()
+    {
+        return energyCostCap;
+    }
+
+    public int GetManaCostCap()
+    {
+        return manaCostCap;
+    }
+
     public int GetNetManaCost()
     {
         Card currentCard = card;
@@ -491,5 +506,15 @@ public class CardController : MonoBehaviour
     public int GetSimulatedTotalAttackValue(int attackCardIndex)
     {
         return cardEffects.GetSimulatedAttackValue(caster, new List<Vector2> { caster.GetComponent<EnemyController>().desiredTarget[attackCardIndex].transform.position });
+    }
+
+    public bool GetStartedInDeck()
+    {
+        return startedInDeck;
+    }
+
+    public void SetStartedInDeck(bool value)
+    {
+        startedInDeck = value;
     }
 }

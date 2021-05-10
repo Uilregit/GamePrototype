@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CopyBuffsEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         foreach (GameObject targ in target)
             foreach (BuffFactory buff in targ.GetComponent<BuffController>().GetBuffs())
                 buff.GetCopy().OnApply(caster.GetComponent<HealthController>(), targ.GetComponent<HealthController>(), buff.cardValue, buff.duration, false, null, null);

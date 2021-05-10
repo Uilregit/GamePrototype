@@ -303,8 +303,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityNames:
+  - 'Harvest: Strength'
+  - 'Decay: Strength'
+  abilitySprites:
+  - {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  - {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   targetTypes: 6400000064000000
-  conditionTypes: 00000000
+  conditionTypes: 0000000000000000
   triggerTypes: 0100000000000000
   abilityTypes: 0200000002000000
   abilityValue: 01000000feffffff

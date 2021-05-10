@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GiveBuffsEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         foreach (GameObject targ in target)
             foreach (BuffFactory buff in caster.GetComponent<BuffController>().GetBuffs())

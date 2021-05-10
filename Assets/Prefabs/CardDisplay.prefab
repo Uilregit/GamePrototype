@@ -265,6 +265,7 @@ MonoBehaviour:
   blackSkillBack: {fileID: 938513664079775433, guid: 0c9ee798e5c661143bc0ac6bfbb74189, type: 3}
   enemyAttackCardBack: {fileID: -6711108833145869290, guid: fd0598a937063b644ae76519d49afc00, type: 3}
   enemySkillCardBack: {fileID: -585757995719137323, guid: fd0598a937063b644ae76519d49afc00, type: 3}
+  passiveCardBack: {fileID: 21300000, guid: 22239c34accf272428051bdae5351059, type: 3}
 --- !u!120 &6073473462300651164
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -756,7 +757,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 4
+  m_fontSizeMin: 1
   m_fontSizeMax: 12
   m_fontStyle: 1
   m_HorizontalAlignment: 2

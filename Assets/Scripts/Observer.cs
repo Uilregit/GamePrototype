@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Observer : MonoBehaviour
 {
     public abstract void OnNotify(object value, Relic.NotificationType notificationType, List<Relic> traceList);
+
+    public abstract void OnNotify(int value, StoryRoomSetup.ChallengeType notificationType);
 }
 
 public abstract class Subject:MonoBehaviour

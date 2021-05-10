@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   name: Rupture
   energyCost: 0
-  manaCost: 3
+  manaCost: 0
   range: 0
   radius: 0
   casterColor: 4

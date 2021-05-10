@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class StealCardEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
-        foreach(GameObject targ in target)
+        if (waitTimeMultiplier == 0)
+            yield break;
+
+        foreach (GameObject targ in target)
         {
             Card c = targ.GetComponent<EnemyController>().GetCard()[0].GetCard().GetCopy();
             try

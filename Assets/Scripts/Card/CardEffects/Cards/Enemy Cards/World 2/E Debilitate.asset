@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   name: Debilitate
   energyCost: 0
-  manaCost: 6
+  manaCost: 3
   range: 1
   radius: 0
   casterColor: 6

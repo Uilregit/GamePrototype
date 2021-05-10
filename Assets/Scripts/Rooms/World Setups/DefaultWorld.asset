@@ -40,11 +40,6 @@ MonoBehaviour:
   - {x: 0, y: 6}
   - {x: 1, y: 6}
   - {x: 2, y: 6}
-  - {x: -2, y: 7}
-  - {x: -1, y: 7}
-  - {x: 0, y: 7}
-  - {x: 1, y: 7}
-  - {x: 2, y: 7}
   innitialRooms:
   - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
   - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
@@ -66,10 +61,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d96ad6099ba85f648ae7d801daa5af9d, type: 2}
   dissapearPercentage: 0.1
   numOfShopPerWorld: 2
-  minShopLocation: 3
-  maxShopLocation: 3
-  numOfShrinePerWorld: 1
-  minShrineLocation: 4
-  maxShrineLocation: 5
+  minShopLocation: 2
+  maxShopLocation: 4
+  numOfShrinePerWorld: 2
+  minShrineLocation: 2
+  maxShrineLocation: 4
   shopPercentage: 0.1
-  shrinePercentage: 0.1
+  shrinePercentage: 0.2

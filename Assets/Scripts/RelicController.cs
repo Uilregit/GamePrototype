@@ -42,6 +42,11 @@ public class RelicController : Observer
         HandController.handController.ResetCardDisplays();
     }
 
+    public override void OnNotify(int value, StoryRoomSetup.ChallengeType notificationType)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public Relic GetRandomRelic()
     {
         int index = Random.Range(0, validChoices.Count);

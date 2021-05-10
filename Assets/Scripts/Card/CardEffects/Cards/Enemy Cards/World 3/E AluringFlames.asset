@@ -22,9 +22,10 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 6
-  description: Pulls all targets in 1 radius to the center and create a <b>Fire Trap</b>
+  description: <b>Targeted AoE</b>|Pulls all targets in 1 radius to the center and
+    create a <b>Fire Trap</b>
   art: {fileID: 21300000, guid: 285b0d82d9498774dae7dd10f098751b, type: 3}
-  castType: 8
+  castType: 7
   castShape: 0
   targetType: 030000000300000003000000
   cardEffectName: 0e0100008813000005000000
@@ -35,8 +36,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  effectValue: 000000000100000005000000
-  effectDuration: 000000000200000000000000
+  effectValue: 000000000100000003000000
+  effectDuration: 000000000200000002000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 8630214521550605354, guid: 935da8d03c4227d4fab2241811866500, type: 3}

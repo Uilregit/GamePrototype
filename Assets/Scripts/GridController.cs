@@ -169,7 +169,7 @@ public class GridController : MonoBehaviour
         List<GameObject> output = new List<GameObject>();
 
         foreach (Vector2 location in locations)
-            output.AddRange(GetObjectAtLocation(location));
+            output.AddRange(GetObjectAtLocation(location, new string[] { "Player", "Enemy" }));
 
         return output.Distinct().ToList();
     }
@@ -247,7 +247,7 @@ public class GridController : MonoBehaviour
     public void DisableAllPlayers()
     {
         //Disable Player and card movement, trigger all end of turn effects
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray();
         foreach (GameObject player in players)
             player.GetComponent<PlayerMoveController>().SetMoveable(false);
     }
@@ -438,6 +438,9 @@ public class GridController : MonoBehaviour
 
         foreach (GameObject obj in objects)
         {
+            if (obj.GetComponent<HealthController>() == null)
+                continue;
+
             int health = obj.GetComponent<HealthController>().GetCurrentVit();
             int armor = obj.GetComponent<HealthController>().GetCurrentArmor();
 

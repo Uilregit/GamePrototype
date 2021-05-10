@@ -38,6 +38,12 @@ public class GameController : MonoBehaviour
     //Stats
     private int totalOverkillGold;
 
+    //[SerializeField]
+    //private HealthController simulationCharacter;
+    [SerializeField]
+    private GameObject simulationPrefab;
+    private Queue<HealthController> simulationCharacters;
+
     private void Start()
     {
         if (GameController.gameController == null)
@@ -46,6 +52,15 @@ public class GameController : MonoBehaviour
             Destroy(this.gameObject);
 
         deadChars = new List<Card.CasterColor>();
+        simulationCharacters = new Queue<HealthController>();
+        for (int i = 0; i < 49; i++)
+        {
+            GameObject obj = Instantiate(simulationPrefab);
+            //obj.SetActive(false);
+            obj.transform.position = new Vector2(100, 100);
+            simulationCharacters.Enqueue(obj.GetComponent<HealthController>());
+        }
+
 
         //Hide the reward cards
         for (int i = 0; i < rewardCards.Length; i++)
@@ -53,12 +68,21 @@ public class GameController : MonoBehaviour
             rewardCards[i].Hide();
             rewardCards[i].transform.parent.GetComponent<Collider2D>().enabled = false;
         }
-        RandomizeRoom();
+
+        setup = RoomController.roomController.GetCurrentRoomSetup();
+
+        Debug.Log(setup.GetLocations(RoomSetup.BoardType.P).Count);
+        Debug.Log(setup.GetLocations(RoomSetup.BoardType.E).Count);
+
+        if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)    //If level setup satisfies basic requiremnts, use level plan
+            InitializeRoom();
+        else                                                                                                                                    //If level setup doesn't satisfy basic requirements, randomize
+            RandomizeRoom();
 
         DeckController.deckController.PopulateDecks();
         DeckController.deckController.ResetCardValues();
         DeckController.deckController.ShuffleDrawPile();
-        HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+        HandController.handController.SetBonusHandSize(0, false);
 
         InformationController.infoController.SaveCombatInformation();           //Save combat information at start of room as well in case char dies in the first room
 
@@ -85,12 +109,74 @@ public class GameController : MonoBehaviour
             GameObject.FindGameObjectWithTag("Hold").GetComponent<Image>().enabled = false;
             GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
+
+        StartCoroutine(ShowAbilities());
+    }
+
+    private IEnumerator ShowAbilities()
+    {
+        yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+
+        yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+
+        foreach (EnemyController thisEnemy in TurnController.turnController.GetEnemies())
+            yield return StartCoroutine(thisEnemy.GetComponent<EnemyInformationController>().ShowAbilities());
+    }
+
+    public void InitializeRoom()
+    {
+        GetComponent<SpriteRenderer>().sprite = RoomController.roomController.GetCombatBackground();
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> enemies = new List<GameObject>();
+        blocks = new List<GameObject>();
+        List<Vector2> viableSpawnLocations = setup.GetLocations(RoomSetup.BoardType.P);
+        //Spawn players first. If specified location, at location, if not, spawn randomly
+        foreach (GameObject player in players)
+        {
+            if (!PartyController.party.partyColors.Contains(player.GetComponent<PlayerController>().GetColorTag()))
+            {
+                Destroy(player.gameObject);
+                continue;
+            }
+
+            Vector2 spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
+            player.GetComponent<PlayerController>().Spawn(spawnedLocation + new Vector2(-3, -2));
+            viableSpawnLocations.Remove(spawnedLocation);
+
+            // If the player was dead from before, remove them
+            Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
+            if (InformationController.infoController.GetIfDead(colorTag))
+            {
+                GridController.gridController.RemoveFromPosition(player, player.transform.position);
+                ReportDeadChar(colorTag);
+                GridController.gridController.OnPlayerDeath(player, colorTag);
+                viableSpawnLocations.Add(spawnedLocation);
+            }
+        }
+        //Then spawn enemies
+        viableSpawnLocations = setup.GetLocations(RoomSetup.BoardType.E);
+        foreach (GameObject enemy in setup.enemies)
+        {
+            GameObject thisEnemy = Instantiate(enemy);
+            Vector2 spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
+            viableSpawnLocations.Remove(spawnedLocation);
+            thisEnemy.GetComponent<EnemyController>().Spawn(spawnedLocation + new Vector2(-3, -2));
+            enemies.Add(thisEnemy);
+        }
+
+        //Lastly spawn blocks
+        foreach (Vector2 loc in setup.GetLocations(RoomSetup.BoardType.W))
+        {
+            GameObject thisBlock = Instantiate(block, loc + new Vector2(-3, -2), Quaternion.identity);
+            GridController.gridController.ReportPosition(thisBlock, loc + new Vector2(-3, -2));
+            blocks.Add(thisBlock);
+        }
     }
 
     public void RandomizeRoom()
     {
         GetComponent<SpriteRenderer>().sprite = RoomController.roomController.GetCombatBackground();
-        setup = RoomController.roomController.GetCurrentRoomSetup();
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> enemies = new List<GameObject>();
@@ -104,10 +190,10 @@ public class GameController : MonoBehaviour
                 Destroy(player.gameObject);
                 continue;
             }
-            if (setup.playwerSpawnLocations.Count == 0)
+            if (setup.GetLocations(RoomSetup.BoardType.P).Count == 0)
                 player.GetComponent<PlayerController>().Spawn();
             else
-                player.GetComponent<PlayerController>().Spawn(setup.playwerSpawnLocations[counter]);
+                player.GetComponent<PlayerController>().Spawn(setup.GetLocations(RoomSetup.BoardType.P)[counter]);
 
             // If the player was dead from before, remove them
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
@@ -229,6 +315,8 @@ public class GameController : MonoBehaviour
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))     //At the end of all boss rooms, heal every player to full and resurrect all dead players for free
             {
                 player = obj.GetComponent<HealthController>();
+                if (player.GetIsSimulation())
+                    continue;
                 player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
                 player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
                 player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
@@ -254,14 +342,27 @@ public class GameController : MonoBehaviour
 
         yield return StartCoroutine(DisplayVictoryText());
 
+
+        Debug.Log(RoomController.roomController.selectedLevel);
+        Debug.Log(StoryModeController.story.GetSetup().setups.Count);
+
         if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
         {
-            if (RoomController.roomController.GetWorldLevel() == 2)
+            if (RoomController.roomController.GetWorldLevel() == RoomController.roomController.GetNumberOfWorlds() - 1)
             {
                 SceneManager.LoadScene("EndScene");
                 yield break;
             }
         }
+        else if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetSetup().setups.Count - 1)
+        {
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
+            AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
+            TurnController.turnController.ReportTurnBasedAchievements();
+            StoryModeController.story.ReportRoomCompleted();
+            SceneManager.LoadScene("StoryModeEndScene");
+        }
+
         RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat);
         if (totalOverkillGold > 0)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
@@ -283,6 +384,7 @@ public class GameController : MonoBehaviour
             if (chosenCard.name != rewardCards[i].GetCard().name)
                 InformationLogger.infoLogger.SaveRewardsCardInfo(InformationLogger.infoLogger.patchID,
                         InformationLogger.infoLogger.gameID,
+                        RoomController.roomController.worldLevel.ToString(),
                         RoomController.roomController.selectedLevel.ToString(),
                         RoomController.roomController.roomName,
                         rewardCards[i].GetCard().GetCard().casterColor.ToString(),
@@ -341,8 +443,12 @@ public class GameController : MonoBehaviour
         List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
         List<GameObject> output = new List<GameObject>();
         foreach (GameObject obj in players)
+        {
+            if (obj.GetComponent<HealthController>().GetIsSimulation())
+                continue;
             if (!deadChars.Contains(obj.GetComponent<PlayerController>().GetColorTag()) && PartyController.party.partyColors.Contains(obj.GetComponent<PlayerController>().GetColorTag()))
                 output.Add(obj);
+        }
         return output;
     }
 
@@ -408,6 +514,43 @@ public class GameController : MonoBehaviour
         }
 
         damageOverlay.color = new Color(0, 0, 0, 0);
+    }
+
+    public HealthController GetSimulationCharacter(HealthController simulationTarget, bool SetSimOnTarget = true)
+    {
+        HealthController simulationCharacter = simulationCharacters.Dequeue();
+
+        simulationCharacter.originalSimulationTarget = simulationTarget.gameObject.name;
+
+        foreach (BuffFactory buff in simulationCharacter.GetComponent<BuffController>().GetBuffs())
+            buff.Revert(simulationCharacter);
+
+        simulationCharacter.GetComponent<BuffController>().SetBuffs(simulationTarget.GetComponent<BuffController>().GetBuffs(), false);
+
+        simulationCharacter.gameObject.tag = simulationTarget.gameObject.tag;
+        simulationCharacter.SetBonusArmor(simulationTarget.GetBonusArmor(), null, false);
+        simulationCharacter.SetBonusAttack(simulationTarget.GetBonusAttack(), false);
+        simulationCharacter.SetBonusVit(simulationTarget.GetBonusVit(), false);
+        simulationCharacter.SetCurrentArmor(simulationTarget.GetCurrentArmor(), false);
+        simulationCharacter.SetCurrentAttack(simulationTarget.GetCurrentAttack());
+        simulationCharacter.SetCurrentVit(simulationTarget.GetCurrentVit());
+
+        //simulationCharacter.gameObject.tag = simulationTarget.gameObject.tag;
+        simulationCharacter.gameObject.tag = "Simulation";
+
+        simulationCharacter.transform.position = simulationTarget.transform.position;
+
+        if (SetSimOnTarget)
+            simulationTarget.SetSimCharacter(simulationCharacter);
+
+        return simulationCharacter;
+    }
+
+    public void ReportSimulationFinished(HealthController simulationCharacter)
+    {
+        simulationCharacter.transform.position = new Vector2(100, 100);
+
+        simulationCharacters.Enqueue(simulationCharacter);
     }
 
     /*

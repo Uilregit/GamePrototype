@@ -4,33 +4,44 @@ using UnityEngine;
 
 public class PiercingDamageEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int totalDamageValue = 0;
-        foreach (GameObject targ in target)
+        int duration = 1;
+
+        if (card.GetTempDuration() != 0)
+            duration = card.GetTempDuration();
+        else if (card.effectDuration[effectIndex] != 0)
+            duration = card.effectDuration[effectIndex];
+
+        for (int i = 0; i < duration; i++)
         {
-            int damageValue = 0;
-            HealthController targetHealthController = targ.GetComponent<HealthController>();
-            if (card.GetTempEffectValue() == 0)
+            foreach (GameObject targ in target)
             {
-                if (card.effectValue[effectIndex] != 0)
-                    damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * Mathf.Abs(card.effectValue[effectIndex]) / 100.0f) * Mathf.RoundToInt(Mathf.Sign(card.effectValue[effectIndex]));
+                int damageValue = 0;
+                HealthController targetHealthController = targ.GetComponent<HealthController>();
+                if (card.GetTempEffectValue() == 0)
+                {
+                    if (card.effectValue[effectIndex] != 0)
+                        damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * Mathf.Abs(card.effectValue[effectIndex]) / 100.0f) * Mathf.RoundToInt(Mathf.Sign(card.effectValue[effectIndex]));
+                    else
+                        damageValue = caster.GetComponent<HealthController>().GetAttack();
+                }
                 else
-                    damageValue = caster.GetComponent<HealthController>().GetAttack();
+                {
+                    if (card.effectValue[effectIndex] != 0)
+                        damageValue = Mathf.CeilToInt(card.GetTempEffectValue() * Mathf.Abs(card.effectValue[effectIndex]) / 100.0f) * Mathf.RoundToInt(Mathf.Sign(card.effectValue[effectIndex]));
+                    else
+                        damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f);
+                }
+                totalDamageValue += damageValue;
+                if (damageValue > 0 && waitTimeMultiplier != 0)        //Don't trigger on damage dealt on simulations
+                    yield return caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), damageValue));
+                targetHealthController.TakePiercingDamage(damageValue, caster.GetComponent<HealthController>());
             }
-            else
-            {
-                if (card.effectValue[effectIndex] != 0)
-                    damageValue = Mathf.CeilToInt(card.GetTempEffectValue() * Mathf.Abs(card.effectValue[effectIndex]) / 100.0f) * Mathf.RoundToInt(Mathf.Sign(card.effectValue[effectIndex]));
-                else
-                    damageValue = Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f);
-            }
-            totalDamageValue += damageValue;
-            if (damageValue > 0)
-                caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), damageValue));
-            targetHealthController.TakePiercingDamage(damageValue, caster.GetComponent<HealthController>());
+
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
-        yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
         card.SetDamageDone(totalDamageValue);
     }
 

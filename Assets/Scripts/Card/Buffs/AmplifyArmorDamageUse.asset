@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: AmplifyArmorDamageUse
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.11084986, b: 1, a: 1}
-  description: 'Barrier: Block the next {d} instance of damage dealt to this target
-    completely'
+  description: 'Shell: Block the next {d} instance of armor damage dealt to this
+    target completely'
   triggerType: 100
+  triggerModificationProtection: 0
   durationType: 1
   onApplyEffects: 12
   onTriggerTarget: 0
@@ -27,3 +28,5 @@ MonoBehaviour:
   tempValue: 0
   duration: 0
   value: 0
+  obj: {fileID: 0}
+  card: {fileID: 0}

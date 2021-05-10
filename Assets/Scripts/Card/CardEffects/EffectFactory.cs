@@ -53,9 +53,6 @@ public class EffectFactory
                 case Card.EffectType.SetKnockBackOtherBuff:
                     effects[i] = new SetKnockBackOtherBuffEffect();
                     break;
-                case Card.EffectType.TauntEffect:
-                    effects[i] = new TauntEffect();
-                    break;
                 case Card.EffectType.GetMissingHealth:
                     effects[i] = new GetMissingHealth();
                     break;
@@ -121,6 +118,9 @@ public class EffectFactory
                     break;
                 case Card.EffectType.DrawEnergyCards:
                     effects[i] = new DrawEnergyCardEffect();
+                    break;
+                case Card.EffectType.ChangeHandSizeEffect:
+                    effects[i] = new ChangeHandSizeEffect();
                     break;
                 case Card.EffectType.Sacrifice:
                     effects[i] = new SacrificeEffect();

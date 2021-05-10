@@ -104,7 +104,7 @@ public class MultiplayerGameController : NetworkBehaviour
 
     public IEnumerator Victory()
     {
-        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        List<GameObject> players = GameController.gameController.GetLivingPlayers().ToList();
         players.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         foreach (GameObject player in players)
             player.GetComponent<MultiplayerPlayerMoveController>().SetMoveable(false);
@@ -119,7 +119,7 @@ public class MultiplayerGameController : NetworkBehaviour
 
     public IEnumerator Defeat()
     {
-        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        List<GameObject> players = GameController.gameController.GetLivingPlayers().ToList();
         players.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         foreach (GameObject player in players)
             player.GetComponent<MultiplayerPlayerMoveController>().SetMoveable(false);

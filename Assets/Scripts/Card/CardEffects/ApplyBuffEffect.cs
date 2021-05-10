@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ApplyBuffEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         foreach (GameObject targ in target)
         {
@@ -22,8 +22,10 @@ public class ApplyBuffEffect : Effect
                 buff.OnApply(targetH, originator, card.effectValue[effectIndex], card.effectDuration[effectIndex], false, null, null);
             else
                 buff.OnApply(targetH, originator, card.GetTempEffectValue(), card.effectDuration[effectIndex], false, null, null);
-            if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
-                caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), 0));
+
+            if (waitTimeMultiplier != 0)
+                if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
+                    caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), 0));
         }
         yield return new WaitForSeconds(0);
     }

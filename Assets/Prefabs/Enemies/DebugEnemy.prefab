@@ -76,7 +76,8 @@ MonoBehaviour:
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 2e1cb26e7a32dd94fa9aa3487bc0ea14, type: 2}
+  - {fileID: 11400000, guid: ffd843ed45efe6b44b9072492e4e4bc0, type: 2}
+  - {fileID: 11400000, guid: 990bcf97c0a3d524fbd76d5dd6896ed6, type: 2}
   moveType: 0
   targetType: 0
   desiredTarget:
@@ -95,6 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   size: 1
+  isSimulation: 0
   charDisplay: {fileID: 6491098502223438485}
 --- !u!61 &5812241472637964539
 BoxCollider2D:
@@ -301,7 +303,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityNames: []
+  abilitySprites: []
   targetTypes: 
+  conditionTypes: 
   triggerTypes: 
   abilityTypes: 
   abilityValue: 

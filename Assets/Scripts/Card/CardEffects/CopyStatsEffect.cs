@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CopyStatsEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         int maxATK = -999999;
         int maxArmor = -9999999;
         foreach (GameObject targ in target)

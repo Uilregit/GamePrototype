@@ -68,8 +68,8 @@ MonoBehaviour:
   castRange: 3
   maxVit: 25
   vitVariate: 1
-  startingArmor: 5
-  attack: 5
+  startingArmor: 8
+  attack: 6
   moveRange: 5
   randomStartRange: 0
   attacksPerTurn: 1
@@ -123,7 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityNames: []
+  abilitySprites: []
   targetTypes: 
+  conditionTypes: 
   triggerTypes: 
   abilityTypes: 
   abilityValue: 

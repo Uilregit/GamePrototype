@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: E ArcticWind
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: ArcticWind
   energyCost: 0
-  manaCost: 5
+  manaCost: 2
   range: 1
   radius: 3
   casterColor: 6

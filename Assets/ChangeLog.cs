@@ -474,7 +474,8 @@
  * Added a seed system to the game's randomization
  * Added a save load system that saves:
  *      Seed
- *      Overworld layout and progress
+ *      Overworld
+ *      layout and progress
  *      Selected and collected cards
  *      New cards
  *      Relics
@@ -665,6 +666,35 @@
  * ####### 0.4.5 #######
  * #####################
  * -- Cards --
+ * All red cards now give permanent armor instead of temporary armor
+ * 
+ *      - Red -
+ *      Headcrack --> Shield Slam
+ *          If the target is attacking you, stun them for 1 turn --> Deal damage equal to your armor
+ *      
+ *      - Blue -
+ *      Blood Rite
+ *          Whenever the target is healed, resture 3 more health --> Restore 150% of ATK as health three times
+ *      Life Link --> Holy Smite
+ *          Whenerver the target is healed, you heal for the same amount --> Targeted AoE, Heal the center target for 150% of ATK, deal 150% of ATK as damage to surrounding targets
+ *      Cycle of Mana
+ *          Draw 2 cards --> Expand Hand Size by 1
+ *      
+ *      - White -
+ *      Echo
+ *          Echoed card now keeps all cost reductions and caps of the played card
+ *      Rememberance
+ *          2M --> 1E
+ *          Manifest a card from your discard pile --> Manifest a white temporary copy of a card from your discard pile
+ *      Drain Strength --> Foresight
+ *          2E --> 0E
+ *          Target looses 2 ATK, you gain 2 aTK --> Manifest a a white temporary copy of a card from your draw pile
+ *          
+ *      - Black -
+ *      Soul Catcher --> Poison
+ *          Remove 3 armor from the target, they gain 1 back over the next 3 turns --> for the next 3 turns, remove 1 armor and deal 25% of ATK as damage
+ *      Belittle --> Alchemic Ferver
+ *          Target looses 1 ATK for each status effect on them --> For the next 3 turns, targets restores 1 health for each energy used
  * 
  * -- Enemies --
  * Lowered health of all World 2 normal enemies by 25%
@@ -678,13 +708,62 @@
  * Added gravity and knockback targeting for enemies
  *      Enemies will always prioritize stacking players first. If that's not possible, knocking players into traps
  * When two traps are created on top of eachother, the longer duration one stays
+ * Added name and art for passives
+ * Enemy processes will not wait for it's effect to finish triggering before moving on to the next enemy
+ * Knockback effects from enemies will now always prioritize stacking players
+ * Enemies can now use targeted AoE on other enemies
+ * Doubled shrine possibility on all worlds
+ * Room randomization of world layers is no longer hard coded
+ * Lowered number of rooms in each world by 1
+ * Card effects that don't impact the board no longer pauses for 0.5 seconds
+ * Traps duration change is now independent of damage trigger and no longer delays end of turn
+ * Added mana and energy use as buff trigger types
+ * Added data tracking to playtime information
+ * Added data tarcking to playtime inside combat (tracked every player and enemy turn)
  * 
  * -- UI --
  * Added tooltips to keywords in enemy AND player cards when cards have been selected
+ * Added cards at start of combat, start of turn, and in character information screen for passive effects
+ * Added passive card backs
+ * Added glow hit particle for passive effects
+ * Added health damage previews when casting cards (direct and buff. Will have to update with ability and talent in the future)
+ * Added health damage previews for end of turn damage over time
  * 
  * -- Bugs --
  * Fixed traps not being spawn under characters in AoE cast
  * Fixed traps spawning on top of eachother in AoE cast
+ * Fixed red linerenderer after opening character information menu on enemies with passives
+ * Fixed passive casts not destroying the target tile reticle
+ * Fixed world 3 enemies animations not looping
+ * Fixed bug where holding on enemies showed passive card instead of next attack card on turn 1
+ * Fixed bug where stored information always shows missing for room name
+ * Fixed bug where on damage dealt buffs were triggered during health bar simulations
+ * Fixed multiple simulation targets messing up each other's values by adding in a pooling system of 49 simulation targets
+ * Fixed bug where knockback effects could knock enemies into blockades
+ * Fixed bug where simulation objects will be picked up in player object finds
+ * Fixed preview healthbar not showing up for Holy Smite
+ * Fixed timelogging not saving the combat room name, only combat room type
+ * 
+ * 
+ * #####################
+ * ####### 0.4.6 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * 
+ * -- System --
+ * Added story mode
+ * Added achievement system and basic achievements
+ * Roomsetups can now specify room layout that is deterministic or remain truely random
+ * 
+ * -- Story --
+ * Added flavor text for first 10 rooms in world 1
+ * 
+ * -- UI --
+ * 
+ * -- Bugs --
+ * 
  * 
  * Uncommon: powerful but more complex, requires more setup to get the most out of them
  * Add uncommon cards
@@ -727,19 +806,6 @@
  * Add elite minibosses (have hearthstone solo adventure style passive effects)
  *      Huge stats, duplicate (split stats equally across the two spawns), attack, duplicate, attack
  * tune all enemy values
- * 
- * #####################
- * ####### 0.4.6 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
  * 
  * solidify common cards, add uncommon cards
  * 

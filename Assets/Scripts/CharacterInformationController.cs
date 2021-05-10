@@ -13,6 +13,7 @@ public class CharacterInformationController : MonoBehaviour
     public Text armorText;
     public Text attackText;
     public Text attackQueueText;
+    public List<CardDisplay> passiveCards;
     public List<Text> abilityTexts;
     public List<CardDisplay> attackCards;
     public List<BuffDescriptionController> buffDescriptions;
@@ -75,13 +76,22 @@ public class CharacterInformationController : MonoBehaviour
         }
 
         //Abilities section
-        List<string> abilityStrings = abilitiesController.GetAbilityStrings();
-        for (int i = 0; i < abilityTexts.Count; i++)
+        List<Card> abilityCards = abilitiesController.GetAbilityCards();
+        for (int i = 0; i < passiveCards.Count; i++)
         {
-            if (i < abilityStrings.Count)
-                abilityTexts[i].text = abilityStrings[i];
+            if (i < abilityCards.Count)
+            {
+                CardController temp = this.gameObject.AddComponent<CardController>();
+                temp.SetCardDisplay(passiveCards[i]);
+                temp.SetCard(abilityCards[i], false, true);
+                passiveCards[i].SetCard(temp);
+                passiveCards[i].Show();
+                passiveCards[i].GetComponent<LineRenderer>().enabled = false;
+            }
             else
-                abilityTexts[i].text = "";
+            {
+                passiveCards[i].Hide();
+            }
         }
     }
 

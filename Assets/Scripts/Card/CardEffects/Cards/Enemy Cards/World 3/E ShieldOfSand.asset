@@ -20,28 +20,29 @@ MonoBehaviour:
   energyCost: 0
   manaCost: 4
   range: 0
-  radius: 0
+  radius: 1
   casterColor: 6
-  description: Completely prevent the next 1 instance of damage
+  description: <b>Targeted AoE</b>|Pulls all targets in 1 radius to the center completely
+    prevent the next 1 instance of damage
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
-  castType: 1
+  castType: 7
   castShape: 0
   targetType: 0000000000000000
-  cardEffectName: 6e0000006e000000
-  hitEffect: c80000003f420f00
+  cardEffectName: 0e0100006e000000
+  hitEffect: 2c010000c8000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
-  - {fileID: 11400000, guid: b9a34f8b928d0ac4eb6144245b0d1356, type: 2}
-  - {fileID: 11400000, guid: 6368852c1575e3b4db594b4bcc21304e, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 290d4b8719c50594a874ad327fdcda0d, type: 2}
   effectValue: 0000000000000000
-  effectDuration: 0100000001000000
+  effectDuration: 0000000001000000
   spawnObject:
   - {fileID: 0}
   cards:
   - {fileID: 0}
-  indicatorType: 0
-  targetBehaviour: 11
+  indicatorType: 2
+  targetBehaviour: 12
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0

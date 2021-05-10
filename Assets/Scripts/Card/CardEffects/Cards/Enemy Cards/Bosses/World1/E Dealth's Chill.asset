@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Dealth's Chill
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Death's Chill
@@ -21,19 +22,19 @@ MonoBehaviour:
   range: 3
   radius: 0
   casterColor: 6
-  description: Temporarily lower the target's armor by 2 for 1 turn
+  description: Target looses 3 armor
   art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
   castType: 2
   castShape: 0
   targetType: 01000000
-  cardEffectName: 6e000000
+  cardEffectName: 0a000000
   hitEffect: 2c010000
   conditionType: 00000000
   conditionValue: 00000000
   buff:
   - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
-  effectValue: feffffff
-  effectDuration: 01000000
+  effectValue: 03000000
+  effectDuration: 00000000
   spawnObject:
   - {fileID: 0}
   cards:

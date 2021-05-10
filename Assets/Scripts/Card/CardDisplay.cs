@@ -11,15 +11,17 @@ public class CardDisplay : MonoBehaviour
     {
         { "Knockback", "Move target away from the caster" },
         { "Knock Away", "Move target's neighbours away from the target" },
-        { "Fire Trap", "Deals 5 damage to ALL on trap at start and end of turn" },
+        { "Fire Trap", "Deals 3 damage twice to ALL on trap at start and end of turn" },
         { "Targeted AoE", "Effects targets in 1 radius around the cast location" },
         { "Stun", "Target unable to move or play cards" },
-        { "Taunt", "Target forced to move towards and target cards at the caster" },
+        { "Taunt", "Target must move towards and target cards at the caster" },
         { "Manifest", "Choose a card from 3 options to add to your hand" },
         { "Temporary Copy", "Card only playable this turn, then card dissapears" },
         { "Piercing", "Damage not blocked by or affects armor" },
         { "Silence", "Target cannot play Mana cards" },
         { "Disarm", "Target cannot play Energy cards" },
+        { "Sacrifice", "Destroy ALL summons and trigger their <b>Sacrifice</b> effects"},
+        { "Hand Size", "Always draw a full hand at the start of every turn"},
     };
     private List<Image> thisToolTips = new List<Image>();
 
@@ -53,6 +55,7 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private Sprite blackSkillBack;
     [SerializeField] private Sprite enemyAttackCardBack;
     [SerializeField] private Sprite enemySkillCardBack;
+    [SerializeField] private Sprite passiveCardBack;
     //[SerializeField] private Sprite greyCardBack;
 
     private CardController thisCard;
@@ -126,6 +129,9 @@ public class CardDisplay : MonoBehaviour
                 case (Card.CasterColor.Enemy):
                     cardBack.sprite = enemyAttackCardBack;
                     break;
+                case (Card.CasterColor.Passive):
+                    cardBack.sprite = passiveCardBack;
+                    break;
                 default:
                     cardBack.sprite = enemyAttackCardBack;
                     break;
@@ -157,6 +163,9 @@ public class CardDisplay : MonoBehaviour
                     break;
                 case (Card.CasterColor.Enemy):
                     cardBack.sprite = enemySkillCardBack;
+                    break;
+                case (Card.CasterColor.Passive):
+                    cardBack.sprite = passiveCardBack;
                     break;
                 default:
                     cardBack.sprite = enemySkillCardBack;
@@ -211,7 +220,7 @@ public class CardDisplay : MonoBehaviour
                 try
                 {
                     //Debug.Log("tried setting caster");
-                    if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor)
+                    if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor && !obj.GetComponent<HealthController>().GetIsSimulation())
                     {
 
                         card.SetCaster(obj);
@@ -410,7 +419,7 @@ public class CardDisplay : MonoBehaviour
         {
             if (thisToolTips[i].isActiveAndEnabled != value)
             {
-                if (index == -1 && total == 1)
+                if (total == 1)
                 {
                     if (inCombat)
                     {
@@ -422,14 +431,10 @@ public class CardDisplay : MonoBehaviour
                     else
                         thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.4f * i, 0);
                 }
-                else if (index == 0)
-                    thisToolTips[i].transform.localPosition = new Vector3(-1.25f, 0.8f - 0.4f * i, 0);
-                else if (index == total - 1)
-                    thisToolTips[i].transform.localPosition = new Vector3(1.25f, 0.8f - 0.4f * i, 0);
-
+                else
+                    thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.4f * i, 0);
+                thisToolTips[i].transform.localRotation = Quaternion.identity;
                 thisToolTips[i].gameObject.SetActive(value);
-                if (total > 1 && (index != total - 1 || index != 0))
-                    thisToolTips[i].gameObject.SetActive(false);
             }
         }
     }

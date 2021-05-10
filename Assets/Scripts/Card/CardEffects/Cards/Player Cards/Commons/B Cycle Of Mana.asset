@@ -22,18 +22,18 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 1
-  description: Draw 2 cards
+  description: Expand <b>Hand Size</b> by 1 for the rest of this encounter
   art: {fileID: 21300000, guid: 5299e25b9872fba42907f8cb4ecde774, type: 3}
   castType: 3
   castShape: 0
   targetType: 02000000
-  cardEffectName: bc020000
+  cardEffectName: 02030000
   hitEffect: 3f420f00
   conditionType: 00000000
   conditionValue: 00000000
   buff:
   - {fileID: 0}
-  effectValue: 02000000
+  effectValue: 01000000
   effectDuration: 00000000
   spawnObject:
   - {fileID: 0}

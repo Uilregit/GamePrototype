@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class ArmorDamageEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
-        foreach (GameObject targ in target)
+        int duration = 1;
+
+        if (card.GetTempDuration() != 0)
+            duration = card.GetTempDuration();
+        else if (card.effectDuration[effectIndex] != 0)
+            duration = card.effectDuration[effectIndex];
+
+        for (int i = 0; i < duration; i++)
         {
-            HealthController targetHealthController = targ.GetComponent<HealthController>();
-            if (card.GetTempEffectValue() == 0)
-                targetHealthController.TakeArmorDamage(card.effectValue[effectIndex], caster.GetComponent<HealthController>());
-            else
-                targetHealthController.TakeArmorDamage(Mathf.CeilToInt(card.GetTempEffectValue() * card.effectValue[effectIndex] / 100.0f), caster.GetComponent<HealthController>());
+            foreach (GameObject targ in target)
+            {
+                HealthController targetHealthController = targ.GetComponent<HealthController>();
+                if (card.GetTempEffectValue() == 0)
+                    targetHealthController.TakeArmorDamage(card.effectValue[effectIndex], caster.GetComponent<HealthController>());
+                else
+                    targetHealthController.TakeArmorDamage(card.GetTempEffectValue(), caster.GetComponent<HealthController>());
+            }
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
-        yield return new WaitForSeconds(0);
     }
 
     public override int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)

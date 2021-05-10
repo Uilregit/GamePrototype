@@ -15,7 +15,7 @@ public class Card : ScriptableObject
     public int manaCost;
     public int range = 0;
     public int radius;
-    public enum CasterColor { Red, Blue, Green, Orange, White, Black, Enemy, Gray };
+    public enum CasterColor { Red, Blue, Green, Orange, White, Black, Enemy, Gray, Passive };
     public CasterColor casterColor;
     [TextArea]
     public string description;
@@ -26,7 +26,7 @@ public class Card : ScriptableObject
     public enum CastShape { Circle, Plus, None };
     public CastShape castShape;
     //Who the target of the effect is
-    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None , Center};
+    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None , Center, Peripherals};
     public TargetType[] targetType = new TargetType[1];
     //Name of the effect of the card
     public enum EffectType
@@ -65,7 +65,6 @@ public class Card : ScriptableObject
         GravityEffect = 270,
         ___ = 299,
 
-        TauntEffect = 300,
         ____ = 399,
 
         SetDuration = 400,
@@ -99,6 +98,7 @@ public class Card : ScriptableObject
         DrawCards = 700,
         DrawManaCards = 701, 
         DrawEnergyCards = 702, 
+
         CardCostReductionDrawn = 710, 
         CardCostCapDrawn = 711,
         CardCostReductionRandom = 720,
@@ -106,6 +106,8 @@ public class Card : ScriptableObject
         ManifestDrawCards = 750,
         ManifestDiscardCards = 751,
         ManifestANYEnergyCardEffect = 760,
+
+        ChangeHandSizeEffect = 770,
         ________ = 799,
 
         StealCardEffect = 800,

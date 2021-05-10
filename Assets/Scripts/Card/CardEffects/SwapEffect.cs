@@ -5,8 +5,11 @@ using System.Linq;
 
 public class SwapEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         if (!target.All(x => x.GetComponent<HealthController>().size >1))
         {
             Vector2 newLoc = target[0].transform.position;

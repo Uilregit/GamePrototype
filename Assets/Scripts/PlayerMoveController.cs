@@ -31,6 +31,9 @@ public class PlayerMoveController : MonoBehaviour
     private DateTime clickedTime;
     private Vector2 clickedLocation;
 
+    //Achievement tracking
+    private List<Vector2> castFromLocation = new List<Vector2>();
+
     private void Awake()
     {
         col2D = GetComponent<Collider2D>();
@@ -134,10 +137,18 @@ public class PlayerMoveController : MonoBehaviour
 
     public void ResetTurn()
     {
+        castFromLocation = new List<Vector2>();
+
         UpdateOrigin(transform.position);
         movedDistance = 0;
         SetMoveable(true);
         GetComponent<HealthController>().AtStartOfTurn();
+    }
+
+    public void ReportTurnBasedAchievements()
+    {
+        AchievementSystem.achieve.OnNotify(castFromLocation.Count, StoryRoomSetup.ChallengeType.CastLocationsPerTurn);
+        AchievementSystem.achieve.OnNotify(movedDistance, StoryRoomSetup.ChallengeType.CharDistMovedPerTurn);
     }
 
     public void SetMoveable(bool newMoveable)
@@ -250,6 +261,8 @@ public class PlayerMoveController : MonoBehaviour
         path = new List<Vector2>();
         TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
         //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
+
+        castFromLocation.Add(transform.position);
     }
 
     public void ChangeMoveDistance(int value)

@@ -5,8 +5,13 @@ using Mirror;
 
 public class DrawLastPlayedCardEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+        {
+            caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardDrawn, caster.GetComponent<HealthController>(), card.effectValue[effectIndex]);
+            yield break;
+        }
         List<Card> cardsPlayedThisTurn = TurnController.turnController.GetCardsPlayedThisTurn();
 
         if (MultiplayerGameController.gameController != null)
@@ -16,7 +21,7 @@ public class DrawLastPlayedCardEffect : Effect
 
         card.SetPreviousEffectSuccessful(cardsPlayedThisTurn.Count != 0);
 
-        for (int i = cardsPlayedThisTurn.Count - 1; i > cardsPlayedThisTurn.Count - 1 - card.effectValue[effectIndex]; i--) //Draw effectValue number of mana cards
+        for (int i = cardsPlayedThisTurn.Count - 1; i > cardsPlayedThisTurn.Count - 1 - card.effectValue[effectIndex]; i--) //Draw effectValue number of cards
         {
             Card c = cardsPlayedThisTurn[i].GetCopy();
             try
@@ -31,6 +36,10 @@ public class DrawLastPlayedCardEffect : Effect
 
             CardController cc = HandController.handController.gameObject.AddComponent<CardController>();
             cc.SetCard(c, true, false);
+            cc.SetEnergyCostDiscount(TurnController.turnController.GetCardPlayedEnergyReduction()[i]);
+            cc.SetEnergyCostCap(TurnController.turnController.GetCardPlayedEnergyCap()[i]);
+            cc.SetManaCostDiscount(TurnController.turnController.GetCardPlayedManaReduction()[i]);
+            cc.SetManaCostCap(TurnController.turnController.GetCardPlayedManaCap()[i]);
             HandController.handController.CreateSpecificCard(cc);
         }
         yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());

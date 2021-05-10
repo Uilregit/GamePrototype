@@ -72,14 +72,18 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.ArmorDamageMultiplier:
                 healthController.AddArmorDamageMultiplier(cardValue);
                 break;
+            case Buff.BuffEffectType.AllDamageMultiplier:
+                healthController.AddVitDamageMultiplier(cardValue);
+                healthController.AddArmorDamageMultiplier(cardValue);
+                break;
             case Buff.BuffEffectType.PhasedMovement:
                 healthController.SetPhasedMovement(true);
                 break;
             case Buff.BuffEffectType.BonusAttack:
-                healthController.SetBonusAttack(cardValue);
+                healthController.SetBonusAttack(cardValue, true);
                 break;
             case Buff.BuffEffectType.BonusArmor:
-                healthController.SetBonusArmor(cardValue, relicTrace);
+                healthController.SetBonusArmor(cardValue, relicTrace, true);
                 break;
             case Buff.BuffEffectType.BonusCastRange:
                 healthController.SetBonusCastRange(cardValue);
@@ -160,6 +164,7 @@ public class BuffFactory : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                         InformationLogger.infoLogger.gameID,
+                                        RoomController.roomController.worldLevel.ToString(),
                                         RoomController.roomController.selectedLevel.ToString(),
                                         RoomController.roomController.roomName,
                                         TurnController.turnController.turnID.ToString(),
@@ -210,7 +215,7 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.VitDamage:
                 vitDamage += target.GetSimulatedVitDamage(GetValue(value));
                 armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
-                target.TakeVitDamage(GetValue(value), selfHealthController, traceList);
+                target.TakeVitDamage(GetValue(value), selfHealthController, traceList, null, (GetTriggerType() == Buff.TriggerType.AtEndOfTurn || GetTriggerType() == Buff.TriggerType.AtStartOfTurn));
                 break;
             case Buff.BuffEffectType.PiercingDamage:
                 vitDamage += target.GetSimulatedPiercingDamage(GetValue(value));
@@ -282,6 +287,7 @@ public class BuffFactory : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                                 InformationLogger.infoLogger.gameID,
+                                                RoomController.roomController.worldLevel.ToString(),
                                                 RoomController.roomController.selectedLevel.ToString(),
                                                 RoomController.roomController.roomName,
                                                 TurnController.turnController.turnID.ToString(),
@@ -340,14 +346,18 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.ArmorDamageMultiplier:
                 healthController.RemoveArmorDamageMultiplier(-cardValue);
                 break;
+            case Buff.BuffEffectType.AllDamageMultiplier:
+                healthController.RemoveVitDamageMultiplier(cardValue);
+                healthController.RemoveArmorDamageMultiplier(cardValue);
+                break;
             case Buff.BuffEffectType.PhasedMovement:
                 healthController.SetPhasedMovement(false);
                 break;
             case Buff.BuffEffectType.BonusAttack:
-                healthController.SetBonusAttack(-cardValue);
+                healthController.SetBonusAttack(-cardValue, true);
                 break;
             case Buff.BuffEffectType.BonusArmor:
-                healthController.SetBonusArmor(-cardValue, null);
+                healthController.SetBonusArmor(-cardValue, null, true);
                 break;
             case Buff.BuffEffectType.BonusCastRange:
                 healthController.SetBonusCastRange(-cardValue);
@@ -420,6 +430,7 @@ public class BuffFactory : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                 InformationLogger.infoLogger.gameID,
+                                RoomController.roomController.worldLevel.ToString(),
                                 RoomController.roomController.selectedLevel.ToString(),
                                 RoomController.roomController.roomName,
                                 TurnController.turnController.turnID.ToString(),
@@ -482,12 +493,24 @@ public class BuffFactory : MonoBehaviour
         //output.value = value;
         output.color = buff.color;
         output.description = buff.description;
+        output.onApplyEffects = buff.onApplyEffects;
+        output.triggerModificationProtection = buff.triggerModificationProtection;
         output.SetTriggerType(buff.GetTriggerType());
+        output.onTriggerEffects = buff.onTriggerEffects;
+        output.valueManipulationType = buff.valueManipulationType;
         output.durationType = buff.durationType;
+        output.appliedBuff = buff.appliedBuff;
+        output.appliedBuffDuration = buff.appliedBuffDuration;
+        output.effectValue = buff.effectValue;
+        output.tempValue = buff.tempValue;
+        output.value = buff.value;
+        output.obj = buff.obj;
+        output.card = buff.card;
 
         BuffFactory buffFactory = new BuffFactory();
         buffFactory.buff = output;
         buffFactory.duration = duration;
+        buffFactory.cardName = cardName;
         buffFactory.cardValue = cardValue;
         return buffFactory;
     }
@@ -523,10 +546,10 @@ public class BuffFactory : MonoBehaviour
         switch (buff.onApplyEffects)
         {
             case Buff.BuffEffectType.BonusAttack:
-                health.SetBonusArmor(diff, null);
+                health.SetBonusArmor(diff, null, true);
                 break;
             case Buff.BuffEffectType.BonusArmor:
-                health.SetBonusAttack(diff);
+                health.SetBonusAttack(diff, true);
                 break;
             case Buff.BuffEffectType.BonusCastRange:
                 health.SetBonusCastRange(diff);
@@ -556,10 +579,10 @@ public class BuffFactory : MonoBehaviour
         switch (buff.onApplyEffects)
         {
             case Buff.BuffEffectType.BonusAttack:
-                health.SetBonusArmor(diff, null);
+                health.SetBonusArmor(diff, null, true);
                 break;
             case Buff.BuffEffectType.BonusArmor:
-                health.SetBonusAttack(diff);
+                health.SetBonusAttack(diff, true);
                 break;
             case Buff.BuffEffectType.BonusCastRange:
                 health.SetBonusCastRange(diff);

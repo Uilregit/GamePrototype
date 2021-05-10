@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ResurrectEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         HealthController player = null;
 
         if (MultiplayerGameController.gameController != null)
             player = caster.GetComponent<HealthController>();
         else
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
-                if (obj.GetComponent<PlayerController>().GetColorTag() == card.casterColor)
+                if (obj.GetComponent<PlayerController>().GetColorTag() == card.casterColor && !obj.GetComponent<HealthController>().GetIsSimulation())
                     player = obj.GetComponent<HealthController>();
 
         player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(card.casterColor));
@@ -46,7 +49,7 @@ public class ResurrectEffect : Effect
         yield return new WaitForSeconds(0);
     }
 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         throw new System.NotImplementedException();
     }

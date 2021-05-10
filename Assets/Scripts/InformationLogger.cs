@@ -55,9 +55,9 @@ public class SaveFile
     public int p2Armor;
     public int p3Armor;
 
-    public string[][] collectionCardNames;
-    public string[][] selectedCardNames;
-    public string[][] newCardNames;
+    public string[] collectionCardNames;
+    public string[] selectedCardNames;
+    public string[] newCardNames;
     public string recentRewardsCard;
 
     public string[] relicNames;
@@ -73,6 +73,20 @@ public class SaveFile
     public int goldUsed;
     public int bossesDefeated;
     public float secondsInGame;
+}
+
+[System.Serializable]
+public class StoryModeSaveFile
+{
+    public int[] unlockedRoomIds;
+    //public Dictionary<int, bool[]> challengeStars;  //Room id, stars 1, 2, 3
+    public Dictionary<int, int[]> challengeValues;  //Room id, value 1, 2, 3
+
+    public List<string> cardSelected;
+    public string[] cardCraftable;
+    public Dictionary<string, int> cardUnlocks;
+    public Dictionary<string, int> weaponUnlocks;
+    public Dictionary<string, int> materialUnlocks;
 }
 
 [System.Serializable]
@@ -172,6 +186,8 @@ public class InformationLogger : MonoBehaviour
     public static InformationLogger infoLogger;
 
     public bool debug;
+    public bool debugBossRoomEnabled;
+    public bool isStoryMode = false;
     public string patchID;
     public int seed;
     public string gameID;
@@ -215,7 +231,7 @@ public class InformationLogger : MonoBehaviour
         catch { }
     }
 
-    public void SaveCombatInfo(string patchID, string gameID, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
+    public void SaveCombatInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
                                string unplayedFlag, string castFlag, string casterName, string targetCount, string targetName, string vitDamageDone, string armorDamageDone, string manaGenerated, string manaUsed, string buffTriggerCount)
     {
         if (InformationLogger.infoLogger.debug)
@@ -226,7 +242,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,turnID,timestamp,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,turnID,timestamp,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -236,6 +252,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + turnID;
@@ -259,7 +276,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveRewardsCardInfo(string patchID, string gameID, string encounterLevel, string roomName, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string immediatelyUsedFlag)
+    public void SaveRewardsCardInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string immediatelyUsedFlag)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -269,7 +286,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,immediatelyUsedFlag";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,cardColor,cardName,chosenFlag,immediatelyUsedFlag";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -279,6 +296,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + cardColor;
@@ -289,7 +307,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveShopCardInfo(string patchID, string gameID, string encounterLevel, string roomName, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string goldUsed)
+    public void SaveShopCardInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string goldUsed)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -299,7 +317,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,cardColor,cardName,chosenFlag,goldUsed";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,cardColor,cardName,chosenFlag,goldUsed";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -309,6 +327,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + cardColor;
@@ -319,7 +338,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveGoldInfo(string patchID, string gameID, string encounterLevel, string roomName, string passiveGold, string overkillGold, string totalGoldAtRoomEnd)
+    public void SaveGoldInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string passiveGold, string overkillGold, string totalGoldAtRoomEnd)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -329,7 +348,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,passiveGold,overkillGold,totalGoldAtRoomEnd";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,passiveGold,overkillGold,totalGoldAtRoomEnd";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -339,6 +358,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + passiveGold;
@@ -348,7 +368,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveGameScoreInfo(string patchID, string gameID, string encounterLevel, string roomName, string gameWon, string gameLost, string totalScore, string overkill, string damage,
+    public void SaveGameScoreInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string gameWon, string gameLost, string totalScore, string overkill, string damage,
                                     string damageArmored, string damageOverhealedProtected, string damageAvoided, string enemiesBroken, string goldUSed, string bossesDefeated, string secondsInGame)
     {
         if (InformationLogger.infoLogger.debug)
@@ -359,7 +379,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,roomName,gameWon,gameLost,totalScore,overkill,damage,damageArmored,damageOverhealedProtected,damageAvoided,enemiesBroken,goldUSed,bossesDefeated,secondsInGame";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,gameWon,gameLost,totalScore,overkill,damage,damageArmored,damageOverhealedProtected,damageAvoided,enemiesBroken,goldUSed,bossesDefeated,secondsInGame";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -369,6 +389,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + roomName;
         line += delimiter + gameWon;
@@ -387,7 +408,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveDeckInfo(string patchID, string gameID, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag)
+    public void SaveDeckInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -397,7 +418,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,encounterLevel,cardColor,cardName,energyCost,manaCost,chosenFlag,removedFlag,finalDeckListFlag";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,cardColor,cardName,energyCost,manaCost,chosenFlag,removedFlag,finalDeckListFlag";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -407,6 +428,7 @@ public class InformationLogger : MonoBehaviour
 
         line += delimiter + patchID;
         line += delimiter + gameID;
+        line += delimiter + worldLevel;
         line += delimiter + encounterLevel;
         line += delimiter + cardColor;
         line += delimiter + cardName;
@@ -415,6 +437,36 @@ public class InformationLogger : MonoBehaviour
         line += delimiter + chosenFlag;
         line += delimiter + removedFlag;
         line += delimiter + finalDeckListFlag;
+
+        File.AppendAllText(filePath, line + "\n");
+    }
+
+    public void SaveTimeInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomType, string roomName, string turnId = "0")
+    {
+        if (InformationLogger.infoLogger.debug)
+            return;
+
+        string filePath = GetCombatPath() + "/time_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
+        //DebugPlus.LogOnScreen(filePath).Duration(5);
+        //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
+        //Debug.Log(filePath);
+
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomType,roomName,turnId,timestamp";
+
+        if (!File.Exists(filePath))
+            File.WriteAllText(filePath, header + "\n");
+
+        string delimiter = ",";
+        string line = SystemInfo.deviceUniqueIdentifier;
+
+        line += delimiter + patchID;
+        line += delimiter + gameID;
+        line += delimiter + worldLevel;
+        line += delimiter + encounterLevel;
+        line += delimiter + roomType;
+        line += delimiter + roomName;
+        line += delimiter + turnId;
+        line += delimiter + (int)ScoreController.score.GetSecondsInGame();
 
         File.AppendAllText(filePath, line + "\n");
     }
@@ -550,6 +602,68 @@ public class InformationLogger : MonoBehaviour
         }
 
         return saveFile;
+    }
+
+    //Save in singleplayer
+    private StoryModeSaveFile GetStoryModeSaveFile()
+    {
+        StoryModeSaveFile output = new StoryModeSaveFile();
+
+        output.unlockedRoomIds = StoryModeController.story.GetCompletedRooms().ToArray();
+        output.challengeValues = StoryModeController.story.GetChallengeValues();
+        output.cardCraftable = StoryModeController.story.GetCardCraftable().ToArray();
+        output.cardUnlocks = StoryModeController.story.GetCardUnlocked();
+        output.cardSelected = StoryModeController.story.GetCardSelected();
+
+        return output;
+    }
+
+    public void SaveStoryModeGame()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+
+        formatter.Serialize(stream, GetStoryModeSaveFile());
+        stream.Close();
+    }
+
+    public void LoadStoryModeGame()
+    {
+        StoryModeSaveFile file = LoadStoryModeGameFile();
+
+        StoryModeController.story.SetCompletedRooms(file.unlockedRoomIds.ToList());
+        StoryModeController.story.SetChallengeValues(file.challengeValues);
+        StoryModeController.story.SetCardCraftable(file.cardCraftable.ToList());
+        StoryModeController.story.SetCardUnlocked(file.cardUnlocks);
+        StoryModeController.story.SetCardSelected(file.cardSelected);
+    }
+
+    private StoryModeSaveFile LoadStoryModeGameFile()
+    {
+        string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        StoryModeSaveFile saveFile = null;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            saveFile = formatter.Deserialize(stream) as StoryModeSaveFile;
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.Log("save file not found in: " + path);
+        }
+
+        return saveFile;
+    }
+
+    public bool GetHasStoryModeSaveFile()
+    {
+        string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        return File.Exists(path);
     }
 
     public string[] GetLoadPartyColors()

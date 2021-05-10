@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu]
 public class RoomSetup : ScriptableObject
@@ -10,5 +11,53 @@ public class RoomSetup : ScriptableObject
     public string roomName;
     public GameObject[] enemies;
     public int blockNumber;
-    public List<Vector2> playwerSpawnLocations;
+    [HideInInspector]
+    public BoardType[] level1 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level2 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level3 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level4 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level5 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level6 = new BoardType[7];
+    [HideInInspector]
+    public BoardType[] level7 = new BoardType[7];
+
+    public List<Vector2> GetLocations(BoardType type)
+    {
+        List<Vector2> output = new List<Vector2>();
+        for (int j = 0; j < 7; j++)
+            if (level1[j] == type)
+                output.Add(new Vector2(0, j));
+        for (int j = 0; j < 7; j++)
+            if (level2[j] == type)
+                output.Add(new Vector2(1, j));
+        for (int j = 0; j < 7; j++)
+            if (level3[j] == type)
+                output.Add(new Vector2(2, j));
+        for (int j = 0; j < 7; j++)
+            if (level4[j] == type)
+                output.Add(new Vector2(3, j));
+        for (int j = 0; j < 7; j++)
+            if (level5[j] == type)
+                output.Add(new Vector2(4, j));
+        for (int j = 0; j < 7; j++)
+            if (level6[j] == type)
+                output.Add(new Vector2(5, j));
+        for (int j = 0; j < 7; j++)
+            if (level7[j] == type)
+                output.Add(new Vector2(6, j));
+        return output;
+    }
+
+    public enum BoardType
+    {
+        O = 0,
+        W = 1,
+        P = 2,
+        E = 3
+    }
 }

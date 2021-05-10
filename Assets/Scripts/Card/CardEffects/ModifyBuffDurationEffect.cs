@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ModifyBuffDurationEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
-        foreach(GameObject targ in target)
+        foreach (GameObject targ in target)
         {
             foreach (BuffFactory buff in targ.GetComponent<BuffController>().GetBuffs())
                 buff.duration += card.effectValue[effectIndex];

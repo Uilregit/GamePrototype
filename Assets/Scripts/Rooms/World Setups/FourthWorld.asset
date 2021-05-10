@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62e277e99ab91b4a87780de25baa52d, type: 3}
   m_Name: FourthWorld
   m_EditorClassIdentifier: 
+  combatBackground: {fileID: 0}
+  cameraBackground: {r: 0, g: 0, b: 0, a: 0}
   roomLocations:
   - {x: -2, y: 0}
   - {x: 0, y: 0}
@@ -40,10 +42,16 @@ MonoBehaviour:
   - {x: -2, y: 6}
   - {x: 0, y: 6}
   - {x: 2, y: 6}
-  - {x: -2, y: 7}
-  - {x: 0, y: 7}
-  - {x: 2, y: 7}
   innitialRooms: []
   midRooms: []
   lateRooms: []
   bossRooms: []
+  dissapearPercentage: 0
+  numOfShopPerWorld: 0
+  minShopLocation: 0
+  maxShopLocation: 0
+  numOfShrinePerWorld: 0
+  minShrineLocation: 0
+  maxShrineLocation: 0
+  shopPercentage: 0
+  shrinePercentage: 0

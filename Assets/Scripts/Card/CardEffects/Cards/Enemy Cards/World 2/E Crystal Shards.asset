@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: E Crystal Shards
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Crystal Shards
   energyCost: 0
-  manaCost: 5
+  manaCost: 3
   range: 1
   radius: 0
   casterColor: 6

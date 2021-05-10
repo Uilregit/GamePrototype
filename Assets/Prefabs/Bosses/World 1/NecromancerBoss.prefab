@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 3
-  maxVit: 100
+  maxVit: 70
   vitVariate: 1
   startingArmor: 5
   attack: 12
@@ -98,7 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   size: 1
+  isSimulation: 0
   charDisplay: {fileID: 8124094990149397557}
+  originalSimulationTarget: 
 --- !u!61 &3149853040009221859
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -312,8 +314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityNames: []
+  abilitySprites: []
   targetTypes: 
-  conditionTypes: 00000000
+  conditionTypes: 
   triggerTypes: 
   abilityTypes: 
   abilityValue: 

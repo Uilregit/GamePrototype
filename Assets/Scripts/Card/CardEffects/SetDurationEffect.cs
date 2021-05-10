@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SetDurationEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         if (card.effectDuration[effectIndex] != 0)
             card.SetTempDuration(card.effectDuration[effectIndex]);
         else

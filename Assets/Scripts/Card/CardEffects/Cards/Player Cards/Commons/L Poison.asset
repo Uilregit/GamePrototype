@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: L Poison
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Poison
+  energyCost: 2
+  manaCost: 0
+  range: 0
+  radius: 0
+  casterColor: 5
+  description: At the end of the next 3 turns,remove 1 armor and deal <s>25% of ATK
+    as</s> damage to the target
+  art: {fileID: 21300000, guid: b7f0d5225c93ea54d800b6f16b3e475c, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 03000000020000000200000003000000
+  cardEffectName: 6e000000fe010000910100006e000000
+  hitEffect: 2c0100003f420f003f420f003f420f00
+  conditionType: 00000000000000000000000000000000
+  conditionValue: 00000000000000000000000000000000
+  buff:
+  - {fileID: 11400000, guid: 1cd23939e6420d74ca96f7fd204feea0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 4281f70a93f2ce549a55e5c9286f0c4e, type: 2}
+  effectValue: 01000000000000001900000000000000
+  effectDuration: 03000000000000000000000003000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0

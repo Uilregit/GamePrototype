@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBossRoom: 0
   relicReward: 0
-  roomName: https://www.reddit.com/r/interestingasfuck/comments/lmrbj5/a_30_day_timelapse_of_sweet_potato_in_water/
+  roomName: Ilusionists
   enemies:
   - {fileID: 3234652053163052453, guid: c7b2589eb92f05e4d9cf683dc47eb259, type: 3}
   - {fileID: 3234652053163052453, guid: c7b2589eb92f05e4d9cf683dc47eb259, type: 3}

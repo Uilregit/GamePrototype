@@ -22,6 +22,7 @@ public class CollectionController : MonoBehaviour
     public static CollectionController collectionController;
 
     public bool isSinglePlayer;
+    public bool isStoryMode = false;
     public DeckCustomizeCardController[] custCardsDisplay;
     [SerializeField]
     public SelectedCardController[] selectedCardsDisplay;
@@ -30,6 +31,7 @@ public class CollectionController : MonoBehaviour
     public FinalizeButtonController finalizeButton;
     [SerializeField]
     public EditorCardsWrapper[] editorDeck;
+    public EditorCardsWrapper[] storyModeDeck;
     public EditorCardsWrapper[] debugDeck;
     public EditorCardsWrapper[] multiplayerDeck;
     private ListWrapper[] completeDeck = new ListWrapper[3];
@@ -46,7 +48,10 @@ public class CollectionController : MonoBehaviour
         if (CollectionController.collectionController == null)
             CollectionController.collectionController = this;
         else
+        {
             Destroy(this.gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -61,7 +66,14 @@ public class CollectionController : MonoBehaviour
         //Only includes decks from colors in the party and sorts them by their color order in the party
         EditorCardsWrapper[] usedDeck;
         if (InformationLogger.infoLogger.debug)
-            usedDeck = debugDeck;
+        {
+            if (isStoryMode)
+                usedDeck = storyModeDeck;
+            else
+                usedDeck = debugDeck;
+        }
+        else if (isStoryMode)
+            usedDeck = storyModeDeck;
         else if (isSinglePlayer)
             usedDeck = editorDeck;
         else
@@ -69,6 +81,23 @@ public class CollectionController : MonoBehaviour
 
         if (!isSinglePlayer)
             SetupMultiplayerDeck();
+        else if (isStoryMode)
+        {
+            selectedDeck = new ListWrapper[storyModeDeck.Length]; //Deep copy completeDeck to avoid deleting cards in that list
+            for (int i = 0; i < storyModeDeck.Length; i++)
+            {
+                selectedDeck[i] = new ListWrapper();
+                List<CardController> temp = new List<CardController>();
+                foreach (Card c in storyModeDeck[i].deck)
+                {
+                    CardController j = this.gameObject.AddComponent<CardController>();
+                    j.SetCard(c, true, false);
+                    j.SetStartedInDeck(true);
+                    temp.Add(j);
+                }
+                selectedDeck[i].SetDeck(temp);
+            }
+        }
         else
         {
             for (int i = 0; i < usedDeck.Length; i++)
@@ -92,7 +121,10 @@ public class CollectionController : MonoBehaviour
                 selectedDeck[i] = new ListWrapper();
                 List<CardController> temp = new List<CardController>();
                 foreach (CardController c in completeDeck[i].deck)
+                {
+                    c.SetStartedInDeck(true);
                     temp.Add(c);
+                }
                 selectedDeck[i].SetDeck(temp);
             }
 
@@ -211,6 +243,7 @@ public class CollectionController : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             newCard.GetCard().casterColor.ToString(),
                             newCard.GetCard().name,
@@ -236,6 +269,7 @@ public class CollectionController : MonoBehaviour
         {
             InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             newCard.GetCard().casterColor.ToString(),
                             newCard.GetCard().name,
@@ -284,12 +318,24 @@ public class CollectionController : MonoBehaviour
             {
                 CardController j = this.gameObject.AddComponent<CardController>();
                 j.SetCard(c, true, false);
+                j.SetStartedInDeck(true);
                 temp.Add(j);
             }
             selectedDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)] = new ListWrapper();
             selectedDeck[PartyController.party.GetPartyIndex(usedDeck[i].deck[0].casterColor)].SetDeck(temp);
         }
 
+        ReCountUniqueCards();
+        SetDeck(0);
+        ResolveSelectedList();
+        FinalizeDeck();
+        CheckDeckComplete();
+        CheckPageButtons();
+        RefreshDecks();
+    }
+
+    public void SetupStoryModeDeck()
+    {
         ReCountUniqueCards();
         SetDeck(0);
         ResolveSelectedList();
@@ -311,6 +357,7 @@ public class CollectionController : MonoBehaviour
             {
                 InformationLogger.infoLogger.SaveRewardsCardInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             RoomController.roomController.roomName,
                             recentRewardsCard.GetCard().casterColor.ToString(),
@@ -324,6 +371,7 @@ public class CollectionController : MonoBehaviour
             {
                 InformationLogger.infoLogger.SaveRewardsCardInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             RoomController.roomController.roomName,
                             recentRewardsCard.GetCard().casterColor.ToString(),
@@ -338,6 +386,7 @@ public class CollectionController : MonoBehaviour
                 foreach (CardController card in selectedDeck[i].deck)
                     InformationLogger.infoLogger.SaveDeckInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             card.GetCard().casterColor.ToString(),
                             card.GetCard().name,
@@ -439,8 +488,15 @@ public class CollectionController : MonoBehaviour
         return counter;
     }
 
-    public string[][] GetCompleteDeckNames()
+    public string[] GetCompleteDeckNames()
     {
+        List<string> output = new List<string>();
+        for (int i = 0; i < completeDeck.Length; i++)
+            for (int j = 0; j < completeDeck[i].deck.Count; j++)
+                output.Add(completeDeck[i].deck[j].GetCard().name);
+
+        return output.ToArray();
+        /*
         string[][] output = new string[completeDeck.Length][];
 
         for (int i = 0; i < completeDeck.Length; i++)
@@ -450,10 +506,18 @@ public class CollectionController : MonoBehaviour
                 output[i][j] = completeDeck[i].deck[j].GetCard().name;
         }
         return output;
+        */
     }
 
-    public string[][] GetSelectedDeckNames()
+    public string[] GetSelectedDeckNames()
     {
+        List<string> output = new List<string>();
+        for (int i = 0; i < selectedDeck.Length; i++)
+            for (int j = 0; j < selectedDeck[i].deck.Count; j++)
+                output.Add(selectedDeck[i].deck[j].GetCard().name);
+
+        return output.ToArray();
+        /*
         string[][] output = new string[selectedDeck.Length][];
         for (int i = 0; i < selectedDeck.Length; i++)
         {
@@ -462,10 +526,18 @@ public class CollectionController : MonoBehaviour
                 output[i][j] = selectedDeck[i].deck[j].GetCard().name;
         }
         return output;
+        */
     }
 
-    public string[][] GetNewCardDeckNames()
+    public string[] GetNewCardDeckNames()
     {
+        List<string> output = new List<string>();
+        for (int i = 0; i < newCards.Length; i++)
+            for (int j = 0; j < newCards[i].deck.Count; j++)
+                output.Add(newCards[i].deck[j].GetCard().name);
+
+        return output.ToArray();
+        /*
         string[][] output = new string[newCards.Length][];
         for (int i = 0; i < newCards.Length; i++)
         {
@@ -474,10 +546,24 @@ public class CollectionController : MonoBehaviour
                 output[i][j] = newCards[i].deck[j].GetCard().name;
         }
         return output;
+        */
     }
 
-    public void SetCompleteDeck(string[][] completeDeckNames)
+    public void SetCompleteDeck(string[] completeDeckNames)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            completeDeck[i] = new ListWrapper();
+            completeDeck[i].deck = new List<CardController>();
+        }
+
+        foreach (string name in completeDeckNames)
+        {
+            CardController cardController = this.gameObject.AddComponent<CardController>();
+            cardController.SetCard(LootController.loot.GetCardWithName(name), true, false);
+            completeDeck[PartyController.party.GetPartyIndex(cardController.GetCard().casterColor)].deck.Add(cardController);
+        }
+        /*
         for (int i = 0; i < completeDeckNames.Length; i++)
         {
             completeDeck[i].deck = new List<CardController>();
@@ -488,25 +574,55 @@ public class CollectionController : MonoBehaviour
                 completeDeck[i].deck.Add(cardController);
             }
         }
+        */
     }
-    public void SetSelectedDeck(string[][] selectedDeckNames)
+    public void SetSelectedDeck(string[] selectedDeckNames)
     {
+        selectedDeck = new ListWrapper[3];
+        for (int i = 0; i < 3; i++)
+        {
+            selectedDeck[i] = new ListWrapper();
+            selectedDeck[i].deck = new List<CardController>();
+        }
+
+        foreach (string name in selectedDeckNames)
+        {
+            CardController cardController = this.gameObject.AddComponent<CardController>();
+            cardController.SetCard(LootController.loot.GetCardWithName(name), true, false);
+            selectedDeck[PartyController.party.GetPartyIndex(cardController.GetCard().casterColor)].deck.Add(cardController);
+        }
+        /*
         for (int i = 0; i < selectedDeckNames.Length; i++)
         {
             selectedDeck[i].deck = new List<CardController>();
             for (int j = 0; j < selectedDeckNames[i].Length; j++)
                 selectedDeck[i].deck.Add(GetCardWithName(selectedDeckNames[i][j]));
         }
+        */
     }
 
-    public void SetNewCardsDeck(string[][] newCardDeckNames)
+    public void SetNewCardsDeck(string[] newCardDeckNames)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            newCards[i] = new ListWrapper();
+            newCards[i].deck = new List<CardController>();
+        }
+
+        foreach (string name in newCardDeckNames)
+        {
+            CardController cardController = this.gameObject.AddComponent<CardController>();
+            cardController.SetCard(LootController.loot.GetCardWithName(name), true, false);
+            newCards[PartyController.party.GetPartyIndex(cardController.GetCard().casterColor)].deck.Add(cardController);
+        }
+        /*
         for (int i = 0; i < newCardDeckNames.Length; i++)
         {
             newCards[i].deck = new List<CardController>();
             for (int j = 0; j < newCardDeckNames[i].Length; j++)
                 newCards[i].deck.Add(GetCardWithName(newCardDeckNames[i][j]));
         }
+        */
     }
 
     public void SetRecentRewardsCard(string name)
@@ -526,5 +642,44 @@ public class CollectionController : MonoBehaviour
         {
             return "null";
         }
+    }
+
+    public int GetNumberOfCardsNotStartedInDeck()
+    {
+        int output = 0;
+        for (int i = 0; i < 3; i++)
+            foreach (CardController c in selectedDeck[i].deck)
+                if (!c.GetStartedInDeck())
+                    output++;
+        return output;
+    }
+
+    ////////////////////////////////////////////
+    /////////// Used for story mode ////////////
+    ////////////////////////////////////////////
+    public Dictionary<string, int> GetSelectedDeckDict()
+    {
+        Dictionary<string, int> output = new Dictionary<string, int>();
+        for (int i = 0; i < 3; i++)
+            foreach (CardController card in selectedDeck[i].deck)
+                if (output.ContainsKey(card.GetCard().name))
+                    output[card.GetCard().name] += 1;
+                else
+                    output[card.GetCard().name] = 1;
+
+        return output;
+    }
+
+    public Dictionary<string, int> GetCompleteDeckDict()
+    {
+        Dictionary<string, int> output = new Dictionary<string, int>();
+        for (int i = 0; i < 3; i++)
+            foreach (CardController card in completeDeck[i].deck)
+                if (output.ContainsKey(card.GetCard().name))
+                    output[card.GetCard().name] += 1;
+                else
+                    output[card.GetCard().name] = 1;
+
+        return output;
     }
 }

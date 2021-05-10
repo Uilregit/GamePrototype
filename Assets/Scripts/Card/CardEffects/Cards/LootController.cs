@@ -49,6 +49,7 @@ public class LootController : MonoBehaviour
                 allManaCards.Add(card);
             else
                 allEnergyCards.Add(card);
+
             if (!PartyController.party.partyColors.Contains(card.casterColor))
                 continue;
 
@@ -90,8 +91,8 @@ public class LootController : MonoBehaviour
         List<Card> cards = new List<Card>();
         foreach (CardController c in DeckController.deckController.GetDeck())
             cards.Add(c.GetCard());
-        if (cards.Contains(commonCards[index])) //If card already in deck, reroll
-            index = Random.Range(0, commonCards.Count);
+        if (cards.Contains(commonCards[index]))                 //If card already in deck, reroll
+            index = Random.Range(0, commonCards.Count);         //Not meant to eliminate duplicates, just half chance of getting a card you already have to promote diverse decks
         return commonCards[index];
     }
 

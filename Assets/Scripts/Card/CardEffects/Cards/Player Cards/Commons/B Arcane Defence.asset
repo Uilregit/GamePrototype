@@ -26,17 +26,18 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 24e01eee6e584204ebbe67634a7253ea, type: 3}
   castType: 0
   castShape: 0
-  targetType: 020000000200000003000000
-  cardEffectName: bd020000270200006e000000
-  hitEffect: 3f420f003f420f00c8000000
-  conditionType: 000000008403000000000000
-  conditionValue: 000000000000000000000000
+  targetType: 02000000020000000200000003000000
+  cardEffectName: bd02000027020000910100000a000000
+  hitEffect: 3f420f003f420f003f420f00c8000000
+  conditionType: 00000000840300000000000000000000
+  conditionValue: 00000000000000000000000000000000
   buff:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
-  effectValue: 010000000000000000000000
-  effectDuration: 000000000000000001000000
+  - {fileID: 0}
+  - {fileID: 0}
+  effectValue: 01000000000000009cffffff00000000
+  effectDuration: 00000000000000000000000000000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetDamageDoneEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         card.SetTempEffectValue(card.GetDamageDone());
         yield return new WaitForSeconds(0);

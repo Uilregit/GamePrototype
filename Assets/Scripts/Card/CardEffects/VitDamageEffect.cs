@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VitDamageEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int totalDamageValue = 0;
         int duration = 1;
@@ -35,9 +35,9 @@ public class VitDamageEffect : Effect
 
                 targetHealthController.TakeVitDamage(damageValue, caster.GetComponent<HealthController>());
             }
-            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
-        if (totalDamageValue > 0)
+        if (totalDamageValue > 0 && waitTimeMultiplier != 0)        //Don't trigger on damage dealt on simulations
             caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), totalDamageValue));
         card.SetDamageDone(totalDamageValue);
 
@@ -74,7 +74,7 @@ public class VitDamageEffect : Effect
                         value += targetHealthController.GetSimulatedVitDamage(Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetTempEffectValue() / 100.0f));
                 }
 
-                output += targetHealthController.GetSimulatedVitDamage(value);
+                output += value;
             }
         return output;
     }

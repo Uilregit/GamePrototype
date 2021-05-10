@@ -25,6 +25,7 @@ public class RewardsItemController : MonoBehaviour
 
             InformationLogger.infoLogger.SaveGoldInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             RoomController.roomController.roomName,
                             value.ToString(),
@@ -39,6 +40,7 @@ public class RewardsItemController : MonoBehaviour
 
             InformationLogger.infoLogger.SaveGoldInfo(InformationLogger.infoLogger.patchID,
                             InformationLogger.infoLogger.gameID,
+                            RoomController.roomController.worldLevel.ToString(),
                             RoomController.roomController.selectedLevel.ToString(),
                             RoomController.roomController.roomName,
                             "0",

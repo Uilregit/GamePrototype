@@ -35,7 +35,8 @@ public class BuffController : MonoBehaviour
         queuedBuffList = new List<BuffFactory>();
     }
 
-    public IEnumerator TriggerBuff(Buff.TriggerType type, HealthController healthController, int value, List<BuffFactory> traceList = null)
+    //Note: If buffs aren't triggering, it's because startcoroutine is needed
+    public IEnumerator TriggerBuff(Buff.TriggerType type, HealthController healthController, int value, List<BuffFactory> traceList = null, float waitTimeMultiplier = 1)
     {
         triggerTickets += 1;
         foreach (BuffFactory buff in buffList)
@@ -57,10 +58,10 @@ public class BuffController : MonoBehaviour
                     buff.duration -= 1;
 
                 if (type != Buff.TriggerType.AtEndOfTurn && type != Buff.TriggerType.AtStartOfTurn)
-                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);   //Only triggered buffs causes a pause
+                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);   //Only triggered buffs causes a pause
                 else if (new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor }.Contains(buff.GetBuff().onApplyEffects) ||
                     new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor, Buff.BuffEffectType.PiercingDamage, Buff.BuffEffectType.VitDamage }.Contains(buff.GetBuff().onTriggerEffects))
-                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier);   //Only end of turn buffs that has UI changes causes a pause
+                    yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);   //Only end of turn buffs that has UI changes causes a pause
             }
 
             if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn) //All non start or end of turn, turn buffs (ie lifesteal)
@@ -131,6 +132,15 @@ public class BuffController : MonoBehaviour
     public List<BuffFactory> GetBuffs()
     {
         return buffList;
+    }
+
+    //Used to get simulated damage values for UI
+    public void SetBuffs(List<BuffFactory> buffs, bool additive)
+    {
+        if (!additive)
+            buffList = new List<BuffFactory>();
+        foreach (BuffFactory b in buffs)
+            buffList.Add(b.GetCopy());
     }
 
     public void SetDummyBuffs(BuffInfo buffs)

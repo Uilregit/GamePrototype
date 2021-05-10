@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EnergyGainEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        if (waitTimeMultiplier == 0)
+            yield break;
+
         if (card.effectValue[effectIndex] == 0)
             TurnController.turnController.GainEnergy(card.GetTempEffectValue());
         else
