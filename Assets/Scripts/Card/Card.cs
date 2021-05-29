@@ -26,7 +26,7 @@ public class Card : ScriptableObject
     public enum CastShape { Circle, Plus, None };
     public CastShape castShape;
     //Who the target of the effect is
-    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None , Center, Peripherals};
+    public enum TargetType { Enemy, Player, Self, Any, AllEnemies, AllPlayers, None, Center, Peripherals };
     public TargetType[] targetType = new TargetType[1];
     //Name of the effect of the card
     public enum EffectType
@@ -42,7 +42,7 @@ public class Card : ScriptableObject
         PiercingDamageAll = 21,
         PiercingDamageDivided = 22,
         _ = 99,
-        
+
         Cleanse = 100,
         Buff = 110,
         ModifyBuffDuration = 115,
@@ -53,7 +53,7 @@ public class Card : ScriptableObject
         CopyStatsEffect = 130,
         AssimilateStatsEffect = 131,
         __ = 199,
-        
+
         SetKnockBackDamage = 200,
         SetKnockBackSelfBuff = 205,
         SetKnockBackOtherBuff = 210,
@@ -79,7 +79,7 @@ public class Card : ScriptableObject
         GetDistanceMoved = 527,
         GetDamageDoneEffect = 530,
         GetNumberOfTargetsInRangeEffect = 540,
-        GetNumberOfCardsPlayedInTurn= 541,
+        GetNumberOfCardsPlayedInTurn = 541,
         GetNumberOfAttackers = 542,
         GetNumberInStack = 543,
         GetNumberOfBuffsOnTarget = 545,
@@ -91,15 +91,15 @@ public class Card : ScriptableObject
         GetEnergySpentTurn = 591,
         ______ = 599,
 
-        ManaGain = 600, 
+        ManaGain = 600,
         EnergyGain = 601,
         _______ = 699,
 
         DrawCards = 700,
-        DrawManaCards = 701, 
-        DrawEnergyCards = 702, 
+        DrawManaCards = 701,
+        DrawEnergyCards = 702,
 
-        CardCostReductionDrawn = 710, 
+        CardCostReductionDrawn = 710,
         CardCostCapDrawn = 711,
         CardCostReductionRandom = 720,
 
@@ -140,18 +140,18 @@ public class Card : ScriptableObject
     public enum ConditionType
     {
         None = 0,
-        Odd = 2, 
+        Odd = 2,
         Even = 3,
-        
+
         OnPlay = 100,
-        
-        TargetBroken = 200, 
+
+        TargetBroken = 200,
         TargetNotBroken = 201,
         TargetAttackingCaster = 202,
         TargetNotAttackingCaster = 203,
-        
-        CasterBroken = 300, 
-        CasterNotBroken = 301, 
+
+        CasterBroken = 300,
+        CasterNotBroken = 301,
         CasterHasHigherArmor = 310,
         CasterHasHigherATK = 311,
         CasterHasLowerArmor = 320,
@@ -188,7 +188,7 @@ public class Card : ScriptableObject
     public enum HighlightCondition
     {
         None = 0,
-        
+
         HasBonusATK = 1,
         HasBonusArmor = 2,
         HasBonusVit = 3,
@@ -201,6 +201,13 @@ public class Card : ScriptableObject
 
     public HighlightCondition highlightCondition = HighlightCondition.None;
 
+    public List<StoryModeController.RewardsType> materials = new List<StoryModeController.RewardsType>(3);
+    public List<int> materialAmounts = new List<int>(3);
+
+    /// ##################################
+    /// ### Private methods and values ###
+    /// ##################################
+
     private Vector2 tempCenter;
     private int tempEffectValue = 0;
     private int tempDuration = 0;
@@ -209,12 +216,12 @@ public class Card : ScriptableObject
     private bool previousConditionTrue = true;
     private int damageDone = 0;
 
-    public void SetPreviousConditionTrue (bool value)
+    public void SetPreviousConditionTrue(bool value)
     {
         previousConditionTrue = value;
     }
 
-    public bool GetPreviousConditionTrue ()
+    public bool GetPreviousConditionTrue()
     {
         return previousConditionTrue;
     }
@@ -311,6 +318,16 @@ public class Card : ScriptableObject
         output.indicatorMultiplier = indicatorMultiplier;
         output.executionPriority = executionPriority;
         output.highlightCondition = highlightCondition;
+
+        return output;
+    }
+
+    public Dictionary<StoryModeController.RewardsType, int> GetCraftingMaterials()
+    {
+        Dictionary<StoryModeController.RewardsType, int> output = new Dictionary<StoryModeController.RewardsType, int>();
+
+        for (int i = 0; i < materials.Count; i++)
+            output[materials[i]] = materialAmounts[i];
 
         return output;
     }

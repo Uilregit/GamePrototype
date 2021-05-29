@@ -756,14 +756,81 @@
  * Added story mode
  * Added achievement system and basic achievements
  * Roomsetups can now specify room layout that is deterministic or remain truely random
+ * Added item system that keeps track of item inventory
+ * Added tracking to if challenge items have been sold
+ * Added tracking for all item inventory across singeplayer games
  * 
  * -- Story --
  * Added flavor text for first 10 rooms in world 1
  * 
  * -- UI --
+ * Added room icons to all story mode rooms
+ * Added different color for 3 stars achieved and 3 challenge rewards bought
+ * Added unlocked material list to story mode shop screen
+ * Added materials icon to story mode end shop screen
+ * Added achievement progress for unsatisfied achievements in final shop screen
  * 
  * -- Bugs --
+ * Fixed room not showing yellow even if achievements are fully done for the room
+ * Fixed achievements being overwritten by future, worse attempts
+ * Fixed room and deck resetting incorrectly after completing a room
+ * Fixed end of non end maps not reporting end of turn achievements
+ * Fixed bug where path preview UI will path through enemies and blockades
  * 
+ * -- To dos --
+ * Design maps and enemy designs for all 10 rooms
+ * Design item reward strucutre for all 10 rooms
+ * Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)
+ *      Shop (gold as currency)
+ *          1 customizeable slot
+ *          1 weapon slot
+ *          1 equipment slot
+ *          Daily card specials (50% off materials)
+ *              1 Common Card
+ *          Weekly card specials (25% off materials)
+ *              3 Common Cards
+ *          Crafting for all common cards that have been seen
+ *          1 net cost equipments
+ *              Sprint shoes
+ *                  +1 moverange
+ *              
+ *      Secret Shop (stars as currency)
+ *          1 customizeable slot
+ *          + passive gold
+ *          2 cards per room reward
+ *          Card rewards reroll
+ *          Unlock uncommon cards
+ *          Materials trading (lower tiered to higher tiered materials)
+ *          Restat weapons
+ *          2 net cost weapons
+ *              Midas Gauntlet
+ *                  Deal +50% damage to enemies below 0 health
+ *          Daily and Weekly specials on uncommon cards
+ *          
+ * Add weapons (relics for story mode. Effect with negative stats randomly generated)
+ *      Cost value associated with effect, balanced by stats
+ *              1 cost = 1 ATK
+ *              1 cost = 2 Armor
+ *              1 cost = 5 Health
+ *      Cost can be -1 cost in a random stat or +1 cost in a stat and -2 in another or +1 in a stat and -1 in two others
+ *      ie: break mana effect = 1 cost, so stats can be -1 ATK, or +1 ATK and -10 Health or +2 Armor but -1 ATK and -5 health
+ *      Or Equipments: +1 ATk or +2 ATK and -5 health, etc
+ *      Rarer weapons have 2 or 3 cost effects and can have wider cost ranges
+ *      Rarer equipments have 2 or 3 cost stats and can have wider cost ranges
+ *      Weapons stats versions are randomly generated so many weapons with the same effect can exist (name of weapon tied to effect, not stats)
+ *          Secret shop can restat weapons?
+ *      Weapons have stats and add 1 special card to your deck
+ *          Grey in preview, Uncommon level complexity, powerful if drawn
+ *          Build around or payoff cards for a color's archetype
+ *      Equipments are relics from classic mode
+ *      Switch so weapon is stats and equipment is effect?
+ *      Eventually each char can equip 1 weapon and 2 equipment
+ * Add arenas (1 no customizable card slot unlocked, 1 completely unlocked. Battle till death, mini version of the classic gameplay)
+ * Secret rooms
+ *      1 or 2 per world that's an interesting take on a room/enemy combination
+ *      Not nessecarily hard, but a cool interesting reward for those who 3 star everything
+ *      Places for mini games?
+ *      Bomb voyage: smaller and smaller rooms with more and more bombs
  * 
  * Uncommon: powerful but more complex, requires more setup to get the most out of them
  * Add uncommon cards

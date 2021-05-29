@@ -71,9 +71,6 @@ public class GameController : MonoBehaviour
 
         setup = RoomController.roomController.GetCurrentRoomSetup();
 
-        Debug.Log(setup.GetLocations(RoomSetup.BoardType.P).Count);
-        Debug.Log(setup.GetLocations(RoomSetup.BoardType.E).Count);
-
         if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)    //If level setup satisfies basic requiremnts, use level plan
             InitializeRoom();
         else                                                                                                                                    //If level setup doesn't satisfy basic requirements, randomize
@@ -342,10 +339,6 @@ public class GameController : MonoBehaviour
 
         yield return StartCoroutine(DisplayVictoryText());
 
-
-        Debug.Log(RoomController.roomController.selectedLevel);
-        Debug.Log(StoryModeController.story.GetSetup().setups.Count);
-
         if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
         {
             if (RoomController.roomController.GetWorldLevel() == RoomController.roomController.GetNumberOfWorlds() - 1)
@@ -354,19 +347,12 @@ public class GameController : MonoBehaviour
                 yield break;
             }
         }
-        else if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetSetup().setups.Count - 1)
-        {
-            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
-            AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
-            TurnController.turnController.ReportTurnBasedAchievements();
-            StoryModeController.story.ReportRoomCompleted();
-            SceneManager.LoadScene("StoryModeEndScene");
-        }
 
         RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat);
         if (totalOverkillGold > 0)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
-        RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Card, null, 0);
+        if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1))     //Don't give a card reward if it's the last room for storymode
+            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Card, null, 0);
         if (setup.relicReward)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Relic, null, 0);
         RewardsMenuController.rewardsMenu.ShowMenu();

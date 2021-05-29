@@ -103,8 +103,8 @@ public class PathFindController : MonoBehaviour
 
             if (!GridController.gridController.CheckIfOutOfBounds(newBoardSpaces) &&
                 (
-                    (GridController.gridController.GetObjectAtLocation(newBoardSpaces).Count == 0 ||
-                     GridController.gridController.GetObjectAtLocation(newBoardSpaces).All(x => pathThroughTag.Contains(x.tag)))
+                    (GridController.gridController.GetObjectAtLocation(newBoardSpaces, new string[] { "Player", "Enemy", "Blockade" }).Count == 0 ||
+                     GridController.gridController.GetObjectAtLocation(newBoardSpaces, new string[] { "Player", "Enemy", "Blockade" }).All(x => pathThroughTag.Contains(x.tag)))
                 ) ||
                 newBoardSpaces.Any(x => x == endingLoc))
             {

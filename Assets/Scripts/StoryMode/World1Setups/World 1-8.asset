@@ -17,9 +17,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
   - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
   - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
   challenges: 000000003a0400003b040000
   valueType: 000000000100000001000000
   challengeValues: 000000000500000014000000
-  challengeComparisonType: 000000000000000000000000
+  challengeComparisonType: 0000000000000000000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 0000000000000000000000000000000000000000
+  rewardAmounts: 0000000000000000000000000000000000000000
+  rewardCosts: 
+  challengeRewardBought: 000000
   flavorText: Silia's Dry Cleaning is a gathering place for adventurers who brag
     about their unessecarily gory deeds

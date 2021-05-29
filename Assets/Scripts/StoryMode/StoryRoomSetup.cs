@@ -11,8 +11,9 @@ public class StoryRoomSetup : ScriptableObject
     public ChallengeValueType[] valueType = new ChallengeValueType[3];
     public int[] challengeValues = new int[3];
     public ChallengeComparisonType[] challengeComparisonType = new ChallengeComparisonType[3];
+    public int[] bestChallengeValues = new int[3] { -1, -1, -1 };
 
-    public RewardsType[] rewardTypes;
+    public StoryModeController.RewardsType[] rewardTypes;
     public int[] rewardAmounts;
     public int[] rewardCosts;
     public bool[] challengeRewardBought = new bool[3] { false, false, false };
@@ -20,67 +21,6 @@ public class StoryRoomSetup : ScriptableObject
     [TextArea]
     public string flavorText;
 
-    public enum RewardsType
-    {
-        BlankCard = 0,
-        WeaponBlueprint = 5,
-
-        EnergyShard = 10,
-        EnergyGem = 15,
-        EnergyCrystal = 19,
-
-        ManaShard = 20,
-        ManaGem = 25,
-        ManaCrystal = 29,
-
-        RubyShard = 30,
-        RubyGem = 35,
-        RubyCrystal = 39,
-
-        SapphireShard = 40,
-        SapphireGem = 45,
-        SapphireCrystal = 49,
-
-        EmeraldShard = 50,
-        EmeraldGem = 55,
-        EmeraldCrystal = 59,
-
-        SpessartineShard = 60,
-        SpessartineGem = 65,
-        SpessartineCrystal = 69,
-
-        QuartzShard = 70,
-        QuartzGem = 75,
-        QuartzCrystal = 79,
-
-        OnyxShard = 80,
-        OnyxGem = 85,
-        OnyxCrystal = 89,
-
-        BronzeOre = 100,
-        BronzeIngot = 105,
-        BronzeBlock = 109,
-
-        IronOre = 110,
-        IronIngot = 115,
-        IronBlock = 119,
-
-        PlatinumOre = 120,
-        PlatinumIngot = 125,
-        PlatinumBlock = 129,
-
-        MythrilOre = 130,
-        MythrilIngot = 135,
-        MythrilBlock = 139,
-
-        OrichalcumOre = 140,
-        OrichalcumIngot = 145,
-        OrichalcumBlock = 149,
-
-        AdamantiteOre = 150,
-        AdamantiteIngot = 155,
-        AdamantiteBlock = 159,
-    }
 
     public enum ChallengeType
     {
@@ -211,10 +151,45 @@ public class StoryRoomSetup : ScriptableObject
         if (challenges[index] != ChallengeType.Complete)
         {
             if (StoryModeController.story.GetChallengeValues().ContainsKey(roomID))
-                output += " (" + StoryModeController.story.GetChallengeValues()[roomID][index] + "/" + challengeValues[index] + ")";
+            {
+                if (StoryModeController.story.GetChallengeValues()[roomID][index] == -1)
+                    output += " (0/" + challengeValues[index] + ")";
+                else
+                    output += " (" + StoryModeController.story.GetChallengeValues()[roomID][index] + "/" + challengeValues[index] + ")";
+            }
             else
                 output += " (0/" + challengeValues[index] + ")";
         }
         return output;
+    }
+
+    public void SetBestValues(int[] values)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (bestChallengeValues[1] == -1)
+                bestChallengeValues[i] = values[i];
+            else
+                switch (challengeComparisonType[i])
+                {
+                    case ChallengeComparisonType.GreaterThan:
+                        bestChallengeValues[i] = Mathf.Max(bestChallengeValues[i], values[i]);
+                        break;
+                    case ChallengeComparisonType.LessThan:
+                        bestChallengeValues[i] = Mathf.Min(bestChallengeValues[i], values[i]);
+                        break;
+                    case ChallengeComparisonType.EqualTo:
+                        int oldDiff = Mathf.Abs(bestChallengeValues[i] - challengeValues[i]);
+                        int newDiff = Mathf.Abs(values[i] - challengeValues[i]);
+                        if (oldDiff > newDiff)
+                            bestChallengeValues[i] = values[i];
+                        break;
+                }
+        }
+    }
+
+    public void SetReardsBought(bool item1, bool item2, bool item3)
+    {
+        challengeRewardBought = new bool[3] { item1, item2, item3 };
     }
 }

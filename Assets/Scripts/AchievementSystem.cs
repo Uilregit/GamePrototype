@@ -25,8 +25,6 @@ public class AchievementSystem : Observer
 
     public override void OnNotify(int value, StoryRoomSetup.ChallengeType notificationType)
     {
-        Debug.Log(notificationType);
-        Debug.Log(GetChallengeValueType(notificationType));
         switch (GetChallengeValueType(notificationType))
         {
             case (StoryRoomSetup.ChallengeValueType.ValueAsIs):
@@ -53,12 +51,21 @@ public class AchievementSystem : Observer
                 achievements[notificationType] = Mathf.Min(value, achievements[notificationType]);
                 break;
         }
+
+        StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
+        for (int i = 0; i < setup.challenges.Length; i++)
+        {
+            if (setup.challenges[i] == notificationType)
+            {
+                Debug.Log(notificationType + "| " + GetChallengeValueType(notificationType) + " | " + value + " --> " + achievements[notificationType]);
+            }
+        }
     }
 
     public int GetChallengeValue(StoryRoomSetup.ChallengeType notificationType)
     {
         if (!achievements.ContainsKey(notificationType))
-            return 0;
+            return -1;
         return achievements[notificationType];
     }
 
@@ -71,7 +78,7 @@ public class AchievementSystem : Observer
     public StoryRoomSetup.ChallengeValueType GetChallengeValueType(StoryRoomSetup.ChallengeType challenge)
     {
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
-        for (int i = 0; i < setup.challenges.Length; i ++)
+        for (int i = 0; i < setup.challenges.Length; i++)
         {
             if (setup.challenges[i] == challenge)
                 return setup.valueType[i];

@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-5
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: 1a727a28cb2eb0e40b49320a9d0f5c8b, type: 2}
+  - {fileID: 11400000, guid: a75c8fd779a5e2444bef56245136b505, type: 2}
+  - {fileID: 11400000, guid: e0ce81d9dd1ad25469f228f0ae885bec, type: 2}
+  - {fileID: 11400000, guid: ae00346732d5b77448b5a18526e4e620, type: 2}
+  - {fileID: 11400000, guid: a8dc4e47a1fc60542960951e04a5353a, type: 2}
   challenges: 000000001c0400001d040000
   valueType: 000000000100000001000000
   challengeValues: 000000000500000014000000
   challengeComparisonType: 000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 0000000014000000020000005000000082000000
+  rewardAmounts: 0100000002000000010000000500000005000000
+  rewardCosts: 3200000032000000320000001400000014000000
+  challengeRewardBought: 000000
   flavorText: Jenga is a common passtime for the Jade Order. Weird how they play
     on the battlefield though...

@@ -13,6 +13,9 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     private int totalGold = 0;
 
+    private Dictionary<StoryModeController.RewardsType, int> boughtItems = new Dictionary<StoryModeController.RewardsType, int>();
+    private bool[] challengeItemsBought = new bool[3] { false, false, false };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +23,17 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
 
+        if (StoryModeController.story.GetChallengeItemsBought().ContainsKey(StoryModeController.story.GetCurrentRoomID()))
+            challengeItemsBought = StoryModeController.story.GetChallengeItemsBought()[StoryModeController.story.GetCurrentRoomID()];
+        else
+            challengeItemsBought = new bool[3] { false, false, false };
+
         for (int i = 0; i < 3; i++)
         {
-            items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i));
-            items[i].SetValues(setup.rewardTypes[i].ToString() + " x" + setup.rewardAmounts[i].ToString(), setup.rewardCosts[i]);
+            items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && !challengeItemsBought[i]);
+            items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i]);
+            if (challengeItemsBought[i])
+                items[i].SetBought();
         }
 
         for (int i = 3; i < 5; i++)
@@ -31,7 +41,7 @@ public class StoryModeEndSceenController : MonoBehaviour
             if (setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i])
             {
                 items[i].SetEnabled(true);
-                items[i].SetValues(setup.rewardTypes[i].ToString() + " x" + setup.rewardAmounts[i].ToString(), setup.rewardCosts[i]);
+                items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i]);
             }
             else
                 items[i].SetEnabled(false);
@@ -40,12 +50,25 @@ public class StoryModeEndSceenController : MonoBehaviour
         ResetItemEnabled();
     }
 
-    public void ReportItemBought(int gold, bool bought)
+    public void ReportItemBought(int gold, StoryModeController.RewardsType name, int amount, bool bought, int index)
     {
         if (bought)
             totalGold -= gold;
         else
             totalGold += gold;
+
+        if (bought)
+        {
+            if (boughtItems.ContainsKey(name))
+                boughtItems[name] += amount;
+            else
+                boughtItems[name] = amount;
+        }
+        else
+            boughtItems[name] -= amount;
+
+        if (index < 3)
+            challengeItemsBought[index] = bought;
 
         ResetItemEnabled();
     }
@@ -57,6 +80,8 @@ public class StoryModeEndSceenController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             items[i].SetGreyout(!(StoryModeController.story.ChallengeSatisfied(i) && totalGold >= setup.rewardCosts[i]));
+            if (challengeItemsBought[i] && !items[i].GetSelected())
+                items[i].SetBought();
         }
 
         for (int i = 3; i < 5; i++)
@@ -80,6 +105,12 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public void BuyAndExit()
     {
+        StoryModeController.story.ReportItemsBought(boughtItems);
+        StoryModeController.story.AddChallengeItemsBought(StoryModeController.story.GetCurrentRoomID(), challengeItemsBought);
+        Destroy(RoomController.roomController.gameObject);
+        RoomController.roomController = null;
+        InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
+        StoryModeController.story.ResetDecks();
         SceneManager.LoadScene("StoryModeScene");
     }
 }

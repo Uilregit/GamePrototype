@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class StoryModeEndItemController : MonoBehaviour
 {
+    public int index;
+
     public Image lockedIcon;
-    public Text soldOutText;
+    public Text lockedAchievementText;
+    public Image soldOutText;
     public Image blackoutImage;
     public Image outline;
     public Text itemName;
+    public Image itemIcon;
     public Text costText;
 
     public StoryModeEndSceenController endSceneController;
@@ -19,20 +23,23 @@ public class StoryModeEndItemController : MonoBehaviour
 
     private bool selectable = false;
 
+    private StoryModeController.RewardsType thisName;
+    private int amount;
+
     public void SetEnabled(bool state)
     {
-        lockedIcon.enabled = !state;
+        lockedIcon.gameObject.SetActive(!state);
         blackoutImage.enabled = !state;
-        soldOutText.enabled = false;
+        soldOutText.gameObject.SetActive(false);
 
         selectable = state;
     }
 
     public void SetBought()
     {
-        lockedIcon.enabled = false;
+        lockedIcon.gameObject.SetActive(false);
         blackoutImage.enabled = true;
-        soldOutText.enabled = true;
+        soldOutText.gameObject.SetActive(true);
     }
 
     public void SetSelected()
@@ -42,14 +49,20 @@ public class StoryModeEndItemController : MonoBehaviour
 
         selected = !selected;
         outline.GetComponent<Outline>().enabled = selected;
-        endSceneController.ReportItemBought(itemCost, selected);
+        endSceneController.ReportItemBought(itemCost, thisName, amount, selected, index);
     }
 
-    public void SetValues(string name, int cost)
+    public void SetValues(StoryModeController.RewardsType newName, int newAmount, int cost)
     {
-        itemName.text = name;
+        itemIcon.sprite = StoryModeController.story.GetRewardSprite(newName);
+        itemIcon.color = StoryModeController.story.GetRewardsColor(newName);
+        thisName = newName;
+        amount = newAmount;
+        itemName.text = thisName + "\nx" + amount.ToString();
         costText.text = cost.ToString();
         itemCost = cost;
+        if (index < 3)
+            lockedAchievementText.text = StoryModeController.story.GetCurrentRoomSetup().GetChallengeText(StoryModeController.story.GetCurrentRoomID(), index);
     }
 
     public void SetGreyout(bool value)
@@ -59,5 +72,20 @@ public class StoryModeEndItemController : MonoBehaviour
 
         if (selectable)
             blackoutImage.enabled = value;
+    }
+
+    public StoryModeController.RewardsType GetName()
+    {
+        return thisName;
+    }
+
+    public int GetAmount()
+    {
+        return amount;
+    }
+
+    public bool GetSelected()
+    {
+        return selected;
     }
 }

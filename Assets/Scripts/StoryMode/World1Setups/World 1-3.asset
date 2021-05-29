@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-3
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: b86f750a09a516b439c4a859e6cfe7f5, type: 2}
+  - {fileID: 11400000, guid: 7ba395de9b876bc4ba1ab3cb1226416b, type: 2}
+  - {fileID: 11400000, guid: 1c41760b5a1bc7d42bac1b0b00778001, type: 2}
   challenges: 000000000804000009040000
   valueType: 000000000100000001000000
   challengeValues: 000000000500000000000000
   challengeComparisonType: 000000000000000014000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 000000000500000002000000320000001e000000
+  rewardAmounts: 0100000001000000010000000500000005000000
+  rewardCosts: 3200000032000000320000001400000014000000
+  challengeRewardBought: 000000
   flavorText: Novice mages are taught restraint, but seasoned bishops know you should
     blow **** up

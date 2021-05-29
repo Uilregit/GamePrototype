@@ -86,7 +86,8 @@ public class StoryModeSaveFile
     public string[] cardCraftable;
     public Dictionary<string, int> cardUnlocks;
     public Dictionary<string, int> weaponUnlocks;
-    public Dictionary<string, int> materialUnlocks;
+    public Dictionary<StoryModeController.RewardsType, int> itemsUnlocked;
+    public Dictionary<int, bool[]> challengeItemsBought;
 }
 
 [System.Serializable]
@@ -614,6 +615,8 @@ public class InformationLogger : MonoBehaviour
         output.cardCraftable = StoryModeController.story.GetCardCraftable().ToArray();
         output.cardUnlocks = StoryModeController.story.GetCardUnlocked();
         output.cardSelected = StoryModeController.story.GetCardSelected();
+        output.itemsUnlocked = StoryModeController.story.GetItemsBought();
+        output.challengeItemsBought = StoryModeController.story.GetChallengeItemsBought();
 
         return output;
     }
@@ -637,6 +640,8 @@ public class InformationLogger : MonoBehaviour
         StoryModeController.story.SetCardCraftable(file.cardCraftable.ToList());
         StoryModeController.story.SetCardUnlocked(file.cardUnlocks);
         StoryModeController.story.SetCardSelected(file.cardSelected);
+        StoryModeController.story.SetItemsBought(file.itemsUnlocked);
+        StoryModeController.story.SetChallengeItemsBought(file.challengeItemsBought);
     }
 
     private StoryModeSaveFile LoadStoryModeGameFile()

@@ -105,8 +105,6 @@ public class TurnController : MonoBehaviour
             //Clear the entire hand
             HandController.handController.ClearHand();
 
-            ReportTurnBasedAchievements();
-
             StartCoroutine(EnemyTurn());
         }
         else
@@ -208,6 +206,8 @@ public class TurnController : MonoBehaviour
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
+
+        ReportTurnBasedAchievements();              //Report achievements right before checking death to ensure all end of turn processes complete
 
         yield return StartCoroutine(GridController.gridController.CheckDeath());
 

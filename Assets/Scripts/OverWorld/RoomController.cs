@@ -80,6 +80,7 @@ public class RoomController : MonoBehaviour
 
     public void InitializeWorld(bool load = false)
     {
+        Debug.Log("room instantialized");
         Random.InitState(InformationLogger.infoLogger.seed);
 
         if (InformationLogger.infoLogger.isStoryMode)
@@ -91,25 +92,25 @@ public class RoomController : MonoBehaviour
             canvas = GetComponent<Canvas>();
             roomSeeds = new List<int>();
 
-            for (int i = StoryModeController.story.GetSetup().setups.Count; i > 1; i--)
+            for (int i = StoryModeController.story.GetCurrentRoomSetup().setups.Count; i > 1; i--)
             {
                 GameObject obj = Instantiate(smallRoomPrefab);
-                obj.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetSetup().setups.Count - i));
+                obj.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i));
                 if (InformationLogger.infoLogger.debug)
                     obj.GetComponent<SmallRoom>().SetSetup(debugRoom);
                 else
-                    obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetSetup().setups[StoryModeController.story.GetSetup().setups.Count - i]);
+                    obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i]);
                 smallRooms.Add(obj.GetComponent<SmallRoom>());
                 obj.transform.SetParent(transform);
                 obj.transform.position = transform.position + new Vector3(0, (bossRoom.transform.position.y - i) * 0.8f + 0.7f, 0);
 
                 obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
             }
-            bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetSetup().setups.Count - 1));
+            bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
             if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
                 bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
             else
-                bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetSetup().setups[StoryModeController.story.GetSetup().setups.Count - 1]);
+                bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1]);
 
             Refresh();
         }
@@ -220,7 +221,7 @@ public class RoomController : MonoBehaviour
                         room.SetColor(viableColor);
                 }
             }
-            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers()) || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetSetup().setups.Count - 2))             //Enable the boss room when viable
+            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers()) || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2))             //Enable the boss room when viable
                 bossRoom.SetSelectable(true);
             else
                 bossRoom.SetSelectable(false);

@@ -276,7 +276,11 @@ public class CardEffectsController : MonoBehaviour
         {
             caster.GetComponent<EnemyInformationController>().CardTriggerFinished();        //Used to sync enemy turns with card effect trigger times
         }
-        catch { }
+        catch
+        {
+            if (!isSimulation)
+                caster.GetComponent<PlayerMoveController>().ReportCast();                   //If not a simulation cast, report for achievement purposes
+        }
 
         try //Singleplayer
         {

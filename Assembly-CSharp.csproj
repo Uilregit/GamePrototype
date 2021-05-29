@@ -137,7 +137,9 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageAll.cs" />
     <Compile Include="Assets\Scripts\BuffDescriptionController.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MultiplayerGameController.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryModeEndSceenController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\PiercingDamageAll.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryModeEndItemController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawLastPlayedCardEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CreateANYEnergyCard.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageDivided.cs" />
@@ -228,8 +230,8 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\UI\StoryModeEndItemController.cs" />
-    <Compile Include="Assets\Scripts\UI\StoryModeEndSceenController.cs" />
+    <Compile Include="Assets\Scripts\StoryMode\StoryModeShopController.cs" />
+    <Compile Include="Assets\Scripts\Card\StoryModeShopCardController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

@@ -409,7 +409,7 @@ public class GridController : MonoBehaviour
             s += "\n";
             //DebugPlus.LogOnScreen(s).Duration(10);
         }
-        Debug.Log(s);
+        //Debug.Log(s);
         return s;
     }
 

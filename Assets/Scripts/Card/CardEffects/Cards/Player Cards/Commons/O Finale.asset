@@ -47,3 +47,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 000000003c00000028000000
+  materialAmounts: 010000000800000004000000

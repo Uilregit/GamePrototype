@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-1
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: d014302788fe7204cad56d9e796a3ebd, type: 2}
+  - {fileID: 11400000, guid: 1199a62c50a63634da1e8f0b9347deb4, type: 2}
+  - {fileID: 11400000, guid: 866f9312a3b2bb84f917a5cbe6d75f67, type: 2}
   challenges: 00000000f4030000f5030000
   valueType: 000000000100000001000000
   challengeValues: 000000000200000005000000
   challengeComparisonType: 000000000000000000000000
-  rewardTypes: 000000000a0000001e0000002800000032000000
-  rewardAmounts: 0100000002000000050000000500000005000000
-  rewardCosts: 3200000032000000140000001400000014000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 000000000a000000140000001e00000028000000
+  rewardAmounts: 0100000002000000020000000500000005000000
+  rewardCosts: 3200000014000000140000001400000014000000
   challengeRewardBought: 000000
-  flavorText: Members of the guild go on hikes, weekend camps, and assassination
-    missions
+  flavorText: The woods are slightly off limits due to all of the murder

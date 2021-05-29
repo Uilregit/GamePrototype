@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RewardsMenuController : MonoBehaviour
 {
@@ -127,12 +128,22 @@ public class RewardsMenuController : MonoBehaviour
         numRewardsTaken += 1;
         if (numRewards == numRewardsTaken)
         {
-            if (RoomController.roomController.GetWorldLevel() != 2 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
-                RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
-            RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
-            RoomController.roomController.Refresh();
-            InformationLogger.infoLogger.SaveGame(false);
-            GameController.gameController.LoadScene("OverworldScene", true, deckId);
+            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1)        //If it's story mode's last room, go to end
+            {
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
+                AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
+                StoryModeController.story.ReportRoomCompleted();
+                SceneManager.LoadScene("StoryModeEndScene");
+            }
+            else
+            {
+                if (RoomController.roomController.GetWorldLevel() != 2 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)                                           //eles go to overworld
+                    RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
+                RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+                RoomController.roomController.Refresh();
+                InformationLogger.infoLogger.SaveGame(false);
+                GameController.gameController.LoadScene("OverworldScene", true, deckId);
+            }
         }
     }
 

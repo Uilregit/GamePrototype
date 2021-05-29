@@ -9,4 +9,14 @@ public class StoryRoomController : MonoBehaviour
     public bool unlockRequire3Stars = false;
     public bool startHidden = false;
     public StoryRoomSetup setup;
+    public StoryRoomType roomType;
+
+    public enum StoryRoomType
+    {
+        Combat = 0,
+        Boss = 5,
+        Shop = 10,
+        Arena = 50,
+        NewWorld = 100
+    }
 }

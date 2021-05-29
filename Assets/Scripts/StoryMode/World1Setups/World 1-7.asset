@@ -20,6 +20,11 @@ MonoBehaviour:
   challenges: 000000003004000031040000
   valueType: 000000000100000001000000
   challengeValues: 000000000500000014000000
-  challengeComparisonType: 000000000000000000000000
+  challengeComparisonType: 0000000000000000000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 0000000000000000000000000000000000000000
+  rewardAmounts: 0000000000000000000000000000000000000000
+  rewardCosts: 
+  challengeRewardBought: 000000
   flavorText: Aspiring necromancers often seek "future corpses", and use healing
     magic to them... fresh

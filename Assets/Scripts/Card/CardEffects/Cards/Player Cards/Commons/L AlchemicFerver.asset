@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   name: Alchemic Ferver
   energyCost: 0
-  manaCost: 3
+  manaCost: 2
   range: 0
   radius: 0
   casterColor: 5
@@ -44,3 +44,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 0000000050000000
+  materialAmounts: 010000000c000000

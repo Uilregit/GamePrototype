@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-4
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: c50ca31df65112d408f7a29402eeeae6, type: 2}
+  - {fileID: 11400000, guid: 2ac07689fd4eef647b2d1f908ea72e74, type: 2}
+  - {fileID: 11400000, guid: b56bcd648f75f46419c1fc4ed4d05598, type: 2}
   challenges: 000000001204000013040000
-  valueType: 000000000100000001000000
+  valueType: 000000000a0000000a000000
   challengeValues: 000000000500000014000000
   challengeComparisonType: 000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: 000000000a000000020000006400000082000000
+  rewardAmounts: 0100000002000000010000000500000005000000
+  rewardCosts: 3200000032000000320000001400000014000000
+  challengeRewardBought: 000000
   flavorText: 'Squirrel merchants'' bouty posters usually say: wanted dead or very
     dead'

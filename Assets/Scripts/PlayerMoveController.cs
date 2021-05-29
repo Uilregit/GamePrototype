@@ -56,7 +56,7 @@ public class PlayerMoveController : MonoBehaviour
         Vector2 roundedPosition = GridController.gridController.GetRoundedVector(newlocation, GetComponent<HealthController>().size);
         int moveRangeLeft = Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0);
 
-        if (CheckIfPositionValid(roundedPosition))
+        if (CheckIfPositionValid(roundedPosition))          //If it's a valid pathable position, draw path preview to location
         {
             if (GridController.gridController.GetObjectAtLocation(roundedPosition).Count == 0)
             {
@@ -67,7 +67,7 @@ public class PlayerMoveController : MonoBehaviour
 
                     for (int i = 0; i < 10; i++)
                     {
-                        path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player", "Enemy" }, new List<Vector2> { Vector2.zero }, 1);
+                        path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
                         if (path.Count < moveRangeLeft)
                             break;
                     }
@@ -76,7 +76,7 @@ public class PlayerMoveController : MonoBehaviour
                 }
             }
         }
-        else
+        else                                                //If final loc is not valid, draw path preview to last good position
         {
             moveShadow.transform.position = lastGoodPosition;
             if (lastHoverLocation != lastGoodPosition)
@@ -147,7 +147,7 @@ public class PlayerMoveController : MonoBehaviour
 
     public void ReportTurnBasedAchievements()
     {
-        AchievementSystem.achieve.OnNotify(castFromLocation.Count, StoryRoomSetup.ChallengeType.CastLocationsPerTurn);
+        AchievementSystem.achieve.OnNotify(castFromLocation.Distinct().ToList().Count, StoryRoomSetup.ChallengeType.CastLocationsPerTurn);
         AchievementSystem.achieve.OnNotify(movedDistance, StoryRoomSetup.ChallengeType.CharDistMovedPerTurn);
     }
 
@@ -261,7 +261,10 @@ public class PlayerMoveController : MonoBehaviour
         path = new List<Vector2>();
         TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
         //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
+    }
 
+    public void ReportCast()
+    {
         castFromLocation.Add(transform.position);
     }
 
