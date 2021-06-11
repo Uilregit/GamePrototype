@@ -11,6 +11,18 @@ TextureImporter:
   - first:
       213: -200898542965462881
     second: Gray Out Template_2
+  - first:
+      213: -7010401856490536372
+    second: Gray Out Template_0
+  - first:
+      213: -7018289200671074743
+    second: Gray Out Template_1
+  - first:
+      213: -8406320926514487707
+    second: Gray Out Template_2
+  - first:
+      213: -1416647141714146131
+    second: Gray Out Template_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -137,19 +149,19 @@ TextureImporter:
       name: Gray Out Template_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 352
-        width: 255
+        x: 3
+        y: 686
+        width: 253
         height: 334
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c73a0dcb813fa080800000000000000
-      internalID: -9174059439420196921
+      spriteID: c42842b77ac06be90800000000000000
+      internalID: -7010401856490536372
       vertices: []
       indices: 
       edges: []
@@ -159,39 +171,39 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 10
-        width: 253
+        y: 344
+        width: 248
         height: 342
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d2f399cd60ada850800000000000000
-      internalID: 6389939839702397656
+      spriteID: 9465a0f08270a9e90800000000000000
+      internalID: -7018289200671074743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gray Out Template_2
+      name: Gray Out Template_3
       rect:
         serializedVersion: 2
-        x: 261
-        y: 66
-        width: 5
-        height: 18
+        x: 9
+        y: 0
+        width: 247
+        height: 339
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9866aee6d3463df0800000000000000
-      internalID: -200898542965462881
+      spriteID: dac4e0a2eee075ce0800000000000000
+      internalID: -1416647141714146131
       vertices: []
       indices: 
       edges: []

@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class StoryModeShopCardController : MonoBehaviour
 {
+    public int index;
+    public bool isDailyCard;
+
     private CardController card;
     private Dictionary<StoryModeController.RewardsType, int> materials;
     private float clickedTime;
-    private Collider2D col;
     private CardDisplay cardDisplay;
     private bool picked = false;
 
@@ -24,12 +26,13 @@ public class StoryModeShopCardController : MonoBehaviour
     private Canvas originalCanvas;
     private Vector3 localScale;
     private Vector3 originalLocation;
+
+    private bool bought = false;
     //private int originalSorterOrder;
 
     private void Awake()
     {
         cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
-        col = GetComponent<Collider2D>();
         localScale = transform.localScale;
         originalLocation = transform.position;
         originalCanvas = transform.parent.GetComponent<Canvas>();
@@ -89,54 +92,55 @@ public class StoryModeShopCardController : MonoBehaviour
     {
         picked = true;
 
-        Hide();
-        soldOutBack.enabled = true;
-        soldOutText.enabled = true;
-        /*
-        CollectionController.collectionController.AddRewardsCard(card, false);
-        ResourceController.resource.ChangeGold(-price);
-        ShopController.shop.ReportBoughtCard(card);
-        ScoreController.score.UpdateGoldUsed(price);
-        */
-
-        col.enabled = false;
-        //cardDisplay.Hide();
+        StoryModeShopController.shop.ReportCardSelected(this, materials, ResetBuyable(), bought);
     }
 
-    public void ResetBuyable()
+    public void SetCardBought()
     {
-        if (picked)
-            return;
+        bought = true;
+        cardDisplay.SetHighLight(false);
+        soldOutBack.enabled = true;
+        soldOutText.enabled = true;
 
+        StoryModeController.story.SetCardBought(isDailyCard, index);
+
+        InformationLogger.infoLogger.SaveStoryModeGame();
+    }
+
+    public bool ResetBuyable()
+    {
         bool hasEnoughMaterials = true;
-        int index = 0;
+        int i = 0;
         foreach (StoryModeController.RewardsType m in materials.Keys)
         {
             if (!StoryModeController.story.GetItemsBought().ContainsKey(m) || StoryModeController.story.GetItemsBought()[m] < materials[m])
             {
                 hasEnoughMaterials = false;
 
-                materialBack[index].color = Color.red;
+                materialBack[i].color = Color.red;
             }
-            index++;
+            i++;
         }
 
         if (hasEnoughMaterials)
             Show();
         else
             Hide();
+
+        if (bought)
+            SetCardBought();
+
+        return hasEnoughMaterials;
     }
 
     public void Hide()
     {
         cardDisplay.SetHighLight(false);
-        col.enabled = false;
     }
 
     public void Show()
     {
         cardDisplay.SetHighLight(true);
-        col.enabled = true;
     }
 
     private IEnumerator EnlargeCard()
@@ -148,5 +152,10 @@ public class StoryModeShopCardController : MonoBehaviour
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, false);
         cardDisplay.SetToolTip(true, -1, 1, false);
+    }
+
+    public CardController GetCardController()
+    {
+        return card;
     }
 }

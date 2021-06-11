@@ -216,18 +216,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 25
-        width: 250
-        height: 343
-      alignment: 9
-      pivot: {x: 0.5353093, y: 0.5}
+        y: 346
+        width: 246
+        height: 341
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ad88b4a42aaea880800000000000000
-      internalID: -8597747564244595293
+      spriteID: 18ce0ac0c9b319af0800000000000000
+      internalID: -391466151191712639
       vertices: []
       indices: 
       edges: []
@@ -236,19 +236,40 @@ TextureImporter:
       name: Black Card Template_1
       rect:
         serializedVersion: 2
-        x: 3
-        y: 367
-        width: 253
+        x: 1
+        y: 686
+        width: 255
         height: 334
-      alignment: 9
-      pivot: {x: 0.4841107, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c6435c7435460d00800000000000000
-      internalID: 938513664079775433
+      spriteID: bbee756b72f5624f0800000000000000
+      internalID: -853890455172550981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Black Card Template_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 4
+        width: 244
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f915784291ff30110800000000000000
+      internalID: 1226104007027020191
       vertices: []
       indices: 
       edges: []

@@ -1019,7 +1019,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResurrectCard: {fileID: 11400000, guid: 69878ebc9e335a748a68637cfbf2a5d1, type: 2}
-  lootTable: {fileID: 11400000, guid: 0af409872f4f84a4c88ddf0f2115195e, type: 2}
+  cardLootTable: {fileID: 11400000, guid: 0af409872f4f84a4c88ddf0f2115195e, type: 2}
+  equipmentLootTable: {fileID: 11400000, guid: 1087c9a7a641b224fa597f4ea49c640f, type: 2}
   rarePercentage: 0
 --- !u!4 &179996406
 Transform:

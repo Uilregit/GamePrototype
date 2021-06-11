@@ -88,6 +88,9 @@ public class StoryModeSaveFile
     public Dictionary<string, int> weaponUnlocks;
     public Dictionary<StoryModeController.RewardsType, int> itemsUnlocked;
     public Dictionary<int, bool[]> challengeItemsBought;
+
+    public Dictionary<int, bool[]> dailyBought;
+    public Dictionary<int, bool[]> weeklyBought;
 }
 
 [System.Serializable]
@@ -617,6 +620,8 @@ public class InformationLogger : MonoBehaviour
         output.cardSelected = StoryModeController.story.GetCardSelected();
         output.itemsUnlocked = StoryModeController.story.GetItemsBought();
         output.challengeItemsBought = StoryModeController.story.GetChallengeItemsBought();
+        output.dailyBought = StoryModeController.story.GetDailyBought();
+        output.weeklyBought = StoryModeController.story.GetWeeklyBought();
 
         return output;
     }
@@ -642,6 +647,8 @@ public class InformationLogger : MonoBehaviour
         StoryModeController.story.SetCardSelected(file.cardSelected);
         StoryModeController.story.SetItemsBought(file.itemsUnlocked);
         StoryModeController.story.SetChallengeItemsBought(file.challengeItemsBought);
+        StoryModeController.story.SetDailyBought(file.dailyBought);
+        StoryModeController.story.SetWeeklyBought(file.weeklyBought);
     }
 
     private StoryModeSaveFile LoadStoryModeGameFile()

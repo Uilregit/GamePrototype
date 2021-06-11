@@ -759,6 +759,8 @@
  * Added item system that keeps track of item inventory
  * Added tracking to if challenge items have been sold
  * Added tracking for all item inventory across singeplayer games
+ * Added tracking of bought cards (daily/weekly special or otherwise) across singeplayer games
+ * Added system and UI for selecting weapons and accessories for different colors
  * 
  * -- Story --
  * Added flavor text for first 10 rooms in world 1
@@ -769,6 +771,10 @@
  * Added unlocked material list to story mode shop screen
  * Added materials icon to story mode end shop screen
  * Added achievement progress for unsatisfied achievements in final shop screen
+ * Added items and stars tabs to main story mode screen
+ * Added new card crafting screen that shows required and obtained materials
+ * Reworked deck manager to account for weapons and equipments
+ * Added way to navigate between Map, Party, Gear, Card, and Skill tabs in story mode
  * 
  * -- Bugs --
  * Fixed room not showing yellow even if achievements are fully done for the room

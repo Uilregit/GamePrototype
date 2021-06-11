@@ -57,29 +57,17 @@ public class PartyController : MonoBehaviour
         string[] output = new string[3];
 
         for (int i = 0; i < 3; i++)
-        {
-            switch (partyColors[i])
-            {
-                case Card.CasterColor.Red:
-                    output[i] = "Red";
-                    break;
-                case Card.CasterColor.Blue:
-                    output[i] = "Blue";
-                    break;
-                case Card.CasterColor.Green:
-                    output[i] = "Green";
-                    break;
-                case Card.CasterColor.Orange:
-                    output[i] = "Orange";
-                    break;
-                case Card.CasterColor.White:
-                    output[i] = "White";
-                    break;
-                case Card.CasterColor.Black:
-                    output[i] = "Black";
-                    break;
-            }
-        }
+            output[i] = GetPlayerColorText(partyColors[i]);
+
+        return output;
+    }
+
+    public string[] GetPotentialPlayerTexts()
+    {
+        string[] output = new string[potentialPlayerColors.Length];
+
+        for(int i = 0; i < potentialPlayerColors.Length; i ++)
+            output[i] = GetPlayerColorText(potentialPlayerColors[i]);
 
         return output;
     }

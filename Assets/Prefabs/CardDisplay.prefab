@@ -251,20 +251,28 @@ MonoBehaviour:
   lineRenderer: {fileID: 6073473462300651164}
   attackGreyOut: {fileID: 6389939839702397656, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
   skillGreyOut: {fileID: -9174059439420196921, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
+  weaponGreyOut: {fileID: -1416647141714146131, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
   redAttackBack: {fileID: 21300000, guid: ff50fd8d801c31b47b7f19ffc22c1819, type: 3}
   redSkillBack: {fileID: 21300002, guid: ff50fd8d801c31b47b7f19ffc22c1819, type: 3}
+  redWeaponBack: {fileID: 21300004, guid: ff50fd8d801c31b47b7f19ffc22c1819, type: 3}
   greenAttackBack: {fileID: 21300004, guid: a7604c6ad2bcce74d946f9b61e5e0ef4, type: 3}
   greenSkillBack: {fileID: 21300000, guid: a7604c6ad2bcce74d946f9b61e5e0ef4, type: 3}
+  greenWeaponBack: {fileID: 21300008, guid: a7604c6ad2bcce74d946f9b61e5e0ef4, type: 3}
   blueAttackBack: {fileID: 21300002, guid: 1db5845ebde3a1c41b30689948ad225c, type: 3}
   blueSkillBack: {fileID: 21300000, guid: 1db5845ebde3a1c41b30689948ad225c, type: 3}
+  blueWeaponBack: {fileID: 21300006, guid: 1db5845ebde3a1c41b30689948ad225c, type: 3}
   orangeAttackBack: {fileID: -949108279755179004, guid: 9ec8f1121b265a94197f140803640f8a, type: 3}
   orangeSkillBack: {fileID: -7627848690287100978, guid: 9ec8f1121b265a94197f140803640f8a, type: 3}
+  orangeWeaponBack: {fileID: -5075904127233720438, guid: 9ec8f1121b265a94197f140803640f8a, type: 3}
   whiteAttackBack: {fileID: -8727725049631794147, guid: 23b86a177adf24443bec30f6cb04f474, type: 3}
   whiteSkillBack: {fileID: 2788093962928366136, guid: 23b86a177adf24443bec30f6cb04f474, type: 3}
+  whiteWeaponBack: {fileID: -2552466098527649407, guid: 23b86a177adf24443bec30f6cb04f474, type: 3}
   blackAttackBack: {fileID: -8597747564244595293, guid: 0c9ee798e5c661143bc0ac6bfbb74189, type: 3}
   blackSkillBack: {fileID: 938513664079775433, guid: 0c9ee798e5c661143bc0ac6bfbb74189, type: 3}
+  blackWeaponBack: {fileID: 1226104007027020191, guid: 0c9ee798e5c661143bc0ac6bfbb74189, type: 3}
   enemyAttackCardBack: {fileID: -6711108833145869290, guid: fd0598a937063b644ae76519d49afc00, type: 3}
   enemySkillCardBack: {fileID: -585757995719137323, guid: fd0598a937063b644ae76519d49afc00, type: 3}
+  enemyWeaponBack: {fileID: 4246659446456090789, guid: fd0598a937063b644ae76519d49afc00, type: 3}
   passiveCardBack: {fileID: 21300000, guid: 22239c34accf272428051bdae5351059, type: 3}
 --- !u!120 &6073473462300651164
 LineRenderer:

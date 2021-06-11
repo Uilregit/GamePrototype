@@ -44,6 +44,12 @@ TextureImporter:
   - first:
       213: -3294482100903515814
     second: White Card Template_13
+  - first:
+      213: -6259907231453968658
+    second: White Card Template_0
+  - first:
+      213: 856056878527025484
+    second: White Card Template_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -171,18 +177,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 21
-        width: 253
-        height: 343
-      alignment: 9
-      pivot: {x: 0.53242284, y: 0.5}
+        y: 346
+        width: 252
+        height: 341
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1c1b6f0f44e0e680800000000000000
-      internalID: -8727725049631794147
+      spriteID: ee689461a875029a0800000000000000
+      internalID: -6259907231453968658
       vertices: []
       indices: 
       edges: []
@@ -191,19 +197,40 @@ TextureImporter:
       name: White Card Template_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 363
-        width: 256
+        x: 4
+        y: 686
+        width: 249
         height: 334
-      alignment: 9
-      pivot: {x: 0.49204165, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 832a1c4ffac41b620800000000000000
-      internalID: 2788093962928366136
+      spriteID: c411228023351eb00800000000000000
+      internalID: 856056878527025484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White Card Template_3
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 3
+        width: 247
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18148006b91d39cd0800000000000000
+      internalID: -2552466098527649407
       vertices: []
       indices: 
       edges: []

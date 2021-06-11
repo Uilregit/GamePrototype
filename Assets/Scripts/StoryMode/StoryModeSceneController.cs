@@ -27,6 +27,14 @@ public class StoryModeSceneController : MonoBehaviour
     public Text flavorTextbox;
     public Image[] challengeStars;
 
+    public RectTransform stars;
+    public RectTransform items;
+    public Image starsButton;
+    public Image itemsButton;
+    public Text[] itemsList;
+    public Image[] itemsSoldOutIcons;
+    public Image[] itemsIcons;
+
     public Image enterButton;
 
     //private List<int> completedRooms = new List<int>();
@@ -96,6 +104,7 @@ public class StoryModeSceneController : MonoBehaviour
         enterButton.GetComponent<Collider2D>().enabled = false;
 
         ReportRoomSelected(selectedRoom.roomId);
+        StarsViewSelected();
     }
 
     public void ReportRoomSelected(int roomId)
@@ -132,10 +141,40 @@ public class StoryModeSceneController : MonoBehaviour
             challengeStars[i].transform.GetChild(0).GetComponent<Text>().text = selectedRoom.setup.GetChallengeText(selectedRoom.roomId, i);
         }
 
+        for (int i = 0; i < 5; i++)
+        {
+            itemsList[i].text = selectedRoom.setup.rewardTypes[i] + " x" + selectedRoom.setup.rewardAmounts[i];
+            itemsIcons[i].sprite = StoryModeController.story.GetRewardSprite(selectedRoom.setup.rewardTypes[i]);
+            itemsIcons[i].color = StoryModeController.story.GetRewardsColor(selectedRoom.setup.rewardTypes[i]);
+
+            if (i < 3 && StoryModeController.story.GetChallengeItemsBought().ContainsKey(roomId))
+                itemsSoldOutIcons[i].gameObject.SetActive(StoryModeController.story.GetChallengeItemsBought()[roomId][i]);
+            else
+                itemsSoldOutIcons[i].gameObject.SetActive(false);
+        }
+
         enterButton.color = unlockedColor;
         enterButton.GetComponent<Collider2D>().enabled = true;
 
         StoryModeController.story.SetCurrentRoomSetup(selectedRoom.setup);
+    }
+
+    public void StarsViewSelected()
+    {
+        stars.gameObject.SetActive(true);
+        items.gameObject.SetActive(false);
+
+        starsButton.color = goldColor;
+        itemsButton.color = shopColor;
+    }
+
+    public void ItemsViewSelected()
+    {
+        items.gameObject.SetActive(true);
+        stars.gameObject.SetActive(false);
+
+        starsButton.color = shopColor;
+        itemsButton.color = goldColor;
     }
 
     private bool ChallengeSatisfied(StoryRoomController setup, int index)

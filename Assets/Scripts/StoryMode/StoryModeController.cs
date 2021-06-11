@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StoryModeController : MonoBehaviour
 {
@@ -12,11 +13,14 @@ public class StoryModeController : MonoBehaviour
 
     private List<string> cardCraftable = new List<string>();
     private Dictionary<string, int> cardUnlocked = new Dictionary<string, int>();
+    private Dictionary<string, int> equipmentUnlocked = new Dictionary<string, int>() { { "Small Pocket", 5 }, { "Messenger Bag", 5 } };
+    private Dictionary<int, bool[]> dailyBought = new Dictionary<int, bool[]>();
+    private Dictionary<int, bool[]> weeklyBought = new Dictionary<int, bool[]>();
     private List<string> selectedcards = new List<string>();
+    private Dictionary<Card.CasterColor, List<string>> selectedEquipments = new Dictionary<Card.CasterColor, List<string>>();
 
     private Dictionary<RewardsType, int> unlockedItems = new Dictionary<RewardsType, int>();
     private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();
-
 
     public Sprite blankCardSprite;
     public Sprite cardSlotSprite;
@@ -49,6 +53,8 @@ public class StoryModeController : MonoBehaviour
     public Color mythrilColor;
     public Color orichalcumColor;
     public Color AdamantiteColor;
+
+    private Vector2 desiredCameraLocation;
 
     public enum RewardsType
     {
@@ -144,6 +150,12 @@ public class StoryModeController : MonoBehaviour
                 for (int i = 0; i < cardUnlocked[key]; i++)
                     selectedcards.Add(key);
 
+            equipmentUnlocked = new Dictionary<string, int>();
+            selectedEquipments = new Dictionary<Card.CasterColor, List<string>>();
+
+            foreach (Card.CasterColor casterColor in PartyController.party.potentialPlayerColors)
+                selectedEquipments[casterColor] = new List<string>();
+
             if (!InformationLogger.infoLogger.debug)
                 InformationLogger.infoLogger.SaveStoryModeGame();
 
@@ -154,6 +166,10 @@ public class StoryModeController : MonoBehaviour
             InformationLogger.infoLogger.LoadStoryModeGame();
             Debug.Log("had save file");
         }
+
+        CollectionController.collectionController.SetCompleteEquipments(equipmentUnlocked);
+        CollectionController.collectionController.SetSelectedEquipments(selectedEquipments);
+        //CollectionController.collectionController.RefreshEquipments();
 
         CollectionController.collectionController.SetSelectedDeck(selectedcards.ToArray());
         List<string> completeDeck = new List<string>();
@@ -294,23 +310,26 @@ public class StoryModeController : MonoBehaviour
 
     public Dictionary<RewardsType, int> GetItemsBought()
     {
+        /*
         Debug.Log("Get Items Bought: " + unlockedItems.Keys.Count + " items");
         foreach (RewardsType name in unlockedItems.Keys)
         {
             Debug.Log("    " + name + ": " + unlockedItems[name]);
         }
+        */
         return unlockedItems;
     }
 
     public void SetItemsBought(Dictionary<RewardsType, int> value)
     {
         unlockedItems = value;
-
+        /*
         Debug.Log("Set Items Bought: " + value.Keys.Count + " items");
         foreach (RewardsType name in unlockedItems.Keys)
         {
             Debug.Log("    " + name + ": " + unlockedItems[name]);
         }
+        */
     }
 
     public void SetChallengeItemsBought(Dictionary<int, bool[]> value)
@@ -341,6 +360,69 @@ public class StoryModeController : MonoBehaviour
                 output++;
 
         return output;
+    }
+
+    public void ReportCardBought(string cardName, Dictionary<StoryModeController.RewardsType, int> usedMaterials)
+    {
+        if (cardUnlocked.ContainsKey(cardName))
+            cardUnlocked[cardName] += 1;
+        else
+            cardUnlocked[cardName] = 1;
+
+        foreach (StoryModeController.RewardsType m in usedMaterials.Keys)
+            unlockedItems[m] -= usedMaterials[m];
+
+        //InformationLogger.infoLogger.SaveStoryModeGame();
+    }
+
+    public void SetDailyBought(Dictionary<int, bool[]> daily)
+    {
+        dailyBought = daily;
+        if (daily == null)
+        {
+            dailyBought = new Dictionary<int, bool[]>();
+            dailyBought[GetDailySeed()] = new bool[] { false, false, false };
+        }
+    }
+
+    public void SetWeeklyBought(Dictionary<int, bool[]> weekly)
+    {
+        weeklyBought = weekly;
+        if (weekly == null)
+        {
+            weeklyBought = new Dictionary<int, bool[]>();
+            weeklyBought[GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
+        }
+    }
+
+    public Dictionary<int, bool[]> GetDailyBought()
+    {
+        if (!dailyBought.ContainsKey(GetDailySeed()))
+        {
+            dailyBought = new Dictionary<int, bool[]>();
+            dailyBought[GetDailySeed()] = new bool[] { false, false, false };
+        }
+
+        return dailyBought;
+    }
+
+    public Dictionary<int, bool[]> GetWeeklyBought()
+    {
+        if (!weeklyBought.ContainsKey(GetWeeklySeed()))
+        {
+            weeklyBought = new Dictionary<int, bool[]>();
+            weeklyBought[GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
+        }
+
+        return weeklyBought;
+    }
+
+    public void SetCardBought(bool isDailyCard, int index)
+    {
+        if (isDailyCard)
+            dailyBought[GetDailySeed()][index] = true;
+        else
+            weeklyBought[GetWeeklySeed()][index] = true;
     }
 
     public Sprite GetRewardSprite(RewardsType reward)
@@ -448,5 +530,78 @@ public class StoryModeController : MonoBehaviour
             return AdamantiteColor;
 
         return new Color(1, 0, 1);
+    }
+
+    public int GetDailySeed()
+    {
+        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        return (int)(System.DateTime.UtcNow - epochStart).TotalDays;
+    }
+
+    public int GetWeeklySeed()
+    {
+        System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+
+        int day = (int)(System.DateTime.UtcNow - epochStart).TotalDays;
+        return (int)(day / 7);
+    }
+
+    public void GoToMapScene()
+    {
+        if (SceneManager.GetActiveScene().name != "StoryModeScene")
+        {
+            SceneManager.LoadScene("StoryModeScene");
+            desiredCameraLocation = new Vector2(0, 0);
+        }
+        else
+            CameraController.camera.transform.position = new Vector3(0, 0, CameraController.camera.transform.position.z);
+    }
+
+    public void GoToPartyScene()
+    {
+        if (SceneManager.GetActiveScene().name != "TavernScene")
+            SceneManager.LoadScene("TavernScene");
+
+        desiredCameraLocation = new Vector2(0, 0);
+    }
+
+    public void GoToCardScene()
+    {
+        if (SceneManager.GetActiveScene().name != "StoryModeScene")
+        {
+            SceneManager.LoadScene("StoryModeScene");
+            desiredCameraLocation = new Vector2(8, 0);
+        }
+        else
+            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
+
+        CollectionController.collectionController.RefreshDecks();
+        CollectionController.collectionController.SetIsShowingCards(true);
+    }
+
+    public void GoToGearScene()
+    {
+        if (SceneManager.GetActiveScene().name != "StoryModeScene")
+        {
+            SceneManager.LoadScene("StoryModeScene");
+            desiredCameraLocation = new Vector2(8, 0);
+        }
+        else
+            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
+
+        CollectionController.collectionController.RefreshEquipments();
+        CollectionController.collectionController.SetIsShowingCards(false);
+    }
+
+    public void SetMenuBar(bool state)
+    {
+        GetComponent<Canvas>().enabled = state;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (StoryModeController.story != this)
+            return;
+        CameraController.camera.transform.position = new Vector3(desiredCameraLocation.x, desiredCameraLocation.y, CameraController.camera.transform.position.z);
     }
 }

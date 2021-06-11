@@ -9,7 +9,8 @@ public class LootController : MonoBehaviour
 
     public Card ResurrectCard;
 
-    public CardLootTable lootTable;
+    public CardLootTable cardLootTable;
+    public EquipmentLootTable equipmentLootTable;
     public int rarePercentage = 30;
 
     private List<Card> rareCards = new List<Card>();
@@ -43,7 +44,7 @@ public class LootController : MonoBehaviour
 
     public void ResetPartyLootTable()
     {
-        foreach (Card card in lootTable.cardLoot)
+        foreach (Card card in cardLootTable.cardLoot)
         {
             if (card.manaCost > 0)
                 allManaCards.Add(card);
@@ -99,7 +100,7 @@ public class LootController : MonoBehaviour
     public List<Card> GetAllCards(Card.CasterColor color)
     {
         List<Card> output = new List<Card>();
-        foreach (Card card in lootTable.cardLoot)
+        foreach (Card card in cardLootTable.cardLoot)
             if (card.casterColor == color)
                 output.Add(card);
         return output;
@@ -107,10 +108,10 @@ public class LootController : MonoBehaviour
 
     public Card GetCardWithName(string name)
     {
-        foreach (Card c in lootTable.cardLoot)
+        foreach (Card c in cardLootTable.cardLoot)
             if (c.name == name)
                 return c;
-        foreach (Card c in lootTable.tokenCards)
+        foreach (Card c in cardLootTable.tokenCards)
             if (c.name == name)
                 return c;
         return null;
@@ -146,5 +147,20 @@ public class LootController : MonoBehaviour
     {
         int index = Random.Range(0, allManaCards.Count);
         return allManaCards[index];
+    }
+
+    public Equipment GetEquipment(string name)
+    {
+        Equipment output = null;
+        foreach (Equipment e in equipmentLootTable.equipmentLoot)
+            if (e.equipmentName == name)
+                output = e;
+        return output;
+    }
+
+    public Equipment GetRandomEquipment()
+    {
+        int index = Random.Range(0, equipmentLootTable.equipmentLoot.Length);
+        return equipmentLootTable.equipmentLoot[index];
     }
 }

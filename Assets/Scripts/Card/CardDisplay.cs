@@ -41,20 +41,28 @@ public class CardDisplay : MonoBehaviour
 
     [SerializeField] private Sprite attackGreyOut;
     [SerializeField] private Sprite skillGreyOut;
+    [SerializeField] private Sprite weaponGreyOut;
     [SerializeField] private Sprite redAttackBack;
     [SerializeField] private Sprite redSkillBack;
+    [SerializeField] private Sprite redWeaponBack;
     [SerializeField] private Sprite greenAttackBack;
     [SerializeField] private Sprite greenSkillBack;
+    [SerializeField] private Sprite greenWeaponBack;
     [SerializeField] private Sprite blueAttackBack;
     [SerializeField] private Sprite blueSkillBack;
+    [SerializeField] private Sprite blueWeaponBack;
     [SerializeField] private Sprite orangeAttackBack;
     [SerializeField] private Sprite orangeSkillBack;
+    [SerializeField] private Sprite orangeWeaponBack;
     [SerializeField] private Sprite whiteAttackBack;
     [SerializeField] private Sprite whiteSkillBack;
+    [SerializeField] private Sprite whiteWeaponBack;
     [SerializeField] private Sprite blackAttackBack;
     [SerializeField] private Sprite blackSkillBack;
+    [SerializeField] private Sprite blackWeaponBack;
     [SerializeField] private Sprite enemyAttackCardBack;
     [SerializeField] private Sprite enemySkillCardBack;
+    [SerializeField] private Sprite enemyWeaponBack;
     [SerializeField] private Sprite passiveCardBack;
     //[SerializeField] private Sprite greyCardBack;
 
@@ -98,6 +106,56 @@ public class CardDisplay : MonoBehaviour
         description.enabled = true;
         energyCost.enabled = true;
         lineRenderer.enabled = true;
+    }
+
+    public void SetEquipment(Equipment equip, Card.CasterColor equipedChar)
+    {
+        switch (equipedChar)
+        {
+            case (Card.CasterColor.Blue):
+                cardBack.sprite = blueWeaponBack;
+                break;
+            case (Card.CasterColor.Red):
+                cardBack.sprite = redWeaponBack;
+                break;
+            case (Card.CasterColor.Green):
+                cardBack.sprite = greenWeaponBack;
+                break;
+            case (Card.CasterColor.Orange):
+                cardBack.sprite = orangeWeaponBack;
+                break;
+            case (Card.CasterColor.White):
+                cardBack.sprite = whiteWeaponBack;
+                break;
+            case (Card.CasterColor.Black):
+                cardBack.sprite = blackWeaponBack;
+                break;
+            default:
+                cardBack.sprite = passiveCardBack;
+                break;
+        }
+        cardGreyOut.sprite = weaponGreyOut;
+        cardWhiteOut.sprite = weaponGreyOut;
+
+        art.sprite = equip.art;
+        outline.sprite = cardBack.sprite;
+        cardName.text = equip.equipmentName;
+
+        energyCost.text = "";
+        manaCost.text = "";
+
+        string desc = "";
+        if (equip.isWeapon)
+            desc += "<b>Weapon</b>\n";
+        else
+            desc += "<b>Accessory</b>\n";
+
+        if (equip.numOfCardSlots == 1)
+            desc += equip.numOfCardSlots.ToString() + " card slot. ";
+        else
+            desc += equip.numOfCardSlots.ToString() + " card slots. ";
+        desc += equip.equipmentDescription;
+        description.text = desc;
     }
 
     public void SetCard(CardController card, bool dynamicNumbers = true)

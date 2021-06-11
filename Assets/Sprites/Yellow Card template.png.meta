@@ -44,6 +44,12 @@ TextureImporter:
   - first:
       213: -5000754445505555942
     second: Yellow Card template_13
+  - first:
+      213: 8834839119710501764
+    second: Yellow Card template_0
+  - first:
+      213: 1447443837767650820
+    second: Yellow Card template_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -170,19 +176,19 @@ TextureImporter:
       name: Yellow Card template_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 357
-        width: 252
+        x: 7
+        y: 686
+        width: 246
         height: 334
-      alignment: 9
-      pivot: {x: 0.49569994, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecb320fb700742690800000000000000
-      internalID: -7627848690287100978
+      spriteID: 48bb112de57ab9a70800000000000000
+      internalID: 8834839119710501764
       vertices: []
       indices: 
       edges: []
@@ -191,19 +197,40 @@ TextureImporter:
       name: Yellow Card template_1
       rect:
         serializedVersion: 2
-        x: 12
-        y: 15
-        width: 249
-        height: 342
-      alignment: 9
-      pivot: {x: 0.5338139, y: 0.5}
+        x: 17
+        y: 346
+        width: 244
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40c7fc35c0714d2f0800000000000000
-      internalID: -949108279755179004
+      spriteID: 40e0876608a561410800000000000000
+      internalID: 1447443837767650820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yellow Card template_2
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 2
+        width: 245
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f7b4ee614ce89b0800000000000000
+      internalID: -5075904127233720438
       vertices: []
       indices: 
       edges: []

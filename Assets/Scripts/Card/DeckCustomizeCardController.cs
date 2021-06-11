@@ -8,6 +8,7 @@ public class DeckCustomizeCardController : MonoBehaviour
     public float clickThreshold;
 
     private CardController card;
+    private Equipment equipment;
     private float clickedTime;
     public Text count;
     public Image greyOut;
@@ -20,6 +21,9 @@ public class DeckCustomizeCardController : MonoBehaviour
     private Vector3 originalLocation;
     private CardDisplay cardDisplay;
     //private int originalSorterOrder;
+
+    private bool isShowingCard = true;
+    private Card.CasterColor color = Card.CasterColor.Passive;
 
     private void Awake()
     {
@@ -37,7 +41,8 @@ public class DeckCustomizeCardController : MonoBehaviour
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
         highlight.enabled = false;
-        CollectionController.collectionController.RemoveCardFromNew(card);
+        if (isShowingCard)
+            CollectionController.collectionController.RemoveCardFromNew(card);
     }
 
     public void OnMouseUp()
@@ -53,13 +58,22 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void SelectCard()
     {
-        CollectionController.collectionController.AddCard(card);
+        if (isShowingCard)
+            CollectionController.collectionController.AddCard(card);
+        else
+            CollectionController.collectionController.AddEquipment(equipment, color);
     }
 
     public void SetCard(CardController newCard)
     {
         card = newCard;
         cardDisplay.SetCard(newCard, false);
+    }
+
+    public void SetEquipment(Equipment equip, Card.CasterColor value)
+    {
+        equipment = equip;
+        color = value;
     }
 
     public void SetCount(int newCount)
@@ -94,5 +108,10 @@ public class DeckCustomizeCardController : MonoBehaviour
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
         cardDisplay.SetToolTip(true, -1, 1, false);
+    }
+
+    public void SetIsShowingCard(bool value)
+    {
+        isShowingCard = value;
     }
 }

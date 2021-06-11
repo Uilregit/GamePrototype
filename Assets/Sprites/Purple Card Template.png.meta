@@ -44,6 +44,12 @@ TextureImporter:
   - first:
       213: 5794897858860221874
     second: Purple Card Template_13
+  - first:
+      213: -5093326654800308750
+    second: Purple Card Template_0
+  - first:
+      213: 2847600479496484298
+    second: Purple Card Template_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -170,19 +176,19 @@ TextureImporter:
       name: Purple Card Template_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 357
-        width: 250
+        x: 8
+        y: 686
+        width: 247
         height: 334
-      alignment: 9
-      pivot: {x: 0.495438, y: 0.5}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d7e0d4d438fed7f0800000000000000
-      internalID: -585757995719137323
+      spriteID: 2f5599f946ed059b0800000000000000
+      internalID: -5093326654800308750
       vertices: []
       indices: 
       edges: []
@@ -192,18 +198,39 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 15
+        y: 345
         width: 252
-        height: 342
-      alignment: 9
-      pivot: {x: 0.53952634, y: 0.5}
+        height: 341
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61caa5fb21a5dd2a0800000000000000
-      internalID: -6711108833145869290
+      spriteID: ac5be928c85b48720800000000000000
+      internalID: 2847600479496484298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple Card Template_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 4
+        width: 247
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a0821c444a2fea30800000000000000
+      internalID: 4246659446456090789
       vertices: []
       indices: 
       edges: []

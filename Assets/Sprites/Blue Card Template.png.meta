@@ -44,6 +44,12 @@ TextureImporter:
   - first:
       213: 21300026
     second: Blue Card Template_13
+  - first:
+      213: 6691323338717883827
+    second: Blue Card Template_0
+  - first:
+      213: -5544977617141113944
+    second: Blue Card Template_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -147,18 +153,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 352
+        y: 686
         width: 256
         height: 334
-      alignment: 9
-      pivot: {x: 0.43992501, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02305410000000000800000000000000
-      internalID: 21300000
+      spriteID: 3bd6f89df1b5cdc50800000000000000
+      internalID: 6691323338717883827
       vertices: []
       indices: 
       edges: []
@@ -168,18 +174,39 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 10
-        width: 254
+        y: 344
+        width: 250
         height: 342
-      alignment: 9
-      pivot: {x: 0.5307144, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22305410000000000800000000000000
-      internalID: 21300002
+      spriteID: 8abdfca5c384c03b0800000000000000
+      internalID: -5544977617141113944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Card Template_3
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 246
+        height: 339
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
