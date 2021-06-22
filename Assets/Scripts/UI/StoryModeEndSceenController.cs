@@ -14,6 +14,8 @@ public class StoryModeEndSceenController : MonoBehaviour
     private int totalGold = 0;
 
     private Dictionary<StoryModeController.RewardsType, int> boughtItems = new Dictionary<StoryModeController.RewardsType, int>();
+    private Dictionary<Card, int> boughtCards = new Dictionary<Card, int>();
+    private Dictionary<Equipment, int> boughtEquipiments = new Dictionary<Equipment, int>();
     private bool[] challengeItemsBought = new bool[3] { false, false, false };
 
     // Start is called before the first frame update
@@ -31,7 +33,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && !challengeItemsBought[i]);
-            items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i]);
+            items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
             if (challengeItemsBought[i])
                 items[i].SetBought();
         }
@@ -41,7 +43,7 @@ public class StoryModeEndSceenController : MonoBehaviour
             if (setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i])
             {
                 items[i].SetEnabled(true);
-                items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i]);
+                items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
             }
             else
                 items[i].SetEnabled(false);
@@ -57,15 +59,42 @@ public class StoryModeEndSceenController : MonoBehaviour
         else
             totalGold += gold;
 
-        if (bought)
+        if (name == StoryModeController.RewardsType.SpecificCard)
         {
-            if (boughtItems.ContainsKey(name))
-                boughtItems[name] += amount;
+            if (bought)
+            {
+                if (boughtCards.ContainsKey(items[index].GetCard()))
+                    boughtCards[items[index].GetCard()] += amount;
+                else
+                    boughtCards[items[index].GetCard()] = amount;
+            }
             else
-                boughtItems[name] = amount;
+                boughtCards[items[index].GetCard()] -= amount;
+        }
+        else if (name == StoryModeController.RewardsType.SpecificEquipment)
+        {
+            if (bought)
+            {
+                if (boughtEquipiments.ContainsKey(items[index].GetEquipment()))
+                    boughtEquipiments[items[index].GetEquipment()] += amount;
+                else
+                    boughtEquipiments[items[index].GetEquipment()] = amount;
+            }
+            else
+                boughtEquipiments[items[index].GetEquipment()] -= amount;
         }
         else
-            boughtItems[name] -= amount;
+        {
+            if (bought)
+            {
+                if (boughtItems.ContainsKey(name))
+                    boughtItems[name] += amount;
+                else
+                    boughtItems[name] = amount;
+            }
+            else
+                boughtItems[name] -= amount;
+        }
 
         if (index < 3)
             challengeItemsBought[index] = bought;
@@ -106,11 +135,14 @@ public class StoryModeEndSceenController : MonoBehaviour
     public void BuyAndExit()
     {
         StoryModeController.story.ReportItemsBought(boughtItems);
+        StoryModeController.story.ReportCardsBought(boughtCards);
+        StoryModeController.story.ReportEquipmentBought(boughtEquipiments);
         StoryModeController.story.AddChallengeItemsBought(StoryModeController.story.GetCurrentRoomID(), challengeItemsBought);
         Destroy(RoomController.roomController.gameObject);
         RoomController.roomController = null;
         InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
         StoryModeController.story.ResetDecks();
+        StoryModeController.story.SetMenuBar(true);
         SceneManager.LoadScene("StoryModeScene");
     }
 }

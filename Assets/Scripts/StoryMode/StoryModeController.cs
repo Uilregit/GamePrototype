@@ -1,26 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class StoryModeController : MonoBehaviour
 {
     public static StoryModeController story;
     private List<int> completedIds = new List<int>();
-    private Dictionary<int, int[]> challengeValues = new Dictionary<int, int[]>();
+    private Dictionary<int, int[]> challengeValues = new Dictionary<int, int[]>();              //<roomId, bestChallengeValue>
     private int currentRoomId = -1;
     private StoryRoomSetup currentRoomSetup;
 
     private List<string> cardCraftable = new List<string>();
-    private Dictionary<string, int> cardUnlocked = new Dictionary<string, int>();
-    private Dictionary<string, int> equipmentUnlocked = new Dictionary<string, int>() { { "Small Pocket", 5 }, { "Messenger Bag", 5 } };
-    private Dictionary<int, bool[]> dailyBought = new Dictionary<int, bool[]>();
-    private Dictionary<int, bool[]> weeklyBought = new Dictionary<int, bool[]>();
-    private List<string> selectedcards = new List<string>();
-    private Dictionary<Card.CasterColor, List<string>> selectedEquipments = new Dictionary<Card.CasterColor, List<string>>();
+    //private Dictionary<string, int> cardUnlocked = new Dictionary<string, int>();                                                           //<cardName, cardAmount>
+    //private Dictionary<string, int> equipmentUnlocked = new Dictionary<string, int>() { { "Small Pocket", 5 }, { "Messenger Bag", 5 }, { "Short Sword", 1 }, { "Stout Shield", 1 } };    //<equipmentName, equipmentAmount>
+    private Dictionary<int, bool[]> dailyBought = new Dictionary<int, bool[]>();                //<dayIDSeed, bought[]>
+    private Dictionary<int, bool[]> weeklyBought = new Dictionary<int, bool[]>();               //<weekIDSeed, bought[]>
+    //private Dictionary<string, string[]> selectedcards = new Dictionary<string, string[]>();    //<casterColor, cardName>
+    //private Dictionary<Card.CasterColor, List<string>> selectedEquipments = new Dictionary<Card.CasterColor, List<string>>();
 
     private Dictionary<RewardsType, int> unlockedItems = new Dictionary<RewardsType, int>();
-    private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();
+    private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();       //<roomID, ifItemBought[]>
+
+    public Color defaultMenuColor;
+    public Color selectedMenuColor;
+    public Color warningNotificationColor;
+    public Color newNotificationColor;
+    public Image[] menuIcons;
+    public Image[] menuNotifications;
 
     public Sprite blankCardSprite;
     public Sprite cardSlotSprite;
@@ -56,11 +64,25 @@ public class StoryModeController : MonoBehaviour
 
     private Vector2 desiredCameraLocation;
 
+    private MenuState menuState = MenuState.MapScreen;
+    private bool deckIncomplete = false;
+
+    public enum MenuState
+    {
+        MapScreen = 0,
+        PartyScreen = 10,
+        GearScreen = 20,
+        CardScreen = 30,
+        SkillsScreen = 40
+    }
+
     public enum RewardsType
     {
         BlankCard = 0,
         CardSlot = 2,
         WeaponBlueprint = 5,
+        SpecificCard = 7,
+        SpecificEquipment = 8,
 
         EnergyShard = 10,
         EnergyGem = 15,
@@ -133,8 +155,8 @@ public class StoryModeController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         completedIds = new List<int>();
-        //cardUnlocked = CollectionController.collectionController.GetCompleteDeckDict();
-        //cardCraftable = new List<string>(CollectionController.collectionController.GetCompleteDeckDict().Keys);
+
+        ShowMenuSelected(0);
 
         ResetDecks();
     }
@@ -143,18 +165,36 @@ public class StoryModeController : MonoBehaviour
     {
         if (!InformationLogger.infoLogger.GetHasStoryModeSaveFile())
         {
-            cardCraftable = new List<string>(CollectionController.collectionController.GetSelectedDeckDict().Keys);
-            cardUnlocked = CollectionController.collectionController.GetSelectedDeckDict();
+            //Instantiate all decks based off of storymode decks for the collection controller
+            List<string> cardCraftable = new List<string>();
+            Dictionary<string, int> completeDeck = new Dictionary<string, int>();
+            Dictionary<string, string[]> selectedcards = new Dictionary<string, string[]>();
+            foreach (EditorCardsWrapper cardWrapper in CollectionController.collectionController.storyModeDeck)
+            {
+                string color = cardWrapper.deck[0].casterColor.ToString();
+                List<string> cardNames = new List<string>();
+                foreach (Card c in cardWrapper.deck)
+                {
+                    cardCraftable.Add(c.name);
+                    if (completeDeck.ContainsKey(c.name))
+                        completeDeck[c.name] += 1;
+                    else
+                        completeDeck[c.name] = 1;
 
-            foreach (string key in cardUnlocked.Keys)
-                for (int i = 0; i < cardUnlocked[key]; i++)
-                    selectedcards.Add(key);
+                    cardNames.Add(c.name);
+                }
+                selectedcards[color] = cardNames.ToArray();
+            }
 
-            equipmentUnlocked = new Dictionary<string, int>();
-            selectedEquipments = new Dictionary<Card.CasterColor, List<string>>();
+            CollectionController.collectionController.SetCompleteDeck(completeDeck);
+            CollectionController.collectionController.SetSelectedDeck(selectedcards);
 
-            foreach (Card.CasterColor casterColor in PartyController.party.potentialPlayerColors)
-                selectedEquipments[casterColor] = new List<string>();
+            //Instantiate all equipments
+            Dictionary<string, string[]> selectedEquipments = new Dictionary<string, string[]>();
+            foreach (string color in PartyController.party.GetPotentialPlayerTexts())
+                selectedEquipments[color] = new string[0];
+            CollectionController.collectionController.SetCompleteEquipments(new Dictionary<string, int>());
+            CollectionController.collectionController.SetSelectedEquipments(selectedEquipments);
 
             if (!InformationLogger.infoLogger.debug)
                 InformationLogger.infoLogger.SaveStoryModeGame();
@@ -166,18 +206,18 @@ public class StoryModeController : MonoBehaviour
             InformationLogger.infoLogger.LoadStoryModeGame();
             Debug.Log("had save file");
         }
-
+        /*
         CollectionController.collectionController.SetCompleteEquipments(equipmentUnlocked);
         CollectionController.collectionController.SetSelectedEquipments(selectedEquipments);
-        //CollectionController.collectionController.RefreshEquipments();
 
-        CollectionController.collectionController.SetSelectedDeck(selectedcards.ToArray());
+        CollectionController.collectionController.SetSelectedDeck(selectedcards);
         List<string> completeDeck = new List<string>();
         foreach (string name in cardUnlocked.Keys)
             for (int i = 0; i < cardUnlocked[name]; i++)
                 completeDeck.Add(name);
-
+        
         CollectionController.collectionController.SetCompleteDeck(completeDeck.ToArray());
+        */
         CollectionController.collectionController.SetupStoryModeDeck();
     }
 
@@ -203,6 +243,7 @@ public class StoryModeController : MonoBehaviour
         for (int i = 0; i < 3; i++)
             Debug.Log(currentRoomSetup.challenges[i] + " | " + challengeValues[currentRoomId][i]);
 
+        InformationLogger.infoLogger.LoadStoryModeDecksAndEquipments();
         InformationLogger.infoLogger.SaveStoryModeGame();
     }
 
@@ -262,27 +303,6 @@ public class StoryModeController : MonoBehaviour
         return cardCraftable;
     }
 
-    public void SetCardUnlocked(Dictionary<string, int> value)
-    {
-        cardUnlocked = value;
-    }
-
-    public Dictionary<string, int> GetCardUnlocked()
-    {
-        return cardUnlocked;
-    }
-
-    public void SetCardSelected(List<string> value)
-    {
-        Debug.Log("selected cards set: " + value.Count);
-        selectedcards = value;
-    }
-
-    public List<string> GetCardSelected()
-    {
-        return selectedcards;
-    }
-
     public bool ChallengeSatisfied(int index)
     {
         switch (currentRoomSetup.challengeComparisonType[index])
@@ -306,6 +326,22 @@ public class StoryModeController : MonoBehaviour
             else
                 unlockedItems[item] = items[item];
         }
+    }
+
+    public void ReportCardsBought(Dictionary<Card, int> cards)
+    {
+        Dictionary<string, int> names = new Dictionary<string, int>();
+        foreach (Card c in cards.Keys)
+            names[c.name] = cards[c];
+        CollectionController.collectionController.SetCompleteDeck(names, true);
+    }
+
+    public void ReportEquipmentBought(Dictionary<Equipment, int> equipments)
+    {
+        Dictionary<string, int> names = new Dictionary<string, int>();
+        foreach (Equipment e in equipments.Keys)
+            names[e.equipmentName] = equipments[e];
+        CollectionController.collectionController.SetCompleteEquipments(names, true);
     }
 
     public Dictionary<RewardsType, int> GetItemsBought()
@@ -364,10 +400,7 @@ public class StoryModeController : MonoBehaviour
 
     public void ReportCardBought(string cardName, Dictionary<StoryModeController.RewardsType, int> usedMaterials)
     {
-        if (cardUnlocked.ContainsKey(cardName))
-            cardUnlocked[cardName] += 1;
-        else
-            cardUnlocked[cardName] = 1;
+        CollectionController.collectionController.SetCompleteDeck(new Dictionary<string, int>() { { cardName, 1 } }, true);
 
         foreach (StoryModeController.RewardsType m in usedMaterials.Keys)
             unlockedItems[m] -= usedMaterials[m];
@@ -425,8 +458,12 @@ public class StoryModeController : MonoBehaviour
             weeklyBought[GetWeeklySeed()][index] = true;
     }
 
-    public Sprite GetRewardSprite(RewardsType reward)
+    public Sprite GetRewardSprite(RewardsType reward, int index)
     {
+        if (reward == RewardsType.SpecificCard)
+            return StoryModeController.story.GetCurrentRoomSetup().rewardCards[index].art;
+        else if (reward == RewardsType.SpecificEquipment)
+            return StoryModeController.story.GetCurrentRoomSetup().rewardEquipment[index].art;
         List<RewardsType> shards = new List<RewardsType>() { RewardsType.OnyxShard, RewardsType.QuartzShard, RewardsType.RubyShard, RewardsType.SapphireShard, RewardsType.SpessartineShard, RewardsType.EmeraldShard };
         List<RewardsType> gems = new List<RewardsType>() { RewardsType.OnyxGem, RewardsType.QuartzGem, RewardsType.RubyGem, RewardsType.SapphireGem, RewardsType.SpessartineGem, RewardsType.EmeraldGem };
         List<RewardsType> crystals = new List<RewardsType>() { RewardsType.OnyxCrystal, RewardsType.QuartzCrystal, RewardsType.RubyCrystal, RewardsType.SapphireCrystal, RewardsType.SpessartineCrystal, RewardsType.EmeraldCrystal };
@@ -475,6 +512,9 @@ public class StoryModeController : MonoBehaviour
 
     public Color GetRewardsColor(RewardsType reward)
     {
+        if (reward == RewardsType.SpecificCard || reward == RewardsType.SpecificEquipment)
+            return Color.white;
+
         List<RewardsType> energy = new List<RewardsType>() { RewardsType.EnergyCrystal, RewardsType.EnergyGem, RewardsType.EnergyShard };
         List<RewardsType> mana = new List<RewardsType>() { RewardsType.ManaCrystal, RewardsType.ManaGem, RewardsType.ManaShard };
         List<RewardsType> red = new List<RewardsType>() { RewardsType.RubyCrystal, RewardsType.RubyGem, RewardsType.RubyShard };
@@ -548,6 +588,13 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToMapScene()
     {
+        if (deckIncomplete)
+        {
+            StopAllCoroutines();
+            StartCoroutine(NotificationFlashRed(3));
+            return;
+        }
+
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");
@@ -555,28 +602,27 @@ public class StoryModeController : MonoBehaviour
         }
         else
             CameraController.camera.transform.position = new Vector3(0, 0, CameraController.camera.transform.position.z);
+
+        menuState = MenuState.MapScreen;
+        ShowMenuSelected(0);
     }
 
     public void GoToPartyScene()
     {
+        if (deckIncomplete)
+        {
+            StopAllCoroutines();
+            StartCoroutine(NotificationFlashRed(3));
+            return;
+        }
+
         if (SceneManager.GetActiveScene().name != "TavernScene")
             SceneManager.LoadScene("TavernScene");
 
         desiredCameraLocation = new Vector2(0, 0);
-    }
 
-    public void GoToCardScene()
-    {
-        if (SceneManager.GetActiveScene().name != "StoryModeScene")
-        {
-            SceneManager.LoadScene("StoryModeScene");
-            desiredCameraLocation = new Vector2(8, 0);
-        }
-        else
-            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
-
-        CollectionController.collectionController.RefreshDecks();
-        CollectionController.collectionController.SetIsShowingCards(true);
+        menuState = MenuState.PartyScreen;
+        ShowMenuSelected(1);
     }
 
     public void GoToGearScene()
@@ -591,6 +637,88 @@ public class StoryModeController : MonoBehaviour
 
         CollectionController.collectionController.RefreshEquipments();
         CollectionController.collectionController.SetIsShowingCards(false);
+
+        menuState = MenuState.GearScreen;
+        ShowMenuSelected(2);
+    }
+
+    public void GoToCardScene()
+    {
+        if (SceneManager.GetActiveScene().name != "StoryModeScene")
+        {
+            SceneManager.LoadScene("StoryModeScene");
+            desiredCameraLocation = new Vector2(8, 0);
+        }
+        else
+            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
+
+        CollectionController.collectionController.RefreshDecks();
+        CollectionController.collectionController.SetIsShowingCards(true);
+
+        menuState = MenuState.CardScreen;
+        ShowMenuSelected(3);
+    }
+
+    public MenuState GetMenuState()
+    {
+        return menuState;
+    }
+
+    public bool GetIsDeckIncomplete()
+    {
+        return deckIncomplete;
+    }
+
+    public void ShowMenuSelected(int index)
+    {
+        foreach (Image icon in menuIcons)
+            icon.color = defaultMenuColor;
+        menuIcons[index].color = selectedMenuColor;
+    }
+
+    public void ShowMenuNotification(int index, bool state, bool notificationTypeNew)
+    {
+        if (notificationTypeNew)
+            menuNotifications[index].color = newNotificationColor;
+        else
+            menuNotifications[index].color = warningNotificationColor;
+        menuNotifications[index].enabled = state;
+
+        if (index == 3 && !notificationTypeNew)
+            deckIncomplete = state;
+    }
+
+    public IEnumerator NotificationFlashRed(int index)
+    {
+        float startingTime = Time.time;
+        Color finalColor = defaultMenuColor;
+        if (GetMenuType(index) == menuState)
+            finalColor = selectedMenuColor;
+
+        for (int i = 0; i < 20; i++)
+        {
+            menuIcons[index].color = Color.Lerp(warningNotificationColor, finalColor, i / 20.0f);
+            yield return new WaitForSeconds(0.01f);
+        }
+        menuIcons[index].color = finalColor;
+    }
+
+    private MenuState GetMenuType(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return MenuState.MapScreen;
+            case 1:
+                return MenuState.PartyScreen;
+            case 2:
+                return MenuState.GearScreen;
+            case 3:
+                return MenuState.CardScreen;
+            case 4:
+                return MenuState.SkillsScreen;
+        }
+        return MenuState.MapScreen;
     }
 
     public void SetMenuBar(bool state)
@@ -602,6 +730,7 @@ public class StoryModeController : MonoBehaviour
     {
         if (StoryModeController.story != this)
             return;
-        CameraController.camera.transform.position = new Vector3(desiredCameraLocation.x, desiredCameraLocation.y, CameraController.camera.transform.position.z);
+        if (SceneManager.GetActiveScene().name != "CombatScene")
+            CameraController.camera.transform.position = new Vector3(desiredCameraLocation.x, desiredCameraLocation.y, CameraController.camera.transform.position.z);
     }
 }

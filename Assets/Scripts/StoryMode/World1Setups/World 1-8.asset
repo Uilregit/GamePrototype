@@ -24,6 +24,18 @@ MonoBehaviour:
   challengeComparisonType: 0000000000000000000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
   rewardTypes: 0000000000000000000000000000000000000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   rewardAmounts: 0000000000000000000000000000000000000000
   rewardCosts: 
   challengeRewardBought: 000000

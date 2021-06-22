@@ -761,6 +761,12 @@
  * Added tracking for all item inventory across singeplayer games
  * Added tracking of bought cards (daily/weekly special or otherwise) across singeplayer games
  * Added system and UI for selecting weapons and accessories for different colors
+ * Non basic cards can no longer be slotted into basic card slots
+ * Added save/load to story mode's cards and equipments
+ * Cards can now trigger equipment effects. Equipment effects always trigger before the card's own effects goes off
+ * Complete and selected decks now reworked to be consistent for all 6 colors instead of just the 3 in party
+ * Cards and Equipments can now be given as rewards at the end of story mode rooms
+ * Add weapons to shop pool
  * 
  * -- Story --
  * Added flavor text for first 10 rooms in world 1
@@ -775,6 +781,18 @@
  * Added new card crafting screen that shows required and obtained materials
  * Reworked deck manager to account for weapons and equipments
  * Added way to navigate between Map, Party, Gear, Card, and Skill tabs in story mode
+ * Added UI selection for gear when selecting, deselecting, and swapping equipment with already equiped gear
+ * Added weapon/accessory/basic card equiping/unequiping/sorting that is independent of each other
+ * Added equipment changing removing non starter cards who's slots are no longer available
+ *       Ensured this works for equipment from other colors who swapped with this color's equipment too
+ * Added UI conversion between card display and selectable cards in the collection controller
+ * Added conditional UI whiteout highlights for equipment and card selection
+ * Added menu selection UI to story mode
+ * Added warning icon for card button if their cards no longer satisfy a full deck's requirement, disable other buttons till that's sorted
+ * Basic starter cards are now always sorted first in the collection manager
+ * Added icons and tooltips to card displays for weapons with on play effects
+ * Player equipped equipments can now be seen on the character information menu
+ * Added Equipment, Card, and Material type to story mode end scene
  * 
  * -- Bugs --
  * Fixed room not showing yellow even if achievements are fully done for the room
@@ -782,8 +800,22 @@
  * Fixed room and deck resetting incorrectly after completing a room
  * Fixed end of non end maps not reporting end of turn achievements
  * Fixed bug where path preview UI will path through enemies and blockades
+ * Fixed combat scenes camera not positioned correctly
+ * Fixed the shop back button not actually returning to the main menu
+ * Fixed achievement tracking for the first 5 rooms
  * 
  * -- To dos --
+ * ~ Add card drag deselect for equipment cards
+ * ~ Make selectable cards able to be dragged from one type (basic slots) to another (weapon slots)
+ * ~ Add on hover card display to card and weapon in story mode end scene and item section of story mode scene
+ * Design enemy, achievement, and reward for the first world
+ * Add mini boss for the first world (when broken/summons destroyed, grant player three 0 cost synergizing cards)
+ * Add secret shop (use stars for unlocking permanent bonuses (2 cards per room, etc)
+ * Add secret area (just a tonne of bombs)
+ * Add arena, essentially classic mode for the 1 world (bonuses for short time and low number of cards used. 5-10 tiers, better reward each time)
+ *      Add prepped (can bring in any equpment and card) and naked (yes equipment, but no card) versions
+ *      Best equipment and cards can only be unlocked this way
+ * 
  * Design maps and enemy designs for all 10 rooms
  * Design item reward strucutre for all 10 rooms
  * Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

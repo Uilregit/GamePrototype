@@ -9,6 +9,7 @@ public class StoryModeShopCardController : MonoBehaviour
     public bool isDailyCard;
 
     private CardController card;
+    private Equipment equipment;
     private Dictionary<StoryModeController.RewardsType, int> materials;
     private float clickedTime;
     private CardDisplay cardDisplay;
@@ -45,6 +46,11 @@ public class StoryModeShopCardController : MonoBehaviour
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(newCard, true);
     }
 
+    public void SetEquipment(Equipment newEquipment)
+    {
+        equipment = newEquipment;
+    }
+
     public void SetMaterials(Dictionary<StoryModeController.RewardsType, int> materialsList)
     {
         materials = materialsList;
@@ -53,7 +59,7 @@ public class StoryModeShopCardController : MonoBehaviour
         foreach (StoryModeController.RewardsType m in materialsList.Keys)
         {
             Color c = StoryModeController.story.GetRewardsColor(m);
-            materialIcons[i].sprite = StoryModeController.story.GetRewardSprite(m);
+            materialIcons[i].sprite = StoryModeController.story.GetRewardSprite(m, i);
             materialIcons[i].color = c;
             materialValues[i].text = materialsList[m].ToString();
             materialValues[i].color = c;
@@ -77,7 +83,7 @@ public class StoryModeShopCardController : MonoBehaviour
 
     public void OnMouseUp()
     {
-        transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
+        //transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
         StopAllCoroutines();
         transform.SetParent(originalCanvas.transform);
         transform.localScale = localScale;
@@ -157,5 +163,10 @@ public class StoryModeShopCardController : MonoBehaviour
     public CardController GetCardController()
     {
         return card;
+    }
+
+    public Equipment GetEquipment()
+    {
+        return equipment;
     }
 }

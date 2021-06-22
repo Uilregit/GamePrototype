@@ -293,7 +293,7 @@ public class EnemyInformationController : MonoBehaviour
             cards.AddRange(enemyController.GetCard());
             foreach (CardController c in cards)
                 c.SetCaster(this.gameObject);
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffController().GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffController().GetBuffs(), null, GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
     }

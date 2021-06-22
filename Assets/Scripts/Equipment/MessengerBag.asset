@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: {fileID: 21300000, guid: b9626b856cd18284690a797040fda875, type: 3}
   equipmentName: Messenger Bag
+  equipmentDescription: 
   isWeapon: 1
   numOfCardSlots: 2
   atkChange: 0
@@ -22,6 +23,8 @@ MonoBehaviour:
   moveRangeChange: 0
   castRangeChange: 0
   handSizeChange: 0
+  energyChange: 0
+  manaChange: 0
   effects: 
   effectValues: 
   materialTypes: 0500000064000000

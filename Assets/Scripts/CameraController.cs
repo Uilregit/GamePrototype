@@ -26,10 +26,9 @@ public class CameraController : MonoBehaviour
         try
         {
             Camera.main.backgroundColor = RoomController.roomController.GetCurrentWorldSetup().cameraBackground;
+            screenShakeMultiplier = SettingsController.settings.GetScreenShakeMultiplier();
         }
         catch { }
-
-        screenShakeMultiplier = SettingsController.settings.GetScreenShakeMultiplier();
 
         originalLocation = transform.position;
         shakingStartTime = Time.time;

@@ -123,6 +123,9 @@ public class StoryModeSceneController : MonoBehaviour
         selectedRoom.GetComponent<Outline>().enabled = true;
 
         flavorTextbox.text = selectedRoom.setup.flavorText;
+
+        StoryModeController.story.SetCurrentRoomSetup(selectedRoom.setup);
+
         int stars = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -143,8 +146,13 @@ public class StoryModeSceneController : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            itemsList[i].text = selectedRoom.setup.rewardTypes[i] + " x" + selectedRoom.setup.rewardAmounts[i];
-            itemsIcons[i].sprite = StoryModeController.story.GetRewardSprite(selectedRoom.setup.rewardTypes[i]);
+            if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificCard)
+                itemsList[i].text = selectedRoom.setup.rewardCards[i].name + " x" + selectedRoom.setup.rewardAmounts[i];
+            else if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificEquipment)
+                itemsList[i].text = selectedRoom.setup.rewardEquipment[i].equipmentName + " x" + selectedRoom.setup.rewardAmounts[i];
+            else
+                itemsList[i].text = selectedRoom.setup.rewardTypes[i] + " x" + selectedRoom.setup.rewardAmounts[i];
+            itemsIcons[i].sprite = StoryModeController.story.GetRewardSprite(selectedRoom.setup.rewardTypes[i], i);
             itemsIcons[i].color = StoryModeController.story.GetRewardsColor(selectedRoom.setup.rewardTypes[i]);
 
             if (i < 3 && StoryModeController.story.GetChallengeItemsBought().ContainsKey(roomId))
@@ -155,8 +163,6 @@ public class StoryModeSceneController : MonoBehaviour
 
         enterButton.color = unlockedColor;
         enterButton.GetComponent<Collider2D>().enabled = true;
-
-        StoryModeController.story.SetCurrentRoomSetup(selectedRoom.setup);
     }
 
     public void StarsViewSelected()
@@ -203,6 +209,10 @@ public class StoryModeSceneController : MonoBehaviour
 
     public void EnterRoom()
     {
+        InformationLogger.infoLogger.SaveStoryModeGame();
+
+        CollectionController.collectionController.SetInCombatDecks();       //Set the complete and selected decks before the combat starts
+
         StoryModeController.story.SetCurrentRoomID(selectedRoom.roomId);
         StoryModeController.story.SetCurrentRoomSetup(selectedRoom.setup);
 
@@ -228,5 +238,7 @@ public class StoryModeSceneController : MonoBehaviour
         {
 
         }
+
+        StoryModeController.story.SetMenuBar(false);
     }
 }

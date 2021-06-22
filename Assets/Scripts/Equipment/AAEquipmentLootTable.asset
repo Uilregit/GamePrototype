@@ -15,3 +15,5 @@ MonoBehaviour:
   equipmentLoot:
   - {fileID: 11400000, guid: a90883a48deffe54695bd0043c844847, type: 2}
   - {fileID: 11400000, guid: 9e145277375320c4a9d3df069ecc2fa8, type: 2}
+  - {fileID: 11400000, guid: 3e3fad7983ac8e1439ac9e123786c90f, type: 2}
+  - {fileID: 11400000, guid: 017c540e00e6ef54faabc07da74fe4c9, type: 2}

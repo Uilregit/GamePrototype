@@ -9,12 +9,15 @@ using Mirror;
 public class CardController : MonoBehaviour
 {
     private Card card;
+    private Equipment equipment;
     private Card resurrectCard;
     public bool isResurrectCard = false;
     public CardDisplay cardDisplay;
     private CardEffectsController cardEffects;
     private CardDragController cardDrag;
     private List<Vector2> targets = new List<Vector2>();
+
+    private Equipment attachedEquipment;
 
     private int manaCostDiscount;
     private int energyCostDiscount;
@@ -60,6 +63,11 @@ public class CardController : MonoBehaviour
         cardDisplay = display;
     }
 
+    public CardDisplay GetCardDisplay()
+    {
+        return cardDisplay;
+    }
+
     public void SetCardEffects(CardEffectsController effect)
     {
         cardEffects = effect;
@@ -79,6 +87,17 @@ public class CardController : MonoBehaviour
         }
     }
 
+    public void SetEquipment(Equipment e, Card.CasterColor color)
+    {
+        equipment = e;
+        cardDisplay.SetEquipment(e, color);
+    }
+
+    public Equipment GetEquipment()
+    {
+        return equipment;
+    }
+
     public void SetCardController(CardController newCard)
     {
         card = newCard.card;
@@ -88,6 +107,8 @@ public class CardController : MonoBehaviour
         energyCostCap = newCard.energyCostCap;
         caster = newCard.caster;
         targets = newCard.targets;
+
+        SetAttachedEquipment(newCard.GetAttachedEquipment());
         SetCard(newCard.GetCard());
     }
 
@@ -107,6 +128,10 @@ public class CardController : MonoBehaviour
 
     public void CreateRangeIndicator()
     {
+        int equipmentBonusCastRange = 0;
+        if (attachedEquipment != null)
+            equipmentBonusCastRange = attachedEquipment.castRangeChange;
+
         bool proceed = false;
         try
         {
@@ -142,12 +167,12 @@ public class CardController : MonoBehaviour
             else if (card.castType == Card.CastType.None)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, Card.CastShape.Circle, 20, PartyController.party.GetPlayerColor(card.casterColor));
             else
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range, PartyController.party.GetPlayerColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange, PartyController.party.GetPlayerColor(card.casterColor));
 
             List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
             if (card.castType == Card.CastType.TargetedAoE)
             {
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + card.radius, Color.clear, 1);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange + card.radius, Color.clear, 1);
                 castableLocations = TileCreator.tileCreator.GetTilePositions(1);
                 TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
             }
@@ -483,6 +508,8 @@ public class CardController : MonoBehaviour
         cost -= GetManaCostDiscount();
         cost -= caster.GetComponent<HealthController>().GetManaCostReduction();
         cost -= TurnController.turnController.GetManaReduction();
+        if (attachedEquipment != null)
+            cost -= attachedEquipment.manaChange;
         return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 
@@ -500,6 +527,8 @@ public class CardController : MonoBehaviour
         cost -= GetEnergyCostDiscount();
         cost -= caster.GetComponent<HealthController>().GetEnergyCostReduction();
         cost -= TurnController.turnController.GetEnergyReduction();
+        if (attachedEquipment != null)
+            cost -= attachedEquipment.energyChange;
         return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 
@@ -516,5 +545,15 @@ public class CardController : MonoBehaviour
     public void SetStartedInDeck(bool value)
     {
         startedInDeck = value;
+    }
+
+    public Equipment GetAttachedEquipment()
+    {
+        return attachedEquipment;
+    }
+
+    public void SetAttachedEquipment(Equipment value)
+    {
+        attachedEquipment = value;
     }
 }

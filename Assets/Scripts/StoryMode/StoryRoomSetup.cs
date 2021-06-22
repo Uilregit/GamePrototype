@@ -14,6 +14,8 @@ public class StoryRoomSetup : ScriptableObject
     public int[] bestChallengeValues = new int[3] { -1, -1, -1 };
 
     public StoryModeController.RewardsType[] rewardTypes;
+    public Card[] rewardCards;
+    public Equipment[] rewardEquipment;
     public int[] rewardAmounts;
     public int[] rewardCosts;
     public bool[] challengeRewardBought = new bool[3] { false, false, false };
@@ -103,7 +105,7 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Break X Enemies";
                 break;
             case ChallengeType.TotalOverkillGold:
-                output += "Earn X overkill gold";
+                output += "Earn X total overkill gold";
                 break;
             case ChallengeType.CharsStacked:
                 output += "Stack X characters together";
@@ -176,7 +178,10 @@ public class StoryRoomSetup : ScriptableObject
                         bestChallengeValues[i] = Mathf.Max(bestChallengeValues[i], values[i]);
                         break;
                     case ChallengeComparisonType.LessThan:
-                        bestChallengeValues[i] = Mathf.Min(bestChallengeValues[i], values[i]);
+                        if (bestChallengeValues[i] == -1)
+                            bestChallengeValues[i] = values[i];
+                        else
+                            bestChallengeValues[i] = Mathf.Min(bestChallengeValues[i], values[i]);
                         break;
                     case ChallengeComparisonType.EqualTo:
                         int oldDiff = Mathf.Abs(bestChallengeValues[i] - challengeValues[i]);

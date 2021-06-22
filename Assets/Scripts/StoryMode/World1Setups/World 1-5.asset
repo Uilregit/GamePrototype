@@ -20,11 +20,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ae00346732d5b77448b5a18526e4e620, type: 2}
   - {fileID: 11400000, guid: a8dc4e47a1fc60542960951e04a5353a, type: 2}
   challenges: 000000001c0400001d040000
-  valueType: 000000000100000001000000
-  challengeValues: 000000000500000014000000
+  valueType: 00000000010000000a000000
+  challengeValues: 000000000300000002000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 0000000014000000020000005000000082000000
+  rewardTypes: 0000000005000000460000005000000082000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   rewardAmounts: 0100000002000000010000000500000005000000
   rewardCosts: 3200000032000000320000001400000014000000
   challengeRewardBought: 000000

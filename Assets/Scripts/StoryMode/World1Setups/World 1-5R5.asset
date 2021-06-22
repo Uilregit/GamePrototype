@@ -17,6 +17,8 @@ MonoBehaviour:
   roomName: World 1-5R5
   enemies:
   - {fileID: 7954930865912147755, guid: ddf1fd5b7fee819448a0a9630f476808, type: 3}
+  - {fileID: 7954930865912147755, guid: ddf1fd5b7fee819448a0a9630f476808, type: 3}
+  - {fileID: 7954930865912147755, guid: ddf1fd5b7fee819448a0a9630f476808, type: 3}
   - {fileID: 486108287864838809, guid: 69fa743f9b4564a48be8829f73460a28, type: 3}
   - {fileID: 486108287864838809, guid: 69fa743f9b4564a48be8829f73460a28, type: 3}
   blockNumber: 99

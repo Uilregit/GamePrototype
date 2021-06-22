@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StoryModeShopController : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class StoryModeShopController : MonoBehaviour
 
         for (int i = 0; i < inventoryList.Count; i++)
         {
-            inventoryIcons[i].sprite = StoryModeController.story.GetRewardSprite(inventoryList[i]);
+            inventoryIcons[i].sprite = StoryModeController.story.GetRewardSprite(inventoryList[i], i);
             inventoryIcons[i].color = StoryModeController.story.GetRewardsColor(inventoryList[i]);
             if (StoryModeController.story.GetItemsBought().ContainsKey(inventoryList[i]))
                 inventoryNumbers[i].text = StoryModeController.story.GetItemsBought()[inventoryList[i]].ToString();
@@ -69,43 +70,50 @@ public class StoryModeShopController : MonoBehaviour
         int day = StoryModeController.story.GetDailySeed();
         int week = StoryModeController.story.GetWeeklySeed();
 
+        float equipmentChance = 0.3f;
+
         //Initialize the daily cards
-        Random.InitState(day);
-        int i = 0;
-        foreach (StoryModeShopCardController card in DailyDeals)
-        {
-            card.GetComponent<CardController>().SetCard(LootController.loot.GetCard(), false);
-            card.SetCard(card.GetComponent<CardController>());
-
-            Dictionary<StoryModeController.RewardsType, int> totalMaterials = card.GetComponent<CardController>().GetCard().GetCraftingMaterials();
-            Dictionary<StoryModeController.RewardsType, int> discountedMaterials = new Dictionary<StoryModeController.RewardsType, int>();
-            foreach (StoryModeController.RewardsType m in totalMaterials.Keys)
-                discountedMaterials[m] = (int)Mathf.Max(1, Mathf.Floor(totalMaterials[m] * 0.5f));            //Half off materials, but always costs at least 1
-            card.SetMaterials(discountedMaterials);
-
-            if (StoryModeController.story.GetDailyBought()[day][i])
-                card.SetCardBought();
-
-            i++;
-        }
-
+        PopulateCards(DailyDeals, day, equipmentChance, 0.5f, true);
         //Iniitialize the weekly cards
-        Random.InitState(week);
-        i = 0;
-        foreach (StoryModeShopCardController card in WeeklyWares)
-        {
-            card.GetComponent<CardController>().SetCard(LootController.loot.GetCard(), false);
-            card.SetCard(card.GetComponent<CardController>());
+        PopulateCards(WeeklyWares, week, equipmentChance, 0.75f, false);
+    }
 
-            Dictionary<StoryModeController.RewardsType, int> totalMaterials = card.GetComponent<CardController>().GetCard().GetCraftingMaterials();
+    private void PopulateCards(StoryModeShopCardController[] cards, int seed, float equipmentChance, float discountMultiplier, bool isDay)
+    {
+        Random.InitState(seed);
+        int i = 0;
+        foreach (StoryModeShopCardController card in cards)
+        {
+            Dictionary<StoryModeController.RewardsType, int> totalMaterials = new Dictionary<StoryModeController.RewardsType, int>();
+
+            if (Random.Range(0.0f, 1.0f) <= equipmentChance)
+            {
+                card.GetComponent<CardController>().SetEquipment(LootController.loot.GetRandomEquipment(), Card.CasterColor.Passive);
+                card.SetEquipment(card.GetComponent<CardController>().GetEquipment());
+                totalMaterials = card.GetComponent<CardController>().GetEquipment().GetCraftingMaterials();
+            }
+            else
+            {
+                card.GetComponent<CardController>().SetCard(LootController.loot.GetCard(), false);
+                card.SetCard(card.GetComponent<CardController>());
+                totalMaterials = card.GetComponent<CardController>().GetCard().GetCraftingMaterials();
+            }
+
             Dictionary<StoryModeController.RewardsType, int> discountedMaterials = new Dictionary<StoryModeController.RewardsType, int>();
             foreach (StoryModeController.RewardsType m in totalMaterials.Keys)
-                discountedMaterials[m] = (int)Mathf.Max(1, Mathf.Floor(totalMaterials[m] * 0.75f));            //25% off materials, but always costs at least 1
+                discountedMaterials[m] = (int)Mathf.Max(1, Mathf.Floor(totalMaterials[m] * discountMultiplier));            //Half off materials, but always costs at least 1
             card.SetMaterials(discountedMaterials);
 
-            if (StoryModeController.story.GetWeeklyBought()[week][i])
-                card.SetCardBought();
-
+            if (isDay)
+            {
+                if (StoryModeController.story.GetDailyBought().ContainsKey(seed) && StoryModeController.story.GetDailyBought()[seed][i])
+                    card.SetCardBought();
+            }
+            else
+            {
+                if (StoryModeController.story.GetWeeklyBought().ContainsKey(seed) && StoryModeController.story.GetWeeklyBought()[seed][i])
+                    card.SetCardBought();
+            }
             i++;
         }
     }
@@ -115,13 +123,22 @@ public class StoryModeShopController : MonoBehaviour
         currentCard = card;
         currentCardMaterials = materials;
 
-        selectedCard.SetCard(card.GetCardController(), false);
-        rarityText.text = card.GetCardController().GetCard().rarity.ToString().ToUpper();
+        if (card.GetEquipment() != null)
+        {
+            selectedCard.SetEquipment(card.GetEquipment(), Card.CasterColor.Passive);
+            rarityText.text = card.GetEquipment().rarity.ToString().ToUpper();
+        }
+        else
+        {
+            selectedCard.SetCard(card.GetCardController(), false);
+            rarityText.text = card.GetCardController().GetCard().rarity.ToString().ToUpper();
+        }
+
 
         int i = 0;
         foreach (StoryModeController.RewardsType m in materials.Keys)
         {
-            selectedMaterialsIcons[i].sprite = StoryModeController.story.GetRewardSprite(m);
+            selectedMaterialsIcons[i].sprite = StoryModeController.story.GetRewardSprite(m, i);
             selectedMaterialsIcons[i].color = StoryModeController.story.GetRewardsColor(m);
 
             selectedMaterialsNames[i].text = m.ToString();
@@ -155,11 +172,20 @@ public class StoryModeShopController : MonoBehaviour
         }
 
         foreach (Image img in duplicateBarBack)
-            img.color = PartyController.party.GetPlayerColor(card.GetCardController().GetCard().casterColor);
+        {
+            if (card.GetEquipment() != null)
+                img.color = PartyController.party.GetPlayerColor(Card.CasterColor.Enemy);
+            else
+                img.color = PartyController.party.GetPlayerColor(card.GetCardController().GetCard().casterColor);
+        }
 
+        //Find the number of copies that's already owned for this card
         int duplicate = 0;
-        if (StoryModeController.story.GetCardUnlocked().ContainsKey(card.GetCardController().GetCard().name))
-            duplicate = StoryModeController.story.GetCardUnlocked()[card.GetCardController().GetCard().name];
+
+        if (card.GetEquipment() != null)
+            duplicate = CollectionController.collectionController.GetCountOfEquipmentInCollection(card.GetEquipment());
+        else
+            duplicate = CollectionController.collectionController.GetCountOfCardInCollection(card.GetCardController().GetCard());
 
         duplicateText.text = duplicate + "/4";
         duplicateBar.transform.localScale = new Vector2((float)duplicate / 4.0f, 1);
@@ -190,5 +216,11 @@ public class StoryModeShopController : MonoBehaviour
     public void ReportBackButtonPressed()
     {
         CameraController.camera.transform.position = new Vector3(0, 0, CameraController.camera.transform.position.z);
+    }
+
+    public void ReportReturnButtonPressed()
+    {
+        StoryModeController.story.GoToMapScene();
+        StoryModeController.story.SetMenuBar(true);
     }
 }

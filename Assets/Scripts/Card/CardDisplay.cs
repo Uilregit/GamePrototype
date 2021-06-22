@@ -34,6 +34,8 @@ public class CardDisplay : MonoBehaviour
     public Text energyCost;
     public Text description;
     public Text manaCost;
+    public Image equipmentIcon;
+    public Image equipmentOutline;
     public Image outline;
     public Text disabledStatusText;
     private Outline conditionHighlight;
@@ -87,6 +89,8 @@ public class CardDisplay : MonoBehaviour
         energyCost.enabled = false;
         description.enabled = false;
         manaCost.enabled = false;
+        equipmentIcon.gameObject.SetActive(false);
+        equipmentOutline.enabled = false;
         try
         {
             lineRenderer.enabled = false;
@@ -103,6 +107,8 @@ public class CardDisplay : MonoBehaviour
         cardWhiteOut.enabled = false;
         cardName.GetComponent<TextMeshProUGUI>().enabled = true;
         manaCost.enabled = true;
+        equipmentIcon.gameObject.SetActive(true);
+        equipmentOutline.enabled = true;
         description.enabled = true;
         energyCost.enabled = true;
         lineRenderer.enabled = true;
@@ -144,6 +150,11 @@ public class CardDisplay : MonoBehaviour
         energyCost.text = "";
         manaCost.text = "";
 
+        equipmentIcon.color = Color.clear;
+        equipmentIcon.gameObject.SetActive(false);
+        equipmentOutline.color = Color.clear;
+        equipmentOutline.enabled = false;
+
         string desc = "";
         if (equip.isWeapon)
             desc += "<b>Weapon</b>\n";
@@ -154,8 +165,9 @@ public class CardDisplay : MonoBehaviour
             desc += equip.numOfCardSlots.ToString() + " card slot. ";
         else
             desc += equip.numOfCardSlots.ToString() + " card slots. ";
-        desc += equip.equipmentDescription;
+        desc += equip.equipmentDescription.Replace("|", "\n");
         description.text = desc;
+        description.color = Color.white;
     }
 
     public void SetCard(CardController card, bool dynamicNumbers = true)
@@ -298,6 +310,37 @@ public class CardDisplay : MonoBehaviour
                 }
 
         description.text = card.GetCard().description.Replace('|', '\n');
+        description.color = Color.black;
+
+        if (card.GetAttachedEquipment() != null && (card.GetAttachedEquipment().effectCard != null || card.GetAttachedEquipment().GetHasCardPassives()))
+        {
+            equipmentIcon.color = Color.white;
+            equipmentIcon.gameObject.SetActive(true);
+            equipmentIcon.transform.GetChild(0).GetComponent<Image>().sprite = card.GetAttachedEquipment().art;
+            equipmentOutline.color = Color.white;
+            equipmentOutline.enabled = true;
+            if (card.GetAttachedEquipment().isWeapon)
+                equipmentOutline.color = Color.red;
+            else
+                equipmentOutline.color = Color.blue;
+            if (card.GetCard().manaCost == 0)
+            {
+                equipmentIcon.transform.localPosition = new Vector2(-1.22f, 1.03f);
+                equipmentOutline.transform.localPosition = new Vector2(-1.22f, 1.03f);
+            }
+            else
+            {
+                equipmentIcon.transform.localPosition = new Vector2(1.22f, 1.03f);
+                equipmentOutline.transform.localPosition = new Vector2(1.22f, 1.03f);
+            }
+        }
+        else
+        {
+            equipmentIcon.color = Color.clear;
+            equipmentIcon.gameObject.SetActive(false);
+            equipmentOutline.color = Color.clear;
+            equipmentOutline.enabled = false;
+        }
 
         //Formatting Codes for dynamic card text
         string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm", "l" };
@@ -429,6 +472,21 @@ public class CardDisplay : MonoBehaviour
             Destroy(img.gameObject);
         thisToolTips = new List<Image>();
 
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().effectCard != null)
+        {
+            Image tt = Instantiate(toolTip);
+            tt.transform.SetParent(transform);
+            tt.transform.localPosition = new Vector3(1.25f, 0.8f, 0);
+            tt.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+            int length = card.GetAttachedEquipment().equipmentDescription.IndexOf("|");
+            tt.transform.GetChild(0).GetComponent<Text>().text = "<b>" + card.GetAttachedEquipment().equipmentName + "</b>\n" + card.GetAttachedEquipment().equipmentDescription.Substring(0, length);
+            if (card.GetAttachedEquipment().isWeapon)
+                tt.GetComponent<Outline>().effectColor = Color.red;
+            else
+                tt.GetComponent<Outline>().effectColor = Color.blue;
+            tt.gameObject.SetActive(false);
+            thisToolTips.Add(tt);
+        }
         foreach (string name in toolTipDict.Keys)
         {
             if (description.text.ToLower().Contains(name.ToLower()))
@@ -438,6 +496,7 @@ public class CardDisplay : MonoBehaviour
                 tt.transform.localPosition = new Vector3(1.25f, 0.8f, 0);
                 tt.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
                 tt.transform.GetChild(0).GetComponent<Text>().text = "<b>" + name + "</b>\n" + toolTipDict[name];
+                tt.GetComponent<Outline>().effectColor = tt.color;
                 tt.gameObject.SetActive(false);
                 thisToolTips.Add(tt);
             }

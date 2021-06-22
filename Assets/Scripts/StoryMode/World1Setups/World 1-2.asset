@@ -18,13 +18,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19345544773936b42b697e64bee57895, type: 2}
   - {fileID: 11400000, guid: 5cd16f7ed57144644a8483c2ebfdcf84, type: 2}
   challenges: 00000000fe030000ff030000
-  valueType: 000000000100000001000000
+  valueType: 000000000a0000000a000000
   challengeValues: 00000000050000000a000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 00000000460000003c0000002800000032000000
-  rewardAmounts: 010000000a0000000a0000000500000005000000
-  rewardCosts: 3200000014000000140000001400000014000000
+  rewardTypes: 0000000008000000080000002800000032000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: a90883a48deffe54695bd0043c844847, type: 2}
+  - {fileID: 11400000, guid: 9e145277375320c4a9d3df069ecc2fa8, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0100000001000000010000000500000005000000
+  rewardCosts: 3200000032000000320000001400000014000000
   challengeRewardBought: 000000
   flavorText: The Lazul Consort mages revere their Grand Magi for their big deck
     energy

@@ -153,6 +153,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\VitDamageAll.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\Cards\LootController.cs" />
     <Compile Include="Assets\Scripts\UnlocksController.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Equipment.cs" />
     <Compile Include="Assets\Scripts\Enemies\BuffController.cs" />
     <Compile Include="Assets\Scripts\StoryMode\StoryModeShopController.cs" />
     <Compile Include="Assets\SettingsController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\ManifestANYEnergyCardEffect.cs" />
     <Compile Include="Assets\Scripts\ScoreController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawEnergyCardEffect.cs" />
+    <Compile Include="Assets\Scripts\Equipment\EquipmentLootTable.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CleanseEffect.cs" />
     <Compile Include="Assets\Scripts\Card\StoryModeShopCardController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetNumberOfBuffsEffect.cs" />
@@ -232,8 +234,6 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\Equipment\Equipment.cs" />
-    <Compile Include="Assets\Scripts\Equipment\EquipmentLootTable.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

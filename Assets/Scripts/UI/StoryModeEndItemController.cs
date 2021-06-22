@@ -15,6 +15,7 @@ public class StoryModeEndItemController : MonoBehaviour
     public Text itemName;
     public Image itemIcon;
     public Text costText;
+    public Text rewardTypeText;
 
     public StoryModeEndSceenController endSceneController;
 
@@ -24,6 +25,8 @@ public class StoryModeEndItemController : MonoBehaviour
     private bool selectable = false;
 
     private StoryModeController.RewardsType thisName;
+    private Card thisCard;
+    private Equipment thisEquipment;
     private int amount;
 
     public void SetEnabled(bool state)
@@ -52,13 +55,30 @@ public class StoryModeEndItemController : MonoBehaviour
         endSceneController.ReportItemBought(itemCost, thisName, amount, selected, index);
     }
 
-    public void SetValues(StoryModeController.RewardsType newName, int newAmount, int cost)
+    public void SetValues(StoryModeController.RewardsType newName, int newAmount, int cost, int index)
     {
-        itemIcon.sprite = StoryModeController.story.GetRewardSprite(newName);
+        itemIcon.sprite = StoryModeController.story.GetRewardSprite(newName, index);
         itemIcon.color = StoryModeController.story.GetRewardsColor(newName);
         thisName = newName;
+        thisCard = StoryModeController.story.GetCurrentRoomSetup().rewardCards[index];
+        thisEquipment = StoryModeController.story.GetCurrentRoomSetup().rewardEquipment[index];
         amount = newAmount;
-        itemName.text = thisName + "\nx" + amount.ToString();
+
+        if (newName == StoryModeController.RewardsType.SpecificCard)
+        {
+            rewardTypeText.text = "Card";
+            itemName.text = thisCard.name + "\nx" + amount.ToString();
+        }
+        else if (newName == StoryModeController.RewardsType.SpecificEquipment)
+        {
+            rewardTypeText.text = "Gear";
+            itemName.text = thisEquipment.equipmentName + "\nx" + amount.ToString();
+        }
+        else
+        {
+            rewardTypeText.text = "Material";
+            itemName.text = thisName + "\nx" + amount.ToString();
+        }
         costText.text = cost.ToString();
         itemCost = cost;
         if (index < 3)
@@ -77,6 +97,16 @@ public class StoryModeEndItemController : MonoBehaviour
     public StoryModeController.RewardsType GetName()
     {
         return thisName;
+    }
+
+    public Card GetCard()
+    {
+        return thisCard;
+    }
+
+    public Equipment GetEquipment()
+    {
+        return thisEquipment;
     }
 
     public int GetAmount()

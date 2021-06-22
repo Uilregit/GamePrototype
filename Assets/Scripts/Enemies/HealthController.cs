@@ -989,6 +989,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
             catch { }
 
+        if (oldHealth > 0 && oldHealth - damage <= 0 && !attacker.isPlayer && !isPlayer && !isSimulation)
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
+
         GridController.gridController.ResetOverlapOrder(transform.position);
     }
 

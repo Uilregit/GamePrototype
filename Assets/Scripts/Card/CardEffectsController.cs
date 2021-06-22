@@ -80,6 +80,51 @@ public class CardEffectsController : MonoBehaviour
             bonusCast += TurnController.turnController.GetPlayerBonusCast();
 
         List<GameObject> movedObjects = new List<GameObject>();
+
+        //Triggers equipment effects if there are any
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().effectCard != null)
+        {
+            HealthController simulationCharacter = null;
+            EffectFactory factory = new EffectFactory();
+            Effect[] weaponEffects = factory.GetEffects(card.GetAttachedEquipment().effectCard.cardEffectName);
+            for (int i = 0; i < card.GetAttachedEquipment().effectCard.cardEffectName.Length; i++)
+            {
+                List<Vector2> locs = new List<Vector2>();
+                List<GameObject> t = new List<GameObject>();
+                if (card.GetAttachedEquipment().effectCard.targetType[i] == Card.TargetType.Self)
+                {
+                    if (isSimulation)
+                    {
+                        simulationCharacter = GameController.gameController.GetSimulationCharacter(caster.GetComponent<HealthController>(), false);
+                        t.Add(simulationCharacter.gameObject);
+                    }
+                    else
+                    {
+                        locs.Add(caster.transform.position);
+                        t.Add(caster);
+                    }
+                }
+                else
+                {
+                    locs = targetLocs;
+                    t.AddRange(targets);
+                }
+
+                if (card.GetAttachedEquipment().effectCard.cardEffectName[i] == Card.EffectType.ForcedMovement)
+                    movedObjects.AddRange(t);
+                if (!isSimulation)
+                {
+                    yield return StartCoroutine(weaponEffects[i].Process(caster, this, locs, card.GetAttachedEquipment().effectCard, i));
+                }
+                else
+                {
+                    if (simulationCharacter != null)
+                        GameController.gameController.ReportSimulationFinished(simulationCharacter);
+                    yield return StartCoroutine(effects[i].Process(caster, this, t, card.GetCard(), i, 0));
+                }
+            }
+        }
+
         //If there are bonus casts, then process the card that many more times
         for (int j = 0; j < 1 + bonusCast; j++)
         {

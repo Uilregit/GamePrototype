@@ -57,6 +57,7 @@ public class DeckController : MonoBehaviour
                 else
                     numberOfManaCardsInDraw += 1;
             }
+
         discardPile = new List<CardController>();
         numberOfEnergyCardsInDiscard = 0;
         numberOfManaCardsInDiscard = 0;
@@ -316,8 +317,12 @@ public class DeckController : MonoBehaviour
         return discardPile.Count;
     }
 
-    public void SetDecks(ListWrapper[] newList)
+    public void SetDecks(Dictionary<string, ListWrapper> value)
     {
+        ListWrapper[] newList = new ListWrapper[3];
+        for(int i = 0; i < 3;  i++)
+            newList[i] = value[PartyController.party.GetPlayerColorTexts()[i]];
+
         deck = newList;
 
         PopulateDecks();

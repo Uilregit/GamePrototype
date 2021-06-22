@@ -56,7 +56,7 @@ public class SaveFile
     public int p3Armor;
 
     public string[] collectionCardNames;
-    public string[] selectedCardNames;
+    public Dictionary<string, string[]> selectedCardNames;
     public string[] newCardNames;
     public string recentRewardsCard;
 
@@ -82,15 +82,17 @@ public class StoryModeSaveFile
     //public Dictionary<int, bool[]> challengeStars;  //Room id, stars 1, 2, 3
     public Dictionary<int, int[]> challengeValues;  //Room id, value 1, 2, 3
 
-    public List<string> cardSelected;
+    public Dictionary<string, string[]> cardSelected;   //<casterColor, cardNames>
     public string[] cardCraftable;
-    public Dictionary<string, int> cardUnlocks;
-    public Dictionary<string, int> weaponUnlocks;
+    public Dictionary<string, int> cardUnlocks;         //<cardName, cardAmount>
+    public string[] completeEquipments;
+    public Dictionary<string, string[]> selectedEquipments;
+    public Dictionary<string, int> weaponUnlocks;       //<equipmentName, equipmentAmount>
     public Dictionary<StoryModeController.RewardsType, int> itemsUnlocked;
-    public Dictionary<int, bool[]> challengeItemsBought;
+    public Dictionary<int, bool[]> challengeItemsBought;//<roomID, ifBought>
 
-    public Dictionary<int, bool[]> dailyBought;
-    public Dictionary<int, bool[]> weeklyBought;
+    public Dictionary<int, bool[]> dailyBought;         //<dayIDSeed, ifBought>
+    public Dictionary<int, bool[]> weeklyBought;        //<weekIDSeed, ifBought>
 }
 
 [System.Serializable]
@@ -616,8 +618,10 @@ public class InformationLogger : MonoBehaviour
         output.unlockedRoomIds = StoryModeController.story.GetCompletedRooms().ToArray();
         output.challengeValues = StoryModeController.story.GetChallengeValues();
         output.cardCraftable = StoryModeController.story.GetCardCraftable().ToArray();
-        output.cardUnlocks = StoryModeController.story.GetCardUnlocked();
-        output.cardSelected = StoryModeController.story.GetCardSelected();
+        output.cardUnlocks = CollectionController.collectionController.GetCompleteDeckDict();
+        output.cardSelected = CollectionController.collectionController.GetSelectedDeckNames();
+        output.selectedEquipments = CollectionController.collectionController.GetSelectEquipments();
+        output.completeEquipments = CollectionController.collectionController.GetCompleteEquipments();
         output.itemsUnlocked = StoryModeController.story.GetItemsBought();
         output.challengeItemsBought = StoryModeController.story.GetChallengeItemsBought();
         output.dailyBought = StoryModeController.story.GetDailyBought();
@@ -628,6 +632,7 @@ public class InformationLogger : MonoBehaviour
 
     public void SaveStoryModeGame()
     {
+        Debug.Log("#### saving story mode game ####");
         BinaryFormatter formatter = new BinaryFormatter();
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
@@ -638,17 +643,38 @@ public class InformationLogger : MonoBehaviour
 
     public void LoadStoryModeGame()
     {
+        Debug.Log("#### Loading story mode game ####");
         StoryModeSaveFile file = LoadStoryModeGameFile();
 
         StoryModeController.story.SetCompletedRooms(file.unlockedRoomIds.ToList());
         StoryModeController.story.SetChallengeValues(file.challengeValues);
         StoryModeController.story.SetCardCraftable(file.cardCraftable.ToList());
-        StoryModeController.story.SetCardUnlocked(file.cardUnlocks);
-        StoryModeController.story.SetCardSelected(file.cardSelected);
+        CollectionController.collectionController.SetCompleteDeck(file.cardUnlocks);
+        CollectionController.collectionController.SetSelectedDeck(file.cardSelected);
+        CollectionController.collectionController.SetCompleteEquipments(file.completeEquipments);
+        CollectionController.collectionController.SetSelectedEquipments(file.selectedEquipments);
+        CollectionController.collectionController.ReCountUniqueCards();
+        CollectionController.collectionController.RefreshDecks();
+        CollectionController.collectionController.ReCountUniqueEquipments();
+        CollectionController.collectionController.RefreshEquipments();
         StoryModeController.story.SetItemsBought(file.itemsUnlocked);
         StoryModeController.story.SetChallengeItemsBought(file.challengeItemsBought);
         StoryModeController.story.SetDailyBought(file.dailyBought);
         StoryModeController.story.SetWeeklyBought(file.weeklyBought);
+    }
+
+    //Used to reset decks and equipments after a story mode combat sequence
+    public void LoadStoryModeDecksAndEquipments()
+    {
+        Debug.Log("#### Reset decks and equipment ####");
+        StoryModeSaveFile file = LoadStoryModeGameFile();
+
+        CollectionController.collectionController.SetCompleteDeck(file.cardUnlocks);
+        CollectionController.collectionController.SetSelectedDeck(file.cardSelected);
+        CollectionController.collectionController.SetCompleteEquipments(file.completeEquipments);
+        CollectionController.collectionController.SetSelectedEquipments(file.selectedEquipments);
+        CollectionController.collectionController.ReCountUniqueCards();
+        CollectionController.collectionController.ReCountUniqueEquipments();
     }
 
     private StoryModeSaveFile LoadStoryModeGameFile()

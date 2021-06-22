@@ -78,6 +78,9 @@ public class GridController : MonoBehaviour
                 else
                     o.GetComponent<Collider2D>().enabled = false;
 
+        if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
+            AchievementSystem.achieve.OnNotify(objects[xLoc + xOffset, yLoc + yOffset].Count, StoryRoomSetup.ChallengeType.CharsStacked);
+
         /*
         if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
         {

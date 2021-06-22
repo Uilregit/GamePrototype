@@ -30,7 +30,7 @@ public class CharacterInformationController : MonoBehaviour
         Hide();
     }
 
-    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<BuffFactory> buffList, AbilitiesController abilitiesController)
+    public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<BuffFactory> buffList, List<Equipment> equipments, AbilitiesController abilitiesController)
     {
         int currentHealth = healthController.GetVit();
         int maxHealth = healthController.GetMaxVit();
@@ -77,14 +77,27 @@ public class CharacterInformationController : MonoBehaviour
 
         //Abilities section
         List<Card> abilityCards = abilitiesController.GetAbilityCards();
+        int count = abilityCards.Count;
+        if (equipments != null)
+            count = equipments.Count;
         for (int i = 0; i < passiveCards.Count; i++)
         {
-            if (i < abilityCards.Count)
+            if (i < count)
             {
                 CardController temp = this.gameObject.AddComponent<CardController>();
                 temp.SetCardDisplay(passiveCards[i]);
-                temp.SetCard(abilityCards[i], false, true);
-                passiveCards[i].SetCard(temp);
+                if (equipments == null)
+                {
+                    temp.SetCard(abilityCards[i], false, true);
+                    passiveCards[i].SetCard(temp);
+                }
+                else
+                {
+                    temp.GetCardDisplay().SetEquipment(equipments[i], healthController.GetComponent<PlayerController>().GetColorTag());
+                    passiveCards[i].SetEquipment(equipments[i], healthController.GetComponent<PlayerController>().GetColorTag());
+                }
+
+                
                 passiveCards[i].Show();
                 passiveCards[i].GetComponent<LineRenderer>().enabled = false;
             }
@@ -102,7 +115,7 @@ public class CharacterInformationController : MonoBehaviour
         GetComponent<CanvasScaler>().enabled = true;
         returnButton.enabled = false;
         returnButton.enabled = true;
-        for (int i = 0; i < attackCards.Count; i ++)
+        for (int i = 0; i < attackCards.Count; i++)
         {
             if (i < numOfCards)
             {

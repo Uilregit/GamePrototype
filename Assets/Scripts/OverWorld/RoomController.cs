@@ -503,7 +503,7 @@ public class RoomController : MonoBehaviour
                     "Overworld");
         }
         else
-            transform.position = new Vector3(-10, 0, 0);
+            transform.position = new Vector3(-10, 0, 0);                //Move all the rooms out of the way when in combat to prevent accidental clicking rooms
     }
 
     private void OnDestroy()

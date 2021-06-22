@@ -22,8 +22,20 @@ MonoBehaviour:
   challengeValues: 000000000500000014000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 000000000a000000020000006400000082000000
-  rewardAmounts: 0100000002000000010000000500000005000000
+  rewardTypes: 0000000008000000020000006400000082000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: a90883a48deffe54695bd0043c844847, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0100000001000000010000000500000005000000
   rewardCosts: 3200000032000000320000001400000014000000
   challengeRewardBought: 000000
   flavorText: 'Squirrel merchants'' bouty posters usually say: wanted dead or very

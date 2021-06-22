@@ -11,6 +11,9 @@ public class FinalizeButtonController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (SceneManager.GetActiveScene().name != "OverworldScene")
+            return;
+
         CollectionController.collectionController.FinalizeDeck();
         try
         {

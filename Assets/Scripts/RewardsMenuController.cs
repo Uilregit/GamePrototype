@@ -72,7 +72,10 @@ public class RewardsMenuController : MonoBehaviour
                 menuItemBack[i].transform.GetChild(0).GetComponent<Image>().sprite = goldRewardSprite;
                 menuItemBack[i].transform.GetChild(0).GetComponent<Image>().color = goldColor;
                 if (rewardsTypes[i] == RewardType.OverkillGold)
+                {
                     description = rewardsValues[i] + " Overkill Gold";
+                    AchievementSystem.achieve.OnNotify(rewardsValues[i], StoryRoomSetup.ChallengeType.TotalOverkillGold);
+                }
                 else
                     description = rewardsValues[i] + " Gold";
             }

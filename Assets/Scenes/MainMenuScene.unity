@@ -2995,10 +2995,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70be7f95205dd57459c153927f006c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   debugBossRoomEnabled: 0
   isStoryMode: 0
-  patchID: 0.4.5.4.c
+  patchID: 0.5.0
   seed: 0
   gameID: 
   versionText: {fileID: 2125512850}

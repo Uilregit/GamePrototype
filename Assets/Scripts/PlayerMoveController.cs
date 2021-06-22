@@ -312,7 +312,7 @@ public class PlayerMoveController : MonoBehaviour
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
             List<CardController> cards = new List<CardController>();
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), CollectionController.collectionController.GetEquipmentList(player.GetColorTag()), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
 
