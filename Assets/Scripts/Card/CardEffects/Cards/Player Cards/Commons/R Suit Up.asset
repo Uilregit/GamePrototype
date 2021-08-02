@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 0
-  description: Draw 1 energy card, target gains armor equal to 2x it's cost
+  description: Draw 1 energy card, then the target gains armor equal to 2x it's cost
   art: {fileID: 21300000, guid: 4afe5cafb08fd0941a56cec78bea1e42, type: 3}
   castType: 0
   castShape: 0

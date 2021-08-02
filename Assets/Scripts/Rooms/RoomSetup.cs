@@ -31,25 +31,25 @@ public class RoomSetup : ScriptableObject
         List<Vector2> output = new List<Vector2>();
         for (int j = 0; j < 7; j++)
             if (level1[j] == type)
-                output.Add(new Vector2(0, j));
+                output.Add(new Vector2(6 - j, 6));          //j on x and 6-j to transpose and flip on x and y axis to match actual layout
         for (int j = 0; j < 7; j++)
             if (level2[j] == type)
-                output.Add(new Vector2(1, j));
+                output.Add(new Vector2(6 - j, 5));
         for (int j = 0; j < 7; j++)
             if (level3[j] == type)
-                output.Add(new Vector2(2, j));
+                output.Add(new Vector2(6 - j, 4));
         for (int j = 0; j < 7; j++)
             if (level4[j] == type)
-                output.Add(new Vector2(3, j));
+                output.Add(new Vector2(6 - j, 3));
         for (int j = 0; j < 7; j++)
             if (level5[j] == type)
-                output.Add(new Vector2(4, j));
+                output.Add(new Vector2(6 - j, 2));
         for (int j = 0; j < 7; j++)
             if (level6[j] == type)
-                output.Add(new Vector2(5, j));
+                output.Add(new Vector2(6 - j, 1));
         for (int j = 0; j < 7; j++)
             if (level7[j] == type)
-                output.Add(new Vector2(6, j));
+                output.Add(new Vector2(6 - j, 0));
         return output;
     }
 

@@ -208,80 +208,81 @@ public class BuffFactory : MonoBehaviour
         int vitDamage = 0;
         int armorDamage = 0;
 
-        switch (buff.onTriggerEffects)
-        {
-            case Buff.BuffEffectType.None:
-                break;
-            case Buff.BuffEffectType.VitDamage:
-                vitDamage += target.GetSimulatedVitDamage(GetValue(value));
-                armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
-                target.TakeVitDamage(GetValue(value), selfHealthController, traceList, null, (GetTriggerType() == Buff.TriggerType.AtEndOfTurn || GetTriggerType() == Buff.TriggerType.AtStartOfTurn));
-                break;
-            case Buff.BuffEffectType.PiercingDamage:
-                vitDamage += target.GetSimulatedPiercingDamage(GetValue(value));
-                target.TakePiercingDamage(GetValue(value), selfHealthController, traceList);
-                break;
-            case Buff.BuffEffectType.ArmorDamage:
-                armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
-                target.TakeArmorDamage(GetValue(value), selfHealthController, traceList);
-                break;
-            case Buff.BuffEffectType.VitDamageMultiplier:
-                target.AddVitDamageMultiplier(GetValue(value));
-                break;
-            case Buff.BuffEffectType.HealingMultiplier:
-                target.AddHealingMultiplier(GetValue(value));
-                break;
-            case Buff.BuffEffectType.ArmorDamageMultiplier:
-                target.AddArmorDamageMultiplier(GetValue(value));
-                break;
-            case Buff.BuffEffectType.ApplyBuff:
-                BuffFactory thisBuff = new BuffFactory();
-                thisBuff.SetBuff(buff.appliedBuff);
-                thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, false, traceList, relicTrace);
-                break;
-            case Buff.BuffEffectType.DrawCard:
-                List<Card> spawnCards = new List<Card>();
-                foreach (Card spawnCard in buff.GetDrawnCards())
-                    if (spawnCard != null)
-                        spawnCards.Add(spawnCard);
-                if (spawnCards.Count == 0)
-                    HandController.handController.DrawAnyCard();
-                else
-                {
-                    foreach (Card card in spawnCards)
+        for (int iteration = 0; iteration < buff.onTriggerAppliedCount; iteration++)
+            switch (buff.onTriggerEffects)
+            {
+                case Buff.BuffEffectType.None:
+                    break;
+                case Buff.BuffEffectType.VitDamage:
+                    vitDamage += target.GetSimulatedVitDamage(GetValue(value));
+                    armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
+                    target.TakeVitDamage(GetValue(value), selfHealthController, traceList, null, (GetTriggerType() == Buff.TriggerType.AtEndOfTurn || GetTriggerType() == Buff.TriggerType.AtStartOfTurn));
+                    break;
+                case Buff.BuffEffectType.PiercingDamage:
+                    vitDamage += target.GetSimulatedPiercingDamage(GetValue(value));
+                    target.TakePiercingDamage(GetValue(value), selfHealthController, traceList);
+                    break;
+                case Buff.BuffEffectType.ArmorDamage:
+                    armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
+                    target.TakeArmorDamage(GetValue(value), selfHealthController, traceList);
+                    break;
+                case Buff.BuffEffectType.VitDamageMultiplier:
+                    target.AddVitDamageMultiplier(GetValue(value));
+                    break;
+                case Buff.BuffEffectType.HealingMultiplier:
+                    target.AddHealingMultiplier(GetValue(value));
+                    break;
+                case Buff.BuffEffectType.ArmorDamageMultiplier:
+                    target.AddArmorDamageMultiplier(GetValue(value));
+                    break;
+                case Buff.BuffEffectType.ApplyBuff:
+                    BuffFactory thisBuff = new BuffFactory();
+                    thisBuff.SetBuff(buff.appliedBuff);
+                    thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, false, traceList, relicTrace);
+                    break;
+                case Buff.BuffEffectType.DrawCard:
+                    List<Card> spawnCards = new List<Card>();
+                    foreach (Card spawnCard in buff.GetDrawnCards())
+                        if (spawnCard != null)
+                            spawnCards.Add(spawnCard);
+                    if (spawnCards.Count == 0)
+                        HandController.handController.DrawAnyCard();
+                    else
                     {
-                        CardController temp = selfHealthController.gameObject.AddComponent<CardController>();
-                        temp.SetCard(card, true, false);
-                        HandController.handController.CreateSpecificCard(temp);
+                        foreach (Card card in spawnCards)
+                        {
+                            CardController temp = selfHealthController.gameObject.AddComponent<CardController>();
+                            temp.SetCard(card, true, false);
+                            HandController.handController.CreateSpecificCard(temp);
+                        }
                     }
-                }
-                yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
-                break;
-            case Buff.BuffEffectType.CreateFireTrap:
-                GameObject obj = GameObject.Instantiate(buff.obj, selfHealthController.GetPreviousPosition(), Quaternion.identity);
-                obj.transform.parent = CanvasController.canvasController.boardCanvas.transform;
+                    yield return HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
+                    break;
+                case Buff.BuffEffectType.CreateFireTrap:
+                    GameObject obj = GameObject.Instantiate(buff.obj, selfHealthController.GetPreviousPosition(), Quaternion.identity);
+                    obj.transform.parent = CanvasController.canvasController.boardCanvas.transform;
 
-                foreach (TrapController t in GridController.gridController.traps)
-                    if (t.transform.position == obj.transform.position)
-                    {
-                        obj.gameObject.SetActive(false);
-                        break;
-                    }
-                int index = 0;
-                for (int i = 0; i < buff.card.cardEffectName.Length; i++)
-                    if (buff.card.cardEffectName[i] == Card.EffectType.CreateObject)
-                    {
-                        index = i;
-                        break;
-                    }
-                obj.GetComponent<TrapController>().SetValues(selfHealthController.gameObject, buff.card, index + 1);
-                GridController.gridController.traps.Add(obj.GetComponent<TrapController>());
-                break;
-            default:
-                Debug.Log(buff.onApplyEffects);
-                Debug.Log("Trigger Not implimented");
-                break;
-        }
+                    foreach (TrapController t in GridController.gridController.traps)
+                        if (t.transform.position == obj.transform.position)
+                        {
+                            obj.gameObject.SetActive(false);
+                            break;
+                        }
+                    int index = 0;
+                    for (int i = 0; i < buff.card.cardEffectName.Length; i++)
+                        if (buff.card.cardEffectName[i] == Card.EffectType.CreateObject)
+                        {
+                            index = i;
+                            break;
+                        }
+                    obj.GetComponent<TrapController>().SetValues(selfHealthController.gameObject, buff.card, index + 1);
+                    GridController.gridController.traps.Add(obj.GetComponent<TrapController>());
+                    break;
+                default:
+                    Debug.Log(buff.onApplyEffects);
+                    Debug.Log("Trigger Not implimented");
+                    break;
+            }
 
         try
         {

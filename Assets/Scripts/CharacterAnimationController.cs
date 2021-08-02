@@ -51,6 +51,12 @@ public class CharacterAnimationController : MonoBehaviour
     public void TriggerDeath()
     {
         anim.SetTrigger("isDead");
+        try
+        {
+            Card.CasterColor color = transform.parent.parent.GetComponent<PlayerController>().GetColorTag();
+            GridController.gridController.ReportPlayerDead(this.transform.parent.parent.gameObject, color);
+        }
+        catch { }
     }
 
     public void Destroy()

@@ -80,11 +80,11 @@ public class RoomController : MonoBehaviour
 
     public void InitializeWorld(bool load = false)
     {
-        Debug.Log("room instantialized");
         Random.InitState(InformationLogger.infoLogger.seed);
 
         if (InformationLogger.infoLogger.isStoryMode)
         {
+            Random.InitState(StoryModeController.story.GetSecondSeed());
             selectedLevel = -1;
             smallRooms = new List<SmallRoom>();
             previousRoom = new List<Vector2>();
@@ -92,20 +92,50 @@ public class RoomController : MonoBehaviour
             canvas = GetComponent<Canvas>();
             roomSeeds = new List<int>();
 
-            for (int i = StoryModeController.story.GetCurrentRoomSetup().setups.Count; i > 1; i--)
+            //Setting up arena rooms
+            if (StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.Arena || StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.NakedArena)
             {
-                GameObject obj = Instantiate(smallRoomPrefab);
-                obj.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i));
-                if (InformationLogger.infoLogger.debug)
-                    obj.GetComponent<SmallRoom>().SetSetup(debugRoom);
-                else
-                    obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i]);
-                smallRooms.Add(obj.GetComponent<SmallRoom>());
-                obj.transform.SetParent(transform);
-                obj.transform.position = transform.position + new Vector3(0, (bossRoom.transform.position.y - i) * 0.8f + 0.7f, 0);
+                //Create rooms according to world setup's specifications
+                foreach (Vector2 loc in StoryModeController.story.GetCurrentRoomSetup().arenaSetup.roomLocations)
+                {
+                    GameObject obj = Instantiate(smallRoomPrefab);
+                    obj.GetComponent<SmallRoom>().SetLocation(loc);
+                    smallRooms.Add(obj.GetComponent<SmallRoom>());
+                    obj.transform.SetParent(transform);
+                    obj.transform.position = transform.position + new Vector3(loc.x * 0.8f, loc.y * 0.8f - 3.37f, 0);
 
-                obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
+                    obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
+                }
+
+                //Setting up rooms per level for randomization
+                numRoomsPerLevel = new Dictionary<int, int>();
+                foreach (SmallRoom room in smallRooms)
+                    if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
+                        numRoomsPerLevel[(int)room.GetLocation().y] += 1;
+                    else
+                        numRoomsPerLevel[(int)room.GetLocation().y] = 1;
+
+                RandomizeRooms();
             }
+            //Setting up combat and boss rooms
+            else
+            {
+                for (int i = StoryModeController.story.GetCurrentRoomSetup().setups.Count; i > 1; i--)
+                {
+                    GameObject obj = Instantiate(smallRoomPrefab);
+                    obj.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i));
+                    if (InformationLogger.infoLogger.debug)
+                        obj.GetComponent<SmallRoom>().SetSetup(debugRoom);
+                    else
+                        obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i]);
+                    smallRooms.Add(obj.GetComponent<SmallRoom>());
+                    obj.transform.SetParent(transform);
+                    obj.transform.position = transform.position + new Vector3(0, (bossRoom.transform.position.y - i) * 0.8f + 0.7f, 0);
+
+                    obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
+                }
+            }
+
             bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
             if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
                 bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
@@ -116,12 +146,14 @@ public class RoomController : MonoBehaviour
         }
         else
         {
+            //Enable resource controller items
             ResourceController.resource.GetComponent<Canvas>().enabled = true;
             ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
             ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
 
             canvas = GetComponent<Canvas>();
 
+            //Reset all previous existing rooms for a fresh start
             destroyedRooms = new List<Vector2>();
 
             if (!load)
@@ -136,6 +168,7 @@ public class RoomController : MonoBehaviour
             smallRooms = new List<SmallRoom>();
             roomSeeds = new List<int>();
 
+            //Create rooms according to world setup's specifications
             foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
             {
                 GameObject obj = Instantiate(smallRoomPrefab);
@@ -147,6 +180,7 @@ public class RoomController : MonoBehaviour
                 obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
             }
 
+            //Setting up rooms per level for randomization
             numRoomsPerLevel = new Dictionary<int, int>();
             foreach (SmallRoom room in smallRooms)
                 if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
@@ -189,6 +223,9 @@ public class RoomController : MonoBehaviour
             foreach (SmallRoom firstRoom in smallRooms)
                 if (firstRoom.GetLocation().y == 0)
                     firstRoom.SetSelectable(true);
+
+            if (InformationLogger.infoLogger.isStoryMode && StoryModeController.story.GetCurrentRoomSetup().setups.Count == 1)             //Enable the boss room when viable
+                bossRoom.SetSelectable(true);
         }
         else
         {
@@ -221,7 +258,8 @@ public class RoomController : MonoBehaviour
                         room.SetColor(viableColor);
                 }
             }
-            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers()) || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2))             //Enable the boss room when viable
+            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers())
+                || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2))             //Enable the boss room when viable
                 bossRoom.SetSelectable(true);
             else
                 bossRoom.SetSelectable(false);
@@ -530,10 +568,10 @@ public class RoomController : MonoBehaviour
     public int GetNumberofWorldLayers()
     {
         int maxRoomLevel = 0;
-        foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
-            if (loc.y > maxRoomLevel)
-                maxRoomLevel = (int)loc.y;
+        foreach (SmallRoom loc in smallRooms)
+            if (loc.GetLocation().y > maxRoomLevel)
+                maxRoomLevel = (int)loc.GetLocation().y;
 
-        return maxRoomLevel;
+        return maxRoomLevel + 1;            //Adds 1 to account for the boss room at the topmost layer
     }
 }

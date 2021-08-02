@@ -64,7 +64,6 @@ public class MainMenuSceneController : MonoBehaviour
         RewardsMenuController.rewardsMenu.ShowRelicRewardMenu(thisRelic);
         InformationLogger.infoLogger.SaveGame(true);
         InformationLogger.infoLogger.SavePlayerPreferences();
-        SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 
     public void SettingsButton()

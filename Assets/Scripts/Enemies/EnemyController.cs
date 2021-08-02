@@ -66,7 +66,12 @@ public class EnemyController : MonoBehaviour
 
         healthController = GetComponent<HealthController>();
         if (vitVariate)
+        {
             maxVit = Mathf.RoundToInt(maxVit * (1 + Random.Range(-0.1f, 0.1f)));
+            startingArmor += Random.Range(0, 2);
+            if (attack != 0)
+                attack += Random.Range(0, 2);
+        }
         healthController.SetCastRange(castRange);
         healthController.SetMaxVit(maxVit);
         healthController.SetCurrentVit(maxVit);
@@ -227,43 +232,7 @@ public class EnemyController : MonoBehaviour
     {
         if (healthController.GetTauntedTarget() != null)          //Taunt target
             return healthController.GetTauntedTarget().gameObject;
-        return desiredTarget[currentAttackSquence % attackSequence.Count];
-    }
-
-    //Returns the viable target of the enemy. If taunted, is the taunter, if target isn't pathable, checks if there's an attackable target, else default target
-    public GameObject GetTarget()
-    {
-        GameObject target;
-        if (healthController.GetTauntedTarget() != null)          //Taunt target
-            target = healthController.GetTauntedTarget().gameObject;
-        else
-        {
-            try
-            {
-                target = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex].castType))[0];                     //Get the target according to the card in question
-            }
-            catch
-            {
-                target = this.gameObject;       //If the target is dead, then return self to avoid null errors
-            }
-
-            /*
-            List<GameObject> attackableTargets = enemyInformation.GetAttackableTargets(GetTargetTags(attackSequence[attackCardIndex].castType, attackSequence[attackCardIndex].targetType[0]));     //Will go to the nearest viable target to the actual target if
-            int distance = 99999999;                                                                                                                //the actual target isn't pathable
-            GameObject newTarget = target;
-            foreach (GameObject obj in attackableTargets)                                                                                            //Gets a list of attackable targets, chage target to closest to the desired one
-            {
-                if (GridController.gridController.GetManhattanDistance(target.transform.position, obj.transform.position) < distance)
-                {
-                    distance = GridController.gridController.GetManhattanDistance(target.transform.position, obj.transform.position);
-                    newTarget = obj;
-                }
-            }
-            target = newTarget;
-            */
-        }
-
-        return target;
+        return desiredTarget[currentAttackSquence % attacksPerTurn];
     }
 
     public GameObject[] GetTargetArray()
@@ -274,16 +243,16 @@ public class EnemyController : MonoBehaviour
                 target[i] = healthController.GetTauntedTarget().gameObject;
         else
             for (int i = 0; i < attacksPerTurn; i++)
-                target[i] = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex + i].castType))[0];                     //Get the target according to the card in question
+                target[i] = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex + i].castType, attackCardIndex + i))[0];                     //Get the target according to the card in question
         return target;
     }
 
     //Gets the target specified by the card's target type
-    private Vector2 GetCardTarget(Card.CastType type)
+    private Vector2 GetCardTarget(Card.CastType type, int index)
     {
         TargetType currentTargetType = targetType;
         if (attackSequence[attackCardIndex].targetBehaviour != TargetType.Default)
-            currentTargetType = attackSequence[attackCardIndex].targetBehaviour;
+            currentTargetType = attackSequence[index].targetBehaviour;
 
         if (currentTargetType == TargetType.Self)
             return transform.position;
@@ -469,7 +438,7 @@ public class EnemyController : MonoBehaviour
         if (!healthController.GetPhasedMovement())
             pathThroughTags = new string[] { "None" };
         else
-            pathThroughTags = new string[] { "Player", "Enemy" };
+            pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
         Vector2 finalLoc = Vector2.zero;
         if (maxOverlap > 0)                         //Prioritize overlaping targets over knocking to traps
@@ -548,7 +517,7 @@ public class EnemyController : MonoBehaviour
         if (!healthController.GetPhasedMovement())
             avoidTags = new string[] { "Player", "Enemy", "Blockade" };
         else
-            avoidTags = new string[] { "Blockade" };
+            avoidTags = new string[] { };
 
         //First find all positions that can actually be pathed to
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
@@ -608,8 +577,34 @@ public class EnemyController : MonoBehaviour
         if (!healthController.GetPhasedMovement())
             pathThroughTags = new string[] { "None" };
         else
-            pathThroughTags = new string[] { "Player", "Enemy" };
+            pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
         return PathFindController.pathFinder.PathFind(transform.position, finalLocation, pathThroughTags, occupiedSpace, size);
+    }
+
+    //Used by turn controller to determine which enemy should move first to avoid blocking issues. Returns the number of steps needed to path to the target, 1000 + phased path if currently blocked
+    //Lower the sorting order, the earlier this enemy should get to go
+    public int FindPathSortingOrder(GameObject target)
+    {
+        string[] pathThroughTags = new string[0];
+        if (!healthController.GetPhasedMovement())
+            pathThroughTags = new string[] { "None" };
+        else
+            pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
+
+        int output = FindFurthestPointInRange(target, pathThroughTags).Count;
+
+        if (output == 1)
+        {
+            output = 10000;                         //If unpathable, the lowest sorting order possible will be 10000 to ensure non blocked enemies will go first
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "Player", "Enemy" }, occupiedSpace, size);
+            foreach (Vector2 loc in path)
+                if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)         //Only count enemy in penialities so player body blocking is not taken into account
+                    output += 1000;                 //Penialize enemies for each character in their way to ensure those with less in their way goes first
+            output += path.Count;
+
+        }
+
+        return output;
     }
 
     //Find the closest point to the target with a kite distance using the return of pathinfinding
@@ -619,13 +614,13 @@ public class EnemyController : MonoBehaviour
         if (!healthController.GetPhasedMovement())
             pathThroughTags = new string[] { "None" };
         else
-            pathThroughTags = new string[] { "Player", "Enemy" };
+            pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
         List<Vector2> output = FindFurthestPointInRange(target, pathThroughTags);
 
-        if (output.Count == 1)
+        if (output.Count == 1)  //If a path could not be found, find path as if player and enemies don't exist to avoid paths being blocked by enemies causing unpathable enemies to stay still
         {
-            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, pathThroughTags, occupiedSpace, size);
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "Player", "Enemy" }, occupiedSpace, size);
             if (InformationLogger.infoLogger.debug)
                 foreach (Vector2 loc in path)
                     TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.blue, 0);
@@ -661,14 +656,14 @@ public class EnemyController : MonoBehaviour
 
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);                              //Get all positions that can cast on the target
 
-        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(healthController.GetTotalCastRange(), 1)];      //Sort positions by distance to target
-        for (int i = Mathf.Max(healthController.GetTotalCastRange() - 1, 0); i >= 0; i--)
+        List<Vector2>[] locationsByDistance = new List<Vector2>[Mathf.Max(healthController.GetTotalCastRange() + 1, 1)];      //Sort positions by distance to target, +1 for initializing locationsByDistance
+        for (int i = Mathf.Max(healthController.GetTotalCastRange(), 0); i >= 0; i--)
             locationsByDistance[i] = new List<Vector2>();
 
         foreach (Vector2 loc in inRangeLocations)
             try
             {
-                locationsByDistance[GetManhattanDistance(loc, target.transform.position) - 1].Add(loc);
+                locationsByDistance[GetManhattanDistance(loc, target.transform.position)].Add(loc);
             }
             catch
             {
@@ -682,15 +677,16 @@ public class EnemyController : MonoBehaviour
             }
 
         List<Vector2> pathableLocations = new List<Vector2>();                                              //Check if pathable within the allocated move distance or not
-        for (int i = Mathf.Max(healthController.GetTotalCastRange() - 1, 0); i >= 0; i--)                                  //Prefer locations further from target if possible
+        for (int i = Mathf.Max(healthController.GetTotalCastRange(), 0); i >= 0; i--)                                  //Prefer locations further from target if possible
         {
             pathableLocations = new List<Vector2>();
             foreach (Vector2 loc in locationsByDistance[i])
             {
                 List<Vector2> path = new List<Vector2>();
                 path = PathFindController.pathFinder.PathFind(transform.position, loc, pathThroughTags, occupiedSpace, size);
-                if (path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
-                    pathableLocations.Add(path[path.Count - 1]);
+                //if (path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
+                if (path.Count > 1)
+                    pathableLocations.Add(loc);
             }
             if (pathableLocations.Count > 0)                                                                //If there are pathable locations in this distance range, move on to the next step
                 break;
@@ -700,7 +696,7 @@ public class EnemyController : MonoBehaviour
         if (desiredTarget != null)                                                                          //In case the desired target has died/been destroyed
             desiredTargetLocation = desiredTarget[currentAttackSquence % attacksPerTurn].transform.position;
         else
-            desiredTargetLocation = GetTarget().transform.position;
+            desiredTargetLocation = GetCurrentTarget().transform.position;
 
         List<Vector2> finalLocs = new List<Vector2>() { transform.position };                               //Find the viable position that's the furthest from the current position
         foreach (Vector2 loc in pathableLocations)                                                          //Allows for more movement and more dynamic battles
@@ -723,7 +719,6 @@ public class EnemyController : MonoBehaviour
         }
 
         Vector2 finalLoc = finalLocs[Random.Range(0, finalLocs.Count)];                                     //If there are multiple viable positions with the same distance, chose one at random
-
         return PathFindController.pathFinder.PathFind(transform.position, finalLoc, pathThroughTags, occupiedSpace, size);  //Return the pathfind to the chosen location
     }
 
@@ -1063,108 +1058,4 @@ public class EnemyController : MonoBehaviour
     {
         previousPosition = loc;
     }
-    /*
-    //Scores the simulated outcome, highest score should be the most desired outcome
-    private int ScoreSimulatedOutCome(SimHealthController simH, int turn)
-    {
-        int score = 0;
-        if (simH.currentVit <= 0)
-        {
-            score += 99999;                 //Max out score 
-            score -= turn;                  //Gives a penalty for higher turn number. Early lethals are better
-        }
-        else
-        {
-            score -= simH.currentVit * 1;   //1 point per health left
-            score -= simH.currentArmor * 2;//2 points per armor left
-        }
-        return score;
-    }
-    */
-
-    /*
-    //Chose index of the card to attack with
-    private int ChoseAttackCard(GameObject target)
-    {
-        SimHealthController simH = new SimHealthController();
-        simH.SetValues(target.GetComponent<HealthController>().GetSimulatedSelf());
-        int bestScore = -999999;
-        int firstCard = 0;
-
-        for (int i = 0; i < attackCards.Length; i++)
-        {
-            SimHealthController simH1 = new SimHealthController();
-            simH1.SetValues(enemyInformation.SimulateTriggerCard(i, target, simH));
-            if (ScoreSimulatedOutCome(simH1, 1) > bestScore)
-            {
-                firstCard = i;
-                bestScore = ScoreSimulatedOutCome(simH1, 1);
-            }
-            for (int j = 0; j < attackCards.Length; j++)
-            {
-                SimHealthController simH2 = new SimHealthController();
-                simH2.SetValues(enemyInformation.SimulateTriggerCard(j, target, simH1));
-                if (ScoreSimulatedOutCome(simH2, 2) > bestScore)
-                {
-
-                    firstCard = i;
-                    bestScore = ScoreSimulatedOutCome(simH2, 2);
-                }
-                for (int k = 0; k < attackCards.Length; k++)
-                {
-                    SimHealthController simH3 = new SimHealthController();
-                    simH3.SetValues(enemyInformation.SimulateTriggerCard(k, target, simH2));
-                    if (ScoreSimulatedOutCome(simH3, 3) > bestScore)
-                    {
-
-                        firstCard = i;
-                        bestScore = ScoreSimulatedOutCome(simH3, 3);
-                    }
-                    for (int l = 0; l < attackCards.Length; l++)
-                    {
-                        SimHealthController simH4 = new SimHealthController();
-                        simH4.SetValues(enemyInformation.SimulateTriggerCard(l, target, simH3));
-                        if (ScoreSimulatedOutCome(simH4, 4) > bestScore)
-                        {
-
-                            firstCard = i;
-                            bestScore = ScoreSimulatedOutCome(simH4, 4);
-                        }
-                    }
-                }
-            }
-        }
-        return firstCard;
-    }
-    */
-
-    /*
-    //Use recursion to find the best card sequence to use simulating "iteration" number of turns
-    //Dictionary of bestScore, then the SHC object storing the simulation data
-    private Dictionary<int, SimHealthController> RecurseBestCardCombo(int bestScore, SimHealthController simH, GameObject target, int iteration)
-    {
-        Dictionary<int, SimHealthController> output = new Dictionary<int, SimHealthController>();
-
-        for (int l = 0; l < attackCards.Length; l++)
-        {
-            SimHealthController thisSimH = new SimHealthController();
-            thisSimH.SetValues(enemyInformation.SimulateTriggerCard(l, target, simH));
-            if (ScoreSimulatedOutCome(thisSimH, iteration) > bestScore)
-            {
-
-                thisSimH.cardSequence.Add(l);
-                bestScore = ScoreSimulatedOutCome(thisSimH, iteration);
-                output[bestScore] = thisSimH;
-            }
-            if (iteration >= 1)
-            {
-                Dictionary<int, SimHealthController> nextIteration = RecurseBestCardCombo(bestScore, thisSimH, target, iteration - 1);
-                foreach (var item in nextIteration)
-                    if (!output.Keys.Contains(item.Key))
-                        output.Add(item.Key, item.Value);
-            }
-        }
-        return output;
-    }
-    */
 }

@@ -11,6 +11,7 @@ public class AbilitiesController : MonoBehaviour
         Self = 0,
         AllPlayers = 10,
         AllEnemies = 20,
+        HandController = 30,
         Creator = 100,
     }
 
@@ -24,6 +25,8 @@ public class AbilitiesController : MonoBehaviour
     {
         OnDeath = 0,
         OnSacrifice = 1,
+        OnBreak = 5,
+        OnBelow0Health = 6,
         AtEndOfTurn = 10,
     }
     public enum AbilityType
@@ -31,9 +34,13 @@ public class AbilitiesController : MonoBehaviour
         VitChange = 0,
         ArmorChange = 1,
         AttackChange = 2,
+
         FullHeal = 10,
         Break = 11,
-        Revive = 99
+
+        Revive = 99,
+
+        GetSynergizedCards = 999
     }
 
     public List<string> abilityNames = new List<string>();
@@ -123,6 +130,28 @@ public class AbilitiesController : MonoBehaviour
                                 newObj.GetComponent<PlayerController>().Spawn(obj.transform.position);
                             }
                             break;
+                        case AbilityType.GetSynergizedCards:
+                            string color = PartyController.party.GetPlayerColorTexts()[Random.Range(0, 2)];
+                            List<Card> synergizedCards = LootController.loot.GetSynergizedCards(color);
+                            List<int> indexes = new List<int>();
+                            while (indexes.Count < abilityValue[i])
+                            {
+                                int newIndex = Random.Range(0, synergizedCards.Count - 1);
+                                if (!indexes.Contains(newIndex))
+                                    indexes.Add(newIndex);
+                            }
+                            foreach (int index in indexes)
+                            {
+                                Card c = synergizedCards[index].GetCopy();
+                                c.exhaust = true;
+                                CardController cc = HandController.handController.gameObject.AddComponent<CardController>();
+                                cc.SetCard(c, true, false);
+                                cc.SetManaCostCap(0);
+                                cc.SetEnergyCostCap(0);
+                                HandController.handController.CreateSpecificCard(cc);
+                            }
+                            HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
+                            break;
                     }
                 }
             }
@@ -157,6 +186,8 @@ public class AbilitiesController : MonoBehaviour
                 return output;
             case TargetType.AllPlayers:
                 return GameController.gameController.GetLivingPlayers();
+            case TargetType.HandController:
+                return new List<GameObject>() { HandController.handController.gameObject };
             default:
                 return new List<GameObject>() { this.gameObject };
         }
@@ -228,6 +259,9 @@ public class AbilitiesController : MonoBehaviour
                     break;
                 case AbilityType.Revive:
                     s += "Revive";
+                    break;
+                case AbilityType.GetSynergizedCards:
+                    s += "Cards From The Future That Costs (0)";
                     break;
             }
 

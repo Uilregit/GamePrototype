@@ -45,6 +45,8 @@ public class CollectionController : MonoBehaviour
     private Dictionary<string, ListWrapper> selectedDeck = new Dictionary<string, ListWrapper>();
     private Dictionary<string, ListWrapper> newCards = new Dictionary<string, ListWrapper>();
     private EquipmentWrapper completeEquipments;
+    private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife" };
+    private List<string> debugCards = new List<string>();
     private Dictionary<string, EquipmentWrapper> selectedEquipments = new Dictionary<string, EquipmentWrapper>();
     private CardController recentRewardsCard;
 
@@ -54,7 +56,10 @@ public class CollectionController : MonoBehaviour
     private int page = 0;
 
     public Image weaponImage;
+    public EquipmentDragCardController weaponDragCard;
     public Image accessoryImage;
+    public EquipmentDragCardController accessoryDragCard;
+    public Image errorMessage;
     private bool isShowingCards = true;
 
     private void Awake()
@@ -98,29 +103,12 @@ public class CollectionController : MonoBehaviour
             SetupMultiplayerDeck();
         else if (isStoryMode)
         {
-            for (int i = 0; i < storyModeDeck.Length; i++)              //Deep copy completeDeck to avoid deleting cards in that list
-            {
-                List<CardController> temp = new List<CardController>();
-                string color = "";
-                foreach (Card c in storyModeDeck[i].deck)
-                {
-                    CardController j = this.gameObject.AddComponent<CardController>();
-                    j.SetCard(c, true, false);
-                    j.SetStartedInDeck(true);
-                    temp.Add(j);
-
-                    color = c.casterColor.ToString();
-                }
-                selectedDeck[color].SetDeck(temp);
-            }
+            SetStoryModeDefaultDeckAsSelectedDeck();
         }
         else
         {
             for (int i = 0; i < usedDeck.Length; i++)
             {
-                if (!PartyController.party.partyColors.Contains(usedDeck[i].deck[0].casterColor))
-                    continue;
-
                 List<CardController> temp = new List<CardController>();
                 string color = "";
                 foreach (Card c in usedDeck[i].deck)
@@ -148,7 +136,6 @@ public class CollectionController : MonoBehaviour
 
             ReCountUniqueCards();
             SetDeck(0);
-            ResolveSelectedList();
             FinalizeDeck();
             CheckDeckComplete();
             CheckPageButtons();
@@ -165,8 +152,6 @@ public class CollectionController : MonoBehaviour
 
     public void ResolveSelectedEquipmentList()
     {
-        ReCountUniqueEquipments();
-
         foreach (string partyColor in PartyController.party.GetPotentialPlayerTexts())
             if (selectedEquipments.ContainsKey(partyColor))
                 foreach (Equipment equip in selectedEquipments[partyColor].equipments)
@@ -211,6 +196,7 @@ public class CollectionController : MonoBehaviour
 
         RefreshSelectDecks();
         RefreshSelectedEquipments();
+        CheckPageButtons();
     }
 
     public void RefreshSelectDecks()
@@ -279,24 +265,29 @@ public class CollectionController : MonoBehaviour
 
     public void RefreshEquipments()
     {
-        ResolveSelectedEquipmentList();
+        ReCountUniqueEquipments();      //Refresh unique equipments just in case
 
         //Order the equiped equipments by colors, with the selected player color equipments always being first
         List<Equipment> equipedEquipment = new List<Equipment>();
         List<string> equipedColor = new List<string>();
-        if (selectedEquipments.ContainsKey(PartyController.party.GetPlayerColorTexts()[deckID]))
+        if (selectedEquipments.ContainsKey(PartyController.party.GetPlayerColorTexts()[deckID]))        //Add the equipped equipments from party colors so they show up first
             foreach (Equipment e in selectedEquipments[PartyController.party.GetPlayerColorTexts()[deckID]].equipments)
             {
                 equipedEquipment.Add(e);
                 equipedColor.Add(PartyController.party.GetPlayerColorTexts()[deckID]);
             }
-        foreach (string color in PartyController.party.GetPotentialPlayerTexts())
+        foreach (string color in PartyController.party.GetPotentialPlayerTexts())                       //Add the equipped equipments from non party colors so they show up after the party color equipments
             if (selectedEquipments.ContainsKey(color) && color != PartyController.party.GetPlayerColorTexts()[deckID])
                 foreach (Equipment e in selectedEquipments[color].equipments)
                 {
                     equipedEquipment.Add(e);
                     equipedColor.Add(color);
                 }
+
+        Dictionary<string, int> resolvedUniqueEquipments = new Dictionary<string, int>();               //Using the resolved unique equipment list that removes equipments that have all be equipped by players
+        foreach (string key in uniqueEquipments.Keys)
+            if (uniqueEquipments[key] > 0)
+                resolvedUniqueEquipments[key] = uniqueEquipments[key];
 
         //Draws all the cards in the select area
         for (int i = 0; i < custCardsDisplay.Length; i++)
@@ -314,21 +305,17 @@ public class CollectionController : MonoBehaviour
                 custCardsDisplay[i].greyOut.enabled = false;
             }
             //Drawing the unequiped equipments
-            else if (i + custCardsDisplay.Length * page < uniqueEquipments.Keys.Count + equipedEquipment.Count)
+            else if (i + custCardsDisplay.Length * page < resolvedUniqueEquipments.Keys.Count + equipedEquipment.Count)
             {
                 custCardsDisplay[i].Show();
-                string name = uniqueEquipments.Keys.ToArray<string>()[i + custCardsDisplay.Length * page - equipedEquipment.Count];
-                if (uniqueEquipments[name] < 1)
-                {
-                    custCardsDisplay[i].Hide();
-                    continue;
-                }
+                string name = resolvedUniqueEquipments.Keys.ToArray<string>()[i + custCardsDisplay.Length * page - equipedEquipment.Count];
+
                 Equipment equip = LootController.loot.GetEquipment(name);
                 custCardsDisplay[i].GetComponentInChildren<CardDisplay>().SetEquipment(equip, Card.CasterColor.Passive);
                 custCardsDisplay[i].SetIsShowingCard(false);
                 custCardsDisplay[i].SetEquipment(equip, Card.CasterColor.Passive);
-                custCardsDisplay[i].SetCount(uniqueEquipments[name]);
-                if (uniqueEquipments[name] <= 0)
+                custCardsDisplay[i].SetCount(resolvedUniqueEquipments[name]);
+                if (resolvedUniqueEquipments[name] <= 0)
                 {
                     custCardsDisplay[i].GetComponent<Collider2D>().enabled = false;
                     custCardsDisplay[i].greyOut.enabled = true;
@@ -364,13 +351,17 @@ public class CollectionController : MonoBehaviour
                 if (equip.isWeapon)
                 {
                     weaponImage.gameObject.SetActive(true);
+                    weaponImage.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = equip.art;
                     weaponImage.rectTransform.sizeDelta = new Vector2(equip.numOfCardSlots * 0.6f, accessoryImage.rectTransform.sizeDelta.y);
+                    weaponDragCard.SetEquipment(equip, PartyController.party.GetPlayerCasterColor(PartyController.party.GetPlayerColorTexts()[deckID]));
                 }
                 else
                 {
                     accessoryImage.gameObject.SetActive(true);
+                    accessoryImage.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = equip.art;
                     accessoryImage.rectTransform.sizeDelta = new Vector2(equip.numOfCardSlots * 0.6f, accessoryImage.rectTransform.sizeDelta.y);
                     accessoryImage.transform.localPosition = weaponImage.transform.localPosition + new Vector3(weaponCardSlots * 0.6f, 0);
+                    accessoryDragCard.SetEquipment(equip, PartyController.party.GetPlayerCasterColor(PartyController.party.GetPlayerColorTexts()[deckID]));
                 }
             }
         }
@@ -389,6 +380,17 @@ public class CollectionController : MonoBehaviour
     public void PreviousPage()
     {
         page -= 1;
+        if (isShowingCards)
+            RefreshDecks();
+        else
+            RefreshEquipments();
+        CheckPageButtons();
+    }
+
+    public void SetPage(int p)
+    {
+        page = p;
+
         if (isShowingCards)
             RefreshDecks();
         else
@@ -417,7 +419,7 @@ public class CollectionController : MonoBehaviour
                 foreach (Equipment e in selectedEquipments[key].equipments)
                     numOfSelectedEquipments++;
 
-            if (custCardsDisplay.Length * (page + 1) < uniqueEquipments.Keys.Count + numOfSelectedEquipments && !isShowingCards)
+            if (custCardsDisplay.Length * (page + 1) < uniqueEquipments.Keys.Count + numOfSelectedEquipments)
                 pageButtons[1].Enable(true);
             else
                 pageButtons[1].Enable(false);
@@ -432,6 +434,9 @@ public class CollectionController : MonoBehaviour
         int range = (int)ranges.y;
 
         //If any of the slots in the available ranges are null, insert the new card there
+        if (!selectedDeck[newCard.GetCard().casterColor.ToString()].deck.GetRange(startingIndex, range).Any(x => x == null))
+            RemoveCard(selectedDeck[newCard.GetCard().casterColor.ToString()].deck[index], index, false);
+
         if (selectedDeck[newCard.GetCard().casterColor.ToString()].deck.GetRange(startingIndex, range).Any(x => x == null))
         {
             //Find which index to insert into
@@ -470,6 +475,30 @@ public class CollectionController : MonoBehaviour
         RefreshDecks();
     }
 
+    public void SwapCards(int index1, int index2)
+    {
+        //Save the card controllers to be swapped
+        CardController card1 = selectedDeck[PartyController.party.GetPlayerColorTexts()[deckID]].deck[index1];
+        CardController card2 = selectedDeck[PartyController.party.GetPlayerColorTexts()[deckID]].deck[index2];
+
+        //Remove both cards
+        if (card2 != null)
+            RemoveCard(card2, index2, false);
+        if (GetIfViableSelectSlot(card2.GetCard(), index1) && GetIfSelectedSlotHasEmpty(index1))         //If swap is not needed and card can just be added to the new area, do so
+            AddCard(card2, index1);
+        else                                                        //Else swap the two cards
+        {
+            if (card1 != null)
+                RemoveCard(card1, index1, false);
+
+            //Add in both cards if they're going into a viable slot
+            if (card1 != null && GetIfViableSelectSlot(card1.GetCard(), index2))
+                AddCard(card1, index2);
+            if (card2 != null && GetIfViableSelectSlot(card2.GetCard(), index1))
+                AddCard(card2, index1);
+        }
+    }
+
     public bool GetIfViableSelectSlot(Card c, int index)
     {
         Vector2 range = CollectionController.collectionController.GetWeaponAndAccessorySlots();
@@ -478,6 +507,18 @@ public class CollectionController : MonoBehaviour
             return ((c.rarity == Card.Rarity.Starter || c.rarity == Card.Rarity.StarterAttack) || index < slots);  //Only allow cards to be selected in their respective slots in the story mode scene
         else
             return true;
+    }
+
+    public bool GetIfSelectedSlotHasEmpty(int index)
+    {
+        Vector2 ranges = GetSelectCardCategoryIndexRanges(index);
+        int startingIndex = (int)ranges.x;
+        int range = (int)ranges.y;
+
+        for (int i = startingIndex; i < startingIndex + range; i++)
+            if (selectedDeck[PartyController.party.GetPlayerColorTexts()[deckID]].deck[i] == null)
+                return true;
+        return false;
     }
 
     public void AddEquipment(Equipment equip, Card.CasterColor color)
@@ -572,6 +613,7 @@ public class CollectionController : MonoBehaviour
                     if (selectedDeck[color.ToString()].deck[i] != null && selectedDeck[color.ToString()].deck[i].GetCard().rarity != Card.Rarity.Starter && selectedDeck[color.ToString()].deck[i].GetCard().rarity != Card.Rarity.StarterAttack)     //Don't remove blank or starter cards
                         RemoveCard(selectedDeck[color.ToString()].deck[i], i, false);
 
+        ReCountUniqueEquipments();
         RefreshEquipments();
         RefreshSelectDecks();
         if (CheckDeckComplete() && SceneManager.GetActiveScene().name != "OverworldScene")
@@ -580,7 +622,6 @@ public class CollectionController : MonoBehaviour
 
     public void RemoveCard(CardController newCard, int index, bool refreshDecks = true)
     {
-        int deckIndex = PartyController.party.GetPartyIndex(newCard.GetCard().casterColor);
         selectedDeck[newCard.GetCard().casterColor.ToString()].deck[index] = null;
         uniqueCards[newCard.GetCard().casterColor.ToString()][newCard.GetCard().name] += 1;
 
@@ -696,7 +737,6 @@ public class CollectionController : MonoBehaviour
         */
         ReCountUniqueCards();
         SetDeck(0);
-        ResolveSelectedList();
         FinalizeDeck();
         CheckDeckComplete();
         CheckPageButtons();
@@ -706,8 +746,8 @@ public class CollectionController : MonoBehaviour
     public void SetupStoryModeDeck()
     {
         ReCountUniqueCards();
+        ReCountUniqueEquipments();
         SetDeck(0);
-        ResolveSelectedList();
         FinalizeDeck();
         CheckDeckComplete();
         CheckPageButtons();
@@ -804,13 +844,16 @@ public class CollectionController : MonoBehaviour
                 if (card == null)
                     totalNumOfBlanks++;
 
-        if (totalNumOfBlanks > 0)
-            StoryModeController.story.ShowMenuNotification(3, true, false);
-        else if (totalNumOfBlanks == 0)
+        if (isStoryMode)
         {
-            if (StoryModeController.story.GetIsDeckIncomplete() && SceneManager.GetActiveScene().name != "OverworldScene")        //If the deck wasn't full but now is, save the game
-                InformationLogger.infoLogger.SaveStoryModeGame();
-            StoryModeController.story.ShowMenuNotification(3, false, false);
+            if (totalNumOfBlanks > 0)
+                StoryModeController.story.ShowMenuNotification(3, true, false);
+            else if (totalNumOfBlanks == 0)
+            {
+                if (StoryModeController.story.GetIsDeckIncomplete() && SceneManager.GetActiveScene().name != "OverworldScene")        //If the deck wasn't full but now is, save the game
+                    InformationLogger.infoLogger.SaveStoryModeGame();
+                StoryModeController.story.ShowMenuNotification(3, false, false);
+            }
         }
 
         return totalNumOfBlanks == 0;
@@ -830,7 +873,6 @@ public class CollectionController : MonoBehaviour
             newCards[newCard.GetCard().casterColor.ToString()].deck.Add(c);
         completeDeck[newCard.GetCard().casterColor.ToString()].deck.Add(c);
         ReCountUniqueCards();
-        ResolveSelectedList();
         RefreshDecks();
     }
 
@@ -878,6 +920,8 @@ public class CollectionController : MonoBehaviour
             }
             uniqueCards[color] = temp;
         }
+
+        ResolveSelectedList();
     }
 
     public void ReCountUniqueEquipments()
@@ -891,6 +935,8 @@ public class CollectionController : MonoBehaviour
             else
                 uniqueEquipments[equip.equipmentName] = 1;
         }
+
+        ResolveSelectedEquipmentList();
     }
 
     public int GetCountOfCardInCollection(Card card)
@@ -983,6 +1029,11 @@ public class CollectionController : MonoBehaviour
                 completeDeck[color].deck = new List<CardController>();
             }
 
+        if (InformationLogger.infoLogger.debug)
+            foreach (string equip in debugCards)
+                if (!value.ContainsKey(equip))
+                    value[equip] = 3;
+
         foreach (string name in value.Keys)
         {
             for (int i = 0; i < value[name]; i++)
@@ -1019,6 +1070,14 @@ public class CollectionController : MonoBehaviour
             completeEquipments = new EquipmentWrapper();
             completeEquipments.equipments = new List<Equipment>();
         }
+
+        if (InformationLogger.infoLogger.debug)
+        {
+            foreach (string equip in debugEquipments)
+                if (!completeEquipmentNames.ContainsKey(equip))
+                    completeEquipmentNames[equip] = 3;
+        }
+
         foreach (string newEquipment in completeEquipmentNames.Keys)
             for (int i = 0; i < completeEquipmentNames[newEquipment]; i++)
                 completeEquipments.equipments.Add(LootController.loot.GetEquipment(newEquipment));
@@ -1059,7 +1118,6 @@ public class CollectionController : MonoBehaviour
                 c.SetStartedInDeck(true);
 
         ReCountUniqueCards();
-        ResolveSelectedList();
         RefreshDecks();
     }
 
@@ -1098,12 +1156,12 @@ public class CollectionController : MonoBehaviour
         selectedAreaWhiteOut.transform.SetAsLastSibling();
     }
 
-    public void SetSelectCardWhiteOut(bool state, int index)
+    public void SetSelectCardWhiteOut(bool state, int index, Color c)
     {
         if (!state)
         {
             foreach (SelectedCardController card in selectedCardsDisplay)
-                card.SetWhiteOut(false);
+                card.SetWhiteOut(false, Color.white);
             return;
         }
 
@@ -1113,7 +1171,7 @@ public class CollectionController : MonoBehaviour
         int range = (int)ranges.y;
 
         for (int i = startingIndex; i < startingIndex + range; i++)
-            selectedCardsDisplay[i].SetWhiteOut(state);
+            selectedCardsDisplay[i].SetWhiteOut(state, c);
     }
 
     //Takes in the select card index and returns the startingIndex and range of select cards that belong in the same weapon/accessory/basic categories
@@ -1209,9 +1267,14 @@ public class CollectionController : MonoBehaviour
     {
         if (value == null)
             return;
+
         List<Equipment> equipments = new List<Equipment>();
         foreach (string e in value)
             equipments.Add(LootController.loot.GetEquipment(e));
+
+        if (InformationLogger.infoLogger.debug)
+            foreach (string e in debugEquipments)
+                equipments.Add(LootController.loot.GetEquipment(e));
 
         completeEquipments = new EquipmentWrapper();
         completeEquipments.equipments = equipments;
@@ -1261,9 +1324,57 @@ public class CollectionController : MonoBehaviour
 
         return output;
     }
+    public void SetStoryModeDefaultDeckAsSelectedDeck()
+    {
+        for (int i = 0; i < storyModeDeck.Length; i++)              //Deep copy completeDeck to avoid deleting cards in that list
+        {
+            List<CardController> temp = new List<CardController>();
+            string color = "";
+            foreach (Card c in storyModeDeck[i].deck)
+            {
+                CardController j = this.gameObject.AddComponent<CardController>();
+                j.SetCard(c, true, false);
+                j.SetStartedInDeck(true);
+                temp.Add(j);
+
+                color = c.casterColor.ToString();
+            }
+            selectedDeck[color].SetDeck(temp);
+        }
+
+        selectedEquipments = new Dictionary<string, EquipmentWrapper>();
+
+        ReCountUniqueCards();
+        RefreshDecks();
+    }
 
     public void SetIsShowingCards(bool state)
     {
         isShowingCards = state;
+    }
+
+    public void ShowErrorMessage()
+    {
+        errorMessage.color = new Color(errorMessage.color.r, errorMessage.color.g, errorMessage.color.b, 1);
+        Color textColor = errorMessage.transform.GetChild(0).GetComponent<Text>().color;
+        errorMessage.transform.GetChild(0).GetComponent<Text>().color = new Color(textColor.r, textColor.g, textColor.b, 1);
+        errorMessage.transform.SetAsLastSibling();
+        StartCoroutine(FadeErrorMessage());
+    }
+
+    public void HideErrorMessage()
+    {
+        StopAllCoroutines();
+        errorMessage.color = new Color(errorMessage.color.r, errorMessage.color.g, errorMessage.color.b, 0);
+        Color textColor = errorMessage.transform.GetChild(0).GetComponent<Text>().color;
+        errorMessage.transform.GetChild(0).GetComponent<Text>().color = new Color(textColor.r, textColor.g, textColor.b, 0);
+    }
+
+    private IEnumerator FadeErrorMessage()
+    {
+        yield return new WaitForSeconds(3.33f);     //0.33s per word for 10 words
+        errorMessage.color = new Color(errorMessage.color.r, errorMessage.color.g, errorMessage.color.b, 0);
+        Color textColor = errorMessage.transform.GetChild(0).GetComponent<Text>().color;
+        errorMessage.transform.GetChild(0).GetComponent<Text>().color = new Color(textColor.r, textColor.g, textColor.b, 0);
     }
 }

@@ -749,8 +749,22 @@
  * ####### 0.4.6 #######
  * #####################
  * -- Cards --
+ *      - Red -
+ *      The Best Defence --> The Bigger They Are
+ *          2M --> 3M
+ *          Target gains armor equal to their ATK --> Target takes damage equal to 2x their armor
+ *      Vendetta
+ *          Deal 100% of ATK as damage. If the target is targeting you, damage them again --> When target is damaged, target retaliatse with 50% of Their ATK twice this turn
+ *      - White -
+ *      Retaliate --> The Best Defence
+ *          When target is damaged, target retaliatse with 50% of Their ATK as damage this turn --> Target gains armor equal to their ATK
+ *      - Systems -
+ *      Phased movement now allows characters to move through blockades
  * 
  * -- Enemies --
+ * Now all enemies can have 0, 1, or 2 bonus ATK and Armor if set to variatevit, to give more sense of randomness
+ * Added world 1 tutorial boss
+ *      Summons pillars that cannot move but buff the boss. Pillars grant player 3 free synergyzing cards on break
  * 
  * -- System --
  * Added story mode
@@ -767,6 +781,17 @@
  * Complete and selected decks now reworked to be consistent for all 6 colors instead of just the 3 in party
  * Cards and Equipments can now be given as rewards at the end of story mode rooms
  * Add weapons to shop pool
+ * Buffs can now specify how many times their on trigger effect goes off
+ * Story mode rooms are now randomized with the second as the seed instead of the global infologger seed to prevent 100% consistent card rewards
+ * All chars dying in story mode now goes to storymodeendscene instead of classic mode end scene
+ * Designed enemies, layout, and rewards for all 10 rooms in the first world
+ * Storymode debugging now has it's own separate savefile
+ * Added options for storymode debugging to copy the real story mode's progress
+ * Added hidden rooms to storymode maps
+ *      Boss rooms that unlock after defeatin the boss room once (harder more challenging version of the boss for 1 off fights)
+ *      Special rooms that unlock after 3 staring a regular room (a fun/extreme/quirky version of the regular room)
+ * World 2 can now be selected and gone to. Layout designed. Save system incorporates worlds
+ * Added ability for story rooms to start with default cards and no equipment
  * 
  * -- Story --
  * Added flavor text for first 10 rooms in world 1
@@ -793,6 +818,20 @@
  * Added icons and tooltips to card displays for weapons with on play effects
  * Player equipped equipments can now be seen on the character information menu
  * Added Equipment, Card, and Material type to story mode end scene
+ * Added error messages to collection controller to help with some of the less intuitive aspects such as putting card in a locked slot
+ * Weapon and Accessory images in collection now have the equiped item's art
+ * Ability card texts are now white to fit the darker card back
+ * Added UI for seeing achievement and gold progress midway through a run
+ * Card mana and energy numbers are yellow instead of red when debuffed
+ * Move and cast range indicators now always show over every board object
+ * Added drag deequip for equipments on the gear menu
+ * Collection controller now allows cards to be swapped around while following customizeable card slot rules
+ * Colleciton controoler now will now put the card in it's desired slot, replacing the card in that location if no empty slot is found in that category
+ * Added animation to highlight newly unlocked rooms in story mode
+ * Added additional room icon for boss room crowns and arena
+ * Collection controller swaps will add card to the viable section if there's an empty slot already instead of swapping with the card selected
+ * Mid run achievements will now show current achievement progress if said achievement has not yet been met
+ * Achievement texts will no longer have (x/y) for boolean achievements
  * 
  * -- Bugs --
  * Fixed room not showing yellow even if achievements are fully done for the room
@@ -803,21 +842,43 @@
  * Fixed combat scenes camera not positioned correctly
  * Fixed the shop back button not actually returning to the main menu
  * Fixed achievement tracking for the first 5 rooms
+ * Fixed enemies not refreshing intent on turn 1 of story mode rooms
+ * Fixed story mode shops not refreshing the deck properly
+ * Fixed equipment tooltip not showing up on cards sometimes
+ * Fixed cards and equipment effect cards not triggering correctly on force moved objects
+ * Fixed simulated card casts triggering on card casts buffs
+ * Fixed bosses that play multiple cards per turn to have intent targets be the same for all cards
+ * Fixed bug where enemies might crash on their second card in their sequence
+ * Fixed bug where revive card cast can't find the player to cast because that player is dead
+ * Fixed bug where revived players were not moveable
+ * Fixed final room in story mode not rezing and full healing players, causing dead chars to remain dead in later rooms
+ * Fixed enemy intents color fading when target is out of range not working consistently
+ * Fixed equipments showing blanks if all equipment of that type has been equipped by players
+ * Fixed gear and card menus not resetting to page 0 when switching between them
+ * Fixed equipments always showing an equippable version at stock 1 even after equiping it
+ * Fixed gear sorting issues on equipping and unequipping
+ * Fixed bug where swapping an collection selected card with itself caused it to duplicate that card in the collection
+ * Fixed room layout being transposed and flipped on the X and Y axis
+ * Fixed story mode setting button not leading to settings
+ * Fixed bug where resolve overlap ignored blockades for checking for empty spots
+ * Fixed bug where going to the settings menu from the story mode scene didn't hide the menu bar
+ * Fixed settings menu not going back into the story mode scene if entered from story mode
+ * Fixed pathing issue where enemies whose paths being blocked by other enemies would not move at all on their turn
+ * Fixed pathing enemy execution priority where some enemies can't path to their target.
+ *      Enemies who can path to their targets go first, followed by enemies sorted ascendingly by how many other enemies they have to path through
+ * Fixed pathing issue where sometimes impossible paths return a shorted pathway
+ * Fixed story mode rooms where it's just the bossfight having the boss room not selectable
+ * Fixed story mode world 1 room 2 giving the beta version of warcry, causing a crash
+ * Fixed gold and achievements not resetting at the end of every story mode room
+ * Fixed gear screen cards showing tooltips for the card room cards
+ * Fixed collection controller selected cards sorting in front of on hover selected cards after being selected the first time
  * 
  * -- To dos --
- * ~ Add card drag deselect for equipment cards
- * ~ Make selectable cards able to be dragged from one type (basic slots) to another (weapon slots)
- * ~ Add on hover card display to card and weapon in story mode end scene and item section of story mode scene
- * Design enemy, achievement, and reward for the first world
- * Add mini boss for the first world (when broken/summons destroyed, grant player three 0 cost synergizing cards)
  * Add secret shop (use stars for unlocking permanent bonuses (2 cards per room, etc)
- * Add secret area (just a tonne of bombs)
  * Add arena, essentially classic mode for the 1 world (bonuses for short time and low number of cards used. 5-10 tiers, better reward each time)
  *      Add prepped (can bring in any equpment and card) and naked (yes equipment, but no card) versions
  *      Best equipment and cards can only be unlocked this way
  * 
- * Design maps and enemy designs for all 10 rooms
- * Design item reward strucutre for all 10 rooms
  * Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)
  *      Shop (gold as currency)
  *          1 customizeable slot
@@ -894,11 +955,8 @@
  *      animation speeds
  * 
  * Add encyclopedia of cards that've been encountered in the game
- * 
- * move buffs to ability controllers? or seperate buffs to follow the listener pattern
- * 
+ *  * 
  * Add starting relic bonus to be only if last run ended above level 5, otherwise get a tiny stat boost instead (1 armor or 3 health)
- * Have a bigger visual effect for recovering from broken
  * 
  * Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
  *      retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too

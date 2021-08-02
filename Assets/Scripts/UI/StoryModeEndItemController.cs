@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class StoryModeEndItemController : MonoBehaviour
 {
@@ -31,7 +33,10 @@ public class StoryModeEndItemController : MonoBehaviour
 
     public void SetEnabled(bool state)
     {
-        lockedIcon.gameObject.SetActive(!state);
+        if (index < 3 && SceneManager.GetActiveScene().name == "StoryModeEndScene")
+            lockedIcon.gameObject.SetActive(!state);
+        else
+            lockedIcon.gameObject.SetActive(false);
         blackoutImage.enabled = !state;
         soldOutText.gameObject.SetActive(false);
 
@@ -57,8 +62,11 @@ public class StoryModeEndItemController : MonoBehaviour
 
     public void SetValues(StoryModeController.RewardsType newName, int newAmount, int cost, int index)
     {
-        itemIcon.sprite = StoryModeController.story.GetRewardSprite(newName, index);
-        itemIcon.color = StoryModeController.story.GetRewardsColor(newName);
+        if (SceneManager.GetActiveScene().name == "StoryModeEndScene")
+        {
+            itemIcon.sprite = StoryModeController.story.GetRewardSprite(newName, index);
+            itemIcon.color = StoryModeController.story.GetRewardsColor(newName);
+        }
         thisName = newName;
         thisCard = StoryModeController.story.GetCurrentRoomSetup().rewardCards[index];
         thisEquipment = StoryModeController.story.GetCurrentRoomSetup().rewardEquipment[index];
@@ -76,12 +84,21 @@ public class StoryModeEndItemController : MonoBehaviour
         }
         else
         {
-            rewardTypeText.text = "Material";
-            itemName.text = thisName + "\nx" + amount.ToString();
+            if (SceneManager.GetActiveScene().name == "StoryModeEndScene")
+            {
+                itemName.text = thisName + "\nx" + amount.ToString();
+                rewardTypeText.text = "Material";
+            }
+            else                    //If it's a secret shop item, use different rules for setting item name
+            {
+                itemName.text = thisName.ToString().Replace("Plus", "+").Replace("X", amount.ToString());
+                itemName.text = string.Concat(itemName.text.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' '); ;
+                rewardTypeText.text = "Passive";
+            }
         }
         costText.text = cost.ToString();
         itemCost = cost;
-        if (index < 3)
+        if (index < 3 && SceneManager.GetActiveScene().name == "StoryModeEndScene")
             lockedAchievementText.text = StoryModeController.story.GetCurrentRoomSetup().GetChallengeText(StoryModeController.story.GetCurrentRoomID(), index);
     }
 

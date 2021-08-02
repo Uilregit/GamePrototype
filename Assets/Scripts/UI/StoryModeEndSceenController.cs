@@ -19,7 +19,7 @@ public class StoryModeEndSceenController : MonoBehaviour
     private bool[] challengeItemsBought = new bool[3] { false, false, false };
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         totalGold = ResourceController.resource.GetGold();
 
@@ -40,11 +40,9 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         for (int i = 3; i < 5; i++)
         {
+            items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
             if (setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i])
-            {
                 items[i].SetEnabled(true);
-                items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
-            }
             else
                 items[i].SetEnabled(false);
         }
@@ -52,7 +50,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         ResetItemEnabled();
     }
 
-    public void ReportItemBought(int gold, StoryModeController.RewardsType name, int amount, bool bought, int index)
+    public virtual void ReportItemBought(int gold, StoryModeController.RewardsType name, int amount, bool bought, int index)
     {
         if (bought)
             totalGold -= gold;
@@ -132,8 +130,10 @@ public class StoryModeEndSceenController : MonoBehaviour
         return totalGold;
     }
 
-    public void BuyAndExit()
+    public virtual void BuyAndExit()
     {
+        ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
+        AchievementSystem.achieve.ResetAchievements();
         StoryModeController.story.ReportItemsBought(boughtItems);
         StoryModeController.story.ReportCardsBought(boughtCards);
         StoryModeController.story.ReportEquipmentBought(boughtEquipiments);
@@ -143,6 +143,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
         StoryModeController.story.ResetDecks();
         StoryModeController.story.SetMenuBar(true);
+        StoryModeController.story.SetCombatInfoMenu(false);
         SceneManager.LoadScene("StoryModeScene");
     }
 }

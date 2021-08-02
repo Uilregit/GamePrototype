@@ -103,6 +103,9 @@ public class StoryModeShopCardController : MonoBehaviour
 
     public void SetCardBought()
     {
+        if (InformationLogger.infoLogger.debug)     //If debugged, always show the card as available to be bought
+            return;
+
         bought = true;
         cardDisplay.SetHighLight(false);
         soldOutBack.enabled = true;

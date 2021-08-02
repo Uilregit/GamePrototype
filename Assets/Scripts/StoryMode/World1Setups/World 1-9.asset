@@ -14,30 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-9
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: 00ce617d3d4e52a478bd075af51d79ed, type: 2}
+  - {fileID: 11400000, guid: c9b232e88c45b4f4fb534b249eca0446, type: 2}
+  - {fileID: 11400000, guid: bafb41f883e31a64885bfa90c3342fe9, type: 2}
+  - {fileID: 11400000, guid: 02253c3ac3e77f842bd0215915fe5613, type: 2}
   challenges: 000000004404000045040000
   valueType: 000000000100000001000000
-  challengeValues: 000000000500000014000000
-  challengeComparisonType: 0000000000000000000000000000000000000000
+  challengeValues: 000000001400000006000000
+  challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 0000000000000000000000000000000000000000
+  rewardTypes: 0000000007000000080000003c00000064000000
   rewardCards:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: bc37a4e3e52ac9643bcfa88fe92196b8, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   rewardEquipment:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 11400000, guid: e1f4bc1f330d75a44b4d76b0695baaf8, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  rewardAmounts: 0000000000000000000000000000000000000000
-  rewardCosts: 
+  rewardAmounts: 0100000001000000010000000400000006000000
+  rewardCosts: 320000003c0000003c0000001400000014000000
   challengeRewardBought: 000000
   flavorText: Sticks and stones will break your bones, but words will leave you *psychologically*
     broken

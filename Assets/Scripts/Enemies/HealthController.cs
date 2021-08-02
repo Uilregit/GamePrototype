@@ -386,7 +386,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             else
             {
                 PlayerController player = GetComponent<PlayerController>();
-                GameController.gameController.ReportDeadChar(player.GetColorTag());
+                GameController.gameController.ReportDeadChar(player.GetColorTag(), player.gameObject);
 
                 //GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
             }
@@ -615,6 +615,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                     AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
                 }
                 charDisplay.sprite.color = new Color(1, 0, 0);
+
+                abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnBreak);
 
                 try
                 {
@@ -962,6 +964,17 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetVitText(currentVit + bonusVit);
     }
 
+    public void AtEndOfTurn()
+    {
+        if (isPlayer)
+            AchievementSystem.achieve.OnNotify(GetVit() + GetArmor(), StoryRoomSetup.ChallengeType.HealthAndArmorCombinedPerTurn);
+    }
+
+    public bool GetIfDamageWouldKill(int damage)
+    {
+        return GetVit() > 0 && GetVit() <= damage;
+    }
+
     public void OnDamage(HealthController attacker, int damage, int oldHealth, List<BuffFactory> buffTrace = null, bool isEndOfTurn = false)
     {
         //Handheld.Vibrate();
@@ -972,9 +985,18 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ShowHealthBar(damage, oldHealth, false, null, isEndOfTurn);
 
         if (damage > 0)
+        {
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
+            if (damage <= bonusVit && isPlayer)
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BonusHealthCompleteBlock);
+        }
         else if (damage == 0)
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageBlocked, this, damage, buffTrace));
+        else
+        {
+            if (!attacker.isPlayer && isPlayer)
+                AchievementSystem.achieve.OnNotify(damage, StoryRoomSetup.ChallengeType.HealedByEnemy);
+        }
 
         if (currentVit + bonusVit <= 0)
             try
@@ -989,8 +1011,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
             catch { }
 
-        if (oldHealth > 0 && oldHealth - damage <= 0 && !attacker.isPlayer && !isPlayer && !isSimulation)
-            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
+        if (oldHealth > 0 && oldHealth - damage <= 0 && !isSimulation)   //Trigger on health below 0 actions
+        {
+            abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnBelow0Health);
+            if (!attacker.isPlayer && !isPlayer && attacker != this)
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
+        }
 
         GridController.gridController.ResetOverlapOrder(transform.position);
     }
@@ -1131,7 +1157,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         try
         {
             for (int i = 0; i < GetComponent<EnemyController>().desiredTarget.Length; i++)
+            {
+                if (GetComponent<EnemyController>().desiredTarget[i].GetComponent<HealthController>().isPlayer && health.isPlayer && GetComponent<EnemyController>().desiredTarget[i] != health.gameObject)
+                    AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.TauntAwayFromAlly);
                 GetComponent<EnemyController>().desiredTarget[i] = tauntedTarget.gameObject;
+            }
         }
         catch { }
     }

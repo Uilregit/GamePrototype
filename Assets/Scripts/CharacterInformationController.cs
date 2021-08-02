@@ -90,6 +90,7 @@ public class CharacterInformationController : MonoBehaviour
                 {
                     temp.SetCard(abilityCards[i], false, true);
                     passiveCards[i].SetCard(temp);
+                    passiveCards[i].description.color = Color.white;
                 }
                 else
                 {

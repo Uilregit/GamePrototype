@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: RetaliateBuff
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0.42735004, a: 1}
-  description: 'Retaliate: Attacker takes {v} damage per hit for {d} turns'
+  description: 'Retaliate: Attacker takes {v} damage twice per hit for {d} turns'
   triggerType: 100
+  triggerModificationProtection: 0
   durationType: 0
   onApplyEffects: 0
   onTriggerTarget: 2
   onTriggerEffects: 1
+  onTriggerAppliedCount: 2
   valueManipulationType: 0
   appliedBuff: {fileID: 0}
   appliedBuffDuration: 0
@@ -26,3 +28,5 @@ MonoBehaviour:
   tempValue: 0
   duration: 0
   value: 0
+  obj: {fileID: 0}
+  card: {fileID: 0}

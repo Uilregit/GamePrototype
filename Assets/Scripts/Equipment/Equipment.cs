@@ -21,12 +21,16 @@ public class Equipment : ScriptableObject
     public int moveRangeChange;
     public int castRangeChange;
     public int handSizeChange;
+    public int replaceChange;
     public int energyChange;
     public int manaChange;
-    public int attackedCardCastRangeChange;
+    public int attachedCardCastRangeChange;
 
-    [Header("On Play Effects")]
-    public Card effectCard;
+    [Header("Before Trigger Effects")]
+    public Card beforeTriggerCard;
+
+    [Header("After Trigger Effects")]
+    public Card afterTriggerCard;
 
     [Header("Crafting Materials")]
     public StoryModeController.RewardsType[] materialTypes;
@@ -45,7 +49,7 @@ public class Equipment : ScriptableObject
     public bool GetHasCardPassives()
     {
         int totalCardPassives = 0;
-        totalCardPassives = Mathf.Abs(energyChange) + Mathf.Abs(manaChange) + Mathf.Abs(attackedCardCastRangeChange);
+        totalCardPassives = Mathf.Abs(energyChange) + Mathf.Abs(manaChange) + Mathf.Abs(attachedCardCastRangeChange);
         return totalCardPassives > 0;
     }
 

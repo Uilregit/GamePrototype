@@ -26,7 +26,7 @@ MonoBehaviour:
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: f5db62675681e7a4da28039bb7bd2592, type: 2}
+  - {fileID: 11400000, guid: 59524c259c643aa4a8787a57cbe17128, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   rewardEquipment:
@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rewardAmounts: 0100000001000000020000000500000005000000
-  rewardCosts: 3200000032000000140000001400000014000000
+  rewardAmounts: 0100000001000000010000000400000004000000
+  rewardCosts: 320000003c0000003c0000001400000014000000
   challengeRewardBought: 000000
   flavorText: The woods are slightly off limits due to all of the murder

@@ -319,9 +319,13 @@ public class GridController : MonoBehaviour
         yield return new WaitForSeconds(0);
     }
 
-    public void OnPlayerDeath(GameObject obj, Card.CasterColor color)
+    public void ReportPlayerDead(GameObject obj, Card.CasterColor color)
     {
         deathLocation[color] = obj.transform.position;
+    }
+
+    public void OnPlayerDeath(GameObject obj, Card.CasterColor color)
+    {
         obj.transform.position = new Vector2(1000, 1000);     //Move out of the way for possible resurrection
         obj.GetComponent<HealthController>().ReportDead();
     }
@@ -394,7 +398,7 @@ public class GridController : MonoBehaviour
                 List<Vector2> newLocs = new List<Vector2>();
                 foreach (Vector2 loc in occupiedLocations)
                     newLocs.Add(newLoc + loc);
-                if (!CheckIfOutOfBounds(newLocs) && GetObjectAtLocation(newLocs).Count == 0)
+                if (!CheckIfOutOfBounds(newLocs) && GetObjectAtLocation(newLocs, new string[] { "Player", "Enemy", "Blockade" }).Count == 0)
                     locations[GetManhattanDistance(startingLoc, newLoc)] = newLoc;
             }
         //DebugPlus.LogOnScreen(locations.Keys.ToString()).Duration(10);

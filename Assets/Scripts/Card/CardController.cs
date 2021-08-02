@@ -98,7 +98,7 @@ public class CardController : MonoBehaviour
         return equipment;
     }
 
-    public void SetCardController(CardController newCard)
+    public void SetCardController(CardController newCard, bool dynamicTexts = false)
     {
         card = newCard.card;
         manaCostDiscount = newCard.manaCostDiscount;
@@ -109,7 +109,7 @@ public class CardController : MonoBehaviour
         targets = newCard.targets;
 
         SetAttachedEquipment(newCard.GetAttachedEquipment());
-        SetCard(newCard.GetCard());
+        SetCard(newCard.GetCard(), true, true, dynamicTexts);
     }
 
     public Card GetCard()
@@ -130,7 +130,7 @@ public class CardController : MonoBehaviour
     {
         int equipmentBonusCastRange = 0;
         if (attachedEquipment != null)
-            equipmentBonusCastRange = attachedEquipment.castRangeChange;
+            equipmentBonusCastRange = attachedEquipment.attachedCardCastRangeChange;
 
         bool proceed = false;
         try
@@ -370,7 +370,8 @@ public class CardController : MonoBehaviour
         if (thisCard.casterColor == Card.CasterColor.Enemy)   //If it's an enemy card, return caster stored in the card
             return caster;
 
-        GameObject[] players = GameController.gameController.GetLivingPlayers().ToArray(); //Else return caster based on color. Will have to change if more colored players are added
+        List<GameObject> players = GameController.gameController.GetLivingPlayers(); //Else return caster based on color. Will have to change if more colored players are added
+        players.AddRange(GameController.gameController.GetDeadPlayers());            //Also include dead chars for resurrect casting
 
         try     //Multiplayer
         {
@@ -399,6 +400,7 @@ public class CardController : MonoBehaviour
                 {
                     caster = player;
                     casterHealthController = player.GetComponent<HealthController>();
+                    return caster;
                 }
             }
             return caster;
@@ -502,6 +504,8 @@ public class CardController : MonoBehaviour
 
         if (currentCard.manaCost == 0)
             return 0;
+        if (caster == null)
+            caster = FindCaster(card);
         HealthController hlth = caster.GetComponent<HealthController>();
         int cost = Mathf.Min(currentCard.manaCost, hlth.GetManaCostCap(), TurnController.turnController.GetManaCostCap(), manaCostCap); //Set cost to the minimum cap for the card
         //Reduce all reduction sources from the cap
@@ -509,7 +513,7 @@ public class CardController : MonoBehaviour
         cost -= caster.GetComponent<HealthController>().GetManaCostReduction();
         cost -= TurnController.turnController.GetManaReduction();
         if (attachedEquipment != null)
-            cost -= attachedEquipment.manaChange;
+            cost += attachedEquipment.manaChange;
         return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 
@@ -521,6 +525,8 @@ public class CardController : MonoBehaviour
 
         if (currentCard.energyCost == 0 && currentCard.manaCost != 0)
             return 0;
+        if (caster == null)
+            caster = FindCaster(card);
         HealthController hlth = caster.GetComponent<HealthController>();
         int cost = Mathf.Min(currentCard.energyCost, hlth.GetEnergyCostCap(), TurnController.turnController.GetEnergyCostCap(), energyCostCap); //Set cost to the minimum cap for the card
         //Reduce all reduction sources from the cap
@@ -528,7 +534,7 @@ public class CardController : MonoBehaviour
         cost -= caster.GetComponent<HealthController>().GetEnergyCostReduction();
         cost -= TurnController.turnController.GetEnergyReduction();
         if (attachedEquipment != null)
-            cost -= attachedEquipment.energyChange;
+            cost += attachedEquipment.energyChange;
         return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 

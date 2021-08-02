@@ -179,6 +179,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\ForceMovementFromCastLocation.cs" />
     <Compile Include="Assets\Scripts\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\CustomizeMenu\EditDeckButtonController.cs" />
+    <Compile Include="Assets\Scripts\Card\EquipmentDragCardController.cs" />
     <Compile Include="Assets\Scripts\UI\BattlePassController.cs" />
     <Compile Include="Assets\Scripts\BoardObjects\BlockadeController.cs" />
     <Compile Include="Assets\Scripts\Card\ManifestCardController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
+    <Compile Include="Assets\Scripts\StoryModeSecretShopSceneController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

@@ -168,6 +168,26 @@ public class CardDisplay : MonoBehaviour
         desc += equip.equipmentDescription.Replace("|", "\n");
         description.text = desc;
         description.color = Color.white;
+
+        //Tooltips
+        foreach (Image img in thisToolTips)
+            Destroy(img.gameObject);
+        thisToolTips = new List<Image>();
+
+        foreach (string name in toolTipDict.Keys)
+        {
+            if (description.text.ToLower().Contains(name.ToLower()))
+            {
+                Image tt = Instantiate(toolTip);
+                tt.transform.SetParent(transform);
+                tt.transform.localPosition = new Vector3(1.25f, 0.8f, 0);
+                tt.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+                tt.transform.GetChild(0).GetComponent<Text>().text = "<b>" + name + "</b>\n" + toolTipDict[name];
+                tt.GetComponent<Outline>().effectColor = tt.color;
+                tt.gameObject.SetActive(false);
+                thisToolTips.Add(tt);
+            }
+        }
     }
 
     public void SetCard(CardController card, bool dynamicNumbers = true)
@@ -274,14 +294,14 @@ public class CardDisplay : MonoBehaviour
         if (netManaCost < card.GetCard().manaCost)
             manaCost.color = Color.green;
         else if (netManaCost > card.GetCard().manaCost)
-            manaCost.color = Color.red;
+            manaCost.color = new Color(255, 186, 0);
         else
             manaCost.color = Color.white;
 
         if (netEnergyCost < card.GetCard().energyCost)
             energyCost.color = Color.green;
         else if (netEnergyCost > card.GetCard().energyCost)
-            energyCost.color = Color.red;
+            energyCost.color = new Color(255, 186, 0);
         else
             energyCost.color = Color.white;
 
@@ -312,7 +332,7 @@ public class CardDisplay : MonoBehaviour
         description.text = card.GetCard().description.Replace('|', '\n');
         description.color = Color.black;
 
-        if (card.GetAttachedEquipment() != null && (card.GetAttachedEquipment().effectCard != null || card.GetAttachedEquipment().GetHasCardPassives()))
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
         {
             equipmentIcon.color = Color.white;
             equipmentIcon.gameObject.SetActive(true);
@@ -472,7 +492,7 @@ public class CardDisplay : MonoBehaviour
             Destroy(img.gameObject);
         thisToolTips = new List<Image>();
 
-        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().effectCard != null)
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
         {
             Image tt = Instantiate(toolTip);
             tt.transform.SetParent(transform);

@@ -67,7 +67,11 @@ public class PlayerMoveController : MonoBehaviour
 
                     for (int i = 0; i < 10; i++)
                     {
-                        path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
+                        string[] avoidTag = new string[] { "Player" };
+                        if (healthController.GetPhasedMovement())
+                            avoidTag = new string[] { "Player", "Enemy", "Blockade" };
+                        path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, avoidTag, new List<Vector2> { Vector2.zero }, 1);
+
                         if (path.Count < moveRangeLeft)
                             break;
                     }
@@ -85,7 +89,10 @@ public class PlayerMoveController : MonoBehaviour
 
                 for (int i = 0; i < 10; i++)
                 {
-                    path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, new string[] { "Player" }, new List<Vector2> { Vector2.zero }, 1);
+                    string[] avoidTag = new string[] { "Player" };
+                    if (healthController.GetPhasedMovement())
+                        avoidTag = new string[] { "Player", "Enemy", "Blockade" };
+                    path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, avoidTag, new List<Vector2> { Vector2.zero }, 1);
                     if (path.Count < moveRangeLeft)
                         break;
                 }
@@ -169,15 +176,13 @@ public class PlayerMoveController : MonoBehaviour
          */
         if (moveable)
         {
+            GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
             if (healthController.GetStunned())
             {
-                GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
                 TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, 0, PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
             }
             else
             {
-                GridController.gridController.RemoveFromPosition(this.gameObject, transform.position);
-
                 if (!healthController.GetPhasedMovement())
                 {
                     TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
@@ -189,10 +194,10 @@ public class PlayerMoveController : MonoBehaviour
                 else    //If phased movement, then player can move through, but not on enemies
                 {
                     TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Blockade" }, 0);    //Does not avoid Enemies for move range calculation
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { }, 0);    //Does not avoid Enemies for move range calculation
                     List<Vector2> destroyLocs = new List<Vector2>();
-                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies, can't move onto them
-                        if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)
+                    foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies and blockades, can't move onto them
+                        if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy", "Blockade" }).Count > 0)
                             destroyLocs.Add(loc);
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
@@ -226,7 +231,7 @@ public class PlayerMoveController : MonoBehaviour
                     else    //If phased movement, then player can move through, but not on enemies
                     {
                         TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Blockade" }, 1);    //Does not avoid Enemies for move range calculation
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
                             if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)

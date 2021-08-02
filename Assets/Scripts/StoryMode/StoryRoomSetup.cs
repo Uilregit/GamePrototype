@@ -6,7 +6,9 @@ using UnityEngine;
 public class StoryRoomSetup : ScriptableObject
 {
     public string roomName;
+    public bool useDefaultCardsAndEquipments = false;
     public List<RoomSetup> setups;
+    public WorldSetup arenaSetup;
     public ChallengeType[] challenges = new ChallengeType[3];
     public ChallengeValueType[] valueType = new ChallengeValueType[3];
     public int[] challengeValues = new int[3];
@@ -27,6 +29,8 @@ public class StoryRoomSetup : ScriptableObject
     public enum ChallengeType
     {
         Complete = 0,
+        TotalTurnsUsed = 10,
+        TotalTimeUsed = 20,
 
         CastLocationsPerTurn = 1012,
         CharDistMovedPerTurn = 1013,
@@ -55,8 +59,10 @@ public class StoryRoomSetup : ScriptableObject
         ArmorRemovedFromEnemy = 1092,
         AromrRemovedWithSingleCard = 1093,
 
-        SacrificeNothing = 1102,
-        DefeatBossInTurn = 1103,
+        DefeatBossInTurn = 1102,
+        DefeatBossOnEnemyTurn = 1103,
+
+        SacrificeNothing = 9999,
     }
 
     public enum ChallengeValueType
@@ -75,13 +81,19 @@ public class StoryRoomSetup : ScriptableObject
         LessThan = 20
     }
 
-    public string GetChallengeText(int roomID, int index)
+    public string GetChallengeText(int roomID, int index, int bestValue = -1, bool useValueAsIs = false)
     {
         string output = "";
         switch (challenges[index])
         {
             case ChallengeType.Complete:
                 output += "Complete The Run";
+                break;
+            case ChallengeType.TotalTurnsUsed:
+                output += "Complete in less than X turns";
+                break;
+            case ChallengeType.TotalTimeUsed:
+                output += "Complete in less than X minsY";
                 break;
             case ChallengeType.CastLocationsPerTurn:
                 output += "Have 1 character cast from X locations in 1 turn";
@@ -99,7 +111,7 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Spend X mana in 1 turn";
                 break;
             case ChallengeType.UnspentEnergyPerTurn:
-                output += "Use all available energy every turn";
+                output += "Leave less than X total energy unsent at the end of turns";
                 break;
             case ChallengeType.BreakEnemies:
                 output += "Break X Enemies";
@@ -111,19 +123,19 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Stack X characters together";
                 break;
             case ChallengeType.EnemyFriendlyKill:
-                output += "Make X enemy kill another";
+                output += "Make X enemies kill another";
                 break;
             case ChallengeType.TauntAwayFromAlly:
-                output += "Taun X enemies targeting an ally";
+                output += "Taun X enemies targeting an other ally";
                 break;
             case ChallengeType.HealedByEnemy:
                 output += "Be healed by an enemy";
                 break;
             case ChallengeType.BonusHealthCompleteBlock:
-                output += "Entirely block 1 instance of damage with overheal’s bonus health";
+                output += "Entirely block X instance of damage with overheal’s bonus health";
                 break;
             case ChallengeType.HealthAndArmorCombinedPerTurn:
-                output += "End the turn with a character with more than X total health plus armor";
+                output += "End a turn with more than X combined health and armor on 1 character";
                 break;
             case ChallengeType.DamageDealtWithSingeCard:
                 output += "Deal X Damage With A Single Card";
@@ -137,11 +149,14 @@ public class StoryRoomSetup : ScriptableObject
             case ChallengeType.AromrRemovedWithSingleCard:
                 output += "Remove X armor from enemies with a single card";
                 break;
-            case ChallengeType.SacrificeNothing:
-                output += "Defeat all boss summons before they’re sacrificed";
-                break;
             case ChallengeType.DefeatBossInTurn:
                 output += "Defeat the boss in less than X turns";
+                break;
+            case ChallengeType.DefeatBossOnEnemyTurn:
+                output += "Defeat the boss on the enemy's turn";
+                break;
+            case ChallengeType.SacrificeNothing:
+                output += "Defeat all boss summons before they’re sacrificed";
                 break;
             default:
                 output += "";
@@ -149,10 +164,22 @@ public class StoryRoomSetup : ScriptableObject
                 break;
         }
 
-        output = output.Replace("X", challengeValues[index].ToString());
-        if (challenges[index] != ChallengeType.Complete)
+        if (challenges[index] == ChallengeType.TotalTimeUsed)
         {
-            if (StoryModeController.story.GetChallengeValues().ContainsKey(roomID))
+            output = output.Replace("X", (challengeValues[index] / 60).ToString());      //Special formatting for time based achievements
+            if (challengeValues[index] % 60 > 0)
+                output = output.Replace("Y", " " + (challengeValues[index] % 60).ToString() + "secs");
+            else
+                output = output.Replace("Y", "");
+        }
+        else
+            output = output.Replace("X", challengeValues[index].ToString());
+
+        if (challenges[index] != ChallengeType.Complete && challengeValues[index] != 0)
+        {
+            if (bestValue != -1)
+                output += " (" + bestValue + "/" + challengeValues[index] + ")";
+            else if (StoryModeController.story.GetChallengeValues().ContainsKey(roomID) && !useValueAsIs)
             {
                 if (StoryModeController.story.GetChallengeValues()[roomID][index] == -1)
                     output += " (0/" + challengeValues[index] + ")";
@@ -168,29 +195,34 @@ public class StoryRoomSetup : ScriptableObject
     public void SetBestValues(int[] values)
     {
         for (int i = 0; i < 3; i++)
-        {
-            if (bestChallengeValues[1] == -1)
-                bestChallengeValues[i] = values[i];
-            else
-                switch (challengeComparisonType[i])
-                {
-                    case ChallengeComparisonType.GreaterThan:
-                        bestChallengeValues[i] = Mathf.Max(bestChallengeValues[i], values[i]);
-                        break;
-                    case ChallengeComparisonType.LessThan:
-                        if (bestChallengeValues[i] == -1)
-                            bestChallengeValues[i] = values[i];
-                        else
-                            bestChallengeValues[i] = Mathf.Min(bestChallengeValues[i], values[i]);
-                        break;
-                    case ChallengeComparisonType.EqualTo:
-                        int oldDiff = Mathf.Abs(bestChallengeValues[i] - challengeValues[i]);
-                        int newDiff = Mathf.Abs(values[i] - challengeValues[i]);
-                        if (oldDiff > newDiff)
-                            bestChallengeValues[i] = values[i];
-                        break;
-                }
-        }
+            bestChallengeValues[i] = GetBestValues(bestChallengeValues[i], values[i], i, challengeComparisonType[i]);
+    }
+
+    public int GetBestValues(int oldValue, int newValue, int index, ChallengeComparisonType comparisonType)
+    {
+        int output = oldValue;
+        if (newValue == -1)
+            output = oldValue;
+        else
+            switch (comparisonType)
+            {
+                case ChallengeComparisonType.GreaterThan:
+                    output = Mathf.Max(oldValue, newValue);
+                    break;
+                case ChallengeComparisonType.LessThan:
+                    if (oldValue == -1)
+                        output = newValue;
+                    else
+                        output = Mathf.Min(oldValue, newValue);
+                    break;
+                case ChallengeComparisonType.EqualTo:
+                    int oldDiff = Mathf.Abs(oldValue - challengeValues[index]);
+                    int newDiff = Mathf.Abs(newValue - challengeValues[index]);
+                    if (oldDiff > newDiff)
+                        output = newValue;
+                    break;
+            }
+        return output;
     }
 
     public void SetReardsBought(bool item1, bool item2, bool item3)

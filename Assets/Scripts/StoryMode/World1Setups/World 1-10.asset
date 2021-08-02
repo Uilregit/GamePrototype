@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: World 1-10
   m_EditorClassIdentifier: 
   roomName: World 1-10
+  useDefaultCardsAndEquipments: 0
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
-  challenges: 000000004e0400004f040000
+  - {fileID: 11400000, guid: 8f1e4e0dfcdaf5f4389dda9b52839d49, type: 2}
+  - {fileID: 11400000, guid: 5ed6269b9e37fce4fb84a00fe0d98940, type: 2}
+  - {fileID: 11400000, guid: 913e28061357c4340a2ffb6bbc7b1294, type: 2}
+  - {fileID: 11400000, guid: 27eac7dc5f5e9ea43968f0994a3553fd, type: 2}
+  - {fileID: 11400000, guid: b63fe2680f15f6449a91598ce1bfe98e, type: 2}
+  arenaSetup: {fileID: 0}
+  challenges: 000000004f0400004e040000
   valueType: 000000000100000001000000
-  challengeValues: 000000000500000014000000
-  challengeComparisonType: 0000000000000000000000000000000000000000
+  challengeValues: 000000000100000004000000
+  challengeComparisonType: 000000000000000014000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 0000000000000000000000000000000000000000
+  rewardTypes: 2a230000f4010000c6020000230000002d000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -37,8 +39,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rewardAmounts: 0000000000000000000000000000000000000000
-  rewardCosts: 
+  rewardAmounts: 0100000001000000010000000300000003000000
+  rewardCosts: 32000000780000003c0000001e0000001e000000
   challengeRewardBought: 000000
   flavorText: Ritualistic sacrifice is not great at raising employee morale. That's
     why Magus Seleen raise their corpses instead

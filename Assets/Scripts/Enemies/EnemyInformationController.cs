@@ -113,11 +113,12 @@ public class EnemyInformationController : MonoBehaviour
         if (!GetComponent<HealthController>().GetPhasedMovement())
             avoidTags = new string[] { "Player", "Blockade" };
         else
-            avoidTags = new string[] { "Blockade" };
+            avoidTags = new string[] { };
 
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, avoidTags, 1);
 
+        //If phased movement is enabled, still can't end on an occupied spot
         if (GetComponent<HealthController>().GetPhasedMovement())
         {
             List<Vector2> destroyLocs = new List<Vector2>();
@@ -231,6 +232,7 @@ public class EnemyInformationController : MonoBehaviour
     //Refresh the colors of the intent to reflect the target's color
     private void RefreshIntentColors()
     {
+        CreateRangeIndicators(false);                   //Refresh attackrange positions for color to ensure accuracy
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
         {
             Color intentColor = Color.white;
@@ -443,7 +445,7 @@ public class EnemyInformationController : MonoBehaviour
         return displayedCards[cardIndex].GetComponent<CardEffectsController>().SimulateTriggerEffect(this.gameObject, target.transform.position, simH);
     }
 
-    public void ShowUsedCard(CardController card, Vector2 target)
+    public void ShowUsedCard(CardController card, Vector2 target, bool isWhiteText = false)
     {
         RaycastHit hit;
         Ray ray = new Ray(Camera.main.transform.position, transform.position - Camera.main.transform.position);
@@ -469,6 +471,8 @@ public class EnemyInformationController : MonoBehaviour
         card.SetCaster(this.gameObject);
         usedCard.GetComponent<CardController>().SetCaster(this.gameObject);
         usedCard.GetComponent<CardController>().SetCard(card.GetCard());
+        if (isWhiteText)
+            usedCard.GetComponent<CardController>().GetCardDisplay().description.color = Color.white;
 
         if (card.GetCard().castType == Card.CastType.AoE)
         {
@@ -567,7 +571,7 @@ public class EnemyInformationController : MonoBehaviour
                 CardController temp = this.gameObject.AddComponent<CardController>();
                 temp.SetCardDisplay(displayedCards[0].transform.GetChild(0).GetComponent<CardDisplay>());
                 temp.SetCard(abilityCards[i], false, true);
-                ShowUsedCard(temp, transform.position);
+                ShowUsedCard(temp, transform.position, true);
                 GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("Glow");
                 yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime * TimeController.time.timerMultiplier);
 

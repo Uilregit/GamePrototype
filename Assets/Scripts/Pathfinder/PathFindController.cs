@@ -40,7 +40,7 @@ public class PathFindController : MonoBehaviour
         for (int iteration = 0; iteration < 1000; iteration++)   //Runs for a max of 1000 iterations to prevent infinite loops if unpathable
         {
             if (openList.Count == 0) //If trapped in an enclosed space, return early
-                return GetFinalPath(startingNode, currentNode);
+                return new List<Vector2>() { startingLoc };
 
             currentNode = openList[0];
             for (int i = 1; i < openList.Count; i++)
@@ -72,13 +72,7 @@ public class PathFindController : MonoBehaviour
                 }
             }
         }
-
-        AStarNode finalNode = closedList[0];
-        foreach (AStarNode node in closedList)
-            if (node.hCost < finalNode.hCost)
-                finalNode = node;
-        output = GetFinalPath(startingNode, finalNode);  //returns the path to the node closest to the target if unable to path to ending location (ie unpathable)
-        return output;
+        return new List<Vector2>() { startingLoc };
     }
 
     //Return 4 nodes at neighbouring positions if they are valid positions for pathfinding

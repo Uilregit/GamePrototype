@@ -22,7 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 1
-  description: Draw a mana card, target gains temporary armor equal to it's cost
+  description: Draw a mana card, then the target gains temporary armor equal to it's
+    cost
   art: {fileID: 21300000, guid: 24e01eee6e584204ebbe67634a7253ea, type: 3}
   castType: 0
   castShape: 0

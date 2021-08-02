@@ -71,6 +71,7 @@ public class CardEffectsController : MonoBehaviour
         */
         int vitDamage = 0;
         int armorDamage = 0;
+        int numKilled = 0;
         string targetNames = "|";
 
         int bonusCast = 0;
@@ -81,49 +82,9 @@ public class CardEffectsController : MonoBehaviour
 
         List<GameObject> movedObjects = new List<GameObject>();
 
-        //Triggers equipment effects if there are any
-        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().effectCard != null)
-        {
-            HealthController simulationCharacter = null;
-            EffectFactory factory = new EffectFactory();
-            Effect[] weaponEffects = factory.GetEffects(card.GetAttachedEquipment().effectCard.cardEffectName);
-            for (int i = 0; i < card.GetAttachedEquipment().effectCard.cardEffectName.Length; i++)
-            {
-                List<Vector2> locs = new List<Vector2>();
-                List<GameObject> t = new List<GameObject>();
-                if (card.GetAttachedEquipment().effectCard.targetType[i] == Card.TargetType.Self)
-                {
-                    if (isSimulation)
-                    {
-                        simulationCharacter = GameController.gameController.GetSimulationCharacter(caster.GetComponent<HealthController>(), false);
-                        t.Add(simulationCharacter.gameObject);
-                    }
-                    else
-                    {
-                        locs.Add(caster.transform.position);
-                        t.Add(caster);
-                    }
-                }
-                else
-                {
-                    locs = targetLocs;
-                    t.AddRange(targets);
-                }
-
-                if (card.GetAttachedEquipment().effectCard.cardEffectName[i] == Card.EffectType.ForcedMovement)
-                    movedObjects.AddRange(t);
-                if (!isSimulation)
-                {
-                    yield return StartCoroutine(weaponEffects[i].Process(caster, this, locs, card.GetAttachedEquipment().effectCard, i));
-                }
-                else
-                {
-                    if (simulationCharacter != null)
-                        GameController.gameController.ReportSimulationFinished(simulationCharacter);
-                    yield return StartCoroutine(effects[i].Process(caster, this, t, card.GetCard(), i, 0));
-                }
-            }
-        }
+        //Triggers equipment effects before trigger if there are any
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().beforeTriggerCard != null)
+            yield return StartCoroutine(TriggerEquipmentEffect(caster, targets, targetLocs, movedObjects, isSimulation, true));
 
         //If there are bonus casts, then process the card that many more times
         for (int j = 0; j < 1 + bonusCast; j++)
@@ -224,6 +185,10 @@ public class CardEffectsController : MonoBehaviour
                         foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(targ, new string[] { "Player", "Enemy" }))
                         {
                             if (!isSimulation)
+                            {
+                                if (obj.GetComponent<HealthController>().GetIfDamageWouldKill(damage))
+                                    numKilled++;
+
                                 if (card.GetCard().hitEffect[i] == Card.HitEffect.PlayerAttack)
                                 {
                                     if (damage <= 5)
@@ -244,6 +209,7 @@ public class CardEffectsController : MonoBehaviour
                                 }
                                 else
                                     obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger(card.GetCard().hitEffect[i].ToString());
+                            }
 
                             if (obj.GetComponent<PlayerController>() != null)
                             {
@@ -290,6 +256,10 @@ public class CardEffectsController : MonoBehaviour
                     }
                     else
                     {
+                        foreach (GameObject obj in movedObjects)
+                            locs.Add(obj.transform.position);
+                        locs = locs.Distinct().ToList();
+
                         if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
                             StartCoroutine(effects[i].Process(caster, this, locs, card.GetCard(), i));
                         else
@@ -315,7 +285,21 @@ public class CardEffectsController : MonoBehaviour
                     }
                 }
             }
+
+            if (vitDamage > 0)
+                AchievementSystem.achieve.OnNotify(vitDamage, StoryRoomSetup.ChallengeType.DamageDealtWithSingeCard);
+            if (armorDamage > 0)
+            {
+                AchievementSystem.achieve.OnNotify(armorDamage, StoryRoomSetup.ChallengeType.AromrRemovedWithSingleCard);
+                AchievementSystem.achieve.OnNotify(armorDamage, StoryRoomSetup.ChallengeType.ArmorRemovedFromEnemy);
+            }
+            if (numKilled > 0)
+                AchievementSystem.achieve.OnNotify(numKilled, StoryRoomSetup.ChallengeType.KillWithSingleCard);
         }
+
+        //Triggers equipment effects before trigger if there are any
+        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().afterTriggerCard != null)
+            yield return StartCoroutine(TriggerEquipmentEffect(caster, targets, targetLocs, movedObjects, isSimulation, false));
 
         try
         {
@@ -329,13 +313,13 @@ public class CardEffectsController : MonoBehaviour
 
         try //Singleplayer
         {
-            if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
+            if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)       //Only trigger on card played if it's a player card
                 foreach (GameObject player in GameController.gameController.GetLivingPlayers())
                     player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
         }
         catch  //Multiplayer
         {
-            if (card.GetCard().casterColor != Card.CasterColor.Enemy)       //Only trigger on card played if it's a player card
+            if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)       //Only trigger on card played if it's a player card
                 foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
                     player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
         }
@@ -377,6 +361,56 @@ public class CardEffectsController : MonoBehaviour
                                                             "0");
         }
         catch { }
+    }
+
+    public IEnumerator TriggerEquipmentEffect (GameObject caster, List<GameObject> targets, List<Vector2> targetLocs, List<GameObject> movedObjects, bool isSimulation, bool isBeforeCard)
+    {
+        HealthController simulationCharacter = null;
+        EffectFactory factory = new EffectFactory();
+        Card equipmentCard = card.GetAttachedEquipment().beforeTriggerCard;
+        if (!isBeforeCard)
+            equipmentCard = card.GetAttachedEquipment().afterTriggerCard;
+        Effect[] weaponEffects = factory.GetEffects(equipmentCard.cardEffectName);
+        for (int i = 0; i < equipmentCard.cardEffectName.Length; i++)
+        {
+            List<Vector2> locs = new List<Vector2>();
+            List<GameObject> t = new List<GameObject>();
+            if (equipmentCard.targetType[i] == Card.TargetType.Self)
+            {
+                if (isSimulation)
+                {
+                    simulationCharacter = GameController.gameController.GetSimulationCharacter(caster.GetComponent<HealthController>(), false);
+                    t.Add(simulationCharacter.gameObject);
+                }
+                else
+                {
+                    locs.Add(caster.transform.position);
+                    t.Add(caster);
+                }
+            }
+            else
+            {
+                locs = targetLocs;
+                t.AddRange(targets);
+            }
+
+            foreach (GameObject obj in movedObjects)
+                locs.Add(obj.transform.position);
+            locs = locs.Distinct().ToList();
+
+            if (equipmentCard.cardEffectName[i] == Card.EffectType.ForcedMovement)
+                movedObjects.AddRange(t);
+            if (!isSimulation)
+            {
+                yield return StartCoroutine(weaponEffects[i].Process(caster, this, locs, equipmentCard, i));
+            }
+            else
+            {
+                if (simulationCharacter != null)
+                    GameController.gameController.ReportSimulationFinished(simulationCharacter);
+                yield return StartCoroutine(weaponEffects[i].Process(caster, this, t, card.GetCard(), i, 0));
+            }
+        }
     }
 
     public IEnumerator TriggerEffect(GameObject caster, List<Vector2> targets, bool propogateOverServer = true, bool hasEffectDelay = false)

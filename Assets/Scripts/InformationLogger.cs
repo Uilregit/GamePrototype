@@ -79,8 +79,12 @@ public class SaveFile
 public class StoryModeSaveFile
 {
     public int[] unlockedRoomIds;
-    //public Dictionary<int, bool[]> challengeStars;  //Room id, stars 1, 2, 3
-    public Dictionary<int, int[]> challengeValues;  //Room id, value 1, 2, 3
+    //public Dictionary<int, bool[]> challengeStars;    //Room id, stars 1, 2, 3
+    public Dictionary<int, int[]> challengeValues;      //Room id, value 1, 2, 3
+    public int lastSelectedRoomId;                      //Id of the last room that was selected
+    public int lastSelectedAchievements;                //Number of achievements at the time of the start of the room
+    public bool lastSelectedComplete;                   //If the last room was complete before that room was selected
+    public int worldNumber;                             //The world that was last selected before save
 
     public Dictionary<string, string[]> cardSelected;   //<casterColor, cardNames>
     public string[] cardCraftable;
@@ -89,7 +93,9 @@ public class StoryModeSaveFile
     public Dictionary<string, string[]> selectedEquipments;
     public Dictionary<string, int> weaponUnlocks;       //<equipmentName, equipmentAmount>
     public Dictionary<StoryModeController.RewardsType, int> itemsUnlocked;
+
     public Dictionary<int, bool[]> challengeItemsBought;//<roomID, ifBought>
+    public Dictionary<int, bool[]> secretShopItemsBought;//<worldID, ifBought>
 
     public Dictionary<int, bool[]> dailyBought;         //<dayIDSeed, ifBought>
     public Dictionary<int, bool[]> weeklyBought;        //<weekIDSeed, ifBought>
@@ -193,6 +199,8 @@ public class InformationLogger : MonoBehaviour
 
     public bool debug;
     public bool debugBossRoomEnabled;
+    public bool debugStoryCopyRealSaveFile;
+    public bool debugStoryCopyDebugSaveFile;
     public bool isStoryMode = false;
     public string patchID;
     public int seed;
@@ -617,6 +625,10 @@ public class InformationLogger : MonoBehaviour
 
         output.unlockedRoomIds = StoryModeController.story.GetCompletedRooms().ToArray();
         output.challengeValues = StoryModeController.story.GetChallengeValues();
+        output.lastSelectedRoomId = StoryModeController.story.GetLastSelectedRoomID();
+        output.lastSelectedAchievements = StoryModeController.story.GetLastSelectedAchievents();
+        output.lastSelectedComplete = StoryModeController.story.GetLastSelectedComplete();
+        output.worldNumber = StoryModeController.story.GetWorldNumber();
         output.cardCraftable = StoryModeController.story.GetCardCraftable().ToArray();
         output.cardUnlocks = CollectionController.collectionController.GetCompleteDeckDict();
         output.cardSelected = CollectionController.collectionController.GetSelectedDeckNames();
@@ -624,6 +636,7 @@ public class InformationLogger : MonoBehaviour
         output.completeEquipments = CollectionController.collectionController.GetCompleteEquipments();
         output.itemsUnlocked = StoryModeController.story.GetItemsBought();
         output.challengeItemsBought = StoryModeController.story.GetChallengeItemsBought();
+        output.secretShopItemsBought = StoryModeController.story.GetSecretShopItemsBought();
         output.dailyBought = StoryModeController.story.GetDailyBought();
         output.weeklyBought = StoryModeController.story.GetWeeklyBought();
 
@@ -635,6 +648,8 @@ public class InformationLogger : MonoBehaviour
         Debug.Log("#### saving story mode game ####");
         BinaryFormatter formatter = new BinaryFormatter();
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        if (debug)
+            path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
 
         formatter.Serialize(stream, GetStoryModeSaveFile());
@@ -648,6 +663,10 @@ public class InformationLogger : MonoBehaviour
 
         StoryModeController.story.SetCompletedRooms(file.unlockedRoomIds.ToList());
         StoryModeController.story.SetChallengeValues(file.challengeValues);
+        StoryModeController.story.SetLastSelectedRoomID(file.lastSelectedRoomId);
+        StoryModeController.story.SetLastSelectedAchievemnts(file.lastSelectedAchievements);
+        StoryModeController.story.SetLastSelectedComplete(file.lastSelectedComplete);
+        StoryModeController.story.SetWorldNumber(file.worldNumber);
         StoryModeController.story.SetCardCraftable(file.cardCraftable.ToList());
         CollectionController.collectionController.SetCompleteDeck(file.cardUnlocks);
         CollectionController.collectionController.SetSelectedDeck(file.cardSelected);
@@ -659,6 +678,7 @@ public class InformationLogger : MonoBehaviour
         CollectionController.collectionController.RefreshEquipments();
         StoryModeController.story.SetItemsBought(file.itemsUnlocked);
         StoryModeController.story.SetChallengeItemsBought(file.challengeItemsBought);
+        StoryModeController.story.SetSecretShopItemsBought(file.secretShopItemsBought);
         StoryModeController.story.SetDailyBought(file.dailyBought);
         StoryModeController.story.SetWeeklyBought(file.weeklyBought);
     }
@@ -680,6 +700,8 @@ public class InformationLogger : MonoBehaviour
     private StoryModeSaveFile LoadStoryModeGameFile()
     {
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        if (debug)
+            path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         StoryModeSaveFile saveFile = null;
         if (File.Exists(path))
         {
@@ -701,6 +723,8 @@ public class InformationLogger : MonoBehaviour
     public bool GetHasStoryModeSaveFile()
     {
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        if (debug)
+            path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         return File.Exists(path);
     }
 
@@ -775,7 +799,6 @@ public class InformationLogger : MonoBehaviour
 
             CollectionController.collectionController.ReCountUniqueCards();
             CollectionController.collectionController.SetDeck(0);
-            CollectionController.collectionController.ResolveSelectedList();
             CollectionController.collectionController.FinalizeDeck();
             CollectionController.collectionController.CheckDeckComplete();
             CollectionController.collectionController.CheckPageButtons();

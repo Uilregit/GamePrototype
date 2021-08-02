@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
     private RoomSetup setup;
 
     private List<Card.CasterColor> deadChars;
+    private List<GameObject> deadPlayers = new List<GameObject>();
 
     //Stats
     private int totalOverkillGold;
@@ -146,7 +147,7 @@ public class GameController : MonoBehaviour
             if (InformationController.infoController.GetIfDead(colorTag))
             {
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
-                ReportDeadChar(colorTag);
+                ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
                 viableSpawnLocations.Add(spawnedLocation);
             }
@@ -169,6 +170,9 @@ public class GameController : MonoBehaviour
             GridController.gridController.ReportPosition(thisBlock, loc + new Vector2(-3, -2));
             blocks.Add(thisBlock);
         }
+
+        foreach (GameObject enemy in enemies)
+            enemy.GetComponent<EnemyController>().RefreshIntent();
     }
 
     public void RandomizeRoom()
@@ -197,7 +201,7 @@ public class GameController : MonoBehaviour
             if (InformationController.infoController.GetIfDead(colorTag))
             {
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
-                ReportDeadChar(colorTag);
+                ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
             }
             counter += 1;
@@ -301,8 +305,13 @@ public class GameController : MonoBehaviour
 
         DeckController.deckController.ResetCardValues();
 
-        if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+        if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom || RoomController.roomController.selectedLevel == RoomController.roomController.GetNumberofWorldLayers())        //If the room is the boss room (classic) or the last room (story), full rez and heal all chars
         {
+            AchievementSystem.achieve.OnNotify(TurnController.turnController.turnID, StoryRoomSetup.ChallengeType.DefeatBossInTurn);
+            AchievementSystem.achieve.OnNotify((int)ScoreController.score.GetSecondsInGame(), StoryRoomSetup.ChallengeType.TotalTimeUsed);
+            if (!TurnController.turnController.GetIsPlayerTurn())
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.DefeatBossOnEnemyTurn);
+
             ScoreController.score.UpdateBossesDefeated();
 
             CameraController.camera.ScreenShake(0.4f, 2f, true);
@@ -348,7 +357,10 @@ public class GameController : MonoBehaviour
             }
         }
 
-        RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat);
+        int bonusPassiveGold = 0;
+        if (StoryModeController.story != null && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXGoldPerRoom))
+            bonusPassiveGold = StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXGoldPerRoom];
+        RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat + bonusPassiveGold);
         if (totalOverkillGold > 0)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
         if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1))     //Don't give a card reward if it's the last room for storymode
@@ -394,9 +406,13 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    //Used by button from combat room's end screen
     public void LoadEndScene()
     {
-        SceneManager.LoadScene("EndScene");
+        if (StoryModeController.story != null)
+            SceneManager.LoadScene("StoryModeEndScene");
+        else
+            SceneManager.LoadScene("EndScene");
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
@@ -409,9 +425,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void ReportDeadChar(Card.CasterColor color)
+    public void ReportDeadChar(Card.CasterColor color, GameObject player)
     {
         deadChars.Add(color);
+        deadPlayers.Add(player);
+
         if (deadChars.Count >= 3)
         {
             TurnController.turnController.StopAllCoroutines();
@@ -438,9 +456,15 @@ public class GameController : MonoBehaviour
         return output;
     }
 
-    public virtual void ReportResurrectedChar(Card.CasterColor color)
+    public List<GameObject> GetDeadPlayers()
+    {
+        return deadPlayers;
+    }
+
+    public virtual void ReportResurrectedChar(Card.CasterColor color, GameObject player)
     {
         deadChars.Remove(color);
+        deadPlayers.Remove(player);
     }
 
     public virtual List<Card.CasterColor> GetDeadChars()

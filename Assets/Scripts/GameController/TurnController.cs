@@ -131,6 +131,7 @@ public class TurnController : MonoBehaviour
     {
         AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
         AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
+        AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
 
         List<GameObject> players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
@@ -195,6 +196,7 @@ public class TurnController : MonoBehaviour
         //Trigger all end of turn buff effects
         foreach (GameObject characters in players)
         {
+            characters.GetComponent<HealthController>().AtEndOfTurn();
             characters.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
             yield return StartCoroutine(characters.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, characters.GetComponent<HealthController>(), 0));
         }
@@ -226,7 +228,7 @@ public class TurnController : MonoBehaviour
             thisEnemy.GetComponent<HealthController>().AtStartOfTurn();
 
         //Order all the enemies by their card execution priority. Solve ties by closest enemies to their target
-        enemies = enemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => GridController.gridController.GetManhattanDistance(x.GetTarget().transform.position, x.transform.position)).ToList();
+        enemies = enemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
 
         //Execute the turn for each enemy
         foreach (EnemyController thisEnemy in enemies)
@@ -282,6 +284,7 @@ public class TurnController : MonoBehaviour
 
         foreach (EnemyController thisEnemy in enemies)
         {
+            thisEnemy.GetComponent<HealthController>().AtEndOfTurn();
             thisEnemy.GetComponent<AbilitiesController>().TriggerAbilities(AbilitiesController.TriggerType.AtEndOfTurn);
             yield return StartCoroutine(thisEnemy.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, thisEnemy.GetComponent<HealthController>(), 0));
         }

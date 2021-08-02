@@ -163,4 +163,55 @@ public class LootController : MonoBehaviour
         int index = Random.Range(0, equipmentLootTable.equipmentLoot.Length);
         return equipmentLootTable.equipmentLoot[index];
     }
+
+    //Returns all cards that synergize with that color by looking at the required materials to craft that card. (cards that synergize with the color would require that color's material to craf)
+    public List<Card> GetSynergizedCards(string color)
+    {
+        List<Card> output = new List<Card>();
+        List<StoryModeController.RewardsType> colorMaterial = GetColorRewardMaterialTypes(color);
+        foreach (Card c in cardLootTable.cardLoot)
+            if ((c.casterColor.ToString() == color && c.materials.Count == 2 && new List<Card.Rarity>() { Card.Rarity.Common, Card.Rarity.Rare, Card.Rarity.Legendary }.Contains(c.rarity)) ||   //If the card is the chosen color, check that it's synergizing with itself and is not a starter card
+                (c.casterColor.ToString() != color && PartyController.party.GetPlayerColorTexts().Contains(c.casterColor.ToString()) && c.materials.Any(x => colorMaterial.Contains(x))))        //If the card is of another color, check that it's synergizing with the chosen color
+                output.Add(c);
+        return output;
+    }
+
+    private List<StoryModeController.RewardsType> GetColorRewardMaterialTypes(string color)
+    {
+        List<StoryModeController.RewardsType> output = new List<StoryModeController.RewardsType>();
+        switch (color)
+        {
+            case "Red":
+                output.Add(StoryModeController.RewardsType.RubyCrystal);
+                output.Add(StoryModeController.RewardsType.RubyGem);
+                output.Add(StoryModeController.RewardsType.RubyShard);
+                break;
+            case "Blue":
+                output.Add(StoryModeController.RewardsType.SapphireCrystal);
+                output.Add(StoryModeController.RewardsType.SapphireGem);
+                output.Add(StoryModeController.RewardsType.SapphireShard);
+                break;
+            case "Green":
+                output.Add(StoryModeController.RewardsType.EmeraldCrystal);
+                output.Add(StoryModeController.RewardsType.EmeraldGem);
+                output.Add(StoryModeController.RewardsType.EmeraldShard);
+                break;
+            case "Orange":
+                output.Add(StoryModeController.RewardsType.TopazCrystal);
+                output.Add(StoryModeController.RewardsType.TopazGem);
+                output.Add(StoryModeController.RewardsType.TopazShard);
+                break;
+            case "White":
+                output.Add(StoryModeController.RewardsType.QuartzCrystal);
+                output.Add(StoryModeController.RewardsType.QuartzGem);
+                output.Add(StoryModeController.RewardsType.QuartzShard);
+                break;
+            case "Black":
+                output.Add(StoryModeController.RewardsType.OnyxCrystal);
+                output.Add(StoryModeController.RewardsType.OnyxGem);
+                output.Add(StoryModeController.RewardsType.OnyxShard);
+                break;
+        }
+        return output;
+    }
 }

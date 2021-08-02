@@ -47,11 +47,12 @@ public class StoryModeShopController : MonoBehaviour
 
         PopulateCards();
         UpdateInventoryMaterials();
+        StoryModeController.story.SetCombatInfoMenu(false);
     }
 
     public void UpdateInventoryMaterials()
     {
-        List<StoryModeController.RewardsType> inventoryList = new List<StoryModeController.RewardsType>() { StoryModeController.RewardsType.BlankCard, StoryModeController.RewardsType.WeaponBlueprint, StoryModeController.RewardsType.RubyShard, StoryModeController.RewardsType.SapphireShard, StoryModeController.RewardsType.EmeraldShard, StoryModeController.RewardsType.SpessartineShard, StoryModeController.RewardsType.QuartzShard, StoryModeController.RewardsType.OnyxShard };
+        List<StoryModeController.RewardsType> inventoryList = new List<StoryModeController.RewardsType>() { StoryModeController.RewardsType.BlankCard, StoryModeController.RewardsType.WeaponBlueprint, StoryModeController.RewardsType.RubyShard, StoryModeController.RewardsType.SapphireShard, StoryModeController.RewardsType.EmeraldShard, StoryModeController.RewardsType.TopazShard, StoryModeController.RewardsType.QuartzShard, StoryModeController.RewardsType.OnyxShard };
 
         for (int i = 0; i < inventoryList.Count; i++)
         {
@@ -207,7 +208,10 @@ public class StoryModeShopController : MonoBehaviour
         if (!craftButtonSelectable)
             return;
 
-        StoryModeController.story.ReportCardBought(currentCard.GetCardController().GetCard().name, currentCardMaterials);
+        if (currentCard.GetEquipment() == null)
+            StoryModeController.story.ReportCardBought(currentCard.GetCardController().GetCard().name, currentCardMaterials);
+        else
+            StoryModeController.story.ReportEquipmentBought(currentCard.GetEquipment().equipmentName, currentCardMaterials);
         PopulateCards();
         currentCard.SetCardBought();
         CameraController.camera.transform.position = new Vector3(0, 0, CameraController.camera.transform.position.z);

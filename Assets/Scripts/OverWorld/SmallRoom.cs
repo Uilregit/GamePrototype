@@ -96,6 +96,11 @@ public class SmallRoom : MonoBehaviour
 
     public void SetSelectable(bool state)
     {
+        if (highlight == null)
+            highlight = GetComponent<Outline>();
+        if (collider == null)
+            collider = GetComponent<Collider2D>();
+
         selectable = state;
         highlight.enabled = state;
         collider.enabled = state;

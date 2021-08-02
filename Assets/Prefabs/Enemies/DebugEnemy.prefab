@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castRange: 3
+  castRange: 1
   maxVit: 1
   vitVariate: 1
   startingArmor: 1
@@ -76,8 +76,7 @@ MonoBehaviour:
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: ffd843ed45efe6b44b9072492e4e4bc0, type: 2}
-  - {fileID: 11400000, guid: 990bcf97c0a3d524fbd76d5dd6896ed6, type: 2}
+  - {fileID: 11400000, guid: 0effdfd9a82c7e048b9f5038cad251b7, type: 2}
   moveType: 0
   targetType: 0
   desiredTarget:
@@ -98,6 +97,7 @@ MonoBehaviour:
   size: 1
   isSimulation: 0
   charDisplay: {fileID: 6491098502223438485}
+  originalSimulationTarget: 
 --- !u!61 &5812241472637964539
 BoxCollider2D:
   m_ObjectHideFlags: 0

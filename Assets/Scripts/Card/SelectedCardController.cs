@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SelectedCardController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class SelectedCardController : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalRotation;
     private bool isShowing = true;
+
+    private int custCardSlots = 0;
+    private int cardDragIndex = 0;
 
     public void SetCard(CardController card)
     {
@@ -68,7 +72,7 @@ public class SelectedCardController : MonoBehaviour
     public void SetEquipment(Equipment equip)
     {
         thisCard = null;
-        
+
         backImage.transform.GetComponent<RectTransform>().pivot = new Vector2(0.5f, equip.art.pivot.y / equip.art.rect.height);
         backImage.sprite = equip.art;
 
@@ -163,6 +167,8 @@ public class SelectedCardController : MonoBehaviour
         Vector3 newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
 
+        CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3);
+
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -1.3)
         {
             if (isShowing)
@@ -185,6 +191,31 @@ public class SelectedCardController : MonoBehaviour
                 isShowingCardDisplay = false;
             }
         }
+
+        if (thisCard.GetCard().rarity == Card.Rarity.Starter || thisCard.GetCard().rarity == Card.Rarity.StarterAttack || SceneManager.GetActiveScene().name != "StoryModeScene")
+            custCardSlots = 8;
+        else
+        {
+            Vector2 ranges = CollectionController.collectionController.GetWeaponAndAccessorySlots();
+            custCardSlots = (int)(ranges.x + ranges.y);
+        }
+
+        //Find the index location that the card is being dragged over
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3)
+        {
+            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+            if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
+            {
+                cardDragIndex = (int)((positionX + 2.4f) / 0.6f);
+                CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
+                if (cardDragIndex < custCardSlots)                                                  //Only white out select cards if the card is dragged over slots it can go into
+                    CollectionController.collectionController.SetSelectCardWhiteOut(true, cardDragIndex, Color.white);
+                else
+                    CollectionController.collectionController.SetSelectCardWhiteOut(true, cardDragIndex, Color.red);
+            }
+            else
+                CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);  //If the card is outside range, hide all whiteouts
+        }
     }
 
     public void OnMouseUp()
@@ -194,18 +225,30 @@ public class SelectedCardController : MonoBehaviour
 
         isShowingCardDisplay = false;
         cardDisplay.Hide();
+        Show();
         transform.rotation = originalRotation;
         transform.position = originalPosition;
 
-        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -1.3)
+        CollectionController.collectionController.SetSelectAreaWhiteOut(false);
+        CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
+
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
         {
             clickable = false;
             CollectionController.collectionController.RemoveCard(thisCard, index);
         }
+        else if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3 && cardDragIndex != index)        //If card is dragged to another equipped card's location
+        {
+            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+            if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
+                if (cardDragIndex < custCardSlots)
+                    CollectionController.collectionController.SwapCards(cardDragIndex, index);
+        }
     }
 
-    public void SetWhiteOut(bool state)
+    public void SetWhiteOut(bool state, Color c)
     {
         whiteOut.enabled = state;
+        whiteOut.color = new Color(c.r, c.g, c.b, whiteOut.color.a);
     }
 }

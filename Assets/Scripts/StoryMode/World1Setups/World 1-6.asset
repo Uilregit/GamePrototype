@@ -14,29 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: World 1-6
   setups:
-  - {fileID: 11400000, guid: 2511eefac41691b41b1d05ced9e3a5a5, type: 2}
-  - {fileID: 11400000, guid: 4d826d0b020108441bc37ec8244ee488, type: 2}
-  - {fileID: 11400000, guid: f801d7dc313b97c4ca0e162e03111033, type: 2}
+  - {fileID: 11400000, guid: 61fd206ec16cd8349900bd387a2987ee, type: 2}
+  - {fileID: 11400000, guid: 86ee0b9cd00c38e41b70c51890836dd3, type: 2}
+  - {fileID: 11400000, guid: 27b5bdb09e888ab4f89993d9e2325d80, type: 2}
   challenges: 000000002604000027040000
-  valueType: 000000000100000001000000
-  challengeValues: 000000000500000014000000
-  challengeComparisonType: 0000000000000000000000000000000000000000
+  valueType: 000000001400000014000000
+  challengeValues: 000000000100000001000000
+  challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 0000000000000000000000000000000000000000
+  rewardTypes: 0000000007000000080000001e00000046000000
   rewardCards:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   rewardEquipment:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 11400000, guid: fc8c61d3204f2584fb83e69cb6535343, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  rewardAmounts: 0000000000000000000000000000000000000000
-  rewardCosts: 
+  rewardAmounts: 0100000001000000010000000400000004000000
+  rewardCosts: 320000003c0000003c0000001400000014000000
   challengeRewardBought: 000000
   flavorText: People generally underestimate the tactical applications of a Ruby
     Bard's yo mama taunts

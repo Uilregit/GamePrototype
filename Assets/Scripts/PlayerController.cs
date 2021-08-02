@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
         int bonusCastRange = 0;
         int bonusMoveRange = 0;
         int bonusHandSize = 0;
+        int bonusReplace = 0;
         if (!healthController.GetIsSimulation() && CollectionController.collectionController.GetSelectEquipments().ContainsKey(colorTag.ToString()))
             foreach (string e in CollectionController.collectionController.GetSelectEquipments()[colorTag.ToString()])
                 equipments.Add(LootController.loot.GetEquipment(e));
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
             bonusCastRange += e.castRangeChange;
             bonusMoveRange += e.moveRangeChange;
             bonusHandSize += e.handSizeChange;
+            bonusReplace += e.replaceChange;
         }
 
         healthController.SetCastRange(castRange + bonusCastRange);
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
         healthController.SetStartingArmor(startingArmor + bonusArmor);
         healthController.SetStartingAttack(attack + bonusAtk);
         healthController.SetBonusMoveRange(bonusMoveRange);
+        HandController.handController.SetBonusReplace(bonusReplace, true);
         HandController.handController.SetBonusHandSize(bonusHandSize, true);
         if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
             healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit

@@ -46,6 +46,9 @@ public class ResourceController : MonoBehaviour
     {
         gold += value;
         goldCount.text = gold.ToString();
+
+        if (StoryModeController.story != null)
+            StoryModeController.story.RefreshGoldValue();
     }
 
     public int GetGold()

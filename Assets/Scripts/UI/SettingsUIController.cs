@@ -25,7 +25,7 @@ public class SettingsUIController : MonoBehaviour
     public void ReportGameSpeedOption(int index)
     {
         SettingsController.settings.SetGameSpeedIndex(index);
-        for (int i = 0; i < gameSpeedOptions.Length; i ++)
+        for (int i = 0; i < gameSpeedOptions.Length; i++)
         {
             if (index == i)
             {
@@ -65,9 +65,9 @@ public class SettingsUIController : MonoBehaviour
     public void ReportRemainingMoveRangeIndicator(bool state)
     {
         SettingsController.settings.SetRemainingMoveRangeIndicator(state);
-        for(int i = 0; i < remainingMoveRangeIndicatorOptions.Length; i++)
+        for (int i = 0; i < remainingMoveRangeIndicatorOptions.Length; i++)
         {
-            if ((!state && i  == 0)|| (state && i == 1))
+            if ((!state && i == 0) || (state && i == 1))
             {
                 remainingMoveRangeIndicatorOptions[i].color = selectedColor;
                 remainingMoveRangeIndicatorOptions[i].transform.GetChild(0).GetComponent<Image>().color = selectedColor;
@@ -85,6 +85,12 @@ public class SettingsUIController : MonoBehaviour
     public void BackButton()
     {
         InformationLogger.infoLogger.SaveSettings();
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        if (StoryModeController.story != null)
+        {
+            StoryModeController.story.SetMenuBar(true);
+            SceneManager.LoadScene("StoryModeScene", LoadSceneMode.Single);
+        }
+        else
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 }

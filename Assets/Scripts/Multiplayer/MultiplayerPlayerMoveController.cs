@@ -168,7 +168,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
                 if (!healthController.GetPhasedMovement())
                 {
                     TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
-                                                        PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { otherTag, "Blockade" }, 0);
+                                                        PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { otherTag, }, 0);
                     if (SettingsController.settings.GetRemainingMoveRangeIndicator() && path.Count > 1)       //If the option is enabled and player moved, create remaining move range indicator
                         TileCreator.tileCreator.CreateTiles(this.gameObject, lastGoodPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
                                                             PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { otherTag, "Blockade" }, 1);
@@ -209,7 +209,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
 
                     if (!healthController.GetPhasedMovement())
                         TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
-                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { otherTag, "Blockade" }, 1);
+                                                    PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { otherTag, }, 1);
                     else    //If phased movement, then player can move through, but not on enemies
                     {
                         TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
@@ -301,7 +301,7 @@ public class MultiplayerPlayerMoveController : NetworkBehaviour
         if (!GetComponent<HealthController>().GetPhasedMovement())
             avoidTags = new string[] { selfTag, "Blockade" };
         else
-            avoidTags = new string[] { "Blockade" };
+            avoidTags = new string[] { };
 
         foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, player.GetMoveRange() + bonusMoveRange, moveRangeColor, avoidTags, 1);

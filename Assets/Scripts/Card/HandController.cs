@@ -56,7 +56,14 @@ public class HandController : MonoBehaviour
         }
         else
         {
-            maxReplaceCount = UnlocksController.unlock.GetUnlocks().replaceUnlocked;
+            if (StoryModeController.story != null)                      //If in singleplayer, then use the single player replace values
+            {
+                maxReplaceCount = 1;
+                if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXReplace))
+                    maxReplaceCount += StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXReplace];
+            }
+            else
+                maxReplaceCount = UnlocksController.unlock.GetUnlocks().replaceUnlocked;
             allowHold = UnlocksController.unlock.GetUnlocks().holdUnlocked;
         }
     }
@@ -88,7 +95,7 @@ public class HandController : MonoBehaviour
         card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
         CardController cardController = card.GetComponent<CardController>();
         CardController drawnCard = DeckController.deckController.DrawAnyCard(fromDrawPile);
-        cardController.SetCardController(drawnCard);
+        cardController.SetCardController(drawnCard, true);
 
         if (fromDrawPile)
             cardController.transform.position = new Vector3(-5, -3, 0);
@@ -547,5 +554,15 @@ public class HandController : MonoBehaviour
             bonusHandSize += value;
         else
             bonusHandSize = value;
+    }
+
+    public void SetBonusReplace(int value, bool relative)
+    {
+        if (relative)
+            maxReplaceCount += value;
+        else
+            maxReplaceCount = value;
+
+        ResetReplaceCounter();
     }
 }

@@ -22,21 +22,24 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 0
-  description: Deal <s>100% of ATK as</s> damage. If the target is attacking you,
-    deal damage again
-  art: {fileID: 21300000, guid: b3d5864ad9c273d4eaddfdf6a5993132, type: 3}
+  description: When the target is damaged this turn, they retaliate with 50% of <b>their</b>
+    ATK twice
+  art: {fileID: 21300000, guid: 79b06621f255b1d4aa8da6a5ce46a0ae, type: 3}
   castType: 0
   castShape: 0
-  targetType: 0300000003000000
-  cardEffectName: 0000000000000000
-  hitEffect: 0000000000000000
-  conditionType: 00000000ca000000
-  conditionValue: 0000000000000000
+  targetType: 030000000300000003000000
+  cardEffectName: fe010000910100006e000000
+  hitEffect: 3f420f003f420f00c8000000
+  conditionType: 000000000000000000000000
+  conditionValue: 000000000000000000000000
   buff:
   - {fileID: 0}
-  effectValue: 6400000064000000
-  effectDuration: 0000000000000000
+  - {fileID: 0}
+  - {fileID: 11400000, guid: d1757c32a1e762d4fb690c3ce675e03f, type: 2}
+  effectValue: 000000003200000000000000
+  effectDuration: 000000000000000001000000
   spawnObject:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   cards:

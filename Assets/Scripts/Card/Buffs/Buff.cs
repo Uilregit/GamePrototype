@@ -17,6 +17,7 @@ public class Buff : ScriptableObject
     public BuffEffectType onApplyEffects;
     public TriggerTarget onTriggerTarget;
     public BuffEffectType onTriggerEffects;
+    public int onTriggerAppliedCount = 1;
     public ValueManipulationType valueManipulationType;
     //public BuffEffectType onRevertEffects;
 

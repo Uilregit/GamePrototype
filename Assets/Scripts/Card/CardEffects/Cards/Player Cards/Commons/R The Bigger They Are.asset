@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: R The Bigger They Are
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: The Bigger They Are
+  energyCost: 0
+  manaCost: 3
+  range: 0
+  radius: 0
+  casterColor: 0
+  description: Target takes damage equal to 2x their armor
+  art: {fileID: 21300000, guid: b3d5864ad9c273d4eaddfdf6a5993132, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 030000000300000003000000
+  cardEffectName: 0a0200009101000005000000
+  hitEffect: 3f420f003f420f0000000000
+  conditionType: 000000000000000000000000
+  conditionValue: 000000000000000000000000
+  buff:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  effectValue: 00000000c800000000000000
+  effectDuration: 000000000000000001000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 11
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0
+  materials: 000000001e00000046000000
+  materialAmounts: 010000000800000004000000

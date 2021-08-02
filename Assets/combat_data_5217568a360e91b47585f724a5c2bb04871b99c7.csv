@@ -4285,3 +4285,492 @@ deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,turnID,timestamp,cast
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.4.c,4/16/2021 11:43:09 AM,2,0,Ilusionists,0,178,0,,,False,False,False,True,,1,Berzerker,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.4.c,4/16/2021 11:43:09 AM,2,0,Ilusionists,0,178,0,,,False,False,False,True,,1,Archer,0,0,0,0,1
 5217568a360e91b47585f724a5c2bb04871b99c7,0.4.5.4.c,4/16/2021 11:43:09 AM,2,0,Ilusionists,0,178,0,,,False,False,False,True,,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 4:27:39 PM,0,0,World 1-1R1,0,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 4:27:39 PM,0,0,World 1-1R1,0,0,0,Blue,Alacrity,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 4:27:39 PM,0,0,World 1-1R1,0,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 4:27:39 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 4:27:39 PM,0,0,World 1-1R1,0,0,0,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:24:09 PM,0,0,World 1-1R1,0,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,0,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,2,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,2,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,0,0,2,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,0,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,1,Green,Arrow Storm,False,False,False,True,Archer,1,|Huge Damage(Clone)|,3,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,12,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,3,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,1,0,4,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,0,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,2,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,30,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,3,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,2,0,3,Blue,Alacrity,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:36:29 PM,0,0,World 1-1R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,1,Green,Haste,False,False,False,True,Archer,1,|Berzerker|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,12,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,3,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,0,0,3,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Berzerker,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,0,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,3,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,1,0,3,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,0,Green,Arrow Storm,False,False,False,True,Archer,1,|Huge Damage(Clone)|,3,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,12,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,12,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,3,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,2,0,3,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0,6/26/2021 6:38:25 PM,0,0,World 1-1R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,0,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,0,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,0,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Archer|,6,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:48:25 PM,0,0,World 1-1R1,1,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,0,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,0,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,0,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,0,0,0,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,0,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Berzerker|,3,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:50:09 PM,0,0,World 1-1R1,1,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,0,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,0,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,0,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,0,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Archer|,6,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:51:19 PM,0,0,World 1-1R1,1,0,0,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,0,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,0,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,0,0,0,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,0,0,0,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,1,0,0,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Mage|,11,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Blue,Raise,True,False,False,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,2,0,0,Blue,Raise,True,False,False,False,None,None,None,None,None,0,5,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/1/2021 6:55:05 PM,0,0,World 1-1R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,0,Red,Defend,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,0,Blue,Thunder,False,False,False,True,Mage,1,|Huge Damage(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,6,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,2,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,3,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,0,0,3,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Red,Defend,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,14,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,2,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,36,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,3,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,4,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,1,0,4,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,2,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,2,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,0,World 1-1R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,0,Blue,Thunder,False,False,False,True,Mage,2,|Armor Breaker(Clone)|Armor Breaker(Clone)|,4,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,2,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,3,Green,Arrow Storm,False,False,False,True,Archer,1,|Armor Breaker(Clone)|,12,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,0,0,4,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,0,Red,Sword and Board,False,False,False,True,Berzerker,1,|Armor Breaker(Clone)|Berzerker|,5,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,1,Green,Thousand Knives,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,1,Green,Thousand Knives,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,2,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,2,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,4,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,36,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,1,World 1-1R2,1,0,4,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,0,Green,Boomerang,False,True,False,False,None,None,None,None,None,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,1,Green,Wind Strike,False,False,False,True,Archer,2,|Huge Damage(Clone)|Armor Breaker(Clone)|Huge Damage(Clone)|Armor Breaker(Clone)|,5,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,2,Red,Sword and Board,False,False,False,True,Berzerker,2,|Huge Damage(Clone)|Armor Breaker(Clone)|Berzerker|,20,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,3,Red,Defend,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,3,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,3,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,0,0,3,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Berzerker|,1,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,0,Green,Arrow Storm,False,False,False,True,Archer,1,|Armor Breaker(Clone)|,3,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,1,Blue,Thunder,False,False,False,True,Mage,1,|Armor Breaker(Clone)|,10,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,14,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,3,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,4,Blue,Meteor,False,True,False,False,None,None,None,None,None,0,6,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.1,7/11/2021 7:42:41 PM,0,2,World 1-1R3,1,0,4,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,36,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,0,Blue,Meteor,False,True,False,False,None,None,None,None,None,0,6,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,0,Blue,Thunder,False,False,False,True,Mage,1,|RoadHog(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|RoadHog(Clone)|RoadHog(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,3,Blue,Fireball,False,False,False,True,Mage,1,|RoadHog(Clone)|,17,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,4,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,0,0,4,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|RoadHog(Clone)|RoadHog(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,1,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,1,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,2,Blue,Fireball,False,False,False,True,Mage,1,|RoadHog(Clone)|,36,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,3,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,1,0,3,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,2,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,0,World 1-2R1,2,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Blue,Fireball,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,0,Blue,Thunder,False,False,False,True,Mage,3,|Armor Breaker(Clone)|Armor Breaker(Clone)|RoadHog(Clone)|,8,3,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,1,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,1,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,1,Green,Haste,False,False,False,True,Archer,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,2,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,3,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,3,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,0,0,3,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/25/2021 12:25:31 AM,0,1,World 1-2R3,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,1,Green,Wind Strike,False,False,False,True,Archer,1,|Huge Damage(Clone)|Huge Damage(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,2,Green,Haste,False,False,False,True,Archer,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,36,0,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,0,0,4,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Berzerker|,3,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,0,Blue,Thunder,False,False,False,True,Mage,3,|Armor Breaker(Clone)|Huge Damage(Clone)|Huge Damage(Clone)|,17,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,1,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,1,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,1,Blue,Thunder,False,False,False,True,Mage,3,|Armor Breaker(Clone)|Huge Damage(Clone)|Huge Damage(Clone)|,24,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Mage|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,3,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,1,0,3,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Enemy,Armor Melter,False,False,False,True,Armor Breaker(Clone),1,|Mage|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,|Huge Damage(Clone)|,0,0,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Armor Breaker(Clone)|Armor Breaker(Clone)|,8,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,1,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,14,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,14,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,3,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,3,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,2,0,3,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,0,Enemy,Bite,False,False,False,True,Huge Damage(Clone),1,|Berzerker|,2,1,0,1,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,0,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,0,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,0,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,1,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,2,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,2,Blue,Fireball,False,False,False,True,Mage,1,|Huge Damage(Clone)|,17,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,3,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,3,,Grow,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,3,Blue,Meteor,False,False,False,True,Mage,1,|Huge Damage(Clone)|Huge Damage(Clone)|,48,0,0,6,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,3,0,4,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,0,World 1-6R1,4,0,0,Enemy,Grow,False,False,False,True,Huge Damage(Clone),1,Huge Damage(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,0,Green,Haste,False,False,False,True,Archer,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,1,Blue,Cycle Of Mana,False,False,False,True,Mage,0,|Mage|Mage|,0,0,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,2,Blue,Meteor,False,True,False,False,None,None,None,None,None,0,6,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,2,Red,Sword and Board,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,2,Blue,Thunder,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,3,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,4,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,0,0,4,Green,Wind Strike,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,0,Green,Haste,False,False,False,True,Archer,1,|Mage|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,1,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,1,Blue,Thunder,False,False,False,True,Mage,1,|Neutral(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,2,Green,Wind Strike,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,2,Red,Sword and Board,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,3,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,3,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,1,0,3,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,0,Green,Haste,False,False,False,True,Archer,1,Mage,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,|Neutral(Clone)|,0,-5,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,|Neutral(Clone)|,0,-5,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Neutral(Clone)|Neutral(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,1,Red,Taunt,False,False,False,True,Berzerker,2,|Neutral(Clone)|Neutral(Clone)|Berzerker|,0,-3,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,2,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,2,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,2,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,2,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,2,Red,Sword and Board,False,False,False,True,Berzerker,2,|Neutral(Clone)|Neutral(Clone)|Berzerker|,2,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,3,Blue,Fireball,False,False,False,True,Mage,2,|Neutral(Clone)|Neutral(Clone)|,22,2,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,4,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,2,0,4,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Enemy,Ironstrike,False,False,False,True,Neutral(Clone),1,|Berzerker|Berzerker|,1,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Enemy,Ironstrike,False,False,False,True,Neutral(Clone),1,|Berzerker|Berzerker|,1,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Support(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,0,Red,Taunt,False,False,False,True,Berzerker,1,|Support(Clone)|Berzerker|,0,-3,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,1,Blue,Thunder,False,False,False,True,Mage,2,|Neutral(Clone)|Neutral(Clone)|,2,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,2,Green,Haste,False,False,False,True,Archer,1,|Archer|,0,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Haste,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,3,Green,Wind Strike,False,False,False,True,Archer,1,|Neutral(Clone)|Neutral(Clone)|,1,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,4,Blue,Fireball,False,False,False,True,Mage,1,|Neutral(Clone)|,13,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,3,0,5,Green,Arrow Storm,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Green,Haste,False,False,False,True,Archer,1,Archer,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Enemy,Harden,False,False,False,True,Neutral(Clone),1,|Berzerker|,0,-5,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Enemy,Fiendfyre,False,False,False,True,Support(Clone),1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Enemy,Fiendfyre,False,False,False,True,Support(Clone),1,|Berzerker|Berzerker|,-5,0,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Neutral(Clone),0,0,0,0,3
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Support(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Green,Arrow Storm,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,,Fiendfyre,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,0,Blue,Thunder,False,False,False,True,Mage,2,|Neutral(Clone)|Support(Clone)|,4,2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,1,,Fiendfyre,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,1,Red,Defend,False,False,False,True,Berzerker,1,|Archer|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Archer|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,3,Blue,Fireball,False,False,False,True,Mage,1,|Neutral(Clone)|,15,1,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,4,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,4,Blue,Cycle Of Mana,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,4,0,4,Red,Sword and Board,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Enemy,Fiendfyre,False,False,False,True,Support(Clone),1,Berzerker,0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Support(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Support(Clone),0,0,0,0,3
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Fiendfyre,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,1
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Fiendfyre,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Red,Taunt,False,False,False,True,Berzerker,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,0,Red,Sword and Board,False,False,False,True,Berzerker,1,|Support(Clone)|Berzerker|,6,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,1,,Taunt,False,False,False,True,,1,Simulation Variant(Clone),0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,1,Red,Sword and Board,False,False,False,True,Berzerker,1,|Support(Clone)|Berzerker|,14,-1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,2,Blue,Cycle Of Mana,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,2,Red,Taunt,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,2,Blue,Meteor,True,False,False,False,None,None,None,None,None,0,6,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,5,0,2,Red,Defend,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,6,0,0,Enemy,Fiendfyre,False,False,False,True,Support(Clone),1,Berzerker,0,0,0,0,2
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,1,World 1-6R2,6,0,0,Enemy,Fiendfyre,False,False,False,True,Support(Clone),1,Berzerker,0,0,0,0,3
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,0,Blue,Fireball,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,0,Green,Wind Strike,False,False,False,True,Archer,1,|Support(Clone)|Support(Clone)|,3,1,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,1,Blue,Cycle Of Mana,False,False,False,True,Mage,0,|Mage|Mage|,0,0,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,2,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,3,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,4,Blue,Fireball,True,False,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,0,0,4,Green,Haste,True,False,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:14:15 PM,0,2,World 1-6R3,1,0,0,Green,Haste,False,True,False,False,None,None,None,None,None,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,0,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,1,Red,Defend,False,False,False,True,Berzerker,1,|Berzerker|,0,-2,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,2,Red,Sword and Board,False,False,False,True,Berzerker,1,|Huge Damage(Clone)|Berzerker|,5,0,1,0,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,3,Blue,Fireball,False,True,False,False,None,None,None,None,None,0,3,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,3,Blue,Cure,False,True,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,3,Blue,Cure,True,False,False,False,None,None,None,None,None,0,2,0
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.0.1,7/31/2021 5:38:14 PM,0,0,World 1-7R1,0,0,3,Blue,Thunder,True,False,False,False,None,None,None,None,None,1,0,0
