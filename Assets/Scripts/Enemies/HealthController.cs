@@ -119,6 +119,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         abilitiesController = GetComponent<AbilitiesController>();
         buffController = GetComponent<BuffController>();
+
+        abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnSpawn);
     }
 
     public BuffController GetBuffController()
@@ -987,8 +989,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (damage > 0)
         {
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
-            if (damage <= bonusVit && isPlayer)
-                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BonusHealthCompleteBlock);
+
+            if (isPlayer)
+            {
+                AchievementSystem.achieve.OnNotify(damage, StoryRoomSetup.ChallengeType.TakeLessThanXTotalDamage);
+                if (damage <= bonusVit)
+                    AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BonusHealthCompleteBlock);
+            }
         }
         else if (damage == 0)
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageBlocked, this, damage, buffTrace));

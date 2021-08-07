@@ -329,6 +329,7 @@ public class EnemyController : MonoBehaviour
             yield return StartCoroutine(MoveLerp(transform.position, position, TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier * 0.7f));
 
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, 1));
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemiesTravelLessThanXSpaces);
             //yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
 
@@ -685,7 +686,7 @@ public class EnemyController : MonoBehaviour
                 List<Vector2> path = new List<Vector2>();
                 path = PathFindController.pathFinder.PathFind(transform.position, loc, pathThroughTags, occupiedSpace, size);
                 //if (path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
-                if (path.Count > 1)
+                if (path.Count > 1 &&  path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
                     pathableLocations.Add(loc);
             }
             if (pathableLocations.Count > 0)                                                                //If there are pathable locations in this distance range, move on to the next step
@@ -1057,5 +1058,10 @@ public class EnemyController : MonoBehaviour
     public void SetPreviousPosition(Vector2 loc)
     {
         previousPosition = loc;
+    }
+
+    public bool GetCanPathToTarget()
+    {
+        return enemyInformation.GetCanPathToTarget();
     }
 }

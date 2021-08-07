@@ -28,6 +28,7 @@ public class AbilitiesController : MonoBehaviour
         OnBreak = 5,
         OnBelow0Health = 6,
         AtEndOfTurn = 10,
+        OnSpawn = 1000,
     }
     public enum AbilityType
     {
@@ -37,6 +38,8 @@ public class AbilitiesController : MonoBehaviour
 
         FullHeal = 10,
         Break = 11,
+
+        PhasedMovement = 20,
 
         Revive = 99,
 
@@ -129,6 +132,9 @@ public class AbilitiesController : MonoBehaviour
                             {
                                 newObj.GetComponent<PlayerController>().Spawn(obj.transform.position);
                             }
+                            break;
+                        case AbilityType.PhasedMovement:
+                            obj.GetComponent<HealthController>().SetPhasedMovement(true);
                             break;
                         case AbilityType.GetSynergizedCards:
                             string color = PartyController.party.GetPlayerColorTexts()[Random.Range(0, 2)];
@@ -262,6 +268,9 @@ public class AbilitiesController : MonoBehaviour
                     break;
                 case AbilityType.GetSynergizedCards:
                     s += "Cards From The Future That Costs (0)";
+                    break;
+                case AbilityType.PhasedMovement:
+                    s += "Permanent Phased Movement";
                     break;
             }
 

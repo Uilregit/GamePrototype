@@ -12,9 +12,8 @@ public class StoryModeSecretShopSceneController : StoryModeEndSceenController
 
     public override void Start()
     {
-        totalGoals = StoryModeController.story.GetUnspentChallengeTokens();
-
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
+        totalGoals = StoryModeController.story.GetUnspentChallengeTokens();
 
         for (int i = 0; i < items.Length; i++)
         {

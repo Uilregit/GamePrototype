@@ -357,6 +357,7 @@ public class RoomController : MonoBehaviour
     public void EnterRoom(string sceneName)
     {
         //GameController.gameController.LoadScene(sceneName, false, 0);
+        HandController.handController.ResetHoldsAndReplaces();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 

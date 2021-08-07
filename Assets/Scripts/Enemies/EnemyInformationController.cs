@@ -41,6 +41,7 @@ public class EnemyInformationController : MonoBehaviour
 
     private bool hasShownAbilities = false;
     private bool isTriggeringCard = false;
+    private bool canPathToTarget = false;
 
     //private Animator anim;
 
@@ -251,8 +252,11 @@ public class EnemyInformationController : MonoBehaviour
                 targetLocation = enemyController.desiredTarget[i].GetComponent<PlayerMoveController>().moveShadow.transform.position;
             }
 
+            canPathToTarget = true;
+            //If target not in range, darken
             if (!attackableLocations.Contains(new Vector2(Mathf.Round(targetLocation.x), Mathf.Round(targetLocation.y))) && enemyController.desiredTarget[i] != this.gameObject) //If target is self, always highlight
             {
+                canPathToTarget = false;
                 if (intentColor == Color.black)
                     intentColor.a = 0.2f;
                 else
@@ -585,5 +589,10 @@ public class EnemyInformationController : MonoBehaviour
             }
         }
         hasShownAbilities = true;
+    }
+
+    public bool GetCanPathToTarget()
+    {
+        return canPathToTarget;
     }
 }

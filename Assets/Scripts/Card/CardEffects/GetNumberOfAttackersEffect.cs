@@ -11,10 +11,10 @@ public class GetNumberOfAttackersEffect : Effect
             yield break;
 
         int maxCount = 0;
-        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
+        foreach (GameObject targ in target)
         {
             int count = 0;
-            foreach (GameObject targ in target)
+            foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
                 if (enemy.desiredTarget.Any(o => o == targ))
                     count++;
             maxCount = Mathf.Max(count, maxCount);

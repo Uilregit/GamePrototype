@@ -62,6 +62,11 @@ public class StoryRoomSetup : ScriptableObject
         DefeatBossInTurn = 1102,
         DefeatBossOnEnemyTurn = 1103,
 
+        PlayMoreThanXCardsPerTurn = 1901,
+        TakeLessThanXTotalDamage = 1902,
+
+        EnemiesTravelLessThanXSpaces = 1911,
+
         SacrificeNothing = 9999,
     }
 
@@ -154,6 +159,15 @@ public class StoryRoomSetup : ScriptableObject
                 break;
             case ChallengeType.DefeatBossOnEnemyTurn:
                 output += "Defeat the boss on the enemy's turn";
+                break;
+            case ChallengeType.PlayMoreThanXCardsPerTurn:
+                output += "Play more than X cards in 1 turn";
+                break;
+            case ChallengeType.TakeLessThanXTotalDamage:
+                output += "Take less than X total damage";
+                break;
+            case ChallengeType.EnemiesTravelLessThanXSpaces:
+                output += "Ensure enemies travel less than X total spaces";
                 break;
             case ChallengeType.SacrificeNothing:
                 output += "Defeat all boss summons before they’re sacrificed";

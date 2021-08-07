@@ -873,6 +873,35 @@
  * Fixed gear screen cards showing tooltips for the card room cards
  * Fixed collection controller selected cards sorting in front of on hover selected cards after being selected the first time
  * 
+ * 
+ * #####################
+ * ####### 0.5.0 #######
+ * #####################
+ * -- Cards --
+ * 
+ * -- Enemies --
+ * 
+ * -- System --
+ * Lowered max pathfinding steps from 1000 to 100 to increase performance for when mulitple enemies can't path to their targeted player
+ * Improved enemy turn execution priority to handle edge cases
+ *      Enemies will now ignore card execution order if they can't path to their target
+ *      Enemies who can path to the target but are blocked by another enemy will still respect pathing sorting order
+ * Added hard mode of bosses as secret bosses
+ * 
+ * -- UI --
+ * Rescaled all scenes to better fit the samsung galaxy S8 screen wrap
+ * Reordered Character Information screen to allow for bigger sized attack queue cards and passive cards
+ * 
+ * -- Bugs --
+ * Fixed handcontroller replaces constantly going up by 1
+ * Fixed R-Bring It On always giving 1 enemy's worth of armor instead of multiple
+ * Fixed secret shop not being accessible after going into a different scene
+ * Fixed G-Boomerang not showing the damage health preview when targeting a character
+ * Fixed small pockets not showing up as an equipment icon on the card during combat
+ * Fixed pathing null pointer error
+ * Fixed enemy pathing choosing a position around the player that they don't have enough move range to travel to
+ * 
+ * 
  * -- To dos --
  * Add secret shop (use stars for unlocking permanent bonuses (2 cards per room, etc)
  * Add arena, essentially classic mode for the 1 world (bonuses for short time and low number of cards used. 5-10 tiers, better reward each time)
@@ -1036,65 +1065,8 @@
  *      daily quests (do x damage)
  *      
  *      permanent story progression tied to expansions
- * 
- * #####################
- * ####### 0.4.7 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * add in 6 rares (1 color per archytype)
- * 
- * #####################
- * ####### 0.4.8 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * add armor/accessories
- * 
- * #####################
- * ####### 0.4.9 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
- * add weapons
- * 
- * #####################
- * ####### 0.5.0 #######
- * #####################
- * -- Cards --
- * 
- * -- Enemies --
- * 
- * -- System --
- * 
- * -- UI --
- * 
- * -- Bugs --
- * 
+ *      
+ *      
  * First alpha build
  * Get feedback
  * Add cross game loops

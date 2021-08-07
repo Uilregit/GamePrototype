@@ -15,7 +15,7 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 309f0b72c1d05c746bacf6a807216b0b, type: 3}
   equipmentName: Small Pocket
   rarity: 0
-  equipmentDescription: Attached card draws a card after it's played
+  equipmentDescription: Attached card draws a card after it's played|
   isWeapon: 0
   numOfCardSlots: 1
   atkChange: 0

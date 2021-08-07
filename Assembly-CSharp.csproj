@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\Enemies\EnemyInformationController.cs" />
     <Compile Include="Assets\Scripts\Card\DeckCustomizeCardController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\VitDamageEffect.cs" />
+    <Compile Include="Assets\Scripts\StoryModeSecretShopSceneController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ModifyTempValueEffect.cs" />
     <Compile Include="Assets\ChangeLog.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawCardEffect.cs" />
@@ -235,7 +236,6 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\StoryModeSecretShopSceneController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -834,9 +834,6 @@
     </Reference>
     <Reference Include="projectCloner">
       <HintPath>Library\ScriptAssemblies\projectCloner.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.DeviceSimulator.Tests.Common">
-      <HintPath>Library\ScriptAssemblies\Unity.DeviceSimulator.Tests.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>

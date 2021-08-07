@@ -26,7 +26,7 @@ public class StoryModeController : MonoBehaviour
     private Dictionary<RewardsType, int> unlockedItems = new Dictionary<RewardsType, int>();
     private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();       //<roomID, ifItemBought[]>
     private Dictionary<int, bool[]> secretShopItemsBought = new Dictionary<int, bool[]>();      //<worldID, ifItemBought[]>
-    public StoryRoomController[] secretShops;
+    public StoryRoomSetup[] secretShops;
 
     public Color defaultMenuColor;
     public Color selectedMenuColor;
@@ -935,7 +935,7 @@ public class StoryModeController : MonoBehaviour
         foreach (int worldId in secretShopItemsBought.Keys)
             for (int i = 0; i < secretShopItemsBought[worldId].Length; i++)
                 if (secretShopItemsBought[worldId][i])
-                    spentTokens += secretShops[worldId].setup.rewardCosts[i];
+                    spentTokens += secretShops[worldId].rewardCosts[i];
 
         return StoryModeSceneController.story.GetTotalChallengeTokens() - spentTokens;
     }

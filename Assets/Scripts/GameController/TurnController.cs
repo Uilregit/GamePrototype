@@ -132,6 +132,7 @@ public class TurnController : MonoBehaviour
         AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
         AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
         AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
+        AchievementSystem.achieve.OnNotify(cardsPlayedThisTurn.Count, StoryRoomSetup.ChallengeType.PlayMoreThanXCardsPerTurn);
 
         List<GameObject> players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
@@ -228,7 +229,22 @@ public class TurnController : MonoBehaviour
             thisEnemy.GetComponent<HealthController>().AtStartOfTurn();
 
         //Order all the enemies by their card execution priority. Solve ties by closest enemies to their target
-        enemies = enemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
+        List<EnemyController> pathableEnemies = new List<EnemyController>();
+        List<EnemyController> unpathableEnemies = new List<EnemyController>();
+        foreach (EnemyController e in enemies)
+            if (e.GetCanPathToTarget() && e.FindPathSortingOrder(e.GetCurrentTarget()) < 1000)      //If the target is pathable and unblocked
+                pathableEnemies.Add(e);
+            else
+                unpathableEnemies.Add(e);
+        //Unpathable enemies just want to path towards the target regardless of card execution priority
+        unpathableEnemies = unpathableEnemies.OrderBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
+        //pathable enemies will sort according to card execution priority, then enemies closest to the target moves first
+        pathableEnemies = pathableEnemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
+
+        //Pathable enemies goes first, followed by unpathable enemies
+        enemies = new List<EnemyController>();
+        enemies.AddRange(pathableEnemies);
+        enemies.AddRange(unpathableEnemies);
 
         //Execute the turn for each enemy
         foreach (EnemyController thisEnemy in enemies)

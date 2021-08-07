@@ -49,6 +49,11 @@ public class HandController : MonoBehaviour
         drawnCards = new List<CardController>();
         drawQueue = new List<CardController>();
 
+        ResetHoldsAndReplaces();
+    }
+
+    public void ResetHoldsAndReplaces()
+    {
         if (InformationLogger.infoLogger.debug)
         {
             maxReplaceCount = 20;

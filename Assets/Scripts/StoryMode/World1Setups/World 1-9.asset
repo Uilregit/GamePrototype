@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: World 1-9
   m_EditorClassIdentifier: 
   roomName: World 1-9
+  useDefaultCardsAndEquipments: 0
   setups:
   - {fileID: 11400000, guid: 00ce617d3d4e52a478bd075af51d79ed, type: 2}
   - {fileID: 11400000, guid: c9b232e88c45b4f4fb534b249eca0446, type: 2}
   - {fileID: 11400000, guid: bafb41f883e31a64885bfa90c3342fe9, type: 2}
   - {fileID: 11400000, guid: 02253c3ac3e77f842bd0215915fe5613, type: 2}
+  arenaSetup: {fileID: 0}
   challenges: 000000004404000045040000
-  valueType: 000000000100000001000000
+  valueType: 000000000a00000001000000
   challengeValues: 000000001400000006000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff

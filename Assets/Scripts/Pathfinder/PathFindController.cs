@@ -37,11 +37,12 @@ public class PathFindController : MonoBehaviour
         openList.Add(startingNode);
 
         AStarNode currentNode = openList[0];
-        for (int iteration = 0; iteration < 1000; iteration++)   //Runs for a max of 1000 iterations to prevent infinite loops if unpathable
+        for (int iteration = 0; iteration < 200; iteration++)   //Runs for a max of 200 iterations to prevent infinite loops if unpathable
         {
             if (openList.Count == 0) //If trapped in an enclosed space, return early
                 return new List<Vector2>() { startingLoc };
 
+            //Cycle through all positions in open list to find the least costly node
             currentNode = openList[0];
             for (int i = 1; i < openList.Count; i++)
             {
@@ -52,10 +53,12 @@ public class PathFindController : MonoBehaviour
                 }
             }
 
+            //Go to the least costly node
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            if (Mathf.Abs((currentNode.position - endingLoc).magnitude) <= Mathf.Pow(2 * Mathf.Pow((0.5f * objectSize - 0.5f), 2), 0.5f)) //If pathfinding finds the ending, then return path list and end early | distance less than one to account for size 2 objects
+            //If the current node is the final location, then return the path
+            if (Mathf.Abs((currentNode.position - endingLoc).magnitude) <= 0.5f) //If pathfinding finds the ending, then return path list and end early | distance less than one to account for size 2 objects
             {
                 output = GetFinalPath(startingNode, currentNode);
                 return output;
@@ -122,7 +125,7 @@ public class PathFindController : MonoBehaviour
         List<Vector2> output = new List<Vector2>();
         AStarNode currentNode = finalNode;
 
-        while (currentNode != firstNode)
+        while (currentNode.position != firstNode.position)
         {
             output.Add(currentNode.position);
             currentNode = currentNode.parent;
@@ -141,10 +144,8 @@ public class PathFindController : MonoBehaviour
     private bool ContainsPosition(List<AStarNode> list, AStarNode node)
     {
         foreach (AStarNode listNode in list)
-        {
             if (listNode.position == node.position)
                 return true;
-        }
         return false;
     }
 }

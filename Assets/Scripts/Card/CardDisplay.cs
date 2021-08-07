@@ -561,15 +561,15 @@ public class CardDisplay : MonoBehaviour
                     if (inCombat)
                     {
                         if (transform.position.x > 0)
-                            thisToolTips[i].transform.localPosition = new Vector3(-1.25f, 0.8f - 0.4f * i, 0);
+                            thisToolTips[i].transform.localPosition = new Vector3(-1.25f, 0.8f - 0.45f * i, 0);
                         else
-                            thisToolTips[i].transform.localPosition = new Vector3(1.25f, 0.8f - 0.4f * i, 0);
+                            thisToolTips[i].transform.localPosition = new Vector3(1.25f, 0.8f - 0.45f * i, 0);
                     }
                     else
-                        thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.4f * i, 0);
+                        thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.45f * i, 0);
                 }
                 else
-                    thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.4f * i, 0);
+                    thisToolTips[i].transform.localPosition = new Vector3(0, -0.95f - 0.45f * i, 0);
                 thisToolTips[i].transform.localRotation = Quaternion.identity;
                 thisToolTips[i].gameObject.SetActive(value);
             }

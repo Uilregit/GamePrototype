@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: World 1-4
   m_EditorClassIdentifier: 
   roomName: World 1-4
+  useDefaultCardsAndEquipments: 0
   setups:
   - {fileID: 11400000, guid: c50ca31df65112d408f7a29402eeeae6, type: 2}
   - {fileID: 11400000, guid: 2ac07689fd4eef647b2d1f908ea72e74, type: 2}
   - {fileID: 11400000, guid: b56bcd648f75f46419c1fc4ed4d05598, type: 2}
+  arenaSetup: {fileID: 0}
   challenges: 000000001204000013040000
   valueType: 000000000a0000000a000000
   challengeValues: 000000000500000064000000
@@ -38,4 +40,4 @@ MonoBehaviour:
   rewardAmounts: 0100000001000000010000000600000006000000
   rewardCosts: 32000000320000003c0000001400000014000000
   challengeRewardBought: 000000
-  flavorText: Squirrel merchants' bounty posters usually wants them VERY dead
+  flavorText: If they're worth killing, theyre worth overkilling
