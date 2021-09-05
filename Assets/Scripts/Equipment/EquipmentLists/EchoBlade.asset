@@ -15,8 +15,8 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 39703715bb2779e438afb6fc9a308fda, type: 3}
   equipmentName: Echo Blade
   rarity: 0
-  equipmentDescription: Attached card deals 25% of ATK as damage to target after
-    trigger|Atk +1
+  equipmentDescription: Attached card deals <s>25% of ATK as</s> damage to targets
+    after trigger|
   isWeapon: 0
   numOfCardSlots: 1
   atkChange: 1

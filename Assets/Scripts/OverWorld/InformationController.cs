@@ -22,7 +22,7 @@ public class RNG
         uint BIT_Noise2 = 0xB5297A4D;
         uint BIT_Noise3 = 0x1B56C4E9;
 
-        uint mangledBits = (uint) positionX;
+        uint mangledBits = (uint)positionX;
         mangledBits *= BIT_Noise1;
         mangledBits += seed;
         mangledBits ^= (mangledBits >> 8);
@@ -95,7 +95,7 @@ public class InformationController : MonoBehaviour
 
         List<Card.CasterColor> playerColors = new List<Card.CasterColor>();
         List<GameObject> players = MultiplayerGameController.gameController.GetLivingPlayers();
-        for (int i = 0; i < 3; i ++)
+        for (int i = 0; i < 3; i++)
         {
             combatInfo.vit[i] = players[i].GetComponent<HealthController>().GetCurrentVit();
             combatInfo.maxVit[i] = players[i].GetComponent<HealthController>().GetMaxVit();
@@ -106,7 +106,7 @@ public class InformationController : MonoBehaviour
 
             combatInfo.deadChars[i] = false;
         }
-                
+
         ResourceController.resource.LoadLives(combatInfo.lives);
         ResourceController.resource.GetComponent<Canvas>().enabled = true;
         ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
@@ -132,6 +132,16 @@ public class InformationController : MonoBehaviour
 
     public int GetStartingAttack(Card.CasterColor color)
     {
+        try
+        {
+            if (combatInfo.atk[PartyController.party.GetPartyIndex(color)] == 0)
+                return PartyController.party.GetStartingAttack(color) + CollectionController.collectionController.GetEquipmentAttack(color);
+        }
+        catch
+        {
+            return PartyController.party.GetStartingAttack(color) + CollectionController.collectionController.GetEquipmentAttack(color);
+        }
+
         return combatInfo.atk[PartyController.party.GetPartyIndex(color)];
     }
 
@@ -146,6 +156,17 @@ public class InformationController : MonoBehaviour
             combatInfo.vit[i] += maxVitChange;
             combatInfo.maxVit[i] += maxVitChange;
         }
+    }
+
+    //Used to have story mode combat start with fresh stats, unaffected by old team stats
+    public void ResetCombatInfo()
+    {
+        combatInfo.lives = ResourceController.resource.GetLives();
+        combatInfo.atk = new int[] { -1, -1, -1 };
+        combatInfo.armor = new int[] { -1, -1, -1 };
+        combatInfo.vit = new int[] { -1, -1, -1 };
+        combatInfo.maxVit = new int[] { -1, -1, -1 };
+        combatInfo.deadChars = new bool[3] { false, false, false };
     }
 
     public CombatInfo GetCombatInfo()

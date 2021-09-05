@@ -22,20 +22,20 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 1
-  description: <b>Targeted AoE|</b>You loose 3 health, deal <s>200% of ATK as</s>
-    damage to <b>ALL</b> in range
+  description: <b>Targeted AoE|</b>Deal <s>250% of ATK as</s> damage to the center
+    target, and <s>150% of ATK as</s> damage to surrounding targets
   art: {fileID: 21300000, guid: c707b12e6dbb7754d9e2199d9689a2d0, type: 3}
   castType: 7
   castShape: 0
-  targetType: 0200000003000000
-  cardEffectName: 1400000000000000
+  targetType: 0700000008000000
+  cardEffectName: 0000000000000000
   hitEffect: 0000000000000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
   - {fileID: 0}
-  effectValue: 03000000c8000000
-  effectDuration: 0000000000000000
+  effectValue: fa00000096000000
+  effectDuration: 0100000001000000
   spawnObject:
   - {fileID: 0}
   - {fileID: 0}

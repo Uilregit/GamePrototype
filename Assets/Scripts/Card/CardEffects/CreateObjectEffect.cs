@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CreateObjectEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;
@@ -82,7 +82,7 @@ public class CreateObjectEffect : Effect
         yield return new WaitForSeconds(0);
     }
 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;

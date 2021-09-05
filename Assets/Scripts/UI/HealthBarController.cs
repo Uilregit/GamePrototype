@@ -190,7 +190,8 @@ public class HealthBarController : MonoBehaviour
         {
             StopCoroutine(healthImageHide);
             hidingDamageImage = false;
-            damage += oldDamageInt;
+            if (Mathf.Sign(damage) == Mathf.Sign(oldDamageInt))
+                damage += oldDamageInt;
         }
 
         oldDamageInt = damage;
@@ -273,7 +274,8 @@ public class HealthBarController : MonoBehaviour
             armorDamageImage2.transform.localScale = originalArmorDamageImageScale;
             armorDamageText.transform.localScale = originalArmorDamagetextScale;
 
-            armorDamage += oldArmorDamgeInt;
+            if (Mathf.Sign(armorDamage) == Mathf.Sign(oldArmorDamgeInt))
+                armorDamage += oldArmorDamgeInt;
             armorValue = oldArmorAmount;
 
             StopCoroutine(armorDamageNumberHide);

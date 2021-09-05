@@ -9,6 +9,8 @@ public class RelicDisplayController : MonoBehaviour
     public static RelicDisplayController relicDisplay;
 
     [Header("Icons")]
+    public Image iconBack;
+    public Text iconRelicText;
     public List<Image> relicImages;
 
     [Header("Information Menu")]
@@ -36,6 +38,12 @@ public class RelicDisplayController : MonoBehaviour
         originalRelicScale = relicImages[0].transform.localScale;
     }
 
+    public void SetRelicsToStoryMode(bool state)
+    {
+        iconBack.enabled = !state;
+        iconRelicText.enabled = !state;
+    }
+
     public void RefreshRelicDisplays()
     {
         for (int i = 0; i < relicImages.Count; i++)
@@ -52,6 +60,9 @@ public class RelicDisplayController : MonoBehaviour
 
     public void ShowRelicDescriptionMenu()
     {
+        if (RelicController.relic.relics.Count == 0)
+            return;
+
         back.enabled = true;
         relicMenuText.enabled = true;
         for (int i = 0; i < relicIcons.Count; i++)

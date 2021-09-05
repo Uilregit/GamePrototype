@@ -39,8 +39,10 @@ MonoBehaviour:
   - {fileID: 0}
   cards:
   - {fileID: 0}
-  indicatorType: 2
+  indicatorType: 1
   targetBehaviour: 12
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

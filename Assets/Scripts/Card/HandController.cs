@@ -361,6 +361,9 @@ public class HandController : MonoBehaviour
 
             try
             {
+                string equipmentName = "";
+                if (replacedCard.GetAttachedEquipment() != null)
+                    equipmentName = replacedCard.GetAttachedEquipment().equipmentName;
                 InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                     InformationLogger.infoLogger.gameID,
                                     RoomController.roomController.worldLevel.ToString(),
@@ -381,7 +384,8 @@ public class HandController : MonoBehaviour
                                     "None",
                                     replacedCard.GetCard().energyCost.ToString(),
                                     replacedCard.GetCard().manaCost.ToString(),
-                                    "0");
+                                    "0",
+                                    equipmentName);
             }
             catch { }
         }
@@ -442,6 +446,9 @@ public class HandController : MonoBehaviour
             else
                 try
                 {
+                    string equipmentName = "";
+                    if (card.GetAttachedEquipment() != null)
+                        equipmentName = card.GetAttachedEquipment().equipmentName;
                     InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
                                         InformationLogger.infoLogger.gameID,
                                         RoomController.roomController.worldLevel.ToString(),
@@ -462,7 +469,8 @@ public class HandController : MonoBehaviour
                                         "None",
                                         card.GetCard().energyCost.ToString(),
                                         card.GetCard().manaCost.ToString(),
-                                        "0");
+                                        "0",
+                                        equipmentName);
                 }
                 catch { }
         }

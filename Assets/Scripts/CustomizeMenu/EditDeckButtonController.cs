@@ -8,6 +8,7 @@ public class EditDeckButtonController : MonoBehaviour
     public void OnMouseDown()
     {
         CameraController.camera.transform.position = new Vector3(8, 0, -10);
+        CollectionController.collectionController.ResetDeck();
     }
 
     public void Hide()

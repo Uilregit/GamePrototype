@@ -134,6 +134,9 @@ public class TurnController : MonoBehaviour
         AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
         AchievementSystem.achieve.OnNotify(cardsPlayedThisTurn.Count, StoryRoomSetup.ChallengeType.PlayMoreThanXCardsPerTurn);
 
+        if (cardsPlayedThisTurn.Select(x => x.casterColor).ToList().Distinct().Count() == 3)
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.CastFromAllColorsForXTurns);
+
         List<GameObject> players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
             player.GetComponent<PlayerMoveController>().ReportTurnBasedAchievements();
@@ -176,12 +179,6 @@ public class TurnController : MonoBehaviour
         if (energyCardsPlayed == 0)
             RelicController.relic.OnNotify(this, Relic.NotificationType.OnNoEnergyCardPlyed, null);
 
-        cardsPlayedThisTurn = new List<Card>();
-        cardPlayedEnergyReduction = new List<int>();
-        cardPlayedEnergyCap = new List<int>();
-        cardPlayedManaReduction = new List<int>();
-        cardPlayedManaCap = new List<int>();
-
         yield return StartCoroutine(TriggerTraps());    //Trigger Traps
         GridController.gridController.ResolveOverlap();
         GridController.gridController.DebugGrid();
@@ -212,6 +209,12 @@ public class TurnController : MonoBehaviour
 
         ReportTurnBasedAchievements();              //Report achievements right before checking death to ensure all end of turn processes complete
 
+        cardsPlayedThisTurn = new List<Card>();
+        cardPlayedEnergyReduction = new List<int>();
+        cardPlayedEnergyCap = new List<int>();
+        cardPlayedManaReduction = new List<int>();
+        cardPlayedManaCap = new List<int>();
+
         yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         //Enemy turn
@@ -231,20 +234,31 @@ public class TurnController : MonoBehaviour
         //Order all the enemies by their card execution priority. Solve ties by closest enemies to their target
         List<EnemyController> pathableEnemies = new List<EnemyController>();
         List<EnemyController> unpathableEnemies = new List<EnemyController>();
+        List<EnemyController> firstEnemies = new List<EnemyController>();
+        List<EnemyController> lastEnemies = new List<EnemyController>();
         foreach (EnemyController e in enemies)
-            if (e.GetCanPathToTarget() && e.FindPathSortingOrder(e.GetCurrentTarget()) < 1000)      //If the target is pathable and unblocked
+            if (e.GetCard()[0].GetCard().executionPriority <= -999)                                     //-999 sorting orders ALWAYS goes first
+                firstEnemies.Add(e);
+            else if (e.GetCard()[0].GetCard().executionPriority >= 999)                                 //999 sorting orders ALWAYS goes last
+                lastEnemies.Add(e);
+            else if (e.GetCanPathToTarget() && e.FindPathSortingOrder(e.GetCurrentTarget()) < 1000)      //If the target is pathable and unblocked
                 pathableEnemies.Add(e);
             else
                 unpathableEnemies.Add(e);
         //Unpathable enemies just want to path towards the target regardless of card execution priority
         unpathableEnemies = unpathableEnemies.OrderBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
-        //pathable enemies will sort according to card execution priority, then enemies closest to the target moves first
+        //Pathable enemies will sort according to card execution priority, then enemies closest to the target moves first
         pathableEnemies = pathableEnemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
+        //All first and last enemies will sort according to card execution priority, then enemies closest to the target moves first
+        firstEnemies = firstEnemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
+        lastEnemies = lastEnemies.OrderBy(x => x.GetCard()[0].GetCard().executionPriority).ThenBy(x => x.FindPathSortingOrder(x.GetCurrentTarget())).ToList();
 
         //Pathable enemies goes first, followed by unpathable enemies
         enemies = new List<EnemyController>();
+        enemies.AddRange(firstEnemies);
         enemies.AddRange(pathableEnemies);
         enemies.AddRange(unpathableEnemies);
+        enemies.AddRange(lastEnemies);
 
         //Execute the turn for each enemy
         foreach (EnemyController thisEnemy in enemies)

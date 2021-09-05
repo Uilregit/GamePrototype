@@ -16,7 +16,7 @@ public class ScoreController : MonoBehaviour
     public int heroEXPNeededToLevelAt20;
 
     public Text timerText;
-    public bool timerPaused = true; 
+    private bool timerPaused = true;
 
     public int scorePerOverkill;
     public int scorePerDamage;
@@ -63,6 +63,23 @@ public class ScoreController : MonoBehaviour
             secondsInGame += Time.deltaTime;
             timerText.text = "Time: " + TimeSpan.FromSeconds(secondsInGame).ToString("hh':'mm':'ss");
         }
+    }
+
+    public void EnableTimerText(bool state)
+    {
+        if (state)
+            timerText.text = "Time: " + TimeSpan.FromSeconds(secondsInGame).ToString("hh':'mm':'ss");
+        else
+            timerText.text = "";
+    }
+
+    public void SetTimerPaused(bool state)
+    {
+        timerPaused = state;
+        if (state)
+            timerText.color = Color.yellow;
+        else
+            timerText.color = Color.white;
     }
 
     public void UpdateOverkill(int value)

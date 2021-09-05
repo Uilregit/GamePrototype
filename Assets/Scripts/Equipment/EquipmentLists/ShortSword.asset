@@ -15,7 +15,7 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 9d11d838c5050864dafed72d89319658, type: 3}
   equipmentName: Short Sword
   rarity: 0
-  equipmentDescription: '|Atk +1'
+  equipmentDescription: 
   isWeapon: 1
   numOfCardSlots: 1
   atkChange: 1

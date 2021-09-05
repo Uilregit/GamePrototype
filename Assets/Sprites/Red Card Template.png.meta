@@ -50,6 +50,9 @@ TextureImporter:
   - first:
       213: 8306215843433014373
     second: Red Card Template_1
+  - first:
+      213: -8005502180378210800
+    second: Red Card Template_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -152,10 +155,10 @@ TextureImporter:
       name: Red Card Template_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 344
-        width: 247
-        height: 343
+        x: 6
+        y: 366
+        width: 249
+        height: 333
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,29 +176,8 @@ TextureImporter:
       name: Red Card Template_1
       rect:
         serializedVersion: 2
-        x: 7
-        y: 686
-        width: 249
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 564eb872d4b954370800000000000000
-      internalID: 8306215843433014373
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Red Card Template_2
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 12
+        x: 291
+        y: 370
         width: 242
         height: 326
       alignment: 0
@@ -205,8 +187,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42305410000000000800000000000000
-      internalID: 21300004
+      spriteID: 22305410000000000800000000000000
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red Card Template_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 25
+        width: 252
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01e01f19e2eb6e090800000000000000
+      internalID: -8005502180378210800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red Card Template_3
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 24
+        width: 241
+        height: 332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []

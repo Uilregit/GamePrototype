@@ -45,6 +45,8 @@ public class GameController : MonoBehaviour
     private GameObject simulationPrefab;
     private Queue<HealthController> simulationCharacters;
 
+    private int doomCounter = 5;
+
     private void Start()
     {
         if (GameController.gameController == null)
@@ -109,6 +111,8 @@ public class GameController : MonoBehaviour
         }
 
         StartCoroutine(ShowAbilities());
+
+        ScoreController.score.SetTimerPaused(false);
     }
 
     private IEnumerator ShowAbilities()
@@ -146,10 +150,11 @@ public class GameController : MonoBehaviour
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
             if (InformationController.infoController.GetIfDead(colorTag))
             {
+                GridController.gridController.ReportPlayerDead(player, colorTag);
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
                 ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
-                viableSpawnLocations.Add(spawnedLocation);
+                //viableSpawnLocations.Add(spawnedLocation);
             }
         }
         //Then spawn enemies
@@ -200,6 +205,7 @@ public class GameController : MonoBehaviour
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
             if (InformationController.infoController.GetIfDead(colorTag))
             {
+                GridController.gridController.ReportPlayerDead(player, colorTag);
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
                 ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
@@ -299,6 +305,8 @@ public class GameController : MonoBehaviour
 
     public IEnumerator Victory()
     {
+        ScoreController.score.SetTimerPaused(true);
+
         GridController.gridController.DisableAllPlayers();
         //HandController.handController.ClearHand();
         HandController.handController.EmptyHand();
@@ -311,38 +319,16 @@ public class GameController : MonoBehaviour
             AchievementSystem.achieve.OnNotify((int)ScoreController.score.GetSecondsInGame(), StoryRoomSetup.ChallengeType.TotalTimeUsed);
             if (!TurnController.turnController.GetIsPlayerTurn())
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.DefeatBossOnEnemyTurn);
+            if (PartyController.party.partyColors.Contains(Card.CasterColor.Red) && PartyController.party.partyColors.Contains(Card.CasterColor.Green) && PartyController.party.partyColors.Contains(Card.CasterColor.Blue))
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.UseOriginalTeam);
 
             ScoreController.score.UpdateBossesDefeated();
 
             CameraController.camera.ScreenShake(0.4f, 2f, true);
             yield return new WaitForSeconds(2.5f);
 
-            HealthController player = null;
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))     //At the end of all boss rooms, heal every player to full and resurrect all dead players for free
-            {
-                player = obj.GetComponent<HealthController>();
-                if (player.GetIsSimulation())
-                    continue;
-                player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
-                player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
-                player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
-                foreach (Card.CasterColor deadCharColor in deadChars)
-                {
-                    if (obj.GetComponent<PlayerController>().GetColorTag() == deadCharColor)        //Resurrect all dead players for free
-                    {
-                        player.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
-                        player.GetComponent<HealthController>().charDisplay.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
-                        player.GetComponent<HealthController>().ReportResurrect();
-                        player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
-                        player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
-                        GridController.gridController.RemoveDeathLocation(deadCharColor);
-                        GridController.gridController.ReportPosition(player.gameObject, player.transform.position);
-                    }
-                }
-                player.charDisplay.hitEffectAnim.SetTrigger("Heal");
-                yield return new WaitForSeconds(0.5f);
-            }
-            deadChars = new List<Card.CasterColor>();
+            yield return StartCoroutine(RezAndHealAllPlayers(0.5f));
+
             yield return new WaitForSeconds(1f);
         }
 
@@ -365,9 +351,39 @@ public class GameController : MonoBehaviour
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
         if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1))     //Don't give a card reward if it's the last room for storymode
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Card, null, 0);
-        if (setup.relicReward)
+        if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom) && setup.relicReward)
             RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Relic, null, 0);
         RewardsMenuController.rewardsMenu.ShowMenu();
+    }
+
+    public IEnumerator RezAndHealAllPlayers(float rezDelay)
+    {
+        HealthController player = null;
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))     //At the end of all boss rooms, heal every player to full and resurrect all dead players for free
+        {
+            player = obj.GetComponent<HealthController>();
+            if (player.GetIsSimulation())
+                continue;
+            player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
+            player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
+            player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
+            foreach (Card.CasterColor deadCharColor in deadChars)
+            {
+                if (obj.GetComponent<PlayerController>().GetColorTag() == deadCharColor)        //Resurrect all dead players for free
+                {
+                    player.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
+                    player.GetComponent<HealthController>().charDisplay.transform.position = GridController.gridController.GetDeathLocation(deadCharColor);
+                    player.GetComponent<HealthController>().ReportResurrect();
+                    player.GetComponent<PlayerMoveController>().UpdateOrigin(player.transform.position);
+                    player.GetComponent<PlayerMoveController>().ResetMoveDistance(0);
+                    GridController.gridController.RemoveDeathLocation(deadCharColor);
+                    GridController.gridController.ReportPosition(player.gameObject, player.transform.position);
+                }
+            }
+            player.charDisplay.hitEffectAnim.SetTrigger("Heal");
+            yield return new WaitForSeconds(rezDelay);
+        }
+        deadChars = new List<Card.CasterColor>();
     }
 
     public void ReportOverkillGold(int value)
@@ -389,6 +405,25 @@ public class GameController : MonoBehaviour
                         rewardCards[i].GetCard().GetCard().name,
                         rewardCards[i].GetCard().GetCard().energyCost.ToString(),
                         rewardCards[i].GetCard().GetCard().manaCost.ToString(),
+                        "False",
+                        "False");
+        }
+    }
+
+    public void RecordRewardEquipments(Equipment chosenEquipment)
+    {
+        for (int i = 0; i < rewardCards.Length; i++)
+        {
+            if (chosenEquipment.name != rewardCards[i].GetEquipment().name)
+                InformationLogger.infoLogger.SaveRewardsCardInfo(InformationLogger.infoLogger.patchID,
+                        InformationLogger.infoLogger.gameID,
+                        RoomController.roomController.worldLevel.ToString(),
+                        RoomController.roomController.selectedLevel.ToString(),
+                        RoomController.roomController.roomName,
+                        "Equipment",
+                        rewardCards[i].GetEquipment().name,
+                        "0",
+                        "0",
                         "False",
                         "False");
         }
@@ -432,6 +467,7 @@ public class GameController : MonoBehaviour
 
         if (deadChars.Count >= 3)
         {
+            StartCoroutine(RezAndHealAllPlayers(0f));
             TurnController.turnController.StopAllCoroutines();
             CanvasController.canvasController.uiCanvas.enabled = false;
             HandController.handController.EmptyHand();
@@ -544,6 +580,11 @@ public class GameController : MonoBehaviour
         simulationCharacter.SetCurrentArmor(simulationTarget.GetCurrentArmor(), false);
         simulationCharacter.SetCurrentAttack(simulationTarget.GetCurrentAttack());
         simulationCharacter.SetCurrentVit(simulationTarget.GetCurrentVit());
+        simulationCharacter.SetImmuneToEnergy(simulationTarget.GetImmuneToEnergy());
+        simulationCharacter.SetImmuneToMana(simulationTarget.GetImmuneToMana());
+        simulationCharacter.SetArmorDamageMultiplier(simulationTarget.GetArmorDamageMultiplier());
+        simulationCharacter.SetVitDamageMultiplier(simulationTarget.GetVitDamageMultiplier());
+        simulationCharacter.SetHealingMultiplier(simulationTarget.GetHealingMultiplier());
 
         //simulationCharacter.gameObject.tag = simulationTarget.gameObject.tag;
         simulationCharacter.gameObject.tag = "Simulation";
@@ -561,6 +602,16 @@ public class GameController : MonoBehaviour
         simulationCharacter.transform.position = new Vector2(100, 100);
 
         simulationCharacters.Enqueue(simulationCharacter);
+    }
+
+    public void ChangeDoomCounter(int value)
+    {
+        doomCounter += value;
+    }
+
+    public int GetDoomCounter()
+    {
+        return doomCounter;
     }
 
     /*

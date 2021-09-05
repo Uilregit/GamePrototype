@@ -188,7 +188,7 @@ public class MultiplayerInformationController : NetworkBehaviour
             MultiplayerCoordinator.networkManager.enemyCard.GetComponent<CardController>().SetCard(card, true, true, true);
             EffectFactory factory = new EffectFactory();
             Effect[] effects = factory.GetEffects(card.cardEffectName);
-            StartCoroutine(effects[effectIndex].Process(caster, MultiplayerCoordinator.networkManager.enemyCard.GetComponent<CardEffectsController>(), location, card, effectIndex));
+            StartCoroutine(effects[effectIndex].ProcessCard(caster, MultiplayerCoordinator.networkManager.enemyCard.GetComponent<CardEffectsController>(), location, card, effectIndex));
             //StartCoroutine(MultiplayerCoordinator.networkManager.enemyCard.GetComponent<CardEffectsController>().TriggerEffect(caster, location, false, true));
         }
     }

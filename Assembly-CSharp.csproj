@@ -144,6 +144,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\DrawLastPlayedCardEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CreateANYEnergyCard.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageDivided.cs" />
+    <Compile Include="Assets\Scripts\PatchController.cs" />
     <Compile Include="Assets\Scripts\Card\Objects\ExplosiveTrap.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageEffect.cs" />
     <Compile Include="Assets\Scripts\StoryMode\StoryModeSceneController.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\EnergyGainEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerMouseController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\SetKnockBackDamage.cs" />
+    <Compile Include="Assets\Scripts\Card\CardEffects\DoomEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\VitDamageAll.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\Cards\LootController.cs" />
     <Compile Include="Assets\Scripts\UnlocksController.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
+    <Compile Include="Assets\PatchSceneController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -855,6 +858,9 @@
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CreateDuplicateObjectsEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;
@@ -59,12 +59,12 @@ public class CreateDuplicateObjectsEffect : Effect
         yield return new WaitForSeconds(0);
     }
 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;
 
-            throw new System.NotImplementedException();
+        throw new System.NotImplementedException();
     }
 
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)

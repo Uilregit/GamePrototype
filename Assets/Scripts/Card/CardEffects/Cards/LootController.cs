@@ -15,17 +15,15 @@ public class LootController : MonoBehaviour
 
     private List<Card> rareCards = new List<Card>();
     private List<Card> commonCards = new List<Card>();
-    private List<Card> starterCards = new List<Card>();
+    private List<Card> starterDefenceCards = new List<Card>();
     private List<Card> starterAttackCards = new List<Card>();
+    private List<Card> starterSpecialCards = new List<Card>();
 
     private List<Card> allEnergyCards = new List<Card>();
     private List<Card> allManaCards = new List<Card>();
-    /*
     private List<Card> allRareCards = new List<Card>();
     private List<Card> allCommonCards = new List<Card>();
-    private List<Card> allStarterCards = new List<Card>();
-    private List<Card> allStarterAttackCards = new List<Card>();
-    */
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,6 +49,11 @@ public class LootController : MonoBehaviour
             else
                 allEnergyCards.Add(card);
 
+            if (card.rarity == Card.Rarity.Rare)
+                allRareCards.Add(card);
+            else if (card.rarity == Card.Rarity.Common)
+                allCommonCards.Add(card);
+
             if (!PartyController.party.partyColors.Contains(card.casterColor))
                 continue;
 
@@ -58,10 +61,11 @@ public class LootController : MonoBehaviour
                 rareCards.Add(card);
             else if (card.rarity == Card.Rarity.Common)
                 commonCards.Add(card);
-            else if (card.rarity == Card.Rarity.Starter)
-                starterCards.Add(card);
-
-            if (card.rarity == Card.Rarity.StarterAttack)
+            else if (card.rarity == Card.Rarity.StarterDefence)
+                starterDefenceCards.Add(card);
+            else if (card.rarity == Card.Rarity.StarterSpecial)
+                starterSpecialCards.Add(card);
+            else if (card.rarity == Card.Rarity.StarterAttack)
                 starterAttackCards.Add(card);
         }
     }
@@ -78,6 +82,24 @@ public class LootController : MonoBehaviour
             else
                 return GetCommonCard();
         }
+    }
+
+    public Card GetUnlockedCard()
+    {
+        Card output = null;
+        int roll = Random.Range(0, 100);
+        while (output == null || !PartyController.party.unlockedPlayerColors.Contains(output.casterColor))
+            if (roll < rarePercentage)
+            {
+                int index = Random.Range(0, allRareCards.Count);
+                output = allRareCards[index];
+            }
+            else
+            {
+                int index = Random.Range(0, allCommonCards.Count);
+                output = allCommonCards[index];
+            }
+        return output;
     }
 
     private Card GetRareCard()
@@ -120,6 +142,9 @@ public class LootController : MonoBehaviour
     public Card GetStarterCard(Card.CasterColor color)
     {
         List<Card> viableCards = new List<Card>();
+        List<Card> starterCards = starterAttackCards;
+        starterCards.AddRange(starterDefenceCards);
+        starterCards.AddRange(starterSpecialCards);
         foreach (Card c in starterCards)
             if (c.casterColor == color)
                 viableCards.Add(c);
@@ -131,6 +156,26 @@ public class LootController : MonoBehaviour
     {
         List<Card> viableCards = new List<Card>();
         foreach (Card c in starterAttackCards)
+            if (c.casterColor == color)
+                viableCards.Add(c);
+        int index = Random.Range(0, viableCards.Count);
+        return viableCards[index];
+    }
+
+    public Card GetStarterDefenceCard(Card.CasterColor color)
+    {
+        List<Card> viableCards = new List<Card>();
+        foreach (Card c in starterDefenceCards)
+            if (c.casterColor == color)
+                viableCards.Add(c);
+        int index = Random.Range(0, viableCards.Count);
+        return viableCards[index];
+    }
+
+    public Card GetStarterSpecialCard(Card.CasterColor color)
+    {
+        List<Card> viableCards = new List<Card>();
+        foreach (Card c in starterSpecialCards)
             if (c.casterColor == color)
                 viableCards.Add(c);
         int index = Random.Range(0, viableCards.Count);
@@ -170,8 +215,9 @@ public class LootController : MonoBehaviour
         List<Card> output = new List<Card>();
         List<StoryModeController.RewardsType> colorMaterial = GetColorRewardMaterialTypes(color);
         foreach (Card c in cardLootTable.cardLoot)
-            if ((c.casterColor.ToString() == color && c.materials.Count == 2 && new List<Card.Rarity>() { Card.Rarity.Common, Card.Rarity.Rare, Card.Rarity.Legendary }.Contains(c.rarity)) ||   //If the card is the chosen color, check that it's synergizing with itself and is not a starter card
-                (c.casterColor.ToString() != color && PartyController.party.GetPlayerColorTexts().Contains(c.casterColor.ToString()) && c.materials.Any(x => colorMaterial.Contains(x))))        //If the card is of another color, check that it's synergizing with the chosen color
+            if (((c.casterColor.ToString() == color && c.materials.Count == 2) ||                                                   //If the card is the chosen color, check that it's synergizing with itself
+                (c.casterColor.ToString() != color && PartyController.party.GetPlayerColorTexts().Contains(c.casterColor.ToString()) && c.materials.Any(x => colorMaterial.Contains(x)))) && //If the card is of another color, check that it's synergizing with the chosen color
+                new List<Card.Rarity>() { Card.Rarity.Common, Card.Rarity.Rare, Card.Rarity.Legendary }.Contains(c.rarity))         //Makes sure that starter cards are never given
                 output.Add(c);
         return output;
     }

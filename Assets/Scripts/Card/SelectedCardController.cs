@@ -192,7 +192,7 @@ public class SelectedCardController : MonoBehaviour
             }
         }
 
-        if (thisCard.GetCard().rarity == Card.Rarity.Starter || thisCard.GetCard().rarity == Card.Rarity.StarterAttack || SceneManager.GetActiveScene().name != "StoryModeScene")
+        if (new List<Card.Rarity> { Card.Rarity.StarterAttack, Card.Rarity.StarterDefence, Card.Rarity.StarterSpecial }.Contains(thisCard.GetCard().rarity) || SceneManager.GetActiveScene().name != "StoryModeScene")
             custCardSlots = 8;
         else
         {
@@ -243,6 +243,8 @@ public class SelectedCardController : MonoBehaviour
             if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
                 if (cardDragIndex < custCardSlots)
                     CollectionController.collectionController.SwapCards(cardDragIndex, index);
+                else
+                    CollectionController.collectionController.ShowErrorMessage("Outside runs, only starter cards can be placed into locked card slots");
         }
     }
 

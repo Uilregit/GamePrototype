@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Card : ScriptableObject
 {
-    public enum Rarity { Common, Rare, Legendary, Starter, StarterAttack };
+    public enum Rarity { Common, Rare, Legendary, StarterAttack, StarterDefence, StarterSpecial };
     public bool exhaust = false;
     public bool shuffleToDiscardPile = true;
     public bool canCastOnSelf = true;
@@ -120,7 +120,8 @@ public class Card : ScriptableObject
         CreateObject = 5000,
         CreateDuplicateObject = 5050,
         Sacrifice = 5100,
-        Resurrect = 9999
+        Resurrect = 9999,
+        Doom = 99999
     }
     public EffectType[] cardEffectName = new EffectType[1];
 
@@ -178,7 +179,7 @@ public class Card : ScriptableObject
 
     public enum IndicatorType
     {
-        Attack, Guard, Buff, Debuff, Other
+        Attack, Guard, Buff, Debuff, Other, Heal
     }
     public IndicatorType indicatorType;
     public EnemyController.TargetType targetBehaviour = EnemyController.TargetType.Default;

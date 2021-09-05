@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Fiendfyre
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Fiendfyre
@@ -42,8 +43,10 @@ MonoBehaviour:
   cards:
   - {fileID: 0}
   - {fileID: 0}
-  indicatorType: 1
+  indicatorType: 5
   targetBehaviour: 6
   indicatorMultiplier: 
   executionPriority: 1
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

@@ -131,11 +131,16 @@ public class RewardsMenuController : MonoBehaviour
         numRewardsTaken += 1;
         if (numRewards == numRewardsTaken)
         {
-            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1)        //If it's story mode's last room, go to end
+            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1||
+                InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
             {
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
                 AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
                 StoryModeController.story.ReportRoomCompleted();
+                RelicController.relic.ResetRelics();
+
+                ScoreController.score.EnableTimerText(false);
+                ScoreController.score.SetSecondsInGame(0);
                 SceneManager.LoadScene("StoryModeEndScene");
             }
             else

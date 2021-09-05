@@ -8,19 +8,55 @@ public class FinalizeButtonController : MonoBehaviour
 {
     public Color enableColor;
     public Color disableColor;
+    public ButtonType buttonType;
+    public FinalizeButtonController cardButton;
+    public FinalizeButtonController gearButton;
+
+    public enum ButtonType
+    {
+        Back,
+        Card,
+        Gear
+    }
+
+    private void Awake()
+    {
+        if (buttonType == ButtonType.Card)
+        {
+            cardButton.Enable(false);
+            gearButton.Enable(true);
+        }
+    }
 
     private void OnMouseDown()
     {
-        if (SceneManager.GetActiveScene().name != "OverworldScene")
+        if (SceneManager.GetActiveScene().name != "OverworldScene" && SceneManager.GetActiveScene().name != "ShopScene")
             return;
 
-        CollectionController.collectionController.FinalizeDeck();
-        try
+        switch (buttonType)
         {
-            CollectionController.collectionController.LogInformation();
+            case ButtonType.Back:
+                CollectionController.collectionController.FinalizeDeck();
+                try
+                {
+                    CollectionController.collectionController.LogInformation();
+                }
+                catch { }
+                CameraController.camera.transform.position = new Vector3(0, 0, -10);
+                break;
+            case ButtonType.Card:
+                CollectionController.collectionController.SetIsShowingCards(true);
+                CollectionController.collectionController.SetPage(0);
+                cardButton.Enable(false);
+                gearButton.Enable(true);
+                break;
+            case ButtonType.Gear:
+                CollectionController.collectionController.SetIsShowingCards(false);
+                CollectionController.collectionController.SetPage(0);
+                cardButton.Enable(true);
+                gearButton.Enable(false);
+                break;
         }
-        catch { }
-        CameraController.camera.transform.position = new Vector3(0, 0, -10);
     }
 
     public void Enable(bool state)

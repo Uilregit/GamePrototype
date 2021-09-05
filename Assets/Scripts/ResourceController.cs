@@ -13,19 +13,22 @@ public class ResourceController : MonoBehaviour
     [Header("Shop Settings")]
     public int commonCardPrice;
     public int rareCardPrice;
+    public int commonEquipmentPrice;
+    public int rareEquipmentPrice;
 
     public float commonShopPercentage;
     public float rareShopPercentage;
-
+    public float shopEquipmentPercentage;
     [Header("Gold UI Settings")]
     public Text goldCount;
 
     [Header("Lives UI Settings")]
     public Text livesCount;
     private int lives = 0;
+    private int numberOfRevievesUsed = 0;
     //public Text goldText;
     //public Image goldUIBack;
-    public Canvas canvas;
+    [SerializeField] private Canvas canvas;
 
     private int gold;
     // Start is called before the first frame update
@@ -40,6 +43,16 @@ public class ResourceController : MonoBehaviour
         DontDestroyOnLoad(canvas);
         //DontDestroyOnLoad(goldText);
         //DontDestroyOnLoad(goldUIBack);
+    }
+
+    public void EnableStoryModeRelicsMenu(bool state)
+    {
+        goldCount.transform.parent.gameObject.SetActive(false);
+        livesCount.transform.parent.gameObject.SetActive(false);
+        canvas.enabled = state;
+        canvas.GetComponent<CanvasScaler>().enabled = false;
+        canvas.GetComponent<CanvasScaler>().enabled = true;
+        RelicDisplayController.relicDisplay.SetRelicsToStoryMode(state);
     }
 
     public void ChangeGold(int value)
@@ -70,6 +83,23 @@ public class ResourceController : MonoBehaviour
 
     public int GetLives()
     {
+        if (StoryModeController.story != null)
+            return 1;
         return lives;
+    }
+
+    public void ReportReviveUsed()
+    {
+        numberOfRevievesUsed += 1;
+    }
+
+    public int GetNumberOfRevivesUsed()
+    {
+        return numberOfRevievesUsed;
+    }
+
+    public void ResetReviveUsed()
+    {
+        numberOfRevievesUsed = 0;
     }
 }

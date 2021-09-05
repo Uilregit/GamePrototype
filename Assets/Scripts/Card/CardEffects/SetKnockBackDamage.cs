@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetKnockBackDamage : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         foreach (GameObject targ in target)
             targ.GetComponent<HealthController>().SetKnockBackDamage(card.effectValue[effectIndex]);

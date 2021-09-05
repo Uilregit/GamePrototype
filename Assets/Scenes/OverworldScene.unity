@@ -916,35 +916,35 @@ PrefabInstance:
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: debugDeck.Array.data[2].deck.Array.data[7]
       value: 
-      objectReference: {fileID: 11400000, guid: 90c7ad3c5b33f6a47bb611ad4a24b042, type: 2}
+      objectReference: {fileID: 11400000, guid: 59f60bcd82105984a804369344930bcd, type: 2}
     - target: {fileID: 8231600188673925120, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: isStoryMode
       value: 0
@@ -4031,8 +4031,11 @@ MonoBehaviour:
   goldGainPerCombat: 20
   commonCardPrice: 100
   rareCardPrice: 100
+  commonEquipmentPrice: 0
+  rareEquipmentPrice: 0
   commonShopPercentage: 0
   rareShopPercentage: 0
+  shopEquipmentPercentage: 0
   goldCount: {fileID: 691334967}
   livesCount: {fileID: 440062809}
   canvas: {fileID: 1654874105}
@@ -4155,6 +4158,24 @@ MonoBehaviour:
   - {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   - {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
   teamColor: {r: 0, g: 0, b: 0, a: 0}
+  redAtk: 0
+  redArmor: 0
+  redHealth: 0
+  blueAtk: 0
+  blueArmor: 0
+  blueHealth: 0
+  greenAtk: 0
+  greenArmor: 0
+  greenHealth: 0
+  orangeAtk: 0
+  orangeArmor: 0
+  orangeHealth: 0
+  whiteAtk: 0
+  whiteArmor: 0
+  whiteHealth: 0
+  blackAtk: 0
+  blackArmor: 0
+  blackHealth: 0
 --- !u!4 &1705573832
 Transform:
   m_ObjectHideFlags: 0
@@ -4347,6 +4368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481095b93e2d32c459d2c1a6dab4aebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconBack: {fileID: 0}
+  iconRelicText: {fileID: 0}
   relicImages:
   - {fileID: 2132571475}
   - {fileID: 1378971243}
@@ -4779,7 +4802,6 @@ MonoBehaviour:
   heroEXPNeededToLevelAt1: 0
   heroEXPNeededToLevelAt20: 0
   timerText: {fileID: 0}
-  timerPaused: 1
   scorePerOverkill: 1
   scorePerDamage: 1
   scorePerDamageArmored: 0

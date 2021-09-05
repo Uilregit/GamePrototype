@@ -619,7 +619,17 @@ public class EnemyController : MonoBehaviour
 
         List<Vector2> output = FindFurthestPointInRange(target, pathThroughTags);
 
-        if (output.Count == 1)  //If a path could not be found, find path as if player and enemies don't exist to avoid paths being blocked by enemies causing unpathable enemies to stay still
+        if (output.Count == 1)  //If a path could not be found, find path as if other enemies don't exist to avoid paths being blocked by enemies causing unpathable enemies to stay still
+        {
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "Enemy" }, occupiedSpace, size);
+            if (InformationLogger.infoLogger.debug)
+                foreach (Vector2 loc in path)
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.blue, 0);
+            int bonuseMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+            output = path.GetRange(0, Mathf.Min(moveRange + bonuseMoveRange + 1, path.Count));
+        }
+
+        if (output.Count == 1)  //If a path still could not be found, find path as if player and enemies don't exist to avoid paths being blocked by enemies causing unpathable enemies to stay still
         {
             List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "Player", "Enemy" }, occupiedSpace, size);
             if (InformationLogger.infoLogger.debug)
@@ -686,7 +696,7 @@ public class EnemyController : MonoBehaviour
                 List<Vector2> path = new List<Vector2>();
                 path = PathFindController.pathFinder.PathFind(transform.position, loc, pathThroughTags, occupiedSpace, size);
                 //if (path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
-                if (path.Count > 1 &&  path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
+                if (path.Count > 1 && path.Count - 1 <= moveRange + GetComponent<HealthController>().GetBonusMoveRange())
                     pathableLocations.Add(loc);
             }
             if (pathableLocations.Count > 0)                                                                //If there are pathable locations in this distance range, move on to the next step

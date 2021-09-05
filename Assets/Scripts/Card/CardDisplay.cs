@@ -34,6 +34,10 @@ public class CardDisplay : MonoBehaviour
     public Text energyCost;
     public Text description;
     public Text manaCost;
+    public Text atkChange;
+    public Text armorChange;
+    public Text healthChange;
+    public GameObject[] statIcons;
     public Image equipmentIcon;
     public Image equipmentOutline;
     public Image outline;
@@ -44,31 +48,42 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private Sprite attackGreyOut;
     [SerializeField] private Sprite skillGreyOut;
     [SerializeField] private Sprite weaponGreyOut;
+    [SerializeField] private Sprite accessoryGreyOut;
     [SerializeField] private Sprite redAttackBack;
     [SerializeField] private Sprite redSkillBack;
     [SerializeField] private Sprite redWeaponBack;
+    [SerializeField] private Sprite redAccessoryBack;
     [SerializeField] private Sprite greenAttackBack;
     [SerializeField] private Sprite greenSkillBack;
     [SerializeField] private Sprite greenWeaponBack;
+    [SerializeField] private Sprite greenAccessoryBack;
     [SerializeField] private Sprite blueAttackBack;
     [SerializeField] private Sprite blueSkillBack;
     [SerializeField] private Sprite blueWeaponBack;
+    [SerializeField] private Sprite blueAccessoryBack;
     [SerializeField] private Sprite orangeAttackBack;
     [SerializeField] private Sprite orangeSkillBack;
     [SerializeField] private Sprite orangeWeaponBack;
+    [SerializeField] private Sprite orangeAccessoryBack;
     [SerializeField] private Sprite whiteAttackBack;
     [SerializeField] private Sprite whiteSkillBack;
     [SerializeField] private Sprite whiteWeaponBack;
+    [SerializeField] private Sprite whiteAccessoryBack;
     [SerializeField] private Sprite blackAttackBack;
     [SerializeField] private Sprite blackSkillBack;
     [SerializeField] private Sprite blackWeaponBack;
+    [SerializeField] private Sprite blackAccessoryBack;
     [SerializeField] private Sprite enemyAttackCardBack;
     [SerializeField] private Sprite enemySkillCardBack;
     [SerializeField] private Sprite enemyWeaponBack;
-    [SerializeField] private Sprite passiveCardBack;
+    [SerializeField] private Sprite enemyAccessoryBack;
+    [SerializeField] private Sprite unequippedWeaponBack;
+    [SerializeField] private Sprite unequippedAccessoryBack;
     //[SerializeField] private Sprite greyCardBack;
 
+    private bool isShowingCard = true;
     private CardController thisCard;
+    private Equipment thisEquipment;
 
     // Start is called before the first frame update
     void Awake()
@@ -89,6 +104,11 @@ public class CardDisplay : MonoBehaviour
         energyCost.enabled = false;
         description.enabled = false;
         manaCost.enabled = false;
+        atkChange.enabled = false;
+        armorChange.enabled = false;
+        healthChange.enabled = false;
+        foreach (GameObject obj in statIcons)
+            obj.SetActive(false);
         equipmentIcon.gameObject.SetActive(false);
         equipmentOutline.enabled = false;
         try
@@ -107,6 +127,12 @@ public class CardDisplay : MonoBehaviour
         cardWhiteOut.enabled = false;
         cardName.GetComponent<TextMeshProUGUI>().enabled = true;
         manaCost.enabled = true;
+        atkChange.enabled = true;
+        armorChange.enabled = true;
+        healthChange.enabled = true;
+        if (!isShowingCard)
+            foreach (GameObject obj in statIcons)
+                obj.SetActive(true);
         equipmentIcon.gameObject.SetActive(true);
         equipmentOutline.enabled = true;
         description.enabled = true;
@@ -116,30 +142,58 @@ public class CardDisplay : MonoBehaviour
 
     public void SetEquipment(Equipment equip, Card.CasterColor equipedChar)
     {
-        switch (equipedChar)
-        {
-            case (Card.CasterColor.Blue):
-                cardBack.sprite = blueWeaponBack;
-                break;
-            case (Card.CasterColor.Red):
-                cardBack.sprite = redWeaponBack;
-                break;
-            case (Card.CasterColor.Green):
-                cardBack.sprite = greenWeaponBack;
-                break;
-            case (Card.CasterColor.Orange):
-                cardBack.sprite = orangeWeaponBack;
-                break;
-            case (Card.CasterColor.White):
-                cardBack.sprite = whiteWeaponBack;
-                break;
-            case (Card.CasterColor.Black):
-                cardBack.sprite = blackWeaponBack;
-                break;
-            default:
-                cardBack.sprite = passiveCardBack;
-                break;
-        }
+        isShowingCard = false;
+        thisEquipment = equip;
+        if (equip.isWeapon)
+            switch (equipedChar)
+            {
+                case (Card.CasterColor.Blue):
+                    cardBack.sprite = blueWeaponBack;
+                    break;
+                case (Card.CasterColor.Red):
+                    cardBack.sprite = redWeaponBack;
+                    break;
+                case (Card.CasterColor.Green):
+                    cardBack.sprite = greenWeaponBack;
+                    break;
+                case (Card.CasterColor.Orange):
+                    cardBack.sprite = orangeWeaponBack;
+                    break;
+                case (Card.CasterColor.White):
+                    cardBack.sprite = whiteWeaponBack;
+                    break;
+                case (Card.CasterColor.Black):
+                    cardBack.sprite = blackWeaponBack;
+                    break;
+                default:
+                    cardBack.sprite = unequippedWeaponBack;
+                    break;
+            }
+        else
+            switch (equipedChar)
+            {
+                case (Card.CasterColor.Blue):
+                    cardBack.sprite = blueAccessoryBack;
+                    break;
+                case (Card.CasterColor.Red):
+                    cardBack.sprite = redAccessoryBack;
+                    break;
+                case (Card.CasterColor.Green):
+                    cardBack.sprite = greenAccessoryBack;
+                    break;
+                case (Card.CasterColor.Orange):
+                    cardBack.sprite = orangeAccessoryBack;
+                    break;
+                case (Card.CasterColor.White):
+                    cardBack.sprite = whiteAccessoryBack;
+                    break;
+                case (Card.CasterColor.Black):
+                    cardBack.sprite = blackAccessoryBack;
+                    break;
+                default:
+                    cardBack.sprite = unequippedAccessoryBack;
+                    break;
+            }
         cardGreyOut.sprite = weaponGreyOut;
         cardWhiteOut.sprite = weaponGreyOut;
 
@@ -147,8 +201,23 @@ public class CardDisplay : MonoBehaviour
         outline.sprite = cardBack.sprite;
         cardName.text = equip.equipmentName;
 
-        energyCost.text = "";
-        manaCost.text = "";
+        if (equip.isWeapon)
+        {
+            energyCost.text = equip.numOfCardSlots.ToString();
+            manaCost.text = "";
+        }
+        else
+        {
+            energyCost.text = "";
+            manaCost.text = equip.numOfCardSlots.ToString();
+        }
+
+        atkChange.text = equip.atkChange.ToString();
+        armorChange.text = equip.armorChange.ToString();
+        healthChange.text = equip.healthChange.ToString();
+
+        foreach (GameObject obj in statIcons)
+            obj.SetActive(art.enabled);
 
         equipmentIcon.color = Color.clear;
         equipmentIcon.gameObject.SetActive(false);
@@ -161,12 +230,48 @@ public class CardDisplay : MonoBehaviour
         else
             desc += "<b>Accessory</b>\n";
 
+        /*
         if (equip.numOfCardSlots == 1)
             desc += equip.numOfCardSlots.ToString() + " card slot. ";
         else
             desc += equip.numOfCardSlots.ToString() + " card slots. ";
-        desc += equip.equipmentDescription.Replace("|", "\n");
+        */
+        desc += equip.equipmentDescription.Replace("|", "");
         description.text = desc;
+        if (description.text.Contains("<s>"))
+        {
+            string descriptionText = description.text;
+            int startingCheckIndex = 0;
+            while (descriptionText.IndexOf("<s>") != -1)
+            {
+                int s = descriptionText.IndexOf("<s>");
+                int e = descriptionText.IndexOf("</s>");
+                int a = descriptionText.IndexOf("ATK");
+
+                string attackText = descriptionText.Substring(s, e - s + 4);
+
+                int percentage = 100;
+                int.TryParse(descriptionText.Substring(s + 3, descriptionText.IndexOf("%", startingCheckIndex) - s - 3), out percentage);
+
+                string finalText = "";
+
+                finalText = attackText.Replace("<s>", "").Replace("</s>", "");
+
+                if (finalText.IndexOf("ATK as") != -1 && equipedChar != Card.CasterColor.Enemy)
+                    try
+                    {
+                        finalText = finalText.Replace("ATK as", "ATK (" + (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(equipedChar) * percentage / 100.0f)).ToString() + ") as");
+                    }
+                    catch { }
+
+                descriptionText = descriptionText.Replace(attackText, finalText);
+
+                startingCheckIndex = descriptionText.IndexOf("%", startingCheckIndex) + 1;
+            }
+
+            description.text = descriptionText;
+        }
+        description.text = description.text.Replace("<s>", "").Replace("</s>", "");
         description.color = Color.white;
 
         //Tooltips
@@ -192,6 +297,7 @@ public class CardDisplay : MonoBehaviour
 
     public void SetCard(CardController card, bool dynamicNumbers = true)
     {
+        isShowingCard = true;
         thisCard = card;
         Card.CasterColor casterColor = card.GetCard().casterColor;
         if (card.GetCard().manaCost == 0)
@@ -220,7 +326,7 @@ public class CardDisplay : MonoBehaviour
                     cardBack.sprite = enemyAttackCardBack;
                     break;
                 case (Card.CasterColor.Passive):
-                    cardBack.sprite = passiveCardBack;
+                    cardBack.sprite = unequippedWeaponBack;
                     break;
                 default:
                     cardBack.sprite = enemyAttackCardBack;
@@ -255,7 +361,7 @@ public class CardDisplay : MonoBehaviour
                     cardBack.sprite = enemySkillCardBack;
                     break;
                 case (Card.CasterColor.Passive):
-                    cardBack.sprite = passiveCardBack;
+                    cardBack.sprite = unequippedWeaponBack;
                     break;
                 default:
                     cardBack.sprite = enemySkillCardBack;
@@ -267,6 +373,8 @@ public class CardDisplay : MonoBehaviour
         art.sprite = card.GetCard().art;
         outline.sprite = cardBack.sprite;
         cardName.text = card.GetCard().name;
+        foreach (GameObject obj in statIcons)
+            obj.SetActive(false);
 
         //Resolve energy and mana cost
         int netManaCost = card.GetCard().manaCost;
@@ -290,6 +398,10 @@ public class CardDisplay : MonoBehaviour
             manaCost.text = "";
             energyCost.text = netEnergyCost.ToString();
         }
+
+        atkChange.text = "";
+        armorChange.text = "";
+        healthChange.text = "";
 
         if (netManaCost < card.GetCard().manaCost)
             manaCost.color = Color.green;
@@ -332,7 +444,7 @@ public class CardDisplay : MonoBehaviour
         description.text = card.GetCard().description.Replace('|', '\n');
         description.color = Color.black;
 
-        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
+        if (!card.isResurrectCard && card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
         {
             equipmentIcon.color = Color.white;
             equipmentIcon.gameObject.SetActive(true);
@@ -363,7 +475,7 @@ public class CardDisplay : MonoBehaviour
         }
 
         //Formatting Codes for dynamic card text
-        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm", "l" };
+        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm", "l", "d" };
 
         if (dynamicNumbers)
         {
@@ -413,7 +525,8 @@ public class CardDisplay : MonoBehaviour
                                                TurnController.turnController.GetManaSpent(),
                                                TurnController.turnController.GetEnergySpent(),
                                                dm,
-                                               ResourceController.resource.GetLives()};
+                                               ResourceController.resource.GetNumberOfRevivesUsed(),
+                                               GameController.gameController.GetDoomCounter()};
             }
             catch
             {
@@ -492,14 +605,45 @@ public class CardDisplay : MonoBehaviour
             Destroy(img.gameObject);
         thisToolTips = new List<Image>();
 
-        if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
+        if (!card.isResurrectCard && card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
         {
             Image tt = Instantiate(toolTip);
             tt.transform.SetParent(transform);
             tt.transform.localPosition = new Vector3(1.25f, 0.8f, 0);
             tt.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
             int length = card.GetAttachedEquipment().equipmentDescription.IndexOf("|");
-            tt.transform.GetChild(0).GetComponent<Text>().text = "<b>" + card.GetAttachedEquipment().equipmentName + "</b>\n" + card.GetAttachedEquipment().equipmentDescription.Substring(0, length);
+            string descriptionText = "<b>" + card.GetAttachedEquipment().equipmentName + "</b>\n" + card.GetAttachedEquipment().equipmentDescription.Substring(0, length);
+            while (descriptionText.IndexOf("<s>") != -1)
+            {
+                int start = descriptionText.IndexOf("<s>");
+                int end = descriptionText.IndexOf("</s>");
+
+                string attackText = descriptionText.Substring(start, end - start + 4);
+
+                int percentage = 100;
+                int.TryParse(descriptionText.Substring(start + 3, descriptionText.IndexOf("%") - start - 3), out percentage);
+
+                string finalText = "";
+                int bonusAttack = 0;
+
+                try
+                {
+                    finalText = (Mathf.CeilToInt(transform.parent.GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetAttack() * percentage / 100.0f)).ToString();
+                    bonusAttack = transform.parent.GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusAttack();
+                }
+                catch
+                {
+                    finalText = (Mathf.CeilToInt(InformationController.infoController.GetStartingAttack(thisCard.GetCard().casterColor) * percentage / 100.0f)).ToString();
+                }
+
+                if (bonusAttack > 0)
+                    finalText = "*" + finalText + "*";
+                else if (bonusAttack < 0)
+                    finalText = "-" + finalText + "-";
+
+                descriptionText = descriptionText.Replace(attackText, finalText);
+            }
+            tt.transform.GetChild(0).GetComponent<Text>().text = descriptionText;
             if (card.GetAttachedEquipment().isWeapon)
                 tt.GetComponent<Outline>().effectColor = Color.red;
             else
@@ -537,6 +681,11 @@ public class CardDisplay : MonoBehaviour
     public CardController GetCard()
     {
         return thisCard;
+    }
+
+    public Equipment GetEquipment()
+    {
+        return thisEquipment;
     }
 
     public void SetHighLight(bool value)

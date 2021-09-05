@@ -133,17 +133,22 @@ public class StoryModeEndSceenController : MonoBehaviour
     public virtual void BuyAndExit()
     {
         ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
+        ResourceController.resource.ResetReviveUsed();
         AchievementSystem.achieve.ResetAchievements();
         StoryModeController.story.ReportItemsBought(boughtItems);
         StoryModeController.story.ReportCardsBought(boughtCards);
         StoryModeController.story.ReportEquipmentBought(boughtEquipiments);
         StoryModeController.story.AddChallengeItemsBought(StoryModeController.story.GetCurrentRoomID(), challengeItemsBought);
+        StoryModeController.story.ReportColorsCompleted(StoryModeController.story.GetCurrentRoomID(), PartyController.party.GetPlayerCasterColors());
         Destroy(RoomController.roomController.gameObject);
         RoomController.roomController = null;
         InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
+        InformationController.infoController.ResetCombatInfo();     //Reset all team stats tracking
+        InformationController.infoController.firstRoom = true;
         StoryModeController.story.ResetDecks();
         StoryModeController.story.SetMenuBar(true);
         StoryModeController.story.SetCombatInfoMenu(false);
+        ResourceController.resource.EnableStoryModeRelicsMenu(false);
         SceneManager.LoadScene("StoryModeScene");
     }
 }

@@ -50,6 +50,9 @@ TextureImporter:
   - first:
       213: -5544977617141113944
     second: Blue Card Template_1
+  - first:
+      213: -4856801165792125460
+    second: Blue Card Template_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -153,7 +156,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 686
+        y: 366
         width: 256
         height: 334
       alignment: 0
@@ -163,20 +166,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bd6f89df1b5cdc50800000000000000
-      internalID: 6691323338717883827
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue Card Template_1
+      name: Blue Card Template_2
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 361
+        width: 248
+        height: 337
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42305410000000000800000000000000
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Card Template_7
       rect:
         serializedVersion: 2
         x: 12
-        y: 344
-        width: 250
-        height: 342
+        y: 25
+        width: 254
+        height: 341
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8abdfca5c384c03b0800000000000000
-      internalID: -5544977617141113944
+      spriteID: e2305410000000000800000000000000
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue Card Template_3
+      name: Blue Card Template_8
       rect:
         serializedVersion: 2
-        x: 9
-        y: 0
-        width: 246
-        height: 339
+        x: 296
+        y: 19
+        width: 250
+        height: 340
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62305410000000000800000000000000
-      internalID: 21300006
+      spriteID: 03305410000000000800000000000000
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []

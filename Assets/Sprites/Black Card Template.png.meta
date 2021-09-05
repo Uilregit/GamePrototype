@@ -216,11 +216,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 346
-        width: 246
+        y: 26
+        width: 255
         height: 341
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,19 +236,40 @@ TextureImporter:
       name: Black Card Template_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 686
-        width: 255
+        x: 5
+        y: 366
+        width: 250
         height: 334
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbee756b72f5624f0800000000000000
-      internalID: -853890455172550981
+      spriteID: 9c6435c7435460d00800000000000000
+      internalID: 938513664079775433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Black Card Template_2
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 364
+        width: 245
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa84f8c8a8dafda40800000000000000
+      internalID: 5395221689188436138
       vertices: []
       indices: 
       edges: []
@@ -257,19 +278,19 @@ TextureImporter:
       name: Black Card Template_3
       rect:
         serializedVersion: 2
-        x: 11
-        y: 4
-        width: 244
-        height: 334
+        x: 297
+        y: 20
+        width: 252
+        height: 336
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f915784291ff30110800000000000000
-      internalID: 1226104007027020191
+      spriteID: e8326065703412a40800000000000000
+      internalID: 5341624331825193870
       vertices: []
       indices: 
       edges: []

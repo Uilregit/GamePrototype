@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E ColdEmbrace
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Cold Embrace
@@ -40,8 +41,10 @@ MonoBehaviour:
   - {fileID: 0}
   cards:
   - {fileID: 0}
-  indicatorType: 1
+  indicatorType: 5
   targetBehaviour: 6
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

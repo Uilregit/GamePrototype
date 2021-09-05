@@ -179,7 +179,6 @@ public class CardDragController : DragController
             if (GridController.gridController.GetRoundedVector(mousePosition, 1) != lastGoodPosition)
             {
                 lastGoodPosition = GridController.gridController.GetRoundedVector(mousePosition, 1);
-
                 if (TileCreator.tileCreator.GetSelectableLocations().Contains(GridController.gridController.GetRoundedVector(mousePosition, 1)))
                     CameraController.camera.ScreenShake(0.03f, 0.05f);
 
@@ -419,7 +418,7 @@ public class CardDragController : DragController
                 HealthController hlthController = obj.GetComponent<HealthController>();
                 HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
 
-                yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true));
+                yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true, simulation.gameObject));
 
                 hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
             }
@@ -553,6 +552,13 @@ public class CardDragController : DragController
         {
             foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
                 player.GetComponent<Collider2D>().enabled = true;
+        }
+
+        //If the card just cast is a resurrect card, revert it before shuffling it into the discard pile
+        if (cardController.isResurrectCard)
+        {
+            cardController.isResurrectCard = false;
+            cardController.ResetCard();
         }
 
         Destroy(this.gameObject);

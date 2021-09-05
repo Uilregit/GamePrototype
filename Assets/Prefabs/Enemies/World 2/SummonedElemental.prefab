@@ -67,6 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castRange: 2
   maxVit: 10
+  vitVariate: 1
   startingArmor: 10
   attack: 10
   moveRange: 3
@@ -110,6 +111,7 @@ MonoBehaviour:
   blockIntent: {fileID: 21300002, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   buffIntent: {fileID: 21300004, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   debuffIntent: {fileID: 21300006, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  healIntent: {fileID: 21300016, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   otherIntent: {fileID: 21300008, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   displayedCards: []
 --- !u!114 &620759651950581824
@@ -124,7 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityNames: []
+  abilitySprites: []
   targetTypes: 
+  conditionTypes: 
   triggerTypes: 
   abilityTypes: 
   abilityValue: 
@@ -140,8 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb69054952ac409c6a98fab04356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   size: 1
+  isSimulation: 0
   charDisplay: {fileID: 8464520558053597639}
+  originalSimulationTarget: 
 --- !u!61 &7581886792987532364
 BoxCollider2D:
   m_ObjectHideFlags: 0

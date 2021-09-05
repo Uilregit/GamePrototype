@@ -76,7 +76,7 @@ public class PlayerMoveController : MonoBehaviour
                             break;
                     }
                     TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, roundedPosition), moveRangeIndicatorColor);
+                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - path.Count + 1, moveRangeIndicatorColor);
                 }
             }
         }

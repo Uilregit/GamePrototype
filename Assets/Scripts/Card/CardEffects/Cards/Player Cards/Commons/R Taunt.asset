@@ -15,7 +15,7 @@ MonoBehaviour:
   exhaust: 0
   shuffleToDiscardPile: 1
   canCastOnSelf: 0
-  rarity: 3
+  rarity: 5
   name: Taunt
   energyCost: 0
   manaCost: 2

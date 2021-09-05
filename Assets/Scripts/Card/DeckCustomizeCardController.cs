@@ -12,7 +12,11 @@ public class DeckCustomizeCardController : MonoBehaviour
     private CardController card;
     private Equipment equipment;
     private float clickedTime;
+    public Image countBackdrop;
     public Text count;
+    public Image[] countIcons;
+    public Color selectedColor;
+    public Color unselectedColor;
     public Image greyOut;
     public Outline highlight;
     public Collider2D col;
@@ -21,7 +25,7 @@ public class DeckCustomizeCardController : MonoBehaviour
     private Canvas originalCanvas;
     private Vector3 localScale;
     private Vector3 originalLocation;
-    private CardDisplay cardDisplay;
+    public CardDisplay cardDisplay;
     //private int originalSorterOrder;
 
     private bool isShowingCard = true;
@@ -38,7 +42,6 @@ public class DeckCustomizeCardController : MonoBehaviour
         localScale = transform.localScale;
         originalLocation = transform.position;
         originalCanvas = transform.parent.GetComponent<Canvas>();
-        cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
         //originalSorterOrder = transform.GetChild(0).GetComponent<CardDisplay>().Show();.cardName.GetComponent<MeshRenderer>().sortingOrder;
     }
 
@@ -52,11 +55,19 @@ public class DeckCustomizeCardController : MonoBehaviour
         highlight.enabled = false;
         if (isShowingCard)
             CollectionController.collectionController.RemoveCardFromNew(card);
+        else
+            CollectionController.collectionController.RemoveEquipmentFromNew(equipment);
+
+        //Set the stats texts on the collection controller
+        if (equipment != null)
+            CollectionController.collectionController.ResetStatsTexts(equipment);
+        foreach (Image img in countIcons)
+            img.enabled = false;
 
         //Find the card slots that the current card can go to
         if (equipment != null)  //If this card is an equipment card, it can go anywhere
             custCardSlots = 8;
-        else if (card.GetCard().rarity == Card.Rarity.Starter || card.GetCard().rarity == Card.Rarity.StarterAttack || SceneManager.GetActiveScene().name != "StoryModeScene")
+        else if (new List<Card.Rarity> { Card.Rarity.StarterAttack, Card.Rarity.StarterDefence, Card.Rarity.StarterSpecial }.Contains(card.GetCard().rarity) || SceneManager.GetActiveScene().name != "StoryModeScene")
             custCardSlots = 8;
         else
         {
@@ -134,6 +145,11 @@ public class DeckCustomizeCardController : MonoBehaviour
     {
         transform.SetParent(originalCanvas.transform);
 
+        if (!isShowingCard)
+            CollectionController.collectionController.ResetStatsTexts();
+        foreach (Image img in countIcons)
+            img.enabled = true;
+
         //Weapons
         if (!isShowingCard && !cardEnlarged)
         {
@@ -157,7 +173,7 @@ public class DeckCustomizeCardController : MonoBehaviour
             if (CollectionController.collectionController.GetIfViableSelectSlot(card.GetCard(), index))  //Only allow cards to be selected in their respective slots
                 SelectCard(index);
             else
-                CollectionController.collectionController.ShowErrorMessage();
+                CollectionController.collectionController.ShowErrorMessage("Outside runs, only starter cards can be placed into locked card slots");
         }
 
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
@@ -180,6 +196,8 @@ public class DeckCustomizeCardController : MonoBehaviour
         selectedCard.SetCard(newCard);
         selectedCard.Hide();
         equipment = null;
+        foreach (Image icon in countIcons)
+            icon.enabled = true;
     }
 
     public void SetEquipment(Equipment equip, Card.CasterColor value)
@@ -189,16 +207,45 @@ public class DeckCustomizeCardController : MonoBehaviour
         selectedCard.SetEquipment(equip);
         selectedCard.Hide();
         card = null;
+        if (value != Card.CasterColor.Passive)
+            foreach (Image icon in countIcons)
+                icon.enabled = false;
     }
 
     public void SetCount(int newCount)
     {
         count.text = "x" + newCount.ToString();
+        int totalCount = 0;
+        if (isShowingCard)
+            totalCount = CollectionController.collectionController.GetCountOfCardInCollection(card.GetCard());
+        else
+            totalCount = CollectionController.collectionController.GetCountOfEquipmentInCollection(equipment);
+
+        for (int i = 0; i < countIcons.Length; i++)
+        {
+            if (i < totalCount)
+                countIcons[i].GetComponent<Outline>().effectColor = selectedColor;
+            else
+                countIcons[i].GetComponent<Outline>().effectColor = unselectedColor;
+            if (i >= totalCount - newCount)
+                countIcons[i].color = unselectedColor;
+            else
+                countIcons[i].color = selectedColor;
+            /*
+            if (i < newCount)
+                countIcons[i].color = selectedColor;
+            else
+                countIcons[i].color = unselectedColor;
+            */
+        }
     }
 
     public void Hide()
     {
+        for (int i = 0; i < countIcons.Length; i++)
+            countIcons[i].enabled = false;
         count.enabled = false;
+        countBackdrop.enabled = false;
         if ((object)cardDisplay == null)
             cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
         cardDisplay.Hide();
@@ -208,7 +255,10 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void Show()
     {
+        for (int i = 0; i < countIcons.Length; i++)
+            countIcons[i].enabled = true;
         count.enabled = true;
+        countBackdrop.enabled = true;
         if ((object)cardDisplay == null)
             cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
         cardDisplay.Show();
@@ -225,6 +275,8 @@ public class DeckCustomizeCardController : MonoBehaviour
         cardDisplay.Show();
         cardDisplay.lineRenderer.enabled = false;
         selectedCard.Hide();
+        for (int i = 0; i < countIcons.Length; i++)
+            countIcons[i].enabled = false;
         count.enabled = true;
 
         cardEnlarged = true;
@@ -238,6 +290,8 @@ public class DeckCustomizeCardController : MonoBehaviour
 
         cardDisplay.Hide();
         selectedCard.Show();
+        for (int i = 0; i < countIcons.Length; i++)
+            countIcons[i].enabled = false;
         count.enabled = false;
 
         cardEnlarged = false;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PiercingDamageEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int totalDamageValue = 0;
         int duration = 1;
@@ -44,7 +44,7 @@ public class PiercingDamageEffect : Effect
         }
         card.SetDamageDone(totalDamageValue);
     }
-
+    /*
     public override int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int output = 0;
@@ -73,7 +73,7 @@ public class PiercingDamageEffect : Effect
     {
         return 0;
     }
-
+    */
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);

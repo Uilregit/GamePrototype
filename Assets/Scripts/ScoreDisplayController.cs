@@ -56,7 +56,7 @@ public class ScoreDisplayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ScoreController.score.timerPaused = true;
+        ScoreController.score.SetTimerPaused(true);
         scoreTotal = 0;
 
         scores = new List<int>()

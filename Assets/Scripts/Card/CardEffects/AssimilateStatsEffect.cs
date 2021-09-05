@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AssimilateStatsEffect : Effect
 { 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;
@@ -17,13 +17,13 @@ public class AssimilateStatsEffect : Effect
             {
                 BuffFactory buff = new BuffFactory();
                 buff.SetBuff(GameController.gameController.attackBuff);
-                buff.OnApply(targetHealthController, caster.GetComponent<HealthController>(), casterHealthController.GetAttack() - targetHealthController.GetAttack(), card.effectDuration[effectIndex], false, null, null);
+                buff.OnApply(targetHealthController, caster.GetComponent<HealthController>(), casterHealthController.GetAttack() - targetHealthController.GetAttack(), card.effectDuration[effectIndex], card.name, false, null, null);
             }
             if (casterHealthController.GetArmor() != targetHealthController.GetArmor())
             {
                 BuffFactory buff = new BuffFactory();
                 buff.SetBuff(GameController.gameController.armorBuff);
-                buff.OnApply(targetHealthController, caster.GetComponent<HealthController>(), casterHealthController.GetArmor() - targetHealthController.GetArmor(), card.effectDuration[effectIndex], false, null, null);
+                buff.OnApply(targetHealthController, caster.GetComponent<HealthController>(), casterHealthController.GetArmor() - targetHealthController.GetArmor(), card.effectDuration[effectIndex], card.name, false, null, null);
             }
         }
         yield return new WaitForSeconds(0);

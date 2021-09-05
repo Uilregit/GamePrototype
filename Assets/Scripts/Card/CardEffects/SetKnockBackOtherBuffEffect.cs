@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetKnockBackOtherBuffEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         card.buff[effectIndex].SetDrawnCards(card.cards);
         int value = card.effectValue[effectIndex];

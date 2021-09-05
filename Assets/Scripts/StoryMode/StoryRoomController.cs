@@ -8,10 +8,12 @@ public class StoryRoomController : MonoBehaviour
     public int roomId;
     public int unlockRequirementID;
     public bool unlockRequire3Stars = false;
+    public bool unockRequiresAllStars = false;
     public bool startHidden = false;
     public StoryRoomSetup setup;
     public StoryRoomType roomType;
     public Image connector;
+    public Image[] colorsCompleted;
 
     public enum StoryRoomType
     {
@@ -23,5 +25,28 @@ public class StoryRoomController : MonoBehaviour
         NakedArena = 60,
         NewWorld = 100,
         PreviousWorld = 101
+    }
+
+    public void SetColorsCompleted(List<Card.CasterColor> colors)
+    {
+        List<Card.CasterColor> colorOrder = new List<Card.CasterColor> { Card.CasterColor.White, Card.CasterColor.Red, Card.CasterColor.Orange, Card.CasterColor.Green, Card.CasterColor.Blue, Card.CasterColor.Black };
+        int counter = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            if (colors.Contains(colorOrder[i]))
+            {
+                colorsCompleted[i].enabled = true;
+                colorsCompleted[i].color = PartyController.party.GetPlayerColor(colorOrder[i]) * new Color(1, 1, 1, 0.5f);
+                colorsCompleted[i].transform.localScale = new Vector2(1, 1f / colors.Count);
+                if (colors.Count % 2 == 1)
+                    colorsCompleted[i].transform.localPosition = new Vector2(0, (float)counter * 0.6f / colors.Count - 0.6f / colors.Count * ((colors.Count - 1) / 2));
+                else
+                    colorsCompleted[i].transform.localPosition = new Vector2(0, (float)counter * 0.6f / colors.Count - 0.3f + 0.6f / colors.Count / 2);
+
+                counter++;
+            }
+            else
+                colorsCompleted[i].enabled = false;
+        }
     }
 }

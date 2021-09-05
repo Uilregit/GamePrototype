@@ -134,13 +134,13 @@ public class RoomController : MonoBehaviour
 
                     obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
                 }
-            }
 
-            bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
-            if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
-                bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
-            else
-                bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1]);
+                bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
+                if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
+                    bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
+                else
+                    bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1]);
+            }
 
             Refresh();
         }
@@ -258,8 +258,10 @@ public class RoomController : MonoBehaviour
                         room.SetColor(viableColor);
                 }
             }
-            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers())
-                || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2))             //Enable the boss room when viable
+
+            if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers() - 1)
+                || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2)
+                || (InformationLogger.infoLogger.isStoryMode && StoryModeController.story.GetCurrentRoomSetup().arenaSetup != null && selectedLevel == GetNumberofWorldLayers() - 1))             //Enable the boss room when viable
                 bossRoom.SetSelectable(true);
             else
                 bossRoom.SetSelectable(false);

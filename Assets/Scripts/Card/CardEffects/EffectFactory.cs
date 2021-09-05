@@ -215,6 +215,9 @@ public class EffectFactory
                 case Card.EffectType.Resurrect:
                     effects[i] = new ResurrectEffect();
                     break;
+                case Card.EffectType.Doom:
+                    effects[i] = new DoomEffect();
+                    break;
                 default:
                     effects[i] = null;
                     break;

@@ -89,7 +89,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   size: 1
+  isSimulation: 0
   charDisplay: {fileID: 2574207753936809111}
+  originalSimulationTarget: 
 --- !u!61 &7056359581185118565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,6 +146,7 @@ MonoBehaviour:
   blockIntent: {fileID: 21300002, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   buffIntent: {fileID: 21300004, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   debuffIntent: {fileID: 21300006, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  healIntent: {fileID: 21300016, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   otherIntent: {fileID: 21300008, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   displayedCards: []
 --- !u!120 &8339057748829611373

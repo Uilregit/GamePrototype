@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetBonusVit : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int maxValue = 0;
         foreach (GameObject targ in target)

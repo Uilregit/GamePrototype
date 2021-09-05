@@ -15,11 +15,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 6e75d86d363bae64a95938199a29ca4f, type: 3}
   equipmentName: Vanguard
   rarity: 0
-  equipmentDescription: '|Atk -1, Armor +3'
+  equipmentDescription: 
   isWeapon: 1
   numOfCardSlots: 1
-  atkChange: 0
-  armorChange: 0
+  atkChange: -1
+  armorChange: 3
   healthChange: 0
   moveRangeChange: 0
   castRangeChange: 0

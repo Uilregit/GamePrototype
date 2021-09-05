@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ShopCardController : MonoBehaviour
 {
     private CardController card;
+    private Equipment equipment;
     private int price;
     private float clickedTime;
     private Collider2D col;
@@ -38,6 +39,12 @@ public class ShopCardController : MonoBehaviour
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(newCard, true);
     }
 
+    public void SetEquipment(Equipment e)
+    {
+        equipment = e;
+        transform.GetChild(0).GetComponent<CardDisplay>().SetEquipment(e, Card.CasterColor.Passive);
+    }
+
     public void SetPrice(int value)
     {
         price = value;
@@ -52,7 +59,10 @@ public class ShopCardController : MonoBehaviour
 
     public void OnMouseUp()
     {
-        transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
+        if (equipment == null)
+            transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
+        else
+            transform.GetChild(0).GetComponent<CardDisplay>().SetEquipment(equipment, Card.CasterColor.Passive);
         StopAllCoroutines();
         transform.SetParent(originalCanvas.transform);
         transform.localScale = localScale;
@@ -66,10 +76,18 @@ public class ShopCardController : MonoBehaviour
     public void SelectCard()
     {
         picked = true;
-        CollectionController.collectionController.AddRewardsCard(card, false);
         ResourceController.resource.ChangeGold(-price);
-        ShopController.shop.ReportBoughtCard(card);
         ScoreController.score.UpdateGoldUsed(price);
+        if (equipment != null)
+        {
+            CollectionController.collectionController.AddRewardsEquipment(equipment, false);
+            ShopController.shop.ReportBoughtEquipment(equipment);
+        }
+        else
+        {
+            CollectionController.collectionController.AddRewardsCard(card, false);
+            ShopController.shop.ReportBoughtCard(card);
+        }
 
         col.enabled = false;
         cardDisplay.Hide();
@@ -106,7 +124,10 @@ public class ShopCardController : MonoBehaviour
         //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight, 0);
         transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
-        transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, false);
+        if (equipment == null)
+            transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, false);
+        else
+            transform.GetChild(0).GetComponent<CardDisplay>().SetEquipment(equipment, Card.CasterColor.Passive);
         cardDisplay.SetToolTip(true, -1, 1, false);
     }
 }

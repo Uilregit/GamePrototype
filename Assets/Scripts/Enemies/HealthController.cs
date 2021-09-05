@@ -60,8 +60,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private bool stunned = false;
     private bool silenced = false;
     private bool disarmed = false;
+    private bool inflicted = false;
+    private bool immuneToEnergy = false;
+    private bool immuneToMana = false;
     private HealthController tauntedTarget = null;
 
+    private bool isBeingKnockedBack = false;
     private Buff knockbackSelfBuff = null;
     private int knockBackSelfValue = 0;
     private int knockBackSelfDuration = 0;
@@ -121,6 +125,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         buffController = GetComponent<BuffController>();
 
         abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnSpawn);
+
+        if (!isSimulation)
+            AchievementSystem.achieve.OnNotify(0, StoryRoomSetup.ChallengeType.TakeLessThanXTotalDamage);
     }
 
     public BuffController GetBuffController()
@@ -212,6 +219,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetBonusVit()
     {
         return bonusVit;
+    }
+
+    public void SetInstantKill()
+    {
+        currentVit = 0;
+        bonusVit = 0;
     }
 
     public int GetCurrentAttack()
@@ -375,6 +388,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public void OnDeath()
     {
+        //Calls all buff related achievements as they wouldn't have been reverted yet
+        foreach (BuffFactory buff in buffController.GetBuffs())
+            buff.ReportAchievements();
+
         try
         {
             if (MultiplayerGameController.gameController != null)
@@ -475,6 +492,36 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return disarmed;
     }
 
+    public void SetInflicted(bool state)
+    {
+        inflicted = state;
+    }
+
+    public bool GetInflicted()
+    {
+        return inflicted;
+    }
+
+    public void SetImmuneToEnergy(bool state)
+    {
+        immuneToEnergy = state;
+    }
+
+    public bool GetImmuneToEnergy()
+    {
+        return immuneToEnergy;
+    }
+
+    public void SetImmuneToMana(bool state)
+    {
+        immuneToMana = state;
+    }
+
+    public bool GetImmuneToMana()
+    {
+        return immuneToMana;
+    }
+
     private void ResetVitText(int value)
     {
         charDisplay.vitText.text = value.ToString();
@@ -524,7 +571,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             {
                 multiplier *= i;
                 if (i == 0 && !isSimulation)
-                    charDisplay.healthBar.SetStatusText("Immune", Color.yellow);
+                    SetStatusText("Immune", Color.yellow);
             }
 
             int damage = Mathf.Max((value * multiplier - GetArmor()), 1);
@@ -555,6 +602,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             OnDamage(attacker, 0, oldHealth, traceList);
         }
+    }
+
+    public void SetStatusText(string text, Color color)
+    {
+        charDisplay.healthBar.SetStatusText(text, color);
     }
 
     public int GetSimulatedVitDamage(int value)
@@ -637,7 +689,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             wasBroken = false;
         }
 
-        if (damage > 0)
+        if (damage > 0 && !isSimulation)
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnShieldDamageRecieved, this, damage, traceList));
     }
 
@@ -683,7 +735,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             currentVit = Mathf.Min(maxVit, currentVit + bonusVit - damage);
             bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
 
-            if (damage < 0)
+            if (damage < 0 && isSimulation)
                 StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, traceList));
         }
 
@@ -737,6 +789,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         if (size > 1)
             yield break; //Show resist on UI
+        isBeingKnockedBack = true;
 
         Vector2 originalLocation = transform.position;
         for (int i = 1; i <= Mathf.Abs(steps); i++)
@@ -753,7 +806,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 yield break;
             }
 
-            List<GameObject> objectInWay = GridController.gridController.GetObjectAtLocation(aboutToBePositions);
+            List<GameObject> objectInWay = GridController.gridController.GetObjectAtLocation(aboutToBePositions, new string[] { "Blockade" });      //Only stop if hitting a blockade
 
             if (GridController.gridController.CheckIfOutOfBounds(aboutToBePositions) ||
                 GridController.gridController.GetObjectAtLocation(aboutToBePositions, new string[] { "Blockade" }).Count > 0)        //If going to be knocked out of bounds or into a barrier, prevent movement
@@ -772,6 +825,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 foreach (Vector2 loc in occupiedSpaces)
                     GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
             Vector2 previousPosition = transform.position;
+
+            //Also knock back all overlapped objects if they're not already being overlapped
+            if (!isSimulation)
+                foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(previousPosition, new string[] { "Player", "Enemy" }))
+                    if (!obj.GetComponent<HealthController>().GetIsBeingKnockedBack())
+                        obj.GetComponent<HealthController>().StartCoroutine(obj.GetComponent<HealthController>().ForcedMovement(castFromLocation, steps - 1, canOverlap, buffTrace));
+
             transform.position = knockedToCenter;
             if (!isSimulation)
                 foreach (Vector2 loc in aboutToBePositions)
@@ -800,7 +860,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 GetComponent<MultiplayerPlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
             }
 
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
+            if (!isSimulation)
+                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
 
             if (objectInWay.Count != 0)    //If knocked to position is occupied then stop (still allow overlap, but stop after)
             {
@@ -809,6 +870,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 yield break;
             }
         }
+        isBeingKnockedBack = false;
         GridController.gridController.ResetOverlapOrder(transform.position);
     }
 
@@ -832,7 +894,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                     buff.casterColor = Card.CasterColor.Enemy.ToString();
                 }
                 buff.casterName = this.name;
-                buff.OnApply(targetH, this, knockBackOtherValue, knockBackOtherDuration, false, null, null);
+                buff.OnApply(targetH, this, knockBackOtherValue, knockBackOtherDuration, knockbackOtherCardName, false, null, null);
                 if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage && !isSimulation)
                     GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
             }
@@ -853,7 +915,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 buff.casterColor = Card.CasterColor.Enemy.ToString();
             }
             buff.casterName = this.name;
-            buff.OnApply(this, this, knockBackSelfValue, knockBackSelfDuration, false, null, null);
+            buff.OnApply(this, this, knockBackSelfValue, knockBackSelfDuration, knockbackSelfCardName, false, null, null);
             if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage && !isSimulation)
                 GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
 
@@ -885,6 +947,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetKnockBackDamage()
     {
         return knockBackDamage;
+    }
+
+    public bool GetIsBeingKnockedBack()
+    {
+        return isBeingKnockedBack;
     }
 
     public SimHealthController GetSimulatedSelf()
@@ -939,6 +1006,36 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         healingMulitpliers.Remove(i);
     }
 
+    public List<int> GetVitDamageMultiplier()
+    {
+        return vitDamageMultipliers;
+    }
+
+    public void SetVitDamageMultiplier(List<int> value)
+    {
+        vitDamageMultipliers = value;
+    }
+
+    public List<int> GetArmorDamageMultiplier()
+    {
+        return armorDamageMultipliers;
+    }
+
+    public void SetArmorDamageMultiplier(List<int> value)
+    {
+        armorDamageMultipliers = value;
+    }
+
+    public List<int> GetHealingMultiplier()
+    {
+        return healingMulitpliers;
+    }
+
+    public void SetHealingMultiplier(List<int> value)
+    {
+        healingMulitpliers = value;
+    }
+
     public void ResolveBroken()
     {
         currentBrokenTurns++;
@@ -986,7 +1083,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         ShowHealthBar(damage, oldHealth, false, null, isEndOfTurn);
 
-        if (damage > 0)
+        if (damage > 0 && !isSimulation)
         {
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
 
@@ -997,11 +1094,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                     AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BonusHealthCompleteBlock);
             }
         }
-        else if (damage == 0)
+        else if (damage == 0 && !isSimulation)
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageBlocked, this, damage, buffTrace));
         else
         {
-            if (!attacker.isPlayer && isPlayer)
+            if (!attacker.isPlayer && isPlayer && !isSimulation)
                 AchievementSystem.achieve.OnNotify(damage, StoryRoomSetup.ChallengeType.HealedByEnemy);
         }
 
@@ -1021,7 +1118,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (oldHealth > 0 && oldHealth - damage <= 0 && !isSimulation)   //Trigger on health below 0 actions
         {
             abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnBelow0Health);
-            if (!attacker.isPlayer && !isPlayer && attacker != this)
+            if (!attacker.isPlayer && !isPlayer && attacker != this && !isSimulation)
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
         }
 
@@ -1067,8 +1164,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (simHlthController == null)
             simHlthController = GameController.gameController.GetSimulationCharacter(this);
 
-        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));
-        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, simHlthController, 0, null, 0));         //Triggering both start and end of turn for player and enemy damage over time
+        if (!isSimulation)
+        {
+            yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));
+            yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, simHlthController, 0, null, 0));         //Triggering both start and end of turn for player and enemy damage over time
+        }
         int endOfTurnDamage = GetVit() - simHlthController.GetVit();
 
         /*
@@ -1165,7 +1265,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             for (int i = 0; i < GetComponent<EnemyController>().desiredTarget.Length; i++)
             {
-                if (GetComponent<EnemyController>().desiredTarget[i].GetComponent<HealthController>().isPlayer && health.isPlayer && GetComponent<EnemyController>().desiredTarget[i] != health.gameObject)
+                if (GetComponent<EnemyController>().desiredTarget[i].GetComponent<HealthController>().isPlayer && health.isPlayer && GetComponent<EnemyController>().desiredTarget[i] != health.gameObject && !isSimulation)
                     AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.TauntAwayFromAlly);
                 GetComponent<EnemyController>().desiredTarget[i] = tauntedTarget.gameObject;
             }

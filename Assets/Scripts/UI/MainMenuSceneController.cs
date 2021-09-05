@@ -35,7 +35,7 @@ public class MainMenuSceneController : MonoBehaviour
     public void StartGame()     //Used by relic menu button
     {
         RelicController.relic.AddRelic(thisRelic);
-        ScoreController.score.timerPaused = false;
+        ScoreController.score.SetTimerPaused(false);
 
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
 
@@ -79,6 +79,11 @@ public class MainMenuSceneController : MonoBehaviour
     public void MultiplayerButton()
     {
         SceneManager.LoadScene("MultiplayerSetupScene", LoadSceneMode.Single);
+    }
+
+    public void PatchNotesButton()
+    {
+        SceneManager.LoadScene("PatchNotesScene", LoadSceneMode.Single);
     }
 
     public void StoryMode()

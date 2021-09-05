@@ -50,6 +50,9 @@ TextureImporter:
   - first:
       213: 2847600479496484298
     second: Purple Card Template_1
+  - first:
+      213: 5977755899785396253
+    second: Purple Card Template_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -173,34 +176,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Purple Card Template_0
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 686
-        width: 247
-        height: 334
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f5599f946ed059b0800000000000000
-      internalID: -5093326654800308750
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Purple Card Template_1
       rect:
         serializedVersion: 2
-        x: 12
-        y: 345
-        width: 252
-        height: 341
+        x: 291
+        y: 363
+        width: 244
+        height: 334
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,12 +197,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Purple Card Template_2
+      name: Purple Card Template_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 4
-        width: 247
+        x: 10
+        y: 366
+        width: 246
         height: 334
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -229,8 +211,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a0821c444a2fea30800000000000000
-      internalID: 4246659446456090789
+      spriteID: 5d7e0d4d438fed7f0800000000000000
+      internalID: -585757995719137323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple Card Template_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 25
+        width: 252
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1044b0c15145f250800000000000000
+      internalID: 5977755899785396253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple Card Template_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 24
+        width: 252
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aae12012c8349090800000000000000
+      internalID: -8028729829549282649
       vertices: []
       indices: 
       edges: []

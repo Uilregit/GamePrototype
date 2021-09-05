@@ -15,7 +15,7 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 4002b5e7b65f93c4b885f6d211979b01, type: 3}
   equipmentName: Magic Cloak
   rarity: 0
-  equipmentDescription: '|Armor -1, Replace +1'
+  equipmentDescription: '|Replace +1'
   isWeapon: 1
   numOfCardSlots: 3
   atkChange: 0

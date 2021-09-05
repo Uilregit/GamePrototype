@@ -21,6 +21,9 @@ public class BuffFactory : MonoBehaviour
     private bool reverted = false;
     private HealthController casterHealthController;
 
+    private int totalVitDamage = 0;
+    private int totalArmorDamage = 0;
+
     public void SetBuff(Buff newBuff)
     {
         buff = newBuff;
@@ -33,8 +36,9 @@ public class BuffFactory : MonoBehaviour
         return buff.onTriggerEffects;
     }
 
-    public virtual void OnApply(HealthController healthController, HealthController newCasterHealthController, int value, int newDuration, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
+    public virtual void OnApply(HealthController healthController, HealthController newCasterHealthController, int value, int newDuration, string originalCardName, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
     {
+        cardName = originalCardName;
         casterHealthController = newCasterHealthController;
         healthController.GetBuffController().AddBuff(this);
         cardValue = value;
@@ -149,7 +153,7 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.ApplyBuff:
                 BuffFactory thisBuff = new BuffFactory();
                 thisBuff.SetBuff(buff.appliedBuff);
-                thisBuff.OnApply(healthController, casterHealthController, cardValue, buff.appliedBuffDuration, false, traceList, relicTrace);
+                thisBuff.OnApply(healthController, casterHealthController, cardValue, buff.appliedBuffDuration, cardName, false, traceList, relicTrace);
                 break;
             default:
                 Debug.Log(buff.onApplyEffects);
@@ -159,6 +163,9 @@ public class BuffFactory : MonoBehaviour
 
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
             enemy.GetComponent<EnemyInformationController>().RefreshIntent();
+
+        totalArmorDamage += armorDamage;
+        totalVitDamage += vitDamage;
 
         try
         {
@@ -182,7 +189,8 @@ public class BuffFactory : MonoBehaviour
                                         armorDamage.ToString(),
                                         0.ToString(),
                                         0.ToString(),
-                                        triggerCount.ToString());
+                                        triggerCount.ToString(),
+                                        "");
         }
         catch { }
     }
@@ -209,6 +217,7 @@ public class BuffFactory : MonoBehaviour
         int armorDamage = 0;
 
         for (int iteration = 0; iteration < buff.onTriggerAppliedCount; iteration++)
+        {
             switch (buff.onTriggerEffects)
             {
                 case Buff.BuffEffectType.None:
@@ -217,10 +226,14 @@ public class BuffFactory : MonoBehaviour
                     vitDamage += target.GetSimulatedVitDamage(GetValue(value));
                     armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
                     target.TakeVitDamage(GetValue(value), selfHealthController, traceList, null, (GetTriggerType() == Buff.TriggerType.AtEndOfTurn || GetTriggerType() == Buff.TriggerType.AtStartOfTurn));
+                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+                    yield return selfHealthController.GetComponent<BuffController>().StartCoroutine(selfHealthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, selfHealthController.GetComponent<HealthController>(), vitDamage, traceList));
                     break;
                 case Buff.BuffEffectType.PiercingDamage:
                     vitDamage += target.GetSimulatedPiercingDamage(GetValue(value));
                     target.TakePiercingDamage(GetValue(value), selfHealthController, traceList);
+                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+                    yield return selfHealthController.GetComponent<BuffController>().StartCoroutine(selfHealthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, selfHealthController.GetComponent<HealthController>(), vitDamage, traceList));
                     break;
                 case Buff.BuffEffectType.ArmorDamage:
                     armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
@@ -238,7 +251,7 @@ public class BuffFactory : MonoBehaviour
                 case Buff.BuffEffectType.ApplyBuff:
                     BuffFactory thisBuff = new BuffFactory();
                     thisBuff.SetBuff(buff.appliedBuff);
-                    thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, false, traceList, relicTrace);
+                    thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, cardName, false, traceList, relicTrace);
                     break;
                 case Buff.BuffEffectType.DrawCard:
                     List<Card> spawnCards = new List<Card>();
@@ -283,6 +296,11 @@ public class BuffFactory : MonoBehaviour
                     Debug.Log("Trigger Not implimented");
                     break;
             }
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+        }
+
+        totalArmorDamage += armorDamage;
+        totalVitDamage += vitDamage;
 
         try
         {
@@ -306,7 +324,8 @@ public class BuffFactory : MonoBehaviour
                                                 armorDamage.ToString(),
                                                 0.ToString(),
                                                 0.ToString(),
-                                                triggerCount.ToString());
+                                                triggerCount.ToString(),
+                                                "");
         }
         catch { }
         triggerCount += 1;
@@ -427,6 +446,11 @@ public class BuffFactory : MonoBehaviour
                 break;
         }
 
+        totalArmorDamage += armorDamage;
+        totalVitDamage += vitDamage;
+
+        ReportAchievements();
+
         try
         {
             InformationLogger.infoLogger.SaveCombatInfo(InformationLogger.infoLogger.patchID,
@@ -449,11 +473,22 @@ public class BuffFactory : MonoBehaviour
                                 armorDamage.ToString(),
                                 0.ToString(),
                                 0.ToString(),
-                                triggerCount.ToString());
+                                triggerCount.ToString(),
+                                "");
         }
         catch { }
 
         reverted = true;
+    }
+
+    //Called on revert and on victory in case buffs that haven't reverted yet needs to report their achievement values
+    public void ReportAchievements()
+    {
+        if (casterColor != "Enemy")
+        {
+            AchievementSystem.achieve.OnNotify(totalArmorDamage, StoryRoomSetup.ChallengeType.AromrRemovedWithSingleCard);
+            AchievementSystem.achieve.OnNotify(totalVitDamage, StoryRoomSetup.ChallengeType.DamageDealtWithSingeCard);
+        }
     }
 
     private int GetValue(int triggerValue)

@@ -45,6 +45,10 @@ public class PlayerController : MonoBehaviour
             bonusReplace += e.replaceChange;
         }
 
+        attack = PartyController.party.GetStartingAttack(colorTag);
+        startingArmor = PartyController.party.GetStartingArmor(colorTag);
+        maxVit = PartyController.party.GetStartingHealth(colorTag);
+
         healthController.SetCastRange(castRange + bonusCastRange);
         healthController.SetMaxVit(maxVit + bonusVit);
         healthController.SetStartingArmor(startingArmor + bonusArmor);
@@ -53,7 +57,12 @@ public class PlayerController : MonoBehaviour
         HandController.handController.SetBonusReplace(bonusReplace, true);
         HandController.handController.SetBonusHandSize(bonusHandSize, true);
         if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
-            healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
+            try
+            {
+                if (InformationController.infoController.GetMaxVit(colorTag) != -1)     //If InformationController has not be reset to default values, use those stats instead
+                    healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
+            }
+            catch { }
 
         moveController = GetComponent<PlayerMoveController>();
         moveController.SetPlayerController(this);

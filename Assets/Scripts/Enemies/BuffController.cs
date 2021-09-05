@@ -100,6 +100,10 @@ public class BuffController : MonoBehaviour
 
     public void Cleanse(HealthController healthController, bool sendInfo = true)
     {
+        //If the target is inflicted, they can't be cleansed
+        if (healthController.GetInflicted())
+            return;
+
         foreach (BuffFactory buff in buffList)
             buff.Revert(healthController);
 
@@ -152,7 +156,7 @@ public class BuffController : MonoBehaviour
             buff.SetBuff(MultiplayerGameController.gameController.dummyBuff);
             Color color = new Color(buffs.colorsR[i], buffs.colorsG[i], buffs.colorsB[i]);
             buff.SetDummyInfo(color, buffs.descriptions[i]);
-            buff.OnApply(GetComponent<HealthController>(), GetComponent<HealthController>(), buffs.value[i], buffs.duration[i], false, null, null);
+            buff.OnApply(GetComponent<HealthController>(), GetComponent<HealthController>(), buffs.value[i], buffs.duration[i], "Dummy", false, null, null);
         }
     }
 

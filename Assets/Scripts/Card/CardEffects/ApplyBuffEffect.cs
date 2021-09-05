@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ApplyBuffEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         foreach (GameObject targ in target)
         {
@@ -19,9 +19,9 @@ public class ApplyBuffEffect : Effect
             if (card.GetTempObject() != null)
                 originator = card.GetTempObject().GetComponent<HealthController>();
             if (card.effectValue[effectIndex] != 0)
-                buff.OnApply(targetH, originator, card.effectValue[effectIndex], card.effectDuration[effectIndex], false, null, null);
+                buff.OnApply(targetH, originator, card.effectValue[effectIndex], card.effectDuration[effectIndex], card.name, false, null, null);
             else
-                buff.OnApply(targetH, originator, card.GetTempEffectValue(), card.effectDuration[effectIndex], false, null, null);
+                buff.OnApply(targetH, originator, card.GetTempEffectValue(), card.effectDuration[effectIndex], card.name, false, null, null);
 
             if (waitTimeMultiplier != 0)
                 if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
@@ -42,7 +42,7 @@ public class ApplyBuffEffect : Effect
             HealthController targetH = targ.GetComponent<HealthController>();
             BuffFactory buffFactory = new BuffFactory();
             buffFactory.SetBuff(buff);
-            buffFactory.OnApply(targetH, null, effectValue, effectDuration, true, null, traceList);
+            buffFactory.OnApply(targetH, null, effectValue, effectDuration, "Relic", true, null, traceList);
         }
     }
 }

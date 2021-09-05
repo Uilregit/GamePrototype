@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetManaSpentTurn : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         card.SetTempEffectValue(TurnController.turnController.GetManaSpent());
         yield return new WaitForSeconds(0);

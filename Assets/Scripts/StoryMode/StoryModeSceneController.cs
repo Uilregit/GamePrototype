@@ -84,12 +84,37 @@ public class StoryModeSceneController : MonoBehaviour
             if ((r.roomType == StoryRoomController.StoryRoomType.Combat || r.roomType == StoryRoomController.StoryRoomType.Boss) && !r.startHidden && r.roomId > maxID)
                 maxID = r.roomId;
 
+            //Shows completed colors for all rooms
+            if (StoryModeController.story.GetColorsCompleted() != null && StoryModeController.story.GetColorsCompleted().ContainsKey(r.roomId))
+                r.SetColorsCompleted(StoryModeController.story.GetColorsCompleted()[r.roomId]);
+
             //Handles hidden rooms first
             if (r.startHidden)
             {
                 if (StoryModeController.story.GetCompletedRooms().Contains(r.unlockRequirementID))
                 {
-                    if (r.unlockRequire3Stars)
+                    if (r.unockRequiresAllStars)
+                    {
+                        bool allStarsUnlocked = true;
+                        foreach (StoryRoomController s in rooms[StoryModeController.story.GetWorldNumber()])
+                            if (s.roomType != StoryRoomController.StoryRoomType.Shop && s.roomType != StoryRoomController.StoryRoomType.SecretShop &&
+                                s.roomType != StoryRoomController.StoryRoomType.NewWorld && s.roomType != StoryRoomController.StoryRoomType.PreviousWorld &&
+                                !s.unockRequiresAllStars)
+                            {
+                                if (GetNumChallengeSatisfied(s) < 3)
+                                {
+                                    allStarsUnlocked = false;
+                                    break;
+                                }
+                            }
+                        if (!allStarsUnlocked)
+                        {
+                            r.gameObject.SetActive(false);
+                            r.connector.gameObject.SetActive(false);
+                            continue;
+                        }
+                    }
+                    else if (r.unlockRequire3Stars)
                     {
                         StoryRoomController previousRoom = null;
                         foreach (StoryRoomController s in rooms[StoryModeController.story.GetWorldNumber()])
@@ -146,6 +171,8 @@ public class StoryModeSceneController : MonoBehaviour
                 {
                     if (r.roomType == StoryRoomController.StoryRoomType.Boss)
                         r.transform.GetChild(0).GetComponent<Image>().sprite = bossCrownIcon;
+                    else if (r.roomType == StoryRoomController.StoryRoomType.Arena || r.roomType == StoryRoomController.StoryRoomType.NakedArena)
+                        r.transform.GetChild(0).GetComponent<Image>().sprite = arenaIcon;
                     else
                         r.transform.GetChild(0).GetComponent<Image>().sprite = crownIcon;
 
@@ -162,7 +189,21 @@ public class StoryModeSceneController : MonoBehaviour
                         r.GetComponent<Image>().color = arenaColor;
                     else
                         r.GetComponent<Image>().color = completedColor;
-                    r.transform.GetChild(0).GetComponent<Image>().color = iconAltColor;
+
+                    if (r.roomType == StoryRoomController.StoryRoomType.Arena || r.roomType == StoryRoomController.StoryRoomType.NakedArena)
+                        r.transform.GetChild(0).GetComponent<Image>().color = iconColor;
+                    else if (StoryModeController.story.GetCompletedRooms().Contains(r.roomId) && r.roomType == StoryRoomController.StoryRoomType.Boss)
+                        if (r.startHidden)
+                            r.transform.GetChild(0).GetComponent<Image>().color = iconColor;
+                        else
+                            r.transform.GetChild(0).GetComponent<Image>().color = iconAltColor;
+                    else
+                    {
+                        if (r.startHidden)
+                            r.transform.GetChild(0).GetComponent<Image>().color = iconColor;
+                        else
+                            r.transform.GetChild(0).GetComponent<Image>().color = iconAltColor;
+                    }
                 }
                 r.GetComponent<Collider2D>().enabled = true;
             }
@@ -290,7 +331,7 @@ public class StoryModeSceneController : MonoBehaviour
         {
             if (StoryModeController.story.GetChallengeValues().ContainsKey(selectedRoom.roomId) && ChallengeSatisfied(selectedRoom, i))
             {
-                if (StoryModeController.story.GetChallengeItemsBought()[roomId][i])
+                if (StoryModeController.story.GetChallengeItemsBought().ContainsKey(roomId) && StoryModeController.story.GetChallengeItemsBought()[roomId][i])
                     challengeStars[i].transform.GetComponent<Image>().color = shopColor;
                 else
                     challengeStars[i].transform.GetComponent<Image>().color = goldColor;
@@ -352,7 +393,7 @@ public class StoryModeSceneController : MonoBehaviour
                 case StoryRoomSetup.ChallengeComparisonType.EqualTo:
                     return StoryModeController.story.GetChallengeValues()[setup.roomId][index] == setup.setup.challengeValues[index];
                 case StoryRoomSetup.ChallengeComparisonType.LessThan:
-                    return StoryModeController.story.GetChallengeValues()[setup.roomId][index] <= setup.setup.challengeValues[index];
+                    return StoryModeController.story.GetChallengeValues()[setup.roomId][index] <= setup.setup.challengeValues[index] && StoryModeController.story.GetChallengeValues()[setup.roomId][index] != -1;
             }
         return false;
     }
@@ -399,10 +440,10 @@ public class StoryModeSceneController : MonoBehaviour
             SetCollection();
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
-        else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Arena)
+        else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Arena || selectedRoom.roomType == StoryRoomController.StoryRoomType.NakedArena)
         {
             SetCollection();
-            ScoreController.score.timerPaused = false;
+            ResourceController.resource.EnableStoryModeRelicsMenu(true);
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
 
@@ -410,6 +451,9 @@ public class StoryModeSceneController : MonoBehaviour
         StoryModeController.story.SetCombatInfoMenu(true);
         StoryModeController.story.RefreshAchievementValues();
         StoryModeController.story.RefreshGoldValue();
+
+        CollectionController.collectionController.SetIsShowingCards(true);
+        CollectionController.collectionController.RefreshDecks();
     }
 
     private void SetCollection()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GravityEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         Vector2 center = card.GetCenter();
         foreach (GameObject obj in target)

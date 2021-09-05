@@ -280,8 +280,7 @@ public class CardController : MonoBehaviour
             (ResourceController.resource.GetLives() == 0 && isResurrectCard))                                 //or if the team is out of lives, change it back too
         {
             isResurrectCard = false;
-            cardDisplay.SetCard(this);
-            cardEffects.SetCard(this);
+            ResetCard();
         }
 
         if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost() && casterIsAlive)
@@ -295,8 +294,7 @@ public class CardController : MonoBehaviour
             resurrectCard = LootController.loot.ResurrectCard.GetCopy();
             resurrectCard.casterColor = card.casterColor;
             resurrectCard.castShape = Card.CastShape.Circle;
-            cardDisplay.SetCard(this);
-            cardEffects.SetCard(this);
+            ResetCard();
             if (energy >= GetNetEnergyCost() && mana >= GetNetManaCost())
             {
                 cardDisplay.SetHighLight(true);
@@ -335,6 +333,12 @@ public class CardController : MonoBehaviour
         }
         else
             cardDisplay.SetConditionHighlight(false);
+    }
+
+    public void ResetCard()
+    {
+        cardDisplay.SetCard(this);
+        cardEffects.SetCard(this);
     }
 
     public void ResetConditionHighlight()
@@ -377,7 +381,7 @@ public class CardController : MonoBehaviour
         {
             players[0].GetComponent<PlayerController>().GetColorTag();
         }
-        catch 
+        catch
         {
             caster = players[0];
             foreach (GameObject player in players)
@@ -514,6 +518,10 @@ public class CardController : MonoBehaviour
         cost -= TurnController.turnController.GetManaReduction();
         if (attachedEquipment != null)
             cost += attachedEquipment.manaChange;
+
+        if (isResurrectCard)                                                    //Resurrect cards cost 1 more for each resurrect that has previously been used
+            cost = resurrectCard.manaCost + ResourceController.resource.GetNumberOfRevivesUsed();
+
         return Mathf.Max(cost, 0); //Cost can never be below 0
     }
 

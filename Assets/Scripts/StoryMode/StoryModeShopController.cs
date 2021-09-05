@@ -95,7 +95,7 @@ public class StoryModeShopController : MonoBehaviour
             }
             else
             {
-                card.GetComponent<CardController>().SetCard(LootController.loot.GetCard(), false);
+                card.GetComponent<CardController>().SetCard(LootController.loot.GetUnlockedCard(), false);
                 card.SetCard(card.GetComponent<CardController>());
                 totalMaterials = card.GetComponent<CardController>().GetCard().GetCraftingMaterials();
             }

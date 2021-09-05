@@ -64,6 +64,15 @@ public class RelicController : Observer
             RelicDisplayController.relicDisplay.RefreshRelicDisplays();
     }
 
+    public void ResetRelics()
+    {
+        foreach (Relic r in relics)
+            validChoices.Add(lootTable.relics.IndexOf(r));
+        relics = new List<Relic>();
+        if (RelicDisplayController.relicDisplay != null)
+            RelicDisplayController.relicDisplay.RefreshRelicDisplays();
+    }
+
     public int[] GetValidChoices()
     {
         return validChoices.ToArray();

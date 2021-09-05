@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PiercingDamageDivided : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int originalTempValue = card.GetTempEffectValue();
         int originalEffectValue = card.effectValue[effectIndex];
@@ -17,13 +17,14 @@ public class PiercingDamageDivided : Effect
         card.effectValue[effectIndex] = 0; //To allow for ATK based damage calculation, not temp value based
 
         foreach (GameObject t in target)
-            GameController.gameController.StartCoroutine(new EffectFactory().GetEffect(Card.EffectType.PiercingDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex));
+            GameController.gameController.StartCoroutine(new EffectFactory().GetEffect(Card.EffectType.PiercingDamage).ProcessCard(caster, effectController, new List<GameObject> { t }, card, effectIndex));
 
         card.SetTempEffectValue(originalTempValue);
         card.effectValue[effectIndex] = originalEffectValue;
         yield return new WaitForSeconds(0);
     }
 
+    /*
     public override int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int originalTempValue = card.GetTempEffectValue();
@@ -59,7 +60,7 @@ public class PiercingDamageDivided : Effect
         card.SetTempEffectValue(originalTempValue);
         return output;
     }
-
+    */
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
     {
         throw new System.NotImplementedException();

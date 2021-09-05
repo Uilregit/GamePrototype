@@ -19,10 +19,12 @@ public class ShrineController : MonoBehaviour
 
     private StatsBoostType statsBoost;
     private Relic relic;
+    private Equipment equipment;
 
     // Start is called before the first frame update
     void Start()
     {
+        /*
         int index = Random.Range(0, 3);
         if (index == 0)
             statsBoost = StatsBoostType.AttackBoost;
@@ -30,6 +32,13 @@ public class ShrineController : MonoBehaviour
             statsBoost = StatsBoostType.ArmorBoost;
         else if (index == 2)
             statsBoost = StatsBoostType.HealthBoost;
+        */
+        equipment = LootController.loot.GetRandomEquipment();
+        for (int i = 0; i < 100; i++)
+            if (CollectionController.collectionController.GetCountOfEquipmentInCollection(equipment) != 0)
+                equipment = LootController.loot.GetRandomEquipment();
+            else
+                break;
 
         relic = RelicController.relic.GetRandomRelic();
 
@@ -38,6 +47,7 @@ public class ShrineController : MonoBehaviour
 
     private void RefreshDisplays()
     {
+        /*
         if (statsBoost == StatsBoostType.AttackBoost)
         {
             item1.transform.GetChild(1).GetComponent<Image>().sprite = attackImage;
@@ -59,6 +69,24 @@ public class ShrineController : MonoBehaviour
             item1.transform.GetChild(2).GetComponent<Text>().text = "Health Boost";
             item1.transform.GetChild(3).GetComponent<Text>().text = "Give all allies +5 Health for the rest of the run";
         }
+        */
+
+        item1.transform.GetChild(1).GetComponent<Image>().sprite = equipment.art;
+        item1.transform.GetChild(1).GetComponent<Image>().color = Color.white;
+        item1.transform.GetChild(2).GetComponent<Text>().text = equipment.equipmentName;
+        string equipText = "Weapon\n";
+        if (!equipment.isWeapon)
+            equipText = "Accessory\n";
+        equipText += equipment.numOfCardSlots + " card slots\n";
+        if (equipment.equipmentDescription != "")
+            equipText += equipment.equipmentDescription.Replace("|", "").Replace("<s>", "").Replace("</s>", "") + "\n";
+        if (equipment.atkChange != 0)
+            equipText += " Atk: " + equipment.atkChange;
+        if (equipment.armorChange != 0)
+            equipText += " Armor: " + equipment.armorChange;
+        if (equipment.healthChange != 0)
+            equipText += " Health: " + equipment.healthChange;
+        item1.transform.GetChild(3).GetComponent<Text>().text = equipText;
 
         item2.transform.GetChild(1).GetComponent<Image>().sprite = relic.art;
         item2.transform.GetChild(1).GetComponent<Image>().color = relic.color;
@@ -68,6 +96,7 @@ public class ShrineController : MonoBehaviour
 
     public void ChoseOption1()
     {
+        /*
         if (statsBoost == StatsBoostType.AttackBoost)
         {
             InformationController.infoController.ChangeCombatInfo(0, 1, 0, 0);
@@ -80,6 +109,9 @@ public class ShrineController : MonoBehaviour
         {
             InformationController.infoController.ChangeCombatInfo(0, 0, 0, 5);
         }
+        */
+
+        CollectionController.collectionController.AddRewardsEquipment(equipment, false);
 
         Camera.main.transform.position = new Vector3(0, 0, -10);
         RoomController.roomController.SetViableRoom(new Vector2(-999, -999));

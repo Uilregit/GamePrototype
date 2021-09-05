@@ -23,6 +23,21 @@ TextureImporter:
   - first:
       213: -1416647141714146131
     second: Gray Out Template_3
+  - first:
+      213: 8124758442688378729
+    second: Gray Out Template_3
+  - first:
+      213: 6250809869087960676
+    second: Gray Out Template_4
+  - first:
+      213: -4226101537632457882
+    second: Gray Out Template_5
+  - first:
+      213: 447861448882684421
+    second: Gray Out Template_6
+  - first:
+      213: 8930645216619420532
+    second: Gray Out Template_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -149,10 +164,10 @@ TextureImporter:
       name: Gray Out Template_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 686
-        width: 253
-        height: 334
+        x: 7
+        y: 366
+        width: 249
+        height: 333
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +175,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c42842b77ac06be90800000000000000
-      internalID: -7010401856490536372
+      spriteID: 7c73a0dcb813fa080800000000000000
+      internalID: -9174059439420196921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gray Out Template_1
+      name: Gray Out Template_2
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 360
+        width: 249
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9866aee6d3463df0800000000000000
+      internalID: -200898542965462881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gray Out Template_6
       rect:
         serializedVersion: 2
         x: 12
-        y: 344
-        width: 248
-        height: 342
+        y: 26
+        width: 253
+        height: 340
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +217,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9465a0f08270a9e90800000000000000
-      internalID: -7018289200671074743
+      spriteID: 5028e396d9f173600800000000000000
+      internalID: 447861448882684421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gray Out Template_3
+      name: Gray Out Template_7
       rect:
         serializedVersion: 2
-        x: 9
-        y: 0
-        width: 247
-        height: 339
+        x: 300
+        y: 16
+        width: 251
+        height: 340
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,8 +238,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dac4e0a2eee075ce0800000000000000
-      internalID: -1416647141714146131
+      spriteID: 47b54a7028600fb70800000000000000
+      internalID: 8930645216619420532
       vertices: []
       indices: 
       edges: []

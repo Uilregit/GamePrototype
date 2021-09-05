@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResurrectEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
             yield break;
@@ -46,12 +46,13 @@ public class ResurrectEffect : Effect
             GameController.gameController.ReportResurrectedChar(card.casterColor, caster);
 
         InformationController.infoController.ChangeCombatInfo(-1, 0, 0, 0);
+        ResourceController.resource.ReportReviveUsed();
         //HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
         yield return new WaitForSeconds(0);
     }
 
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         throw new System.NotImplementedException();
     }

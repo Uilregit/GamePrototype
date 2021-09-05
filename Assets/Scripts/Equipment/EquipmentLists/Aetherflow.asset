@@ -15,7 +15,7 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 03778d93e065feb419201157e5c3dd1b, type: 3}
   equipmentName: Aetherflow
   rarity: 0
-  equipmentDescription: Attached card costs 1 mana less|Atk +1
+  equipmentDescription: Attached card costs 1 mana less|
   isWeapon: 0
   numOfCardSlots: 1
   atkChange: 1

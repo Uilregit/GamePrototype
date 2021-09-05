@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castRange: 4
+  castRange: 3
   maxVit: 80
   vitVariate: 1
   startingArmor: 6
@@ -147,6 +147,7 @@ MonoBehaviour:
   blockIntent: {fileID: 21300002, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   buffIntent: {fileID: 21300004, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   debuffIntent: {fileID: 21300006, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  healIntent: {fileID: 21300016, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   otherIntent: {fileID: 21300008, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   displayedCards: []
 --- !u!120 &8901733674376791157

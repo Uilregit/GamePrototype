@@ -78,6 +78,7 @@ public class SaveFile
 [System.Serializable]
 public class StoryModeSaveFile
 {
+    public string patchID;
     public int[] unlockedRoomIds;
     //public Dictionary<int, bool[]> challengeStars;    //Room id, stars 1, 2, 3
     public Dictionary<int, int[]> challengeValues;      //Room id, value 1, 2, 3
@@ -95,6 +96,7 @@ public class StoryModeSaveFile
     public Dictionary<StoryModeController.RewardsType, int> itemsUnlocked;
 
     public Dictionary<int, bool[]> challengeItemsBought;//<roomID, ifBought>
+    public Dictionary<int, List<Card.CasterColor>> colorsCompleted; //<roomId, colorsCompleted>
     public Dictionary<int, bool[]> secretShopItemsBought;//<worldID, ifBought>
 
     public Dictionary<int, bool[]> dailyBought;         //<dayIDSeed, ifBought>
@@ -246,7 +248,8 @@ public class InformationLogger : MonoBehaviour
     }
 
     public void SaveCombatInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
-                               string unplayedFlag, string castFlag, string casterName, string targetCount, string targetName, string vitDamageDone, string armorDamageDone, string manaGenerated, string manaUsed, string buffTriggerCount)
+                               string unplayedFlag, string castFlag, string casterName, string targetCount, string targetName, string vitDamageDone, string armorDamageDone, string manaGenerated, string manaUsed, string buffTriggerCount,
+                               string attachedEquipment)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -256,7 +259,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,turnID,timestamp,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,turnID,timestamp,castOrder,cardColor,cardName,heldFlag,replacedFlag,unplayedFlag,castFlag,casterName,targetCount,targetName,vitDamageDone,armorDamageDone,manaGenerated,manaUsed,buffTriggerCount,attachedEquipment";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -286,6 +289,7 @@ public class InformationLogger : MonoBehaviour
         line += delimiter + manaGenerated;
         line += delimiter + manaUsed;
         line += delimiter + buffTriggerCount;
+        line += delimiter + attachedEquipment;
 
         File.AppendAllText(filePath, line + "\n");
     }
@@ -422,7 +426,7 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
-    public void SaveDeckInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag)
+    public void SaveDeckInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag, string attachedEquipment)
     {
         if (InformationLogger.infoLogger.debug)
             return;
@@ -432,7 +436,7 @@ public class InformationLogger : MonoBehaviour
         //DebugPlus.LogOnScreen(SystemInfo.deviceUniqueIdentifier);
         //Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,cardColor,cardName,energyCost,manaCost,chosenFlag,removedFlag,finalDeckListFlag";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,cardColor,cardName,energyCost,manaCost,chosenFlag,removedFlag,finalDeckListFlag,attachedEquipment";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
@@ -451,6 +455,7 @@ public class InformationLogger : MonoBehaviour
         line += delimiter + chosenFlag;
         line += delimiter + removedFlag;
         line += delimiter + finalDeckListFlag;
+        line += delimiter + attachedEquipment;
 
         File.AppendAllText(filePath, line + "\n");
     }
@@ -623,6 +628,7 @@ public class InformationLogger : MonoBehaviour
     {
         StoryModeSaveFile output = new StoryModeSaveFile();
 
+        output.patchID = patchID;
         output.unlockedRoomIds = StoryModeController.story.GetCompletedRooms().ToArray();
         output.challengeValues = StoryModeController.story.GetChallengeValues();
         output.lastSelectedRoomId = StoryModeController.story.GetLastSelectedRoomID();
@@ -636,6 +642,7 @@ public class InformationLogger : MonoBehaviour
         output.completeEquipments = CollectionController.collectionController.GetCompleteEquipments();
         output.itemsUnlocked = StoryModeController.story.GetItemsBought();
         output.challengeItemsBought = StoryModeController.story.GetChallengeItemsBought();
+        output.colorsCompleted = StoryModeController.story.GetColorsCompleted();
         output.secretShopItemsBought = StoryModeController.story.GetSecretShopItemsBought();
         output.dailyBought = StoryModeController.story.GetDailyBought();
         output.weeklyBought = StoryModeController.story.GetWeeklyBought();
@@ -678,6 +685,7 @@ public class InformationLogger : MonoBehaviour
         CollectionController.collectionController.RefreshEquipments();
         StoryModeController.story.SetItemsBought(file.itemsUnlocked);
         StoryModeController.story.SetChallengeItemsBought(file.challengeItemsBought);
+        StoryModeController.story.SetColorsCompleted(file.colorsCompleted);
         StoryModeController.story.SetSecretShopItemsBought(file.secretShopItemsBought);
         StoryModeController.story.SetDailyBought(file.dailyBought);
         StoryModeController.story.SetWeeklyBought(file.weeklyBought);
@@ -702,6 +710,7 @@ public class InformationLogger : MonoBehaviour
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         if (debug)
             path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        Debug.Log(path);
         StoryModeSaveFile saveFile = null;
         if (File.Exists(path))
         {
@@ -726,6 +735,31 @@ public class InformationLogger : MonoBehaviour
         if (debug)
             path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         return File.Exists(path);
+    }
+
+    public string GetStoryModeSaveFilePatchID()
+    {
+        string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        if (debug)
+            path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
+        StoryModeSaveFile saveFile = null;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            saveFile = formatter.Deserialize(stream) as StoryModeSaveFile;
+
+            stream.Close();
+        }
+        else
+        {
+            Debug.Log("save file not found in: " + path);
+        }
+
+        if (saveFile == null)
+            return null;
+        return saveFile.patchID;
     }
 
     public string[] GetLoadPartyColors()
@@ -843,7 +877,7 @@ public class InformationLogger : MonoBehaviour
     public void StartGameAndLoad()
     {
         loadGameOnLevelLoad = true;
-        ScoreController.score.timerPaused = false;
+        ScoreController.score.SetTimerPaused(false);
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
     }
 

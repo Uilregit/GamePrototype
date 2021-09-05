@@ -13,7 +13,7 @@ public class EquipmentDragCardController : DragController
     public void Start()
     {
         cardDisplay.Hide();
-        originalPosition = transform.position;
+        originalPosition = transform.localPosition;
     }
 
     public void SetEquipment(Equipment equipment, Card.CasterColor casterColor)
@@ -41,14 +41,23 @@ public class EquipmentDragCardController : DragController
         transform.position = newLocation;
 
         CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3);
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
+            CollectionController.collectionController.ResetStatsTexts(thisEquip, false);
+        else
+            CollectionController.collectionController.ResetStatsTexts();
     }
 
     public void OnMouseUp()
     {
         cardDisplay.Hide();
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
+        {
             CollectionController.collectionController.AddEquipment(thisEquip, thisCasterColor);
-        transform.position = originalPosition;
+            CollectionController.collectionController.SetIsShowingCards(false);
+        }
+
+        transform.localPosition = originalPosition;
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
+        CollectionController.collectionController.ResetStatsTexts();
     }
 }

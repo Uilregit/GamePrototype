@@ -22,7 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 7
-  description: Resurrect this player,|you lose 1 life<l>|(x lives left)</l>
+  description: Resurrect this player|Cost (1) more for each Raise used this run<l>|(x
+    Raise used)</l>
   art: {fileID: 21300000, guid: 7cd48e73a3e91c24e849de70d0061280, type: 3}
   castType: 6
   castShape: 0
@@ -44,3 +45,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -20,12 +21,13 @@ public class StoryModeController : MonoBehaviour
     private List<string> cardCraftable = new List<string>();
     //private Dictionary<string, int> cardUnlocked = new Dictionary<string, int>();                                                           //<cardName, cardAmount>
     //private Dictionary<string, int> equipmentUnlocked = new Dictionary<string, int>() { { "Small Pocket", 5 }, { "Messenger Bag", 5 }, { "Short Sword", 1 }, { "Stout Shield", 1 } };    //<equipmentName, equipmentAmount>
-    private Dictionary<int, bool[]> dailyBought = new Dictionary<int, bool[]>();                //<dayIDSeed, bought[]>
-    private Dictionary<int, bool[]> weeklyBought = new Dictionary<int, bool[]>();               //<weekIDSeed, bought[]>
+    private Dictionary<int, bool[]> dailyBought = new Dictionary<int, bool[]>();                                        //<dayIDSeed, bought[]>
+    private Dictionary<int, bool[]> weeklyBought = new Dictionary<int, bool[]>();                                       //<weekIDSeed, bought[]>
 
     private Dictionary<RewardsType, int> unlockedItems = new Dictionary<RewardsType, int>();
-    private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();       //<roomID, ifItemBought[]>
-    private Dictionary<int, bool[]> secretShopItemsBought = new Dictionary<int, bool[]>();      //<worldID, ifItemBought[]>
+    private Dictionary<int, bool[]> challengeItemsbought = new Dictionary<int, bool[]>();                               //<roomID, ifItemBought[]>
+    private Dictionary<int, bool[]> secretShopItemsBought = new Dictionary<int, bool[]>();                              //<worldID, ifItemBought[]>
+    private Dictionary<int, List<Card.CasterColor>> colorsCompleted = new Dictionary<int, List<Card.CasterColor>>();    //<roomID, colorsCompleted>
     public StoryRoomSetup[] secretShops;
 
     public Color defaultMenuColor;
@@ -380,7 +382,7 @@ public class StoryModeController : MonoBehaviour
             case StoryRoomSetup.ChallengeComparisonType.EqualTo:
                 return value == currentRoomSetup.challengeValues[index];
             case StoryRoomSetup.ChallengeComparisonType.LessThan:
-                return value <= currentRoomSetup.challengeValues[index];
+                return value <= currentRoomSetup.challengeValues[index] && value != -1;
         }
         return false;
     }
@@ -458,6 +460,9 @@ public class StoryModeController : MonoBehaviour
     public int GetNumberOfChallengeItemsBought(int roomId)
     {
         int output = 0;
+
+        if (!challengeItemsbought.ContainsKey(roomId))
+            return 0;
 
         foreach (bool value in challengeItemsbought[roomId])
             if (value)
@@ -717,6 +722,7 @@ public class StoryModeController : MonoBehaviour
 
         CollectionController.collectionController.SetIsShowingCards(false);
         CollectionController.collectionController.SetPage(0);
+        CollectionController.collectionController.ResetDeck();
 
         menuState = MenuState.GearScreen;
         ShowMenuSelected(2);
@@ -734,6 +740,7 @@ public class StoryModeController : MonoBehaviour
 
         CollectionController.collectionController.SetIsShowingCards(true);
         CollectionController.collectionController.SetPage(0);
+        CollectionController.collectionController.ResetDeck();
 
         menuState = MenuState.CardScreen;
         ShowMenuSelected(3);
@@ -769,7 +776,7 @@ public class StoryModeController : MonoBehaviour
             int bestValue = currentRoomSetup.GetBestValues(currentRoomSetup.bestChallengeValues[i], AchievementSystem.achieve.GetChallengeValue(currentRoomSetup.challenges[i]), i, currentRoomSetup.challengeComparisonType[i]);
             if (ChallengeSatisfied(i, bestValue))
             {
-                if (GetChallengeValues().ContainsKey(currentRoomId) && GetChallengeItemsBought()[currentRoomId][i])
+                if (GetChallengeValues().ContainsKey(currentRoomId) && GetChallengeItemsBought().ContainsKey(currentRoomId) && GetChallengeItemsBought()[currentRoomId][i])
                     c = shopColor;
                 else
                     c = goldColor;
@@ -927,6 +934,31 @@ public class StoryModeController : MonoBehaviour
     public void ReportSecretShopItemBought(int worldID, int index, bool bought)
     {
         secretShopItemsBought[worldID][index] = bought;
+    }
+
+    public void ReportColorsCompleted(int roomId, List<Card.CasterColor> colors)
+    {
+        if (colorsCompleted == null)
+            colorsCompleted = new Dictionary<int, List<Card.CasterColor>>();
+        if (!colorsCompleted.ContainsKey(roomId))
+            colorsCompleted[roomId] = colors;
+        else
+        {
+            List<Card.CasterColor> currentColors = colorsCompleted[roomId];
+            currentColors.AddRange(colors);
+            currentColors = currentColors.Distinct().ToList();
+            colorsCompleted[roomId] = currentColors;
+        }
+    }
+
+    public Dictionary<int, List<Card.CasterColor>> GetColorsCompleted()
+    {
+        return colorsCompleted;
+    }
+
+    public void SetColorsCompleted(Dictionary<int, List<Card.CasterColor>> value)
+    {
+        colorsCompleted = value;
     }
 
     public int GetUnspentChallengeTokens()

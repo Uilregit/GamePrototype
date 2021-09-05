@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0051563aec72cc4aa53aaacaa8e2dd8, type: 3}
+  m_Name: World 1-Arena
+  m_EditorClassIdentifier: 
+  roomName: World 1-Arena
+  useDefaultCardsAndEquipments: 0
+  setups: []
+  arenaSetup: {fileID: 11400000, guid: 8cbff891f7c2ed245b35864334f29027, type: 2}
+  challenges: 0a0000000a0000000a000000
+  valueType: 140000001400000014000000
+  challengeValues: 1c000000140000000c000000
+  challengeComparisonType: 140000001400000014000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  rewardTypes: f4010000c602000028230000230000002d000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0000000000000000000000000000000000000000
+  rewardCosts: 32000000780000003c0000002800000028000000
+  challengeRewardBought: 000000
+  flavorText: In communist post apocalyptic dystopia, arena pays YOU

@@ -21,8 +21,20 @@ public abstract class Effect
     Card.EffectType.DrawLastPlayedCardEffect
     };
 
+    public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
+    {
+        List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
+        yield return GameController.gameController.StartCoroutine(ProcessCard(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
+    }
+
+    public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1)
+    {
+        target = CheckImmunity(caster, effectController, target, card, effectIndex, waitTimeMultiplier);
+        yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
+    }
+
     //effect controller used to store temp values for effects that use get
-    public virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
+    protected virtual IEnumerator Process(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         if (GameController.gameController != null)
@@ -36,29 +48,83 @@ public abstract class Effect
         }
     }
 
-    public virtual int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
+    public List<GameObject> CheckImmunity(GameObject caster, CardEffectsController effectsController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1)
+    {
+        List<GameObject> viableCastTargets = new List<GameObject>();
+        foreach (HealthController hlth in target.Select(x => x.GetComponent<HealthController>()))
+        {
+            if (hlth.GetImmuneToEnergy() && card.manaCost == 0)
+            {
+                if (waitTimeMultiplier != 0)
+                    hlth.SetStatusText("Immune", Color.yellow);
+            }
+            else if (hlth.GetImmuneToMana() && card.manaCost > 0)
+            {
+                if (waitTimeMultiplier != 0)
+                    hlth.SetStatusText("Immune", Color.yellow);
+            }
+            else
+                viableCastTargets.Add(hlth.gameObject);
+        }
+        return viableCastTargets;
+    }
+
+    public int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         return GetSimulatedVitDamage(caster, effectController, target, card, effectIndex);
     }
 
-    public virtual int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        return 0;
+        int output = 0;
+        /*
+        foreach (GameObject obj in target)
+        {
+            HealthController hlthController = obj.GetComponent<HealthController>();
+            HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+
+            GameController.gameController.StartCoroutine(effectController.TriggerEffect(caster, new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true));
+
+            output += hlthController.GetVit() - simulation.GetVit();
+            GameController.gameController.ReportSimulationFinished(simulation);
+        }
+        */
+        return output;
     }
 
-    public virtual int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
+    public int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, Vector2 location, Card card, int effectIndex)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         return GetSimulatedArmorDamage(caster, effectController, target, card, effectIndex);
     }
 
-    public virtual int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
+    public int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
-        return 0;
+        int output = 0;
+        /*
+        foreach (GameObject obj in target)
+        {
+            HealthController hlthController = obj.GetComponent<HealthController>();
+            HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+
+            GameController.gameController.StartCoroutine(effectController.TriggerEffect(caster, new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true));
+
+            while (!effectController.GetFinished()) { }
+
+            output += hlthController.GetArmor() - simulation.GetArmor();
+            Debug.Log(hlthController.GetAttack() + "|" + hlthController.GetArmor() + "|" + hlthController.GetVit());
+            Debug.Log(simulation.GetAttack() + "|" + simulation.GetArmor() + "|" + simulation.GetVit());
+            Debug.Log(hlthController.GetArmor() + " - " + simulation.GetArmor() + " = " + output);
+            GameController.gameController.ReportSimulationFinished(simulation);
+        }
+
+        Debug.Log(output);
+        */
+        return output;
     }
 
-    public abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1);
+    protected abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1);
     public abstract SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH);
 
     public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration, List<Relic> traceList)

@@ -28,6 +28,10 @@ public class AbilitiesController : MonoBehaviour
         OnBreak = 5,
         OnBelow0Health = 6,
         AtEndOfTurn = 10,
+
+        OnDamageTaken = 100,
+        OnPlayerCardCast = 200,
+
         OnSpawn = 1000,
     }
     public enum AbilityType
@@ -40,6 +44,11 @@ public class AbilitiesController : MonoBehaviour
         Break = 11,
 
         PhasedMovement = 20,
+
+        Inflicted = 50,
+
+        EnergyImmunity = 90,
+        SwapImmunity = 93,
 
         Revive = 99,
 
@@ -136,6 +145,9 @@ public class AbilitiesController : MonoBehaviour
                         case AbilityType.PhasedMovement:
                             obj.GetComponent<HealthController>().SetPhasedMovement(true);
                             break;
+                        case AbilityType.Inflicted:
+                            obj.GetComponent<HealthController>().SetInflicted(true);
+                            break;
                         case AbilityType.GetSynergizedCards:
                             string color = PartyController.party.GetPlayerColorTexts()[Random.Range(0, 2)];
                             List<Card> synergizedCards = LootController.loot.GetSynergizedCards(color);
@@ -157,6 +169,21 @@ public class AbilitiesController : MonoBehaviour
                                 HandController.handController.CreateSpecificCard(cc);
                             }
                             HandController.handController.StartCoroutine(HandController.handController.ResolveDrawQueue());
+                            break;
+                        case AbilityType.EnergyImmunity:
+                            obj.GetComponent<HealthController>().SetImmuneToEnergy(true);
+                            break;
+                        case AbilityType.SwapImmunity:
+                            if (obj.GetComponent<HealthController>().GetImmuneToEnergy())
+                            {
+                                obj.GetComponent<HealthController>().SetImmuneToEnergy(false);
+                                obj.GetComponent<HealthController>().SetImmuneToMana(true);
+                            }
+                            else
+                            {
+                                obj.GetComponent<HealthController>().SetImmuneToEnergy(true);
+                                obj.GetComponent<HealthController>().SetImmuneToMana(false);
+                            }
                             break;
                     }
                 }
@@ -216,6 +243,12 @@ public class AbilitiesController : MonoBehaviour
                 case TriggerType.AtEndOfTurn:
                     s += "<b>End of turn:</b> ";
                     break;
+                case TriggerType.OnDamageTaken:
+                    s += "<b>Damage taken:</b> ";
+                    break;
+                case TriggerType.OnPlayerCardCast:
+                    s += "<b>On card cast:</b> ";
+                    break;
             }
 
             switch (conditionTypes[i])
@@ -267,10 +300,19 @@ public class AbilitiesController : MonoBehaviour
                     s += "Revive";
                     break;
                 case AbilityType.GetSynergizedCards:
-                    s += "Cards From The Future That Costs (0)";
+                    s += "Temporary Cards From The Future That Costs (0)";
                     break;
                 case AbilityType.PhasedMovement:
                     s += "Permanent Phased Movement";
+                    break;
+                case AbilityType.Inflicted:
+                    s += "Status effects can't be cleansed";
+                    break;
+                case AbilityType.SwapImmunity:
+                    s += "Switch immunity between energy and mana cards";
+                    break;
+                case AbilityType.EnergyImmunity:
+                    s += "Become immune to energy cards";
                     break;
             }
 

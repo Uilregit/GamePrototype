@@ -5,7 +5,7 @@ using Mirror;
 
 public class DrawLastPlayedCardEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)
         {

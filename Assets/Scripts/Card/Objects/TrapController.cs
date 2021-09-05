@@ -43,7 +43,7 @@ public class TrapController : MonoBehaviour
             EffectFactory factory = new EffectFactory();
             Effect effect = factory.GetEffect(card.cardEffectName[effectIndex]);
 
-            yield return StartCoroutine(effect.Process(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
+            yield return StartCoroutine(effect.ProcessCard(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
             yield return new WaitForSeconds(0.5f * TimeController.time.timerMultiplier);
         }
 

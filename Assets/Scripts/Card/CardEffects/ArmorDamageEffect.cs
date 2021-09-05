@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArmorDamageEffect : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int duration = 1;
 
@@ -26,7 +26,7 @@ public class ArmorDamageEffect : Effect
             yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
     }
-
+    /*
     public override int GetSimulatedArmorDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int output = 0;
@@ -40,7 +40,7 @@ public class ArmorDamageEffect : Effect
         }
         return output;
     }
-
+    */
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);

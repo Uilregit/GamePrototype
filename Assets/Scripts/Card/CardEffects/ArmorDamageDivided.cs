@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArmorDamageDivided : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int originalTempValue = card.GetTempEffectValue();
 
@@ -14,12 +14,12 @@ public class ArmorDamageDivided : Effect
             card.SetTempEffectValue(Mathf.CeilToInt(card.effectValue[effectIndex] / (float)target.Count));
 
         foreach (GameObject t in target)
-            new EffectFactory().GetEffect(Card.EffectType.ArmorDamage).Process(caster, effectController, new List<GameObject> { t }, card, effectIndex);
+            new EffectFactory().GetEffect(Card.EffectType.ArmorDamage).ProcessCard(caster, effectController, new List<GameObject> { t }, card, effectIndex);
 
         card.SetTempEffectValue(originalTempValue);
         yield return new WaitForSeconds(0);
     }
-
+    /*
     public override int GetSimulatedVitDamage(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex)
     {
         int originalTempValue = card.GetTempEffectValue();
@@ -55,7 +55,7 @@ public class ArmorDamageDivided : Effect
         card.SetTempEffectValue(originalTempValue);
         return output;
     }
-
+    */
     public override SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH)
     {
         throw new System.NotImplementedException();

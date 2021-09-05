@@ -30,9 +30,14 @@ public class RewardCardController : MonoBehaviour
         transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(false);
         if (Time.time - clickedTime < clickSelectDuration)
         {
-            CollectionController.collectionController.AddRewardsCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard());
-            int deckId = PartyController.party.GetPartyIndex(transform.GetChild(0).GetComponent<CardDisplay>().GetCard().GetCard().casterColor);
-            RewardsMenuController.rewardsMenu.SetDeckID(deckId);
+            if (transform.GetChild(0).GetComponent<CardDisplay>().GetEquipment() == null)
+            {
+                CollectionController.collectionController.AddRewardsCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard());
+                int deckId = PartyController.party.GetPartyIndex(transform.GetChild(0).GetComponent<CardDisplay>().GetCard().GetCard().casterColor);
+                RewardsMenuController.rewardsMenu.SetDeckID(deckId);
+            }
+            else
+                CollectionController.collectionController.AddRewardsEquipment(transform.GetChild(0).GetComponent<CardDisplay>().GetEquipment());
 
             RewardsMenuController.rewardsMenu.ReportRewardTaken(0);
             RewardsMenuController.rewardsMenu.HideRewardCards();

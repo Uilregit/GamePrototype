@@ -25,6 +25,7 @@ public class EnemyInformationController : MonoBehaviour
     [SerializeField] private Sprite blockIntent;
     [SerializeField] private Sprite buffIntent;
     [SerializeField] private Sprite debuffIntent;
+    [SerializeField] private Sprite healIntent;
     [SerializeField] private Sprite otherIntent;
 
     private List<Vector2> moveableLocations;
@@ -212,6 +213,9 @@ public class EnemyInformationController : MonoBehaviour
                 case Card.IndicatorType.Debuff:
                     currentIntentTypeIndicators[i].sprite = debuffIntent;
                     break;
+                case Card.IndicatorType.Heal:
+                    currentIntentTypeIndicators[i].sprite = healIntent;
+                    break;
                 default:
                     currentIntentTypeIndicators[i].sprite = otherIntent;
                     break;
@@ -223,7 +227,7 @@ public class EnemyInformationController : MonoBehaviour
     //Refresh intent without having to call with card. Used for healthcontroller forced movement to update target color
     public void RefreshIntent()
     {
-        if (GetComponent<HealthController>().GetStunned())
+        if (GetComponent<HealthController>().GetStunned() || GetComponent<HealthController>().GetVit() < 0)
             return;
         CreateRangeIndicators(false); //Refresh the attackable and moveable locations
         RefreshIntentColors();
@@ -278,7 +282,6 @@ public class EnemyInformationController : MonoBehaviour
             currentIntentTypeIndicators[i].color = new Color(0, 0, 0, 0);
             currentIntentMultipliers[i].text = "";
         }
-
     }
 
     //Destroy attack and move range
@@ -394,7 +397,7 @@ public class EnemyInformationController : MonoBehaviour
             //Place card evenly spaced centered around the middle
             float cardLocationX = HandController.handController.cardHighlightXBoarder * Mathf.Sign(-transform.position.x) + i * cardSpacing;
             if (transform.position.x == 0)
-                cardLocationX = -HandController.handController.cardHighlightXBoarder + i  * cardSpacing;
+                cardLocationX = -HandController.handController.cardHighlightXBoarder + i * cardSpacing;
             //Place the card between an acceptable range to be on the oppopsite vertical side of the caster
             //float cardLocationY = Mathf.Clamp(canvasPosition.y + Mathf.Sign(canvasPosition.y - 1) * -1 * cardStartingHeight, minHeight, maxHeight);
             float cardLocationY = canvasPosition.y;

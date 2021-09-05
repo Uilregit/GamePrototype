@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetHighestHealthAlly : Effect
 {
-    public override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
+    protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         int highestHealth = -99999;
         GameObject highestHealthAlly = null;

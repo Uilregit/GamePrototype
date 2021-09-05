@@ -16,6 +16,30 @@ public class PartyController : MonoBehaviour
     public Color teamColor;
     public Dictionary<Card.CasterColor, List<int>> partyLevelInfo;
 
+    [SerializeField] private int redAtk;
+    [SerializeField] private int redArmor;
+    [SerializeField] private int redHealth;
+
+    [SerializeField] private int blueAtk;
+    [SerializeField] private int blueArmor;
+    [SerializeField] private int blueHealth;
+
+    [SerializeField] private int greenAtk;
+    [SerializeField] private int greenArmor;
+    [SerializeField] private int greenHealth;
+
+    [SerializeField] private int orangeAtk;
+    [SerializeField] private int orangeArmor;
+    [SerializeField] private int orangeHealth;
+
+    [SerializeField] private int whiteAtk;
+    [SerializeField] private int whiteArmor;
+    [SerializeField] private int whiteHealth;
+
+    [SerializeField] private int blackAtk;
+    [SerializeField] private int blackArmor;
+    [SerializeField] private int blackHealth;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -60,6 +84,11 @@ public class PartyController : MonoBehaviour
             output[i] = GetPlayerColorText(partyColors[i]);
 
         return output;
+    }
+
+    public List<Card.CasterColor> GetPlayerCasterColors ()
+    {
+        return partyColors.ToList();
     }
 
     public string[] GetPotentialPlayerTexts()
@@ -147,5 +176,65 @@ public class PartyController : MonoBehaviour
     public List<int> GetPartyLevelInfo(Card.CasterColor color)
     {
         return partyLevelInfo[color];
+    }
+
+    public int GetStartingAttack(Card.CasterColor color)
+    {
+        switch(color)
+        {
+            case Card.CasterColor.Red:
+                return redAtk;
+            case Card.CasterColor.Blue:
+                return blueAtk;
+            case Card.CasterColor.Green:
+                return greenAtk;
+            case Card.CasterColor.Orange:
+                return orangeAtk;
+            case Card.CasterColor.Black:
+                return blackAtk;
+            case Card.CasterColor.White:
+                return whiteAtk;
+        }
+        return -1;
+    }
+
+    public int GetStartingArmor(Card.CasterColor color)
+    {
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                return redArmor;
+            case Card.CasterColor.Blue:
+                return blueArmor;
+            case Card.CasterColor.Green:
+                return greenArmor;
+            case Card.CasterColor.Orange:
+                return orangeArmor;
+            case Card.CasterColor.Black:
+                return blackArmor;
+            case Card.CasterColor.White:
+                return whiteArmor;
+        }
+        return -1;
+    }
+
+    public int GetStartingHealth(Card.CasterColor color)
+    {
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                return redHealth;
+            case Card.CasterColor.Blue:
+                return blueHealth;
+            case Card.CasterColor.Green:
+                return greenHealth;
+            case Card.CasterColor.Orange:
+                return orangeHealth;
+            case Card.CasterColor.Black:
+                return blackHealth;
+            case Card.CasterColor.White:
+                return whiteHealth;
+        }
+        return -1;
     }
 }

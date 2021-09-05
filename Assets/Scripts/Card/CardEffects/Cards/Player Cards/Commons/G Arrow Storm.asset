@@ -15,7 +15,7 @@ MonoBehaviour:
   exhaust: 0
   shuffleToDiscardPile: 1
   canCastOnSelf: 1
-  rarity: 3
+  rarity: 5
   name: Arrow Storm
   energyCost: 0
   manaCost: 3
