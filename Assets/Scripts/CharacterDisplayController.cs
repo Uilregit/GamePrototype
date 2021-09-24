@@ -20,6 +20,7 @@ public class CharacterDisplayController : MonoBehaviour
     public List<Image> buffIcons;
     public CharacterAnimationController charAnimController;
     public Animator hitEffectAnim;
+    public Animator passiveEffectAnim;
 
     // Start is called before the first frame update
     void Awake()

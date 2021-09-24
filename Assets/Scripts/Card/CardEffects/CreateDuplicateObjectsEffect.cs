@@ -59,6 +59,11 @@ public class CreateDuplicateObjectsEffect : Effect
         yield return new WaitForSeconds(0);
     }
 
+    public override bool GetIsLocationEffect()
+    {
+        return true;
+    }
+
     protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
         if (waitTimeMultiplier == 0)

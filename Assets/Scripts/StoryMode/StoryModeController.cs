@@ -200,7 +200,7 @@ public class StoryModeController : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         System.DateTime epochStart = new System.DateTime(2020, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-        secondSeed = (int)(System.DateTime.UtcNow - epochStart).Seconds;
+        secondSeed = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
         dailySeed = (int)(System.DateTime.UtcNow - epochStart).TotalDays;
         weeklySeed = (int)(dailySeed / 7);
 

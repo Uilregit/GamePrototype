@@ -59,19 +59,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 2
-  maxVit: 50
+  maxVit: 40
   vitVariate: 1
-  startingArmor: 4
-  attack: 12
+  startingArmor: 5
+  attack: 5
   moveRange: 3
-  randomStartRange: 0
-  attacksPerTurn: 1
+  randomStartRange: 2
+  attacksPerTurn: 2
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 64f2796e76665dc4e9d1d555be1d9fb0, type: 2}
-  moveType: 1
-  targetType: 2
+  - {fileID: 11400000, guid: 5ea0a85d9651db4468f071f43d877932, type: 2}
+  - {fileID: 11400000, guid: 83b5dd691c949ef4f9664bbbf24b0a68, type: 2}
+  - {fileID: 11400000, guid: 03b4f0bc1aa74da4baa5a65a53510c47, type: 2}
+  - {fileID: 11400000, guid: 83b5dd691c949ef4f9664bbbf24b0a68, type: 2}
+  moveType: 0
+  targetType: 0
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}
@@ -308,14 +311,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityNames:
+  - Selecive Immunity
   - Adaptive Armor
   abilitySprites:
   - {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
-  targetTypes: 00000000
-  conditionTypes: 00000000
-  triggerTypes: 01000000
-  abilityTypes: 00000000
-  abilityValue: 00000000
+  - {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  targetTypes: 0000000000000000
+  conditionTypes: 0000000001000000
+  triggerTypes: e8030000c9000000
+  abilityTypes: 5a0000005d000000
+  abilityValue: 0000000000000000
 --- !u!114 &6943378632153553900
 MonoBehaviour:
   m_ObjectHideFlags: 0

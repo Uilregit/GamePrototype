@@ -69,7 +69,7 @@ MonoBehaviour:
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
   - {fileID: 11400000, guid: 64f2796e76665dc4e9d1d555be1d9fb0, type: 2}
-  moveType: 1
+  moveType: 0
   targetType: 2
   desiredTarget:
   - {fileID: 0}

@@ -65,18 +65,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castRange: 1
+  castRange: 3
   maxVit: 1
   vitVariate: 1
   startingArmor: 1
   attack: 5
   moveRange: 4
   randomStartRange: 2
-  attacksPerTurn: 1
+  attacksPerTurn: 2
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 64f2796e76665dc4e9d1d555be1d9fb0, type: 2}
+  - {fileID: 11400000, guid: 3c5a954b274b4a544b1b46fa2066603a, type: 2}
+  - {fileID: 11400000, guid: b7a3823d77233c444ab1a6bda34964ef, type: 2}
   moveType: 0
   targetType: 0
   desiredTarget:

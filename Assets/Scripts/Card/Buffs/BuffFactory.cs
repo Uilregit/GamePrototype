@@ -13,9 +13,9 @@ public class BuffFactory : MonoBehaviour
     private string dummyDescription;
     private bool isDummy;
 
-    public string cardName = "";
-    public string casterColor = "";
-    public string casterName;
+    //public string cardName = "";
+    //public string casterColor = "";
+    public Card card;
     public int triggerCount = 1;
 
     private bool reverted = false;
@@ -36,9 +36,9 @@ public class BuffFactory : MonoBehaviour
         return buff.onTriggerEffects;
     }
 
-    public virtual void OnApply(HealthController healthController, HealthController newCasterHealthController, int value, int newDuration, string originalCardName, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
+    public virtual void OnApply(HealthController healthController, HealthController newCasterHealthController, int value, int newDuration, Card originalCard, bool fromRelic, List<BuffFactory> traceList, List<Relic> relicTrace)
     {
-        cardName = originalCardName;
+        card = originalCard;
         casterHealthController = newCasterHealthController;
         healthController.GetBuffController().AddBuff(this);
         cardValue = value;
@@ -153,7 +153,7 @@ public class BuffFactory : MonoBehaviour
             case Buff.BuffEffectType.ApplyBuff:
                 BuffFactory thisBuff = new BuffFactory();
                 thisBuff.SetBuff(buff.appliedBuff);
-                thisBuff.OnApply(healthController, casterHealthController, cardValue, buff.appliedBuffDuration, cardName, false, traceList, relicTrace);
+                thisBuff.OnApply(healthController, casterHealthController, cardValue, buff.appliedBuffDuration, card, false, traceList, relicTrace);
                 break;
             default:
                 Debug.Log(buff.onApplyEffects);
@@ -176,13 +176,13 @@ public class BuffFactory : MonoBehaviour
                                         RoomController.roomController.roomName,
                                         TurnController.turnController.turnID.ToString(),
                                         TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                        casterColor,
-                                        cardName,
+                                        card.casterColor.ToString(),
+                                        card.name,
                                         "False",
                                         "False",
                                         "False",
                                         "True",
-                                        casterName,
+                                        casterHealthController.gameObject.name,
                                         1.ToString(),
                                         healthController.name,
                                         vitDamage.ToString(),
@@ -251,7 +251,7 @@ public class BuffFactory : MonoBehaviour
                 case Buff.BuffEffectType.ApplyBuff:
                     BuffFactory thisBuff = new BuffFactory();
                     thisBuff.SetBuff(buff.appliedBuff);
-                    thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, cardName, false, traceList, relicTrace);
+                    thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, card, false, traceList, relicTrace);
                     break;
                 case Buff.BuffEffectType.DrawCard:
                     List<Card> spawnCards = new List<Card>();
@@ -311,13 +311,13 @@ public class BuffFactory : MonoBehaviour
                                                 RoomController.roomController.roomName,
                                                 TurnController.turnController.turnID.ToString(),
                                                 TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                                casterColor,
-                                                cardName,
+                                                card.casterColor.ToString(),
+                                                card.name,
                                                 "False",
                                                 "False",
                                                 "False",
                                                 "True",
-                                                casterName,
+                                                casterHealthController.gameObject.name,
                                                 1.ToString(),
                                                 selfHealthController.name,
                                                 vitDamage.ToString(),
@@ -460,13 +460,13 @@ public class BuffFactory : MonoBehaviour
                                 RoomController.roomController.roomName,
                                 TurnController.turnController.turnID.ToString(),
                                 TurnController.turnController.GetNumerOfCardsPlayedInTurn().ToString(),
-                                casterColor,
-                                cardName,
+                                card.casterColor.ToString(),
+                                card.name,
                                 "False",
                                 "False",
                                 "False",
                                 "True",
-                                casterName,
+                                casterHealthController.gameObject.name,
                                 1.ToString(),
                                 healthController.name,
                                 vitDamage.ToString(),
@@ -484,7 +484,7 @@ public class BuffFactory : MonoBehaviour
     //Called on revert and on victory in case buffs that haven't reverted yet needs to report their achievement values
     public void ReportAchievements()
     {
-        if (casterColor != "Enemy")
+        if (card.casterColor != Card.CasterColor.Enemy)
         {
             AchievementSystem.achieve.OnNotify(totalArmorDamage, StoryRoomSetup.ChallengeType.AromrRemovedWithSingleCard);
             AchievementSystem.achieve.OnNotify(totalVitDamage, StoryRoomSetup.ChallengeType.DamageDealtWithSingeCard);
@@ -546,7 +546,8 @@ public class BuffFactory : MonoBehaviour
         BuffFactory buffFactory = new BuffFactory();
         buffFactory.buff = output;
         buffFactory.duration = duration;
-        buffFactory.cardName = cardName;
+        buffFactory.card = card;
+        buffFactory.casterHealthController = casterHealthController;
         buffFactory.cardValue = cardValue;
         return buffFactory;
     }
@@ -657,5 +658,10 @@ public class BuffFactory : MonoBehaviour
     public bool GetIsDummy()
     {
         return isDummy;
+    }
+
+    public HealthController GetCaster()
+    {
+        return casterHealthController;
     }
 }

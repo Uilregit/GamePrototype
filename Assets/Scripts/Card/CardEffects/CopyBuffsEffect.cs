@@ -11,7 +11,7 @@ public class CopyBuffsEffect : Effect
 
         foreach (GameObject targ in target)
             foreach (BuffFactory buff in targ.GetComponent<BuffController>().GetBuffs())
-                buff.GetCopy().OnApply(caster.GetComponent<HealthController>(), targ.GetComponent<HealthController>(), buff.cardValue, buff.duration, card.name, false, null, null);
+                buff.GetCopy().OnApply(caster.GetComponent<HealthController>(), targ.GetComponent<HealthController>(), buff.cardValue, buff.duration, card, false, null, null);
                 //buff.GetCopy().OnApply(caster.GetComponent<HealthController>(), buff.cardValue, buff.duration, false);
         yield return new WaitForSeconds(0);
     }

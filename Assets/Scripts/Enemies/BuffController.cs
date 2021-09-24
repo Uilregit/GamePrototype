@@ -41,8 +41,24 @@ public class BuffController : MonoBehaviour
         triggerTickets += 1;
         foreach (BuffFactory buff in buffList)
         {
+            if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn) //All non start or end of turn, turn buffs (ie lifesteal)
+                buff.duration -= 1;
+
             if (buff.GetTriggerType() == type)
             {
+                if (buff.GetDurationType() == Buff.DurationType.Use)                                            //Reduce duration for all use buffs
+                    buff.duration -= 1;
+
+                //Checks immunity to the card. If immune, don't trigger
+                Effect effect = new EffectFactory().GetEffect(buff.card.cardEffectName[0]);
+                if (buff.GetBuff().onTriggerEffects != Buff.BuffEffectType.None)
+                    if (effect.CheckImmunity(buff.GetCaster().gameObject, null, new List<GameObject> { healthController.gameObject }, buff.card, 0, waitTimeMultiplier).Count == 0)
+                    {
+                        if (buff.duration <= 0) //Bonus duration used for when player puts buff on enemy or when enemy puts buff on player, avoids 1 extra turn issue
+                            buff.Revert(healthController);
+                        continue;
+                    }
+
                 if (traceList != null && traceList.Any(x => x.GetTriggerEffectType() == buff.GetTriggerEffectType())) //Prevent infinite loops of buffs triggering itself in chains. (heal on damage, damage on heal, triggering eachother in a loop)
                     continue;
 
@@ -54,18 +70,12 @@ public class BuffController : MonoBehaviour
                     ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportHealthController(healthController.GetComponent<NetworkIdentity>().netId.ToString(), healthController.GetHealthInformation(), ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
                 }
 
-                if (buff.GetDurationType() == Buff.DurationType.Use)                                            //Reduce duration for all use buffs
-                    buff.duration -= 1;
-
                 if (type != Buff.TriggerType.AtEndOfTurn && type != Buff.TriggerType.AtStartOfTurn)
                     yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);   //Only triggered buffs causes a pause
                 else if (new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor }.Contains(buff.GetBuff().onApplyEffects) ||
                     new List<Buff.BuffEffectType>() { Buff.BuffEffectType.ArmorDamage, Buff.BuffEffectType.BonusArmor, Buff.BuffEffectType.PiercingDamage, Buff.BuffEffectType.VitDamage }.Contains(buff.GetBuff().onTriggerEffects))
                     yield return new WaitForSeconds(TimeController.time.buffTriggerBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);   //Only end of turn buffs that has UI changes causes a pause
             }
-
-            if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn) //All non start or end of turn, turn buffs (ie lifesteal)
-                buff.duration -= 1;
 
             if (buff.duration <= 0) //Bonus duration used for when player puts buff on enemy or when enemy puts buff on player, avoids 1 extra turn issue
                 buff.Revert(healthController);
@@ -156,7 +166,7 @@ public class BuffController : MonoBehaviour
             buff.SetBuff(MultiplayerGameController.gameController.dummyBuff);
             Color color = new Color(buffs.colorsR[i], buffs.colorsG[i], buffs.colorsB[i]);
             buff.SetDummyInfo(color, buffs.descriptions[i]);
-            buff.OnApply(GetComponent<HealthController>(), GetComponent<HealthController>(), buffs.value[i], buffs.duration[i], "Dummy", false, null, null);
+            buff.OnApply(GetComponent<HealthController>(), GetComponent<HealthController>(), buffs.value[i], buffs.duration[i], new Card(), false, null, null);
         }
     }
 

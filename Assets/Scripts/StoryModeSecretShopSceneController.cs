@@ -56,15 +56,23 @@ public class StoryModeSecretShopSceneController : StoryModeEndSceenController
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
         Dictionary<int, bool[]> secretShopItemsbought = StoryModeController.story.GetSecretShopItemsBought();
 
+        bool anySelected = false;
+
         for (int i = 0; i < 5; i++)
         {
             items[i].SetGreyout(totalGoals < setup.rewardCosts[i]);
             if (secretShopItemsbought[StoryModeController.story.GetWorldNumber()][i] && !items[i].GetSelected())
                 items[i].SetBought();
+
+            if (items[i].GetSelected())
+                anySelected = true;
         }
 
         goldText.text = totalGoals.ToString();
-        exitButton.text = "Confirm";
+        if (anySelected)
+            exitButton.text = "Confirm";
+        else
+            exitButton.text = "Back";
     }
 
     public int GetCurrentGoals()

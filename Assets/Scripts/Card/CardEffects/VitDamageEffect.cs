@@ -6,8 +6,6 @@ public class VitDamageEffect : Effect
 {
     protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
-        if (waitTimeMultiplier != 0)
-            Debug.Log("processing vit damage effect" + target.Count);
         int totalDamageValue = 0;
         int duration = 1;
 

@@ -41,6 +41,7 @@ public class StoryRoomSetup : ScriptableObject
         SpendManaPerTurn = 1032,
         UnspentEnergyPerTurn = 1033,
 
+        BeBroken = 1041,
         BreakEnemies = 1042,
         TotalOverkillGold = 1043,
 
@@ -66,7 +67,10 @@ public class StoryRoomSetup : ScriptableObject
         PlayMoreThanXCardsPerTurn = 1901,
         TakeLessThanXTotalDamage = 1902,
 
+        XNumOfImmunedCards = 1905,
+
         EnemiesTravelLessThanXSpaces = 1911,
+        EndTurnWithXEnemies = 1912,
 
         CastOnAnotherally = 1921,
         CastFromAllColorsForXTurns = 1922,
@@ -124,8 +128,11 @@ public class StoryRoomSetup : ScriptableObject
             case ChallengeType.UnspentEnergyPerTurn:
                 output += "Leave {ct} X total energy unsent at the end of turns";
                 break;
+            case ChallengeType.BeBroken:
+                output += "Be broken {ct} X times";
+                break;
             case ChallengeType.BreakEnemies:
-                output += "Break {ct} X Enemies";
+                output += "Break {ct} X enemies";
                 break;
             case ChallengeType.TotalOverkillGold:
                 output += "Earn {ct} X total overkill gold";
@@ -175,6 +182,9 @@ public class StoryRoomSetup : ScriptableObject
             case ChallengeType.EnemiesTravelLessThanXSpaces:
                 output += "Ensure enemies travel {ct} X total spaces";
                 break;
+            case ChallengeType.EndTurnWithXEnemies:
+                output += "End a turn with {ct} X enemies";
+                break;
             case ChallengeType.SacrificeNothing:
                 output += "Defeat all boss summons before they’re sacrificed";
                 break;
@@ -189,6 +199,9 @@ public class StoryRoomSetup : ScriptableObject
                 break;
             case ChallengeType.CastFromAllColorsForXTurns:
                 output += "Use cards from all three colors in {ct} X turns";
+                break;
+            case ChallengeType.XNumOfImmunedCards:
+                output += "Have {ct} X cards be blocked by immunity";
                 break;
             default:
                 output += "";

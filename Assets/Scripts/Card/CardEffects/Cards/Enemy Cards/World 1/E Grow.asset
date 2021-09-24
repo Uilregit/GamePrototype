@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Grow
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Grow
@@ -21,7 +22,7 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: Buff own attack by 3 for 6 turns
+  description: Buff own attack by 4 for 6 turns
   art: {fileID: 21300000, guid: 09f4703c47b90a0419e6d6e8a2486cdf, type: 3}
   castType: 1
   castShape: 0
@@ -32,7 +33,7 @@ MonoBehaviour:
   conditionValue: 00000000
   buff:
   - {fileID: 11400000, guid: 566bf7e44b83f1b4c8163915532f0081, type: 2}
-  effectValue: 03000000
+  effectValue: 04000000
   effectDuration: 06000000
   spawnObject:
   - {fileID: 0}
@@ -43,3 +44,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

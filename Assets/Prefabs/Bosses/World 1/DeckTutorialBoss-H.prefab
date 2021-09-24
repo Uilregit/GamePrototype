@@ -70,7 +70,7 @@ MonoBehaviour:
   attackSequence:
   - {fileID: 11400000, guid: 7ef09be1700fda6489717842474a3ff4, type: 2}
   - {fileID: 11400000, guid: be80c48c9db69db46bd9f5608e9ac693, type: 2}
-  moveType: 1
+  moveType: 0
   targetType: 0
   desiredTarget:
   - {fileID: 0}

@@ -78,7 +78,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7a3823d77233c444ab1a6bda34964ef, type: 2}
   - {fileID: 11400000, guid: eab5ae3f38e3ad34d8f2f3b10029ee6b, type: 2}
   - {fileID: 11400000, guid: bcd607155a0e43e4e975884adec5b7d4, type: 2}
-  moveType: 1
+  moveType: 0
   targetType: 2
   desiredTarget:
   - {fileID: 0}

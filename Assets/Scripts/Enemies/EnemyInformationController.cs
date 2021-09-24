@@ -131,32 +131,6 @@ public class EnemyInformationController : MonoBehaviour
         }
 
         List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(1);
-        //TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
-
-        /*
-        foreach (Vector2 vec in movePositions)
-        {
-            int counter = 0;
-            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, vec, new string[] { "Enemy" }, GetComponent<HealthController>().GetOccupiedSpaces(), GetComponent<HealthController>().size);
-            foreach (Vector2 loc in path)
-            {
-                if (counter > enemyController.moveRange + bonusMoveRange)
-                    break;
-                List<Vector2> v = new List<Vector2>();
-                foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
-                    v.Add(loc + space);
-
-                List<GameObject> colissions = GridController.gridController.GetObjectAtLocation(v, new string[] { "Player", "Blockade" });
-                if (colissions.Count == 0)
-                    foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, loc + space, Card.CastShape.Circle, 0, moveRangeColor, new string[] { "None" }, 1);
-                counter += 1;
-            }
-        }
-
-        movePositions = TileCreator.tileCreator.GetTilePositions(1);
-        TileCreator.tileCreator.RefreshTiles(1);
-                */
 
         //Create attackable locations
         if (displayedCards[0].GetComponent<CardController>().GetCard().castType == Card.CastType.AoE)
@@ -416,17 +390,6 @@ public class EnemyInformationController : MonoBehaviour
     {
         CardController cc = displayedCards[cardIndex].GetComponent<CardController>();
 
-        /*
-        if (enemyController.GetComponent<HealthController>().GetTauntedTarget() != null)         //If this enemy is taunted, cast all self cards as if they were any types
-        {
-            Card card = cc.GetCard().GetCopy();
-            for (int i = 0; i < card.targetType.Length; i++)
-                if (card.targetType[i] == Card.TargetType.Self)
-                    card.targetType[i] = Card.TargetType.Any;
-            cc.SetCard(card, true, false);
-        }
-
-        */
         if (enemyController.GetComponent<HealthController>().GetTauntedTarget() != null)
             if (!targets.Contains(enemyController.GetComponent<HealthController>().GetTauntedTarget().transform.position))
                 targets.Add(enemyController.GetComponent<HealthController>().GetTauntedTarget().transform.position);            //Alwasy include the taunted target's location in cast

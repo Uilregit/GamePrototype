@@ -8,6 +8,7 @@ public class MainMenuSceneController : MonoBehaviour
 {
     public Image newGameButton;
     public Image loadGameButton;
+    public Image patchNotification;
 
     private Relic thisRelic;
 
@@ -24,6 +25,7 @@ public class MainMenuSceneController : MonoBehaviour
         }
         else
         {
+            patchNotification.enabled = InformationLogger.infoLogger.GetLastPatchRead() != InformationLogger.infoLogger.patchID;
             //newGameButton.enabled = false;
             string[] partyColors = InformationLogger.infoLogger.GetLoadPartyColors();
             loadGameButton.transform.GetChild(1).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[0]));
@@ -83,6 +85,8 @@ public class MainMenuSceneController : MonoBehaviour
 
     public void PatchNotesButton()
     {
+        InformationLogger.infoLogger.SetLastPatchRead(InformationLogger.infoLogger.patchID);
+        InformationLogger.infoLogger.SavePlayerPreferences();
         SceneManager.LoadScene("PatchNotesScene", LoadSceneMode.Single);
     }
 

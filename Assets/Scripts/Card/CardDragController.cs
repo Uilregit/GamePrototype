@@ -435,14 +435,35 @@ public class CardDragController : DragController
             target.Remove(cardController.GetCaster());
         List<Vector2> targetedLocs = new List<Vector2>();
         if (card.castType == Card.CastType.TargetedAoE)
-            target.AddRange(GridController.gridController.GetObjectsInAoE(castLocation, card.radius, new string[] { "All" }));
+        {
+            string[] tags = new string[] { "Player", "Enemy" };
+            if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                tags = new string[] { "Enemy" };
+            else if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                tags = new string[] { "Player" };
+            target.AddRange(GridController.gridController.GetObjectsInAoE(castLocation, card.radius, tags));
+        }
         else if (card.castType == Card.CastType.EmptyTargetedAoE)       //For EmptyTargetedAoE, only the center needs to be empty
-            target.AddRange(GridController.gridController.GetObjectAtLocation(castLocation, new string[] { "All" }));
+        {
+            string[] tags = new string[] { "Player", "Enemy" };
+            if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                tags = new string[] { "Enemy" };
+            else if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                tags = new string[] { "Player" };
+            target.AddRange(GridController.gridController.GetObjectAtLocation(castLocation, tags));
+        }
         if (card.castType == Card.CastType.AoE)
         {
             Vector2 casterPosition = cardController.FindCaster(card).transform.position;
             if (GridController.gridController.GetManhattanDistance(castLocation, casterPosition) <= card.radius)
-                targetedLocs.AddRange(GridController.gridController.GetLocationsInAoE(casterPosition, card.radius, new string[] { "All" }));
+            {
+                string[] tags = new string[] { "Player", "Enemy" };
+                if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                    tags = new string[] { "Enemy" };
+                else if (card.targetType[0] == Card.TargetType.AllEnemies || card.targetType[0] == Card.TargetType.Enemy)
+                    tags = new string[] { "Player" };
+                targetedLocs.AddRange(GridController.gridController.GetLocationsInAoE(casterPosition, card.radius, tags));
+            }
             else
             {
                 UnCast();

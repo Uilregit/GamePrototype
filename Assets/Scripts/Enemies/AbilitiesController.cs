@@ -18,6 +18,7 @@ public class AbilitiesController : MonoBehaviour
     public enum ConditionType
     {
         None = 0,
+        TakenDamageThisCard = 1,
         AnotherCopyAlive = 50
     }
 
@@ -30,7 +31,9 @@ public class AbilitiesController : MonoBehaviour
         AtEndOfTurn = 10,
 
         OnDamageTaken = 100,
-        OnPlayerCardCast = 200,
+
+        BeforePlayerCardCast = 200,
+        AfterPlayerCardCast = 201,
 
         OnSpawn = 1000,
     }
@@ -62,6 +65,8 @@ public class AbilitiesController : MonoBehaviour
     public List<TriggerType> triggerTypes = new List<TriggerType>();
     public List<AbilityType> abilityTypes = new List<AbilityType>();
     public List<int> abilityValue = new List<int>();
+
+    private bool takenDamageThisCard = false;
 
     private SpriteRenderer sprite;
     private bool hasAbility;
@@ -99,6 +104,11 @@ public class AbilitiesController : MonoBehaviour
 
     public void TriggerAbilities(TriggerType type)
     {
+        if (type == TriggerType.OnDamageTaken)
+            takenDamageThisCard = true;
+        if (type == TriggerType.BeforePlayerCardCast)
+            takenDamageThisCard = false;
+
         for (int i = 0; i < abilityTypes.Count; i++)
         {
             if (triggerTypes[i] == type && CheckIfConditionMet(conditionTypes[i]))
@@ -172,23 +182,32 @@ public class AbilitiesController : MonoBehaviour
                             break;
                         case AbilityType.EnergyImmunity:
                             obj.GetComponent<HealthController>().SetImmuneToEnergy(true);
+                            obj.GetComponent<HealthController>().charDisplay.passiveEffectAnim.SetTrigger("ImmunityEnergyLoop");
+                            obj.GetComponent<HealthController>().charDisplay.healthBar.FadeInEffect(1, 0.5f);
                             break;
                         case AbilityType.SwapImmunity:
                             if (obj.GetComponent<HealthController>().GetImmuneToEnergy())
                             {
                                 obj.GetComponent<HealthController>().SetImmuneToEnergy(false);
                                 obj.GetComponent<HealthController>().SetImmuneToMana(true);
+                                obj.GetComponent<HealthController>().charDisplay.passiveEffectAnim.SetTrigger("ImmunityManaLoop");
+                                obj.GetComponent<HealthController>().charDisplay.healthBar.FadeInEffect(1, 0.5f);
                             }
                             else
                             {
                                 obj.GetComponent<HealthController>().SetImmuneToEnergy(true);
                                 obj.GetComponent<HealthController>().SetImmuneToMana(false);
+                                obj.GetComponent<HealthController>().charDisplay.passiveEffectAnim.SetTrigger("ImmunityEnergyLoop");
+                                obj.GetComponent<HealthController>().charDisplay.healthBar.FadeInEffect(1, 0.5f);
                             }
                             break;
                     }
                 }
             }
         }
+
+        if (type == TriggerType.AfterPlayerCardCast)
+            takenDamageThisCard = false;
     }
 
     private bool CheckIfConditionMet(ConditionType type)
@@ -202,6 +221,8 @@ public class AbilitiesController : MonoBehaviour
                     return true;
                 else
                     return false;
+            case ConditionType.TakenDamageThisCard:
+                return takenDamageThisCard;
         }
         return false;
     }
@@ -246,8 +267,14 @@ public class AbilitiesController : MonoBehaviour
                 case TriggerType.OnDamageTaken:
                     s += "<b>Damage taken:</b> ";
                     break;
-                case TriggerType.OnPlayerCardCast:
-                    s += "<b>On card cast:</b> ";
+                case TriggerType.BeforePlayerCardCast:
+                    s += "<b>Before card triggers:</b> ";
+                    break;
+                case TriggerType.AfterPlayerCardCast:
+                    if (conditionTypes[i] == ConditionType.TakenDamageThisCard)
+                        s += "<b>After card damage:</b> ";
+                    else
+                        s += "<b>On card cast:</b> ";
                     break;
             }
 
@@ -312,7 +339,12 @@ public class AbilitiesController : MonoBehaviour
                     s += "Switch immunity between energy and mana cards";
                     break;
                 case AbilityType.EnergyImmunity:
-                    s += "Become immune to energy cards";
+                    if (GetComponent<HealthController>().GetImmuneToEnergy() && GetComponent<HealthController>().GetImmuneToMana())
+                        s += "Immune to ALL cards";
+                    else if (GetComponent<HealthController>().GetImmuneToEnergy())
+                        s += "Immune to energy cards";
+                    else if (GetComponent<HealthController>().GetImmuneToMana())
+                        s += "Immune to mana cards";
                     break;
             }
 

@@ -133,6 +133,7 @@ public class TurnController : MonoBehaviour
         AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
         AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
         AchievementSystem.achieve.OnNotify(cardsPlayedThisTurn.Count, StoryRoomSetup.ChallengeType.PlayMoreThanXCardsPerTurn);
+        AchievementSystem.achieve.OnNotify(enemies.Count, StoryRoomSetup.ChallengeType.EndTurnWithXEnemies);
 
         if (cardsPlayedThisTurn.Select(x => x.casterColor).ToList().Distinct().Count() == 3)
             AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.CastFromAllColorsForXTurns);
@@ -161,6 +162,11 @@ public class TurnController : MonoBehaviour
     public List<EnemyController> GetEnemies()
     {
         return enemies;
+    }
+
+    public List<EnemyController> GetQueuedEnemies()
+    {
+        return queuedEnemies;
     }
 
     public IEnumerator EnemyTurn()
@@ -207,6 +213,8 @@ public class TurnController : MonoBehaviour
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
 
+        yield return StartCoroutine(GridController.gridController.CheckDeath());
+
         ReportTurnBasedAchievements();              //Report achievements right before checking death to ensure all end of turn processes complete
 
         cardsPlayedThisTurn = new List<Card>();
@@ -214,8 +222,6 @@ public class TurnController : MonoBehaviour
         cardPlayedEnergyCap = new List<int>();
         cardPlayedManaReduction = new List<int>();
         cardPlayedManaCap = new List<int>();
-
-        yield return StartCoroutine(GridController.gridController.CheckDeath());
 
         //Enemy turn
         CameraController.camera.ScreenShake(0.03f, 0.05f);

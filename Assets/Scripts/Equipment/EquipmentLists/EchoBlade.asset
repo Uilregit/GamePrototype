@@ -31,5 +31,5 @@ MonoBehaviour:
   attachedCardCastRangeChange: 0
   beforeTriggerCard: {fileID: 0}
   afterTriggerCard: {fileID: 11400000, guid: ba6bc509ba44f1241b628308ac46120b, type: 2}
-  materialTypes: 
-  materialAmounts: 
+  materialTypes: 0500000064000000
+  materialAmounts: 0100000011000000

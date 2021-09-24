@@ -106,6 +106,8 @@ public class StoryModeSaveFile
 [System.Serializable]
 public class PlayerPreferences
 {
+    public string lastPatchRead = "";
+
     public string party1;
     public string party2;
     public string party3;
@@ -205,6 +207,7 @@ public class InformationLogger : MonoBehaviour
     public bool debugStoryCopyDebugSaveFile;
     public bool isStoryMode = false;
     public string patchID;
+    private string lastPatchRead = "";
     public int seed;
     public string gameID;
     public Text versionText;
@@ -902,6 +905,9 @@ public class InformationLogger : MonoBehaviour
     {
         PlayerPreferences preferences = new PlayerPreferences();
         string[] colors = PartyController.party.GetPlayerColorTexts();
+
+        preferences.lastPatchRead = lastPatchRead;
+
         preferences.party1 = colors[0];
         preferences.party2 = colors[1];
         preferences.party3 = colors[2];
@@ -949,6 +955,8 @@ public class InformationLogger : MonoBehaviour
     public void LoadPlayerPreferences()
     {
         PlayerPreferences preferences = GetHasPlayerPreferences();
+
+        lastPatchRead = preferences.lastPatchRead;
 
         string[] colors = new string[3];
         colors[0] = preferences.party1;
@@ -1120,6 +1128,16 @@ public class InformationLogger : MonoBehaviour
         }
 
         return settings;
+    }
+
+    public void SetLastPatchRead(string value)
+    {
+        lastPatchRead = value;
+    }
+
+    public string GetLastPatchRead()
+    {
+        return lastPatchRead;
     }
 
     private void OnDestroy()

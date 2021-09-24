@@ -364,4 +364,19 @@ public class HealthBarController : MonoBehaviour
         yield return new WaitForSeconds(TimeController.time.numberShownDuration);
         statusText.enabled = false;
     }
+
+    public void FadeInEffect(float alpha, float time)
+    {
+        SpriteRenderer img = transform.parent.parent.GetComponent<HealthController>().charDisplay.passiveEffectAnim.GetComponent<SpriteRenderer>();
+        StartCoroutine(FadeInEffect(img, alpha, img.color.a, time));
+    }
+
+    private IEnumerator FadeInEffect(SpriteRenderer img, float startingAlpha, float endingAlpha, float time)
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            img.color = Color.Lerp(new Color(img.color.r, img.color.g, img.color.b, startingAlpha), new Color(img.color.r, img.color.g, img.color.b, endingAlpha), i / 49);
+            yield return new WaitForSeconds(time / 50f);
+        }
+    }
 }

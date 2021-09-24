@@ -8,7 +8,7 @@ public class GiveBuffsEffect : Effect
     {
         foreach (GameObject targ in target)
             foreach (BuffFactory buff in caster.GetComponent<BuffController>().GetBuffs())
-                buff.GetCopy().OnApply(targ.GetComponent<HealthController>(), caster.GetComponent<HealthController>(), card.effectValue[effectIndex], card.effectDuration[effectIndex], card.name, false, null, null);
+                buff.GetCopy().OnApply(targ.GetComponent<HealthController>(), caster.GetComponent<HealthController>(), card.effectValue[effectIndex], card.effectDuration[effectIndex], card, false, null, null);
         //buff.GetCopy().OnApply(targ.GetComponent<HealthController>(), buff.cardValue, buff.duration, false);
         yield return new WaitForSeconds(0);
     }

@@ -24,7 +24,10 @@ public abstract class Effect
     public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
-        yield return GameController.gameController.StartCoroutine(ProcessCard(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
+        if (!GetIsLocationEffect())
+            yield return GameController.gameController.StartCoroutine(ProcessCard(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
+        else
+            yield return GameController.gameController.StartCoroutine(Process(caster, effectController, location, card, effectIndex, waitTimeMultiplier));
     }
 
     public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1)
@@ -48,12 +51,16 @@ public abstract class Effect
         }
     }
 
+    protected abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1);
+
     public List<GameObject> CheckImmunity(GameObject caster, CardEffectsController effectsController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
         List<GameObject> viableCastTargets = new List<GameObject>();
         foreach (HealthController hlth in target.Select(x => x.GetComponent<HealthController>()))
         {
-            if (hlth.GetImmuneToEnergy() && card.manaCost == 0)
+            if (hlth.gameObject == caster)                      //Never be immune to your own cards
+                viableCastTargets.Add(hlth.gameObject);
+            else if (hlth.GetImmuneToEnergy() && card.manaCost == 0)
             {
                 if (waitTimeMultiplier != 0)
                     hlth.SetStatusText("Immune", Color.yellow);
@@ -124,12 +131,15 @@ public abstract class Effect
         return output;
     }
 
-    protected abstract IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1);
     public abstract SimHealthController SimulateProcess(GameObject caster, CardEffectsController effectController, Vector2 location, int value, int duration, SimHealthController simH);
 
     public virtual void RelicProcess(List<GameObject> targets, Buff buff, int effectValue, int effectDuration, List<Relic> traceList)
     {
         throw new System.NotImplementedException();
+    }
+    public virtual bool GetIsLocationEffect()
+    {
+        return false;
     }
 }
 

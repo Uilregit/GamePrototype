@@ -12,16 +12,14 @@ public class ApplyBuffEffect : Effect
             BuffFactory buff = new BuffFactory();
             card.buff[effectIndex].SetDrawnCards(card.cards);
             buff.SetBuff(card.buff[effectIndex]);
-            buff.cardName = card.name;
-            buff.casterColor = card.casterColor.ToString();
-            buff.casterName = caster.name;
+            buff.card = card;
             HealthController originator = caster.GetComponent<HealthController>();
             if (card.GetTempObject() != null)
                 originator = card.GetTempObject().GetComponent<HealthController>();
             if (card.effectValue[effectIndex] != 0)
-                buff.OnApply(targetH, originator, card.effectValue[effectIndex], card.effectDuration[effectIndex], card.name, false, null, null);
+                buff.OnApply(targetH, originator, card.effectValue[effectIndex], card.effectDuration[effectIndex], card, false, null, null);
             else
-                buff.OnApply(targetH, originator, card.GetTempEffectValue(), card.effectDuration[effectIndex], card.name, false, null, null);
+                buff.OnApply(targetH, originator, card.GetTempEffectValue(), card.effectDuration[effectIndex], card, false, null, null);
 
             if (waitTimeMultiplier != 0)
                 if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage)
@@ -42,7 +40,7 @@ public class ApplyBuffEffect : Effect
             HealthController targetH = targ.GetComponent<HealthController>();
             BuffFactory buffFactory = new BuffFactory();
             buffFactory.SetBuff(buff);
-            buffFactory.OnApply(targetH, null, effectValue, effectDuration, "Relic", true, null, traceList);
+            buffFactory.OnApply(targetH, null, effectValue, effectDuration, new Card(), true, null, traceList);
         }
     }
 }

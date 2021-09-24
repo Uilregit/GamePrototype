@@ -994,7 +994,7 @@ Fixed not every element in collection controller switching between card and gear
          
     - Systems -
      Phased movement now allows characters to move through blockades
-     
+
 -- Enemies --
     - Brood Mother Boss -
         Cast range reduced from 4 to 3
@@ -1022,7 +1022,6 @@ Knockbacks will now only be stopped by blockades, and not other characters. Char
 Timers will now only progress during combat, will pause after victory while picking rewards
 Going into combat will give players all copies of their starter cards, even if some are unequipped
 Buffs will now report their damage and armor damage done by a single card based achievements when the buffs are reverted or on the attached character's death
-Added immunity checks before all card effect triggers that allows characters to be imune to all card effects, not just damage
 
 -- UI --
 Buffs that trigger multiple times will now have a slight delay for UI clarity
@@ -1042,7 +1041,90 @@ Fixed timer not deleting after finishing arena
 Fixed relics not resetting after finishing arena
 Fixed old team member's stats being forced onto new team members if party was switched between story mode rooms
 Fixed old patch causing number of blank cards to be negative
+
+#####################
+###### 0.5.1.3 ######
+#####################
+-- Cards --
+    - Systems -
+     Buffs will now respect immunity from different sources
+
+-- Enemies --
+    - Magic Armor Boss -
+        Added as the first world 1 boss
+        Armor increased from 3 -> 5
+
+    - Magic Armor Boss (Hard) -
+        Added to world 1
+        Armor increased from 5 -> 7
+        Health increased from 50 -> 60
+
+    - Attack Buff Enemy -
+        Grow from +3 ATK to +4 ATK
+
+-- System --
+Reduced achievement requirements of world 1 room 9 from "Remove 120 total armor" --> "Remove 100 total armor"
+Achievement for room 10 changed from "Use less than 20 cards" --> "Be broken less than 2 times"
+Achievement for hard version of room 10 boss changed from "Ensure enemies travel less than 30 total spaces" --> "End a turn with more than 6 enemies"
+Achievement for room 5 reverted as new boss is implimented
+Turn based achievements are recorded after enemies' death at the end fo the turn
+Added immunity checks before all card effect triggers that allows characters to be imune to all card effects, not just damage
+Added damage taken this card as a condition to ability triggers
+Streamlined achievement reverting in patch bot
+Enemies using AoE targeting types will now move to the furthest point in range instead of standing still if possible
+Enemies with more than 1 cards per turn will now no longer refresh their moverange left with each card
+    All cards before the last will cause the enemy to move as little as possible, last card tries to find the furthest moveable location in range
+
+-- UI --
+Story Mode Secret Shop scene button will now say "Back" when no items are selected, and "Confirm" when any are
+Patch button icon on the main screen now has a notification if that patch note has not yet been read
+Selective immunity passive now dynamically tells you what the boss is immune to (energy, mana, or all)
+Card block aura effect now flashes with 100% alpha before fading back to 50% alpha
+
+-- Bugs --
 Fixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1
+Fixed patch bot not resetting the best values in the scriptable room setup objects
+Fixed cards using location targeting not working
+Fixed enemies with high castranges not kiting properly
+Fixed enemies targeting the wrong character type with abiguous cast types (AoE, TargetedAoE, Any, etc)
+Fixed enemies not kiting properly if trying to target from the furthest position in range
+Fixed enemies using out of range pathfinding when it's staying still for minimized movement mode
+Fixed Echo Blade (Equipment) not requiring any crafting materials
+Fixed World 1 secret room all being labeled boss rooms
+Fixed collection mid run not starting with all copies of a starter card if 0 copies of them were equipped
+Fixed boss rooms always having a random seed of 0
+Fixed story mode seeding bugs that should reduce chance of getting exact same seeds in two different runs (seed no longer between 0-60)
+Fixed null exception error with collections while checking new cards
+Fixed immunity checks preventing buffs from reverting
+Fixed immunity checks for buffs that have no trigger effects
+Fixed normal Magic Armor passive saying "On card cast" instead of "On card damage"
+Fixed AoE, TargetedAoE, and EmptyTargetedAoE from triggering on character types of the wrong type
+
+#####################
+###### 0.5.1.2 ######
+#####################
+-- Cards --
+
+-- Enemies --
+
+-- System --
+
+-- UI --
+
+-- Bugs --
+
+#####################
+###### 0.5.1.2 ######
+#####################
+-- Cards --
+
+-- Enemies --
+
+-- System --
+
+-- UI --
+
+-- Bugs --
 
 -- To dos --
 Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

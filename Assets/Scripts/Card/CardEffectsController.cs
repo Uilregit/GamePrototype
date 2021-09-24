@@ -74,6 +74,8 @@ public class CardEffectsController : MonoBehaviour
         int numEnemiesAlive = 0;
         string targetNames = "|";
 
+        bool blockedByImmune = false;
+
         //Stats tracking for achievement purposes
         bool playerDifferentThanCaster = false;
         int enemiesTotalVit = 0;
@@ -101,6 +103,14 @@ public class CardEffectsController : MonoBehaviour
             bonusCast += TurnController.turnController.GetEnemyBonusCast();
         else
             bonusCast += TurnController.turnController.GetPlayerBonusCast();
+
+        if (!isSimulation && card.GetCard().casterColor != Card.CasterColor.Enemy)
+        {
+            List<GameObject> allChars = GameController.gameController.GetLivingPlayers();
+            allChars.AddRange(TurnController.turnController.GetEnemies().Select(x => x.gameObject));
+            foreach (AbilitiesController abilities in allChars.Select(x => x.GetComponent<AbilitiesController>()))
+                abilities.TriggerAbilities(AbilitiesController.TriggerType.BeforePlayerCardCast);
+        }
 
         List<GameObject> movedObjects = new List<GameObject>();
 
@@ -218,6 +228,14 @@ public class CardEffectsController : MonoBehaviour
                         foreach (GameObject obj in movedObjects)
                             locs.Add(obj.transform.position);
                         locs = locs.Distinct().ToList();
+
+                        //Used for achievement based on card blocked
+                        if (card.GetCard().casterColor != Card.CasterColor.Enemy && !blockedByImmune)
+                        {
+                            List<GameObject> objs = GridController.gridController.GetObjectAtLocation(locs, new string[] { "Player", "Enemy" });
+                            if (objs.Count != effects[i].CheckImmunity(caster, this, objs, card.GetCard(), i, 0).Count)
+                                blockedByImmune = true;
+                        }
 
                         if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
                             StartCoroutine(effects[i].ProcessCard(caster, this, locs, card.GetCard(), i));
@@ -353,6 +371,11 @@ public class CardEffectsController : MonoBehaviour
 
         if (!isSimulation && card.GetCard().casterColor != Card.CasterColor.Enemy)
         {
+            List<GameObject> allChars = GameController.gameController.GetLivingPlayers();
+            allChars.AddRange(TurnController.turnController.GetEnemies().Select(x => x.gameObject));
+            foreach (AbilitiesController abilities in allChars.Select(x => x.GetComponent<AbilitiesController>()))
+                abilities.TriggerAbilities(AbilitiesController.TriggerType.AfterPlayerCardCast);
+
             AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.UseLessThanXCards);
             if (playerTotalVit + enemiesTotalVit - playerFinalTotalVit - enemiesFinalTotalVit > 0)
                 AchievementSystem.achieve.OnNotify(playerTotalVit + enemiesTotalVit - playerFinalTotalVit - enemiesFinalTotalVit, StoryRoomSetup.ChallengeType.DamageDealtWithSingeCard);
@@ -365,6 +388,8 @@ public class CardEffectsController : MonoBehaviour
                 AchievementSystem.achieve.OnNotify(numEnemiesAlive - finalNumEneiesAlive, StoryRoomSetup.ChallengeType.KillWithSingleCard);
             if (playerDifferentThanCaster)
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.CastOnAnotherally);
+            if (blockedByImmune)
+                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.XNumOfImmunedCards);
         }
 
         try

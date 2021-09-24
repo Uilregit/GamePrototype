@@ -401,7 +401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &756166189
 RectTransform:
   m_ObjectHideFlags: 0
@@ -418,8 +418,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29, y: -6.8700886}
-  m_SizeDelta: {x: 26.422142, y: 148.79312}
+  m_AnchoredPosition: {x: -0.29, y: -2.021}
+  m_SizeDelta: {x: 26.422142, y: 84.132416}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756166190
 MonoBehaviour:
@@ -454,64 +454,43 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "#####################\r\n######## 0.5.1 #######\r#\n#####################\r\n--
-    Cards --\r\n     - Red -\r\n         The Best Defence --> The Bigger They Are\r\n            
-    2M --> 3M\r\n             Target gains armor equal to their ATK --> Target takes
-    damage equal to 2x their armor\r\n         Vendetta\r\n             Deal 100%
-    of ATK as damage. If the target is targeting you, damage them again --> When
-    target is damaged, target retaliatse with 50% of Their ATK twice this turn\r\n    
-    \r\n     - Blue -\r\n         Defile\r\n             Targeted AOE Deal 3 damage
-    to self and 200% of ATK to ALL in range --> Targeted AoE Deal <s>250% of ATK
-    as</s> damage to the center target, and <s>150% of ATK as</s> damage to surrounding
-    targets\r\n     \r\n     - Orange -\r\n         Massive Swing\r\n            
-    Deal 350% of ATK as damage --> Deal 300% of ATK as damage\r\n     \r\n     -
-    White -\r\n         Retaliate --> The Best Defence\r\n             When target
-    is damaged, target retaliatse with 50% of Their ATK as damage this turn --> Target
-    gains armor equal to their ATK\r\n         Echo\r\n             Echoed card now
-    keeps all cost reductions and caps of the played card\r\n         Rememberance\r\n            
-    2M --> 1E\r\n             Manifest a card from your discard pile --> Manifest
-    a white temporary copy of a card from your discard pile\r\n         Drain Strength
-    --> Foresight\r\n             2E --> 0E\r\n             Target looses 2 ATK,
-    you gain 2 aTK --> Manifest a a white temporary copy of a card from your draw
-    pile\r\n         \r\n     - Black -\r\n         Soul Catcher --> Poison\r\n            
-    Remove 3 armor from the target, they gain 1 back over the next 3 turns --> for
-    the next 3 turns, remove 1 armor and deal 25% of ATK as damage\r\n         Belittle
-    --> Alchemic Ferver\r\n             Target looses 1 ATK for each status effect
-    on them --> For the next 3 turns, targets restores 1 health for each energy used\r\n        
-    \r\n    - Systems -\r\n     Phased movement now allows characters to move through
-    blockades\r\n     \r\n-- Enemies --\r\n    - Brood Mother Boss -\r\n        Cast
-    range reduced from 4 to 3\r\n\r\n    - Brood Mother Spawn -\r\n        Melt Armor\r\n           
-    Reduce target's armor by 2, then deal 100% of ATK as damage --> Reduce target's
-    armor by 3\r\n\r\n    - Brood Mother Boss (Hard) -\r\n        Cast range reduced
-    from 4 to 3\r\n\r\n    - Brood Mother Spawn (Hard) -\r\n        Melt Armor\r\n           
-    Reduce target's armor by 3, then deal 100% of ATK as damage --> Reduce target's
-    armor by 4, then deal 100% of ATK as damage\r\n\r\n    Added world 1 100% complete
-    secret boss plus achievements\r\n\r\n-- System --\r\nReduced achievement requirements
-    of arena from 5,10,15 mins to 6,12,18 mins\r\nAdded secret room to Story Mode
-    World 1 that's is different from Room 4\r\nArena and Classic mode shops will
-    now offer equipments to buy\r\nArena and Classic mode relic rooms will now offer
-    a choice between a relic and an equipment instead of stat boosts\r\nStory Mode
-    Shop will now offer cards of all unlocked colors in daily and weekly deals\r\nKnockbacks
-    will now only be stopped by blockades, and not other characters. Characters in
-    the way will be knocked back the remaining distance with the original character\r\nTimers
-    will now only progress during combat, will pause after victory while picking
-    rewards\r\nGoing into combat will give players all copies of their starter cards,
-    even if some are unequipped\r\nBuffs will now report their damage and armor damage
-    done by a single card based achievements when the buffs are reverted or on the
-    attached character's death\r\n\r\n\r\n-- UI --\r\nBuffs that trigger multiple
-    times will now have a slight delay for UI clarity\r\nAdded relics UI to story
-    mode arenas\r\nCollection controller for non party colors' gear and cards can
-    now be edited in story mode\r\nCollection controller color deckbutton will now
-    light up if that deck is incomplete\r\nCollection will no longer reset to page
-    0 when switching between colors in gear mode\r\nAdded patch notes scene \r\n\r\n--
-    Bugs --\r\nFixed damage sources from buffs not triggering damaged based buffs\r\nFixed
-    health UI display when damage and healing occur right after eachother\r\nFixed
-    Orange Seeing Red dealing damage twice when enemy has exactly 1 armor\r\nFixed
-    classic mode not letting any cards to be drawn on mobile\r\nFixed take less than
-    x damage achievement not registering if player took 0 damage\r\nFixed timer not
-    deleting after finishing arena\r\nFixed relics not resetting after finishing
-    arena\r\nFixed old team member's stats being forced onto new team members if
-    party was switched between story mode rooms"
+  m_Text: "#####################\r\n####### 0.5.1.3 #######\r\n#####################\r\n--
+    Cards --\r\n    - Systems -\r\n     Buffs will now respect immunity from different
+    sources\r\n\r\n-- Enemies --\r\n    - Magic Armor Boss -\r\n        Added as
+    the first world 1 boss\r\n\r\n    - Magic Armor Boss (Hard) -\r\n        Added
+    to world 1\r\n\r\n    - Attack Buff Enemy -\r\n        Grow from +3 ATK to +4
+    ATK\r\n\r\n-- System --\r\n1<indent = 15%>Reduced achievement requirements of
+    world 1 room 9 from \"Remove 120 total armor\" --> \"Remove 100 total armor\"\r\nAchievement
+    for room 10 changed from \"Use less than 20 cards\" --> \"Be broken less than
+    2 times\"\r\nAchievement for hard version of room 10 boss changed from \"Ensure
+    enemies travel less than 30 total spaces\" --> \"End a turn with more than 6
+    enemies\"\r\nAchievement for room 5 reverted as new boss is implimented\r\nTurn
+    based achievements are recorded after enemies' death at the end fo the turn\r\nAdded
+    immunity checks before all card effect triggers that allows characters to be
+    imune to all card effects, not just damage\r\nAdded damage taken this card as
+    a condition to ability triggers\r\nStreamlined achievement reverting in patch
+    bot\r\nEnemies using AoE targeting types will now move to the furthest point
+    in range instead of standing still if possible\r\nEnemies with more than 1 cards
+    per turn will now no longer refresh their moverange left with each card\r\n   
+    All cards before the last will cause the enemy to move as little as possible,
+    last card tries to find the furthest moveable location in range\r\n\r\n-- UI
+    --\r\nStory Mode Secret Shop scene button will now say \"Back\" when no items
+    are selected, and \"Confirm\" when any are\r\nPatch button icon on the main screen
+    now has a notification if that patch note has not yet been read\r\n\r\n-- Bugs
+    --\r\nFixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1\r\nFixed
+    patch bot not resetting the best values in the scriptable room setup objects\r\nFixed
+    cards using location targeting not working\r\nFixed enemies with high castranges
+    not kiting properly\r\nFixed enemies targeting the wrong character type with
+    abiguous cast types (AoE, TargetedAoE, Any, etc)\r\nFixed enemies not kiting
+    properly if trying to target from the furthest position in range\r\nFixed enemies
+    using out of range pathfinding when it's staying still for minimized movement
+    mode\r\nFixed Echo Blade (Equipment) not requiring any crafting materials\r\nFixed
+    World 1 secret room all being labeled boss rooms\r\nFixed collection mid run
+    not starting with all copies of a starter card if 0 copies of them were equipped\r\nFixed
+    boss rooms always having a random seed of 0\r\nFixed story mode seeding bugs
+    that should reduce chance of getting exact same seeds in two different runs (seed
+    no longer between 0-60)\r\nFixed null exception error with collections while
+    checking new cards"
 --- !u!222 &756166191
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -601,8 +580,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1013974038}
   m_HandleRect: {fileID: 1013974037}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.38437223
+  m_Value: 1.0001149
+  m_Size: 0.6797849
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1246,6 +1225,7 @@ RectTransform:
   m_Children:
   - {fileID: 789108519}
   - {fileID: 756166189}
+  - {fileID: 2048708229}
   m_Father: {fileID: 846196274}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1284,3 +1264,173 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2048708228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2048708229}
+  - component: {fileID: 2048708231}
+  - component: {fileID: 2048708230}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2048708229
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048708228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1768858657}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.29, y: -2.021}
+  m_SizeDelta: {x: 26.422142, y: 84.132416}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2048708230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048708228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "#####################\r\n####### 0.5.1.3 #######\r\n#####################\r\n--
+    Cards --\r\n    - Systems -\r\n     Buffs will now respect immunity from different
+    sources\r\n\r\n-- Enemies --\r\n    - Magic Armor Boss -\r\n        Added as
+    the first world 1 boss\r\n\r\n    - Magic Armor Boss (Hard) -\r\n        Added
+    to world 1\r\n\r\n    - Attack Buff Enemy -\r\n        Grow from +3 ATK to +4
+    ATK\r\n\r\n-- System --\r\nReduced achievement requirements of world 1 room 9
+    from \"Remove 120 total armor\" --> \"Remove 100 total armor\"\r\nAchievement
+    for room 10 changed from \"Use less than 20 cards\" --> \"Be broken less than
+    2 times\"\r\nAchievement for hard version of room 10 boss changed from \"Ensure
+    enemies travel less than 30 total spaces\" --> \"End a turn with more than 6
+    enemies\"\r\nAchievement for room 5 reverted as new boss is implimented\r\nTurn
+    based achievements are recorded after enemies' death at the end fo the turn\r\nAdded
+    immunity checks before all card effect triggers that allows characters to be
+    imune to all card effects, not just damage\r\nAdded damage taken this card as
+    a condition to ability triggers\r\nStreamlined achievement reverting in patch
+    bot\r\nEnemies using AoE targeting types will now move to the furthest point
+    in range instead of standing still if possible\r\nEnemies with more than 1 cards
+    per turn will now no longer refresh their moverange left with each card\r\n   
+    All cards before the last will cause the enemy to move as little as possible,
+    last card tries to find the furthest moveable location in range\r\n\r\n-- UI
+    --\r\nStory Mode Secret Shop scene button will now say \"Back\" when no items
+    are selected, and \"Confirm\" when any are\r\nPatch button icon on the main screen
+    now has a notification if that patch note has not yet been read\r\n\r\n-- Bugs
+    --\r\nFixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1\r\nFixed
+    patch bot not resetting the best values in the scriptable room setup objects\r\nFixed
+    cards using location targeting not working\r\nFixed enemies with high castranges
+    not kiting properly\r\nFixed enemies targeting the wrong character type with
+    abiguous cast types (AoE, TargetedAoE, Any, etc)\r\nFixed enemies not kiting
+    properly if trying to target from the furthest position in range\r\nFixed enemies
+    using out of range pathfinding when it's staying still for minimized movement
+    mode\r\nFixed Echo Blade (Equipment) not requiring any crafting materials\r\nFixed
+    World 1 secret room all being labeled boss rooms\r\nFixed collection mid run
+    not starting with all copies of a starter card if 0 copies of them were equipped\r\nFixed
+    boss rooms always having a random seed of 0\r\nFixed story mode seeding bugs
+    that should reduce chance of getting exact same seeds in two different runs (seed
+    no longer between 0-60)\r\nFixed null exception error with collections while
+    checking new cards"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 1
+  m_fontSizeBase: 1
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2048708231
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048708228}
+  m_CullTransparentMesh: 0

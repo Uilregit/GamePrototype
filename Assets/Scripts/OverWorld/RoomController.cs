@@ -136,6 +136,7 @@ public class RoomController : MonoBehaviour
                 }
 
                 bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
+                bossRoom.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
                 if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
                     bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
                 else

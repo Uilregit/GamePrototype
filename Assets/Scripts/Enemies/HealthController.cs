@@ -69,11 +69,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private Buff knockbackSelfBuff = null;
     private int knockBackSelfValue = 0;
     private int knockBackSelfDuration = 0;
-    private string knockbackSelfCardName = "missing";
+    private Card knockbackSelfCard;
     private Buff knockbackOtherBuff = null;
     private int knockBackOtherValue = 0;
     private int knockBackOtherDuration = 0;
-    private string knockbackOtherCardName = "missing";
+    private Card knockbackOtherCard;
 
     private List<int> vitDamageMultipliers;
     private List<int> armorDamageMultipliers;
@@ -666,7 +666,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 if (!isSimulation)
                 {
                     charDisplay.healthBar.SetStatusText("Broken", new Color(255, 102, 0));
-                    AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
+                    if (!isPlayer)
+                        AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
+                    else
+                        AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BeBroken);
                 }
                 charDisplay.sprite.color = new Color(1, 0, 0);
 
@@ -884,17 +887,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 BuffFactory buff = new BuffFactory();
                 //card.buff[effectIndex].SetDrawnCards(card.cards);
                 buff.SetBuff(knockbackOtherBuff);
-                buff.cardName = knockbackOtherCardName;
-                try
-                {
-                    buff.casterColor = GetComponent<PlayerController>().GetColorTag().ToString();
-                }
-                catch
-                {
-                    buff.casterColor = Card.CasterColor.Enemy.ToString();
-                }
-                buff.casterName = this.name;
-                buff.OnApply(targetH, this, knockBackOtherValue, knockBackOtherDuration, knockbackOtherCardName, false, null, null);
+                buff.card = knockbackOtherCard;
+                buff.OnApply(targetH, this, knockBackOtherValue, knockBackOtherDuration, knockbackOtherCard, false, null, null);
                 if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage && !isSimulation)
                     GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
             }
@@ -905,17 +899,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             BuffFactory buff = new BuffFactory();
             //card.buff[effectIndex].SetDrawnCards(card.cards);
             buff.SetBuff(knockbackSelfBuff);
-            buff.cardName = knockbackSelfCardName;
-            try
-            {
-                buff.casterColor = GetComponent<PlayerController>().GetColorTag().ToString();
-            }
-            catch
-            {
-                buff.casterColor = Card.CasterColor.Enemy.ToString();
-            }
-            buff.casterName = this.name;
-            buff.OnApply(this, this, knockBackSelfValue, knockBackSelfDuration, knockbackSelfCardName, false, null, null);
+            buff.card = knockbackSelfCard;
+            buff.OnApply(this, this, knockBackSelfValue, knockBackSelfDuration, knockbackSelfCard, false, null, null);
             if (buff.GetTriggerEffectType() == Buff.BuffEffectType.VitDamage || buff.GetTriggerEffectType() == Buff.BuffEffectType.PiercingDamage && !isSimulation)
                 GetComponent<BuffController>().StartCoroutine(GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, this, 0));
 
@@ -923,20 +908,20 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
     }
 
-    public void SetKnockBackSelfBuff(Buff newBuff, int value, int duration, string cardName)
+    public void SetKnockBackSelfBuff(Buff newBuff, int value, int duration, Card card)
     {
         knockbackSelfBuff = newBuff;
         knockBackSelfValue = value;
         knockBackSelfDuration = duration;
-        knockbackSelfCardName = cardName;
+        knockbackSelfCard = card;
     }
 
-    public void SetKnockBackOtherBuff(Buff newBuff, int value, int duration, string cardName)
+    public void SetKnockBackOtherBuff(Buff newBuff, int value, int duration, Card card)
     {
         knockbackOtherBuff = newBuff;
         knockBackOtherValue = value;
         knockBackOtherDuration = duration;
-        knockbackOtherCardName = cardName;
+        knockbackOtherCard = card;
     }
 
     public void SetKnockBackDamage(int value)
@@ -1086,6 +1071,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (damage > 0 && !isSimulation)
         {
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
+            abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnDamageTaken);
 
             if (isPlayer)
             {

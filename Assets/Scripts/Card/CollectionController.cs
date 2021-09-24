@@ -1068,7 +1068,8 @@ public class CollectionController : MonoBehaviour
                     colorHasBlanks = true;
                 }
 
-            deckButtons[allColorsOrder.IndexOf(PartyController.party.GetPlayerCasterColor(color))].transform.GetChild(0).GetComponent<Image>().enabled = colorHasBlanks;
+            if (allColorsOrder.IndexOf(PartyController.party.GetPlayerCasterColor(color)) != -1)
+                deckButtons[allColorsOrder.IndexOf(PartyController.party.GetPlayerCasterColor(color))].transform.GetChild(0).GetComponent<Image>().enabled = colorHasBlanks;
         }
 
         if (isStoryMode)
@@ -1119,10 +1120,15 @@ public class CollectionController : MonoBehaviour
             newCards[newCard.GetCard().casterColor.ToString()].deck.Remove(newCard);
 
         for (int i = 0; i < deckButtons.Length; i++)
-            if (newCards[PartyController.party.GetPlayerColorText(allColorsOrder[i])].deck.Count == 0)
-                deckButtons[i].GetComponent<Outline>().enabled = false;
+            if (i < allColorsOrder.Count)
+            {
+                if (newCards[PartyController.party.GetPlayerColorText(allColorsOrder[i])].deck.Count == 0)
+                    deckButtons[i].GetComponent<Outline>().enabled = false;
+                else
+                    deckButtons[i].GetComponent<Outline>().enabled = true;
+            }
             else
-                deckButtons[i].GetComponent<Outline>().enabled = true;
+                deckButtons[i].GetComponent<Outline>().enabled = false;
     }
 
     public void RemoveEquipmentFromNew(Equipment e)
@@ -1352,17 +1358,23 @@ public class CollectionController : MonoBehaviour
         SetIsShowingCards(true);
 
         Dictionary<string, int> combatSelectedDeck = new Dictionary<string, int>();
-        //Give all copies of the starter cards in deck even if some are not equipped
+        //Make copy of the selected deck to prevent modyfing selected cards in runs to change that in story mode
         foreach (string card in GetSelectedDeckDict().Keys)
         {
             Card c = LootController.loot.GetCardWithName(card);
-            if (new List<Card.Rarity> { Card.Rarity.StarterAttack, Card.Rarity.StarterDefence }.Contains(c.rarity))
-                combatSelectedDeck[card] = 3;
-            else if (c.rarity == Card.Rarity.StarterSpecial)
-                combatSelectedDeck[card] = 2;
-            else
-                combatSelectedDeck[card] = GetSelectedDeckDict()[card];
+            combatSelectedDeck[card] = GetSelectedDeckDict()[card];
         }
+        //Give all copies of the starter cards in deck even if some are not equipped
+        for (int i = 0; i < 6; i++)
+            foreach (Card starterCards in storyModeDeck[i].deck)
+                if (PartyController.party.partyColors.Contains(starterCards.casterColor))
+                {
+                    if (new List<Card.Rarity> { Card.Rarity.StarterAttack, Card.Rarity.StarterDefence }.Contains(starterCards.rarity))
+                        combatSelectedDeck[starterCards.name] = 3;
+                    else if (starterCards.rarity == Card.Rarity.StarterSpecial)
+                        combatSelectedDeck[starterCards.name] = 2;
+                }
+
         SetCompleteDeck(combatSelectedDeck);     //Create a new list of complete deck with the card names from select deck
         foreach (string color in selectedDeck.Keys)
             foreach (CardController c in selectedDeck[color].deck)

@@ -13,7 +13,7 @@ public class SetKnockBackSelfBuffEffect : Effect
         int duration = card.effectDuration[effectIndex];
         if (duration == 0)
             duration = card.GetTempDuration();
-        caster.GetComponent<HealthController>().SetKnockBackSelfBuff(card.buff[effectIndex], value, duration, card.name);
+        caster.GetComponent<HealthController>().SetKnockBackSelfBuff(card.buff[effectIndex], value, duration, card);
         yield return new WaitForSeconds(0);
     }
 

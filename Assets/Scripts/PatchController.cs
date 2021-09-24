@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PatchController : MonoBehaviour
 {
-    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1" };
+    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1", "0.5.1.3" };
     public GameObject[] worlds;
 
     // Start is called before the first frame update
@@ -55,15 +55,7 @@ public class PatchController : MonoBehaviour
         {
             case "0.5.0.4":
                 //Reset achievements for room 10 as they've been updated
-                Dictionary<int, int[]> challengeValues = StoryModeController.story.GetChallengeValues();
-                if (challengeValues.ContainsKey(10))
-                {
-                    challengeValues[10] = new int[] { challengeValues[10][0], -1, -1 };
-                    StoryModeController.story.SetChallengeValues(challengeValues);
-                    Dictionary<int, bool[]> challengeBought = StoryModeController.story.GetChallengeItemsBought();
-                    challengeBought[10] = new bool[] { challengeBought[10][0], false, false };
-                    StoryModeController.story.SetChallengeItemsBought(challengeBought);
-                }
+                RevertAchievements(10, false, true, true);
 
                 //Rollback number of blank cards due to previous bug
                 int numOFCardsBought = 0;
@@ -101,15 +93,7 @@ public class PatchController : MonoBehaviour
                 break;
             case "0.5.1":
                 //Reset achievements for room 51 (secret room 4) as they've been updated
-                challengeValues = StoryModeController.story.GetChallengeValues();
-                if (challengeValues.ContainsKey(51))
-                {
-                    challengeValues[51] = new int[] { challengeValues[51][0], -1, -1 };
-                    StoryModeController.story.SetChallengeValues(challengeValues);
-                    Dictionary<int, bool[]> challengeBought = StoryModeController.story.GetChallengeItemsBought();
-                    challengeBought[51] = new bool[] { challengeBought[51][0], false, false };
-                    StoryModeController.story.SetChallengeItemsBought(challengeBought);
-                }
+                RevertAchievements(51, false, true, true);
                 break;
             case "0.5.1.1":
                 //Rollback number of blank cards due to previous bug
@@ -140,10 +124,57 @@ public class PatchController : MonoBehaviour
                 itemsBought[StoryModeController.RewardsType.BlankCard] = totalBlankCardsGotten - numOFCardsBought;
                 StoryModeController.story.SetItemsBought(itemsBought);
                 break;
+            case "0.5.1.3":
+                //Reset achievements for room 5 and room 61 (secret boss room 1) for the new boss
+                RevertAchievements(5, false, true, true);
+                RevertAchievements(10, false, false, true);
+                RevertAchievements(62, false, true, false);
+                RevertAchievements(61, false, true, true);
+                break;
         }
         Debug.Log("######## Patching successful ########");
         InformationLogger.infoLogger.SaveStoryModeGame();
-        InformationLogger.infoLogger.LoadStoryModeGame();
+        //InformationLogger.infoLogger.LoadStoryModeGame();
+    }
+
+    private void RevertAchievements(int id, bool revert1, bool revert2, bool revert3)
+    {
+        Dictionary<int, int[]> challengeValues = StoryModeController.story.GetChallengeValues();
+        Dictionary<int, bool[]> challengeBought = StoryModeController.story.GetChallengeItemsBought();
+
+        if (challengeValues.ContainsKey(id))
+        {
+            int[] newAchieveValues = new int[] { challengeValues[id][0], challengeValues[id][1], challengeValues[id][2] };
+            bool[] newChallegeBought = new bool[] { challengeBought[id][0], challengeBought[id][1], challengeBought[id][2] };
+            if (revert1)
+            {
+                newAchieveValues[0] = -1;
+                newChallegeBought[0] = false;
+            }
+            if (revert2)
+            {
+                newAchieveValues[1] = -1;
+                newChallegeBought[1] = false;
+            }
+            if (revert3)
+            {
+                newAchieveValues[2] = -1;
+                newChallegeBought[2] = false;
+            }
+
+            foreach (StoryRoomController room in worlds[0].GetComponentsInChildren<StoryRoomController>())
+                if (room.roomId == id)
+                {
+
+                    room.setup.bestChallengeValues = newAchieveValues;
+                    room.setup.challengeRewardBought = newChallegeBought;
+                }
+            challengeValues[id] = newAchieveValues;
+            StoryModeController.story.SetChallengeValues(challengeValues);
+
+            challengeBought[id] = newChallegeBought;
+            StoryModeController.story.SetChallengeItemsBought(challengeBought);
+        }
     }
 
     private bool PatchIsOlderThan(string currentID, string checkID)

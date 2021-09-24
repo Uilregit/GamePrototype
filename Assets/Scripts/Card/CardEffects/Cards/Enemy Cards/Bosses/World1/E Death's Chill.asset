@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: E Death's Chill
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Death's Chill
+  energyCost: 1
+  manaCost: 0
+  range: 3
+  radius: 0
+  casterColor: 6
+  description: Target looses 3 armor
+  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  castType: 2
+  castShape: 0
+  targetType: 01000000
+  cardEffectName: 0a000000
+  hitEffect: 2c010000
+  conditionType: 00000000
+  conditionValue: 00000000
+  buff:
+  - {fileID: 11400000, guid: 35cd478f065aab14fac2f3d4cbfa9ee1, type: 2}
+  effectValue: 03000000
+  effectDuration: 00000000
+  spawnObject:
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  indicatorType: 3
+  targetBehaviour: 4
+  indicatorMultiplier: 
+  executionPriority: -1
+  highlightCondition: 0
+  materials: 
+  materialAmounts: 
