@@ -46,10 +46,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int bonusCastRange = 0;
     private int maxVit;
     private int currentVit = 0;
+    private int equipVit = 0;
     private int currentArmor;
     private int startingArmor;
+    private int equipArmor = 0;
     private int startingAttack;
     private int currentAttack;
+    private int equipAttack = 0;
     private int bonusAttack;
     private int bonusVit;
     private int bonusArmor;
@@ -145,31 +148,23 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         int value = InformationController.infoController.GetCurrentVit(color);
         if ((InformationController.infoController.firstRoom == true && value == 0) || color == Card.CasterColor.Enemy)
         {
-            currentVit = maxVit;
-            ResetVitText(maxVit);
+            SetMaxVit(maxVit);
         }
         else
         {
             try
             {
                 int gotMaxVit = InformationController.infoController.GetMaxVit(color);
-                maxVit = gotMaxVit;
+                SetMaxVit(gotMaxVit);
 
                 int gotCurrentVit = InformationController.infoController.GetCurrentVit(color);
-                currentVit = gotCurrentVit;
-                ResetVitText(gotCurrentVit);
+                SetCurrentVit(Mathf.Min(gotCurrentVit, maxVit + equipVit));
 
                 int gotStartingAttack = InformationController.infoController.GetStartingAttack(color);
-                startingAttack = gotStartingAttack;
-                SetCurrentAttack(startingAttack);
-                ResetAttackText(startingAttack);
+                SetStartingAttack(startingAttack);
 
                 int gotStartingArmor = InformationController.infoController.GetStartingArmor(color);
-                startingArmor = gotStartingArmor;
-
-
-                SetCurrentArmor(startingArmor, false);
-                ResetArmorText(gotStartingArmor);
+                SetStartingArmor(startingArmor);
             }
             catch { }
         }
@@ -195,7 +190,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         maxVit = newValue;
         if (InformationController.infoController.firstRoom == true)
         {
-            currentVit = maxVit;
+            currentVit = maxVit + equipVit;
             ResetVitText(currentVit);
         }
     }
@@ -221,6 +216,21 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return bonusVit;
     }
 
+    public int GetEquipVit()
+    {
+        return equipVit;
+    }
+
+    public int GetEquipArmor()
+    {
+        return equipArmor;
+    }
+
+    public int GetEquipAttack()
+    {
+        return equipAttack;
+    }
+
     public void SetInstantKill()
     {
         currentVit = 0;
@@ -241,7 +251,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         currentBrokenTurns = -99999;
         startingArmor = newvalue;
-        currentArmor = newvalue;
+        currentArmor = newvalue + equipArmor;
         ResetArmorText(currentArmor);
     }
 
@@ -267,7 +277,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetStartingAttack(int newvalue)
     {
         startingAttack = newvalue;
-        SetCurrentAttack(startingAttack);
+        SetCurrentAttack(startingAttack + equipAttack);
     }
 
     public int GetStartingAttack()
@@ -278,7 +288,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetCurrentAttack(int newValue)
     {
         currentAttack = newValue;
-        charDisplay.attackText.text = currentAttack.ToString();
+        ResetAttackText(currentAttack);
     }
 
     public void SetBonusAttack(int newValue, bool relative)
@@ -324,6 +334,21 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetBonusArmor()
     {
         return bonusArmor;
+    }
+
+    public void SetEquipVit(int value)
+    {
+        equipVit = value;
+    }
+
+    public void SetEquipArmor(int value)
+    {
+        equipArmor = value;
+    }
+
+    public void SetEquipAttack(int value)
+    {
+        equipAttack = value;
     }
 
     public void SetManaCostCap(int value)
@@ -525,9 +550,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private void ResetVitText(int value)
     {
         charDisplay.vitText.text = value.ToString();
-        if (value > maxVit)
+        if (value > maxVit + equipVit)
             charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
-        else if (value == maxVit)
+        else if (value == maxVit + equipVit)
             charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(1, 1, 1, 0.5f);
         else
             charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
@@ -735,8 +760,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             damage = value;
             foreach (int i in healingMulitpliers)
                 damage *= i;
-            currentVit = Mathf.Min(maxVit, currentVit + bonusVit - damage);
-            bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit);     //Excess healing is moved to bonusVit
+            currentVit = Mathf.Min(maxVit + equipVit, currentVit + bonusVit - damage);
+            bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit - equipVit);     //Excess healing is moved to bonusVit
 
             if (damage < 0 && isSimulation)
                 StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, traceList));
@@ -944,7 +969,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         SimHealthController simSelf = new SimHealthController();
         simSelf.currentVit = currentVit;
         simSelf.currentArmor = currentArmor;
-        simSelf.maxVit = maxVit;
+        simSelf.maxVit = maxVit + equipVit;
         return simSelf;
     }
 
@@ -1143,7 +1168,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
 
         if (!simulated && oldHealth != -1)
-            charDisplay.healthBar.SetDamageImage(oldHealth, damage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0);
+            charDisplay.healthBar.SetDamageImage(oldHealth, damage, maxVit + equipVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0);
         if (oldHealth == -1)
             oldHealth = currentVit + bonusVit;
 
@@ -1174,7 +1199,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         //maxEndOfTurnDamage = Mathf.Clamp(maxEndOfTurnDamage, 0, GetVit() - damage);         //Clamped so damage bar never runs to negative
 
-        charDisplay.healthBar.SetBar(oldHealth, damage, maxEndOfTurnDamage, maxVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0, simulated, simulated);
+        charDisplay.healthBar.SetBar(oldHealth, damage, maxEndOfTurnDamage, maxVit + equipVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() <= 0, simulated, simulated);
 
         if (simCharacter != null)
         {
@@ -1279,6 +1304,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return isDead;
     }
 
+    //Used by multiplayer only
     public byte[] GetHealthInformation()
     {
         HealthInformation output = new HealthInformation();
@@ -1315,6 +1341,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return final;
     }
 
+    //Used by multiplayer only
     public void SetHealthInformation(HealthInformation info)
     {
         if (currentArmor + bonusArmor != info.currentArmor + info.bonusArmor)

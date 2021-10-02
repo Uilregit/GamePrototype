@@ -309,6 +309,8 @@ public class TurnController : MonoBehaviour
         ResetEnergyDisplay();
         HandController.handController.UnholdCard(true);
         HandController.handController.ResetReplaceCounter();
+        GameController.gameController.SetTurnButtonDone(false);
+        GameController.gameController.SetReplaceDone(false);
         yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand()); //Must be called after unholdcard
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart, null);

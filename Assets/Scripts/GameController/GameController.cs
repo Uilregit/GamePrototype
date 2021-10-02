@@ -13,6 +13,11 @@ public class GameController : MonoBehaviour
     public Image damageOverlay;
     public Image circleHighlight;
 
+    public Image endTurnButton;
+    public Color notYetDoneColor;
+    public Color doneColor;
+    public Image replaceImage;
+
     public Text text;
     public CardDisplay[] rewardCards;
 
@@ -506,6 +511,22 @@ public class GameController : MonoBehaviour
     public virtual List<Card.CasterColor> GetDeadChars()
     {
         return deadChars;
+    }
+
+    public void SetTurnButtonDone(bool state)
+    {
+        if (state)
+            endTurnButton.color = doneColor;
+        else
+            endTurnButton.color = notYetDoneColor;
+    }
+
+    public void SetReplaceDone(bool state)
+    {
+        if (state)
+            replaceImage.color = doneColor;
+        else
+            replaceImage.color = notYetDoneColor;
     }
 
     public void SetDamageOverlay(float remainingHealthPercentage)

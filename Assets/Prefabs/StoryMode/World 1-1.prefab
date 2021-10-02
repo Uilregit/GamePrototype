@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.29803923, g: 0.58431375, b: 0.42352942, a: 1}
-  m_EffectDistance: {x: 0.05, y: 0.05}
+  m_EffectDistance: {x: 0.08, y: 0.08}
   m_UseGraphicAlpha: 1
 --- !u!61 &7165609805332521192
 BoxCollider2D:

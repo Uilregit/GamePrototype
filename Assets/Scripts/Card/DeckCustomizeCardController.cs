@@ -50,7 +50,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         hasNeverBeenShrunk = true;                              //Used so where the card can potentially go is shown
         transform.SetParent(selectedCardCanvas.transform);
         EnlargeCard();
-        Vector3 newLocation = new Vector2(0, HandController.handController.cardHighlightHeight) + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        Vector3 newLocation = new Vector2(0, HandController.handController.GetCardHighlightHeight()) + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
         highlight.enabled = false;
         if (isShowingCard)
@@ -134,7 +134,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         }
 
         //Handle the transform movement part
-        Vector2 offset = new Vector2(0, HandController.handController.cardHighlightHeight);
+        Vector2 offset = new Vector2(0, HandController.handController.GetCardHighlightHeight());
         if (!cardEnlarged)
             offset = new Vector2(0, 1.5f);
         Vector3 newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
@@ -269,7 +269,7 @@ public class DeckCustomizeCardController : MonoBehaviour
     private void EnlargeCard()
     {
         transform.localPosition = new Vector3(0, 0, 0);
-        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize(), HandController.handController.GetCardHighlightSize(), 1);
         cardDisplay.SetToolTip(true, -1, 1, false);
 
         cardDisplay.Show();

@@ -56,6 +56,8 @@ public class EnemyInformationController : MonoBehaviour
         moveableLocations = new List<Vector2>();
         attackableLocations = new List<Vector2>();
 
+        Image intentLocation = GetComponent<HealthController>().charDisplay.intentLocation;
+
         currentIntentTypeIndicators = new List<Image>();
         currentIntentMultipliers = new List<Text>();
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
@@ -69,15 +71,17 @@ public class EnemyInformationController : MonoBehaviour
             currentIntentMultipliers[i].transform.SetParent(transform);
             currentIntentMultipliers[i].enabled = true;
 
+            im.transform.SetParent(intentLocation.transform);
+            tx.transform.SetParent(intentLocation.transform);
             if (enemyController.attacksPerTurn % 2 == 0)
             {
-                currentIntentTypeIndicators[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0.5f);  //Even
-                currentIntentMultipliers[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0.5f) + new Vector2(0.3f, -0.1f);
+                currentIntentTypeIndicators[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0f);  //Even
+                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0f) + new Vector2(0.3f, -0.1f);
             }
             else
             {
-                currentIntentTypeIndicators[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0.5f);  //Odd
-                currentIntentMultipliers[i].transform.position = (Vector2)transform.position + new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0.5f) + new Vector2(0.3f, -0.1f);
+                currentIntentTypeIndicators[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0f);  //Odd
+                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0f) + new Vector2(0.3f, -0.1f);
             }
         }
 
@@ -452,6 +456,9 @@ public class EnemyInformationController : MonoBehaviour
             TileCreator.tileCreator.CreateTiles(this.gameObject, target, Card.CastShape.Circle, card.GetCard().radius, GetComponent<EnemyController>().attackRangeColor, 0);
         else
             TileCreator.tileCreator.CreateTiles(this.gameObject, target, Card.CastShape.Circle, 0, GetComponent<EnemyController>().attackRangeColor, 0);
+
+        Debug.Log(card);
+        usedCard.GetComponentInChildren<CardDisplay>().FadeIn(0.1f * TimeController.time.timerMultiplier, PartyController.party.GetPlayerColor(Card.CasterColor.Enemy));
     }
 
     public void GreyOutUsedCard()
@@ -462,7 +469,11 @@ public class EnemyInformationController : MonoBehaviour
     public void DestroyUsedCard()
     {
         HideTargetLine();
-        Destroy(usedCard);
+        if (usedCard != null)
+        {
+            usedCard.GetComponentInChildren<CardDisplay>().FadeOut(0.5f * TimeController.time.timerMultiplier, PartyController.party.GetPlayerColor(Card.CasterColor.Enemy));
+            Destroy(usedCard, 0.5f);
+        }
     }
 
     public void ShowTargetLine(Vector2 target)

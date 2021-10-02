@@ -38,8 +38,8 @@ public class ManifestCardController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         transform.SetAsLastSibling();
-        transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.cardHighlightHeight, 0);
-        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.GetCardHighlightHeight() * 1.1f, 0);
+        transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize() * 1.1f, HandController.handController.GetCardHighlightSize() * 1.1f, 1);
     }
     public void SetCard(CardController card)
     {

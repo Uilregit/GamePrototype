@@ -148,6 +148,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         StoryModeController.story.ResetDecks();
         StoryModeController.story.SetMenuBar(true);
         StoryModeController.story.SetCombatInfoMenu(false);
+        StoryModeController.story.ShowMenuSelected(0);
         ResourceController.resource.EnableStoryModeRelicsMenu(false);
         SceneManager.LoadScene("StoryModeScene");
     }

@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Card\HandController.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MultiplayerPlayerMoveController.cs" />
+    <Compile Include="Assets\PatchSceneController.cs" />
     <Compile Include="Assets\Scripts\Tiles\MoveRangeTile.cs" />
     <Compile Include="Assets\Scripts\RewardsItemController.cs" />
     <Compile Include="Assets\Scripts\CustomizeMenu\PageButtonController.cs" />
@@ -238,7 +239,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\PatchSceneController.cs" />
+    <Compile Include="Assets\Scripts\Card\OnHitEffect.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -820,8 +821,14 @@
     <Reference Include="System.Xml.XPath.XDocument">
       <HintPath>D:\Program Files\Unity\2020.1.2f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
@@ -837,6 +844,12 @@
     </Reference>
     <Reference Include="projectCloner">
       <HintPath>Library\ScriptAssemblies\projectCloner.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>

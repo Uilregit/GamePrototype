@@ -60,7 +60,7 @@ public class CardDragController : DragController
     {
         if (currentState == State.Highlighted && !isHolding)
         {
-            rectTransform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+            rectTransform.localScale = new Vector3(HandController.handController.GetCardHighlightSize(), HandController.handController.GetCardHighlightSize(), 1);
 
             if (desiredRotation.magnitude > 2)
             {
@@ -151,7 +151,7 @@ public class CardDragController : DragController
         currentState = State.Highlighted;
         isTriggeringEffect = false;
         castLocation = originalLocation;
-        rectTransform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        rectTransform.localScale = new Vector3(HandController.handController.GetCardHighlightSize(), HandController.handController.GetCardHighlightSize(), 1);
         cardDisplay.Show();
         line.enabled = false;
 
@@ -302,9 +302,9 @@ public class CardDragController : DragController
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.selectedCardCanvas.transform);
 
-        transform.localScale = new Vector3(HandController.handController.cardHighlightSize, HandController.handController.cardHighlightSize, 1);
+        transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize(), HandController.handController.GetCardHighlightSize(), 1);
         float x = Mathf.Clamp(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).x, -HandController.handController.cardHighlightXBoarder, HandController.handController.cardHighlightXBoarder);
-        float y = CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y + HandController.handController.cardHighlightHeight;
+        float y = CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y + HandController.handController.GetCardHighlightHeight();
         transform.position = new Vector2(x, y);
         transform.SetAsLastSibling();
 
@@ -392,6 +392,8 @@ public class CardDragController : DragController
         List<Vector2> targetedLocs = GetTargetLocations();
         if (targetedLocs.Count == 0)
             return;
+
+        cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
 
         line.enabled = false;
 

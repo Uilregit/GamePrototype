@@ -47,6 +47,9 @@ public class CreateDuplicateObjectsEffect : Effect
                     obj.GetComponent<HealthController>().SetCreator(caster);
                     obj.GetComponent<EnemyController>().SetSkipInitialIntent(true);
 
+                    obj.GetComponent<HealthController>().SetEquipVit(o.GetComponent<HealthController>().GetEquipVit());
+                    obj.GetComponent<HealthController>().SetEquipAttack(o.GetComponent<HealthController>().GetEquipAttack());
+                    obj.GetComponent<HealthController>().SetEquipArmor(o.GetComponent<HealthController>().GetEquipArmor());
 
                     obj.GetComponent<HealthController>().SetCurrentAttack(o.GetComponent<HealthController>().GetCurrentAttack());
                     obj.GetComponent<HealthController>().SetCurrentArmor(o.GetComponent<HealthController>().GetCurrentArmor(), false);

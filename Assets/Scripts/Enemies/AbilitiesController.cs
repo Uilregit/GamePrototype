@@ -135,7 +135,7 @@ public class AbilitiesController : MonoBehaviour
                             obj.GetComponent<HealthController>().TakeArmorDamage(9999999, null);
                             break;
                         case AbilityType.FullHeal:
-                            obj.GetComponent<HealthController>().TakePiercingDamage(obj.GetComponent<HealthController>().GetCurrentVit() - obj.GetComponent<HealthController>().GetMaxVit(), obj.GetComponent<HealthController>());
+                            obj.GetComponent<HealthController>().TakePiercingDamage(obj.GetComponent<HealthController>().GetCurrentVit() - obj.GetComponent<HealthController>().GetMaxVit() - obj.GetComponent<HealthController>().GetEquipVit(), obj.GetComponent<HealthController>());
                             break;
                         case AbilityType.Revive:
                             GameObject newObj = GameObject.Instantiate(RoomController.roomController.GetObjectPrefab(obj), obj.transform.position, Quaternion.identity);

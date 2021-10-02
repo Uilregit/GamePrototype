@@ -40,7 +40,7 @@ public class ApplyBuffEffect : Effect
             HealthController targetH = targ.GetComponent<HealthController>();
             BuffFactory buffFactory = new BuffFactory();
             buffFactory.SetBuff(buff);
-            buffFactory.OnApply(targetH, null, effectValue, effectDuration, new Card(), true, null, traceList);
+            buffFactory.OnApply(targetH, targ.GetComponent<HealthController>(), effectValue, effectDuration, new Card(), true, null, traceList);
         }
     }
 }

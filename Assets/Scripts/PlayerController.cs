@@ -16,6 +16,21 @@ public class PlayerController : MonoBehaviour
     private HealthController healthController;
     private PlayerMoveController moveController;
 
+    [HideInInspector]
+    public int equipBonusVit = 0;
+    [HideInInspector]
+    public int equipBonusArmor = 0;
+    [HideInInspector]
+    public int equipBonusAtk = 0;
+    [HideInInspector]
+    public int equipBonusCastRange = 0;
+    [HideInInspector]
+    public int equipBonusMoveRange = 0;
+    [HideInInspector]
+    public int equipBonusHandSize = 0;
+    [HideInInspector]
+    public int equipBonusReplace = 0;
+
     // Start is called before the first frame update
     public virtual void Awake()
     {
@@ -23,39 +38,37 @@ public class PlayerController : MonoBehaviour
 
         //Assess all passive stat bonuses from the player color
         List<Equipment> equipments = new List<Equipment>();
-        int bonusVit = 0;
-        int bonusArmor = 0;
-        int bonusAtk = 0;
-        int bonusCastRange = 0;
-        int bonusMoveRange = 0;
-        int bonusHandSize = 0;
-        int bonusReplace = 0;
+
         if (!healthController.GetIsSimulation() && CollectionController.collectionController.GetSelectEquipments().ContainsKey(colorTag.ToString()))
             foreach (string e in CollectionController.collectionController.GetSelectEquipments()[colorTag.ToString()])
                 equipments.Add(LootController.loot.GetEquipment(e));
 
         foreach (Equipment e in equipments)
         {
-            bonusArmor += e.armorChange;
-            bonusVit += e.healthChange;
-            bonusAtk += e.atkChange;
-            bonusCastRange += e.castRangeChange;
-            bonusMoveRange += e.moveRangeChange;
-            bonusHandSize += e.handSizeChange;
-            bonusReplace += e.replaceChange;
+            equipBonusArmor += e.armorChange;
+            equipBonusVit += e.healthChange;
+            equipBonusAtk += e.atkChange;
+            equipBonusCastRange += e.castRangeChange;
+            equipBonusMoveRange += e.moveRangeChange;
+            equipBonusHandSize += e.handSizeChange;
+            equipBonusReplace += e.replaceChange;
         }
+
+        healthController.SetEquipArmor(equipBonusArmor);
+        healthController.SetEquipAttack(equipBonusAtk);
+        healthController.SetEquipVit(equipBonusVit);
 
         attack = PartyController.party.GetStartingAttack(colorTag);
         startingArmor = PartyController.party.GetStartingArmor(colorTag);
         maxVit = PartyController.party.GetStartingHealth(colorTag);
 
-        healthController.SetCastRange(castRange + bonusCastRange);
-        healthController.SetMaxVit(maxVit + bonusVit);
-        healthController.SetStartingArmor(startingArmor + bonusArmor);
-        healthController.SetStartingAttack(attack + bonusAtk);
-        healthController.SetBonusMoveRange(bonusMoveRange);
-        HandController.handController.SetBonusReplace(bonusReplace, true);
-        HandController.handController.SetBonusHandSize(bonusHandSize, true);
+        healthController.SetCastRange(castRange + equipBonusCastRange);
+        healthController.SetMaxVit(maxVit);
+        healthController.SetStartingArmor(startingArmor);
+        healthController.SetStartingAttack(attack);
+        healthController.SetBonusMoveRange(equipBonusMoveRange);
+        HandController.handController.SetBonusReplace(equipBonusReplace, true);
+        HandController.handController.SetBonusHandSize(equipBonusHandSize, true);
         if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
             try
             {

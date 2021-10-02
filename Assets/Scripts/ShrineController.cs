@@ -81,11 +81,11 @@ public class ShrineController : MonoBehaviour
         if (equipment.equipmentDescription != "")
             equipText += equipment.equipmentDescription.Replace("|", "").Replace("<s>", "").Replace("</s>", "") + "\n";
         if (equipment.atkChange != 0)
-            equipText += " Atk: " + equipment.atkChange;
+            equipText += " Atk: " + equipment.atkChange.ToString("+0; -#");
         if (equipment.armorChange != 0)
-            equipText += " Armor: " + equipment.armorChange;
+            equipText += " Armor: " + equipment.armorChange.ToString("+0; -#");
         if (equipment.healthChange != 0)
-            equipText += " Health: " + equipment.healthChange;
+            equipText += " Health: " + equipment.healthChange.ToString("+0; -#");
         item1.transform.GetChild(3).GetComponent<Text>().text = equipText;
 
         item2.transform.GetChild(1).GetComponent<Image>().sprite = relic.art;

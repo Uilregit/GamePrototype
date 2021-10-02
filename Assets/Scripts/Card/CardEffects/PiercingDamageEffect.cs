@@ -82,6 +82,6 @@ public class PiercingDamageEffect : Effect
     public override void RelicProcess(List<GameObject> targets, Buff buf, int effectValue, int effectDuration, List<Relic> traceList)
     {
         foreach (GameObject targ in targets)
-            targ.GetComponent<HealthController>().TakePiercingDamage(effectValue, null, null, traceList);
+            targ.GetComponent<HealthController>().TakePiercingDamage(effectValue, targ.GetComponent<HealthController>(), null, traceList);
     }
 }

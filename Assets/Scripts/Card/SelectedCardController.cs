@@ -163,7 +163,7 @@ public class SelectedCardController : MonoBehaviour
 
         Vector2 offset = new Vector2(0, 1.3f);
         if (isShowingCardDisplay)
-            offset = new Vector2(0, HandController.handController.cardHighlightHeight);
+            offset = new Vector2(0, HandController.handController.GetCardHighlightHeight());
         Vector3 newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
 

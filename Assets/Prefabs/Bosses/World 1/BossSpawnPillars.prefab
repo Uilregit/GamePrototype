@@ -350,6 +350,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2312319728480496097, guid: 3173caa8cb88f0e4691a80b3c3e80f7a, type: 3}
+    - target: {fileID: 3507079564178671925, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81dca365c8e29124c9f7bece767dbcfa, type: 2}
     - target: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -398,6 +402,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5dc8ebb055141d449874bdc6b3acf941, type: 2}
+    - target: {fileID: 4561514513223437712, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+      propertyPath: m_InstanceId
+      value: -1671670
+      objectReference: {fileID: 0}
     - target: {fileID: 4834141995001189478, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
       propertyPath: m_Name
       value: CharacterDisplay

@@ -371,6 +371,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!114 &280766687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,8 +599,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1013974038}
   m_HandleRect: {fileID: 1013974037}
   m_Direction: 2
-  m_Value: 1.0001149
-  m_Size: 0.6797849
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1298,8 +1317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29, y: -2.021}
-  m_SizeDelta: {x: 26.422142, y: 84.132416}
+  m_AnchoredPosition: {x: -0.29, y: 0.848}
+  m_SizeDelta: {x: 26.422142, y: 45.877213}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2048708230
 MonoBehaviour:
@@ -1321,43 +1340,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#####################\r\n####### 0.5.1.3 #######\r\n#####################\r\n--
-    Cards --\r\n    - Systems -\r\n     Buffs will now respect immunity from different
-    sources\r\n\r\n-- Enemies --\r\n    - Magic Armor Boss -\r\n        Added as
-    the first world 1 boss\r\n\r\n    - Magic Armor Boss (Hard) -\r\n        Added
-    to world 1\r\n\r\n    - Attack Buff Enemy -\r\n        Grow from +3 ATK to +4
-    ATK\r\n\r\n-- System --\r\nReduced achievement requirements of world 1 room 9
-    from \"Remove 120 total armor\" --> \"Remove 100 total armor\"\r\nAchievement
-    for room 10 changed from \"Use less than 20 cards\" --> \"Be broken less than
-    2 times\"\r\nAchievement for hard version of room 10 boss changed from \"Ensure
-    enemies travel less than 30 total spaces\" --> \"End a turn with more than 6
-    enemies\"\r\nAchievement for room 5 reverted as new boss is implimented\r\nTurn
-    based achievements are recorded after enemies' death at the end fo the turn\r\nAdded
-    immunity checks before all card effect triggers that allows characters to be
-    imune to all card effects, not just damage\r\nAdded damage taken this card as
-    a condition to ability triggers\r\nStreamlined achievement reverting in patch
-    bot\r\nEnemies using AoE targeting types will now move to the furthest point
-    in range instead of standing still if possible\r\nEnemies with more than 1 cards
-    per turn will now no longer refresh their moverange left with each card\r\n   
-    All cards before the last will cause the enemy to move as little as possible,
-    last card tries to find the furthest moveable location in range\r\n\r\n-- UI
-    --\r\nStory Mode Secret Shop scene button will now say \"Back\" when no items
-    are selected, and \"Confirm\" when any are\r\nPatch button icon on the main screen
-    now has a notification if that patch note has not yet been read\r\n\r\n-- Bugs
-    --\r\nFixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1\r\nFixed
-    patch bot not resetting the best values in the scriptable room setup objects\r\nFixed
-    cards using location targeting not working\r\nFixed enemies with high castranges
-    not kiting properly\r\nFixed enemies targeting the wrong character type with
-    abiguous cast types (AoE, TargetedAoE, Any, etc)\r\nFixed enemies not kiting
-    properly if trying to target from the furthest position in range\r\nFixed enemies
-    using out of range pathfinding when it's staying still for minimized movement
-    mode\r\nFixed Echo Blade (Equipment) not requiring any crafting materials\r\nFixed
-    World 1 secret room all being labeled boss rooms\r\nFixed collection mid run
-    not starting with all copies of a starter card if 0 copies of them were equipped\r\nFixed
-    boss rooms always having a random seed of 0\r\nFixed story mode seeding bugs
-    that should reduce chance of getting exact same seeds in two different runs (seed
-    no longer between 0-60)\r\nFixed null exception error with collections while
-    checking new cards"
+  m_text: "#####################\r\n######## 0.5.2 ########\r\n#####################\r\n--
+    Cards --\r\n\r\n-- Enemies --\r\n\r\n-- System --\r\nMajor effects overhaul for
+    all card effects\r\n\r\n-- UI --\r\nShrines will now have \"+\" signs for equipment
+    stat numbers\r\nAll in combat cards on hover enlarge scale has been increased
+    by 20% to improve readability\r\nEnd turn button and replace button will now
+    change color to indicate that no action can be taken anymore\r\nAdded glow to
+    all on hit effects\r\nAdded glow to all boss enemies\r\nAdded fade in and fade
+    out dissolve shader to player and enemy cards\r\n\r\n-- Bugs --\r\nFixed normal
+    Magic Armor passive saying \"On card cast\" instead of \"On card damage\"\r\nFixed
+    AoE, TargetedAoE, and EmptyTargetedAoE from triggering on character types of
+    the wrong type\r\nFixed Magic Armor Boss from casting their cards twice on lower
+    speed settings\r\n    Changed all characters' animation lerp time from 25% to
+    0%\r\nFixed collection controller not showing reserve colors if entered from
+    tavern\r\nFixed char stats in previous rooms overriding new char stats after
+    changing equipment mid run\r\nFixed tavern back button not going to story mode
+    if entered from story mode\r\nFixed cards in collection using -1 as ATK after
+    combat\r\nFixed story mode menu defaulting to card view after combat"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

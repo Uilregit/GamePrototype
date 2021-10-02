@@ -1074,12 +1074,14 @@ Streamlined achievement reverting in patch bot
 Enemies using AoE targeting types will now move to the furthest point in range instead of standing still if possible
 Enemies with more than 1 cards per turn will now no longer refresh their moverange left with each card
     All cards before the last will cause the enemy to move as little as possible, last card tries to find the furthest moveable location in range
+All relic effects that applies to characters will be treat the affected character as the caster of the effect
 
 -- UI --
 Story Mode Secret Shop scene button will now say "Back" when no items are selected, and "Confirm" when any are
 Patch button icon on the main screen now has a notification if that patch note has not yet been read
 Selective immunity passive now dynamically tells you what the boss is immune to (energy, mana, or all)
 Card block aura effect now flashes with 100% alpha before fading back to 50% alpha
+Collection will now have a notification of which deck is incompete when pressing the finalize button
 
 -- Bugs --
 Fixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1
@@ -1097,21 +1099,35 @@ Fixed story mode seeding bugs that should reduce chance of getting exact same se
 Fixed null exception error with collections while checking new cards
 Fixed immunity checks preventing buffs from reverting
 Fixed immunity checks for buffs that have no trigger effects
-Fixed normal Magic Armor passive saying "On card cast" instead of "On card damage"
-Fixed AoE, TargetedAoE, and EmptyTargetedAoE from triggering on character types of the wrong type
 
 #####################
-###### 0.5.1.2 ######
+####### 0.5.2 #######
 #####################
 -- Cards --
 
 -- Enemies --
 
 -- System --
+Major effects overhaul for all card effects
 
 -- UI --
+Shrines will now have "+" signs for equipment stat numbers
+All in combat cards on hover enlarge scale has been increased by 20% to improve readability
+End turn button and replace button will now change color to indicate that no action can be taken anymore
+Added glow to all on hit effects
+Added glow to all boss enemies
+Added fade in and fade out dissolve shader to player and enemy cards
 
 -- Bugs --
+Fixed normal Magic Armor passive saying "On card cast" instead of "On card damage"
+Fixed AoE, TargetedAoE, and EmptyTargetedAoE from triggering on character types of the wrong type
+Fixed Magic Armor Boss from casting their cards twice on lower speed settings
+    Changed all characters' animation lerp time from 25% to 0%
+Fixed collection controller not showing reserve colors if entered from tavern
+Fixed char stats in previous rooms overriding new char stats after changing equipment mid run
+Fixed tavern back button not going to story mode if entered from story mode
+Fixed cards in collection using -1 as ATK after combat
+Fixed story mode menu defaulting to card view after combat
 
 #####################
 ###### 0.5.1.2 ######

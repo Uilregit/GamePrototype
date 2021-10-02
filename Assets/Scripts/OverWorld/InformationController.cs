@@ -134,7 +134,7 @@ public class InformationController : MonoBehaviour
     {
         try
         {
-            if (combatInfo.atk[PartyController.party.GetPartyIndex(color)] == 0)
+            if (combatInfo.atk[PartyController.party.GetPartyIndex(color)] <= 0)
                 return PartyController.party.GetStartingAttack(color) + CollectionController.collectionController.GetEquipmentAttack(color);
         }
         catch

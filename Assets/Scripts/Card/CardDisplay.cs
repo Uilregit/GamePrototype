@@ -45,6 +45,8 @@ public class CardDisplay : MonoBehaviour
     private Outline conditionHighlight;
     public LineRenderer lineRenderer;
 
+    private List<Material> materials = new List<Material>();
+
     [SerializeField] private Sprite attackGreyOut;
     [SerializeField] private Sprite skillGreyOut;
     [SerializeField] private Sprite weaponGreyOut;
@@ -90,7 +92,11 @@ public class CardDisplay : MonoBehaviour
     {
         thisCard = new CardController();
         conditionHighlight = outline.GetComponent<Outline>();
-        //lineRenderer = GetComponent<LineRenderer>();
+
+        art.material = new Material(art.material);
+        cardBack.material = new Material(cardBack.material);
+        equipmentOutline.material = new Material(equipmentOutline.material);
+        equipmentIcon.material = new Material(equipmentIcon.material);
     }
 
     public void Hide()
@@ -736,5 +742,78 @@ public class CardDisplay : MonoBehaviour
             disabledStatusText.text += status;
         else
             disabledStatusText.text += "\n" + status;
+    }
+
+    public void FadeOut(float time, Color emissionColor)
+    {
+        outline.enabled = false;
+        StartCoroutine(ExecuteFadeOut(time, emissionColor));
+    }
+
+    public void FadeIn(float time, Color emissionColor)
+    {
+        StartCoroutine(ExecuteFadeIn(time, emissionColor));
+    }
+
+    private IEnumerator ExecuteFadeOut(float time, Color emissionColor)
+    {
+        if (emissionColor != Color.clear)
+        {
+            art.material.SetColor("_Color", emissionColor * 0.5f);
+            cardBack.material.SetColor("_Color", emissionColor * 0.5f);
+            equipmentIcon.material.SetColor("_Color", emissionColor * 0.5f);
+            equipmentOutline.material.SetColor("_Color", emissionColor * 0.5f);
+        }
+
+        Color originalManaColor = manaCost.color;
+        Color originalEnergyColor = energyCost.color;
+        Color originalTitleColor = cardName.color;
+        Color originalDescriptionColor = description.color;
+        for (int i = 0; i < 10; i++)
+        {
+            manaCost.color = Color.Lerp(originalManaColor, Color.clear, i / 9f);
+            energyCost.color = Color.Lerp(originalEnergyColor, Color.clear, i / 9f);
+            cardName.color = Color.Lerp(originalTitleColor, Color.clear, i / 9f);
+            description.color = Color.Lerp(originalDescriptionColor, Color.clear, i / 9f);
+
+            art.material.SetFloat("_Dissolve", (9 - i) / 9f);
+            cardBack.material.SetFloat("_Dissolve", (9 - i) / 9f);
+            equipmentIcon.material.SetFloat("_Dissolve", (9 - i) / 9f);
+            equipmentOutline.material.SetFloat("_Dissolve", (9 - i) / 9f);
+
+            yield return new WaitForSeconds(time / 10f);
+        }
+    }
+
+    private IEnumerator ExecuteFadeIn(float time, Color emissionColor)
+    {
+        if (emissionColor != Color.clear)
+        {
+            art.material.SetColor("_Color", emissionColor * 0.5f);
+            cardBack.material.SetColor("_Color", emissionColor * 0.5f);
+            equipmentIcon.material.SetColor("_Color", emissionColor * 0.5f);
+            equipmentOutline.material.SetColor("_Color", emissionColor * 0.5f);
+        }
+
+        Color originalManaColor = manaCost.color;
+        Color originalEnergyColor = energyCost.color;
+        Color originalTitleColor = cardName.color;
+        Color originalDescriptionColor = description.color;
+        for (int i = 0; i < 10; i++)
+        {
+            manaCost.color = Color.Lerp(Color.clear, originalManaColor, i / 9f);
+            energyCost.color = Color.Lerp(Color.clear, originalEnergyColor, i / 9f);
+            cardName.color = Color.Lerp(Color.clear, originalTitleColor, i / 9f);
+            description.color = Color.Lerp(Color.clear, originalDescriptionColor, i / 9f);
+
+            art.material.SetFloat("_Dissolve", i / 9f);
+            cardBack.material.SetFloat("_Dissolve", i / 9f);
+            equipmentIcon.material.SetFloat("_Dissolve", i / 9f);
+            equipmentOutline.material.SetFloat("_Dissolve", i / 9f);
+
+
+
+            yield return new WaitForSeconds(time / 10f);
+        }
     }
 }

@@ -234,7 +234,10 @@ public class TavernController : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        if (StoryModeController.story != null)
+            SceneManager.LoadScene("StoryModeScene", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         InformationLogger.infoLogger.SavePlayerPreferences();
     }
 

@@ -711,7 +711,6 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToGearScene()
     {
-        Debug.Log("go to gear scene");
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");

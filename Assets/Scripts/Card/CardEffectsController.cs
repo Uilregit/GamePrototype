@@ -285,23 +285,23 @@ public class CardEffectsController : MonoBehaviour
                                 if (card.GetCard().hitEffect[i] == Card.HitEffect.PlayerAttack)
                                 {
                                     if (damage <= 5)
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("PlayerAttack");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.PlayerAttack, "PlayerAttack");
                                     else if (damage <= 20)
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("MediumImpact");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.PlayerAttack, "MediumImpact");
                                     else
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("LargeImpact");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.PlayerAttack, "LargeImpact");
                                 }
                                 else if (card.GetCard().hitEffect[i] == Card.HitEffect.MagicAttack)
                                 {
                                     if (damage <= 5)
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("SmallMagic");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.MagicAttack, "SmallMagic");
                                     else if (damage <= 20)
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("MediumMagic");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.MagicAttack, "MediumMagic");
                                     else
-                                        obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("LargeMagic");
+                                        obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(Card.HitEffect.MagicAttack, "LargeMagic");
                                 }
                                 else
-                                    obj.GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger(card.GetCard().hitEffect[i].ToString());
+                                    obj.GetComponent<HealthController>().charDisplay.TriggerOnHitEffect(card.GetCard().hitEffect[i]);
 
                                 if (obj.GetComponent<PlayerController>() != null)
                                 {

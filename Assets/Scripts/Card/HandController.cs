@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror;
 
 public class HandController : MonoBehaviour
@@ -18,9 +19,11 @@ public class HandController : MonoBehaviour
     public int playerNumber;
 
     public float cardStartingHeight;
-    public float cardHighlightHeight;
+    [SerializeField]
+    private float cardHighlightHeight;
     public float cardStartingSize;
-    public float cardHighlightSize;
+    [SerializeField]
+    private float cardHighlightSize;
     public float cardAimSize;
     public float cardHoldSize;
     public float cardHighlightXBoarder;
@@ -72,25 +75,6 @@ public class HandController : MonoBehaviour
             allowHold = UnlocksController.unlock.GetUnlocks().holdUnlocked;
         }
     }
-
-    /*
-    //Returns a random card from the deck from ONE color
-    private CardController GetCard(int index)
-    {
-        CardController card = Instantiate(cardTemplate).GetComponent<CardController>();
-        card.transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
-        card.SetCard(deck.DrawCard(index));
-
-        return card;
-    }
-
-    //Adds a new card to the hand and reorders card positions from ONE color
-    private void DrawCard(int index)
-    {
-        hand.Add(GetCard(index));
-        ResetCardPositions();
-    }
-    */
 
     //Returns a random card from the deck fron ANY color
     private CardController InstantiateAnyCard(bool fromDrawPile)
@@ -186,6 +170,8 @@ public class HandController : MonoBehaviour
                 {
                     drawnCards[i].cardDisplay.cardWhiteOut.color = Color.Lerp(Color.white, Color.clear, elapsedTime / 0.1f * TimeController.time.timerMultiplier);
                     drawnCards[i].transform.position = desiredPosition[i];
+                    if (elapsedTime == 0)
+                        drawnCards[i].cardDisplay.FadeIn(0.5f * TimeController.time.timerMultiplier, Color.clear);
                 }
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -312,6 +298,18 @@ public class HandController : MonoBehaviour
             hand[i].GetComponent<CardDragController>().SetActive(true);
             hand[i].GetComponent<CardDragController>().SetOriginalLocation(desiredPosition[i]);
         }
+
+        GameController.gameController.SetTurnButtonDone(hand.Count == 0 || (GetNumberOfPlayableCards() == 0 && currentReplaceCount == maxReplaceCount));
+    }
+
+    public int GetNumberOfPlayableCards()
+    {
+        int output = 0;
+        foreach (CardController card in hand)
+            if (card.GetNetEnergyCost() <= TurnController.turnController.GetCurrentEnergy() && card.GetNetManaCost() <= TurnController.turnController.GetCurrentMana())
+                output++;
+
+        return output;
     }
 
     public void HoldCard(CardController heldCard)
@@ -355,6 +353,7 @@ public class HandController : MonoBehaviour
 
             currentReplaceCount += 1;
             ResetReplaceText();
+            GameController.gameController.SetReplaceDone(currentReplaceCount == maxReplaceCount);
 
             if (currentReplaceCount == maxReplaceCount)
                 GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
@@ -486,23 +485,16 @@ public class HandController : MonoBehaviour
     private IEnumerator ClearExhaustCard(CardController card)
     {
         float elapsedTime = 0;
+        
+        card.cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
+
         while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
         {
-            card.cardDisplay.cardWhiteOut.enabled = true;
-            card.cardDisplay.cardWhiteOut.color = Color.Lerp(Color.clear, Color.white, elapsedTime / 0.5f);
-            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight, 0), new Vector3(card.transform.position.x, cardStartingHeight + 0.5f, 0), elapsedTime / 0.5f);
+            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight, 0), new Vector3(card.transform.position.x, cardStartingHeight + 1f, 0), elapsedTime / 0.5f);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         card.cardDisplay.Hide();
-        elapsedTime = 0;
-        card.cardDisplay.anim.SetTrigger("CardDisappear");
-        while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
-        {
-            card.transform.position = Vector3.Lerp(new Vector3(card.transform.position.x, cardStartingHeight + 0.5f, 0), new Vector3(card.transform.position.x, cardStartingHeight + 1, 0), elapsedTime / 0.5f);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
         Destroy(card.gameObject);
     }
 
@@ -577,5 +569,19 @@ public class HandController : MonoBehaviour
             maxReplaceCount = value;
 
         ResetReplaceCounter();
+    }
+
+    public float GetCardHighlightSize()
+    {
+        if (SceneManager.GetActiveScene().name == "CombatScene")
+            return cardHighlightSize * 1.2f;
+        return cardHighlightSize;
+    }
+
+    public float GetCardHighlightHeight()
+    {
+        if (SceneManager.GetActiveScene().name == "CombatScene")
+            return cardHighlightHeight * 1.2f;
+        return cardHighlightHeight;
     }
 }

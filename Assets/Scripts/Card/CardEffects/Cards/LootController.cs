@@ -13,6 +13,8 @@ public class LootController : MonoBehaviour
     public EquipmentLootTable equipmentLootTable;
     public int rarePercentage = 30;
 
+    public List<OnHitEffect> onHitEffects = new List<OnHitEffect>();
+
     private List<Card> rareCards = new List<Card>();
     private List<Card> commonCards = new List<Card>();
     private List<Card> starterDefenceCards = new List<Card>();
@@ -259,5 +261,13 @@ public class LootController : MonoBehaviour
                 break;
         }
         return output;
+    }
+
+    public OnHitEffect GetOnHitEffect(Card.HitEffect triggerName)
+    {
+        foreach (OnHitEffect effect in onHitEffects)
+            if (effect.effectName == triggerName)
+                return effect;
+        return null;
     }
 }

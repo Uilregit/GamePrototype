@@ -36,13 +36,27 @@ public class FinalizeButtonController : MonoBehaviour
         switch (buttonType)
         {
             case ButtonType.Back:
-                CollectionController.collectionController.FinalizeDeck();
-                try
+                if (!CollectionController.collectionController.CheckDeckComplete())
                 {
-                    CollectionController.collectionController.LogInformation();
+                    string incompeteColor = "";
+                    foreach (Card.CasterColor color in PartyController.party.partyColors)
+                        if (!CollectionController.collectionController.CheckDeckComplete(color))
+                        {
+                            incompeteColor = color.ToString();
+                            break;
+                        }
+                    CollectionController.collectionController.ShowErrorMessage("Incomplete " + incompeteColor + " Deck");
                 }
-                catch { }
-                CameraController.camera.transform.position = new Vector3(0, 0, -10);
+                else
+                {
+                    CollectionController.collectionController.FinalizeDeck();
+                    try
+                    {
+                        CollectionController.collectionController.LogInformation();
+                    }
+                    catch { }
+                    CameraController.camera.transform.position = new Vector3(0, 0, -10);
+                }
                 break;
             case ButtonType.Card:
                 CollectionController.collectionController.SetIsShowingCards(true);

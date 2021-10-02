@@ -33,7 +33,7 @@ public class CharacterInformationController : MonoBehaviour
     public void SetDescription(Sprite character, HealthController healthController, List<CardController> cards, List<BuffFactory> buffList, List<Equipment> equipments, AbilitiesController abilitiesController)
     {
         int currentHealth = healthController.GetVit();
-        int maxHealth = healthController.GetMaxVit();
+        int maxHealth = healthController.GetMaxVit() + healthController.GetEquipVit();
         int attack = healthController.GetAttack();
         int armor = healthController.GetArmor();
         numOfCards = cards.Count;

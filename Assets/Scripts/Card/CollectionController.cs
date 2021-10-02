@@ -1019,7 +1019,7 @@ public class CollectionController : MonoBehaviour
                 gearButton.GetComponent<Outline>().enabled = newEquipments.equipments.Count != 0;
         }
 
-        if (SceneManager.GetActiveScene().name == "StoryModeScene")         //In story mode planning, show other unlocked characters' tabs
+        if (SceneManager.GetActiveScene().name == "StoryModeScene" || SceneManager.GetActiveScene().name == "TavernScene")         //In story mode planning, show other unlocked characters' tabs
         {
             for (int i = 3; i < 3 + otherColors.Count; i++)
             {
@@ -1080,6 +1080,15 @@ public class CollectionController : MonoBehaviour
                 StoryModeController.story.ShowMenuNotification(3, false, false);
         }
         return totalNumOfBlanks == 0;
+    }
+
+    public bool CheckDeckComplete(Card.CasterColor color)
+    {
+        foreach (CardController card in selectedDeck[color.ToString()].deck)
+            if (card == null)
+                return false;
+
+        return true;
     }
 
     public void AddRewardsCard(CardController newCard, bool isRewardsCard = true)

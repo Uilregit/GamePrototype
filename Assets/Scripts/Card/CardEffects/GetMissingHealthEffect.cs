@@ -9,7 +9,7 @@ public class GetMissingHealth : Effect
         foreach (GameObject targ in target)
         {
             HealthController targetHealth = targ.GetComponent<HealthController>();
-            effectController.GetCard().GetCard().SetTempEffectValue(targetHealth.GetCurrentVit() - targetHealth.GetMaxVit());
+            effectController.GetCard().GetCard().SetTempEffectValue(targetHealth.GetCurrentVit() - targetHealth.GetMaxVit() - targetHealth.GetEquipVit());
         }
         yield return new WaitForSeconds(0);
     }
