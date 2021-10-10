@@ -618,6 +618,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             if (GetArmor() > 0 && damage != 0)
                 TakeArmorDamage(1, attacker, traceList);
 
+            if (!isSimulation)
+                if (damage == 0)
+                    charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.Immunity, 0);
+                else if (GetArmor() == 0)
+                    charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.ArmorBroken, 0);
+
             OnDamage(attacker, damage, oldHealth, traceList, isEndOfTurn);
 
             if (damage == 1)
@@ -690,6 +696,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
                 if (!isSimulation)
                 {
+                    charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.ArmorBreak, 0);
+
                     charDisplay.healthBar.SetStatusText("Broken", new Color(255, 102, 0));
                     if (!isPlayer)
                         AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
@@ -718,7 +726,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
 
         if (damage > 0 && !isSimulation)
-            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnShieldDamageRecieved, this, damage, traceList));
+            if (GetArmor() > 0)
+                charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.ArmorHit, 1);
+        StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnShieldDamageRecieved, this, damage, traceList));
     }
 
     public int GetSimulatedArmorDamage(int value)
@@ -1132,6 +1142,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             if (!attacker.isPlayer && !isPlayer && attacker != this && !isSimulation)
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
         }
+
+        if (!isSimulation && isPlayer)
+            GameController.gameController.UpdatePlayerDamage();
 
         GridController.gridController.ResetOverlapOrder(transform.position);
     }

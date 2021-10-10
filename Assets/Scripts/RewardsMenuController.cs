@@ -126,12 +126,19 @@ public class RewardsMenuController : MonoBehaviour
         deckId = value;
     }
 
-    public void ReportRewardTaken(int index)
+    public void ReportRewardTaken(RewardsMenuController.RewardType type)
     {
+        if (type == RewardType.OverkillGold || type == RewardType.PassiveGold)
+            MusicController.music.PlaySFX(MusicController.music.goldSFX);
+        else if (type == RewardType.Card)
+            MusicController.music.PlaySFX(MusicController.music.paperMoveSFX[Random.Range(0, MusicController.music.paperMoveSFX.Count)]);
+        else
+            MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+
         numRewardsTaken += 1;
         if (numRewards == numRewardsTaken)
         {
-            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1||
+            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
                 InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
             {
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
@@ -150,6 +157,7 @@ public class RewardsMenuController : MonoBehaviour
                 RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
                 RoomController.roomController.Refresh();
                 InformationLogger.infoLogger.SaveGame(false);
+                MusicController.music.SetHighPassFilter(true);
                 GameController.gameController.LoadScene("OverworldScene", true, deckId);
             }
         }
@@ -160,7 +168,7 @@ public class RewardsMenuController : MonoBehaviour
         RelicController.relic.AddRelic(thisRelic);
         HideRelicRewardMenu();
         SetItemsClickable(true);
-        ReportRewardTaken(0);
+        ReportRewardTaken(RewardsMenuController.RewardType.Relic);
     }
 
     public void HideRewardCards()

@@ -29,6 +29,7 @@ MonoBehaviour:
   targetType: 03000000
   cardEffectName: fa000000
   hitEffect: 3f420f00
+  soundEffect: 50000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:

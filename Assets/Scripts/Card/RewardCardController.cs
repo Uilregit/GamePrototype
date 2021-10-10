@@ -23,6 +23,7 @@ public class RewardCardController : MonoBehaviour
 
     private void OnMouseUp()
     {
+        transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlayCastSound();
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), true);
         StopAllCoroutines();
         transform.localScale = localScale;
@@ -39,7 +40,7 @@ public class RewardCardController : MonoBehaviour
             else
                 CollectionController.collectionController.AddRewardsEquipment(transform.GetChild(0).GetComponent<CardDisplay>().GetEquipment());
 
-            RewardsMenuController.rewardsMenu.ReportRewardTaken(0);
+            RewardsMenuController.rewardsMenu.ReportRewardTaken(RewardsMenuController.RewardType.Card);
             RewardsMenuController.rewardsMenu.HideRewardCards();
             RewardsMenuController.rewardsMenu.SetItemsClickable(true);
         }
@@ -48,6 +49,7 @@ public class RewardCardController : MonoBehaviour
     private IEnumerator EnlargeCard()
     {
         yield return new WaitForSeconds(0.3f);
+        transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlaySelectSound();
         transform.SetAsLastSibling();
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.GetCardHighlightHeight() * 1.1f, 0);
         transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize() * 1.1f, HandController.handController.GetCardHighlightSize() * 1.1f, 1);

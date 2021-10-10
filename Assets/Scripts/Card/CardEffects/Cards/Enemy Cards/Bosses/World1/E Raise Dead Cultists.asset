@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Raise Dead Cultists
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: 'Raise Dead: Cultists'
@@ -28,6 +29,7 @@ MonoBehaviour:
   targetType: 02000000
   cardEffectName: 88130000
   hitEffect: c8000000
+  soundEffect: 5a000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:
@@ -43,3 +45,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: -1
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

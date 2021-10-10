@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E FrostFire
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Frost Fire
@@ -28,6 +29,7 @@ MonoBehaviour:
   targetType: 020000000200000001000000
   cardEffectName: fe010000910100006e000000
   hitEffect: 3f420f003f420f002c010000
+  soundEffect: 460000000000000000000000
   conditionType: 000000000000000000000000
   conditionValue: 000000000000000000000000
   buff:
@@ -45,3 +47,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

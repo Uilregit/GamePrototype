@@ -52,6 +52,8 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public virtual void ReportItemBought(int gold, StoryModeController.RewardsType name, int amount, bool bought, int index)
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+
         if (bought)
             totalGold -= gold;
         else
@@ -132,6 +134,8 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public virtual void BuyAndExit()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+
         ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
         ResourceController.resource.ResetReviveUsed();
         AchievementSystem.achieve.ResetAchievements();

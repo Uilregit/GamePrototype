@@ -143,6 +143,11 @@ public class PlayerPreferences
 [System.Serializable]
 public class Settings
 {
+    public int backgroundMusicVolume = 10;
+    public bool backgroundMusicMuted = false;
+    public int soundEffectsVolume = 10;
+    public bool soundEffectsMuted = false;
+
     public int gameSpeedIndex;
     public int screenShakeIndex;
     public bool remainingMoveRangeIndicator;
@@ -1082,6 +1087,12 @@ public class InformationLogger : MonoBehaviour
     private Settings GetSettings()
     {
         Settings settings = new Settings();
+
+        settings.backgroundMusicMuted = SettingsController.settings.GetBackGroundMusicMuted();
+        settings.backgroundMusicVolume = SettingsController.settings.GetBackGroundMusicVolume();
+        settings.soundEffectsMuted = SettingsController.settings.GetSoundEffectsMuted();
+        settings.soundEffectsVolume = SettingsController.settings.GetSoundEffectsVolume();
+
         settings.gameSpeedIndex = SettingsController.settings.GetGameSpeedIndex();
         settings.screenShakeIndex = SettingsController.settings.GetScreenShakeIndex();
         settings.remainingMoveRangeIndicator = SettingsController.settings.GetRemainingMoveRangeIndicator();
@@ -1102,6 +1113,11 @@ public class InformationLogger : MonoBehaviour
     public void LoadSettings()
     {
         Settings settings = GetHasSettings();
+
+        SettingsController.settings.SetBackgroundMusicMuted(settings.backgroundMusicMuted);
+        SettingsController.settings.SetBackgroundMusicVolume(settings.backgroundMusicVolume);
+        SettingsController.settings.SetSoundEffectsMuted(settings.soundEffectsMuted, false);
+        SettingsController.settings.SetSoundEffectsVolume(settings.soundEffectsVolume, false);
 
         SettingsController.settings.SetGameSpeedIndex(settings.gameSpeedIndex);
         SettingsController.settings.SetScreenShakeIndex(settings.screenShakeIndex);

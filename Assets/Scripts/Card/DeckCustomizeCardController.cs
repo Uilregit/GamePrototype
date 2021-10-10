@@ -183,6 +183,7 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void SelectCard(int index)
     {
+        cardDisplay.cardSounds.PlaySelectSound();
         if (isShowingCard)
             CollectionController.collectionController.AddCard(card, index);
         else
@@ -268,6 +269,8 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     private void EnlargeCard()
     {
+        cardDisplay.cardSounds.PlaySelectSound();
+
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize(), HandController.handController.GetCardHighlightSize(), 1);
         cardDisplay.SetToolTip(true, -1, 1, false);
@@ -284,6 +287,8 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     private void ShrinkCard()
     {
+        cardDisplay.cardSounds.PlayUncastSound();
+
         transform.localScale = localScale;
         transform.position = originalLocation;
         cardDisplay.SetToolTip(false, -1, 1, false);

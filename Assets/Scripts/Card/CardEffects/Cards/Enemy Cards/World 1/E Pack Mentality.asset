@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Pack Mentality
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Pack Mentality
@@ -28,6 +29,7 @@ MonoBehaviour:
   targetType: 0200000002000000
   cardEffectName: 1c0200006e000000
   hitEffect: 3f420f00c8000000
+  soundEffect: 6400000000000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
@@ -46,3 +48,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

@@ -92,10 +92,13 @@ public class StoryModeShopCardController : MonoBehaviour
         //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = originalSorterOrder;
         if (Time.time - clickedTime <= clickThreshold)
             SelectCard();
+        else
+            cardDisplay.cardSounds.PlayUncastSound();
     }
 
     public void SelectCard()
     {
+        cardDisplay.cardSounds.PlayCastSound();
         picked = true;
 
         StoryModeShopController.shop.ReportCardSelected(this, materials, ResetBuyable(), bought);
@@ -155,6 +158,7 @@ public class StoryModeShopCardController : MonoBehaviour
     private IEnumerator EnlargeCard()
     {
         yield return new WaitForSeconds(0.3f);
+        cardDisplay.cardSounds.PlaySelectSound();
         transform.SetParent(selectedCardCanvas.transform);
         //GetComponent<CardDisplay>().cardName.GetComponent<MeshRenderer>().sortingOrder = selectedCardCanvas.sortingOrder + 1;
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.GetCardHighlightHeight(), 0);

@@ -29,6 +29,9 @@ public class TurnController : MonoBehaviour
     [SerializeField] private Text maxEnergyText;
     [SerializeField] private Text currentEnergyText;
 
+    public AudioClip playerTurnSound;
+    public AudioClip enemyTurnSound;
+
     public Image endTurnButton;
     [SerializeField] private Color turnEnabledColor, turnDisabledColor;
     public Text turnText;
@@ -226,6 +229,7 @@ public class TurnController : MonoBehaviour
         //Enemy turn
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         turnText.text = "Enemy Turn";
+        MusicController.music.PlaySFX(enemyTurnSound);
         turnText.enabled = true;
         turnTextBack.enabled = true;
         yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
@@ -297,6 +301,7 @@ public class TurnController : MonoBehaviour
 
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
+        MusicController.music.PlaySFX(playerTurnSound);
         turnText.enabled = true;
         turnTextBack.enabled = true;
         yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);

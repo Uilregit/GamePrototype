@@ -30,6 +30,7 @@ public class EquipmentDragCardController : DragController
 
     public override void OnMouseDown()
     {
+        cardDisplay.cardSounds.PlaySelectSound();
         base.OnMouseDown();
         cardDisplay.Show();
         cardDisplay.GetComponent<LineRenderer>().enabled = false;
@@ -49,6 +50,7 @@ public class EquipmentDragCardController : DragController
 
     public void OnMouseUp()
     {
+        cardDisplay.cardSounds.PlayCastSound();
         cardDisplay.Hide();
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
         {

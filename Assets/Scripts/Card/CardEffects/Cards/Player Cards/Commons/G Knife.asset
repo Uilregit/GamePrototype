@@ -29,9 +29,11 @@ MonoBehaviour:
   targetType: 0300000003000000
   cardEffectName: 00000000dc000000
   hitEffect: 000000003f420f00
+  soundEffect: 0100000000000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
+  - {fileID: 0}
   - {fileID: 0}
   effectValue: 4b00000001000000
   effectDuration: 0000000000000000

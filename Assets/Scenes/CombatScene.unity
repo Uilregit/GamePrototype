@@ -1548,6 +1548,7 @@ MonoBehaviour:
   cardLootTable: {fileID: 0}
   equipmentLootTable: {fileID: 0}
   rarePercentage: 30
+  onHitEffects: []
 --- !u!4 &181878853
 Transform:
   m_ObjectHideFlags: 0
@@ -3169,7 +3170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -4576,6 +4577,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageOverlay: {fileID: 1655568980}
   circleHighlight: {fileID: 744546236}
+  music: {fileID: 2012761140}
+  combatMusic: {fileID: 8300000, guid: 4298707530aa5434b90d2ce4645d92fd, type: 3}
+  bossMusic: {fileID: 8300000, guid: 4fa3d49c3d1719a4699c37197a04254b, type: 3}
+  victoryFanfair: {fileID: 8300000, guid: 39eae31b7886daa449bc5130d1678d72, type: 3}
   endTurnButton: {fileID: 146497552}
   notYetDoneColor: {r: 0.96862745, g: 0.49803922, b: 0, a: 1}
   doneColor: {r: 0.28141683, g: 0.6415094, b: 0.37792718, a: 1}
@@ -8892,6 +8897,8 @@ MonoBehaviour:
   maxEnergy: 3
   maxEnergyText: {fileID: 1268121867}
   currentEnergyText: {fileID: 1567856008}
+  playerTurnSound: {fileID: 8300000, guid: 44ced445c978dc04a944e9041caa77f5, type: 3}
+  enemyTurnSound: {fileID: 8300000, guid: b9ab491fa13e0b547a6abaf46ae17bb1, type: 3}
   endTurnButton: {fileID: 0}
   turnEnabledColor: {r: 0, g: 0, b: 0, a: 0}
   turnDisabledColor: {r: 0, g: 0, b: 0, a: 0}
@@ -11764,6 +11771,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979236699}
   m_CullTransparentMesh: 0
+--- !u!1 &2012761139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2012761141}
+  - component: {fileID: 2012761140}
+  m_Layer: 0
+  m_Name: BackgroundMusicController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2012761140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012761139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5ee711a8c1d94419cd4beb798cf128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 0}
+  loop: 1
+--- !u!4 &2012761141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012761139}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0356537, y: 1.3376342, z: -224.4153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2035690657
 GameObject:
   m_ObjectHideFlags: 0

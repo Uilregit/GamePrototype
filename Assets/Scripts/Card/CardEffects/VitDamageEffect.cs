@@ -16,6 +16,9 @@ public class VitDamageEffect : Effect
 
         for (int i = 0; i < duration; i++)
         {
+            if (i != 0 && waitTimeMultiplier != 0)
+                caster.GetComponent<HealthController>().charDisplay.onHitSoundController.PlaySound(card.soundEffect[effectIndex]);
+
             foreach (GameObject targ in target)
             {
                 int damageValue = 0;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E SummonElemental
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Summon Elemental
@@ -28,6 +29,7 @@ MonoBehaviour:
   targetType: 02000000
   cardEffectName: 88130000
   hitEffect: c8000000
+  soundEffect: 07000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:
@@ -43,3 +45,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

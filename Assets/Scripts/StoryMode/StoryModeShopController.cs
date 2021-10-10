@@ -224,6 +224,8 @@ public class StoryModeShopController : MonoBehaviour
 
     public void ReportReturnButtonPressed()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+        MusicController.music.SetHighPassFilter(false);
         StoryModeController.story.GoToMapScene();
         StoryModeController.story.SetMenuBar(true);
     }

@@ -9,6 +9,7 @@ public class DeckButtonController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        MusicController.music.PlaySFX(MusicController.music.paperMoveSFX[Random.Range(0, MusicController.music.paperMoveSFX.Count)]);
         CollectionController.collectionController.SetDeck(deckNumber);
     }
 }

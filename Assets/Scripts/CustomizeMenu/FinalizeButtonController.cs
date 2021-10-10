@@ -33,6 +33,8 @@ public class FinalizeButtonController : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "OverworldScene" && SceneManager.GetActiveScene().name != "ShopScene")
             return;
 
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+
         switch (buttonType)
         {
             case ButtonType.Back:
@@ -49,6 +51,9 @@ public class FinalizeButtonController : MonoBehaviour
                 }
                 else
                 {
+                    if (SceneManager.GetActiveScene().name != "ShopScene")
+                        MusicController.music.SetHighPassFilter(false);
+
                     CollectionController.collectionController.FinalizeDeck();
                     try
                     {

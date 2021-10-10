@@ -403,121 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenShakeMultiplier: 1
---- !u!1 &756166188
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 756166189}
-  - component: {fileID: 756166191}
-  - component: {fileID: 756166190}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &756166189
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756166188}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1768858657}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29, y: -2.021}
-  m_SizeDelta: {x: 26.422142, y: 84.132416}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &756166190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756166188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 1
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: "#####################\r\n####### 0.5.1.3 #######\r\n#####################\r\n--
-    Cards --\r\n    - Systems -\r\n     Buffs will now respect immunity from different
-    sources\r\n\r\n-- Enemies --\r\n    - Magic Armor Boss -\r\n        Added as
-    the first world 1 boss\r\n\r\n    - Magic Armor Boss (Hard) -\r\n        Added
-    to world 1\r\n\r\n    - Attack Buff Enemy -\r\n        Grow from +3 ATK to +4
-    ATK\r\n\r\n-- System --\r\n1<indent = 15%>Reduced achievement requirements of
-    world 1 room 9 from \"Remove 120 total armor\" --> \"Remove 100 total armor\"\r\nAchievement
-    for room 10 changed from \"Use less than 20 cards\" --> \"Be broken less than
-    2 times\"\r\nAchievement for hard version of room 10 boss changed from \"Ensure
-    enemies travel less than 30 total spaces\" --> \"End a turn with more than 6
-    enemies\"\r\nAchievement for room 5 reverted as new boss is implimented\r\nTurn
-    based achievements are recorded after enemies' death at the end fo the turn\r\nAdded
-    immunity checks before all card effect triggers that allows characters to be
-    imune to all card effects, not just damage\r\nAdded damage taken this card as
-    a condition to ability triggers\r\nStreamlined achievement reverting in patch
-    bot\r\nEnemies using AoE targeting types will now move to the furthest point
-    in range instead of standing still if possible\r\nEnemies with more than 1 cards
-    per turn will now no longer refresh their moverange left with each card\r\n   
-    All cards before the last will cause the enemy to move as little as possible,
-    last card tries to find the furthest moveable location in range\r\n\r\n-- UI
-    --\r\nStory Mode Secret Shop scene button will now say \"Back\" when no items
-    are selected, and \"Confirm\" when any are\r\nPatch button icon on the main screen
-    now has a notification if that patch note has not yet been read\r\n\r\n-- Bugs
-    --\r\nFixed patch bot ignoring subversions ie. 0.5.1 compared to 0.5.1.1\r\nFixed
-    patch bot not resetting the best values in the scriptable room setup objects\r\nFixed
-    cards using location targeting not working\r\nFixed enemies with high castranges
-    not kiting properly\r\nFixed enemies targeting the wrong character type with
-    abiguous cast types (AoE, TargetedAoE, Any, etc)\r\nFixed enemies not kiting
-    properly if trying to target from the furthest position in range\r\nFixed enemies
-    using out of range pathfinding when it's staying still for minimized movement
-    mode\r\nFixed Echo Blade (Equipment) not requiring any crafting materials\r\nFixed
-    World 1 secret room all being labeled boss rooms\r\nFixed collection mid run
-    not starting with all copies of a starter card if 0 copies of them were equipped\r\nFixed
-    boss rooms always having a random seed of 0\r\nFixed story mode seeding bugs
-    that should reduce chance of getting exact same seeds in two different runs (seed
-    no longer between 0-60)\r\nFixed null exception error with collections while
-    checking new cards"
---- !u!222 &756166191
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756166188}
-  m_CullTransparentMesh: 0
 --- !u!1 &789108518
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,11 +437,11 @@ RectTransform:
   m_Father: {fileID: 1768858657}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.22, y: 0}
   m_SizeDelta: {x: 20, y: 430}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &789108520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,7 +485,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1013974037}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.7916212
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -746,8 +631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.0058}
-  m_SizeDelta: {x: 5, y: 8.583086}
+  m_AnchoredPosition: {x: 0, y: -0.057128}
+  m_SizeDelta: {x: 5, y: 8.685743}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846196275
 MonoBehaviour:
@@ -1243,16 +1128,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 789108519}
-  - {fileID: 756166189}
   - {fileID: 2048708229}
   m_Father: {fileID: 846196274}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.0021455}
-  m_SizeDelta: {x: 5, y: 8.578793}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 5, y: 8.685743}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1768858658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1265,7 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 756166189}
+  m_Content: {fileID: 2048708229}
   m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
@@ -1313,13 +1197,13 @@ RectTransform:
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 1768858657}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29, y: 0.848}
-  m_SizeDelta: {x: 26.422142, y: 45.877213}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.20000005, y: 0}
+  m_SizeDelta: {x: 26.422142, y: 73.1473}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &2048708230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,23 +1224,35 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#####################\r\n######## 0.5.2 ########\r\n#####################\r\n--
-    Cards --\r\n\r\n-- Enemies --\r\n\r\n-- System --\r\nMajor effects overhaul for
-    all card effects\r\n\r\n-- UI --\r\nShrines will now have \"+\" signs for equipment
-    stat numbers\r\nAll in combat cards on hover enlarge scale has been increased
-    by 20% to improve readability\r\nEnd turn button and replace button will now
-    change color to indicate that no action can be taken anymore\r\nAdded glow to
-    all on hit effects\r\nAdded glow to all boss enemies\r\nAdded fade in and fade
-    out dissolve shader to player and enemy cards\r\n\r\n-- Bugs --\r\nFixed normal
-    Magic Armor passive saying \"On card cast\" instead of \"On card damage\"\r\nFixed
-    AoE, TargetedAoE, and EmptyTargetedAoE from triggering on character types of
-    the wrong type\r\nFixed Magic Armor Boss from casting their cards twice on lower
-    speed settings\r\n    Changed all characters' animation lerp time from 25% to
-    0%\r\nFixed collection controller not showing reserve colors if entered from
-    tavern\r\nFixed char stats in previous rooms overriding new char stats after
-    changing equipment mid run\r\nFixed tavern back button not going to story mode
-    if entered from story mode\r\nFixed cards in collection using -1 as ATK after
-    combat\r\nFixed story mode menu defaulting to card view after combat"
+  m_text: "#####################\r\n####### 0.5.2.1 #######\r\n#####################\r\n--
+    Cards --\r\n\r\n-- Enemies --\r\n\r\n-- System --\r\nAchievement requirements
+    for world 1 room 10-H from \"End a turn with more than 6 enemies\" to \"End a
+    turn with more than 5 enemies\"\r\nMajor effects overhaul for all card effects\r\nCompressed
+    textures to half build size\r\nAdded music and sound effects volume controls
+    to settings menu\r\nAdded music and sound effects to all interactions\r\n\r\n--
+    UI --\r\nShrines will now have \"+\" signs for equipment stat numbers\r\nAll
+    in combat cards on hover enlarge scale has been increased by 20% to improve readability\r\nEnd
+    turn button and replace button will now change color to indicate that no action
+    can be taken anymore\r\nAdded glow to all on hit effects\r\nAdded glow to all
+    boss enemies\r\nAdded fade in and fade out dissolve shader to player and enemy
+    cards\r\nIf no equipment are equipped but have unequipped equipments, collection
+    menu defaults to page 1\r\n\r\n-- Audio --\r\nAdded background music to all scenes\r\nAdded
+    sound effects to all combat card interactions including drawing cards\r\nAdded
+    sound effects to all player cards\r\nAdded sound effects to all enemy cards\r\nAdded
+    passive sound effects to damaging armor, armor break, and immunity\r\nAdded footstep
+    sounds to enemies and players\r\nAdded sound effects to all out of comat card
+    interactions\r\nAdded all UI and button sound effects\r\nNormalized audio loudness
+    for all sound effects\r\nAdded lowpass filter to background music when players
+    are at low health\r\n\r\n-- Bugs --\r\nFixed normal Magic Armor passive saying
+    \"On card cast\" instead of \"On card damage\"\r\nFixed AoE, TargetedAoE, and
+    EmptyTargetedAoE from triggering on character types of the wrong type\r\nFixed
+    Magic Armor Boss from casting their cards twice on lower speed settings\r\n   
+    Changed all characters' animation lerp time from 25% to 0%\r\nFixed collection
+    controller not showing reserve colors if entered from tavern\r\nFixed char stats
+    in previous rooms overriding new char stats after changing equipment mid run\r\nFixed
+    tavern back button not going to story mode if entered from story mode\r\nFixed
+    cards in collection using -1 as ATK after combat\r\nFixed story mode menu defaulting
+    to card view after combat"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

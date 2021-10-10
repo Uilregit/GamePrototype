@@ -152,6 +152,7 @@ public class SelectedCardController : MonoBehaviour
         if (!clickable)
             return;
 
+        cardDisplay.cardSounds.PlaySelectSound();
         originalPosition = transform.position;
         originalRotation = transform.rotation;
     }
@@ -173,6 +174,7 @@ public class SelectedCardController : MonoBehaviour
         {
             if (isShowing)
             {
+                cardDisplay.cardSounds.PlayUncastSound();
                 cardDisplay.Show();
                 cardDisplay.lineRenderer.enabled = false;
                 Hide();
@@ -185,6 +187,7 @@ public class SelectedCardController : MonoBehaviour
         {
             if (!isShowing)
             {
+                cardDisplay.cardSounds.PlaySelectSound();
                 cardDisplay.Hide();
                 Show();
                 transform.rotation = originalRotation;
@@ -223,6 +226,7 @@ public class SelectedCardController : MonoBehaviour
         if (!clickable)
             return;
 
+        cardDisplay.cardSounds.PlayCastSound();
         isShowingCardDisplay = false;
         cardDisplay.Hide();
         Show();

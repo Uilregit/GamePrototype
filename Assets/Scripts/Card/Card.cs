@@ -138,6 +138,38 @@ public class Card : ScriptableObject
     }
     public HitEffect[] hitEffect = new HitEffect[1];
 
+    public enum SoundEffect
+    {
+        None = 0,
+
+        Sword = 1,
+        SwordHeavy = 2,
+        Arrow = 5,
+        Claw = 10,
+
+        Fire = 50,
+        FireHeavy = 51,
+        Thunder = 60,
+        ThunderHeavy = 61,
+        Ice = 70,
+        IceHeavy = 7,
+        Wind = 80,
+
+        Heal = 90,
+        Buff = 100,
+        Debuff = 110,
+        ArmorGain = 150,
+        Stun = 160,
+        Taunt = 170,
+
+        ArmorHit = 1000,
+        ArmorBreak = 1001,
+        ArmorBroken = 1002,
+        Immunity = 1010
+    }
+
+    public SoundEffect[] soundEffect = new SoundEffect[1];
+
     public enum ConditionType
     {
         None = 0,
@@ -307,6 +339,7 @@ public class Card : ScriptableObject
         output.targetType = targetType;
         output.cardEffectName = cardEffectName;
         output.hitEffect = hitEffect;
+        output.soundEffect = soundEffect;
         output.conditionType = conditionType;
         output.conditionValue = conditionValue;
         output.buff = buff;

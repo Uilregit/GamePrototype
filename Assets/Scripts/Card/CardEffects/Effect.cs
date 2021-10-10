@@ -63,12 +63,18 @@ public abstract class Effect
             else if (hlth.GetImmuneToEnergy() && card.manaCost == 0)
             {
                 if (waitTimeMultiplier != 0)
+                {
                     hlth.SetStatusText("Immune", Color.yellow);
+                    hlth.charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.Immunity, 0);
+                }
             }
             else if (hlth.GetImmuneToMana() && card.manaCost > 0)
             {
                 if (waitTimeMultiplier != 0)
+                {
                     hlth.SetStatusText("Immune", Color.yellow);
+                    hlth.charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.Immunity, 0);
+                }
             }
             else
                 viableCastTargets.Add(hlth.gameObject);

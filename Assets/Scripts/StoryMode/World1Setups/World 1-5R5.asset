@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: World 1-5R5
   m_EditorClassIdentifier: 
-  isBossRoom: 0
+  isBossRoom: 1
   relicReward: 0
   roomName: World 1-5R5
   enemies:

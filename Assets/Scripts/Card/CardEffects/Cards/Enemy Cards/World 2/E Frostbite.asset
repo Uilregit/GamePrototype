@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Frostbite
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Frostbite
@@ -29,6 +30,7 @@ MonoBehaviour:
   targetType: 01000000030000000300000001000000
   cardEffectName: 00000000fe010000910100006e000000
   hitEffect: 640000003f420f003f420f002c010000
+  soundEffect: 46000000000000000000000000000000
   conditionType: 00000000000000000000000000000000
   conditionValue: 00000000000000000000000000000000
   buff:
@@ -47,3 +49,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

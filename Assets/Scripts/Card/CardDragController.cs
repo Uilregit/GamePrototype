@@ -67,6 +67,9 @@ public class CardDragController : DragController
                 desiredRotation *= 2;
                 if (desiredRotation.magnitude > 30)
                     desiredRotation = desiredRotation.normalized * 30;
+                if (desiredRotation.magnitude > 30 && !cardDisplay.cardSounds.source.isPlaying)
+                    cardDisplay.cardSounds.PlayDragSound();
+
                 rectTransform.rotation = Quaternion.Slerp(rectTransform.rotation, Quaternion.Euler(desiredRotation + originalRotation), Time.deltaTime * 35); //Uses fixedDeltaTime (default 50 calls per second)
             }
             else
@@ -76,6 +79,9 @@ public class CardDragController : DragController
         }
         else if (currentState == State.Aiming)
         {
+            if (!cardDisplay.cardSounds.source.isPlaying)
+                cardDisplay.cardSounds.PlayCastingSound();
+
             if (showingToolTip != null)
                 StopCoroutine(showingToolTip);
             cardDisplay.SetToolTip(false);
@@ -147,6 +153,7 @@ public class CardDragController : DragController
                 player.GetComponent<Collider2D>().enabled = true;
         }
 
+        cardDisplay.cardSounds.PlayUncastSound();
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         currentState = State.Highlighted;
         isTriggeringEffect = false;
@@ -295,6 +302,8 @@ public class CardDragController : DragController
 
     public override void OnMouseDown()
     {
+        cardDisplay.cardSounds.PlaySelectSound();
+
         currentState = State.Highlighted;
         previousMousePosition = Input.mousePosition;
         //Enlarge for easy viewing
@@ -393,6 +402,7 @@ public class CardDragController : DragController
         if (targetedLocs.Count == 0)
             return;
 
+        cardDisplay.cardSounds.PlayCastSound();
         cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
 
         line.enabled = false;

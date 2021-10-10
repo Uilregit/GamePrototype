@@ -25,6 +25,7 @@ public class ManifestCardController : MonoBehaviour
 
     private void OnMouseUp()
     {
+        transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlayCastSound();
         StopAllCoroutines();
         transform.localScale = localScale;
         transform.position = originalLocation;
@@ -37,6 +38,7 @@ public class ManifestCardController : MonoBehaviour
     private IEnumerator EnlargeCard()
     {
         yield return new WaitForSeconds(0.3f);
+        transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlaySelectSound();
         transform.SetAsLastSibling();
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.GetCardHighlightHeight() * 1.1f, 0);
         transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize() * 1.1f, HandController.handController.GetCardHighlightSize() * 1.1f, 1);

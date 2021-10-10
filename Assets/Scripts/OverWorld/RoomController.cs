@@ -359,6 +359,7 @@ public class RoomController : MonoBehaviour
     */
     public void EnterRoom(string sceneName)
     {
+        MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
         //GameController.gameController.LoadScene(sceneName, false, 0);
         HandController.handController.ResetHoldsAndReplaces();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);

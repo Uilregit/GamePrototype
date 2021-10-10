@@ -351,6 +351,7 @@ public class EnemyController : MonoBehaviour
 
             CameraController.camera.ScreenShake(0.06f, 0.05f);
 
+            healthController.charDisplay.onHitSoundController.PlayFootStepSound();
             yield return StartCoroutine(MoveLerp(transform.position, position, TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier * 0.7f));
 
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, healthController, 1));

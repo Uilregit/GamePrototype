@@ -7,6 +7,7 @@ public class EditDeckButtonController : MonoBehaviour
 {
     public void OnMouseDown()
     {
+        MusicController.music.SetHighPassFilter(true);
         CameraController.camera.transform.position = new Vector3(8, 0, -10);
         CollectionController.collectionController.ResetDeck();
     }

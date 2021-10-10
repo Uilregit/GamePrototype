@@ -72,12 +72,11 @@ MonoBehaviour:
   attack: 5
   moveRange: 4
   randomStartRange: 2
-  attacksPerTurn: 2
+  attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 3c5a954b274b4a544b1b46fa2066603a, type: 2}
-  - {fileID: 11400000, guid: b7a3823d77233c444ab1a6bda34964ef, type: 2}
+  - {fileID: 11400000, guid: 0effdfd9a82c7e048b9f5038cad251b7, type: 2}
   moveType: 0
   targetType: 0
   desiredTarget:

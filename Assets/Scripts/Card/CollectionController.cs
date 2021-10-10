@@ -995,6 +995,11 @@ public class CollectionController : MonoBehaviour
         }
         else
         {
+            int allSelectedEquipments = 0;
+            foreach (Card.CasterColor c in allColorsOrder)
+                allSelectedEquipments += selectedEquipments[c.ToString()].equipments.Count;
+            if (allSelectedEquipments == 0 && completeEquipments.equipments.Count > 0)
+                page = 1;
             RefreshSelectDecks();
             RefreshEquipments();
         }

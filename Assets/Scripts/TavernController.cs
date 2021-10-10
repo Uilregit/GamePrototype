@@ -234,6 +234,8 @@ public class TavernController : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(false);
         if (StoryModeController.story != null)
             SceneManager.LoadScene("StoryModeScene", LoadSceneMode.Single);
         else

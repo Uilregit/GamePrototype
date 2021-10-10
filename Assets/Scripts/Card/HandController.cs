@@ -126,6 +126,7 @@ public class HandController : MonoBehaviour
     {
         while (drawQueue.Count > 0)
         {
+            drawQueue[0].cardDisplay.cardSounds.PlayDragSound();
             drawnCards.Add(drawQueue[0]);
             drawQueue.RemoveAt(0);
             yield return StartCoroutine(AnimateDrawCard());
@@ -300,6 +301,8 @@ public class HandController : MonoBehaviour
         }
 
         GameController.gameController.SetTurnButtonDone(hand.Count == 0 || (GetNumberOfPlayableCards() == 0 && currentReplaceCount == maxReplaceCount));
+        if (hand.Count == 0)
+            GameController.gameController.SetReplaceDone(true);
     }
 
     public int GetNumberOfPlayableCards()
@@ -357,6 +360,8 @@ public class HandController : MonoBehaviour
 
             if (currentReplaceCount == maxReplaceCount)
                 GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
+
+            replacedCard.cardDisplay.cardSounds.PlayReplaceSound();
 
             try
             {
@@ -485,7 +490,7 @@ public class HandController : MonoBehaviour
     private IEnumerator ClearExhaustCard(CardController card)
     {
         float elapsedTime = 0;
-        
+
         card.cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
 
         while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)

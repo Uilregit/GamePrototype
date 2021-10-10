@@ -6,6 +6,8 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour
 {
+    public CardSoundController cardSounds;
+
     public Image toolTip;
     private Dictionary<string, string> toolTipDict = new Dictionary<string, string>()
     {

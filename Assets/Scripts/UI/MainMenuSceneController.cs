@@ -10,6 +10,9 @@ public class MainMenuSceneController : MonoBehaviour
     public Image loadGameButton;
     public Image patchNotification;
 
+    public Image[] visualizersFront;
+    public Image[] visualizersBack;
+
     private Relic thisRelic;
 
     private void Start()
@@ -31,6 +34,16 @@ public class MainMenuSceneController : MonoBehaviour
             loadGameButton.transform.GetChild(1).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[0]));
             loadGameButton.transform.GetChild(2).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[1]));
             loadGameButton.transform.GetChild(3).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[2]));
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        float[] amplitudes = MusicController.music.GetBackgroundAmplitude();
+        for (int i = 0; i < 8; i++)
+        {
+            visualizersFront[i].transform.localScale = new Vector2(visualizersFront[i].transform.localScale.x, amplitudes[i]);
+            visualizersBack[7 - i].transform.localScale = new Vector2(visualizersBack[7 - i].transform.localScale.x, amplitudes[i]);
         }
     }
 
@@ -62,6 +75,7 @@ public class MainMenuSceneController : MonoBehaviour
 
     public void NewGameButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
         thisRelic = RelicController.relic.GetRandomRelic();
         RewardsMenuController.rewardsMenu.ShowRelicRewardMenu(thisRelic);
         InformationLogger.infoLogger.SaveGame(true);
@@ -70,21 +84,26 @@ public class MainMenuSceneController : MonoBehaviour
 
     public void SettingsButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         SceneManager.LoadScene("SettingsScene", LoadSceneMode.Single);
     }
 
     public void LoadGameButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         InformationLogger.infoLogger.StartGameAndLoad();
     }
 
     public void MultiplayerButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         SceneManager.LoadScene("MultiplayerSetupScene", LoadSceneMode.Single);
     }
 
     public void PatchNotesButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(true);
         InformationLogger.infoLogger.SetLastPatchRead(InformationLogger.infoLogger.patchID);
         InformationLogger.infoLogger.SavePlayerPreferences();
         SceneManager.LoadScene("PatchNotesScene", LoadSceneMode.Single);
@@ -92,6 +111,7 @@ public class MainMenuSceneController : MonoBehaviour
 
     public void StoryMode()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
         InformationLogger.infoLogger.isStoryMode = true;
         SceneManager.LoadScene("StoryModeScene", LoadSceneMode.Single);
     }

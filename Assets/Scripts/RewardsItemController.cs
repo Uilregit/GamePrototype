@@ -32,7 +32,7 @@ public class RewardsItemController : MonoBehaviour
                             "0",
                             ResourceController.resource.GetGold().ToString());
 
-            RewardsMenuController.rewardsMenu.ReportRewardTaken(index);
+            RewardsMenuController.rewardsMenu.ReportRewardTaken(RewardsMenuController.RewardType.PassiveGold);
         }
         else if (type == RewardsMenuController.RewardType.OverkillGold)
         {
@@ -47,7 +47,7 @@ public class RewardsItemController : MonoBehaviour
                             value.ToString(),
                             ResourceController.resource.GetGold().ToString());
 
-            RewardsMenuController.rewardsMenu.ReportRewardTaken(index);
+            RewardsMenuController.rewardsMenu.ReportRewardTaken(RewardsMenuController.RewardType.OverkillGold);
         }
         else if (type == RewardsMenuController.RewardType.Card)
         {

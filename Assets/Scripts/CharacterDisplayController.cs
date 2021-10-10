@@ -24,7 +24,8 @@ public class CharacterDisplayController : MonoBehaviour
     public CharacterAnimationController charAnimController;
     public Animator hitEffectAnim;
     public Animator passiveEffectAnim;
-    public Light2D pointLight;
+    public OnHitSoundController onHitSoundController;
+    public SpriteRenderer pointLight;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,16 +40,15 @@ public class CharacterDisplayController : MonoBehaviour
         else
             hitEffectAnim.SetTrigger(triggerOverride);
         OnHitEffect effect = LootController.loot.GetOnHitEffect(triggerName);
-        if (effect != null && pointLight.intensity == 0)
+        if (effect != null && pointLight.color.a == 0)
             StartCoroutine(ShineLight(effect.color));
     }
 
     public IEnumerator ShineLight(Color color)
     {
-        pointLight.color = color;
         for (int i = 0; i < 50; i++)
         {
-            pointLight.intensity = 0.5f * (49f - i) / 50f;
+            pointLight.color = new Color(color.r, color.g, color.b, 0.5f * (49f - i) / 50f);
             yield return new WaitForSeconds(0.2f / 50);
 
         }

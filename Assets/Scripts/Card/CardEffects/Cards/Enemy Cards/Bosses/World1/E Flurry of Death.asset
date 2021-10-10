@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Flurry of Death
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Flurry of Death
@@ -29,6 +30,7 @@ MonoBehaviour:
   targetType: 0100000001000000
   cardEffectName: 0000000000000000
   hitEffect: 6400000064000000
+  soundEffect: 0100000002000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
@@ -45,3 +47,5 @@ MonoBehaviour:
   indicatorMultiplier: x3
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

@@ -11,7 +11,7 @@ using System;
 public class PlayerMoveController : MonoBehaviour
 {
     private PlayerController player;
-    private HealthController healthController;
+    public HealthController healthController;
     private int movedDistance = 0;
     public Color moveRangeIndicatorColor;
     public Color attackRangeIndicatorColor;

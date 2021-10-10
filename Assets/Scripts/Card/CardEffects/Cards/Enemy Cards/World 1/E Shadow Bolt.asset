@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Shadow Bolt
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Shadow Bolt
@@ -28,6 +29,7 @@ MonoBehaviour:
   targetType: 01000000
   cardEffectName: 14000000
   hitEffect: 64000000
+  soundEffect: 46000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:
@@ -43,3 +45,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

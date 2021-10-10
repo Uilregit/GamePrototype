@@ -25,7 +25,7 @@ public class ResurrectEffect : Effect
         player.transform.position = target[0];
         player.GetComponent<HealthController>().charDisplay.transform.position = target[0];
         player.GetComponent<HealthController>().ReportResurrect();
-        
+
         if (MultiplayerGameController.gameController != null)
         {
             player.GetComponent<MultiplayerPlayerMoveController>().UpdateOrigin(player.transform.position);
@@ -47,6 +47,7 @@ public class ResurrectEffect : Effect
 
         InformationController.infoController.ChangeCombatInfo(-1, 0, 0, 0);
         ResourceController.resource.ReportReviveUsed();
+        GameController.gameController.UpdatePlayerDamage();
         //HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
 
         yield return new WaitForSeconds(0);

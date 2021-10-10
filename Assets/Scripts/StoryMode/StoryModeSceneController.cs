@@ -49,6 +49,7 @@ public class StoryModeSceneController : MonoBehaviour
 
     //private List<int> completedRooms = new List<int>();
     private StoryRoomController selectedRoom = null;
+    private bool initialized = false;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +66,7 @@ public class StoryModeSceneController : MonoBehaviour
         RefreshWorldRooms();
 
         ReportRoomSelected(selectedRoom.roomId);
+        initialized = true;
         StarsViewSelected();
 
         StartCoroutine(HighlightRooms());
@@ -303,21 +305,29 @@ public class StoryModeSceneController : MonoBehaviour
 
         if (selectedRoom.roomType == StoryRoomController.StoryRoomType.NewWorld)
         {
+            MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
             SetWorldNumber(StoryModeController.story.GetWorldNumber() + 1);
         }
         else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.PreviousWorld)
         {
+            MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
             SetWorldNumber(StoryModeController.story.GetWorldNumber() - 1);
         }
         else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Shop)
         {
+            MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+            MusicController.music.SetHighPassFilter(true);
             SceneManager.LoadScene("StoryModeShopScene", LoadSceneMode.Single);
         }
         else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.SecretShop)
         {
+            MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+            MusicController.music.SetHighPassFilter(true);
             StoryModeController.story.SetMenuBar(false);
             SceneManager.LoadScene("StoryModeSecretShopScene", LoadSceneMode.Single);
         }
+        else if (initialized)
+            MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
 
         selectedRoom.GetComponent<Outline>().effectColor = outlineColor;
         selectedRoom.GetComponent<Outline>().enabled = true;
@@ -419,12 +429,14 @@ public class StoryModeSceneController : MonoBehaviour
 
     public void SettingsButton()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         StoryModeController.story.SetMenuBar(false);
         SceneManager.LoadScene("SettingsScene", LoadSceneMode.Single);
     }
 
     public void EnterRoom()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
         StoryModeController.story.SetLastSelectedRoomID(selectedRoom.roomId);
         StoryModeController.story.SetLastSelectedAchievemnts(GetNumChallengeSatisfied(selectedRoom));
         StoryModeController.story.SetLastSelectedComplete(StoryModeController.story.GetCompletedRooms().Contains(selectedRoom.roomId));

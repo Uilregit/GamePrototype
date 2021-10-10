@@ -13,6 +13,13 @@ public class GameController : MonoBehaviour
     public Image damageOverlay;
     public Image circleHighlight;
 
+    private bool showingDamageOverlay = false;
+
+    public BackgroundMusicController music;
+    public AudioClip combatMusic;
+    public AudioClip bossMusic;
+    public AudioClip victoryFanfair;
+
     public Image endTurnButton;
     public Color notYetDoneColor;
     public Color doneColor;
@@ -115,9 +122,21 @@ public class GameController : MonoBehaviour
             GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
 
+        if (setup.isBossRoom)
+            music.music = bossMusic;
+        else
+            music.music = combatMusic;
+        music.PlayMusic();
+
         StartCoroutine(ShowAbilities());
 
         ScoreController.score.SetTimerPaused(false);
+    }
+
+    public void Update()
+    {
+        if (showingDamageOverlay)
+            damageOverlay.color = new Color(1, 0, 0, 0.5f + MusicController.music.GetBackgroundAmplitude()[0] / 2);     //Flash damage overlay tied to the base of the combat music
     }
 
     private IEnumerator ShowAbilities()
@@ -303,6 +322,7 @@ public class GameController : MonoBehaviour
         InformationController.infoController.SaveCombatInformation();
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         text.text = "VICTORY";
+        MusicController.music.PlayBackground(victoryFanfair, false);
         text.enabled = true;
         yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
         text.enabled = false;
@@ -527,6 +547,19 @@ public class GameController : MonoBehaviour
             replaceImage.color = doneColor;
         else
             replaceImage.color = notYetDoneColor;
+    }
+
+    public void UpdatePlayerDamage()
+    {
+        SetIsShowingDamageOverlay(GetDeadPlayers().Count != 0 || GetLivingPlayers().Select(x => x.GetComponent<HealthController>()).Any(x => !x.GetIsSimulation() && (float)x.GetCurrentVit() / (float)x.GetMaxVit() <= 0.35f));
+    }
+
+    private void SetIsShowingDamageOverlay(bool state)
+    {
+        MusicController.music.SetLowPassFilter(state);
+        showingDamageOverlay = state;
+        if (!state)
+            StartCoroutine(FadeDamageOverlay(0));
     }
 
     public void SetDamageOverlay(float remainingHealthPercentage)

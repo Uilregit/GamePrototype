@@ -76,6 +76,9 @@ public class SmallRoom : MonoBehaviour
                                 roomString,
                                 roomString);
 
+        if (roomString == "ShopScene" || roomString == "ShrineScene")
+            MusicController.music.SetHighPassFilter(true);
+
         RoomController.roomController.EnterRoom(roomString);
     }
 

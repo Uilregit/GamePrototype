@@ -22,6 +22,7 @@ public class TavernButtonController : MonoBehaviour
 
     public void OnClick()
     {
+        MusicController.music.SetHighPassFilter(true);
         SceneManager.LoadScene("TavernScene", LoadSceneMode.Single);
     }
 }

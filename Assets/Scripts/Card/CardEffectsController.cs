@@ -237,6 +237,9 @@ public class CardEffectsController : MonoBehaviour
                                 blockedByImmune = true;
                         }
 
+                        if (effects[i].CheckImmunity(caster, this, GridController.gridController.GetObjectAtLocation(locs), card.GetCard(), i, 0).Count != 0)
+                            caster.GetComponent<HealthController>().charDisplay.onHitSoundController.PlaySound(card.GetCard().soundEffect[i]);
+
                         if (card.GetCard().cardEffectName.Length > i + 1 && card.GetCard().cardEffectName[i + 1] == Card.EffectType.ForcedMovement)
                             StartCoroutine(effects[i].ProcessCard(caster, this, locs, card.GetCard(), i));
                         else

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: E Last Resort
   m_EditorClassIdentifier: 
   exhaust: 0
+  shuffleToDiscardPile: 1
   canCastOnSelf: 1
   rarity: 0
   name: Last Resort
@@ -29,6 +30,7 @@ MonoBehaviour:
   targetType: 0100000001000000
   cardEffectName: 0000000000000000
   hitEffect: 6400000064000000
+  soundEffect: 0200000001000000
   conditionType: 2d0100002c010000
   conditionValue: 0000000000000000
   buff:
@@ -47,3 +49,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: 0
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

@@ -29,6 +29,7 @@ public class StoryModeSecretShopSceneController : StoryModeEndSceenController
 
     public override void ReportItemBought(int gold, StoryModeController.RewardsType name, int amount, bool bought, int index)
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         if (bought)
             totalGoals -= gold;
         else
@@ -82,6 +83,8 @@ public class StoryModeSecretShopSceneController : StoryModeEndSceenController
 
     public override void BuyAndExit()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(false);
         //ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
         AchievementSystem.achieve.ResetAchievements();
         StoryModeController.story.ReportItemsBought(boughtItems);

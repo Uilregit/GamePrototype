@@ -672,6 +672,8 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToMapScene()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(false);
         if (deckIncomplete)
         {
             StopAllCoroutines();
@@ -693,6 +695,8 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToPartyScene()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(true);
         if (deckIncomplete)
         {
             StopAllCoroutines();
@@ -711,6 +715,8 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToGearScene()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(true);
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");
@@ -729,6 +735,8 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToCardScene()
     {
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(true);
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");

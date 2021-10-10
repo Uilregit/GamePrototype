@@ -21,6 +21,7 @@ public class PlayerMouseController : DragController
     public override void OnMouseDown()
     {
         moveController.CreateMoveRangeIndicator();
+        moveController.healthController.charDisplay.onHitSoundController.PlayFootStepSound();
 
         //TileCreator.tileCreator.SetCommitment(true);
         base.OnMouseDown();
@@ -36,6 +37,8 @@ public class PlayerMouseController : DragController
     }
     private void OnMouseUp()
     {
+        moveController.healthController.charDisplay.onHitSoundController.PlayFootStepSound();
+
         moveController.MoveTo(moveController.GetMoveLocation());
         moveController.DestroyMoveRrangeIndicator();
     }

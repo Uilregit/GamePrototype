@@ -110,6 +110,7 @@ public class ShrineController : MonoBehaviour
             InformationController.infoController.ChangeCombatInfo(0, 0, 0, 5);
         }
         */
+        MusicController.music.SetHighPassFilter(false);
 
         CollectionController.collectionController.AddRewardsEquipment(equipment, false);
 
@@ -123,6 +124,8 @@ public class ShrineController : MonoBehaviour
 
     public void ChoseOption2()
     {
+        MusicController.music.SetHighPassFilter(false);
+
         RelicController.relic.AddRelic(relic);
         Camera.main.transform.position = new Vector3(0, 0, -10);
         RoomController.roomController.SetViableRoom(new Vector2(-999, -999));

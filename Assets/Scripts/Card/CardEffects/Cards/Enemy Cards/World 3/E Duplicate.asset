@@ -29,6 +29,7 @@ MonoBehaviour:
   targetType: 00000000
   cardEffectName: ba130000
   hitEffect: c8000000
+  soundEffect: 50000000
   conditionType: 00000000
   conditionValue: 00000000
   buff:
@@ -44,3 +45,5 @@ MonoBehaviour:
   indicatorMultiplier: 
   executionPriority: -100
   highlightCondition: 0
+  materials: 
+  materialAmounts: 

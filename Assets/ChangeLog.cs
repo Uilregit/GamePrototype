@@ -1101,14 +1101,18 @@ Fixed immunity checks preventing buffs from reverting
 Fixed immunity checks for buffs that have no trigger effects
 
 #####################
-####### 0.5.2 #######
+###### 0.5.2.1 ######
 #####################
 -- Cards --
 
 -- Enemies --
 
 -- System --
+Achievement requirements for world 1 room 10-H from "End a turn with more than 6 enemies" to "End a turn with more than 5 enemies"
 Major effects overhaul for all card effects
+Compressed textures to half build size
+Added music and sound effects volume controls to settings menu
+Added music and sound effects to all interactions
 
 -- UI --
 Shrines will now have "+" signs for equipment stat numbers
@@ -1117,6 +1121,19 @@ End turn button and replace button will now change color to indicate that no act
 Added glow to all on hit effects
 Added glow to all boss enemies
 Added fade in and fade out dissolve shader to player and enemy cards
+If no equipment are equipped but have unequipped equipments, collection menu defaults to page 1
+
+-- Audio --
+Added background music to all scenes
+Added sound effects to all combat card interactions including drawing cards
+Added sound effects to all player cards
+Added sound effects to all enemy cards
+Added passive sound effects to damaging armor, armor break, and immunity
+Added footstep sounds to enemies and players
+Added sound effects to all out of comat card interactions
+Added all UI and button sound effects
+Normalized audio loudness for all sound effects
+Added lowpass filter to background music when players are at low health
 
 -- Bugs --
 Fixed normal Magic Armor passive saying "On card cast" instead of "On card damage"
