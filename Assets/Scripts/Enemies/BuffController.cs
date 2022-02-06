@@ -108,10 +108,10 @@ public class BuffController : MonoBehaviour
         buffList = finalList;
     }
 
-    public void Cleanse(HealthController healthController, bool sendInfo = true)
+    public void Cleanse(HealthController healthController, bool sendInfo = true, bool overrideInflicted = false)
     {
         //If the target is inflicted, they can't be cleansed
-        if (healthController.GetInflicted())
+        if (healthController.GetInflicted() && !overrideInflicted)
             return;
 
         foreach (BuffFactory buff in buffList)

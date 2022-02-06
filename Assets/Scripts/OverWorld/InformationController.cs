@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class CombatInfo
 {
     public int lives = 0;
-    public int[] vit = new int[3];
-    public int[] maxVit = new int[3];
-    public int[] atk = new int[3];
-    public int[] armor = new int[3];
-    public bool[] deadChars = new bool[3];
+    public Dictionary<Card.CasterColor, int> vit = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+    public Dictionary<Card.CasterColor, int> maxVit = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+    public Dictionary<Card.CasterColor, int> atk = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+    public Dictionary<Card.CasterColor, int> armor = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+    public Dictionary<Card.CasterColor, bool> deadChars = new Dictionary<Card.CasterColor, bool> { { Card.CasterColor.Red, false }, { Card.CasterColor.Blue, false }, { Card.CasterColor.Green, false }, { Card.CasterColor.Orange, false }, { Card.CasterColor.White, false }, { Card.CasterColor.Black, false } };
 }
 
 public class RNG
@@ -73,24 +73,25 @@ public class InformationController : MonoBehaviour
             if (index == -1)
                 continue;
 
-            combatInfo.vit[index] = player.GetComponent<HealthController>().GetCurrentVit();
-            combatInfo.maxVit[index] = player.GetComponent<HealthController>().GetMaxVit();
-            combatInfo.atk[index] = player.GetComponent<HealthController>().GetStartingAttack();
-            combatInfo.armor[index] = player.GetComponent<HealthController>().GetStartingArmor();
+            combatInfo.vit[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetCurrentVit();
+            combatInfo.maxVit[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetMaxVit();
+            combatInfo.atk[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetStartingAttack();
+            combatInfo.armor[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetStartingArmor();
 
             playerColors.Add(player.GetComponent<PlayerController>().GetColorTag());
         }
 
         for (int i = 0; i < 3; i++)
             if (GameController.gameController.GetDeadChars().Contains(PartyController.party.partyColors[i]))
-                combatInfo.deadChars[i] = true;
+                combatInfo.deadChars[PartyController.party.partyColors[i]] = true;
             else
-                combatInfo.deadChars[i] = false;
+                combatInfo.deadChars[PartyController.party.partyColors[i]] = false;
         ResourceController.resource.LoadLives(combatInfo.lives);
     }
 
     public void SaveMultiplayerCombatInformation()
     {
+        /*
         combatInfo.lives = 3;
 
         List<Card.CasterColor> playerColors = new List<Card.CasterColor>();
@@ -111,30 +112,37 @@ public class InformationController : MonoBehaviour
         ResourceController.resource.GetComponent<Canvas>().enabled = true;
         ResourceController.resource.GetComponent<CanvasScaler>().enabled = false;
         ResourceController.resource.GetComponent<CanvasScaler>().enabled = true;
+        */
     }
 
     public int GetCurrentVit(Card.CasterColor color)
     {
-        if (PartyController.party.GetPartyIndex(color) == -1)
-            return 0;
-        return combatInfo.vit[PartyController.party.GetPartyIndex(color)];
+        if (combatInfo.maxVit[color] > 0)
+        {
+            if (PartyController.party.GetPartyIndex(color) == -1)
+                return 0;
+            return combatInfo.vit[color];
+        }
+        return PartyController.party.GetStartingHealth(color);
     }
 
     public int GetMaxVit(Card.CasterColor color)
     {
-        return combatInfo.maxVit[PartyController.party.GetPartyIndex(color)];
+        if (combatInfo.maxVit[color] > 0)
+            return combatInfo.maxVit[color];
+        return PartyController.party.GetStartingHealth(color);
     }
 
     public int GetStartingArmor(Card.CasterColor color)
     {
-        return combatInfo.armor[PartyController.party.GetPartyIndex(color)];
+        return combatInfo.armor[color];
     }
 
     public int GetStartingAttack(Card.CasterColor color)
     {
         try
         {
-            if (combatInfo.atk[PartyController.party.GetPartyIndex(color)] <= 0)
+            if (combatInfo.atk[color] <= 0)
                 return PartyController.party.GetStartingAttack(color) + CollectionController.collectionController.GetEquipmentAttack(color);
         }
         catch
@@ -142,7 +150,7 @@ public class InformationController : MonoBehaviour
             return PartyController.party.GetStartingAttack(color) + CollectionController.collectionController.GetEquipmentAttack(color);
         }
 
-        return combatInfo.atk[PartyController.party.GetPartyIndex(color)];
+        return combatInfo.atk[color];
     }
 
     public void ChangeCombatInfo(int livesChange, int attackChange, int armorChange, int maxVitChange)
@@ -151,10 +159,10 @@ public class InformationController : MonoBehaviour
         ResourceController.resource.LoadLives(combatInfo.lives);
         for (int i = 0; i < 3; i++)
         {
-            combatInfo.atk[i] += attackChange;
-            combatInfo.armor[i] += armorChange;
-            combatInfo.vit[i] += maxVitChange;
-            combatInfo.maxVit[i] += maxVitChange;
+            combatInfo.atk[PartyController.party.partyColors[i]] += attackChange;
+            combatInfo.armor[PartyController.party.partyColors[i]] += armorChange;
+            combatInfo.vit[PartyController.party.partyColors[i]] += maxVitChange;
+            combatInfo.maxVit[PartyController.party.partyColors[i]] += maxVitChange;
         }
     }
 
@@ -162,11 +170,11 @@ public class InformationController : MonoBehaviour
     public void ResetCombatInfo()
     {
         combatInfo.lives = ResourceController.resource.GetLives();
-        combatInfo.atk = new int[] { -1, -1, -1 };
-        combatInfo.armor = new int[] { -1, -1, -1 };
-        combatInfo.vit = new int[] { -1, -1, -1 };
-        combatInfo.maxVit = new int[] { -1, -1, -1 };
-        combatInfo.deadChars = new bool[3] { false, false, false };
+        combatInfo.atk = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+        combatInfo.armor = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+        combatInfo.vit = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+        combatInfo.maxVit = new Dictionary<Card.CasterColor, int> { { Card.CasterColor.Red, -1 }, { Card.CasterColor.Blue, -1 }, { Card.CasterColor.Green, -1 }, { Card.CasterColor.Orange, -1 }, { Card.CasterColor.White, -1 }, { Card.CasterColor.Black, -1 } };
+        combatInfo.deadChars = new Dictionary<Card.CasterColor, bool> { { Card.CasterColor.Red, false }, { Card.CasterColor.Blue, false }, { Card.CasterColor.Green, false }, { Card.CasterColor.Orange, false }, { Card.CasterColor.White, false }, { Card.CasterColor.Black, false } };
     }
 
     public CombatInfo GetCombatInfo()
@@ -181,7 +189,7 @@ public class InformationController : MonoBehaviour
 
     public bool GetIfDead(Card.CasterColor color)
     {
-        return combatInfo.deadChars[PartyController.party.GetPartyIndex(color)];
+        return combatInfo.deadChars[color];
     }
     /*
     public void LoadCombatInformation()

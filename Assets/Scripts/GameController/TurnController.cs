@@ -64,23 +64,8 @@ public class TurnController : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        enemies = new List<EnemyController>();
-        queuedEnemies = new List<EnemyController>();
-
-        manaCostCap = new List<int>();
-        energyCostCap = new List<int>();
-        manaReduction = new List<int>();
-        energyReduction = new List<int>();
-
-        currentEnergy = maxEnergy;
-
-        ResetEnergyDisplay();
-        if (InformationLogger.infoLogger.debug)
-            currentMana = 10;
-        UIController.ui.ResetManaBar(currentMana);
-        turnID = 0;
-
-        HandController.handController.ResetReplaceCounter();
+        RemoveAllEnemies();
+        ResetManaAndEnergy();
     }
 
     public bool GetIsPlayerTurn()
@@ -160,6 +145,12 @@ public class TurnController : MonoBehaviour
             enemies.Remove(thisEnemy);
         else
             queuedEnemies.Remove(thisEnemy);
+    }
+
+    public void RemoveAllEnemies()
+    {
+        enemies = new List<EnemyController>();
+        queuedEnemies = new List<EnemyController>();
     }
 
     public List<EnemyController> GetEnemies()
@@ -293,8 +284,7 @@ public class TurnController : MonoBehaviour
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
 
-        foreach (EnemyController thisEnemy in enemies)
-            yield return StartCoroutine(thisEnemy.GetComponent<EnemyInformationController>().ShowAbilities());
+        yield return StartCoroutine(GameController.gameController.DisplayAbilityCards());
 
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
@@ -346,6 +336,8 @@ public class TurnController : MonoBehaviour
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
         SetPlayerTurn(true); //Trigger all player start of turn effects
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, turnID);
     }
 
     private IEnumerator TriggerTraps()
@@ -556,6 +548,38 @@ public class TurnController : MonoBehaviour
         HandController.handController.ResetCardPlayability(currentEnergy, currentMana);
     }
 
+    public void ResetCardInfo()
+    {
+        cardsPlayed = new List<Card>();
+        cardsPlayedThisTurn = new List<Card>();
+        manaSpent = new List<int>();
+        energySpent = new List<int>();
+        cardPlayedEnergyReduction = new List<int>();
+        cardPlayedManaReduction = new List<int>();
+        cardPlayedEnergyCap = new List<int>();
+        cardPlayedManaCap = new List<int>();
+    }
+
+    public void ResetManaAndEnergy()
+    {
+        manaCostCap = new List<int>();
+        energyCostCap = new List<int>();
+        manaReduction = new List<int>();
+        energyReduction = new List<int>();
+
+        currentEnergy = maxEnergy;
+
+        ResetEnergyDisplay();
+        if (InformationLogger.infoLogger.debug)
+            currentMana = 10;
+        else
+            currentMana = 0;
+        UIController.ui.ResetManaBar(currentMana);
+        turnID = 0;
+
+        HandController.handController.ResetReplaceCounter();
+    }
+
     public void GainEnergy(int energyValue)
     {
         currentEnergy += energyValue;
@@ -594,6 +618,9 @@ public class TurnController : MonoBehaviour
         cardPlayedEnergyCap.Add(energyCap);
         cardPlayedManaReduction.Add(manaReduction);
         cardPlayedManaCap.Add(manaCap);
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardsUsed, cardsPlayed.Count);
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardsUsed, -1, card.name);
     }
 
     public List<int> GetCardPlayedEnergyReduction()

@@ -19,6 +19,9 @@ public class RewardsItemController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (type == RewardsMenuController.RewardType.PassiveGold)
         {
             ResourceController.resource.ChangeGold(value);
@@ -80,6 +83,11 @@ public class RewardsItemController : MonoBehaviour
             RewardsMenuController.rewardsMenu.SetItemsClickable(false);
             RewardsMenuController.rewardsMenu.ShowRelicRewardMenu(relic);
         }
+
+        //Triggers tutorials
+        List<RewardsMenuController.RewardType> r = new List<RewardsMenuController.RewardType>();
+        r.AddRange(RewardsMenuController.rewardsMenu.GetRewardsTypes());
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuItemTaken, r.IndexOf(type) + 1);
 
         Hide();
     }

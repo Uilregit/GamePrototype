@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 3R1-X6 Next encounter
+  m_EditorClassIdentifier: 
+  ID: 106
+  prerequisiteID: 105
+  isUILevel: 1
+  isPopup: 0
+  overlay: {fileID: 242107426757504669, guid: f63e86414aae8fe42bbd45d3f9490bb8, type: 3}
+  startingCondition: 10201
+  startingValue: -1
+  startingStringValue: 
+  startingComparisonType: 30
+  OnStartUIReveal: 1
+  endingCondition: 10301
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

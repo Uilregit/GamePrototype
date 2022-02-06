@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public Color anticipatedLooseIconColor;
     public Color anticipatedLooseOutlineColor;
 
+    public Image energyIcon;
     public List<Image> manaIcons;
     private int manaCount = 0;
 
@@ -28,6 +29,9 @@ public class UIController : MonoBehaviour
     public Image hideButton;
     private Effect manifestEffect;
 
+    public GameObject replace;
+    public GameObject hold;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,14 +40,22 @@ public class UIController : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        energyIcon.material = new Material(energyIcon.material);
+        energyIcon.material.SetFloat("_Intensity", 0f);
         foreach (Image icon in manaIcons)
+        {
             icon.GetComponent<Outline>().effectColor = anticipatedLooseOutlineColor;
+            icon.material = new Material(icon.material);
+            icon.material.SetFloat("_Intensity", 0f);
+        }
 
         for (int i = 0; i < manifestCards.Count; i++)
         {
             manifestCards[i].GetComponent<Collider2D>().enabled = false;
             manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
         }
+
+        HandController.handController.SetHoldAndReplace(hold, replace);
     }
 
     public void ResetPileCounts(int drawPile, int discardPile)
@@ -61,7 +73,10 @@ public class UIController : MonoBehaviour
                 if (i > manaCount - 1)
                     StartCoroutine(GainMana(i));
                 else
+                {
                     manaIcons[i].color = obtainedManaColor;
+                    StartCoroutine(FadeManaGlow(i, 0f));
+                }
             }
             else
                 manaIcons[i].color = missingManaColor;
@@ -72,7 +87,6 @@ public class UIController : MonoBehaviour
 
     public void SetAnticipatedManaGain(int amount)
     {
-
         for (int i = 0; i < 10; i++)
             if (i < manaCount)
                 manaIcons[i].color = obtainedManaColor;
@@ -85,8 +99,10 @@ public class UIController : MonoBehaviour
     public IEnumerator GainMana(int loc)
     {
         manaIcons[loc].color = anticipatedLooseIconColor;
+        StartCoroutine(FadeManaGlow(loc, 1f));
         yield return new WaitForSeconds(TimeController.time.manaGainFlickerPeriod);
         manaIcons[loc].color = obtainedManaColor;
+        StartCoroutine(FadeManaGlow(loc, 0f));
     }
 
     public void SetAnticipatedManaLoss(int amount)
@@ -94,7 +110,10 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < 10; i++)
             if (i >= manaCount - amount && i < Mathf.Max(manaCount, amount))
                 if (i < manaCount)
+                {
                     manaIcons[i].color = anticipatedLooseIconColor;
+                    StartCoroutine(FadeManaGlow(i, 0.5f));
+                }
                 else
                 {
                     manaIcons[i].GetComponent<Outline>().effectColor = anticipatedLooseOutlineColor;
@@ -151,6 +170,34 @@ public class UIController : MonoBehaviour
         {
             manifestCards[i].GetComponent<Collider2D>().enabled = false;
             manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
+        }
+    }
+
+    public void SetEnergyGlow(bool state)
+    {
+        if (state)
+            StartCoroutine(FadeEnergyGlow(1.0f));
+        else
+            StartCoroutine(FadeEnergyGlow(0f));
+    }
+
+    private IEnumerator FadeEnergyGlow(float value)
+    {
+        float startingVal = energyIcon.material.GetFloat("_Intensity");
+        for (int i = 0; i < 10; i++)
+        {
+            energyIcon.material.SetFloat("_Intensity", Mathf.Lerp(startingVal, value, i / 9.0f));
+            yield return new WaitForSeconds(0.1f / 10);
+        }
+    }
+
+    private IEnumerator FadeManaGlow(int icon, float value)
+    {
+        float startingVal = manaIcons[icon].material.GetFloat("_Intensity");
+        for (int i = 0; i < 10; i++)
+        {
+            manaIcons[icon].material.SetFloat("_Intensity", Mathf.Lerp(startingVal, value, i / 9.0f));
+            yield return new WaitForSeconds(0.1f / 10);
         }
     }
 }

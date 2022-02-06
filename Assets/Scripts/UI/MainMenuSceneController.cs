@@ -35,6 +35,12 @@ public class MainMenuSceneController : MonoBehaviour
             loadGameButton.transform.GetChild(2).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[1]));
             loadGameButton.transform.GetChild(3).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[2]));
         }
+
+        if (!UnlocksController.unlock.GetUnlocks().classicModeUnlocked)
+        {
+            newGameButton.gameObject.SetActive(false);
+            loadGameButton.gameObject.SetActive(false);
+        }
     }
 
     private void FixedUpdate()

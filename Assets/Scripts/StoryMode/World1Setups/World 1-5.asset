@@ -26,7 +26,8 @@ MonoBehaviour:
   challengeValues: 000000000200000003000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 0000000005000000292300005000000046000000
+  skipFinalRewards: 0
+  rewardTypes: 0000000005000000282300005000000046000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -44,3 +45,4 @@ MonoBehaviour:
   challengeRewardBought: 000000
   flavorText: While hugging is not prohibited from the field of battle, it is strongly
     discouraged. -Tun Szu, newly single
+  overrideColors: 

@@ -25,7 +25,15 @@ public class RewardsMenuController : MonoBehaviour
     private int deckId;
     private Relic thisRelic;
 
-    public enum RewardType { PassiveGold, OverkillGold, Card, Relic };
+    public enum RewardType
+    {
+        PassiveGold,
+        OverkillGold,
+        Card,
+        Relic,
+
+        BypassRewards = 100,
+    };
 
     // Start is called before the first frame update
     void Awake()
@@ -136,7 +144,10 @@ public class RewardsMenuController : MonoBehaviour
             MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
 
         numRewardsTaken += 1;
-        if (numRewards == numRewardsTaken)
+        if (type == RewardType.Card)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuCardTaken, 1);
+
+        if (numRewards == numRewardsTaken || type == RewardType.BypassRewards)
         {
             if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
                 InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
@@ -157,9 +168,15 @@ public class RewardsMenuController : MonoBehaviour
                 RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
                 RoomController.roomController.Refresh();
                 InformationLogger.infoLogger.SaveGame(false);
-                MusicController.music.SetHighPassFilter(true);
-                GameController.gameController.LoadScene("OverworldScene", true, deckId);
+                if (type == RewardType.BypassRewards || !RoomController.roomController.GetCurrentRoomSetup().offerRewardCards)
+                    GameController.gameController.LoadScene("OverworldScene", false, deckId);
+                else
+                {
+                    MusicController.music.SetHighPassFilter(true);
+                    GameController.gameController.LoadScene("OverworldScene", true, deckId);
+                }
             }
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuExit, 1);
         }
     }
 
@@ -207,5 +224,10 @@ public class RewardsMenuController : MonoBehaviour
         relicRewardMenu.transform.GetChild(4).GetComponent<Image>().enabled = false;
         relicRewardMenu.transform.GetChild(4).GetComponent<Collider2D>().enabled = false;
         relicRewardMenu.transform.GetChild(5).GetComponent<Text>().enabled = false;
+    }
+
+    public RewardType[] GetRewardsTypes()
+    {
+        return rewardsTypes;
     }
 }

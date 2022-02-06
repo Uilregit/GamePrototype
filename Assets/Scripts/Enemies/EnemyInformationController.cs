@@ -91,6 +91,9 @@ public class EnemyInformationController : MonoBehaviour
     //Create attack and move range and Display cards
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         clickedTime = DateTime.Now;
 
         CreateRangeIndicators();
@@ -265,6 +268,9 @@ public class EnemyInformationController : MonoBehaviour
     //Destroy attack and move range
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
             obj.GetComponent<HealthController>().HideHealthBar();
 
@@ -282,6 +288,7 @@ public class EnemyInformationController : MonoBehaviour
                 c.SetCaster(this.gameObject);
             CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffController().GetBuffs(), null, GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyTapped, 1);
         }
     }
 
@@ -388,6 +395,7 @@ public class EnemyInformationController : MonoBehaviour
             displayedCards[i].transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(true, i, displayedCards.Length);
             displayedCards[i].transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
         }
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyHeld, 1);
     }
 
     public IEnumerator TriggerCard(int cardIndex, List<Vector2> targets)
@@ -457,7 +465,6 @@ public class EnemyInformationController : MonoBehaviour
         else
             TileCreator.tileCreator.CreateTiles(this.gameObject, target, Card.CastShape.Circle, 0, GetComponent<EnemyController>().attackRangeColor, 0);
 
-        Debug.Log(card);
         usedCard.GetComponentInChildren<CardDisplay>().FadeIn(0.1f * TimeController.time.timerMultiplier, PartyController.party.GetPlayerColor(Card.CasterColor.Enemy));
     }
 
@@ -566,6 +573,11 @@ public class EnemyInformationController : MonoBehaviour
             }
         }
         hasShownAbilities = true;
+    }
+
+    public bool GetHasShownAbilities ()
+    {
+        return hasShownAbilities;
     }
 
     public bool GetCanPathToTarget()

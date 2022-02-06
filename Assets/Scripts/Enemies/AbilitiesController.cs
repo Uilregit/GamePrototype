@@ -267,6 +267,9 @@ public class AbilitiesController : MonoBehaviour
                 case TriggerType.OnDamageTaken:
                     s += "<b>Damage taken:</b> ";
                     break;
+                case TriggerType.OnBreak:
+                    s += "<b>When broken:</b> ";
+                    break;
                 case TriggerType.BeforePlayerCardCast:
                     s += "<b>Before card triggers:</b> ";
                     break;

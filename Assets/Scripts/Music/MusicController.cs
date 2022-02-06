@@ -41,12 +41,14 @@ public class MusicController : MonoBehaviour
     {
         backgroundVolume = volume;
         backgroundSource.volume = volume;
+        backgroundSource.enabled = !(volume == 0);
     }
 
     public void SetSFXVolume(float volume)
     {
         soundFXVolume = volume;
         sFXSource.volume = volume;
+        sFXSource.enabled = !(volume == 0);
     }
 
     public void PlayBackground(AudioClip clip, bool loop)
@@ -62,6 +64,8 @@ public class MusicController : MonoBehaviour
 
     public void PlaySFX(AudioClip clip, bool loop = false)
     {
+        sFXSource.pitch = Random.Range(0.8f, 1.3f);
+
         sFXSource.clip = clip;
         sFXSource.loop = loop;
         sFXSource.Play();

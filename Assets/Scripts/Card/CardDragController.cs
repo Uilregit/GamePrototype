@@ -246,6 +246,9 @@ public class CardDragController : DragController
 
     private void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         desiredRotation = Vector2.zero;
 
         cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.SetCasting(false);
@@ -297,11 +300,16 @@ public class CardDragController : DragController
         }
 
         cardController.DeleteRangeIndicator();
+        if (cardController.GetNetEnergyCost() > 0)
+            UIController.ui.SetEnergyGlow(false);
         currentState = State.Default;
     }
 
     public override void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         cardDisplay.cardSounds.PlaySelectSound();
 
         currentState = State.Highlighted;
@@ -324,13 +332,19 @@ public class CardDragController : DragController
         if (cardController.GetNetManaCost() > 0)
             UIController.ui.SetAnticipatedManaLoss(cardController.GetNetManaCost());
         if (cardController.GetNetEnergyCost() > 0)
+        {
+            UIController.ui.SetEnergyGlow(true);
             UIController.ui.SetAnticipatedManaGain(cardController.GetNetEnergyCost());
+        }
 
         base.OnMouseDown();
     }
 
     public override void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         desiredRotation = new Vector2((Input.mousePosition - previousMousePosition).y, (previousMousePosition - Input.mousePosition).x);
         previousMousePosition = Input.mousePosition;
 

@@ -46,6 +46,10 @@ public class PlayerMoveController : MonoBehaviour
         previousPosition = transform.position;
         lastHoverLocation = transform.position;
         originalPosition = transform.position;
+        movedDistance = 0;
+        path = new List<Vector2>();
+        TileCreator.tileCreator.DestroyTiles(this.gameObject);
+        TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
         //moveShadow.GetComponent<SpriteRenderer>().sprite = GetComponent<PlayerController>().sprite.sprite;
         moveShadow.GetComponent<SpriteRenderer>().enabled = false;
     }
@@ -290,6 +294,10 @@ public class PlayerMoveController : MonoBehaviour
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
             enemy.GetComponent<EnemyInformationController>().RefreshIntent();
 
+        Vector2 gridLocation = GridController.gridController.GetGridLocation(location);
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerPosition, (int)(gridLocation.x * 10 + gridLocation.y));
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerMoved, 1);
+
         HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
     }
 
@@ -300,6 +308,9 @@ public class PlayerMoveController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
         clickedTime = DateTime.Now;
@@ -310,6 +321,9 @@ public class PlayerMoveController : MonoBehaviour
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
         GetComponent<HealthController>().HideHealthBar();

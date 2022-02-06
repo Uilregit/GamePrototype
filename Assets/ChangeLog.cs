@@ -1104,24 +1104,46 @@ Fixed immunity checks for buffs that have no trigger effects
 ###### 0.5.2.1 ######
 #####################
 -- Cards --
+    - Green -
+        PowerShot
+            Deal 75% of ATK times the number of cards played this turn as damage in a single strike --> Deal 50% of ATK times the number of cards played this turn as damage in a single strike
 
 -- Enemies --
 
 -- System --
+All players now have a 20% chance of retaining 1 health after taking a fatal hit
 Achievement requirements for world 1 room 10-H from "End a turn with more than 6 enemies" to "End a turn with more than 5 enemies"
 Major effects overhaul for all card effects
 Compressed textures to half build size
 Added music and sound effects volume controls to settings menu
 Added music and sound effects to all interactions
+In combat tutorial text implimented
+    All mouse events and timers disabled while text is on screen
+Story mode rooms can now have specified cards appearing in a specified order for tutorial purposes
+Added fine tuning to enemy pathing where areas can be marked as never used for final location for tutorial/enemy fine tuning
+Tutorial overlays now can have a prerequisite where it will only be shown if the prerequisite overlay has been already been shown
+Allows for no rewards option for rooms
+Allows for no buying items after rooms
+Allows rooms to start with the last picked reward card in hand
+First room of all encounters now start right at combat, instead of at overworld
+Allows for overriding room's replace counts
+Added ability to reset a combat room to it's initial conditions
+For the first tutorial room, death of any player results in a room reset instead of a normal death
+Tutorial overlays may now slow down time for a set duration
+Tutorial popups now pause time while they're up
 
 -- UI --
-Shrines will now have "+" signs for equipment stat numbers
+Shrines will now have information on their equipment offering's stat numbers
 All in combat cards on hover enlarge scale has been increased by 20% to improve readability
 End turn button and replace button will now change color to indicate that no action can be taken anymore
 Added glow to all on hit effects
 Added glow to all boss enemies
 Added fade in and fade out dissolve shader to player and enemy cards
 If no equipment are equipped but have unequipped equipments, collection menu defaults to page 1
+Map highlight now pulses to the music
+Added glow to energy and mana icons to highlight them when being used
+Story mode end scene items now will show card/equipment when held
+Story mode scene now accounts for rooms with no final rewards
 
 -- Audio --
 Added background music to all scenes
@@ -1229,14 +1251,8 @@ Add encyclopedia of cards that've been encountered in the game
 
 Add starting relic bonus to be only if last run ended above level 5, otherwise get a tiny stat boost instead (1 armor or 3 health)
 
-Retune Armro/Attack/Health on all characters including players (armor for how many turns till broken, then adjust attack so ~30%-50% of attack goes through on full armor, health based on how many rooms till healing on average)
-     retune energy defence cards strength so 1 defence blocks most of attack, 2 blocks all from normal enemies, 3 blocks all from bosses too
-     retune mana defence cards strength os 1 blocks all from normal enemies, 2 blocks all from bosses including special attacks, 3 to block ALL possible damage
-
 Add water/pits
 Add terrain like traps and fires and events (falling rocks)
-Add elite minibosses (have hearthstone solo adventure style passive effects)
-     Huge stats, duplicate (split stats equally across the two spawns), attack, duplicate, attack
 
 Add challenge modes: 10 health, etc
 
@@ -1310,12 +1326,8 @@ Add cross game loops
      Permanent upgrade system (secondary currency that persists between games)
          Give player the feeling that if the current run is hopeless, I can go after permanent resources to upgrade my next run
      Upgrades: <Incentivise next run planning>
-         Able to carry 1 card that's been unlocked (picked in a pervious game) to the start of the next game (of your choice)
-         Able to carry 1 card from the deck from the last run to the next game
-         Unlock a starting pack (very low currency requirement, get it essentially the second run)
          Upgrade rarity of the starting pack (uncommon, rare, epic, legendary, etc)
          Unlock blessings/curses (+1 to all attack, but -1 move range, etc)
-         Unlock revives (bring back to 1 health at the cost of one of the three most used cards)
      Hub unlocks: <All manned by quirky characters> <Incentivise next run planning>
          Library (All the cards in collection in previous runs) <Tied to upgrades?>
          Armory (All weapons and armor in collection in previous runs) <Tied to upgrades?>

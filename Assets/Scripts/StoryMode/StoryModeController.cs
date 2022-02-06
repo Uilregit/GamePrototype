@@ -174,16 +174,19 @@ public class StoryModeController : MonoBehaviour
         RareWildCard = 710,
         LegendaryWildCard = 730,
 
-        SuperLike = 9000,
-        RomancerPlus = 9001,
-        RomancerGold = 9002,
-        RomancerPlatinum = 9003,
+        TavernContract = 9000,
 
         PlusXReplace = 10001,
         PlusXGoldPerRoom = 10002,
         PlusXRewardCardRerollPerRun = 10003,
         PlusXWeeklyWaresRerollPerWeek = 10004,
-        PlusXDailyDealsRerollPerDay = 10005
+        PlusXDailyDealsRerollPerDay = 10005,
+
+        UnlockLeveling = 90000,
+        UnlockPostEncounterCards = 90001,
+        UnlockAchievements = 90002,
+
+        UnlockClassicMode = 99001,
     }
 
     // Start is called before the first frame update
@@ -808,6 +811,8 @@ public class StoryModeController : MonoBehaviour
 
     public void SetAchievementInfoMenu(bool state)
     {
+        if (state == true)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.AchievementHeld, 1);
         achievementMenu.gameObject.SetActive(state);
     }
 

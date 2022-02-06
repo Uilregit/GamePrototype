@@ -18,6 +18,17 @@ public class StoryModeEndSceenController : MonoBehaviour
     private Dictionary<Equipment, int> boughtEquipiments = new Dictionary<Equipment, int>();
     private bool[] challengeItemsBought = new bool[3] { false, false, false };
 
+    private void Awake()
+    {
+        StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
+        if (setup.overrideColors.Length == 3)
+            PartyController.party.SetOverrideParty(false);
+
+        //Skip final rewards. Used by tutorials
+        if (setup.skipFinalRewards)
+            BuyAndExit();
+    }
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -46,6 +57,8 @@ public class StoryModeEndSceenController : MonoBehaviour
             else
                 items[i].SetEnabled(false);
         }
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuShown, 1);
 
         ResetItemEnabled();
     }
@@ -83,6 +96,16 @@ public class StoryModeEndSceenController : MonoBehaviour
             else
                 boughtEquipiments[items[index].GetEquipment()] -= amount;
         }
+        else if (name == StoryModeController.RewardsType.UnlockClassicMode)
+        {
+            if (bought)
+            {
+                Unlocks unlock = UnlocksController.unlock.GetUnlocks();
+                unlock.classicModeUnlocked = true;
+                UnlocksController.unlock.SetUnlocks(unlock);
+                InformationLogger.infoLogger.SaveUnlocks();
+            }
+        }
         else
         {
             if (bought)
@@ -98,6 +121,8 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         if (index < 3)
             challengeItemsBought[index] = bought;
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuItemTaken, index + 1);
 
         ResetItemEnabled();
     }
@@ -154,6 +179,15 @@ public class StoryModeEndSceenController : MonoBehaviour
         StoryModeController.story.SetCombatInfoMenu(false);
         StoryModeController.story.ShowMenuSelected(0);
         ResourceController.resource.EnableStoryModeRelicsMenu(false);
+
+        if (!UnlocksController.unlock.GetUnlocks().firstTutorialRoomCompleted)
+        {
+            UnlocksController.unlock.GetUnlocks().firstTutorialRoomCompleted = true;
+            InformationLogger.infoLogger.SaveUnlocks();
+        }
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuExit, 1);
+
         SceneManager.LoadScene("StoryModeScene");
     }
 }

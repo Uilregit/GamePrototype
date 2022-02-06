@@ -39,21 +39,11 @@ public class SaveFile
     */
 
     public int lives;
-    public bool p1Dead;
-    public bool p2Dead;
-    public bool p3Dead;
-    public int p1Vit;
-    public int p2Vit;
-    public int p3Vit;
-    public int p1MaxVit;
-    public int p2MaxVit;
-    public int p3MaxVit;
-    public int p1Atk;
-    public int p2Atk;
-    public int p3Atk;
-    public int p1Armor;
-    public int p2Armor;
-    public int p3Armor;
+    public Dictionary<Card.CasterColor, bool> deadChars;
+    public Dictionary<Card.CasterColor, int> playerVit;
+    public Dictionary<Card.CasterColor, int> playerMaxVit;
+    public Dictionary<Card.CasterColor, int> playerAtk;
+    public Dictionary<Card.CasterColor, int> playerArmor;
 
     public string[] collectionCardNames;
     public Dictionary<string, string[]> selectedCardNames;
@@ -107,6 +97,7 @@ public class StoryModeSaveFile
 public class PlayerPreferences
 {
     public string lastPatchRead = "";
+    public bool tutorialCompleted = false;
 
     public string party1;
     public string party2;
@@ -156,6 +147,10 @@ public class Settings
 [System.Serializable]
 public class Unlocks
 {
+    public bool firstTutorialRoomCompleted;
+    public Dictionary<UIRevealController.UIElement, bool> uiElementUnlocked;
+    public bool classicModeUnlocked;
+
     public bool orangeUnlocked;
     public bool whiteUnlocked;
     public bool blackUnlocked;
@@ -213,6 +208,7 @@ public class InformationLogger : MonoBehaviour
     public bool isStoryMode = false;
     public string patchID;
     private string lastPatchRead = "";
+    private bool tutorialCompleted = false;
     public int seed;
     public string gameID;
     public Text versionText;
@@ -559,21 +555,11 @@ public class InformationLogger : MonoBehaviour
 
             CombatInfo combatInfo = InformationController.infoController.GetCombatInfo();
             saveFile.lives = combatInfo.lives;
-            saveFile.p1Dead = combatInfo.deadChars[0];
-            saveFile.p2Dead = combatInfo.deadChars[1];
-            saveFile.p3Dead = combatInfo.deadChars[2];
-            saveFile.p1Vit = combatInfo.vit[0];
-            saveFile.p2Vit = combatInfo.vit[1];
-            saveFile.p3Vit = combatInfo.vit[2];
-            saveFile.p1MaxVit = combatInfo.maxVit[0];
-            saveFile.p2MaxVit = combatInfo.maxVit[1];
-            saveFile.p3MaxVit = combatInfo.maxVit[2];
-            saveFile.p1Atk = combatInfo.atk[0];
-            saveFile.p2Atk = combatInfo.atk[1];
-            saveFile.p3Atk = combatInfo.atk[2];
-            saveFile.p1Armor = combatInfo.armor[0];
-            saveFile.p2Armor = combatInfo.armor[1];
-            saveFile.p3Armor = combatInfo.armor[2];
+            saveFile.deadChars = combatInfo.deadChars;
+            saveFile.playerVit = combatInfo.vit;
+            saveFile.playerMaxVit = combatInfo.maxVit;
+            saveFile.playerAtk = combatInfo.atk;
+            saveFile.playerArmor = combatInfo.armor;
 
             saveFile.collectionCardNames = CollectionController.collectionController.GetCompleteDeckNames();
             saveFile.selectedCardNames = CollectionController.collectionController.GetSelectedDeckNames();
@@ -815,23 +801,12 @@ public class InformationLogger : MonoBehaviour
 
             CombatInfo combatInfo = new CombatInfo();
             combatInfo.lives = saveFile.lives;
-            bool[] deadChars = new bool[3];
-            deadChars[0] = saveFile.p1Dead;
-            deadChars[1] = saveFile.p2Dead;
-            deadChars[2] = saveFile.p3Dead;
-            combatInfo.deadChars = deadChars;
-            combatInfo.vit[0] = saveFile.p1Vit;
-            combatInfo.vit[1] = saveFile.p2Vit;
-            combatInfo.vit[2] = saveFile.p3Vit;
-            combatInfo.maxVit[0] = saveFile.p1MaxVit;
-            combatInfo.maxVit[1] = saveFile.p2MaxVit;
-            combatInfo.maxVit[2] = saveFile.p3MaxVit;
-            combatInfo.atk[0] = saveFile.p1Atk;
-            combatInfo.atk[1] = saveFile.p2Atk;
-            combatInfo.atk[2] = saveFile.p3Atk;
-            combatInfo.armor[0] = saveFile.p1Armor;
-            combatInfo.armor[1] = saveFile.p2Armor;
-            combatInfo.armor[2] = saveFile.p3Armor;
+            combatInfo.deadChars = saveFile.deadChars;
+            combatInfo.vit = saveFile.playerVit;
+            combatInfo.maxVit = saveFile.playerMaxVit;
+            combatInfo.atk = saveFile.playerAtk;
+            combatInfo.armor = saveFile.playerArmor;
+
             InformationController.infoController.SetCombatInfo(combatInfo);
 
             CollectionController.collectionController.SetCompleteDeck(saveFile.collectionCardNames);
@@ -912,6 +887,7 @@ public class InformationLogger : MonoBehaviour
         string[] colors = PartyController.party.GetPlayerColorTexts();
 
         preferences.lastPatchRead = lastPatchRead;
+        preferences.tutorialCompleted = tutorialCompleted;
 
         preferences.party1 = colors[0];
         preferences.party2 = colors[1];
@@ -962,6 +938,7 @@ public class InformationLogger : MonoBehaviour
         PlayerPreferences preferences = GetHasPlayerPreferences();
 
         lastPatchRead = preferences.lastPatchRead;
+        tutorialCompleted = preferences.tutorialCompleted;
 
         string[] colors = new string[3];
         colors[0] = preferences.party1;
@@ -1154,6 +1131,16 @@ public class InformationLogger : MonoBehaviour
     public string GetLastPatchRead()
     {
         return lastPatchRead;
+    }
+
+    public void SetTutorialCompleted(bool state)
+    {
+        tutorialCompleted = state;
+    }    
+
+    public bool GetTutorialCompleted()
+    {
+        return tutorialCompleted;
     }
 
     private void OnDestroy()

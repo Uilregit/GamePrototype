@@ -9,6 +9,7 @@ public class PartyController : MonoBehaviour
     public static PartyController party;
 
     public Card.CasterColor[] partyColors;
+    private Card.CasterColor[] backupPartyColors;
 
     public Card.CasterColor[] potentialPlayerColors;
     public List<Card.CasterColor> unlockedPlayerColors;
@@ -86,7 +87,7 @@ public class PartyController : MonoBehaviour
         return output;
     }
 
-    public List<Card.CasterColor> GetPlayerCasterColors ()
+    public List<Card.CasterColor> GetPlayerCasterColors()
     {
         return partyColors.ToList();
     }
@@ -95,7 +96,7 @@ public class PartyController : MonoBehaviour
     {
         string[] output = new string[potentialPlayerColors.Length];
 
-        for(int i = 0; i < potentialPlayerColors.Length; i ++)
+        for (int i = 0; i < potentialPlayerColors.Length; i++)
             output[i] = GetPlayerColorText(potentialPlayerColors[i]);
 
         return output;
@@ -180,7 +181,7 @@ public class PartyController : MonoBehaviour
 
     public int GetStartingAttack(Card.CasterColor color)
     {
-        switch(color)
+        switch (color)
         {
             case Card.CasterColor.Red:
                 return redAtk;
@@ -236,5 +237,33 @@ public class PartyController : MonoBehaviour
                 return whiteHealth;
         }
         return -1;
+    }
+
+    public void SetOverrideParty(bool state)
+    {
+        Debug.Log("override party called");
+        if (state)
+            SetOverrideParty(RoomController.roomController.GetCurrentRoomSetup().overrideParty);
+        else
+            partyColors = backupPartyColors;
+    }
+
+    public void SetOverrideParty(Card.CasterColor[] colors)
+    {
+        backupPartyColors = partyColors;
+        partyColors = new Card.CasterColor[3];
+        for (int i = 0; i < colors.Length; i++)
+            partyColors[i] = colors[i];
+
+        List<Card.CasterColor> reserves = new List<Card.CasterColor> { Card.CasterColor.Red, Card.CasterColor.Blue, Card.CasterColor.Green, Card.CasterColor.Orange, Card.CasterColor.White, Card.CasterColor.Black };
+        for (int i = colors.Length; i < 3; i++)
+        {
+            foreach (Card.CasterColor color in reserves)
+                if (!partyColors.Contains(color))
+                {
+                    partyColors[i] = color;
+                    continue;
+                }
+        }
     }
 }

@@ -44,6 +44,7 @@ public class LootController : MonoBehaviour
 
     public void ResetPartyLootTable()
     {
+        Debug.Log("Party is: " + PartyController.party.partyColors[0] + "|" + PartyController.party.partyColors[1] + "|" + PartyController.party.partyColors[2] + "|");
         foreach (Card card in cardLootTable.cardLoot)
         {
             if (card.manaCost > 0)

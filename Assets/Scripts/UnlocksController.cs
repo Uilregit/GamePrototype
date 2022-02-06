@@ -81,54 +81,7 @@ public class UnlocksController : MonoBehaviour
     public Unlocks GetUnlocks()
     {
         if (unlocks == null)
-        {
-            Unlocks newUnlock = new Unlocks();
-            newUnlock.orangeUnlocked = false;
-            newUnlock.whiteUnlocked = false;
-            newUnlock.blackUnlocked = false;
-
-            newUnlock.tavernContracts = 0;
-            newUnlock.largestBoss = 0;
-
-            newUnlock.sand = 0;
-            newUnlock.shards = 0;
-
-            newUnlock.redGoldCardNum = 0;
-            newUnlock.blueGoldCardNum = 0;
-            newUnlock.greenGoldCardNum = 0;
-            newUnlock.orangeGoldCardNum = 0;
-            newUnlock.whiteGoldCardNum = 0;
-            newUnlock.blackGoldCardNum = 0;
-
-            newUnlock.unlockedCards = new string[0];
-            newUnlock.unlockedCardsNumber = new int[0];
-            newUnlock.unlockedRelics = new string[0];
-            newUnlock.unlockedWeapons = new string[0];
-            newUnlock.unlockedArmor = new string[0];
-            newUnlock.unlockedSkins = new string[0];
-
-            newUnlock.holdUnlocked = false;
-            newUnlock.replaceUnlocked = 1;
-            newUnlock.livesUnlocked = 0;
-
-            newUnlock.redTalentUnlocked = new bool[0];
-            newUnlock.blueTalentUnlocked = new bool[0];
-            newUnlock.greenTalentUnlocked = new bool[0];
-            newUnlock.orangeTalentUnlocked = new bool[0];
-            newUnlock.whtieTalentUnlocked = new bool[0];
-            newUnlock.blackTalentUnlocked = new bool[0];
-
-            newUnlock.redCustomizableCardUnlocked = 0;
-            newUnlock.blueCustomizableCardUnlocked = 0;
-            newUnlock.greenCustomizableCardUnlocked = 0;
-            newUnlock.orangeCustomizableCardUnlocked = 0;
-            newUnlock.whiteCustomizableCardUnlocked = 0;
-            newUnlock.blackCustomizableCardUnlocked = 0;
-
-            newUnlock.ascentionTierUnlocked = 0;
-            newUnlock.totalEXP = 0;
-            return newUnlock;
-        }
+            ResetUnlocks();
         return unlocks;
     }
 
@@ -193,7 +146,17 @@ public class UnlocksController : MonoBehaviour
 
     public void ResetUnlocks()
     {
+        unlocks = GetNewUnlocks();
+        InformationLogger.infoLogger.SaveUnlocks();
+    }
+
+    private Unlocks GetNewUnlocks()
+    {
         Unlocks newUnlock = new Unlocks();
+        newUnlock.firstTutorialRoomCompleted = false;
+        newUnlock.uiElementUnlocked = new Dictionary<UIRevealController.UIElement, bool>();
+        newUnlock.classicModeUnlocked = false;
+
         newUnlock.orangeUnlocked = false;
         newUnlock.whiteUnlocked = false;
         newUnlock.blackUnlocked = false;
@@ -239,8 +202,6 @@ public class UnlocksController : MonoBehaviour
         newUnlock.ascentionTierUnlocked = 0;
         newUnlock.totalEXP = 0;
 
-        unlocks = newUnlock;
-
-        InformationLogger.infoLogger.SaveUnlocks();
+        return newUnlock;
     }
 }

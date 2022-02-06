@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 2
-  description: Deal <s>75% of ATK</s> times the number of cards played this turn
+  description: Deal <s>50% of ATK</s> times the number of cards played this turn
     as damage in a single strike<cp>|(x cards played)</cp>
   art: {fileID: 21300000, guid: e0d414afc4ad1894ca7ffd24d8242449, type: 3}
   castType: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   conditionValue: 000000000000000000000000
   buff:
   - {fileID: 0}
-  effectValue: 000000004c1d000000000000
+  effectValue: 000000008813000000000000
   effectDuration: 000000006400000000000000
   spawnObject:
   - {fileID: 0}

@@ -18,6 +18,7 @@ public class StoryModeEndItemController : MonoBehaviour
     public Image itemIcon;
     public Text costText;
     public Text rewardTypeText;
+    public CardDisplay displayCard;
 
     public StoryModeEndSceenController endSceneController;
 
@@ -30,6 +31,16 @@ public class StoryModeEndItemController : MonoBehaviour
     private Card thisCard;
     private Equipment thisEquipment;
     private int amount;
+
+    private bool held = false;
+    private float heldTimer = 0;
+    private Coroutine holdRoutine;
+
+    private void Update()
+    {
+        if (held)
+            heldTimer += Time.deltaTime;
+    }
 
     public void SetEnabled(bool state)
     {
@@ -48,6 +59,40 @@ public class StoryModeEndItemController : MonoBehaviour
         lockedIcon.gameObject.SetActive(false);
         blackoutImage.enabled = true;
         soldOutText.gameObject.SetActive(true);
+    }
+
+    public void OnMouseDown()
+    {
+        held = true;
+        heldTimer = 0;
+        if (thisName == StoryModeController.RewardsType.SpecificCard || thisName == StoryModeController.RewardsType.SpecificEquipment)
+            holdRoutine = StartCoroutine(ShowDisplayCard());
+    }
+
+    public void OnMouseUp()
+    {
+        displayCard.gameObject.SetActive(false);
+        StopCoroutine(holdRoutine);
+        held = false;
+        if (heldTimer < 0.3f)
+            SetSelected();
+    }
+
+    private IEnumerator ShowDisplayCard()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        if (thisName == StoryModeController.RewardsType.SpecificCard)
+        {
+            CardController c = this.gameObject.AddComponent<CardController>();
+            c.SetCardDisplay(displayCard);
+            c.SetCard(thisCard, false, true, false);
+            displayCard.SetCard(c);
+        }
+        else if (thisName == StoryModeController.RewardsType.SpecificEquipment)
+            displayCard.SetEquipment(thisEquipment, Card.CasterColor.Gray);
+        displayCard.SetHighLight(true);
+        displayCard.gameObject.SetActive(true);
     }
 
     public void SetSelected()

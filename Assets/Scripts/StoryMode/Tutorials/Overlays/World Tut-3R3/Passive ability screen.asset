@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: Passive ability screen
+  m_EditorClassIdentifier: 
+  ID: 1
+  prerequisiteID: 10001
+  isUILevel: 1
+  overlay: {fileID: 4367329831992616754, guid: 87f8089267a2baf429578024768916a0, type: 3}
+  startingCondition: 11002
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  endingCondition: 11003
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 10
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

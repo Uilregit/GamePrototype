@@ -71,12 +71,14 @@ MonoBehaviour:
   startingArmor: 2
   attack: 3
   moveRange: 4
-  randomStartRange: 0
+  randomStartRange: 2
   attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
   - {fileID: 11400000, guid: 236adbb34c2dbcc4a839e7d6c85a033e, type: 2}
+  - {fileID: 11400000, guid: 236adbb34c2dbcc4a839e7d6c85a033e, type: 2}
+  - {fileID: 11400000, guid: 54ead397660fb7243b69b41b72cccaf1, type: 2}
   moveType: 0
   targetType: 3
   desiredTarget:

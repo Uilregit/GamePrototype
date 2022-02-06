@@ -30,6 +30,9 @@ public class FinalizeButtonController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (SceneManager.GetActiveScene().name != "OverworldScene" && SceneManager.GetActiveScene().name != "ShopScene")
             return;
 
@@ -61,6 +64,7 @@ public class FinalizeButtonController : MonoBehaviour
                     }
                     catch { }
                     CameraController.camera.transform.position = new Vector3(0, 0, -10);
+                    TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CollectionDoneButtonSelected, 1);
                 }
                 break;
             case ButtonType.Card:

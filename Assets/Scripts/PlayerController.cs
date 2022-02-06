@@ -36,40 +36,48 @@ public class PlayerController : MonoBehaviour
     {
         healthController = GetComponent<HealthController>();
 
+        moveController = GetComponent<PlayerMoveController>();
+        moveController.SetPlayerController(this);
+    }
+
+    public void SetupStats()
+    {
         //Assess all passive stat bonuses from the player color
         List<Equipment> equipments = new List<Equipment>();
 
-        if (!healthController.GetIsSimulation() && CollectionController.collectionController.GetSelectEquipments().ContainsKey(colorTag.ToString()))
-            foreach (string e in CollectionController.collectionController.GetSelectEquipments()[colorTag.ToString()])
-                equipments.Add(LootController.loot.GetEquipment(e));
-
-        foreach (Equipment e in equipments)
-        {
-            equipBonusArmor += e.armorChange;
-            equipBonusVit += e.healthChange;
-            equipBonusAtk += e.atkChange;
-            equipBonusCastRange += e.castRangeChange;
-            equipBonusMoveRange += e.moveRangeChange;
-            equipBonusHandSize += e.handSizeChange;
-            equipBonusReplace += e.replaceChange;
-        }
-
-        healthController.SetEquipArmor(equipBonusArmor);
-        healthController.SetEquipAttack(equipBonusAtk);
-        healthController.SetEquipVit(equipBonusVit);
-
-        attack = PartyController.party.GetStartingAttack(colorTag);
-        startingArmor = PartyController.party.GetStartingArmor(colorTag);
-        maxVit = PartyController.party.GetStartingHealth(colorTag);
-
-        healthController.SetCastRange(castRange + equipBonusCastRange);
-        healthController.SetMaxVit(maxVit);
-        healthController.SetStartingArmor(startingArmor);
-        healthController.SetStartingAttack(attack);
-        healthController.SetBonusMoveRange(equipBonusMoveRange);
-        HandController.handController.SetBonusReplace(equipBonusReplace, true);
-        HandController.handController.SetBonusHandSize(equipBonusHandSize, true);
         if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
+        {
+            if (!healthController.GetIsSimulation() && CollectionController.collectionController.GetSelectEquipments().ContainsKey(colorTag.ToString()))
+                foreach (string e in CollectionController.collectionController.GetSelectEquipments()[colorTag.ToString()])
+                    equipments.Add(LootController.loot.GetEquipment(e));
+
+            foreach (Equipment e in equipments)
+            {
+                equipBonusArmor += e.armorChange;
+                equipBonusVit += e.healthChange;
+                equipBonusAtk += e.atkChange;
+                equipBonusCastRange += e.castRangeChange;
+                equipBonusMoveRange += e.moveRangeChange;
+                equipBonusHandSize += e.handSizeChange;
+                equipBonusReplace += e.replaceChange;
+            }
+
+            healthController.SetEquipArmor(equipBonusArmor);
+            healthController.SetEquipAttack(equipBonusAtk);
+            healthController.SetEquipVit(equipBonusVit);
+
+            attack = PartyController.party.GetStartingAttack(colorTag);
+            startingArmor = PartyController.party.GetStartingArmor(colorTag);
+            maxVit = PartyController.party.GetStartingHealth(colorTag);
+
+            healthController.SetCastRange(castRange + equipBonusCastRange);
+            healthController.SetMaxVit(maxVit);
+            healthController.SetStartingArmor(startingArmor);
+            healthController.SetStartingAttack(attack);
+            healthController.SetBonusMoveRange(equipBonusMoveRange);
+
+            HandController.handController.SetBonusReplace(equipBonusReplace, true);
+            HandController.handController.SetBonusHandSize(equipBonusHandSize, true);
             try
             {
                 if (InformationController.infoController.GetMaxVit(colorTag) != -1)     //If InformationController has not be reset to default values, use those stats instead
@@ -77,8 +85,8 @@ public class PlayerController : MonoBehaviour
             }
             catch { }
 
-        moveController = GetComponent<PlayerMoveController>();
-        moveController.SetPlayerController(this);
+            healthController.GetComponent<BuffController>().Cleanse(healthController, false, true);
+        }
     }
 
     public void Spawn()
@@ -105,6 +113,9 @@ public class PlayerController : MonoBehaviour
             Destroy(this.gameObject);
         transform.position = location;
         GridController.gridController.ReportPosition(this.gameObject, location);
+
+        SetupStats();
+
         GetComponent<PlayerMoveController>().Spawn();
     }
 

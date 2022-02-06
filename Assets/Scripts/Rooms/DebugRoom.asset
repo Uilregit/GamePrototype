@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DebugRoom
   m_EditorClassIdentifier: 
   isBossRoom: 0
+  offerRewardGold: 1
+  offerRewardCards: 1
   relicReward: 0
   roomName: Debug Room
   enemies:
@@ -25,3 +27,11 @@ MonoBehaviour:
   level5: 00000000010000000000000000000000000000000100000000000000
   level6: 00000000010000000200000002000000020000000100000000000000
   level7: 00000000010000000000000000000000000000000100000000000000
+  dialogues: []
+  overlays: []
+  lastRewardCardOnTop: 1
+  overrideCardShuffle: 0
+  cardOrder: []
+  overrideHandSize: -1
+  overrideParty: 
+  overrideSeed: -1

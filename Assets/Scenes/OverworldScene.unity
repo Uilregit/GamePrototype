@@ -457,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music: {fileID: 8300000, guid: 8d5285d182589534da88bfcf56ddedf5, type: 3}
+  loop: 1
 --- !u!4 &250246195
 Transform:
   m_ObjectHideFlags: 0
@@ -3364,6 +3365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a5295d7985a2f49bed084593b61598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlight: {fileID: 1493070429}
+  collider: {fileID: 1493070431}
 --- !u!114 &1493070429
 MonoBehaviour:
   m_ObjectHideFlags: 0

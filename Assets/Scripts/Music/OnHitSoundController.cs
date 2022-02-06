@@ -40,7 +40,10 @@ public class OnHitSoundController : MonoBehaviour
     {
         effectSourceQueue = new Queue<AudioSource>();
         foreach (AudioSource audio in effectSource)
+        {
+            audio.enabled = false;
             effectSourceQueue.Enqueue(audio);
+        }
     }
 
     private void FixedUpdate()
@@ -51,6 +54,7 @@ public class OnHitSoundController : MonoBehaviour
                 finishedAudioSources.Add(audio);
         foreach (AudioSource audio in finishedAudioSources)
         {
+            audio.enabled = false;
             effectSourceQueue.Enqueue(audio);
             usedEffectSource.Remove(audio);
         }
@@ -60,12 +64,15 @@ public class OnHitSoundController : MonoBehaviour
     {
         AudioSource output = effectSourceQueue.Dequeue();
         usedEffectSource.Add(output);
+        output.enabled = true;
         return output;
     }
 
     public void PlayFootStepSound()
     {
         AudioSource source = GetAudioSource();
+
+        source.pitch = Random.Range(0.8f, 1.3f);
 
         source.clip = footStepSounds[Random.Range(0, footStepSounds.Length)];
         source.volume = MusicController.music.sFXSource.volume;
@@ -79,6 +86,8 @@ public class OnHitSoundController : MonoBehaviour
 
         if (usedList.Length > 0)
         {
+            source.pitch = Random.Range(0.8f, 1.3f);
+
             source.clip = usedList[Random.Range(0, usedList.Length)];
             source.volume = MusicController.music.sFXSource.volume;
             source.Play();
@@ -88,6 +97,9 @@ public class OnHitSoundController : MonoBehaviour
     public void PlayArmorSound(Card.SoundEffect armorSoundType, float percentDamageBlocked)
     {
         AudioSource source = GetAudioSource();
+
+        source.pitch = Random.Range(0.8f, 1.3f);
+
         switch (armorSoundType)
         {
             case Card.SoundEffect.ArmorHit:

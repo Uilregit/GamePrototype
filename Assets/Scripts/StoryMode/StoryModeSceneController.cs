@@ -33,6 +33,12 @@ public class StoryModeSceneController : MonoBehaviour
     public Sprite newWorldIcon;
 
     public GameObject[] worlds;
+    public Color[] worldColors;
+    public Image mapBackground;
+    public Image mapTopography;
+
+    public Text worldName;
+    public string[] worldNames;
 
     public Text flavorTextbox;
     public Image[] challengeStars;
@@ -41,6 +47,7 @@ public class StoryModeSceneController : MonoBehaviour
     public RectTransform items;
     public Image starsButton;
     public Image itemsButton;
+    public Image[] blankStarsIcon;
     public Text[] itemsList;
     public Image[] itemsSoldOutIcons;
     public Image[] itemsIcons;
@@ -65,11 +72,20 @@ public class StoryModeSceneController : MonoBehaviour
 
         RefreshWorldRooms();
 
+        if (!UnlocksController.unlock.GetUnlocks().firstTutorialRoomCompleted)
+        {
+            selectedRoom = GetRoomWithID(-10);
+            EnterRoom();
+            return;
+        }
+
         ReportRoomSelected(selectedRoom.roomId);
         initialized = true;
         StarsViewSelected();
 
         StartCoroutine(HighlightRooms());
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.MapSceneLoaded, 1);
     }
 
     public void RefreshWorldRooms()
@@ -83,8 +99,13 @@ public class StoryModeSceneController : MonoBehaviour
         foreach (StoryRoomController r in rooms[StoryModeController.story.GetWorldNumber()])
         {
             //Used to default selected room to last room if all rooms in world have been completed
-            if ((r.roomType == StoryRoomController.StoryRoomType.Combat || r.roomType == StoryRoomController.StoryRoomType.Boss) && !r.startHidden && r.roomId > maxID)
-                maxID = r.roomId;
+            if ((r.roomType == StoryRoomController.StoryRoomType.Combat || r.roomType == StoryRoomController.StoryRoomType.Boss) && !r.startHidden)
+            {
+                if (StoryModeController.story.GetWorldNumber() == 0 && r.roomId < maxID)
+                    maxID = r.roomId;
+                else if (StoryModeController.story.GetWorldNumber() != 0 && r.roomId > maxID)
+                    maxID = r.roomId;
+            }
 
             //Shows completed colors for all rooms
             if (StoryModeController.story.GetColorsCompleted() != null && StoryModeController.story.GetColorsCompleted().ContainsKey(r.roomId))
@@ -178,7 +199,7 @@ public class StoryModeSceneController : MonoBehaviour
                     else
                         r.transform.GetChild(0).GetComponent<Image>().sprite = crownIcon;
 
-                    if (StoryModeController.story.GetNumberOfChallengeItemsBought(r.roomId) == 3)
+                    if (StoryModeController.story.GetNumberOfChallengeItemsBought(r.roomId) == 3 || r.setup.skipFinalRewards)
                         r.GetComponent<Image>().color = shopColor;
                     else
                         r.GetComponent<Image>().color = goldColor;
@@ -210,7 +231,10 @@ public class StoryModeSceneController : MonoBehaviour
                 r.GetComponent<Collider2D>().enabled = true;
             }
             //Change the background color of the room that is unlocked but not completed
-            else if (StoryModeController.story.GetCompletedRooms().Contains(r.unlockRequirementID) || (r.roomId == 1 && StoryModeController.story.GetWorldNumber() == 0) || (r.roomId == 201 && StoryModeController.story.GetWorldNumber() == 1))
+            else if (StoryModeController.story.GetCompletedRooms().Contains(r.unlockRequirementID) ||
+                (r.roomId == -10 && StoryModeController.story.GetWorldNumber() == 0) ||
+                (r.roomId == 1 && StoryModeController.story.GetWorldNumber() == 1) ||
+                (r.roomId == 201 && StoryModeController.story.GetWorldNumber() == 2))
             {
                 if (r.roomType == StoryRoomController.StoryRoomType.Shop)
                     r.GetComponent<Image>().color = shopColor;
@@ -240,7 +264,9 @@ public class StoryModeSceneController : MonoBehaviour
         }
 
         if (selectedRoom == null)
+        {
             selectedRoom = GetRoomWithID(maxID);
+        }
 
         enterButton.color = lockedColor;
         enterButton.GetComponent<Collider2D>().enabled = false;
@@ -292,16 +318,18 @@ public class StoryModeSceneController : MonoBehaviour
     public void ReportRoomSelected(int roomId)
     {
         foreach (StoryRoomController r in rooms[StoryModeController.story.GetWorldNumber()])
+        {
             if (r.roomId == roomId)
             {
                 //If the selected room isn't viable, end this method call
-                if (!StoryModeController.story.GetCompletedRooms().Contains(r.roomId) && !StoryModeController.story.GetCompletedRooms().Contains(r.unlockRequirementID) && roomId != 1)
+                if (!StoryModeController.story.GetCompletedRooms().Contains(r.roomId) && !StoryModeController.story.GetCompletedRooms().Contains(r.unlockRequirementID) && roomId != -10)
                     return;
 
-                selectedRoom.GetComponent<Outline>().enabled = false;
+                selectedRoom.SetHighlighted(false);
                 selectedRoom = r;
                 break;
             }
+        }
 
         if (selectedRoom.roomType == StoryRoomController.StoryRoomType.NewWorld)
         {
@@ -330,13 +358,13 @@ public class StoryModeSceneController : MonoBehaviour
             MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
 
         selectedRoom.GetComponent<Outline>().effectColor = outlineColor;
-        selectedRoom.GetComponent<Outline>().enabled = true;
+        selectedRoom.SetHighlighted(true);
 
         flavorTextbox.text = selectedRoom.setup.flavorText;
 
         StoryModeController.story.SetCurrentRoomSetup(selectedRoom.setup);
 
-        int stars = 0;
+        int starNum = 0;
         for (int i = 0; i < 3; i++)
         {
             if (StoryModeController.story.GetChallengeValues().ContainsKey(selectedRoom.roomId) && ChallengeSatisfied(selectedRoom, i))
@@ -345,7 +373,7 @@ public class StoryModeSceneController : MonoBehaviour
                     challengeStars[i].transform.GetComponent<Image>().color = shopColor;
                 else
                     challengeStars[i].transform.GetComponent<Image>().color = goldColor;
-                stars++;
+                starNum++;
             }
             else
                 challengeStars[i].transform.GetComponent<Image>().color = completedColor;
@@ -373,6 +401,18 @@ public class StoryModeSceneController : MonoBehaviour
 
         enterButton.color = unlockedColor;
         enterButton.GetComponent<Collider2D>().enabled = true;
+
+        itemsButton.gameObject.SetActive(!selectedRoom.setup.skipFinalRewards);
+        starsButton.gameObject.SetActive(!selectedRoom.setup.skipFinalRewards);
+        if (selectedRoom.setup.skipFinalRewards)
+        {
+            stars.gameObject.SetActive(false);
+            items.gameObject.SetActive(false);
+        }
+        else
+            StarsViewSelected();
+        foreach (Image blankIcon in blankStarsIcon)
+            blankIcon.gameObject.SetActive(selectedRoom.setup.skipFinalRewards);
     }
 
     public void StarsViewSelected()
@@ -436,6 +476,8 @@ public class StoryModeSceneController : MonoBehaviour
 
     public void EnterRoom()
     {
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.MapSceneEnterButtonPressed, 1);
+
         MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
         StoryModeController.story.SetLastSelectedRoomID(selectedRoom.roomId);
         StoryModeController.story.SetLastSelectedAchievemnts(GetNumChallengeSatisfied(selectedRoom));
@@ -449,11 +491,15 @@ public class StoryModeSceneController : MonoBehaviour
 
         if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Combat || selectedRoom.roomType == StoryRoomController.StoryRoomType.Boss)
         {
+            if (selectedRoom.setup.overrideColors.Length == 3)
+                PartyController.party.SetOverrideParty(selectedRoom.setup.overrideColors);
             SetCollection();
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
         else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Arena || selectedRoom.roomType == StoryRoomController.StoryRoomType.NakedArena)
         {
+            if (selectedRoom.setup.overrideColors.Length == 3)
+                PartyController.party.SetOverrideParty(selectedRoom.setup.overrideColors);
             SetCollection();
             ResourceController.resource.EnableStoryModeRelicsMenu(true);
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
@@ -490,6 +536,10 @@ public class StoryModeSceneController : MonoBehaviour
             StoryModeController.story.SetWorldNumber(value);
             for (int i = 0; i < worlds.Length; i++)
                 worlds[i].SetActive(i == value);
+
+            mapBackground.color = worldColors[value];
+            mapTopography.transform.localScale = new Vector3(mapTopography.transform.localScale.x * -1, 1, 1);
+            worldName.text = worldNames[value];
 
             RefreshWorldRooms();
 

@@ -24,6 +24,7 @@ MonoBehaviour:
   challengeValues: 00000000020000000a000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: 010000000000000011000000
+  skipFinalRewards: 0
   rewardTypes: 0000000008000000070000002800000032000000
   rewardCards:
   - {fileID: 0}
@@ -40,5 +41,5 @@ MonoBehaviour:
   rewardAmounts: 0100000001000000010000000400000004000000
   rewardCosts: 320000003c0000003c0000001400000014000000
   challengeRewardBought: 000000
-  flavorText: The Lazul Consort mages revere their Grand Magi for their big deck
-    energy
+  flavorText: The Saphire Mages revere their Grand Magi for their big deck energy
+  overrideColors: 

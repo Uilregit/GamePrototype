@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R1-5 Replace
+  m_EditorClassIdentifier: 
+  ID: 5
+  prerequisiteID: -1
+  isUILevel: 0
+  overlay: {fileID: 4199232391356514682, guid: 32a92c2050391ef4497ffd68e18da382, type: 3}
+  startingCondition: 10
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 5
+  endingCondition: 20
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 0
+  OnEndUIReveal: 1
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

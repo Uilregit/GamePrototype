@@ -26,7 +26,8 @@ MonoBehaviour:
   challengeValues: 000000000400000002000000
   challengeComparisonType: 000000001400000014000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: 2a230000f4010000c6020000230000002d000000
+  skipFinalRewards: 0
+  rewardTypes: 28230000f4010000c6020000230000002d000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -43,3 +44,4 @@ MonoBehaviour:
   rewardCosts: 32000000780000003c0000001e0000001e000000
   challengeRewardBought: 000000
   flavorText: The Broodfather went out for milk and never came back
+  overrideColors: 

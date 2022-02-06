@@ -24,6 +24,7 @@ MonoBehaviour:
   challengeValues: 000000000500000005000000
   challengeComparisonType: 000000000000000014000000
   bestChallengeValues: 0100000006000000ffffffff
+  skipFinalRewards: 0
   rewardTypes: 000000000500000007000000320000001e000000
   rewardCards:
   - {fileID: 0}
@@ -40,5 +41,6 @@ MonoBehaviour:
   rewardAmounts: 0100000001000000010000000400000004000000
   rewardCosts: 32000000320000003c0000001400000014000000
   challengeRewardBought: 000000
-  flavorText: The difference between an assasin and a murderer is efficiency. Well,
-    efficiency and paperwork
+  flavorText: The difference between an Emerald Assasin and a murderer is efficiency.
+    Well, efficiency and paperwork
+  overrideColors: 

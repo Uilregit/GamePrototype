@@ -14,6 +14,7 @@ public class GridController : MonoBehaviour
     private int xSize, ySize, xOffset, yOffset;
     //private GameObject[,] objects;
     public List<GameObject>[,] objects;
+    public bool[,] pathBlocks;
 
     private Dictionary<Card.CasterColor, Vector2> deathLocation;
 
@@ -27,19 +28,21 @@ public class GridController : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        ResetGrid();
+    }
+
+    public void ResetGrid()
+    {
         objects = new List<GameObject>[xSize, ySize];
+        pathBlocks = new bool[xSize, ySize];
         for (int x = 0; x < xSize; x++)
             for (int y = 0; y < ySize; y++)
+            {
                 objects[x, y] = new List<GameObject>();
+                pathBlocks[x, y] = false;
+            }
 
         deathLocation = new Dictionary<Card.CasterColor, Vector2>();
-
-        try
-        {
-            GetComponent<MultiplayerGridController>().SetSize(xSize, ySize);
-            GetComponent<MultiplayerGridController>().SetGrid(objects);
-        }
-        catch { }
     }
 
     public int[] GetRoomRange()
@@ -79,7 +82,12 @@ public class GridController : MonoBehaviour
                     o.GetComponent<Collider2D>().enabled = false;
 
         if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
+        {
             AchievementSystem.achieve.OnNotify(objects[xLoc + xOffset, yLoc + yOffset].Count, StoryRoomSetup.ChallengeType.CharsStacked);
+            int enemyCount = objects[xLoc + xOffset, yLoc + yOffset].Select(x => !x.GetComponent<HealthController>().isPlayer).Count();
+            if (enemyCount > 1)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemiesStacked, enemyCount);
+        }
 
         /*
         if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
@@ -215,6 +223,22 @@ public class GridController : MonoBehaviour
                 output.Remove(t.transform.position);
 
         return output;
+    }
+
+    public void SetPathBlocked(Vector2 location, bool state)
+    {
+        int xLoc = Mathf.RoundToInt(location.x);
+        int yLoc = Mathf.RoundToInt(location.y);
+
+        pathBlocks[(xLoc + xOffset), (yLoc + yOffset)] = state;
+    }
+
+    public bool GetPathBlocked(Vector2 location)
+    {
+        int xLoc = Mathf.RoundToInt(location.x);
+        int yLoc = Mathf.RoundToInt(location.y);
+
+        return pathBlocks[(xLoc + xOffset), (yLoc + yOffset)];
     }
 
     //Returns true for out of bounds positions, false if not
@@ -510,5 +534,10 @@ public class GridController : MonoBehaviour
                 foreach (GameObject obj in value[x, y])
                     obj.transform.position = new Vector3(x - xOffset, y - yOffset, 0);
         //DebugGrid();
+    }
+
+    public Vector2 GetGridLocation(Vector2 transformPosition)
+    {
+        return new Vector2((int)transformPosition.x + xOffset, (int)transformPosition.y + yOffset);
     }
 }

@@ -17,12 +17,18 @@ public class RewardCardController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
     }
 
     private void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlayCastSound();
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), true);
         StopAllCoroutines();
@@ -44,16 +50,21 @@ public class RewardCardController : MonoBehaviour
             RewardsMenuController.rewardsMenu.HideRewardCards();
             RewardsMenuController.rewardsMenu.SetItemsClickable(true);
         }
+        else
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsCardShrunk, 1);
     }
 
     private IEnumerator EnlargeCard()
     {
         yield return new WaitForSeconds(0.3f);
+
         transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlaySelectSound();
         transform.SetAsLastSibling();
         transform.position = new Vector3(Mathf.Clamp(originalLocation.x, HandController.handController.cardHighlightXBoarder * -1, HandController.handController.cardHighlightXBoarder), originalLocation.y + HandController.handController.GetCardHighlightHeight() * 1.1f, 0);
         transform.localScale = new Vector3(HandController.handController.GetCardHighlightSize() * 1.1f, HandController.handController.GetCardHighlightSize() * 1.1f, 1);
         transform.GetChild(0).GetComponent<CardDisplay>().SetCard(transform.GetChild(0).GetComponent<CardDisplay>().GetCard(), false);
         transform.GetChild(0).GetComponent<CardDisplay>().SetToolTip(true);
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsCardEnlarged, 1);
     }
 }

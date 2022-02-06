@@ -15,6 +15,7 @@ public class StoryRoomSetup : ScriptableObject
     public ChallengeComparisonType[] challengeComparisonType = new ChallengeComparisonType[3];
     public int[] bestChallengeValues = new int[3] { -1, -1, -1 };
 
+    public bool skipFinalRewards = false;
     public StoryModeController.RewardsType[] rewardTypes;
     public Card[] rewardCards;
     public Equipment[] rewardEquipment;
@@ -25,6 +26,7 @@ public class StoryRoomSetup : ScriptableObject
     [TextArea]
     public string flavorText;
 
+    public Card.CasterColor[] overrideColors;
 
     public enum ChallengeType
     {
@@ -93,7 +95,8 @@ public class StoryRoomSetup : ScriptableObject
     {
         GreaterThan = 0,
         EqualTo = 10,
-        LessThan = 20
+        LessThan = 20,
+        NotEqualTo = 30
     }
 
     public string GetChallengeText(int roomID, int index, int bestValue = -1, bool useValueAsIs = false)

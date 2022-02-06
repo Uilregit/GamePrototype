@@ -17,10 +17,18 @@ public class CardSoundController : MonoBehaviour
     {
         source.volume = MusicController.music.sFXSource.volume;
         source.loop = false;
+        source.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (!source.isPlaying && source.enabled)
+            source.enabled = false;
     }
 
     public void PlaySelectSound()
     {
+        source.enabled = true;
         source.clip = selectSounds[Random.Range(0, selectSounds.Length)];
         source.loop = false;
         source.Play();
@@ -28,12 +36,14 @@ public class CardSoundController : MonoBehaviour
 
     public void PlayDragSound()
     {
+        source.enabled = true;
         source.clip = dragSounds[Random.Range(0, dragSounds.Length)];
         source.loop = false;
         source.Play();
     }
     public void PlayCastingSound()
     {
+        source.enabled = true;
         source.Stop();
         source.clip = castingSounds[Random.Range(0, castingSounds.Length)];
         source.loop = true;
@@ -41,18 +51,21 @@ public class CardSoundController : MonoBehaviour
     }
     public void PlayCastSound()
     {
+        source.enabled = true;
         source.clip = castSounds[Random.Range(0, castSounds.Length)];
         source.loop = false;
         source.Play();
     }
     public void PlayUncastSound()
     {
+        source.enabled = true;
         source.clip = uncastSounds[Random.Range(0, uncastSounds.Length)];
         source.loop = false;
         source.Play();
     }
     public void PlayReplaceSound()
     {
+        source.enabled = true;
         source.clip = replaceSounds[Random.Range(0, replaceSounds.Length)];
         source.loop = false;
         source.Play();

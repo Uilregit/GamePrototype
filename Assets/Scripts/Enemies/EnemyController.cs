@@ -535,7 +535,15 @@ public class EnemyController : MonoBehaviour
         else if (knockToTrapLocs.Count != 0)        //If can't overlap, try knocking into traps
             finalLoc = knockToTrapLocs[Random.Range(0, knockToTrapLocs.Count - 1)];
         else                                        //Last option knock to a random location
-            finalLoc = viablePositions[Random.Range(0, viablePositions.Count - 1)];
+        {
+            if (viablePositions.Count > 0)
+                finalLoc = viablePositions[Random.Range(0, viablePositions.Count - 1)];
+            else
+            {
+                List<Vector2> normalPath = FindFurthestPointInRange(target, pathThroughTags);
+                finalLoc = normalPath[normalPath.Count - 1];
+            }
+        }
         return PathFindController.pathFinder.PathFind(transform.position, finalLoc, pathThroughTags, occupiedSpace, size);
     }
 
@@ -738,7 +746,7 @@ public class EnemyController : MonoBehaviour
         List<Vector2> emptyInRangeLocations = new List<Vector2>();
         List<Vector2> emptyAndTraplessLocations = new List<Vector2>();
         foreach (Vector2 loc in inRangeLocations)                                              //Find all locations that are in range and empty
-            if (GridController.gridController.GetObjectAtLocation(loc).Count == 0)
+            if (GridController.gridController.GetObjectAtLocation(loc).Count == 0 && !GridController.gridController.GetPathBlocked(loc))
             {
                 emptyInRangeLocations.Add(loc);
                 if (!GridController.gridController.traps.Any(x => (Vector2)x.transform.position == loc))    //Also calculates trapless locations in case traps can be avoided

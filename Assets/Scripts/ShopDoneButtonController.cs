@@ -15,6 +15,9 @@ public class ShopDoneButtonController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         MusicController.music.SetHighPassFilter(false);
 
         ShopController.shop.RecordShopInformation();

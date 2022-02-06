@@ -15,6 +15,10 @@ public class StoryRoomController : MonoBehaviour
     public Image connector;
     public Image[] colorsCompleted;
 
+    private bool isHighlighted = false;
+    private float outlineSize;
+    private Outline outline;
+
     public enum StoryRoomType
     {
         Combat = 0,
@@ -25,6 +29,27 @@ public class StoryRoomController : MonoBehaviour
         NakedArena = 60,
         NewWorld = 100,
         PreviousWorld = 101
+    }
+
+    public void Start()
+    {
+        outline = GetComponent<Outline>();
+        outlineSize = outline.effectDistance.x;
+    }
+
+    public void Update()
+    {
+        if (isHighlighted)
+        {
+            float effectDistance = Mathf.Lerp(outlineSize, outlineSize * 1.4f, MusicController.music.GetBackgroundAmplitude()[0]);
+            outline.effectDistance = new Vector2(effectDistance, effectDistance);
+        }
+    }
+
+    public void SetHighlighted(bool state)
+    {
+        isHighlighted = state;
+        outline.enabled = state;
     }
 
     public void SetColorsCompleted(List<Card.CasterColor> colors)

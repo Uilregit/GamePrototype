@@ -47,6 +47,9 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         hasNeverBeenShrunk = true;                              //Used so where the card can potentially go is shown
         transform.SetParent(selectedCardCanvas.transform);
         EnlargeCard();
@@ -82,6 +85,9 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         int index = 0;
         //Find the index location that the card is being dragged over
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3)
@@ -143,6 +149,9 @@ public class DeckCustomizeCardController : MonoBehaviour
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         transform.SetParent(originalCanvas.transform);
 
         if (!isShowingCard)

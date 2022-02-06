@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R2-7 Use Defend
+  m_EditorClassIdentifier: 
+  ID: 7
+  prerequisiteID: 6
+  overlay: {fileID: 42044053939467121, guid: 028ea733f65695b4ca748f24c34de3e8, type: 3}
+  startingCondition: 1002
+  startingValue: 0
+  startingStringValue: Taunt
+  startingComparisonType: 10
+  endingCondition: 1002
+  endingValue: 0
+  endingStringValue: Defend
+  endingComparisonType: 10

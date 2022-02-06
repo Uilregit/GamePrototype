@@ -30,6 +30,9 @@ public class EquipmentDragCardController : DragController
 
     public override void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         cardDisplay.cardSounds.PlaySelectSound();
         base.OnMouseDown();
         cardDisplay.Show();
@@ -38,6 +41,9 @@ public class EquipmentDragCardController : DragController
 
     public override void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
 
@@ -50,6 +56,9 @@ public class EquipmentDragCardController : DragController
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         cardDisplay.cardSounds.PlayCastSound();
         cardDisplay.Hide();
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)

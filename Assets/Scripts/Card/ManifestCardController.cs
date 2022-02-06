@@ -19,12 +19,18 @@ public class ManifestCardController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
     }
 
     private void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         transform.GetChild(0).GetComponent<CardDisplay>().cardSounds.PlayCastSound();
         StopAllCoroutines();
         transform.localScale = localScale;

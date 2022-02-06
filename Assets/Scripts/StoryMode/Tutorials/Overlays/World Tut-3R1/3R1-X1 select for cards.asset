@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 3R1-X1 select for cards
+  m_EditorClassIdentifier: 
+  ID: 101
+  prerequisiteID: -1
+  isUILevel: 1
+  overlay: {fileID: 3808679573964560444, guid: 17d2e8dab008b3b45885760d5f92fd0f, type: 3}
+  startingCondition: 10001
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  endingCondition: 10002
+  endingValue: 3
+  endingStringValue: 
+  endingComparisonType: 10

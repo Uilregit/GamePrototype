@@ -20,6 +20,9 @@ public class PlayerMouseController : DragController
 
     public override void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         moveController.CreateMoveRangeIndicator();
         moveController.healthController.charDisplay.onHitSoundController.PlayFootStepSound();
 
@@ -29,6 +32,9 @@ public class PlayerMouseController : DragController
 
     public override void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (moveController.GetMoveable())
         {
             base.OnMouseDrag();
@@ -37,6 +43,9 @@ public class PlayerMouseController : DragController
     }
     private void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         moveController.healthController.charDisplay.onHitSoundController.PlayFootStepSound();
 
         moveController.MoveTo(moveController.GetMoveLocation());

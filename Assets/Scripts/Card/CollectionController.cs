@@ -529,6 +529,8 @@ public class CollectionController : MonoBehaviour
             catch { }
         }
 
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CollectionCardAddedToDeck, 1);
+
         CheckDeckComplete();
         RefreshDecks();
     }
@@ -1043,6 +1045,8 @@ public class CollectionController : MonoBehaviour
         else                                                                //In all other instances, classic mode, in combat, etc, only show party character tabs
             for (int i = 3; i < 6; i++)
                 deckButtons[i].gameObject.SetActive(false);
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CollectionColorSelected, newDeck);
 
         CheckPageButtons();
         ResetStatsTexts();

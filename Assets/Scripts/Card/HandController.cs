@@ -16,6 +16,7 @@ public class HandController : MonoBehaviour
     private int bonusHandSize;
     public bool allowHold = true;
     public int maxReplaceCount;
+    private int bonusReplaceCount;
     public int playerNumber;
 
     public float cardStartingHeight;
@@ -38,6 +39,9 @@ public class HandController : MonoBehaviour
     private List<CardController> hand;
     private List<CardController> drawnCards;
     private List<CardController> drawQueue;
+
+    private GameObject replace;
+    private GameObject hold;
     // Start is called before the first frame update
     void Awake()
     {
@@ -53,6 +57,12 @@ public class HandController : MonoBehaviour
         drawQueue = new List<CardController>();
 
         ResetHoldsAndReplaces();
+    }
+
+    public void SetHoldAndReplace(GameObject thisHold, GameObject thisReplace)
+    {
+        hold = thisHold;
+        replace = thisReplace;
     }
 
     public void ResetHoldsAndReplaces()
@@ -300,7 +310,7 @@ public class HandController : MonoBehaviour
             hand[i].GetComponent<CardDragController>().SetOriginalLocation(desiredPosition[i]);
         }
 
-        GameController.gameController.SetTurnButtonDone(hand.Count == 0 || (GetNumberOfPlayableCards() == 0 && currentReplaceCount == maxReplaceCount));
+        GameController.gameController.SetTurnButtonDone(hand.Count == 0 || (GetNumberOfPlayableCards() == 0 && currentReplaceCount == maxReplaceCount + bonusReplaceCount));
         if (hand.Count == 0)
             GameController.gameController.SetReplaceDone(true);
     }
@@ -324,7 +334,7 @@ public class HandController : MonoBehaviour
             StartCoroutine(ResetCardPositions());
             heldCard.GetComponent<CardDragController>().SetHeld(true);
 
-            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = false;
+            hold.GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -338,13 +348,13 @@ public class HandController : MonoBehaviour
             Destroy(currentlyHeldCard.gameObject);
             currentlyHeldCard = null;
 
-            GameObject.FindGameObjectWithTag("Hold").GetComponent<Collider>().enabled = true;
+            hold.GetComponent<Collider>().enabled = true;
         }
     }
 
     public void ReplaceCard(CardController replacedCard)
     {
-        if (currentReplaceCount < maxReplaceCount)
+        if (currentReplaceCount < maxReplaceCount + bonusReplaceCount)
         {
             hand.Remove(replacedCard);
             //StartCoroutine(ResetCardPositions());
@@ -356,12 +366,14 @@ public class HandController : MonoBehaviour
 
             currentReplaceCount += 1;
             ResetReplaceText();
-            GameController.gameController.SetReplaceDone(currentReplaceCount == maxReplaceCount);
+            GameController.gameController.SetReplaceDone(currentReplaceCount == maxReplaceCount + bonusReplaceCount);
 
-            if (currentReplaceCount == maxReplaceCount)
-                GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = false;
+            if (currentReplaceCount == maxReplaceCount + bonusReplaceCount)
+                replace.GetComponent<Collider>().enabled = false;
 
             replacedCard.cardDisplay.cardSounds.PlayReplaceSound();
+
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.Replace, currentReplaceCount);
 
             try
             {
@@ -525,17 +537,13 @@ public class HandController : MonoBehaviour
         currentReplaceCount = 0;
         ResetReplaceText();
 
-        GameObject.FindGameObjectWithTag("Replace").GetComponent<Collider>().enabled = true;
+        if (replace != null)
+            replace.GetComponent<Collider>().enabled = true;
     }
 
     private void ResetReplaceText()
     {
-        if (MultiplayerGameController.gameController != null)
-        {
-            maxReplaceCount = 2;
-            allowHold = false;
-        }
-        GameObject.FindGameObjectWithTag("Replace").transform.GetChild(1).GetComponent<Text>().text = "x" + (maxReplaceCount - currentReplaceCount).ToString();
+        replace.transform.GetChild(1).GetComponent<Text>().text = "x" + (maxReplaceCount + bonusReplaceCount - currentReplaceCount).ToString();
     }
 
     public CardController GetHeldCard()
@@ -569,9 +577,9 @@ public class HandController : MonoBehaviour
     public void SetBonusReplace(int value, bool relative)
     {
         if (relative)
-            maxReplaceCount += value;
+            bonusReplaceCount += value;
         else
-            maxReplaceCount = value;
+            bonusReplaceCount = value;
 
         ResetReplaceCounter();
     }

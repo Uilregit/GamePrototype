@@ -77,12 +77,18 @@ public class StoryModeShopCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
     }
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         //transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
         StopAllCoroutines();
         transform.SetParent(originalCanvas.transform);

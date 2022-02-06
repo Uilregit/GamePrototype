@@ -21,7 +21,8 @@ MonoBehaviour:
   challengeValues: 1c000000140000000c000000
   challengeComparisonType: 140000001400000014000000
   bestChallengeValues: ffffffffffffffffffffffff
-  rewardTypes: f4010000c602000028230000230000002d000000
+  skipFinalRewards: 0
+  rewardTypes: f4010000bc020000c6020000230000002d000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -38,3 +39,4 @@ MonoBehaviour:
   rewardCosts: 32000000780000003c0000002800000028000000
   challengeRewardBought: 000000
   flavorText: In communist post apocalyptic dystopia, arena pays YOU
+  overrideColors: 

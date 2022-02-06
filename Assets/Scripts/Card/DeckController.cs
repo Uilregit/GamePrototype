@@ -40,23 +40,38 @@ public class DeckController : MonoBehaviour
             Destroy(this.gameObject);
 
         DontDestroyOnLoad(this.gameObject);
-
     }
 
-    public void PopulateDecks()
+    public void PopulateDecks(Card[] specificCards = null)
     {
         numberOfManaCardsInDraw = 0;
         numberOfEnergyCardsInDraw = 0;
         drawPile = new List<CardController>();
-        foreach (ListWrapper cards in deck)
-            foreach (CardController c in cards.deck)
+
+        foreach (CardController c in GetComponents<CardController>())
+            Destroy(c);
+
+        if (specificCards != null)
+            foreach (Card c in specificCards)
             {
-                drawPile.Add(c);
-                if (c.GetCard().manaCost == 0)
+                CardController cardController = this.gameObject.AddComponent<CardController>();
+                cardController.SetCard(c, true, false);
+                drawPile.Add(cardController);
+                if (c.manaCost == 0)
                     numberOfEnergyCardsInDraw += 1;
                 else
                     numberOfManaCardsInDraw += 1;
             }
+        else
+            foreach (ListWrapper cards in deck)
+                foreach (CardController c in cards.deck)
+                {
+                    drawPile.Add(c);
+                    if (c.GetCard().manaCost == 0)
+                        numberOfEnergyCardsInDraw += 1;
+                    else
+                        numberOfManaCardsInDraw += 1;
+                }
 
         discardPile = new List<CardController>();
         numberOfEnergyCardsInDiscard = 0;
@@ -269,6 +284,37 @@ public class DeckController : MonoBehaviour
         }
     }
 
+    public void ShuffleCardOnTop(List<string> cards)
+    {
+        List<CardController> startingHand = new List<CardController>();
+
+        foreach (string topCard in cards)
+            foreach (CardController c in drawPile)
+                if (c.GetCard().name == topCard)    //Searches through the draw pile, and adds the first match to the starting hand
+                {
+                    startingHand.Add(c);
+                    drawPile.Remove(c);
+                    break;
+                }
+
+        //Shuffle the starting hand so it appears more random
+        for (int i = 0; i < HandController.handController.startingHandSize - startingHand.Count; i++)
+        {
+            startingHand.Add(drawPile[0]);
+            drawPile.Remove(drawPile[0]);
+        }
+        for (int i = 0; i < startingHand.Count; i++)
+        {
+            int index = Random.Range(0, startingHand.Count - 1);
+            CardController c = startingHand[i];
+            startingHand[i] = startingHand[index];
+            startingHand[index] = c;
+        }
+
+        startingHand.AddRange(drawPile);
+        drawPile = startingHand;
+    }
+
     //Makes a copy of the entire default deck, all colors
     public void ResetDecks()
     {
@@ -319,8 +365,9 @@ public class DeckController : MonoBehaviour
 
     public void SetDecks(Dictionary<string, ListWrapper> value)
     {
+        Debug.Log("Set decks");
         ListWrapper[] newList = new ListWrapper[3];
-        for(int i = 0; i < 3;  i++)
+        for (int i = 0; i < 3; i++)
             newList[i] = value[PartyController.party.GetPlayerColorTexts()[i]];
 
         deck = newList;

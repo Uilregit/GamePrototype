@@ -76,7 +76,6 @@ public class GameController : MonoBehaviour
             simulationCharacters.Enqueue(obj.GetComponent<HealthController>());
         }
 
-
         //Hide the reward cards
         for (int i = 0; i < rewardCards.Length; i++)
         {
@@ -85,16 +84,16 @@ public class GameController : MonoBehaviour
         }
 
         setup = RoomController.roomController.GetCurrentRoomSetup();
+        TutorialController.tutorial.SetDialogue(setup.dialogues);
+        TutorialController.tutorial.SetTutorialOverlays(setup.overlays);
 
-        if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)    //If level setup satisfies basic requiremnts, use level plan
+        if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length ||                              //If level setup satisfies basic requiremnts, use level plan
+            setup.GetLocations(RoomSetup.BoardType.P).Count >= setup.overrideParty.Length && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)       //Or if it's a override, use those requirements instead
             InitializeRoom();
         else                                                                                                                                    //If level setup doesn't satisfy basic requirements, randomize
             RandomizeRoom();
 
-        DeckController.deckController.PopulateDecks();
-        DeckController.deckController.ResetCardValues();
-        DeckController.deckController.ShuffleDrawPile();
-        HandController.handController.SetBonusHandSize(0, false);
+        SetupDeckAndHand();
 
         InformationController.infoController.SaveCombatInformation();           //Save combat information at start of room as well in case char dies in the first room
 
@@ -106,6 +105,44 @@ public class GameController : MonoBehaviour
             GridController.gridController.DebugGrid();
 
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart, null);
+
+        foreach (UIRevealController.UIElement element in setup.hiddenUIElements)
+            UIRevealController.UIReveal.SetElementState(element, false);
+
+        if (setup.isBossRoom)
+            music.music = bossMusic;
+        else
+            music.music = combatMusic;
+        music.PlayMusic();
+
+        StartCoroutine(ShowAbilities());
+
+        ScoreController.score.SetTimerPaused(false);
+        UpdatePlayerDamage();
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, 0);
+    }
+
+    public void SetupDeckAndHand()
+    {
+        if (setup.overrideCardShuffle)
+            DeckController.deckController.PopulateDecks(setup.cardOrder);       //Populate decks with the specified order
+        else
+        {
+            DeckController.deckController.PopulateDecks();                      //Populate decks and shuffle them
+            DeckController.deckController.ShuffleDrawPile();
+        }
+        if (setup.lastRewardCardOnTop && CollectionController.collectionController.GetRecentRewardsCard() != "null")                     //Shuffle last reward card on top of draw pile if that setting is on
+            DeckController.deckController.ShuffleCardOnTop(new List<string>() { CollectionController.collectionController.GetRecentRewardsCard() });
+        DeckController.deckController.ResetCardValues();
+        if (setup.overrideHandSize > 0)
+            HandController.handController.SetBonusHandSize(setup.overrideHandSize - HandController.handController.startingHandSize, false);
+        else
+            HandController.handController.SetBonusHandSize(0, false);
+        if (setup.overrideReplaces > 0)
+            HandController.handController.SetBonusReplace(setup.overrideReplaces - HandController.handController.maxReplaceCount, false);
+        else
+            HandController.handController.SetBonusReplace(0, false);
 
         //Setup replace and hold areas
         if (HandController.handController.maxReplaceCount == 0)
@@ -121,19 +158,9 @@ public class GameController : MonoBehaviour
             GameObject.FindGameObjectWithTag("Hold").GetComponent<Image>().enabled = false;
             GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
-
-        if (setup.isBossRoom)
-            music.music = bossMusic;
-        else
-            music.music = combatMusic;
-        music.PlayMusic();
-
-        StartCoroutine(ShowAbilities());
-
-        ScoreController.score.SetTimerPaused(false);
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (showingDamageOverlay)
             damageOverlay.color = new Color(1, 0, 0, 0.5f + MusicController.music.GetBackgroundAmplitude()[0] / 2);     //Flash damage overlay tied to the base of the combat music
@@ -145,35 +172,53 @@ public class GameController : MonoBehaviour
 
         yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
 
-        foreach (EnemyController thisEnemy in TurnController.turnController.GetEnemies())
-            yield return StartCoroutine(thisEnemy.GetComponent<EnemyInformationController>().ShowAbilities());
+        yield return StartCoroutine(DisplayAbilityCards());
+    }
+
+    public IEnumerator DisplayAbilityCards()
+    {
+        int numAbilities = 0;
+        foreach (EnemyInformationController thisEnemy in TurnController.turnController.GetEnemies().Select(x => x.GetComponent<EnemyInformationController>()))
+            if (!thisEnemy.GetHasShownAbilities() && thisEnemy.GetComponent<AbilitiesController>().GetAbilityCards().Count > 0)
+            {
+                numAbilities++;
+                yield return StartCoroutine(thisEnemy.ShowAbilities());
+            }
+        if (numAbilities > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyHasPassive, 1);
     }
 
     public void InitializeRoom()
     {
+        if (setup.overrideSeed != -1)
+            Random.InitState(setup.overrideSeed);
+
         GetComponent<SpriteRenderer>().sprite = RoomController.roomController.GetCombatBackground();
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<GameObject> enemies = new List<GameObject>();
         blocks = new List<GameObject>();
         List<Vector2> viableSpawnLocations = setup.GetLocations(RoomSetup.BoardType.P);
+
         //Spawn players first. If specified location, at location, if not, spawn randomly
         foreach (GameObject player in players)
         {
-            if (!PartyController.party.partyColors.Contains(player.GetComponent<PlayerController>().GetColorTag()))
+            if ((setup.overrideParty.Length != 0 && !setup.overrideParty.Contains(player.GetComponent<PlayerController>().GetColorTag())) ||
+                (setup.overrideParty.Length == 0 && !PartyController.party.partyColors.Contains(player.GetComponent<PlayerController>().GetColorTag())))
             {
-                Destroy(player.gameObject);
+                DestroyImmediate(player.gameObject);
                 continue;
             }
-
             Vector2 spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
             player.GetComponent<PlayerController>().Spawn(spawnedLocation + new Vector2(-3, -2));
             viableSpawnLocations.Remove(spawnedLocation);
 
             // If the player was dead from before, remove them
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
+
             if (InformationController.infoController.GetIfDead(colorTag))
             {
+                Debug.Log(colorTag + " was dead");
                 GridController.gridController.ReportPlayerDead(player, colorTag);
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
                 ReportDeadChar(colorTag, player);
@@ -199,6 +244,10 @@ public class GameController : MonoBehaviour
             GridController.gridController.ReportPosition(thisBlock, loc + new Vector2(-3, -2));
             blocks.Add(thisBlock);
         }
+
+        //Assign blocked pathing movement for tutorials/enemy fine tuning
+        foreach (Vector2 loc in setup.GetLocations(RoomSetup.BoardType.B))
+            GridController.gridController.SetPathBlocked(loc + new Vector2(-3, -2), true);
 
         foreach (GameObject enemy in enemies)
             enemy.GetComponent<EnemyController>().RefreshIntent();
@@ -289,6 +338,56 @@ public class GameController : MonoBehaviour
             enemy.GetComponent<EnemyController>().RefreshIntent();
     }
 
+    public void ResetRoom(bool playerTriggered = true)
+    {
+        if (playerTriggered && !TurnController.turnController.GetIsPlayerTurn())       //Never allow resetting of the room while it's still the enemy's turn
+            return;
+
+        TurnController.turnController.SetPlayerTurn(true);
+
+        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
+            Destroy(enemy.gameObject);
+        TurnController.turnController.RemoveAllEnemies();
+
+        foreach (GameObject block in blocks)
+            Destroy(block);
+        blocks = new List<GameObject>();
+
+        GridController.gridController.ResetGrid();
+
+        ResourceController.resource.ResetReviveUsed();
+        TurnController.turnController.ResetManaAndEnergy();
+        TurnController.turnController.ResetCardInfo();
+
+        if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length ||                              //If level setup satisfies basic requiremnts, use level plan
+        setup.GetLocations(RoomSetup.BoardType.P).Count >= setup.overrideParty.Length && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)       //Or if it's a override, use those requirements instead
+            InitializeRoom();
+        else                                                                                                                                    //If level setup doesn't satisfy basic requirements, randomize
+            RandomizeRoom();
+
+        HandController.handController.EmptyHand();
+        SetupDeckAndHand();
+
+        RelicController.relic.OnNotify(this, Relic.NotificationType.OnCombatStart, null);
+
+        foreach (UIRevealController.UIElement element in setup.hiddenUIElements)
+            UIRevealController.UIReveal.SetElementState(element, false);
+
+        UpdatePlayerDamage();
+
+        SetReplaceDone(false);
+        SetTurnButtonDone(false);
+
+        StartCoroutine(ShowAbilities());
+
+        TutorialController.tutorial.DestroyAndReset();
+        TutorialController.tutorial.SetDialogue(setup.dialogues);
+        TutorialController.tutorial.SetTutorialOverlays(setup.overlays);
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, 0);
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.AfterRoomReset, 1);
+    }
+
     private void RearrangeBlocks(int blockNumber)
     {
         Debug.Log("############ Rearranged Blocks ###########");
@@ -319,9 +418,11 @@ public class GameController : MonoBehaviour
 
     private IEnumerator DisplayVictoryText()
     {
+        TutorialController.tutorial.DestroyAndReset();
         InformationController.infoController.SaveCombatInformation();
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         text.text = "VICTORY";
+        MusicController.music.SetLowPassFilter(false);
         MusicController.music.PlayBackground(victoryFanfair, false);
         text.enabled = true;
         yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
@@ -368,17 +469,35 @@ public class GameController : MonoBehaviour
             }
         }
 
-        int bonusPassiveGold = 0;
-        if (StoryModeController.story != null && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXGoldPerRoom))
-            bonusPassiveGold = StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXGoldPerRoom];
-        RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat + bonusPassiveGold);
-        if (totalOverkillGold > 0)
-            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
-        if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1))     //Don't give a card reward if it's the last room for storymode
-            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Card, null, 0);
-        if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom) && setup.relicReward)
-            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Relic, null, 0);
-        RewardsMenuController.rewardsMenu.ShowMenu();
+        if (setup.offerRewardGold)
+        {
+            int bonusPassiveGold = 0;
+            if (StoryModeController.story != null && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXGoldPerRoom))
+                bonusPassiveGold = StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXGoldPerRoom];
+            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat + bonusPassiveGold);
+            if (totalOverkillGold > 0)
+                RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
+        }
+        if (setup.offerRewardCards)
+        {
+            if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1))     //Don't give a card reward if it's the last room for storymode
+                RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Card, null, 0);
+            if (!(InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom) && setup.relicReward)
+                RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.Relic, null, 0);
+        }
+        if (setup.offerRewardCards || setup.offerRewardGold)
+        {
+            RewardsMenuController.rewardsMenu.ShowMenu();
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuShown, 1);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            RewardsMenuController.rewardsMenu.ReportRewardTaken(RewardsMenuController.RewardType.BypassRewards);
+        }
+
+        if (setup.overrideParty.Length > 0)
+            PartyController.party.SetOverrideParty(false);
     }
 
     public IEnumerator RezAndHealAllPlayers(float rezDelay)

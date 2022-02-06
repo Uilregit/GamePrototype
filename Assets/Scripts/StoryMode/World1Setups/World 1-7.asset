@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: World 1-7
   m_EditorClassIdentifier: 
   roomName: World 1-7
+  useDefaultCardsAndEquipments: 0
   setups:
   - {fileID: 11400000, guid: d7cac3b2495cc7b438c4e618810811c3, type: 2}
   - {fileID: 11400000, guid: 35f34fa5a00505445a0e03199d8650c3, type: 2}
   - {fileID: 11400000, guid: c065d6a2c3bd96a4080771e87f35429f, type: 2}
+  arenaSetup: {fileID: 0}
   challenges: 000000003004000031040000
   valueType: 000000000100000001000000
   challengeValues: 00000000010000001e000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
+  skipFinalRewards: 0
   rewardTypes: 0000000008000000080000008200000032000000
   rewardCards:
   - {fileID: 0}
@@ -38,5 +41,6 @@ MonoBehaviour:
   rewardAmounts: 0100000001000000010000000600000004000000
   rewardCosts: 320000003c0000003c0000001400000014000000
   challengeRewardBought: 000000
-  flavorText: Aspiring necromancers often seek "future corpses", and use healing
-    magic to them... fresh
+  flavorText: With everything rotting instead of dying, mages have to use healing
+    magic to things... fresh
+  overrideColors: 

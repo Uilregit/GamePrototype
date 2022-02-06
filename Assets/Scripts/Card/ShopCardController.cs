@@ -53,12 +53,18 @@ public class ShopCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
     }
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (equipment == null)
             transform.GetChild(0).GetComponent<CardDisplay>().SetCard(card, true);
         else

@@ -149,6 +149,9 @@ public class SelectedCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (!clickable)
             return;
 
@@ -159,6 +162,9 @@ public class SelectedCardController : MonoBehaviour
 
     public void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (!clickable)
             return;
 
@@ -223,6 +229,9 @@ public class SelectedCardController : MonoBehaviour
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (!clickable)
             return;
 

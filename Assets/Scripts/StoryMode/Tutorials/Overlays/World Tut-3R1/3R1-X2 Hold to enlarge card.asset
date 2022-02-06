@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 3R1-X2 Hold to enlarge card
+  m_EditorClassIdentifier: 
+  ID: 102
+  prerequisiteID: 101
+  isUILevel: 1
+  isPopup: 0
+  overlay: {fileID: 1786092755863190855, guid: 0f6423e8d1825c04785bac7e45a4c226, type: 3}
+  startingCondition: 10002
+  startingValue: 3
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 10021
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

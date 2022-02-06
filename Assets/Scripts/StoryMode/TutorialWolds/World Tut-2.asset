@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0051563aec72cc4aa53aaacaa8e2dd8, type: 3}
+  m_Name: World Tut-2
+  m_EditorClassIdentifier: 
+  roomName: World Tut-2
+  useDefaultCardsAndEquipments: 0
+  setups:
+  - {fileID: 11400000, guid: 213f54885338efa46b3588786ad9b812, type: 2}
+  - {fileID: 11400000, guid: 0edb40c169090444f81b2e860b6dd247, type: 2}
+  - {fileID: 11400000, guid: c7b44ebf7a30f88449534a7963471f48, type: 2}
+  arenaSetup: {fileID: 0}
+  challenges: 000000000000000000000000
+  valueType: 000000000000000000000000
+  challengeValues: 000000000000000000000000
+  challengeComparisonType: 000000000000000000000000
+  bestChallengeValues: 010000000200000004000000
+  skipFinalRewards: 0
+  rewardTypes: 905f0100915f0100925f01001e00000028000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0100000001000000010000000100000001000000
+  rewardCosts: 0f00000014000000190000001900000019000000
+  challengeRewardBought: 000000
+  flavorText: Ask not what you can do to your corpses, ask instead what your corpses
+    can do for YOU - The Deckromancer
+  overrideColors: 

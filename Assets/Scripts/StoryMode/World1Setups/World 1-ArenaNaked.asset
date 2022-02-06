@@ -21,7 +21,8 @@ MonoBehaviour:
   challengeValues: 38040000d002000068010000
   challengeComparisonType: 140000001400000014000000
   bestChallengeValues: 8a0000008a0000008a000000
-  rewardTypes: f4010000c6020000282300003700000041000000
+  skipFinalRewards: 0
+  rewardTypes: f4010000bc020000c60200003700000041000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -39,3 +40,4 @@ MonoBehaviour:
   challengeRewardBought: 000000
   flavorText: The arena owner keeps the tradition of nude combattants alive, and
     is banned from parks (start with default cards & equipments)
+  overrideColors: 

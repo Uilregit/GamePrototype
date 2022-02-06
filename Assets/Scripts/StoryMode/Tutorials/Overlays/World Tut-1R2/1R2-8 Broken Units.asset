@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R2-8 Broken Units
+  m_EditorClassIdentifier: 
+  ID: 8
+  prerequisiteID: -1
+  overlay: {fileID: 7404681835067442514, guid: ca1139a77482d4c4eba467e5deb04dda, type: 3}
+  startingCondition: 4001
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  endingCondition: 0
+  endingValue: 0
+  endingStringValue: 
+  endingComparisonType: 10

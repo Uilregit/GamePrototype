@@ -16,7 +16,7 @@ public class CharacterInformationController : MonoBehaviour
     public List<CardDisplay> passiveCards;
     public List<Text> abilityTexts;
     public List<CardDisplay> attackCards;
-    public List<BuffDescriptionController> buffDescriptions;
+    public List<BuffDescriptionController> buffDescriptions = new List<BuffDescriptionController>();
     public Collider2D returnButton;
     private int numOfCards = 0;
 
@@ -126,6 +126,8 @@ public class CharacterInformationController : MonoBehaviour
             else
                 attackCards[i].Hide();
         }
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CharacterInformationMenuOpened, 1);
     }
 
     public void Hide()
@@ -134,5 +136,7 @@ public class CharacterInformationController : MonoBehaviour
         foreach (CardDisplay display in attackCards)
             display.Hide();
         returnButton.enabled = false;
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CharacterInformationMenuClosed, 1);
     }
 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R3-X1 Select Area
+  m_EditorClassIdentifier: 
+  ID: 101
+  prerequisiteID: -1
+  isUILevel: 1
+  overlay: {fileID: 6827340589857357499, guid: f8d6e00f45c2d7241b8ed260758eaf63, type: 3}
+  startingCondition: 10051
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 10052
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

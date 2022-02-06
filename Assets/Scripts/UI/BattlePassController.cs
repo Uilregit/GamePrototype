@@ -112,16 +112,25 @@ public class BattlePassController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         offset = unlockParent.transform.position - Input.mousePosition;
     }
 
     public void OnMouseDrag()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         unlockParent.transform.position = new Vector2(Mathf.Min(parentLeftMostPosition, offset.x + Input.mousePosition.x), unlockParent.transform.position.y);
     }
 
     public void OnMouseUp()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         int index = 0;
         float minDistance = 999999;
         for (int i = 0; i < unlockLocations.Count; i++)

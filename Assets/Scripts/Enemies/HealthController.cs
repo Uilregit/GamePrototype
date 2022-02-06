@@ -405,6 +405,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         if (currentVit <= 0)
         {
+            if (isPlayer)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerDeath, 1);
+
+            if (StoryModeController.story.GetCurrentRoomSetup().skipFinalRewards && isPlayer)
+            {
+                GridController.gridController.StopAllCoroutines();
+                TurnController.turnController.StopAllCoroutines();
+                GameController.gameController.ResetRoom(false);
+                return null;
+            }
             OnDeath();
             return this.gameObject;
         }
@@ -700,7 +710,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
                     charDisplay.healthBar.SetStatusText("Broken", new Color(255, 102, 0));
                     if (!isPlayer)
+                    {
                         AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
+                        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyBroken, 1);
+                    }
                     else
                         AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BeBroken);
                 }
@@ -1061,7 +1074,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         currentBrokenTurns++;
         if (currentBrokenTurns == maxBrokenTurns)
         {
-            if (currentArmor < startingArmor)
+            if (currentArmor < startingArmor && GetCurrentVit() > 0)        //Trigger break recovery only if the character is not dead
             {
                 charDisplay.hitEffectAnim.SetTrigger("BreakRecovery");
                 SetStartingArmor(startingArmor);
@@ -1098,8 +1111,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         //Handheld.Vibrate();
 
-        if (GetComponent<EnemyController>() != null)
+        if (!isPlayer)
+        {
             ScoreController.score.UpdateDamage(damage);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyDamageTaken, damage);
+        }
 
         ShowHealthBar(damage, oldHealth, false, null, isEndOfTurn);
 
@@ -1138,13 +1154,24 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         if (oldHealth > 0 && oldHealth - damage <= 0 && !isSimulation)   //Trigger on health below 0 actions
         {
-            abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnBelow0Health);
-            if (!attacker.isPlayer && !isPlayer && attacker != this && !isSimulation)
-                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
+            if (isPlayer && Random.Range(0, 100) <= 20)                   //Give all players a 20% chance of defying death and retain health
+            {
+                SetCurrentVit(1);
+                charDisplay.healthBar.SetStatusText("Defied", new Color(224, 37, 0));
+            }
+            else
+            {
+                abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnBelow0Health);
+                if (!attacker.isPlayer && !isPlayer && attacker != this && !isSimulation)
+                    AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.EnemyFriendlyKill);
+            }
         }
 
         if (!isSimulation && isPlayer)
             GameController.gameController.UpdatePlayerDamage();
+
+        if (!isSimulation && !isPlayer && GetCurrentVit() < 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyOverkill, GetCurrentVit());
 
         GridController.gridController.ResetOverlapOrder(transform.position);
     }

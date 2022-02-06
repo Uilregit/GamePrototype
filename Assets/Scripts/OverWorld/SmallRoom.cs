@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SmallRoom : MonoBehaviour
 {
-    private Outline highlight;
-    private Collider2D collider;
+    public Outline highlight;
+    public Collider2D collider;
     private Vector2 location;
 
     private bool destroyed = false;
@@ -18,15 +18,23 @@ public class SmallRoom : MonoBehaviour
     private RoomSetup setup;
 
     private int seed;
+    private bool shouldEnterRoom = false;
 
-    private void Awake()
+    private void Update()
     {
-        highlight = GetComponent<Outline>();
-        collider = GetComponent<Collider2D>();
+        if (shouldEnterRoom)
+            if (SceneManager.GetActiveScene().name == "OverworldScene")
+            {
+                shouldEnterRoom = false;
+                Enter();
+            }
     }
 
     private void OnMouseDown()
     {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
         if (selectable)
         {
             Enter();
@@ -79,6 +87,9 @@ public class SmallRoom : MonoBehaviour
         if (roomString == "ShopScene" || roomString == "ShrineScene")
             MusicController.music.SetHighPassFilter(true);
 
+        if (setup.overrideParty.Length > 0)
+            PartyController.party.SetOverrideParty(true);
+
         RoomController.roomController.EnterRoom(roomString);
     }
 
@@ -107,6 +118,9 @@ public class SmallRoom : MonoBehaviour
         selectable = state;
         highlight.enabled = state;
         collider.enabled = state;
+
+        if (selectable && (RoomController.roomController.GetCurrentRoomSetup() == null))
+            shouldEnterRoom = true;
     }
 
     public void SetType(RoomController.roomType value)
