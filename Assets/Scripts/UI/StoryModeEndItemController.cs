@@ -72,7 +72,8 @@ public class StoryModeEndItemController : MonoBehaviour
     public void OnMouseUp()
     {
         displayCard.gameObject.SetActive(false);
-        StopCoroutine(holdRoutine);
+        if (holdRoutine != null)
+            StopCoroutine(holdRoutine);
         held = false;
         if (heldTimer < 0.3f)
             SetSelected();

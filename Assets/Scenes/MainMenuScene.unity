@@ -3580,7 +3580,7 @@ MonoBehaviour:
   debugStoryCopyRealSaveFile: 0
   debugStoryCopyDebugSaveFile: 0
   isStoryMode: 0
-  patchID: 0.5.2.1
+  patchID: 0.5.2.3
   seed: 0
   gameID: 
   versionText: {fileID: 2125512850}
@@ -3851,7 +3851,24 @@ MonoBehaviour:
   popupImage: {fileID: 435908401}
   popupDescription: {fileID: 1266190773}
   passiveTutorials:
-  - {fileID: 11400000, guid: 0dca5f6590f4ec544b6188ce12811dc4, type: 2}
+  - {fileID: 11400000, guid: 90ff11dca9e2978468b7e80fdfa6e6aa, type: 2}
+  - {fileID: 11400000, guid: 84a7105776284ce4f9908a45807c20f8, type: 2}
+  - {fileID: 11400000, guid: 5c055b082fef54e4bb465b9563ed09ad, type: 2}
+  - {fileID: 11400000, guid: 9e2a96812dd8be34483732f8fe13b24f, type: 2}
+  - {fileID: 11400000, guid: 58bb262ffe564854aa846887568cdb33, type: 2}
+  - {fileID: 11400000, guid: 51112d26e7089e742a3e2c9a15e5a823, type: 2}
+  - {fileID: 11400000, guid: 56e56c641252e3e438c63c0284a677e6, type: 2}
+  - {fileID: 11400000, guid: 36fec33da9e8a7e4a9ff623f7ea51367, type: 2}
+  - {fileID: 11400000, guid: adfec04b33c04d1499e8485e6fe4bf9c, type: 2}
+  - {fileID: 11400000, guid: 95edb17573fba1446b86eb2964a884ab, type: 2}
+  - {fileID: 11400000, guid: 82268b80e7262cc45babf596028efdad, type: 2}
+  - {fileID: 11400000, guid: b64d19562762c9248acf4a764211fab7, type: 2}
+  - {fileID: 11400000, guid: 5f87807c9c340444b88824af92b8e748, type: 2}
+  - {fileID: 11400000, guid: 9bce765046d5f3c41b01f5f5133ddf92, type: 2}
+  - {fileID: 11400000, guid: 20072d08b882e384bbd9603decb0ba17, type: 2}
+  - {fileID: 11400000, guid: 7acc450c09f897b429d4c9dd6039b4f4, type: 2}
+  - {fileID: 11400000, guid: 26f6a4c9fda7f1d4cb1bf0772a780f69, type: 2}
+  - {fileID: 11400000, guid: 86e049fbe9cfb714fa9ee2df5b890ab3, type: 2}
 --- !u!114 &586519401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4689,7 +4706,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -7.69}
+  m_AnchoredPosition: {x: 0, y: -8.59}
   m_SizeDelta: {x: 4, y: 1}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &831312985
@@ -5305,6 +5322,25 @@ MonoBehaviour:
   - {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   - {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
   teamColor: {r: 0.6784315, g: 0, b: 1, a: 1}
+  redPlayerName: Warrior
+  bluePlayerName: Mage
+  greenPlayerName: Rogue
+  orangePlayerName: Paladin
+  whitePlayerName: Mimic
+  blackPlayerName: Plague Doctor
+  redPlayerSprites: {fileID: -7954083179492235560, guid: f01a85c7da983764d9c4eb915a1cd07c, type: 3}
+  redPlayerSplashImages: {fileID: 21300000, guid: 5024a32b762b51e4989e7b1ffbccdcfa, type: 3}
+  bluePlayerSprites: {fileID: -2874705393251439747, guid: cd4584b4e09bcf247ba8a01904c9d2ef, type: 3}
+  bluePlayerSplashImages: {fileID: 21300000, guid: 43c5d210985d78849bb4d1802f3fd89f, type: 3}
+  greenPlayerSprites: {fileID: 21300000, guid: fdd38151776bb944cb7a6e65f8c595f5, type: 3}
+  greenPlayerSplashImages: {fileID: 21300000, guid: 873b6a204ac34ed40b0d63273dc5a6ed, type: 3}
+  orangePlayerSprites: {fileID: 4340613292944690403, guid: f597bb7351be0524694b8ca4c6963eea, type: 3}
+  orangePlayerSplashImages: {fileID: 21300000, guid: 67f4e6d2c9af6c649bf6ae50462bb866, type: 3}
+  whitePlayerSprites: {fileID: -832053012216890249, guid: c35d314790c3ff346b18387e8158aaba, type: 3}
+  whitePlayerSplashImages: {fileID: 21300000, guid: 32c6e489bed52dc489a56b7f0aedde7e, type: 3}
+  blackPlayerSprites: {fileID: -1729446517713330891, guid: a20da7544b739294b870e86ceaa9e7ef, type: 3}
+  blackPlayerSplashImages: {fileID: 21300000, guid: f07fb984399bb4f46836c67e4b5b9b59, type: 3}
+  errorSprite: {fileID: 1367244101272414336, guid: b06752fbee9a16c46b9158900697fcd5, type: 3}
   redAtk: 6
   redArmor: 5
   redHealth: 15
@@ -7904,7 +7940,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Some characters will have passive abilities. Tap them to view details
+  m_Text: You can now hire more party members. Go to the tavern to meet them! Low
+    commitment, easy to slip away if they're not your type.
 --- !u!222 &1266190774
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7930,7 +7967,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -4.91}
-  m_SizeDelta: {x: 12.5, y: 5.5}
+  m_SizeDelta: {x: 12.5, y: 7.5}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1273579184
 GameObject:
@@ -8133,8 +8170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamLevel: 0
   currentEXP: 0
-  teamEXPNeededToLevelAt1: 2000
-  teamEXPNeededToLevelAt20: 12000
+  teamEXPNeededToLevelAt1: 500
+  teamEXPNeededToLevelAt20: 1200
   heroEXPNeededToLevelAt1: 2500
   heroEXPNeededToLevelAt20: 9000
   timerText: {fileID: 320447595}
@@ -10108,7 +10145,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6.5, y: 9}
+  m_SizeDelta: {x: 6.5, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1869114825
 MonoBehaviour:
@@ -10130,7 +10167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d560e4e0fcad1ab42afa61230834ca71, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10637,7 +10674,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Passive Abilities
+  m_Text: Your New Buddy
 --- !u!222 &1926452162
 CanvasRenderer:
   m_ObjectHideFlags: 0

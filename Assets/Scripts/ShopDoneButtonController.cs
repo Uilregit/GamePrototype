@@ -24,7 +24,7 @@ public class ShopDoneButtonController : MonoBehaviour
         //GameController.gameController.LoadScene("OverworldScene", ShopController.shop.GetBoughtCard(), ShopController.shop.GetLatestDeckID()); //Don't go to deck editing if a card was not bought
 
         if (ShopController.shop.GetBoughtCard())
-            cameraLocation = new Vector3(8, 0, -10);
+            cameraLocation = new Vector3(100, 0, -10);
         else
             cameraLocation = new Vector3(0, 0, -10);
         deckID = ShopController.shop.GetLatestDeckID();

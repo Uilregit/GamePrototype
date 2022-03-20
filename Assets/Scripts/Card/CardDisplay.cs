@@ -28,7 +28,7 @@ public class CardDisplay : MonoBehaviour
     private List<Image> thisToolTips = new List<Image>();
 
     public Animator anim;
-    public Image cardBack;
+    public Image cardFace;
     public Image cardGreyOut;
     public Image cardWhiteOut;
     public Image art;
@@ -46,6 +46,7 @@ public class CardDisplay : MonoBehaviour
     public Text disabledStatusText;
     private Outline conditionHighlight;
     public LineRenderer lineRenderer;
+    public Image cardBack;
 
     private List<Material> materials = new List<Material>();
 
@@ -96,7 +97,7 @@ public class CardDisplay : MonoBehaviour
         conditionHighlight = outline.GetComponent<Outline>();
 
         art.material = new Material(art.material);
-        cardBack.material = new Material(cardBack.material);
+        cardFace.material = new Material(cardFace.material);
         equipmentOutline.material = new Material(equipmentOutline.material);
         equipmentIcon.material = new Material(equipmentIcon.material);
     }
@@ -104,7 +105,7 @@ public class CardDisplay : MonoBehaviour
     public void Hide()
     {
         art.enabled = false;
-        cardBack.enabled = false;
+        cardFace.enabled = false;
         outline.enabled = false;
         cardGreyOut.enabled = false;
         cardWhiteOut.enabled = false;
@@ -129,7 +130,7 @@ public class CardDisplay : MonoBehaviour
     public void Show()
     {
         art.enabled = true;
-        cardBack.enabled = true;
+        cardFace.enabled = true;
         outline.enabled = true; //Will only be asked to show when cast, therefore always will have enough mana
         cardGreyOut.enabled = false; //^
         cardWhiteOut.enabled = false;
@@ -146,6 +147,34 @@ public class CardDisplay : MonoBehaviour
         description.enabled = true;
         energyCost.enabled = true;
         lineRenderer.enabled = true;
+        lineRenderer.SetPositions(new Vector3[] { Vector3.zero, Vector3.zero });
+    }
+
+    public void PlaceFaceDown()
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+        Hide();
+        cardBack.enabled = true;
+    }
+
+    public void FlipOver()
+    {
+        StartCoroutine(Flip());
+    }
+
+    private IEnumerator Flip()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            transform.rotation = Quaternion.Lerp(Quaternion.Euler(new Vector3(0, -180, 0)), Quaternion.Euler(new Vector3(0, 0, 0)), i / 19f);
+            if (transform.rotation.eulerAngles.y < 90)
+            {
+                Show();
+                cardBack.enabled = false;
+            }
+            yield return new WaitForSeconds(0.5f / 20f);
+        }
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
     }
 
     public void SetEquipment(Equipment equip, Card.CasterColor equipedChar)
@@ -156,57 +185,57 @@ public class CardDisplay : MonoBehaviour
             switch (equipedChar)
             {
                 case (Card.CasterColor.Blue):
-                    cardBack.sprite = blueWeaponBack;
+                    cardFace.sprite = blueWeaponBack;
                     break;
                 case (Card.CasterColor.Red):
-                    cardBack.sprite = redWeaponBack;
+                    cardFace.sprite = redWeaponBack;
                     break;
                 case (Card.CasterColor.Green):
-                    cardBack.sprite = greenWeaponBack;
+                    cardFace.sprite = greenWeaponBack;
                     break;
                 case (Card.CasterColor.Orange):
-                    cardBack.sprite = orangeWeaponBack;
+                    cardFace.sprite = orangeWeaponBack;
                     break;
                 case (Card.CasterColor.White):
-                    cardBack.sprite = whiteWeaponBack;
+                    cardFace.sprite = whiteWeaponBack;
                     break;
                 case (Card.CasterColor.Black):
-                    cardBack.sprite = blackWeaponBack;
+                    cardFace.sprite = blackWeaponBack;
                     break;
                 default:
-                    cardBack.sprite = unequippedWeaponBack;
+                    cardFace.sprite = unequippedWeaponBack;
                     break;
             }
         else
             switch (equipedChar)
             {
                 case (Card.CasterColor.Blue):
-                    cardBack.sprite = blueAccessoryBack;
+                    cardFace.sprite = blueAccessoryBack;
                     break;
                 case (Card.CasterColor.Red):
-                    cardBack.sprite = redAccessoryBack;
+                    cardFace.sprite = redAccessoryBack;
                     break;
                 case (Card.CasterColor.Green):
-                    cardBack.sprite = greenAccessoryBack;
+                    cardFace.sprite = greenAccessoryBack;
                     break;
                 case (Card.CasterColor.Orange):
-                    cardBack.sprite = orangeAccessoryBack;
+                    cardFace.sprite = orangeAccessoryBack;
                     break;
                 case (Card.CasterColor.White):
-                    cardBack.sprite = whiteAccessoryBack;
+                    cardFace.sprite = whiteAccessoryBack;
                     break;
                 case (Card.CasterColor.Black):
-                    cardBack.sprite = blackAccessoryBack;
+                    cardFace.sprite = blackAccessoryBack;
                     break;
                 default:
-                    cardBack.sprite = unequippedAccessoryBack;
+                    cardFace.sprite = unequippedAccessoryBack;
                     break;
             }
         cardGreyOut.sprite = weaponGreyOut;
         cardWhiteOut.sprite = weaponGreyOut;
 
         art.sprite = equip.art;
-        outline.sprite = cardBack.sprite;
+        outline.sprite = cardFace.sprite;
         cardName.text = equip.equipmentName;
 
         if (equip.isWeapon)
@@ -313,31 +342,31 @@ public class CardDisplay : MonoBehaviour
             switch (card.GetCard().casterColor)
             {
                 case (Card.CasterColor.Blue):
-                    cardBack.sprite = blueAttackBack;
+                    cardFace.sprite = blueAttackBack;
                     break;
                 case (Card.CasterColor.Red):
-                    cardBack.sprite = redAttackBack;
+                    cardFace.sprite = redAttackBack;
                     break;
                 case (Card.CasterColor.Green):
-                    cardBack.sprite = greenAttackBack;
+                    cardFace.sprite = greenAttackBack;
                     break;
                 case (Card.CasterColor.Orange):
-                    cardBack.sprite = orangeAttackBack;
+                    cardFace.sprite = orangeAttackBack;
                     break;
                 case (Card.CasterColor.White):
-                    cardBack.sprite = whiteAttackBack;
+                    cardFace.sprite = whiteAttackBack;
                     break;
                 case (Card.CasterColor.Black):
-                    cardBack.sprite = blackAttackBack;
+                    cardFace.sprite = blackAttackBack;
                     break;
                 case (Card.CasterColor.Enemy):
-                    cardBack.sprite = enemyAttackCardBack;
+                    cardFace.sprite = enemyAttackCardBack;
                     break;
                 case (Card.CasterColor.Passive):
-                    cardBack.sprite = unequippedWeaponBack;
+                    cardFace.sprite = unequippedWeaponBack;
                     break;
                 default:
-                    cardBack.sprite = enemyAttackCardBack;
+                    cardFace.sprite = enemyAttackCardBack;
                     break;
             }
             cardGreyOut.sprite = attackGreyOut;
@@ -348,38 +377,38 @@ public class CardDisplay : MonoBehaviour
             switch (card.GetCard().casterColor)
             {
                 case (Card.CasterColor.Blue):
-                    cardBack.sprite = blueSkillBack;
+                    cardFace.sprite = blueSkillBack;
                     break;
                 case (Card.CasterColor.Red):
-                    cardBack.sprite = redSkillBack;
+                    cardFace.sprite = redSkillBack;
                     break;
                 case (Card.CasterColor.Green):
-                    cardBack.sprite = greenSkillBack;
+                    cardFace.sprite = greenSkillBack;
                     break;
                 case (Card.CasterColor.Orange):
-                    cardBack.sprite = orangeSkillBack;
+                    cardFace.sprite = orangeSkillBack;
                     break;
                 case (Card.CasterColor.White):
-                    cardBack.sprite = whiteSkillBack;
+                    cardFace.sprite = whiteSkillBack;
                     break;
                 case (Card.CasterColor.Black):
-                    cardBack.sprite = blackSkillBack;
+                    cardFace.sprite = blackSkillBack;
                     break;
                 case (Card.CasterColor.Enemy):
-                    cardBack.sprite = enemySkillCardBack;
+                    cardFace.sprite = enemySkillCardBack;
                     break;
                 case (Card.CasterColor.Passive):
-                    cardBack.sprite = unequippedWeaponBack;
+                    cardFace.sprite = unequippedWeaponBack;
                     break;
                 default:
-                    cardBack.sprite = enemySkillCardBack;
+                    cardFace.sprite = enemySkillCardBack;
                     break;
             }
             cardGreyOut.sprite = skillGreyOut;
             cardWhiteOut.sprite = skillGreyOut;
         }
         art.sprite = card.GetCard().art;
-        outline.sprite = cardBack.sprite;
+        outline.sprite = cardFace.sprite;
         cardName.text = card.GetCard().name;
         foreach (GameObject obj in statIcons)
             obj.SetActive(false);
@@ -429,21 +458,16 @@ public class CardDisplay : MonoBehaviour
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
                 try
                 {
-                    //Debug.Log("tried setting caster");
                     if (obj.GetComponent<PlayerController>().GetColorTag() == casterColor && !obj.GetComponent<HealthController>().GetIsSimulation())
                     {
-
                         card.SetCaster(obj);
                         break;
                     }
                 }
                 catch
                 {
-                    //Debug.Log("tried setting caster");
                     if (obj.GetComponent<MultiplayerPlayerController>().GetColorTag() == casterColor)
                     {
-
-                        //Debug.Log(obj);
                         card.SetCaster(obj);
                         break;
                     }
@@ -455,10 +479,10 @@ public class CardDisplay : MonoBehaviour
         if (!card.isResurrectCard && card.GetAttachedEquipment() != null && card.GetAttachedEquipment().equipmentDescription.IndexOf("|") > 0)
         {
             equipmentIcon.color = Color.white;
-            equipmentIcon.gameObject.SetActive(true);
+            equipmentIcon.gameObject.SetActive(true && art.enabled);
             equipmentIcon.transform.GetChild(0).GetComponent<Image>().sprite = card.GetAttachedEquipment().art;
             equipmentOutline.color = Color.white;
-            equipmentOutline.enabled = true;
+            equipmentOutline.enabled = true && art.enabled;
             if (card.GetAttachedEquipment().isWeapon)
                 equipmentOutline.color = Color.red;
             else
@@ -762,7 +786,7 @@ public class CardDisplay : MonoBehaviour
         if (emissionColor != Color.clear)
         {
             art.material.SetColor("_Color", emissionColor * 0.5f);
-            cardBack.material.SetColor("_Color", emissionColor * 0.5f);
+            cardFace.material.SetColor("_Color", emissionColor * 0.5f);
             equipmentIcon.material.SetColor("_Color", emissionColor * 0.5f);
             equipmentOutline.material.SetColor("_Color", emissionColor * 0.5f);
         }
@@ -779,7 +803,7 @@ public class CardDisplay : MonoBehaviour
             description.color = Color.Lerp(originalDescriptionColor, Color.clear, i / 9f);
 
             art.material.SetFloat("_Dissolve", (9 - i) / 9f);
-            cardBack.material.SetFloat("_Dissolve", (9 - i) / 9f);
+            cardFace.material.SetFloat("_Dissolve", (9 - i) / 9f);
             equipmentIcon.material.SetFloat("_Dissolve", (9 - i) / 9f);
             equipmentOutline.material.SetFloat("_Dissolve", (9 - i) / 9f);
 
@@ -792,7 +816,7 @@ public class CardDisplay : MonoBehaviour
         if (emissionColor != Color.clear)
         {
             art.material.SetColor("_Color", emissionColor * 0.5f);
-            cardBack.material.SetColor("_Color", emissionColor * 0.5f);
+            cardFace.material.SetColor("_Color", emissionColor * 0.5f);
             equipmentIcon.material.SetColor("_Color", emissionColor * 0.5f);
             equipmentOutline.material.SetColor("_Color", emissionColor * 0.5f);
         }
@@ -809,7 +833,7 @@ public class CardDisplay : MonoBehaviour
             description.color = Color.Lerp(Color.clear, originalDescriptionColor, i / 9f);
 
             art.material.SetFloat("_Dissolve", i / 9f);
-            cardBack.material.SetFloat("_Dissolve", i / 9f);
+            cardFace.material.SetFloat("_Dissolve", i / 9f);
             equipmentIcon.material.SetFloat("_Dissolve", i / 9f);
             equipmentOutline.material.SetFloat("_Dissolve", i / 9f);
 

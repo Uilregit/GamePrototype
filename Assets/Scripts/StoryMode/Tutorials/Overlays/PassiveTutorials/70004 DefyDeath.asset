@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 70004 DefyDeath
+  m_EditorClassIdentifier: 
+  ID: 70004
+  prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 1
+  slowTime: 0
+  slowDuration: 0
+  overlay: {fileID: 0}
+  startingCondition: 70004
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 0
+  endingValue: 0
+  endingStringValue: 
+  endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupTitle: Defy Death
+  popupImage: {fileID: 21300000, guid: 96130f04d46d81949a1ee6939c143655, type: 3}
+  popupDescription: Very rarely, a fatal hit will only bring you to 1 health, unless
+    already at 1 health. Unless this service isn't covered by your healthcare provider.

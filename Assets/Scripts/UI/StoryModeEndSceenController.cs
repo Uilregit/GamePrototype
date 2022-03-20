@@ -6,10 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class StoryModeEndSceenController : MonoBehaviour
 {
+    [Header("End Scene")]
     public Text goldText;
     public Text exitButton;
 
     public StoryModeEndItemController[] items;
+
+    [Header("Level Up Scene")]
+    public Text sceneTitle;
+    public EXPBarController expBar;
+    public Text returnToMapButtonText;
+    public CardDisplay[] cards;
+    public GameObject cardContainer;
+    public GameObject cardPack;
+    public Image cardPackFlash;
+    public Text cardPackNumber;
+    public Image confirmPackButton;
+
+    private int unopenedCardPacks = 0;
+    private bool expGainDone = false;
 
     private int totalGold = 0;
 
@@ -18,15 +33,25 @@ public class StoryModeEndSceenController : MonoBehaviour
     private Dictionary<Equipment, int> boughtEquipiments = new Dictionary<Equipment, int>();
     private bool[] challengeItemsBought = new bool[3] { false, false, false };
 
+    private Vector2 offset = Vector2.zero;
+    private Vector2 newLocation;
+    private List<bool> cardsFlipped = new List<bool>();
+
     private void Awake()
     {
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
-        if (setup.overrideColors.Length == 3)
+        if (setup.overrideColors != null && setup.overrideColors.Length == 3)
             PartyController.party.SetOverrideParty(false);
 
         //Skip final rewards. Used by tutorials
         if (setup.skipFinalRewards)
             BuyAndExit();
+    }
+
+    private void Update()
+    {
+        if (expGainDone && unopenedCardPacks == 0)
+            returnToMapButtonText.transform.parent.gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -43,19 +68,18 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && !challengeItemsBought[i]);
             items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
+            items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && (!challengeItemsBought[i] || setup.allowRewardsRebuy) && totalGold >= setup.rewardCosts[i]);
+            if (!StoryModeController.story.ChallengeSatisfied(i))
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StoryModeEndItemLocked, 1);
             if (challengeItemsBought[i])
-                items[i].SetBought();
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StoryModeEndItemSoldOut, 1);
         }
 
         for (int i = 3; i < 5; i++)
         {
             items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
-            if (setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i])
-                items[i].SetEnabled(true);
-            else
-                items[i].SetEnabled(false);
+            items[i].SetEnabled(setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i]);
         }
 
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuShown, 1);
@@ -134,7 +158,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             items[i].SetGreyout(!(StoryModeController.story.ChallengeSatisfied(i) && totalGold >= setup.rewardCosts[i]));
-            if (challengeItemsBought[i] && !items[i].GetSelected())
+            if (challengeItemsBought[i] && !items[i].GetSelected() && !setup.allowRewardsRebuy)
                 items[i].SetBought();
         }
 
@@ -157,6 +181,125 @@ public class StoryModeEndSceenController : MonoBehaviour
         return totalGold;
     }
 
+    public void GoToLevelScene()
+    {
+        CameraController.camera.transform.position = new Vector2(-100, 0);
+        returnToMapButtonText.transform.parent.gameObject.SetActive(false);
+        StartCoroutine(StartLevelScene());
+    }
+
+    private IEnumerator StartLevelScene()
+    {
+        if (boughtItems.ContainsKey(StoryModeController.RewardsType.CardPack))
+        {
+            for (int i = 0; i < boughtItems[StoryModeController.RewardsType.CardPack]; i++)
+                ReportLevelUp();
+            yield return new WaitForSeconds(1);
+        }
+        int level = ScoreController.score.teamLevel;
+        int numerator = ScoreController.score.currentEXP;
+
+        expBar.SetValues(level, numerator, true, Color.black, Card.CasterColor.Enemy);
+        expBar.SetStoryModeEndSceneController(this);
+        expBar.SetEnabled(true);
+        yield return expBar.StartCoroutine(expBar.GainEXP(totalGold));
+
+        expGainDone = true;
+    }
+
+    public void OpenPack()
+    {
+        Random.InitState(StoryModeController.story.GetSecondSeed());
+        for (int i = 0; i < cards.Length; i++)
+        {
+            if (Random.Range(0f, 1f) < 0.2)                                                 //~1 equipment per pack
+            {
+                Equipment e = LootController.loot.GetRandomEquipment();
+                for (int j = 0; j < 100; j++)
+                {
+                    if (CollectionController.collectionController.GetCountOfEquipmentInCollection(e) < 4)        //Duplicate protect up to 4 cards
+                        break;
+                    else
+                        e = LootController.loot.GetRandomEquipment();
+                }
+                cards[i].SetEquipment(e, Card.CasterColor.Enemy);
+                if (boughtEquipiments.ContainsKey(e))
+                    boughtEquipiments[e]++;
+                else
+                    boughtEquipiments.Add(e, 1);
+            }
+            else
+            {
+                Card c = LootController.loot.GetCard();
+                for (int j = 0; j < 100; j++)
+                {
+                    if (CollectionController.collectionController.GetCountOfCardInCollection(c) < 4)        //Duplicate protect up to 4 cards
+                        break;
+                    else
+                        c = LootController.loot.GetCard();
+                }
+                CardController cc = gameObject.AddComponent<CardController>();
+                cc.SetCardDisplay(cards[i]);
+                cc.SetCard(c, false, true, false);
+                cards[i].SetCard(cc);
+                if (boughtCards.ContainsKey(c))
+                    boughtCards[c]++;
+                else
+                    boughtCards.Add(c, 1);
+            }
+            cards[i].Show();
+            cards[i].PlaceFaceDown();
+            cardsFlipped.Add(false);
+        }
+        confirmPackButton.gameObject.SetActive(false);
+        cardContainer.SetActive(true);
+        cards[0].FlipOver();
+        cardsFlipped[0] = true;
+    }
+
+    public void PackConfirmed()
+    {
+        cardContainer.SetActive(false);
+        confirmPackButton.gameObject.SetActive(false);
+        unopenedCardPacks--;
+        cardPackNumber.text = unopenedCardPacks.ToString();
+        if (unopenedCardPacks <= 0)
+            cardPack.SetActive(false);
+        cardContainer.transform.localPosition = new Vector3(0, cardContainer.transform.localPosition.y, cardContainer.transform.localPosition.z);
+        cardsFlipped = new List<bool>();
+    }
+
+    public void CardViewOnMouseDown()
+    {
+        offset = cardContainer.transform.localPosition - CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+    }
+
+    public void CardViewOnMouseUp()
+    {
+        offset = Vector3.zero;
+        cardContainer.transform.localPosition = new Vector3(Mathf.Round(cardContainer.transform.localPosition.x / -2.8f) * -2.8f, cardContainer.transform.localPosition.y, 0);
+        CheckAndFlipCards();
+    }
+
+    public void CardViewOnMouseDrag()
+    {
+        newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        cardContainer.transform.localPosition = new Vector3(Mathf.Clamp(newLocation.x, -11.2f, 0), cardContainer.transform.localPosition.y, 0);
+        CheckAndFlipCards();
+    }
+
+    private void CheckAndFlipCards()
+    {
+        for (int i = 0; i < cardsFlipped.Count; i++)
+            if (!cardsFlipped[i] && cardContainer.transform.localPosition.x / -2.8f + 0.1f >= i)
+            {
+                cards[i].FlipOver();
+                cardsFlipped[i] = true;
+            }
+        if (cardsFlipped[cardsFlipped.Count - 1])
+            confirmPackButton.gameObject.SetActive(true);
+    }
+
     public virtual void BuyAndExit()
     {
         MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
@@ -175,6 +318,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         InformationController.infoController.ResetCombatInfo();     //Reset all team stats tracking
         InformationController.infoController.firstRoom = true;
         StoryModeController.story.ResetDecks();
+        StoryModeController.story.ResetRewardsRerollLeft();
         StoryModeController.story.SetMenuBar(true);
         StoryModeController.story.SetCombatInfoMenu(false);
         StoryModeController.story.ShowMenuSelected(0);
@@ -189,5 +333,41 @@ public class StoryModeEndSceenController : MonoBehaviour
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuExit, 1);
 
         SceneManager.LoadScene("StoryModeScene");
+
+        if (boughtCards.Keys.Count > 0)
+        {
+            StoryModeController.story.EnableMenuIcon(3);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FirstCardBought, 1);
+        }
+        if (boughtEquipiments.Keys.Count > 0)
+        {
+            StoryModeController.story.EnableMenuIcon(2);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FirstEquipmentBought, 1);
+        }
+        if (boughtItems.ContainsKey(StoryModeController.RewardsType.TavernContract) && boughtItems[StoryModeController.RewardsType.TavernContract] > 0)
+        {
+            StoryModeController.story.EnableMenuIcon(1);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.NewCharUnlocked, 1);
+        }
+    }
+
+    public void ReportLevelUp()
+    {
+        unopenedCardPacks++;
+        cardPack.SetActive(true);
+        cardPackNumber.text = unopenedCardPacks.ToString();
+        StartCoroutine(FlashPack());
+    }
+
+    private IEnumerator FlashPack()
+    {
+        cardPackFlash.enabled = true;
+        for (int i = 0; i < 20; i++)
+        {
+            cardPackFlash.transform.localScale = Vector2.Lerp(new Vector2(0.9f, 0.9f), new Vector2(2, 2), i / 19f);
+            cardPackFlash.color = Color.Lerp(Color.white, Color.clear, 1 / 19f);
+            yield return new WaitForSeconds(0.3f / 20f);
+        }
+        cardPackFlash.enabled = false;
     }
 }

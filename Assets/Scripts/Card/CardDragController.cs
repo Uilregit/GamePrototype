@@ -33,6 +33,8 @@ public class CardDragController : DragController
     private enum State { Default, Highlighted, Aiming };
     private State currentState = default;
 
+    private List<HealthController> knockbackPreviews = new List<HealthController>();
+
     private Coroutine showingToolTip;
 
     // Start is called before the first frame update
@@ -189,7 +191,10 @@ public class CardDragController : DragController
                 if (TileCreator.tileCreator.GetSelectableLocations().Contains(GridController.gridController.GetRoundedVector(mousePosition, 1)))
                     CameraController.camera.ScreenShake(0.03f, 0.05f);
 
+                //Resetting UI indicators
                 TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
+                GameController.gameController.SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+                HideKnockbackPreview();
 
                 castLocation = originalLocation;
 
@@ -253,6 +258,8 @@ public class CardDragController : DragController
 
         cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.SetCasting(false);
         UIController.ui.ResetManaBar(TurnController.turnController.GetCurrentMana());
+        GameController.gameController.SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+        HideKnockbackPreview();
 
         //Sort UI layering
         transform.SetParent(CanvasController.canvasController.uiCanvas.transform);
@@ -437,18 +444,94 @@ public class CardDragController : DragController
         foreach (EnemyController obj in TurnController.turnController.GetEnemies())
             obj.GetComponent<HealthController>().HideHealthBar();
 
+        int numPositionsWithMultiTargets = 0;
+        int maxTargetsPerPosition = 0;
+        List<Vector2> positionsWithTargets = new List<Vector2>();
         foreach (Vector2 loc in locations)           //Show damage that would have been done
         {
-            foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" }))
+            List<GameObject> targets = GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" });
+            if (targets.Count > 1)
             {
-                HealthController hlthController = obj.GetComponent<HealthController>();
+                numPositionsWithMultiTargets++;
+                maxTargetsPerPosition = Mathf.Max(maxTargetsPerPosition, targets.Count);
+            }
+            if (targets.Count > 0)
+                positionsWithTargets.Add(loc);
+        }
+
+        int currentLocationId = 0;
+        Vector2 multiloc = locations[0];
+        bool flipped = false;
+        foreach (Vector2 loc in locations)           //Show damage that would have been done
+        {
+            List<GameObject> targets = GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" });
+            if (targets.Count == 1)
+            {
+                HealthController hlthController = targets[0].GetComponent<HealthController>();
                 HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
 
                 yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true, simulation.gameObject));
 
-                hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
+                Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f);
+                hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true);
+                ShowKnockbackPreview(hlthController, simulation);
             }
+            else if (targets.Count > 1)
+            {
+                int currentTargetId = 0;
+                multiloc = loc;
+                foreach (GameObject obj in targets)
+                {
+                    HealthController hlthController = obj.GetComponent<HealthController>();
+                    HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+
+                    yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true, simulation.gameObject));
+
+                    Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f + currentTargetId * 1.5f);
+                    if (positionsWithTargets.Any(x => x.x == loc.x && x.y > loc.y && x != loc))
+                    {
+                        offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, -3.1f - currentTargetId * 1.5f);
+                        flipped = true;
+                    }
+                    StartCoroutine(hlthController.ShowDamagePreviewBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), simulation, hlthController.charDisplay.sprite.sprite, loc + offset));
+                    ShowKnockbackPreview(hlthController, simulation);
+                    currentTargetId++;
+                }
+            }
+            if (targets.Count > 1)
+                currentLocationId++;
         }
+        Vector2 backdropOffset = new Vector2(0, 1f);
+        if (flipped)
+            backdropOffset = new Vector2(0, -1f);
+        if (numPositionsWithMultiTargets > 0)
+            GameController.gameController.SetDamagePrevieBackdrop(multiloc + backdropOffset, numPositionsWithMultiTargets, maxTargetsPerPosition, flipped);
+        else
+            GameController.gameController.SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+    }
+
+    private void ShowKnockbackPreview(HealthController original, HealthController simulation)
+    {
+        if (original.transform.position != simulation.transform.position && (original.transform.position - simulation.transform.position).magnitude <= 14)
+        {
+            Vector3[] positions = new Vector3[4];
+            positions[0] = original.transform.position;
+            positions[3] = simulation.transform.position;
+            positions[1] = simulation.transform.position - (simulation.transform.position - original.transform.position).normalized * 0.5f;
+            positions[2] = simulation.transform.position - (simulation.transform.position - original.transform.position).normalized * 0.5f;
+            original.charDisplay.lineRenderer.SetPositions(positions);
+            original.charDisplay.lineRenderer.enabled = true;
+
+            knockbackPreviews.Add(original);
+        }
+    }
+
+    private void HideKnockbackPreview()
+    {
+        foreach (HealthController obj in knockbackPreviews)
+            obj.charDisplay.lineRenderer.enabled = false;
+
+        knockbackPreviews = new List<HealthController>();
     }
 
     public List<Vector2> GetTargetLocations()

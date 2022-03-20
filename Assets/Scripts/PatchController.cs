@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PatchController : MonoBehaviour
 {
-    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1", "0.5.1.3" };
+    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1", "0.5.1.3", "0.5.2.2", "0.5.2.3" };
     public GameObject[] worlds;
 
     // Start is called before the first frame update
@@ -17,37 +17,7 @@ public class PatchController : MonoBehaviour
                 if (PatchIsOlderThan(saveFilePatchID, oldPatchVersions[i]))
                     Patch(oldPatchVersions[i]);
     }
-    /*
-    public void PatchButton()
-    {
-        Debug.Log("patched");
-        //Reset achievements for room 10 as they've been updated
-        Dictionary<int, int[]> challengeValues = StoryModeController.story.GetChallengeValues();
-        if (challengeValues.ContainsKey(10))
-        {
-            challengeValues[10] = new int[] { challengeValues[10][0], -1, -1 };
-            StoryModeController.story.SetChallengeValues(challengeValues);
-            Dictionary<int, bool[]> challengeBought = StoryModeController.story.GetChallengeItemsBought();
-            challengeBought[10] = new bool[] { challengeBought[10][0], false, false };
-            StoryModeController.story.SetChallengeItemsBought(challengeBought);
-        }
 
-        //Rollback number of blank cards due to previous bug
-        int numOFCardsBought = 0;
-        foreach (string cardName in CollectionController.collectionController.GetCompleteDeckDict().Keys)
-            if (LootController.loot.GetCardWithName(cardName).rarity != Card.Rarity.Starter && LootController.loot.GetCardWithName(cardName).rarity != Card.Rarity.StarterAttack)
-                numOFCardsBought += CollectionController.collectionController.GetCompleteDeckDict()[cardName];
-        Dictionary<StoryModeController.RewardsType, int> itemsBought = StoryModeController.story.GetItemsBought();
-        itemsBought[StoryModeController.RewardsType.BlankCard] = 10 - numOFCardsBought;
-        StoryModeController.story.SetItemsBought(itemsBought);
-
-        //Assign currnent party colors as the colors completed for all currently completed rooms
-        foreach (int roomID in StoryModeController.story.GetCompletedRooms())
-            StoryModeController.story.ReportColorsCompleted(roomID, new List<Card.CasterColor>(PartyController.party.GetPlayerCasterColors()));
-
-        StoryModeSceneController.story.RefreshWorldRooms();
-    }
-    */
     private void Patch(string version)
     {
         Debug.Log("######## Patching to version: " + version + " ########");
@@ -130,6 +100,20 @@ public class PatchController : MonoBehaviour
                 RevertAchievements(10, false, false, true);
                 RevertAchievements(62, false, true, false);
                 RevertAchievements(61, false, true, true);
+                break;
+            case "0.5.2.2":
+                Dictionary<int, bool[]> secretItems = StoryModeController.story.GetSecretShopItemsBought();
+                if (!secretItems.ContainsKey(1))
+                    secretItems.Add(1, secretItems[0]);
+                else
+                    secretItems[1] = secretItems[0];
+                secretItems[0] = new bool[] { false, false, false, false, false };
+                StoryModeController.story.SetSecretShopItemsBought(secretItems);
+                break;
+            case "0.5.2.3":
+                ScoreController.score.teamLevel = 0;
+                ScoreController.score.currentEXP = 0;
+                InformationLogger.infoLogger.SavePlayerPreferences();
                 break;
         }
         Debug.Log("######## Patching successful ########");

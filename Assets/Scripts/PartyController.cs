@@ -17,6 +17,33 @@ public class PartyController : MonoBehaviour
     public Color teamColor;
     public Dictionary<Card.CasterColor, List<int>> partyLevelInfo;
 
+    [SerializeField] private string redPlayerName;
+    [SerializeField] private string bluePlayerName;
+    [SerializeField] private string greenPlayerName;
+    [SerializeField] private string orangePlayerName;
+    [SerializeField] private string whitePlayerName;
+    [SerializeField] private string blackPlayerName;
+
+    [SerializeField] private Sprite redPlayerSprites;
+    [SerializeField] private Sprite redPlayerSplashImages;
+
+    [SerializeField] private Sprite bluePlayerSprites;
+    [SerializeField] private Sprite bluePlayerSplashImages;
+
+    [SerializeField] private Sprite greenPlayerSprites;
+    [SerializeField] private Sprite greenPlayerSplashImages;
+
+    [SerializeField] private Sprite orangePlayerSprites;
+    [SerializeField] private Sprite orangePlayerSplashImages;
+
+    [SerializeField] private Sprite whitePlayerSprites;
+    [SerializeField] private Sprite whitePlayerSplashImages;
+
+    [SerializeField] private Sprite blackPlayerSprites;
+    [SerializeField] private Sprite blackPlayerSplashImages;
+
+    [SerializeField] private Sprite errorSprite;
+
     [SerializeField] private int redAtk;
     [SerializeField] private int redArmor;
     [SerializeField] private int redHealth;
@@ -68,6 +95,8 @@ public class PartyController : MonoBehaviour
             if (!unlocked.orangeUnlocked)
                 unlockedPlayerColors.Remove(Card.CasterColor.Orange);
         }
+        if (StoryModeController.story != null && (unlocked.blackUnlocked || unlocked.whiteUnlocked || unlocked.orangeUnlocked))
+            StoryModeController.story.EnableMenuIcon(1);
     }
 
     public Color GetPlayerColor(Card.CasterColor caster)
@@ -176,7 +205,10 @@ public class PartyController : MonoBehaviour
 
     public List<int> GetPartyLevelInfo(Card.CasterColor color)
     {
-        return partyLevelInfo[color];
+        if (partyLevelInfo.ContainsKey(color))
+            return partyLevelInfo[color];
+        else
+            return new List<int> { 0, 0 };
     }
 
     public int GetStartingAttack(Card.CasterColor color)
@@ -237,6 +269,66 @@ public class PartyController : MonoBehaviour
                 return whiteHealth;
         }
         return -1;
+    }
+
+    public Sprite GetPlayerSprite(Card.CasterColor color)
+    {
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                return redPlayerSprites;
+            case Card.CasterColor.Blue:
+                return bluePlayerSprites;
+            case Card.CasterColor.Green:
+                return greenPlayerSprites;
+            case Card.CasterColor.Orange:
+                return orangePlayerSprites;
+            case Card.CasterColor.Black:
+                return blackPlayerSprites;
+            case Card.CasterColor.White:
+                return whitePlayerSprites;
+        }
+        return errorSprite;
+    }
+
+    public Sprite GetPlayerSplashImage(Card.CasterColor color)
+    {
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                return redPlayerSplashImages;
+            case Card.CasterColor.Blue:
+                return bluePlayerSplashImages;
+            case Card.CasterColor.Green:
+                return greenPlayerSplashImages;
+            case Card.CasterColor.Orange:
+                return orangePlayerSplashImages;
+            case Card.CasterColor.Black:
+                return blackPlayerSplashImages;
+            case Card.CasterColor.White:
+                return whitePlayerSplashImages;
+        }
+        return errorSprite;
+    }
+
+    public string GetPlayerName(Card.CasterColor color)
+    {
+        switch (color)
+        {
+            case Card.CasterColor.Red:
+                return redPlayerName;
+            case Card.CasterColor.Blue:
+                return bluePlayerName;
+            case Card.CasterColor.Green:
+                return greenPlayerName;
+            case Card.CasterColor.Orange:
+                return orangePlayerName;
+            case Card.CasterColor.White:
+                return whitePlayerName;
+            case Card.CasterColor.Black:
+                return blackPlayerName;
+        }
+        return "error";
     }
 
     public void SetOverrideParty(bool state)

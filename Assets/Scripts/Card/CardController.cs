@@ -162,17 +162,21 @@ public class CardController : MonoBehaviour
             */
 
             GameObject caster = FindCaster(card);
+            Card.CastShape castShape = card.castShape;
+            if (attachedEquipment != null && attachedEquipment.overrideCastShape)
+                castShape = attachedEquipment.overridedCastShape;
+
             if (card.castType == Card.CastType.AoE)
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, card.radius, PartyController.party.GetPlayerColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, castShape, card.radius, PartyController.party.GetPlayerColor(card.casterColor));
             else if (card.castType == Card.CastType.None)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, Card.CastShape.Circle, 20, PartyController.party.GetPlayerColor(card.casterColor));
             else
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange, PartyController.party.GetPlayerColor(card.casterColor));
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange, PartyController.party.GetPlayerColor(card.casterColor));
 
             List<Vector2> castableLocations = TileCreator.tileCreator.GetTilePositions();
             if (card.castType == Card.CastType.TargetedAoE)
             {
-                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, card.castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange + card.radius, Color.clear, 1);
+                TileCreator.tileCreator.CreateTiles(this.gameObject, caster.transform.position, castShape, GetCaster().GetComponent<HealthController>().GetTotalCastRange() + card.range + equipmentBonusCastRange + card.radius, Color.clear, 1);
                 castableLocations = TileCreator.tileCreator.GetTilePositions(1);
                 TileCreator.tileCreator.DestroyTiles(this.gameObject, 1);
             }
@@ -302,6 +306,11 @@ public class CardController : MonoBehaviour
             }
             else
                 cardDisplay.SetHighLight(false);
+
+            if (ResourceController.resource.GetNumberOfRevivesUsed() == 0)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FirstRevive, 1);
+            else
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.SecondRevive, 1);
         }
         else
             cardDisplay.SetHighLight(false);

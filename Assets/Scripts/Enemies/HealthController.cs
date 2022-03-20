@@ -406,7 +406,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (currentVit <= 0)
         {
             if (isPlayer)
-                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerDeath, 1);
+            {
+                if (StoryModeController.story.GetCurrentRoomSetup().roomName == "World Tut-1")
+                    TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerDeath, 1);
+                else
+                    TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FirstDeath, 1);
+            }
 
             if (StoryModeController.story.GetCurrentRoomSetup().skipFinalRewards && isPlayer)
             {
@@ -786,6 +791,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             currentVit = Mathf.Min(maxVit + equipVit, currentVit + bonusVit - damage);
             bonusVit = Mathf.Max(0, oldcurrentVit + bonusVit - damage - maxVit - equipVit);     //Excess healing is moved to bonusVit
 
+            if (bonusVit > 0 && !isSimulation)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.Overheal, 1);
+
             if (damage < 0 && isSimulation)
                 StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnHealingRecieved, this, damage, traceList));
         }
@@ -836,7 +844,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Force the object to move towards the finalLocation, value number of times
     //Value can be positive (towards) or negative (away) from the finalLocation
     //If there is an object in the way stop movement before colision and deal piercing knockback damage to both objects
-    public IEnumerator ForcedMovement(Vector2 castFromLocation, int steps, bool canOverlap = true, List<Buff> buffTrace = null)
+    public IEnumerator ForcedMovement(Vector2 castFromLocation, Vector2 knockbackDirection, int steps, bool canOverlap = true, List<Buff> buffTrace = null)
     {
         if (size > 1)
             yield break; //Show resist on UI
@@ -845,7 +853,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         Vector2 originalLocation = transform.position;
         for (int i = 1; i <= Mathf.Abs(steps); i++)
         {
-            Vector2 knockedToCenter = originalLocation + ((Vector2)transform.position - castFromLocation).normalized * i * Mathf.Sign(steps);
+            Vector2 knockedToCenter = originalLocation + knockbackDirection.normalized * i * Mathf.Sign(steps);
 
             List<Vector2> aboutToBePositions = new List<Vector2>();
             foreach (Vector2 loc in occupiedSpaces)
@@ -872,47 +880,41 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 yield break;
             }
 
+            Vector2 previousPosition = transform.position;
             if (!isSimulation)
+            {
                 foreach (Vector2 loc in occupiedSpaces)
                     GridController.gridController.RemoveFromPosition(this.gameObject, (Vector2)transform.position + loc);
-            Vector2 previousPosition = transform.position;
 
-            //Also knock back all overlapped objects if they're not already being overlapped
-            if (!isSimulation)
+                //Also knock back all overlapped objects if they're not already being overlapped
                 foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(previousPosition, new string[] { "Player", "Enemy" }))
                     if (!obj.GetComponent<HealthController>().GetIsBeingKnockedBack())
-                        obj.GetComponent<HealthController>().StartCoroutine(obj.GetComponent<HealthController>().ForcedMovement(castFromLocation, steps - 1, canOverlap, buffTrace));
+                        obj.GetComponent<HealthController>().StartCoroutine(obj.GetComponent<HealthController>().ForcedMovement(castFromLocation, knockbackDirection, steps - 1, canOverlap, buffTrace));
 
-            transform.position = knockedToCenter;
-            if (!isSimulation)
                 foreach (Vector2 loc in aboutToBePositions)
                     GridController.gridController.ReportPosition(this.gameObject, loc);
 
-            yield return new WaitForSeconds(0.1f * TimeController.time.timerMultiplier);
+                yield return StartCoroutine(LerpToPosition(transform.position, knockedToCenter, 0.05f * TimeController.time.timerMultiplier));
+            }
+            else
+                transform.position = knockedToCenter;
 
-            if (MultiplayerGameController.gameController == null)   //Singleplayer
+            try
+            {
                 try
                 {
-                    try
-                    {
-                        GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
-                        GetComponent<PlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
-                    }
-                    catch
-                    {
-                        GetComponent<EnemyInformationController>().RefreshIntent();
-                        GetComponent<EnemyController>().SetPreviousPosition(previousPosition);
-                    }
+                    GetComponent<PlayerMoveController>().UpdateOrigin(transform.position);
+                    GetComponent<PlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
                 }
-                catch { }
-            else    //Multiplayer
-            {
-                GetComponent<MultiplayerPlayerMoveController>().UpdateOrigin(transform.position);
-                GetComponent<MultiplayerPlayerMoveController>().ChangeMoveDistance(-1); //To compensate for the forced movement using moverange due to commit move
+                catch
+                {
+                    GetComponent<EnemyInformationController>().RefreshIntent();
+                    GetComponent<EnemyController>().SetPreviousPosition(previousPosition);
+                }
             }
+            catch { }
 
-            if (!isSimulation)
-                StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
+            StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnMove, this, 1));
 
             if (objectInWay.Count != 0)    //If knocked to position is occupied then stop (still allow overlap, but stop after)
             {
@@ -923,6 +925,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
         isBeingKnockedBack = false;
         GridController.gridController.ResetOverlapOrder(transform.position);
+    }
+
+    private IEnumerator LerpToPosition(Vector2 startingLoc, Vector2 endingLoc, float duration)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            transform.position = Vector2.Lerp(startingLoc, endingLoc, i / 2f);
+            yield return new WaitForSeconds(duration / 3f);
+        }
+        transform.position = endingLoc;
     }
 
     public void ApplyKnockBackBuffs(List<Vector2> aboutToBePositions)
@@ -1078,15 +1090,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             {
                 charDisplay.hitEffectAnim.SetTrigger("BreakRecovery");
                 SetStartingArmor(startingArmor);
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.BreakRecovery, 1);
             }
             else
             {
                 currentBrokenTurns = -99999;
                 ResetArmorText(currentArmor);
             }
-            if (MultiplayerGameController.gameController != null) //Multiplayer component
-                ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportHealthController(GetComponent<NetworkIdentity>().netId.ToString(), GetHealthInformation(), ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
         }
+        else if (GetCurrentArmor() == 0 && GetCurrentVit() > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.Break2ndTurn, 1);
     }
 
     public void AtStartOfTurn()
@@ -1111,7 +1124,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         //Handheld.Vibrate();
 
-        if (!isPlayer)
+        if (!isPlayer && damage > 0)
         {
             ScoreController.score.UpdateDamage(damage);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyDamageTaken, damage);
@@ -1158,6 +1171,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             {
                 SetCurrentVit(1);
                 charDisplay.healthBar.SetStatusText("Defied", new Color(224, 37, 0));
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.DefyDeath, 1);
             }
             else
             {
@@ -1167,7 +1181,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             }
         }
 
-        if (!isSimulation && isPlayer)
+        if (!isSimulation && isPlayer && damage > 0)
             GameController.gameController.UpdatePlayerDamage();
 
         if (!isSimulation && !isPlayer && GetCurrentVit() < 0)
@@ -1246,6 +1260,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             GameController.gameController.ReportSimulationFinished(simCharacter);
             simCharacter = null;
         }
+    }
+
+    public IEnumerator ShowDamagePreviewBar(int damage, int oldHealth, HealthController simHlthController, Sprite sprite, Vector2 castLocation)
+    {
+        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));
+        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, simHlthController, 0, null, 0));         //Triggering both start and end of turn for player and enemy damage over time
+        int endOfTurnDamage = GetVit() - simHlthController.GetVit() - damage;
+
+        charDisplay.healthBar.SetBar(Mathf.Max(0, oldHealth), damage, endOfTurnDamage, maxVit + equipVit, castLocation + new Vector2(0, 0.5f), 1, 1, 1, GetArmor() <= 0, true, true);
+        charDisplay.healthBar.SetCharacter(sprite, castLocation);
     }
 
     public void SetSimCharacter(HealthController simuChar)

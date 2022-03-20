@@ -68,6 +68,39 @@ TextureImporter:
   - first:
       213: 2479696924389484331
     second: Argeon_Highmayne_Idling_10
+  - first:
+      213: 4340613292944690403
+    second: Yellow_Idling_0
+  - first:
+      213: 6875924459956979757
+    second: Yellow_Idling_1
+  - first:
+      213: -9014395377504317567
+    second: Yellow_Idling_2
+  - first:
+      213: -1695870276672175731
+    second: Yellow_Idling_3
+  - first:
+      213: -9120381442529644506
+    second: Yellow_Idling_4
+  - first:
+      213: -2608636518988817219
+    second: Yellow_Idling_5
+  - first:
+      213: -6443998142972852984
+    second: Yellow_Idling_6
+  - first:
+      213: -2517059463986327643
+    second: Yellow_Idling_7
+  - first:
+      213: 3588128964268692265
+    second: Yellow_Idling_8
+  - first:
+      213: -4025196121898915762
+    second: Yellow_Idling_9
+  - first:
+      213: -8689347033111588944
+    second: Yellow_Idling_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -191,7 +224,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_0
+      name: Yellow_Idling_0
       rect:
         serializedVersion: 2
         x: 0
@@ -199,20 +232,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc5ab031d0e9d1b20800000000000000
-      internalID: 3106813096946804173
+      spriteID: 3ec8e49dac4fc3c30800000000000000
+      internalID: 4340613292944690403
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_1
+      name: Yellow_Idling_1
       rect:
         serializedVersion: 2
         x: 80
@@ -220,20 +253,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ceda4e73613e47e30800000000000000
-      internalID: 4500471612216487404
+      spriteID: d28c72abdd03c6f50800000000000000
+      internalID: 6875924459956979757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_2
+      name: Yellow_Idling_2
       rect:
         serializedVersion: 2
         x: 160
@@ -241,20 +274,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebe6dcd5f5875aab0800000000000000
-      internalID: -4997455860506726722
+      spriteID: 18f8eea1a2f66e280800000000000000
+      internalID: -9014395377504317567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_3
+      name: Yellow_Idling_3
       rect:
         serializedVersion: 2
         x: 240
@@ -262,20 +295,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fffc477f1f0fe38c0800000000000000
-      internalID: -4017508895538491393
+      spriteID: d81cfcde7fe0778e0800000000000000
+      internalID: -1695870276672175731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_4
+      name: Yellow_Idling_4
       rect:
         serializedVersion: 2
         x: 320
@@ -283,20 +316,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf8536cbfcc7f18b0800000000000000
-      internalID: -5179283814792079109
+      spriteID: 620b4fd5665ed6180800000000000000
+      internalID: -9120381442529644506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_5
+      name: Yellow_Idling_5
       rect:
         serializedVersion: 2
         x: 400
@@ -304,20 +337,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: beff3595b2c2c61d0800000000000000
-      internalID: -3356259057603969045
+      spriteID: dbc5f8938e24ccbd0800000000000000
+      internalID: -2608636518988817219
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_6
+      name: Yellow_Idling_6
       rect:
         serializedVersion: 2
         x: 480
@@ -325,20 +358,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 174ad399a8a7f5b10800000000000000
-      internalID: 1972429897506595953
+      spriteID: 80583daa4d15296a0800000000000000
+      internalID: -6443998142972852984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_7
+      name: Yellow_Idling_7
       rect:
         serializedVersion: 2
         x: 560
@@ -346,20 +379,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad436e99d8e68a590800000000000000
-      internalID: -7662753211519453990
+      spriteID: 5af4f82e0cb911dd0800000000000000
+      internalID: -2517059463986327643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_8
+      name: Yellow_Idling_8
       rect:
         serializedVersion: 2
         x: 640
@@ -367,20 +400,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25ee59b589605ed20800000000000000
-      internalID: 3307056752814845522
+      spriteID: 923968348489bc130800000000000000
+      internalID: 3588128964268692265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_9
+      name: Yellow_Idling_9
       rect:
         serializedVersion: 2
         x: 720
@@ -388,20 +421,20 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b97ad1861be5f1370800000000000000
-      internalID: 8295453154688739227
+      spriteID: e486fea1471a328c0800000000000000
+      internalID: -4025196121898915762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Argeon_Highmayne_Idling_10
+      name: Yellow_Idling_10
       rect:
         serializedVersion: 2
         x: 800
@@ -409,14 +442,14 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.3}
+      pivot: {x: 0.5, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b272dd8f637a96220800000000000000
-      internalID: 2479696924389484331
+      spriteID: 0bf0a4959ec396780800000000000000
+      internalID: -8689347033111588944
       vertices: []
       indices: 
       edges: []

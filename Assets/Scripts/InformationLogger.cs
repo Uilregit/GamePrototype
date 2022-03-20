@@ -97,7 +97,13 @@ public class StoryModeSaveFile
 public class PlayerPreferences
 {
     public string lastPatchRead = "";
+    public int latestDateShopOpened = 0;
+    public int dailyRerollsLeft = 0;
+    public int weeklyRerollsLeft = 0;
     public bool tutorialCompleted = false;
+    public List<int> passiveTutorialCompletedIds = new List<int>();
+
+    public bool[] menuIconEnabled = new bool[] { true, false, false, false, false };
 
     public string party1;
     public string party2;
@@ -208,7 +214,11 @@ public class InformationLogger : MonoBehaviour
     public bool isStoryMode = false;
     public string patchID;
     private string lastPatchRead = "";
+    private int latestDayShopOpened = 0;
+    private int dailyRerollsLeft = 0;
+    private int weeklyRerollsLeft = 0;
     private bool tutorialCompleted = false;
+    private bool[] menuIconEnabled = new bool[] { true, false, false, false, false };
     public int seed;
     public string gameID;
     public Text versionText;
@@ -230,8 +240,6 @@ public class InformationLogger : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
-
-        LoadPlayerPreferences();                //Load player preferences on startup
 
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
 
@@ -887,7 +895,13 @@ public class InformationLogger : MonoBehaviour
         string[] colors = PartyController.party.GetPlayerColorTexts();
 
         preferences.lastPatchRead = lastPatchRead;
+        preferences.latestDateShopOpened = StoryModeController.story.GetDailySeed();
+        preferences.dailyRerollsLeft = dailyRerollsLeft;
+        preferences.weeklyRerollsLeft = weeklyRerollsLeft;
         preferences.tutorialCompleted = tutorialCompleted;
+        preferences.passiveTutorialCompletedIds = TutorialController.tutorial.GetCompletedPassiveTutorials();
+
+        preferences.menuIconEnabled = menuIconEnabled;
 
         preferences.party1 = colors[0];
         preferences.party2 = colors[1];
@@ -909,16 +923,20 @@ public class InformationLogger : MonoBehaviour
         preferences.blackLevel = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Black)[0];
         preferences.blackCurrentEXP = PartyController.party.GetPartyLevelInfo(Card.CasterColor.Black)[1];
 
-        preferences.highestOverkillScore = ScoreController.score.highestScores[0];
-        preferences.highestDamageScore = ScoreController.score.highestScores[1];
-        preferences.highestDamageArmoredScore = ScoreController.score.highestScores[2];
-        preferences.highestDamageOverhealedProtectedScore = ScoreController.score.highestScores[3];
-        preferences.highestDamageAvoidedScore = ScoreController.score.highestScores[4];
-        preferences.highestEnemiesBrokenScore = ScoreController.score.highestScores[5];
-        preferences.highestGoldUsedScore = ScoreController.score.highestScores[6];
-        preferences.highestBossesDefeatedScore = ScoreController.score.highestScores[7];
-        preferences.highestSecondsInGameScore = ScoreController.score.highestScores[8];
-        preferences.highestTotalScore = ScoreController.score.highestTotalScore;
+        try
+        {
+            preferences.highestOverkillScore = ScoreController.score.highestScores[0];
+            preferences.highestDamageScore = ScoreController.score.highestScores[1];
+            preferences.highestDamageArmoredScore = ScoreController.score.highestScores[2];
+            preferences.highestDamageOverhealedProtectedScore = ScoreController.score.highestScores[3];
+            preferences.highestDamageAvoidedScore = ScoreController.score.highestScores[4];
+            preferences.highestEnemiesBrokenScore = ScoreController.score.highestScores[5];
+            preferences.highestGoldUsedScore = ScoreController.score.highestScores[6];
+            preferences.highestBossesDefeatedScore = ScoreController.score.highestScores[7];
+            preferences.highestSecondsInGameScore = ScoreController.score.highestScores[8];
+            preferences.highestTotalScore = ScoreController.score.highestTotalScore;
+        }
+        catch { }
 
         return preferences;
     }
@@ -939,6 +957,12 @@ public class InformationLogger : MonoBehaviour
 
         lastPatchRead = preferences.lastPatchRead;
         tutorialCompleted = preferences.tutorialCompleted;
+        latestDayShopOpened = preferences.latestDateShopOpened;
+        dailyRerollsLeft = preferences.dailyRerollsLeft;
+        weeklyRerollsLeft = preferences.weeklyRerollsLeft;
+        TutorialController.tutorial.SetCompletedassiveTutorials(preferences.passiveTutorialCompletedIds);
+
+        menuIconEnabled = preferences.menuIconEnabled;
 
         string[] colors = new string[3];
         colors[0] = preferences.party1;
@@ -988,6 +1012,16 @@ public class InformationLogger : MonoBehaviour
         {
             Debug.Log("player preferences file not found in: " + path);
             playerPreferences = new PlayerPreferences();
+            playerPreferences.lastPatchRead = "";
+            playerPreferences.latestDateShopOpened = 0;
+            playerPreferences.dailyRerollsLeft = 0;
+            playerPreferences.weeklyRerollsLeft = 0;
+
+            playerPreferences.tutorialCompleted = false;
+            playerPreferences.passiveTutorialCompletedIds = new List<int>();
+
+            playerPreferences.menuIconEnabled = new bool[] { true, false, false, false, false };
+
             playerPreferences.party1 = "Red";
             playerPreferences.party2 = "Blue";
             playerPreferences.party3 = "Green";
@@ -1133,14 +1167,54 @@ public class InformationLogger : MonoBehaviour
         return lastPatchRead;
     }
 
+    public int GetLatestDayShopOpened()
+    {
+        return latestDayShopOpened;
+    }
+
+    public void SetLatestDayShopOpened(int value)
+    {
+        latestDayShopOpened = value;
+    }
+
+    public int GetDailyRerollsLeft()
+    {
+        return dailyRerollsLeft;
+    }
+
+    public int GetWeeklyRerollsLeft()
+    {
+        return weeklyRerollsLeft;
+    }
+
+    public void SetDailyRerollsLeft(int value)
+    {
+        dailyRerollsLeft = value;
+    }
+
+    public void SetWeeklyRerollsLeft(int value)
+    {
+        weeklyRerollsLeft = value;
+    }
+
     public void SetTutorialCompleted(bool state)
     {
         tutorialCompleted = state;
-    }    
+    }
 
     public bool GetTutorialCompleted()
     {
         return tutorialCompleted;
+    }
+
+    public bool[] GetMenuIconsEnabled()
+    {
+        return menuIconEnabled;
+    }
+
+    public void SetMenuIconsEnabled(bool[] value)
+    {
+        menuIconEnabled = value;
     }
 
     private void OnDestroy()

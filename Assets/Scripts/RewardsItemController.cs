@@ -56,25 +56,8 @@ public class RewardsItemController : MonoBehaviour
         {
             RewardsMenuController.rewardsMenu.SetItemsClickable(false);
 
-            List<Card> currentRewards = new List<Card>();
             Random.InitState(RoomController.roomController.GetCurrentSmallRoom().GetSeed());
-            for (int i = 0; i < GameController.gameController.rewardCards.Length; i++)
-            {
-                for (int j = 0; j < 100; j++)
-                {
-                    Card reward = LootController.loot.GetCard();
-                    if (!currentRewards.Contains(reward) && CollectionController.collectionController.GetCountOfCardInCollection(reward) < 4) //Ensures that all rewards are unique
-                    {
-                        GameController.gameController.rewardCards[i].transform.parent.GetComponent<CardController>().SetCard(reward, false, true, true);
-                        currentRewards.Add(reward);
-                        break;
-                    }
-                }
-                GameController.gameController.rewardCards[i].Show();
-                GameController.gameController.rewardCards[i].SetHighLight(true);
-                GameController.gameController.rewardCards[i].GetComponent<LineRenderer>().enabled = false;
-                GameController.gameController.rewardCards[i].transform.parent.gameObject.GetComponent<Collider2D>().enabled = true;
-            }
+            GameController.gameController.RollAndShowRewardsCards(false);
 
             //Does not report reward taken here, reports in rewardcardcontroller
         }

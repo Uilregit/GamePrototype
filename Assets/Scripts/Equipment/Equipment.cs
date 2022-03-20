@@ -32,6 +32,10 @@ public class Equipment : ScriptableObject
     [Header("After Trigger Effects")]
     public Card afterTriggerCard;
 
+    [Header("Card Overrides")]
+    public bool overrideCastShape = false;
+    public Card.CastShape overridedCastShape = Card.CastShape.Circle;
+
     [Header("Crafting Materials")]
     public StoryModeController.RewardsType[] materialTypes;
     public int[] materialAmounts;

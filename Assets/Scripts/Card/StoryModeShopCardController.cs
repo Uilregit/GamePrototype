@@ -7,6 +7,7 @@ public class StoryModeShopCardController : MonoBehaviour
 {
     public int index;
     public bool isDailyCard;
+    public int seed;
 
     private CardController card;
     private Equipment equipment;
@@ -107,7 +108,7 @@ public class StoryModeShopCardController : MonoBehaviour
         cardDisplay.cardSounds.PlayCastSound();
         picked = true;
 
-        StoryModeShopController.shop.ReportCardSelected(this, materials, ResetBuyable(), bought);
+        StoryModeShopController.shop.ReportCardSelected(this, materials, GetHasEnoughMaterials(), bought);
     }
 
     public void SetCardBought()
@@ -120,12 +121,45 @@ public class StoryModeShopCardController : MonoBehaviour
         soldOutBack.enabled = true;
         soldOutText.enabled = true;
 
-        StoryModeController.story.SetCardBought(isDailyCard, index);
-
+        StoryModeController.story.SetCardBought(isDailyCard, seed, index);
         InformationLogger.infoLogger.SaveStoryModeGame();
     }
 
-    public bool ResetBuyable()
+    public void SetCardUnBought()
+    {
+        bought = false;
+        soldOutBack.enabled = false;
+        soldOutText.enabled = false;
+    }
+
+    public void ResetBuyable()
+    {
+        bool hasEnoughMaterials = GetHasEnoughMaterials();
+
+        Card.Rarity rarity = Card.Rarity.Common;
+        if (equipment == null)
+            rarity = card.GetCard().rarity;
+        else
+            rarity = equipment.rarity;
+        if (rarity == Card.Rarity.Common && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.CommonWildCard) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.CommonWildCard] > 0)
+            hasEnoughMaterials = true;
+        else if (rarity == Card.Rarity.Rare && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.RareWildCard) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.RareWildCard] > 0)
+            hasEnoughMaterials = true;
+        else if (rarity == Card.Rarity.Legendary && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.LegendaryWildCard) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.LegendaryWildCard] > 0)
+            hasEnoughMaterials = true;
+
+        Debug.Log(hasEnoughMaterials);
+
+        if (hasEnoughMaterials)
+            Show();
+        else
+            Hide();
+
+        if (bought)
+            SetCardBought();
+    }
+
+    public bool GetHasEnoughMaterials()
     {
         bool hasEnoughMaterials = true;
         int i = 0;
@@ -139,14 +173,6 @@ public class StoryModeShopCardController : MonoBehaviour
             }
             i++;
         }
-
-        if (hasEnoughMaterials)
-            Show();
-        else
-            Hide();
-
-        if (bought)
-            SetCardBought();
 
         return hasEnoughMaterials;
     }

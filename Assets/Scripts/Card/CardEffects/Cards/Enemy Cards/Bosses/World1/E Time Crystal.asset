@@ -24,7 +24,7 @@ MonoBehaviour:
   casterColor: 6
   description: Summon a Time Crystal.|When broken, they grant 3 temporary cards from
     the future that costs (0)
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: 539b0e9b0db5da241932a88779d7f0e1, type: 3}
   castType: 5
   castShape: 0
   targetType: 02000000

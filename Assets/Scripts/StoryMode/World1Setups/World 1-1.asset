@@ -15,7 +15,7 @@ MonoBehaviour:
   roomName: World 1-1
   useDefaultCardsAndEquipments: 0
   setups:
-  - {fileID: 11400000, guid: 289872d70f40eb649b3e7d3849534604, type: 2}
+  - {fileID: 11400000, guid: d014302788fe7204cad56d9e796a3ebd, type: 2}
   - {fileID: 11400000, guid: 1199a62c50a63634da1e8f0b9347deb4, type: 2}
   - {fileID: 11400000, guid: 866f9312a3b2bb84f917a5cbe6d75f67, type: 2}
   arenaSetup: {fileID: 0}
@@ -25,6 +25,8 @@ MonoBehaviour:
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: 010000000200000006000000
   skipFinalRewards: 0
+  allowRewardsRebuy: 0
+  noAchievements: 0
   rewardTypes: 0000000008000000070000001e00000028000000
   rewardCards:
   - {fileID: 0}

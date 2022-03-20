@@ -22,6 +22,8 @@ MonoBehaviour:
   challengeComparisonType: 140000001400000014000000
   bestChallengeValues: 8a0000008a0000008a000000
   skipFinalRewards: 0
+  allowRewardsRebuy: 0
+  noAchievements: 0
   rewardTypes: f4010000bc020000c60200003700000041000000
   rewardCards:
   - {fileID: 0}
@@ -35,7 +37,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rewardAmounts: 0000000000000000000000000000000000000000
+  rewardAmounts: 0100000001000000010000000300000003000000
   rewardCosts: 32000000780000003c0000002800000028000000
   challengeRewardBought: 000000
   flavorText: The arena owner keeps the tradition of nude combattants alive, and

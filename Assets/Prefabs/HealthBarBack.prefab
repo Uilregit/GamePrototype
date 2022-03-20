@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 2814715144053797547}
   - component: {fileID: 7132114483659841165}
   - component: {fileID: 6341798654562059229}
+  - component: {fileID: 53079020839552375}
   m_Layer: 0
   m_Name: BonusHealth Bar
   m_TagString: Untagged
@@ -221,8 +222,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.020019531, y: 0}
-  m_SizeDelta: {x: 0.86, y: 0.11}
+  m_AnchoredPosition: {x: 0.05, y: 0}
+  m_SizeDelta: {x: 0.9, y: 0.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2814715144053797547
 CanvasRenderer:
@@ -277,6 +278,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.01, y: 0.01}
   m_UseGraphicAlpha: 1
+--- !u!223 &53079020839552375
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833661990050574890}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
 --- !u!1 &1552481007201083659
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +311,7 @@ GameObject:
   - component: {fileID: 3322284186785947929}
   - component: {fileID: 3275509572196787897}
   - component: {fileID: 2272920721381312183}
+  - component: {fileID: 2869175749563275835}
   m_Layer: 0
   m_Name: HealthBarBack
   m_TagString: Untagged
@@ -321,13 +344,14 @@ RectTransform:
   - {fileID: 4242075181245893851}
   - {fileID: 8141242895984561156}
   - {fileID: 5798749606712371989}
+  - {fileID: 8803852272608979875}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.4}
-  m_SizeDelta: {x: 0.9, y: 0.15}
+  m_AnchoredPosition: {x: 0, y: 0.9}
+  m_SizeDelta: {x: 1, y: 0.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3322284186785947929
 CanvasRenderer:
@@ -401,6 +425,28 @@ MonoBehaviour:
   normalDamageSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   brokenDamageSprite: {fileID: 21300000, guid: 8aa229f04f29b05498f9c1da7dd2ed6f, type: 3}
   armorDamageSprite: {fileID: 21300000, guid: 3179263ff8bd8e847a21033d1bc7a162, type: 3}
+  character: {fileID: 1659702295181672832}
+--- !u!223 &2869175749563275835
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552481007201083659}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 2
+  m_TargetDisplay: 0
 --- !u!1 &1732102075130897303
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +720,7 @@ GameObject:
   - component: {fileID: 4116956240122098723}
   - component: {fileID: 8423673214293524540}
   - component: {fileID: 4762210966232370921}
+  - component: {fileID: 7330258856950826055}
   m_Layer: 0
   m_Name: DamageOverTimeBar
   m_TagString: Untagged
@@ -697,8 +744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.02, y: 0}
-  m_SizeDelta: {x: 0.86, y: 0.11}
+  m_AnchoredPosition: {x: -0.05, y: 0}
+  m_SizeDelta: {x: 0.9, y: 0.14}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &4116956240122098723
 CanvasRenderer:
@@ -753,6 +800,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.01, y: 0.01}
   m_UseGraphicAlpha: 1
+--- !u!223 &7330258856950826055
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846290026275130263}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
 --- !u!1 &4275226591615632468
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +833,7 @@ GameObject:
   - component: {fileID: 7958918467574254694}
   - component: {fileID: 4596874268895542225}
   - component: {fileID: 5604767557386408921}
+  - component: {fileID: 9113602130395819407}
   m_Layer: 0
   m_Name: Health Bar Damage
   m_TagString: Untagged
@@ -788,8 +857,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.02, y: 0}
-  m_SizeDelta: {x: 0.86, y: 0.11}
+  m_AnchoredPosition: {x: 0.05, y: 0}
+  m_SizeDelta: {x: 0.9, y: 0.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7958918467574254694
 CanvasRenderer:
@@ -844,6 +913,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.01, y: 0.01}
   m_UseGraphicAlpha: 1
+--- !u!223 &9113602130395819407
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275226591615632468}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
 --- !u!1 &6460712335167824636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,6 +1141,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &7275613315913921846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8803852272608979875}
+  - component: {fileID: 7375829835181240528}
+  - component: {fileID: 1659702295181672832}
+  m_Layer: 0
+  m_Name: Character
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8803852272608979875
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275613315913921846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 768266192473886429}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.87}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7375829835181240528
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275613315913921846}
+  m_CullTransparentMesh: 0
+--- !u!212 &1659702295181672832
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275613315913921846}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -935817297
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 3996323097801433923, guid: f54857bf23f7f8b41bd2ccb1b7337154, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2, y: 2}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &7744499840096332809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,6 +1344,7 @@ GameObject:
   - component: {fileID: 8776488170507703000}
   - component: {fileID: 3989535185566047527}
   - component: {fileID: 4178912966553654620}
+  - component: {fileID: 5738979569281406994}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -1181,8 +1368,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.02, y: 0}
-  m_SizeDelta: {x: 0.86, y: 0.11}
+  m_AnchoredPosition: {x: 0.05, y: 0}
+  m_SizeDelta: {x: 0.9, y: 0.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8776488170507703000
 CanvasRenderer:
@@ -1237,6 +1424,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.01, y: 0.01}
   m_UseGraphicAlpha: 1
+--- !u!223 &5738979569281406994
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758309443445115360}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
 --- !u!1 &8432927786825799763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,6 +1457,7 @@ GameObject:
   - component: {fileID: 553670970103615286}
   - component: {fileID: 8931749125653232623}
   - component: {fileID: 2225066945356589836}
+  - component: {fileID: 5954320335786298186}
   m_Layer: 0
   m_Name: BonusHealthDamageBar
   m_TagString: Untagged
@@ -1272,8 +1481,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.020019531, y: 0}
-  m_SizeDelta: {x: 0.86, y: 0.11}
+  m_AnchoredPosition: {x: 0.05, y: 0}
+  m_SizeDelta: {x: 0.9, y: 0.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &553670970103615286
 CanvasRenderer:
@@ -1328,6 +1537,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 0.01, y: 0.01}
   m_UseGraphicAlpha: 1
+--- !u!223 &5954320335786298186
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432927786825799763}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
 --- !u!1 &9077203028291430918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,8 +1641,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -935817297
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

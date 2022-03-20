@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 5
-  description: Target loses -6 temporary ATK
+  description: Target loses 6 ATK this turn
   art: {fileID: 21300000, guid: a7423f5aaca816c4099d3f08cee6b6a5, type: 3}
   castType: 0
   castShape: 0

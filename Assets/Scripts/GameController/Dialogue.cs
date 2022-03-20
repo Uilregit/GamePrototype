@@ -79,9 +79,44 @@ public class Dialogue : ScriptableObject
         CharacterInformationMenuOpened = 11002,
         CharacterInformationMenuClosed = 11003,
 
-        EnemyHasPassive = 90001,
+        //Passive tutorials
+            //UI unlocks
+        StoryModeEndItemLocked = 50001,     //done
+        StoryModeEndItemSoldOut = 50002,    //
 
-        PopupEnded = 99999
+        FirstCardBought = 50051,            //
+        FirstCardEquipped = 50052,
+        CardEquippedLockedSlot = 50053,     //
+        FirstEquipmentBought = 50061,       //
+        FirstEquipmentEquipped = 50062,
+        ShopUnlocked = 50071,               //
+        ShopOpened = 50072,                 //
+        NewCharUnlocked = 50081,            //
+        PartyMenuOpened = 50082,            //
+
+            //Combat infos
+        FirstDeath = 70001,                 //
+        FirstRevive = 70002,                //
+        SecondRevive = 70003,               //
+        DefyDeath = 70004,                  //
+        
+        Overheal = 70011,                   //
+        Break2ndTurn = 70021,               //
+        BreakRecovery = 70022,              //
+
+        DiscardPileShuffle = 70051,     //maybe remove?
+
+        FirstClassicModeRelic = 80001,
+        FirstArenaRelic = 80002,
+
+        EnemyHasPassive = 90001,            //
+
+        ClassicModeStart = 99001,
+
+        //Ending popups
+        PopupEnded = 99999,                 //
+        //Ending demo
+        EndOfDemo = 999999                  //
     }
 
     public Conversation GetConversation(Condition con, int value)

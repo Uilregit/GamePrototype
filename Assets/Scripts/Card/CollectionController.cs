@@ -52,8 +52,8 @@ public class CollectionController : MonoBehaviour
     private Dictionary<string, ListWrapper> newCards = new Dictionary<string, ListWrapper>();
     private EquipmentWrapper newEquipments = new EquipmentWrapper();
     private EquipmentWrapper completeEquipments;
-    private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife" };
-    private List<string> debugCards = new List<string>();
+    private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife", "Force Staff" };
+    private List<string> debugCards = new List<string>() { "Meteor" };
     private Dictionary<string, EquipmentWrapper> selectedEquipments = new Dictionary<string, EquipmentWrapper>();
     private CardController recentRewardsCard;
     private Equipment recentRewardsEquipment;
@@ -1324,6 +1324,7 @@ public class CollectionController : MonoBehaviour
         }
 
         foreach (string color in PartyController.party.GetPotentialPlayerTexts())
+        {
             foreach (string cardName in selectedDeckNames[color])
             {
                 CardController cardController = this.gameObject.AddComponent<CardController>();
@@ -1331,6 +1332,9 @@ public class CollectionController : MonoBehaviour
                 cardController.SetCard(LootController.loot.GetCardWithName(cardName), true, false);
                 selectedDeck[cardController.GetCard().casterColor.ToString()].deck.Add(cardController);
             }
+            if (completeDeck[color].deck.Count > selectedDeck[color].deck.Count)
+                StoryModeController.story.EnableMenuIcon(3);
+        }
     }
 
     public void SetCompleteEquipments(Dictionary<string, int> completeEquipmentNames, bool additive = false)
@@ -1568,6 +1572,8 @@ public class CollectionController : MonoBehaviour
     {
         if (value == null)
             return;
+
+        StoryModeController.story.EnableMenuIcon(2);
 
         List<Equipment> equipments = new List<Equipment>();
         foreach (string e in value)

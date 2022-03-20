@@ -22,6 +22,8 @@ MonoBehaviour:
   challengeComparisonType: 140000001400000014000000
   bestChallengeValues: ffffffffffffffffffffffff
   skipFinalRewards: 0
+  allowRewardsRebuy: 0
+  noAchievements: 0
   rewardTypes: f4010000bc020000c6020000230000002d000000
   rewardCards:
   - {fileID: 0}
@@ -35,7 +37,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rewardAmounts: 0000000000000000000000000000000000000000
+  rewardAmounts: 0100000001000000010000000300000003000000
   rewardCosts: 32000000780000003c0000002800000028000000
   challengeRewardBought: 000000
   flavorText: In communist post apocalyptic dystopia, arena pays YOU

@@ -309,7 +309,7 @@ MonoBehaviour:
   abilityNames:
   - Shatter Time
   abilitySprites:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 55e7a812efd0c134b9840d57296f91cc, type: 3}
   targetTypes: 1e000000
   conditionTypes: 00000000
   triggerTypes: 05000000

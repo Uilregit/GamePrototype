@@ -340,6 +340,7 @@ public class PlayerMoveController : MonoBehaviour
                 StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
 
         HandController.handController.ResetCardDisplays();
+        healthController.charDisplay.healthBar.ResetPosition();
     }
 
     public Vector2 GetPreviousPosition()

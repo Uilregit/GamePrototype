@@ -239,6 +239,7 @@ MonoBehaviour:
   healthColor: {r: 1, g: 0, b: 0.4305086, a: 1}
   item1: {fileID: 1376487197}
   item2: {fileID: 2078522183}
+  card: {fileID: 1368623815}
 --- !u!4 &443683717
 Transform:
   m_ObjectHideFlags: 0
@@ -572,6 +573,7 @@ RectTransform:
   - {fileID: 1376487198}
   - {fileID: 2078522184}
   - {fileID: 1251204978}
+  - {fileID: 1368623814}
   m_Father: {fileID: 1845964063}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -983,6 +985,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251204977}
   m_CullTransparentMesh: 0
+--- !u!1001 &1368623813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 693258214}
+    m_Modifications:
+    - target: {fileID: 1433540738016285961, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_Name
+      value: CardDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433540738016285961, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446217023139201612, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aac6edea420a82741846302023910b8b, type: 3}
+--- !u!4 &1368623814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3571938783770610042, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_PrefabInstance: {fileID: 1368623813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1368623815 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7611883445389534506, guid: aac6edea420a82741846302023910b8b, type: 3}
+  m_PrefabInstance: {fileID: 1368623813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9edf1dfc5f29a41b5ddcacf073d9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1376487197
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +1087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376487198}
+  - component: {fileID: 1376487199}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1018,6 +1114,51 @@ Transform:
   m_Father: {fileID: 693258214}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1376487199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376487197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 443683716}
+          m_TargetAssemblyTypeName: ShrineController, Assembly-CSharp
+          m_MethodName: ShowSelectedCard
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 443683716}
+          m_TargetAssemblyTypeName: ShrineController, Assembly-CSharp
+          m_MethodName: HideSelectedCard
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1413680773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,8 +1315,6 @@ GameObject:
   - component: {fileID: 1598802829}
   - component: {fileID: 1598802831}
   - component: {fileID: 1598802830}
-  - component: {fileID: 1598802833}
-  - component: {fileID: 1598802832}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -1240,61 +1379,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598802828}
   m_CullTransparentMesh: 0
---- !u!114 &1598802832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598802828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 443683716}
-          m_TargetAssemblyTypeName: ShrineController, Assembly-CSharp
-          m_MethodName: ChoseOption1
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!61 &1598802833
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598802828}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.5, y: 2.8}
-  m_EdgeRadius: 0
 --- !u!1 &1845964059
 GameObject:
   m_ObjectHideFlags: 0

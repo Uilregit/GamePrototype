@@ -23,7 +23,7 @@ MonoBehaviour:
   radius: 0
   casterColor: 6
   description: Deal <s>33% of ATK as</s> damage three times
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: 3c9c4f8cf9275194c8ecbf66a8617cae, type: 3}
   castType: 2
   castShape: 0
   targetType: 01000000

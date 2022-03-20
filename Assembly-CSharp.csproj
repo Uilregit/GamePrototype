@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Rooms\RoomSetup.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\PiercingDamageEffect.cs" />
     <Compile Include="Assets\Scripts\GameController\TutorialController.cs" />
+    <Compile Include="Assets\Scripts\UIRevealController.cs" />
     <Compile Include="Assets\Scripts\GridController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CardCostReductionDrawn.cs" />
     <Compile Include="Assets\Scripts\OverWorld\InformationController.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Assets\Scripts\UI\RecruitButtonController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ArmorDamageAll.cs" />
     <Compile Include="Assets\Scripts\BuffDescriptionController.cs" />
+    <Compile Include="Assets\Scripts\OverWorld\RoomScrollController.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MultiplayerGameController.cs" />
     <Compile Include="Assets\Scripts\UI\StoryModeEndSceenController.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\PiercingDamageAll.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Assets\Scripts\Card\Buffs\BuffFactory.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\GetNumberOfAttackersEffect.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\CopyStatsEffect.cs" />
+    <Compile Include="Assets\Scripts\UIRevealContainer.cs" />
     <Compile Include="Assets\Scripts\Card\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\OverWorld\BossRoom.cs" />
     <Compile Include="Assets\Scripts\Card\CardEffects\ManaGainEffect.cs" />
@@ -247,8 +250,7 @@
     <Compile Include="Assets\Scripts\Card\CardEffects\GetDrawnCardEnergy.cs" />
     <Compile Include="Assets\Scripts\OverWorld\RoomController.cs" />
     <Compile Include="Assets\Scripts\Relics\Relic.cs" />
-    <Compile Include="Assets\Scripts\UIRevealController.cs" />
-    <Compile Include="Assets\Scripts\UIRevealContainer.cs" />
+    <Compile Include="Assets\Scripts\RerollRewardCardButtonController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

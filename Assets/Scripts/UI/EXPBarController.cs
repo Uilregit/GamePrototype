@@ -25,6 +25,7 @@ public class EXPBarController : MonoBehaviour
     private Color color;
     private Card.CasterColor casterColor;
     private ScoreDisplayController sdController;
+    private StoryModeEndSceenController smesController;
 
     public void SetValues(int newLevel, int newNumerator, bool newIsTeamExpBar, Color newColor, Card.CasterColor newCasterColor)
     {
@@ -47,12 +48,13 @@ public class EXPBarController : MonoBehaviour
 
     public IEnumerator GainEXP(int exp)
     {
+        yield return new WaitForSeconds(0.5f);
         while (exp > 0)
         {
-            if (exp > 27)       //Set to a non multiple of 10 so singles digit changes as well as bar fills up
+            if (exp > 7)       //Set to a non multiple of 10 so singles digit changes as well as bar fills up
             {
-                numerator += 27;
-                exp -= 27;
+                numerator += 7;
+                exp -= 7;
             }
             else
             {
@@ -63,12 +65,13 @@ public class EXPBarController : MonoBehaviour
             {
                 level += 1;
                 StartCoroutine(LevelUp());
-                UnlocksController.unlock.ReportLevelUp(level, isTeamEXPBar, casterColor);
+                //UnlocksController.unlock.ReportLevelUp(level, isTeamEXPBar, casterColor);
                 numerator -= denominator;
                 if (isTeamEXPBar)
                     denominator = ScoreController.score.GetTeamEXPNeededToLevel(level);
                 else
                     denominator = ScoreController.score.GetHeroEXPNeededToLevel(level);
+                smesController.ReportLevelUp();
             }
             SetValues(level, numerator, isTeamEXPBar, color, casterColor);
             yield return new WaitForSeconds(barEXPGainTime * (1 + Mathf.Pow((float)numerator / denominator, 4) * 100));
@@ -81,7 +84,7 @@ public class EXPBarController : MonoBehaviour
         else
             PartyController.party.SetPartyLevelInfo(casterColor, level, numerator);
         InformationLogger.infoLogger.SavePlayerPreferences();
-        sdController.ReportBarDone(isTeamEXPBar);
+        //sdController.ReportBarDone(isTeamEXPBar);
     }
 
     public IEnumerator LevelUp()
@@ -101,6 +104,11 @@ public class EXPBarController : MonoBehaviour
     {
         sdController = value;
     }
+
+    public void SetStoryModeEndSceneController(StoryModeEndSceenController value)
+    {
+        smesController = value;
+    }    
 
     public void SetEnabled(bool value)
     {

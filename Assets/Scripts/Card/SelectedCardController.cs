@@ -212,7 +212,7 @@ public class SelectedCardController : MonoBehaviour
         //Find the index location that the card is being dragged over
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3)
         {
-            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
             if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
             {
                 cardDragIndex = (int)((positionX + 2.4f) / 0.6f);
@@ -252,12 +252,15 @@ public class SelectedCardController : MonoBehaviour
         }
         else if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3 && cardDragIndex != index)        //If card is dragged to another equipped card's location
         {
-            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
             if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
                 if (cardDragIndex < custCardSlots)
                     CollectionController.collectionController.SwapCards(cardDragIndex, index);
                 else
+                {
+                    TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardEquippedLockedSlot, 1);
                     CollectionController.collectionController.ShowErrorMessage("Outside runs, only starter cards can be placed into locked card slots");
+                }
         }
     }
 

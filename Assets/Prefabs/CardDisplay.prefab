@@ -241,7 +241,7 @@ MonoBehaviour:
   cardSounds: {fileID: 4241833805894489670}
   toolTip: {fileID: 4239978086154266541, guid: ac9a9306756a9464ba7dab6ac963a668, type: 3}
   anim: {fileID: 8881027740482283445}
-  cardBack: {fileID: 128688703525648313}
+  cardFace: {fileID: 128688703525648313}
   cardGreyOut: {fileID: 1696064334374193728}
   cardWhiteOut: {fileID: 7626693655065993140}
   art: {fileID: 6815553574594983146}
@@ -261,6 +261,7 @@ MonoBehaviour:
   outline: {fileID: 4534785129137717648}
   disabledStatusText: {fileID: 493516880251595852}
   lineRenderer: {fileID: 6073473462300651164}
+  cardBack: {fileID: 8322688384652861823}
   attackGreyOut: {fileID: 447861448882684421, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
   skillGreyOut: {fileID: -9174059439420196921, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
   weaponGreyOut: {fileID: 8930645216619420532, guid: 53e0eb23acfbc8745af1d3fe5aeb9b91, type: 3}
@@ -365,8 +366,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -935817297
-  m_SortingLayer: 3
+  m_SortingLayerID: -1838316369
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -589,6 +590,7 @@ RectTransform:
   - {fileID: 4207668118096084262}
   - {fileID: 6063252925219524344}
   - {fileID: 5487421631564901081}
+  - {fileID: 51252680775594953}
   m_Father: {fileID: 3571938783770610042}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1852,7 +1854,7 @@ GameObject:
   - component: {fileID: 780744044744903679}
   - component: {fileID: 128688703525648313}
   m_Layer: 5
-  m_Name: CardBack
+  m_Name: CardFace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1906,6 +1908,81 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -6711108833145869290, guid: fd0598a937063b644ae76519d49afc00, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6916595322787949232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 51252680775594953}
+  - component: {fileID: 2151070419274590407}
+  - component: {fileID: 8322688384652861823}
+  m_Layer: 5
+  m_Name: CardBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &51252680775594953
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6916595322787949232}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4076750114502007359}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 3.45, y: 4.71}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2151070419274590407
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6916595322787949232}
+  m_CullTransparentMesh: 0
+--- !u!114 &8322688384652861823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6916595322787949232}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 2c2129e7a2eb5db4281576a207867a54, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 09e1e7cb4a2f64742a1a342a4dd5b694, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

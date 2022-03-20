@@ -58,18 +58,6 @@ public class CardEffectsController : MonoBehaviour
 
     public IEnumerator TriggerEffect(GameObject caster, List<GameObject> targets, List<Vector2> targetLocs, bool propogateOverServer = true, bool isSimulation = false, GameObject simulatedSelf = null)
     {
-        /*
-        if (MultiplayerGameController.gameController != null) //Multiplayer component
-        {
-            if (propogateOverServer)
-                ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportCardUsed(caster.GetComponent<NetworkIdentity>().netId.ToString(), card.GetCard().name, targets, ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber());
-            if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 1)    //Will never play cards on client, always on server
-            {
-                DeckController.deckController.ReportUsedCard(card);     //Client should still add card to discard pile even if the effect isn't triggered
-                yield break;
-            }
-        }
-        */
         int vitDamage = 0;
         int numEnemiesAlive = 0;
         string targetNames = "|";
@@ -347,7 +335,6 @@ public class CardEffectsController : MonoBehaviour
                 }
             }
         }
-
         //Triggers equipment effects before trigger if there are any
         if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().afterTriggerCard != null)
             yield return StartCoroutine(TriggerEquipmentEffect(caster, targets, targetLocs, movedObjects, isSimulation, false, simulatedSelf));
@@ -405,28 +392,12 @@ public class CardEffectsController : MonoBehaviour
                 caster.GetComponent<PlayerMoveController>().ReportCast();                   //If not a simulation cast, report for achievement purposes
         }
 
-        try //Singleplayer
-        {
-            if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)       //Only trigger on card played if it's a player card
-                foreach (GameObject player in GameController.gameController.GetLivingPlayers())
-                    player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
-        }
-        catch  //Multiplayer
-        {
-            if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)       //Only trigger on card played if it's a player card
-                foreach (GameObject player in MultiplayerGameController.gameController.GetLivingPlayers())
-                    player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
-        }
+        if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)       //Only trigger on card played if it's a player card
+            foreach (GameObject player in GameController.gameController.GetLivingPlayers())
+                player.GetComponent<BuffController>().StartCoroutine(player.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnCardPlayed, player.GetComponent<HealthController>(), 1));
 
-        if (MultiplayerGameController.gameController != null) //Multiplayer component
-        {
-            if (TurnController.turnController.GetIsPlayerTurn() && ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() == 0)
-                DeckController.deckController.ReportUsedCard(card);     //Only allow card to shuffle into discard pile if server played it on server's turn
-        }
-        else if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)  //Singleplayer component
-        {
+        if (card.GetCard().casterColor != Card.CasterColor.Enemy && !isSimulation)  //Singleplayer component
             DeckController.deckController.ReportUsedCard(card);
-        }
 
         finished = true;
 

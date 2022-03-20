@@ -25,6 +25,8 @@ MonoBehaviour:
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: 010000000200000004000000
   skipFinalRewards: 0
+  allowRewardsRebuy: 1
+  noAchievements: 1
   rewardTypes: 905f0100915f0100925f01001e00000028000000
   rewardCards:
   - {fileID: 0}

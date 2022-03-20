@@ -17,7 +17,7 @@ public class StoryRoomController : MonoBehaviour
 
     private bool isHighlighted = false;
     private float outlineSize;
-    private Outline outline;
+    public Outline outline;
 
     public enum StoryRoomType
     {
@@ -33,7 +33,6 @@ public class StoryRoomController : MonoBehaviour
 
     public void Start()
     {
-        outline = GetComponent<Outline>();
         outlineSize = outline.effectDistance.x;
     }
 

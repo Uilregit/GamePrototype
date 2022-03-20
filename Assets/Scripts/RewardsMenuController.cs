@@ -195,6 +195,7 @@ public class RewardsMenuController : MonoBehaviour
             GameController.gameController.rewardCards[i].Hide();
             GameController.gameController.rewardCards[i].transform.parent.GetComponent<Collider2D>().enabled = false;
         }
+        GameController.gameController.rewardCardRerolls.gameObject.SetActive(false);
     }
 
     public void ShowRelicRewardMenu(Relic relic)

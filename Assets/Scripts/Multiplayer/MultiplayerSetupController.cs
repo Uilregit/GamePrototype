@@ -65,7 +65,7 @@ public class MultiplayerSetupController : TavernController
 
     public void GoToDeckMenu()
     {
-        Camera.main.transform.position = new Vector3(8, 0, -10);
+        Camera.main.transform.position = new Vector3(100, 0, -10);
     }
     /*
     public void GoToMainMenu()

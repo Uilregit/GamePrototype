@@ -9,18 +9,30 @@ public class DragController : MonoBehaviour
 
     public virtual void OnMouseDown()
     {
-        if (TutorialController.tutorial.GetEnabled())
-            return;
+        try
+        {
+            if (TutorialController.tutorial.GetEnabled())
+                return;
+        }
+        catch { }
 
         offset = transform.position - CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
     }
 
     public virtual void OnMouseDrag()
     {
-        if (TutorialController.tutorial.GetEnabled())
-            return;
+        try
+        {
+            if (TutorialController.tutorial.GetEnabled())
+                return;
 
-        if (TurnController.turnController.GetIsPlayerTurn())
+            if (TurnController.turnController.GetIsPlayerTurn())
+            {
+                newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+                transform.position = newLocation;
+            }
+        }
+        catch
         {
             newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             transform.position = newLocation;

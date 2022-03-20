@@ -48,6 +48,9 @@ public class HealthBarController : MonoBehaviour
     public Sprite brokenDamageSprite;
     public Sprite armorDamageSprite;
 
+    [Header("Sprite")]
+    public SpriteRenderer character;
+
     private Vector2 damageImagePosition;
     private Vector2 armorDamageImagePosition;
     private Vector2 originalDamageImageScale;
@@ -59,6 +62,8 @@ public class HealthBarController : MonoBehaviour
     private int oldArmorAmount = 0;
     private bool hidingDamageImage = false;
     private bool hidingArmorDamageImage = false;
+
+    private Vector3 startingLocalPosition;
 
     private IEnumerator healthBarHide;
     private IEnumerator healthImageHide;
@@ -87,6 +92,8 @@ public class HealthBarController : MonoBehaviour
 
         originalArmorDamageImageScale = armorDamageImage.transform.localScale;
         originalArmorDamagetextScale = armorDamageText.transform.localScale;
+
+        startingLocalPosition = transform.localPosition;
         //bonusHealthDamageBar.enabled = false;
     }
 
@@ -109,7 +116,7 @@ public class HealthBarController : MonoBehaviour
         if (initialHealth <= 0)
             damagePercentage = 0;
 
-        backImage.rectTransform.position = center + new Vector2(0, 0.95f + index * 0.25f) * size;
+        backImage.rectTransform.position = center + new Vector2(0, 1.15f + index * 0.25f) * size;
         backImage.rectTransform.localScale = new Vector2(scale, 1);
 
         barImage.rectTransform.localScale = new Vector2(HPPercentage, 1);
@@ -159,6 +166,13 @@ public class HealthBarController : MonoBehaviour
         }
     }
 
+    public void SetCharacter(Sprite sprite, Vector2 center)
+    {
+        character.transform.position = center + new Vector2(0, 1);
+        character.sprite = sprite;
+        character.enabled = true;
+    }
+
     //Called by other scripts to hide healthbars when letting go
     public void RemoveHealthBar()
     {
@@ -167,18 +181,14 @@ public class HealthBarController : MonoBehaviour
         damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
+        character.enabled = false;
         //bonusHealthDamageBar.enabled = false;
     }
 
     private IEnumerator HideHealthBar()
     {
         yield return new WaitForSeconds(TimeController.time.barShownDuration);
-        backImage.enabled = false;
-        damageBarImage.enabled = false;
-        damageOverTimeBarImage.enabled = false;
-        barImage.enabled = false;
-        bonusHealthBar.enabled = false;
-        //bonusHealthDamageBar.enabled = false;
+        RemoveHealthBar();
     }
 
     public void SetDamageImage(int initialHealth, int damage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken)
@@ -378,5 +388,10 @@ public class HealthBarController : MonoBehaviour
             img.color = Color.Lerp(new Color(img.color.r, img.color.g, img.color.b, startingAlpha), new Color(img.color.r, img.color.g, img.color.b, endingAlpha), i / 49);
             yield return new WaitForSeconds(time / 50f);
         }
+    }
+
+    public void ResetPosition()
+    {
+        transform.localPosition = startingLocalPosition;
     }
 }

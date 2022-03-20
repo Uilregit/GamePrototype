@@ -16,6 +16,8 @@ public class StoryRoomSetup : ScriptableObject
     public int[] bestChallengeValues = new int[3] { -1, -1, -1 };
 
     public bool skipFinalRewards = false;
+    public bool allowRewardsRebuy = false;
+    public bool noAchievements = false;
     public StoryModeController.RewardsType[] rewardTypes;
     public Card[] rewardCards;
     public Equipment[] rewardEquipment;

@@ -11,7 +11,7 @@ public class EditDeckButtonController : MonoBehaviour
             return;
 
         MusicController.music.SetHighPassFilter(true);
-        CameraController.camera.transform.position = new Vector3(8, 0, -10);
+        CameraController.camera.transform.position = new Vector3(100, 0, -10);
         CollectionController.collectionController.ResetDeck();
     }
 

@@ -27,6 +27,8 @@ public class CharacterDisplayController : MonoBehaviour
     public OnHitSoundController onHitSoundController;
     public SpriteRenderer pointLight;
 
+    public LineRenderer lineRenderer;
+
     // Start is called before the first frame update
     void Awake()
     {

@@ -38,6 +38,42 @@ TextureImporter:
   - first:
       213: 21300022
     second: Faie_Bloodwing_Mk2_Breathing_11
+  - first:
+      213: -2874705393251439747
+    second: Blue_Idling_0
+  - first:
+      213: 7420844377215460345
+    second: Blue_Idling_1
+  - first:
+      213: 328780881998796090
+    second: Blue_Idling_2
+  - first:
+      213: 6240529008082391531
+    second: Blue_Idling_3
+  - first:
+      213: -6265852174691893371
+    second: Blue_Idling_4
+  - first:
+      213: 8213826186146997969
+    second: Blue_Idling_5
+  - first:
+      213: 7022851569458672013
+    second: Blue_Idling_6
+  - first:
+      213: 1408030940056039032
+    second: Blue_Idling_7
+  - first:
+      213: 134099301812376108
+    second: Blue_Idling_8
+  - first:
+      213: 2248754244979637855
+    second: Blue_Idling_9
+  - first:
+      213: 5567617884339686771
+    second: Blue_Idling_10
+  - first:
+      213: 8839606007133889058
+    second: Blue_Idling_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -161,7 +197,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_0
+      name: Blue_Idling_0
       rect:
         serializedVersion: 2
         x: 0
@@ -169,20 +205,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5d33571355875347a06fe5c467b5acd
-      internalID: 21300000
+      spriteID: d7b2959fcaefa18d0800000000000000
+      internalID: -2874705393251439747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_1
+      name: Blue_Idling_1
       rect:
         serializedVersion: 2
         x: 140
@@ -190,20 +226,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9813d4665734dcb4b8fc58f9b275a000
-      internalID: 21300002
+      spriteID: 9f3e16dc4a22cf660800000000000000
+      internalID: 7420844377215460345
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_2
+      name: Blue_Idling_2
       rect:
         serializedVersion: 2
         x: 280
@@ -211,20 +247,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 048b06cdf9ddfe34e815ab3cc75bd606
-      internalID: 21300004
+      spriteID: a355a706870109400800000000000000
+      internalID: 328780881998796090
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_3
+      name: Blue_Idling_3
       rect:
         serializedVersion: 2
         x: 420
@@ -232,20 +268,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee2f042add9793d4e80aed0f22848924
-      internalID: 21300006
+      spriteID: be19541b110da9650800000000000000
+      internalID: 6240529008082391531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_4
+      name: Blue_Idling_4
       rect:
         serializedVersion: 2
         x: 560
@@ -253,20 +289,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31465bd8dbb209247a25f53f264acb45
-      internalID: 21300008
+      spriteID: 58f716025a83b09a0800000000000000
+      internalID: -6265852174691893371
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_5
+      name: Blue_Idling_5
       rect:
         serializedVersion: 2
         x: 700
@@ -274,20 +310,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5aeac237a85b9654596c44044caffd28
-      internalID: 21300010
+      spriteID: 1d6e718c56f5df170800000000000000
+      internalID: 8213826186146997969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_6
+      name: Blue_Idling_6
       rect:
         serializedVersion: 2
         x: 840
@@ -295,20 +331,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3453308dc512da54591f2dc7485d9d22
-      internalID: 21300012
+      spriteID: d81f0e33b4e267160800000000000000
+      internalID: 7022851569458672013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_7
+      name: Blue_Idling_7
       rect:
         serializedVersion: 2
         x: 980
@@ -316,20 +352,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e8657c50d9c19c40a0e2a55cfbd66c4
-      internalID: 21300014
+      spriteID: 87eacce0ea45a8310800000000000000
+      internalID: 1408030940056039032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_8
+      name: Blue_Idling_8
       rect:
         serializedVersion: 2
         x: 1120
@@ -337,20 +373,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1595c1b9b17eb947a384da57efd5b88
-      internalID: 21300016
+      spriteID: c229721ca9a6cd100800000000000000
+      internalID: 134099301812376108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_9
+      name: Blue_Idling_9
       rect:
         serializedVersion: 2
         x: 1260
@@ -358,20 +394,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8210794924efaf642a515e1ae6d1d1fb
-      internalID: 21300018
+      spriteID: f5eb927421e253f10800000000000000
+      internalID: 2248754244979637855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_10
+      name: Blue_Idling_10
       rect:
         serializedVersion: 2
         x: 1400
@@ -379,20 +415,20 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bba2d629669ff874da14795993c63461
-      internalID: 21300020
+      spriteID: 37dcd21a7f6244d40800000000000000
+      internalID: 5567617884339686771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Faie_Bloodwing_Mk2_Breathing_11
+      name: Blue_Idling_11
       rect:
         serializedVersion: 2
         x: 1540
@@ -400,14 +436,14 @@ TextureImporter:
         width: 140
         height: 140
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0.16}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cd5b8730abeca34f93454c83347c265
-      internalID: 21300022
+      spriteID: 222ef9944d69caa70800000000000000
+      internalID: 8839606007133889058
       vertices: []
       indices: 
       edges: []

@@ -25,6 +25,7 @@ public class StoryModeShopController : MonoBehaviour
     public Text[] selectedMaterialAmounts;
     public Text[] stockMaterialAmounts;
     public Image craftButton;
+    public Image wildCardButton;
 
     public Image soldOut;
 
@@ -32,6 +33,9 @@ public class StoryModeShopController : MonoBehaviour
     public Color notEnoughColor;
     public Color buttonEnabledColor;
     public Color buttonDisabledColor;
+
+    public Image dailyReroll;
+    public Image weeklyReroll;
 
     private StoryModeShopCardController currentCard;
     private Dictionary<StoryModeController.RewardsType, int> currentCardMaterials;
@@ -48,6 +52,24 @@ public class StoryModeShopController : MonoBehaviour
         PopulateCards();
         UpdateInventoryMaterials();
         StoryModeController.story.SetCombatInfoMenu(false);
+
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != StoryModeController.story.GetRawDailySeed())
+            if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXDailyDealsRerollPerDay))
+                InformationLogger.infoLogger.SetDailyRerollsLeft(StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXDailyDealsRerollPerDay]);
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() / 7 != StoryModeController.story.GetRawWeeklySeed())
+            if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXWeeklyWaresRerollPerWeek))
+                InformationLogger.infoLogger.SetWeeklyRerollsLeft(StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXWeeklyWaresRerollPerWeek]);
+
+        InformationLogger.infoLogger.SetLatestDayShopOpened(StoryModeController.story.GetRawDailySeed());
+        InformationLogger.infoLogger.SavePlayerPreferences();
+
+        dailyReroll.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + InformationLogger.infoLogger.GetDailyRerollsLeft();
+        if (InformationLogger.infoLogger.GetDailyRerollsLeft() <= 0)
+            dailyReroll.gameObject.SetActive(false);
+
+        weeklyReroll.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + InformationLogger.infoLogger.GetWeeklyRerollsLeft();
+        if (InformationLogger.infoLogger.GetWeeklyRerollsLeft() <= 0)
+            weeklyReroll.gameObject.SetActive(false);
     }
 
     public void UpdateInventoryMaterials()
@@ -68,15 +90,8 @@ public class StoryModeShopController : MonoBehaviour
 
     public void PopulateCards()
     {
-        int day = StoryModeController.story.GetDailySeed();
-        int week = StoryModeController.story.GetWeeklySeed();
-
-        float equipmentChance = 0.3f;
-
-        //Initialize the daily cards
-        PopulateCards(DailyDeals, day, equipmentChance, 0.5f, true);
-        //Iniitialize the weekly cards
-        PopulateCards(WeeklyWares, week, equipmentChance, 0.75f, false);
+        RollDailyCards(false);
+        RollWeeklyCards(false);
     }
 
     private void PopulateCards(StoryModeShopCardController[] cards, int seed, float equipmentChance, float discountMultiplier, bool isDay)
@@ -86,6 +101,20 @@ public class StoryModeShopController : MonoBehaviour
         foreach (StoryModeShopCardController card in cards)
         {
             Dictionary<StoryModeController.RewardsType, int> totalMaterials = new Dictionary<StoryModeController.RewardsType, int>();
+            if (isDay)
+            {
+                if (StoryModeController.story.GetDailyBought().ContainsKey(seed) && StoryModeController.story.GetDailyBought()[seed][i])
+                    card.SetCardBought();
+                else
+                    card.SetCardUnBought();
+            }
+            else
+            {
+                if (StoryModeController.story.GetWeeklyBought().ContainsKey(seed) && StoryModeController.story.GetWeeklyBought()[seed][i])
+                    card.SetCardBought();
+                else
+                    card.SetCardUnBought();
+            }
 
             if (Random.Range(0.0f, 1.0f) <= equipmentChance)
             {
@@ -96,27 +125,54 @@ public class StoryModeShopController : MonoBehaviour
             else
             {
                 card.GetComponent<CardController>().SetCard(LootController.loot.GetUnlockedCard(), false);
+                card.SetEquipment(null);
                 card.SetCard(card.GetComponent<CardController>());
                 totalMaterials = card.GetComponent<CardController>().GetCard().GetCraftingMaterials();
             }
+            card.seed = seed;
 
             Dictionary<StoryModeController.RewardsType, int> discountedMaterials = new Dictionary<StoryModeController.RewardsType, int>();
             foreach (StoryModeController.RewardsType m in totalMaterials.Keys)
                 discountedMaterials[m] = (int)Mathf.Max(1, Mathf.Floor(totalMaterials[m] * discountMultiplier));            //Half off materials, but always costs at least 1
             card.SetMaterials(discountedMaterials);
-
-            if (isDay)
-            {
-                if (StoryModeController.story.GetDailyBought().ContainsKey(seed) && StoryModeController.story.GetDailyBought()[seed][i])
-                    card.SetCardBought();
-            }
-            else
-            {
-                if (StoryModeController.story.GetWeeklyBought().ContainsKey(seed) && StoryModeController.story.GetWeeklyBought()[seed][i])
-                    card.SetCardBought();
-            }
             i++;
         }
+    }
+
+    public void RollDailyCards(bool isReroll)
+    {
+        if (isReroll)
+        {
+            InformationLogger.infoLogger.SetDailyRerollsLeft(InformationLogger.infoLogger.GetDailyRerollsLeft() - 1);
+            InformationLogger.infoLogger.SavePlayerPreferences();
+            dailyReroll.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + InformationLogger.infoLogger.GetDailyRerollsLeft();
+            if (InformationLogger.infoLogger.GetDailyRerollsLeft() <= 0)
+                dailyReroll.gameObject.SetActive(false);
+        }
+
+        int day = StoryModeController.story.GetDailySeed();
+        float equipmentChance = 0.3f;
+
+        //Initialize the daily cards
+        PopulateCards(DailyDeals, day, equipmentChance, 0.5f, true);
+    }
+
+    public void RollWeeklyCards(bool isReroll)
+    {
+        if (isReroll)
+        {
+            InformationLogger.infoLogger.SetWeeklyRerollsLeft(InformationLogger.infoLogger.GetWeeklyRerollsLeft() - 1);
+            InformationLogger.infoLogger.SavePlayerPreferences();
+            weeklyReroll.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + InformationLogger.infoLogger.GetWeeklyRerollsLeft();
+            if (InformationLogger.infoLogger.GetWeeklyRerollsLeft() <= 0)
+                weeklyReroll.gameObject.SetActive(false);
+        }
+
+        int week = StoryModeController.story.GetWeeklySeed();
+        float equipmentChance = 0.3f;
+
+        //Iniitialize the weekly cards
+        PopulateCards(WeeklyWares, week, equipmentChance, 0.75f, false);
     }
 
     public void ReportCardSelected(StoryModeShopCardController card, Dictionary<StoryModeController.RewardsType, int> materials, bool craftable, bool bought)
@@ -189,7 +245,7 @@ public class StoryModeShopController : MonoBehaviour
             duplicate = CollectionController.collectionController.GetCountOfCardInCollection(card.GetCardController().GetCard());
 
         duplicateText.text = duplicate + "/4";
-        duplicateBar.transform.localScale = new Vector2((float)duplicate / 4.0f, 1);
+        duplicateBar.transform.localScale = new Vector2(Mathf.Min(1f, (float)duplicate / 4.0f), 1);
 
         if (craftable && !bought)
             craftButton.color = buttonEnabledColor;
@@ -197,6 +253,37 @@ public class StoryModeShopController : MonoBehaviour
             craftButton.color = buttonDisabledColor;
 
         craftButtonSelectable = craftable && !bought;
+
+        StoryModeController.RewardsType rarity = StoryModeController.RewardsType.BlankCard;
+        if (card.GetEquipment() == null)
+        {
+            if (card.GetCardController().GetCard().rarity == Card.Rarity.Common && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.CommonWildCard))
+                rarity = StoryModeController.RewardsType.CommonWildCard;
+            else if (card.GetCardController().GetCard().rarity == Card.Rarity.Rare && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.RareWildCard))
+                rarity = StoryModeController.RewardsType.RareWildCard;
+            else if (card.GetCardController().GetCard().rarity == Card.Rarity.Legendary && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.LegendaryWildCard))
+                rarity = StoryModeController.RewardsType.LegendaryWildCard;
+        }
+        else
+        {
+            if (card.GetEquipment().rarity == Card.Rarity.Common && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.CommonWildCard))
+                rarity = StoryModeController.RewardsType.CommonWildCard;
+            else if (card.GetEquipment().rarity == Card.Rarity.Rare && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.RareWildCard))
+                rarity = StoryModeController.RewardsType.RareWildCard;
+            else if (card.GetEquipment().rarity == Card.Rarity.Legendary && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.LegendaryWildCard))
+                rarity = StoryModeController.RewardsType.LegendaryWildCard;
+        }
+
+        int wildCardNum = 0;
+        if (rarity != StoryModeController.RewardsType.BlankCard)
+        {
+            wildCardNum = StoryModeController.story.GetItemsBought()[rarity];
+
+            wildCardButton.transform.GetChild(0).GetComponent<Text>().text = "x" + wildCardNum;
+            wildCardButton.transform.GetChild(1).GetComponent<Image>().sprite = StoryModeController.story.GetRewardSprite(rarity, 0);
+            wildCardButton.transform.GetChild(1).GetComponent<Image>().color = StoryModeController.story.GetRewardsColor(rarity);
+        }
+        wildCardButton.gameObject.SetActive(wildCardNum > 0);
 
         soldOut.gameObject.SetActive(bought);
 
@@ -208,6 +295,23 @@ public class StoryModeShopController : MonoBehaviour
         if (!craftButtonSelectable)
             return;
 
+        BuyCard();
+    }
+
+    public void ReportWildCardButtonPressed()
+    {
+        if (currentCard.GetCardController().GetCard().rarity == Card.Rarity.Common && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.CommonWildCard))
+            currentCardMaterials = new Dictionary<StoryModeController.RewardsType, int> { { StoryModeController.RewardsType.CommonWildCard, 1 } };
+        else if (currentCard.GetCardController().GetCard().rarity == Card.Rarity.Rare && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.RareWildCard))
+            currentCardMaterials = new Dictionary<StoryModeController.RewardsType, int> { { StoryModeController.RewardsType.RareWildCard, 1 } };
+        else if (currentCard.GetCardController().GetCard().rarity == Card.Rarity.Legendary && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.LegendaryWildCard))
+            currentCardMaterials = new Dictionary<StoryModeController.RewardsType, int> { { StoryModeController.RewardsType.LegendaryWildCard, 1 } };
+
+        BuyCard();
+    }
+
+    private void BuyCard()
+    {
         if (currentCard.GetEquipment() == null)
             StoryModeController.story.ReportCardBought(currentCard.GetCardController().GetCard().name, currentCardMaterials);
         else

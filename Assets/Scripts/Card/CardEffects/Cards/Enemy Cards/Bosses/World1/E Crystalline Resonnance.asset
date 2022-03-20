@@ -23,7 +23,7 @@ MonoBehaviour:
   radius: 0
   casterColor: 6
   description: Gain 100% lifesteal for 5 turns
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: e89605c0ecec90545836b41df1298119, type: 3}
   castType: 1
   castShape: 0
   targetType: 02000000

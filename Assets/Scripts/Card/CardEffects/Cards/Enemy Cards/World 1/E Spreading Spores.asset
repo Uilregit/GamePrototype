@@ -23,7 +23,7 @@ MonoBehaviour:
   radius: 3
   casterColor: 6
   description: Create 2 bomb that explode for <s>100% of ATK as</s> damage
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: 87c1cfb99c61bea46b1a6db171dea79f, type: 3}
   castType: 5
   castShape: 0
   targetType: 02000000

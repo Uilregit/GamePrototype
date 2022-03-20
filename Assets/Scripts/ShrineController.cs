@@ -17,9 +17,14 @@ public class ShrineController : MonoBehaviour
     public GameObject item1;
     public GameObject item2;
 
+    public CardDisplay card;
+
     private StatsBoostType statsBoost;
     private Relic relic;
     private Equipment equipment;
+
+    private IEnumerator cardEnlargeCoroutine;
+    private float cardEnlargeStartTime;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +46,7 @@ public class ShrineController : MonoBehaviour
                 break;
 
         relic = RelicController.relic.GetRandomRelic();
+        card.SetEquipment(equipment, Card.CasterColor.Enemy);
 
         RefreshDisplays();
     }
@@ -133,5 +139,25 @@ public class ShrineController : MonoBehaviour
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
         SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
+    }
+
+    public void ShowSelectedCard()
+    {
+        cardEnlargeCoroutine = SelectedCard();
+        cardEnlargeStartTime = Time.time;
+        StartCoroutine(cardEnlargeCoroutine);
+    }
+
+    private IEnumerator SelectedCard()
+    {
+        yield return new WaitForSeconds(0.3f);
+        card.gameObject.SetActive(true);
+    }
+
+    public void HideSelectedCard()
+    {
+        if (Time.time - cardEnlargeStartTime < 0.3f)
+            ChoseOption1();
+        card.gameObject.SetActive(false);
     }
 }

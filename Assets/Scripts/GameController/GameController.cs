@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     public Image damageOverlay;
     public Image circleHighlight;
 
+    public Image characterDamagePreviewBackdrop;
+
     private bool showingDamageOverlay = false;
 
     public BackgroundMusicController music;
@@ -27,6 +29,9 @@ public class GameController : MonoBehaviour
 
     public Text text;
     public CardDisplay[] rewardCards;
+    public Image rewardCardRerolls;
+    private int numOfRerolls = 2;
+    private List<Card> pastRewards = new List<Card>();
 
     [SerializeField]
     GameObject block;
@@ -578,7 +583,7 @@ public class GameController : MonoBehaviour
         RoomController.roomController.Refresh();
         RoomController.roomController.Show();
         if (goToDeck)
-            cameraLocation = new Vector3(8, 0, -10);
+            cameraLocation = new Vector3(100, 0, -10);
         else
             cameraLocation = new Vector3(0, 0, -10);
         deckID = newDeckID;
@@ -666,6 +671,49 @@ public class GameController : MonoBehaviour
             replaceImage.color = doneColor;
         else
             replaceImage.color = notYetDoneColor;
+    }
+
+    public void RollAndShowRewardsCards(bool isReroll)
+    {
+        int rerollsLeft = 0;
+        if (StoryModeController.story != null)
+            rerollsLeft = StoryModeController.story.GetRewardsRerollLeft();
+        if (rerollsLeft <= 0 && isReroll)
+            return;
+        if (isReroll)
+        {
+            if (StoryModeController.story == null)
+                rerollsLeft--;
+            else
+            {
+                rerollsLeft--;
+                StoryModeController.story.UseRewardsReroll(1);
+            }
+        }
+
+        for (int i = 0; i < rewardCards.Length; i++)
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Card reward = LootController.loot.GetCard();
+                if (!pastRewards.Contains(reward) && CollectionController.collectionController.GetCountOfCardInCollection(reward) < 4) //Ensures that all rewards are unique
+                {
+                    rewardCards[i].transform.parent.GetComponent<CardController>().SetCard(reward, false, true, true);
+                    pastRewards.Add(reward);
+                    break;
+                }
+            }
+            rewardCards[i].Show();
+            rewardCards[i].SetHighLight(true);
+            rewardCards[i].GetComponent<LineRenderer>().enabled = false;
+            rewardCards[i].transform.parent.gameObject.GetComponent<Collider2D>().enabled = true;
+        }
+
+        if (isReroll || rerollsLeft > 0)
+        {
+            rewardCardRerolls.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + rerollsLeft;
+            rewardCardRerolls.gameObject.SetActive(rerollsLeft > 0);
+        }
     }
 
     public void UpdatePlayerDamage()
@@ -777,6 +825,16 @@ public class GameController : MonoBehaviour
         simulationCharacters.Enqueue(simulationCharacter);
     }
 
+    public void SetDamagePrevieBackdrop(Vector2 center, int charWidth, int charHeight, bool flipped)
+    {
+        characterDamagePreviewBackdrop.transform.position = center;
+        characterDamagePreviewBackdrop.rectTransform.sizeDelta = new Vector2(1.5f * charWidth, 1.5f * charHeight);
+        if (flipped)
+            characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, -1);
+        else
+            characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, 1);
+    }
+
     public void ChangeDoomCounter(int value)
     {
         doomCounter += value;
@@ -786,13 +844,4 @@ public class GameController : MonoBehaviour
     {
         return doomCounter;
     }
-
-    /*
-    public void RestartGame()
-    {
-        RoomController.roomController.RestartGame();
-        DeckController.deckController.RestartGame();
-        InformationController.infoController.RestartGame();
-    }
-    */
 }

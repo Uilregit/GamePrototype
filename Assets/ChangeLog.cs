@@ -1104,9 +1104,6 @@ Fixed immunity checks for buffs that have no trigger effects
 ###### 0.5.2.1 ######
 #####################
 -- Cards --
-    - Green -
-        PowerShot
-            Deal 75% of ATK times the number of cards played this turn as damage in a single strike --> Deal 50% of ATK times the number of cards played this turn as damage in a single strike
 
 -- Enemies --
 
@@ -1167,19 +1164,52 @@ Fixed char stats in previous rooms overriding new char stats after changing equi
 Fixed tavern back button not going to story mode if entered from story mode
 Fixed cards in collection using -1 as ATK after combat
 Fixed story mode menu defaulting to card view after combat
+Fixed bug where enemies will stay in place if their target is out of range
+Fixed UI bug where player's armor change indicator will be misalighed after moving the player
 
 #####################
-###### 0.5.1.2 ######
+###### 0.5.2.3 ######
 #####################
 -- Cards --
+    - Green -
+        PowerShot
+            Deal 75% of ATK times the number of cards played this turn as damage in a single strike --> Deal 50% of ATK times the number of cards played this turn as damage in a single strike
+
+-- Equipment --
+    - Added -
+        Force Staff
+            Attached card gains Knockback 1 before the card triggers
 
 -- Enemies --
 
 -- System --
+Added patching to move all world 0 secret shop items to world 1 to accomodate the new tutorial world
+Knockback cards now use the direction between caster and cast location instead of caster and target
+Knockback on multiple units now apply at the same time
+Knockback animate slightly instead of teleport unit to their new locations
+All card process will now trigger only once per object per process call
+Passive tutorials will now only be shown once to a player each
+Rewards cards reroll from secret shop implemented
+Daily and weekly shop rerolls from secret shop implemented
+Wildcards implemented
+Card packs and level up implemented in story mode
 
 -- UI --
+Added message for reaching the end of the demo
+Reworked party menu
+Reworked overworld menu
+Added UI for health previews when targeting cards on stacked targets
+Added UI previews for targets that would be knocked to a different location
+Last main menu icon bar is now Shop instead of Skills. Highlights when new items are available
+Main menu icons now are locked and unclicable on first play, and get unlocked as they're relavant
+Added hold to preview card/equipment for story mode map room item rewards
+Added hold to preview card/equipment for recruit meny in tavern view
+Added hold to preview card/equipment for shrine scene
 
 -- Bugs --
+Fixed bug where switching world wouldn't deselect the room in the previous world
+Fixed bug where hp bars appear in front of combat end menu
+Fixed visual bug where equipment icons on cards doesn't fade when card is casted
 
 -- To dos --
 Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

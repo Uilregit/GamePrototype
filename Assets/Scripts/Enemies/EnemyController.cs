@@ -800,7 +800,7 @@ public class EnemyController : MonoBehaviour
         else
             desiredTargetLocation = GetCurrentTarget().transform.position;
 
-        List<Vector2> finalLocs = new List<Vector2>() { transform.position };                               //Find the viable position that's the furthest from the current position
+        List<Vector2> finalLocs = new List<Vector2>() { desiredTargetLocation };                            //Find the viable position that's the furthest from the current position, default being the target's location
         foreach (Vector2 loc in pathableLocations)                                                          //Allows for more movement and more dynamic battles
         {
             if (desiredTargetLocation == (Vector2)target.transform.position)
@@ -817,10 +817,9 @@ public class EnemyController : MonoBehaviour
                 else if (GetManhattanDistance(loc, desiredTargetLocation) == GetManhattanDistance(finalLocs[0], desiredTargetLocation))
                     finalLocs.Add(loc);
             }
-
         }
 
-        Vector2 finalLoc = finalLocs[Random.Range(0, finalLocs.Count)];                                     //If there are multiple viable positions with the same distance, chose one at random
+        Vector2 finalLoc = finalLocs[Random.Range(0, finalLocs.Count)];                                                     //If there are multiple viable positions with the same distance, chose one at random
         return PathFindController.pathFinder.PathFind(transform.position, finalLoc, pathThroughTags, occupiedSpace, size);  //Return the pathfind to the chosen location
     }
 

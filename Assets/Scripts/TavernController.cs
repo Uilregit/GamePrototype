@@ -18,8 +18,24 @@ public class TavernController : MonoBehaviour
     public BattlePassController teamBattlePass;
     public BattlePassController heroBattlePass;
 
+    public Image background;
+
+    public Text selectedColorClass;
+    public Text selectedColorName;
+    public Text recruitName;
+
+    public Text selectedColorATK;
+    public Text selectedColorDef;
+    public Text selectedColorHlth;
+
+    public SpriteRenderer selectedColorSprite;
+
+    public GameObject reserveObject;
+
     public Canvas recruitCanvas;
     public Image recruitButton;
+    public GameObject recruitInfo;
+    public Image recruitBackground;
     public Sprite orangeCharacterSprite;
     public Sprite whiteCharacterSprite;
     public Sprite blackCharacterSprite;
@@ -35,6 +51,9 @@ public class TavernController : MonoBehaviour
 
     private int selectedIndex = -1;
     private Card.CasterColor recruitColor;
+
+    private int selectedCardIndex = 0;
+    private Vector2 selectedCardOriginalPosition;
     // Start is called before the first frame update
     void Awake()
     {
@@ -76,17 +95,13 @@ public class TavernController : MonoBehaviour
         {
             contractText.text = "Contracts: " + unlocked.tavernContracts;
             contractText.transform.parent.GetComponent<Image>().enabled = true;
-            recruitButton.enabled = true;
-            recruitButton.GetComponent<Collider2D>().enabled = true;
-            recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = true;
+            recruitButton.gameObject.SetActive(true);
         }
         else
         {
             contractText.text = "";
             contractText.transform.parent.GetComponent<Image>().enabled = false;
-            recruitButton.enabled = false;
-            recruitButton.GetComponent<Collider2D>().enabled = false;
-            recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
+            recruitButton.gameObject.SetActive(false);
         }
 
         characterSprites = new Dictionary<Card.CasterColor, Sprite>();
@@ -101,46 +116,88 @@ public class TavernController : MonoBehaviour
 
         teamBattlePass.SetBattlePass(Card.CasterColor.Enemy);
         heroBattlePass.SetBattlePass(PartyController.party.partyColors[0]);
+
+
+        int counter = 0;
+        foreach (Card.CasterColor c in PartyController.party.unlockedPlayerColors)
+            if (!PartyController.party.partyColors.Contains(c))
+            {
+                reserves[counter].gameObject.SetActive(false);
+                counter++;
+            }
+
+        reserveObject.SetActive(false);
+
+        SetSelectedChar(PartyController.party.partyColors[0]);
     }
 
     public void StartEditing(int index)
     {
         selectedIndex = index;
 
-        int i = 0;
-        foreach (Card.CasterColor c in PartyController.party.unlockedPlayerColors)
-            if (!PartyController.party.partyColors.Contains(c))
-            {
-                reserves[i].color = PartyController.party.GetPlayerColor(c);
-                reserves[i].GetComponent<TavernIconsController>().SetColor(c);
-                reserves[i].enabled = true;
-                reserves[i].transform.GetChild(0).GetComponent<Text>().text = "Lv." + PartyController.party.GetPartyLevelInfo(c)[0].ToString();
-                reserves[i].transform.GetChild(0).GetComponent<Text>().enabled = true;
-                i++;
-            }
+        int reserveNumber = PartyController.party.unlockedPlayerColors.Count - 3;
+        if (reserveNumber > 0)
+        {
+            int i = 0;
+            foreach (Card.CasterColor c in PartyController.party.unlockedPlayerColors)
+                if (!PartyController.party.partyColors.Contains(c))
+                {
+                    reserves[i].color = PartyController.party.GetPlayerColor(c);
+                    reserves[i].GetComponent<TavernIconsController>().SetColor(c);
+                    reserves[i].gameObject.SetActive(true);
 
-        if (heroBattlePass != null)
-            heroBattlePass.SetBattlePass(PartyController.party.partyColors[index]);
+                    float reserveSize = 5.0f / (reserveNumber);
+                    reserves[i].transform.localScale = new Vector3(reserveSize, reserves[i].transform.localScale.y, 1);
+                    reserves[i].transform.position = new Vector2(-reserveSize * (reserveNumber - 1) / 2 + reserveSize * i, reserves[i].transform.position.y);
+
+                    i++;
+                }
+
+            if (heroBattlePass != null)
+                heroBattlePass.SetBattlePass(PartyController.party.partyColors[index]);
+
+            reserveObject.GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.partyColors[index]);
+            reserveObject.SetActive(true);
+        }
+        SetSelectedChar(PartyController.party.partyColors[index]);
     }
 
     public void ReportSelected(Card.CasterColor newColor)
     {
         party[selectedIndex].color = PartyController.party.GetPlayerColor(newColor);
-        party[selectedIndex].transform.GetChild(0).GetComponent<Text>().text = "Lv." + PartyController.party.GetPartyLevelInfo(newColor)[0].ToString();
+        //party[selectedIndex].transform.GetChild(0).GetComponent<Text>().text = "Lv." + PartyController.party.GetPartyLevelInfo(newColor)[0].ToString();
         PartyController.party.partyColors[selectedIndex] = newColor;
 
         foreach (Image img in reserves)
         {
-            img.enabled = false;
+            img.gameObject.SetActive(false);
             img.transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
 
         if (heroBattlePass != null)
             heroBattlePass.SetBattlePass(newColor);
+
+        reserveObject.SetActive(false);
+
+        SetSelectedChar(newColor);
+    }
+
+    private void SetSelectedChar(Card.CasterColor color)
+    {
+        selectedColorName.text = PartyController.party.GetPlayerName(color);
+
+        selectedColorSprite.sprite = PartyController.party.GetPlayerSprite(color);
+
+        selectedColorATK.text = PartyController.party.GetStartingAttack(color).ToString();
+        selectedColorDef.text = PartyController.party.GetStartingArmor(color).ToString();
+        selectedColorHlth.text = PartyController.party.GetStartingHealth(color).ToString();
+
+        background.color = PartyController.party.GetPlayerColor(color);
     }
 
     public void ReportRecruitSelected(Card.CasterColor newColor)
     {
+        recruitName.text = PartyController.party.GetPlayerName(newColor);
         characterSprite.sprite = characterSprites[newColor];
         cardControllers[newColor] = new CardController[3];
         for (int j = 0; j < characterCards[newColor].Length; j++)
@@ -151,13 +208,18 @@ public class TavernController : MonoBehaviour
             cards[j].SetCard(cardControllers[newColor][j], false);
         }
 
+        recruitBackground.color = PartyController.party.GetPlayerColor(newColor);
+        recruitInfo.SetActive(true);
+
         recruitColor = newColor;
     }
 
     public void GoToRecruitingMenu()
     {
         GetComponent<Canvas>().enabled = false;
-        recruitCanvas.enabled = true;
+        selectedColorSprite.enabled = false;
+
+        recruitCanvas.gameObject.SetActive(true);
         recruitCanvas.GetComponent<CanvasScaler>().enabled = false;
         recruitCanvas.GetComponent<CanvasScaler>().enabled = true;
 
@@ -165,11 +227,18 @@ public class TavernController : MonoBehaviour
         heroBattlePass.GetComponent<Canvas>().enabled = false;
 
         int i = 0;
+        int recruitNumber = PartyController.party.potentialPlayerColors.Length - PartyController.party.unlockedPlayerColors.Count;
+        Debug.Log(recruitNumber);
         foreach (Card.CasterColor c in PartyController.party.potentialPlayerColors)
             if (!PartyController.party.unlockedPlayerColors.Contains(c))
             {
                 buttons[i].GetComponent<RecruitButtonController>().SetEnable(true);
                 buttons[i].GetComponent<RecruitButtonController>().SetColor(c);
+
+                float recruitSize = 5.0f / (recruitNumber);
+                buttons[i].transform.localScale = new Vector3(recruitSize, buttons[i].transform.localScale.y, 1);
+                buttons[i].transform.position = new Vector2(-recruitSize * (recruitNumber - 1) / 2 + recruitSize * i, buttons[i].transform.position.y);
+
                 characterSprite.sprite = characterSprites[c];
                 cardControllers[c] = new CardController[3];
                 for (int j = 0; j < characterCards[c].Length; j++)
@@ -188,13 +257,15 @@ public class TavernController : MonoBehaviour
 
     public void GoToTavernMenu()
     {
-        recruitCanvas.enabled = false;
+        recruitInfo.SetActive(false);
+        recruitCanvas.gameObject.SetActive(false);
         GetComponent<Canvas>().enabled = true;
+        selectedColorSprite.enabled = true;
 
         PartyController.party.unlockedPlayerColors.Add(recruitColor);
 
-        teamBattlePass.GetComponent<Canvas>().enabled = true;
-        heroBattlePass.GetComponent<Canvas>().enabled = true;
+        //teamBattlePass.GetComponent<Canvas>().enabled = true;
+        //heroBattlePass.GetComponent<Canvas>().enabled = true;
 
         Unlocks unlocked = UnlocksController.unlock.GetUnlocks();
         unlocked.tavernContracts -= 1;
@@ -218,17 +289,13 @@ public class TavernController : MonoBehaviour
         {
             contractText.text = "Contracts: " + unlocked.tavernContracts;
             contractText.transform.parent.GetComponent<Image>().enabled = true;
-            recruitButton.enabled = true;
-            recruitButton.GetComponent<Collider2D>().enabled = true;
-            recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = true;
+            recruitButton.gameObject.SetActive(true);
         }
         else
         {
             contractText.text = "";
             contractText.transform.parent.GetComponent<Image>().enabled = false;
-            recruitButton.enabled = false;
-            recruitButton.GetComponent<Collider2D>().enabled = false;
-            recruitButton.transform.GetChild(0).GetComponent<Text>().enabled = false;
+            recruitButton.gameObject.SetActive(false);
         }
     }
 
@@ -280,5 +347,20 @@ public class TavernController : MonoBehaviour
         heroBattlePass.SetBattlePass(PartyController.party.partyColors[0]);
 
         InformationLogger.infoLogger.SaveGame(true);
+    }
+
+    public void SelectCardForHighlight(int index)
+    {
+        selectedCardIndex = index;
+        selectedCardOriginalPosition = cards[index].transform.position;
+
+        cards[index].transform.position = new Vector3(0, 1, 0);
+        cards[index].transform.localScale = new Vector3(2, 2, 2);
+    }
+
+    public void DeselectCardForHighlight()
+    {
+        cards[selectedCardIndex].transform.position = selectedCardOriginalPosition;
+        cards[selectedCardIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
 }

@@ -26,9 +26,10 @@ public class ResourceController : MonoBehaviour
     public Text livesCount;
     private int lives = 0;
     private int numberOfRevievesUsed = 0;
-    //public Text goldText;
-    //public Image goldUIBack;
-    [SerializeField] private Canvas canvas;
+
+//public Text goldText;
+//public Image goldUIBack;
+[SerializeField] private Canvas canvas;
 
     private int gold;
     // Start is called before the first frame update

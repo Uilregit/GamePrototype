@@ -48,11 +48,16 @@ public class TutorialController : MonoBehaviour
         if (TutorialController.tutorial == null)
             tutorial = this;
         else
+        {
             Destroy(this.gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(tutorialCanvas.gameObject);
         DontDestroyOnLoad(tutorialUICanvas.gameObject);
+
+        InformationLogger.infoLogger.LoadPlayerPreferences();                //Load player preferences on startup
     }
 
     public void SetDialogue(List<Dialogue> tut)
@@ -139,7 +144,7 @@ public class TutorialController : MonoBehaviour
         //Handles pop up overlays
         foreach (TutorialOverlay overlay in passiveTutorials)
         {
-            if (overlay.IfConditionsMet(condition, value, true, stringValue) && !completedPassiveTutIDs.Contains(overlay.ID))
+            if (overlay.IfConditionsMet(condition, value, true, stringValue) && (!completedPassiveTutIDs.Contains(overlay.ID) || overlay.startingCondition == Dialogue.Condition.EndOfDemo))
             {
                 popupOverlay = overlay;
                 popupTitle.text = overlay.popupTitle;
@@ -158,6 +163,7 @@ public class TutorialController : MonoBehaviour
         Time.timeScale = 1;
         popupTutorial.gameObject.SetActive(false);
         completedPassiveTutIDs.Add(popupID);
+        InformationLogger.infoLogger.SavePlayerPreferences();
         UIRevealController.UIReveal.SetElementState(popupOverlay.OnEndUIReveal, true);
         TriggerTutorial(Dialogue.Condition.PopupEnded, popupID);
     }
@@ -255,5 +261,15 @@ public class TutorialController : MonoBehaviour
         Time.timeScale = 0.5f;
         yield return new WaitForSeconds(duration);
         Time.timeScale = oldTimeScale;
+    }
+
+    public List<int> GetCompletedPassiveTutorials()
+    {
+        return completedPassiveTutIDs;
+    }
+
+    public void SetCompletedassiveTutorials(List<int> newIds)
+    {
+        completedPassiveTutIDs = newIds;
     }
 }

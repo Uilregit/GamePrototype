@@ -10,20 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
-  m_Name: PassiveAbilities
+  m_Name: 70021 Break2ndTurn
   m_EditorClassIdentifier: 
-  ID: 10001
+  ID: 70021
   prerequisiteID: -1
   isUILevel: 0
+  isPopup: 1
+  slowTime: 0
+  slowDuration: 0
   overlay: {fileID: 0}
-  startingCondition: 90001
+  startingCondition: 70021
   startingValue: 1
   startingStringValue: 
   startingComparisonType: 10
+  OnStartUIReveal: 1
   endingCondition: 0
   endingValue: 0
   endingStringValue: 
   endingComparisonType: 10
-  popupTitle: Passive Abilities
-  popupImage: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
-  popupDescription: Some enemies have passive abilities. Tap them to see details.
+  OnEndUIReveal: 1
+  popupTitle: Break
+  popupImage: {fileID: 21300000, guid: 4e2075f27c5bbc749ad9cf0200999c38, type: 3}
+  popupDescription: Broken characters stay broken for 1 extra turn. Quick, kick em
+    while they're down!

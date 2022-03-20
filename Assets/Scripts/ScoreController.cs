@@ -38,7 +38,7 @@ public class ScoreController : MonoBehaviour
     private int bossesDefeated;
     private float secondsInGame;
 
-    public List<int> highestScores = new List<int>();
+    public List<int> highestScores = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     public int highestTotalScore;
 
     // Start is called before the first frame update

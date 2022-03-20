@@ -23,7 +23,7 @@ MonoBehaviour:
   radius: 0
   casterColor: 6
   description: Deal <s>100% of ATK as</s> damage, <b>Knockback</b> 1
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: 17c1915b1d2d6464cac75a51917a12c2, type: 3}
   castType: 2
   castShape: 0
   targetType: 0100000001000000

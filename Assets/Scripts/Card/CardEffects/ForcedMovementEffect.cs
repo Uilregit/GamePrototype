@@ -9,8 +9,13 @@ public class ForcedMovementEffect : Effect
         List<GameObject> deepCopy = new List<GameObject>();
         foreach (GameObject obj in target) //Prevent list modify error
             deepCopy.Add(obj);
-        foreach (GameObject targ in deepCopy)
-            yield return targ.GetComponent<HealthController>().StartCoroutine(targ.GetComponent<HealthController>().ForcedMovement(caster.transform.position, card.effectValue[effectIndex]));
+        for (int i = 0; i < deepCopy.Count; i++)
+            if (i == deepCopy.Count - 1)
+                yield return deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized, card.effectValue[effectIndex]));
+            else
+                deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized, card.effectValue[effectIndex]));
+
+        effectController.SetCastLocation(effectController.GetCastLocation() + (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized * card.effectValue[effectIndex]);
         yield return new WaitForSeconds(0);
     }
 

@@ -23,6 +23,8 @@ public class RoomController : MonoBehaviour
     public Color shrineColor;
 
     public EditDeckButtonController deckButton;
+    public GameObject roomParent;
+    public RoomScrollController roomScrollController;
 
     [SerializeField]
     private GameObject smallRoomPrefab;
@@ -49,6 +51,7 @@ public class RoomController : MonoBehaviour
     private Vector2 viableRoom = new Vector2(-999, -999);
     private List<Vector2> previousRoom;
     private List<Vector2> destroyedRooms;
+    private int maxLevel = 0;
 
     private Canvas canvas;
 
@@ -95,25 +98,38 @@ public class RoomController : MonoBehaviour
             //Setting up arena rooms
             if (StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.Arena || StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.NakedArena)
             {
+                List<Vector2> roomLocations = new List<Vector2>();
                 //Create rooms according to world setup's specifications
                 foreach (Vector2 loc in StoryModeController.story.GetCurrentRoomSetup().arenaSetup.roomLocations)
                 {
                     GameObject obj = Instantiate(smallRoomPrefab);
                     obj.GetComponent<SmallRoom>().SetLocation(loc);
                     smallRooms.Add(obj.GetComponent<SmallRoom>());
-                    obj.transform.SetParent(transform);
-                    obj.transform.position = transform.position + new Vector3(loc.x * 0.8f, loc.y * 0.8f - 3.37f, 0);
+                    obj.transform.SetParent(roomParent.transform);
+                    obj.transform.position = transform.position + new Vector3(loc.x * 3.5f, loc.y * 6f, 0);
 
                     obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
+
+                    roomLocations.Add(loc);
                 }
 
                 //Setting up rooms per level for randomization
                 numRoomsPerLevel = new Dictionary<int, int>();
                 foreach (SmallRoom room in smallRooms)
+                {
                     if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
                         numRoomsPerLevel[(int)room.GetLocation().y] += 1;
                     else
                         numRoomsPerLevel[(int)room.GetLocation().y] = 1;
+
+                    maxLevel = Mathf.Max((int)room.GetLocation().y, maxLevel);
+                }
+
+                bossRoom.transform.SetParent(roomParent.transform);
+                bossRoom.transform.position = transform.position + new Vector3(0, (maxLevel + 1) * 6f, 0);
+
+                roomScrollController.SetNumOfRooms(maxLevel + 2, false);
+                roomScrollController.SetRoomLocations(roomLocations);
 
                 RandomizeRooms();
             }
@@ -125,12 +141,12 @@ public class RoomController : MonoBehaviour
                     GameObject obj = Instantiate(smallRoomPrefab);
                     obj.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i));
                     if (InformationLogger.infoLogger.debug)
-                        obj.GetComponent<SmallRoom>().SetSetup(debugRoom);
+                        obj.GetComponent<SmallRoom>().SetSetup(debugRoom, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i + 1, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                     else
-                        obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i]);
+                        obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i], StoryModeController.story.GetCurrentRoomSetup().setups.Count - i + 1, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                     smallRooms.Add(obj.GetComponent<SmallRoom>());
-                    obj.transform.SetParent(transform);
-                    obj.transform.position = transform.position + new Vector3(0, (bossRoom.transform.position.y - i) * 0.8f + 0.7f, 0);
+                    obj.transform.SetParent(roomParent.transform);
+                    obj.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - i) * 3.5f, 0, 0);
 
                     obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
                 }
@@ -138,9 +154,13 @@ public class RoomController : MonoBehaviour
                 bossRoom.GetComponent<SmallRoom>().SetLocation(new Vector2(0, StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1));
                 bossRoom.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
                 if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
-                    bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom);
+                    bossRoom.GetComponent<SmallRoom>().SetSetup(debugRoom, StoryModeController.story.GetCurrentRoomSetup().setups.Count, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                 else
-                    bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1]);
+                    bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1], StoryModeController.story.GetCurrentRoomSetup().setups.Count, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
+                bossRoom.transform.SetParent(roomParent.transform);
+                bossRoom.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1) * 3.5f, 0, 0);
+
+                roomScrollController.SetNumOfRooms(StoryModeController.story.GetCurrentRoomSetup().setups.Count, true);
             }
 
             Refresh();
@@ -169,25 +189,38 @@ public class RoomController : MonoBehaviour
             smallRooms = new List<SmallRoom>();
             roomSeeds = new List<int>();
 
+            List<Vector2> roomLocations = new List<Vector2>();
             //Create rooms according to world setup's specifications
             foreach (Vector2 loc in worldSetups[worldLevel].roomLocations)
             {
                 GameObject obj = Instantiate(smallRoomPrefab);
                 obj.GetComponent<SmallRoom>().SetLocation(loc);
                 smallRooms.Add(obj.GetComponent<SmallRoom>());
-                obj.transform.SetParent(transform);
-                obj.transform.position = transform.position + new Vector3(loc.x * 0.8f, loc.y * 0.8f - 3.37f, 0);
+                obj.transform.SetParent(roomParent.transform);
+                obj.transform.position = transform.position + new Vector3(loc.x * 3.5f, loc.y * 6f, 0);
 
                 obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
+
+                roomLocations.Add(loc);
             }
 
             //Setting up rooms per level for randomization
             numRoomsPerLevel = new Dictionary<int, int>();
             foreach (SmallRoom room in smallRooms)
+            {
                 if (numRoomsPerLevel.ContainsKey((int)room.GetLocation().y))
                     numRoomsPerLevel[(int)room.GetLocation().y] += 1;
                 else
                     numRoomsPerLevel[(int)room.GetLocation().y] = 1;
+
+                maxLevel = Mathf.Max((int)room.GetLocation().y, maxLevel);
+            }
+
+            bossRoom.transform.SetParent(roomParent.transform);
+            bossRoom.transform.position = transform.position + new Vector3(0, (maxLevel + 1) * 6f, 0);
+
+            roomScrollController.SetNumOfRooms(maxLevel + 2, false);
+            roomScrollController.SetRoomLocations(roomLocations);
 
             RandomizeRooms();
             Refresh();
@@ -224,9 +257,16 @@ public class RoomController : MonoBehaviour
             foreach (SmallRoom firstRoom in smallRooms)
                 if (firstRoom.GetLocation().y == 0)
                     firstRoom.SetSelectable(true);
+                else
+                    firstRoom.SetSelectable(false);
+
+            roomScrollController.SetCurrentRoom(0);
+            roomScrollController.ResetScrollProgress(0);
 
             if (InformationLogger.infoLogger.isStoryMode && StoryModeController.story.GetCurrentRoomSetup().setups.Count == 1)             //Enable the boss room when viable
                 bossRoom.SetSelectable(true);
+            else
+                bossRoom.SetSelectable(false);
         }
         else
         {
@@ -234,31 +274,47 @@ public class RoomController : MonoBehaviour
             foreach (SmallRoom room in smallRooms)
             {
                 if (room.GetLocation().y == 0)
+                {
                     room.SetSelectable(false);
+                    room.SetCompleted(true);
+                }
                 if (destroyedRooms.Contains(room.GetLocation()))
                 {
                     room.Hide();
                     room.SetDestroyed(true);
                 }
                 else if (previousRoom.Contains(room.GetLocation())) //Sets trail of past rooms
+                {
                     room.SetColor(previousColor);
+                    room.SetPreviousRoom(previousRoom[Mathf.Max(0, previousRoom.IndexOf(room.GetLocation()) - 1)], previousColor);
+                    room.SetCompleted(true);
+                }
                 else if (room.GetLocation().y - lastRoom.y == 1 &&   //If within selection criteria, make rooms clickable
                     Mathf.Abs(room.GetLocation().x - lastRoom.x) <= 1)
                 {
                     if (viableRoom == room.GetLocation() || viableRoom == new Vector2(-999, -999))
+                    {
                         room.SetSelectable(true);
+                        room.SetPreviousRoom(previousRoom[previousRoom.Count - 1], viableColor);
+                    }
                     else
+                    {
                         room.SetColor(unviableColor);
+                        room.SetLockedTitle();
+                    }
                 }
                 else                                                                    //For the rest, set yet to be reached levels one color, set past levels another
                 {
                     room.SetSelectable(false);
                     if (room.GetLocation().y <= lastRoom.y + 1)
+                    {
                         room.SetColor(unviableColor);
-                    else
-                        room.SetColor(viableColor);
+                        room.SetLockedTitle();
+                        room.SetPreviousRoom(room.GetLocation(), previousColor);
+                    }
                 }
             }
+            roomScrollController.SetLatestUnlockedRoom(previousRoom[previousRoom.Count - 1]);
 
             if ((!InformationLogger.infoLogger.isStoryMode && selectedLevel == GetNumberofWorldLayers() - 1)
                 || (InformationLogger.infoLogger.isStoryMode && selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 2)
@@ -275,6 +331,9 @@ public class RoomController : MonoBehaviour
             else if (room.GetRoomType() == roomType.shrine)
                 room.SetColor(shrineColor);
         }
+
+        GetComponent<CanvasScaler>().enabled = false;
+        GetComponent<CanvasScaler>().enabled = true;
     }
 
     public void RandomizeRooms()
@@ -331,9 +390,10 @@ public class RoomController : MonoBehaviour
                 dissapearedLevels.Add(room.GetLocation().y);
             }
         }
+
         foreach (SmallRoom room in smallRooms)
             if (room.GetRoomType() == roomType.combat)
-                room.SetSetup(GetRoomSetup((int)room.GetLocation().y));
+                room.SetSetup(GetRoomSetup((int)room.GetLocation().y), (int)room.GetLocation().y + 1, maxLevel + 2);
 
         foreach (SmallRoom room in removedRooms)                                        //Set the boss room's setup
         {
@@ -344,9 +404,11 @@ public class RoomController : MonoBehaviour
             //Destroy(room.gameObject);
         }
         if (InformationLogger.infoLogger.debug && !InformationLogger.infoLogger.debugBossRoomEnabled)
-            bossRoom.SetSetup(debugRoom);
+            bossRoom.SetSetup(debugRoom, 1, 1);
         else
-            bossRoom.SetSetup(worldSetups[worldLevel].bossRooms[Random.Range(0, worldSetups[worldLevel].bossRooms.Count)]);
+            bossRoom.SetSetup(worldSetups[worldLevel].bossRooms[Random.Range(0, worldSetups[worldLevel].bossRooms.Count)], maxLevel + 2, maxLevel + 2);
+
+        roomScrollController.Zoom();
     }
     /*
     public void SetCurrentRoomSetup(RoomSetup newSetup)
@@ -578,5 +640,10 @@ public class RoomController : MonoBehaviour
                 maxRoomLevel = (int)loc.GetLocation().y;
 
         return maxRoomLevel + 1;            //Adds 1 to account for the boss room at the topmost layer
+    }
+
+    public RoomScrollController GetRoomScrollController()
+    {
+        return roomScrollController;
     }
 }

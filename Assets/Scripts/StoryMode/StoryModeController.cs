@@ -35,6 +35,8 @@ public class StoryModeController : MonoBehaviour
     public Color warningNotificationColor;
     public Color newNotificationColor;
     public Image[] menuIcons;
+    public Image[] menuBlankOuts;
+    public Text[] menuNames;
     public Image[] menuNotifications;
 
     public Image combatInfoMenu;
@@ -67,6 +69,10 @@ public class StoryModeController : MonoBehaviour
     public Sprite oreSprite;
     public Sprite ingotSprite;
     public Sprite blockSprite;
+
+    public Sprite wildcardSprite;
+    public Sprite cardPackSprite;
+    public Sprite tavernContractSprite;
     public Sprite errorSprite;
 
     public Color cardColor;
@@ -79,6 +85,12 @@ public class StoryModeController : MonoBehaviour
     public Color mythrilColor;
     public Color orichalcumColor;
     public Color AdamantiteColor;
+    public Color commonColor;
+    public Color rareColor;
+    public Color legndaryColor;
+
+    public Color cardPackColor;
+    public Color tavernContractColor;
 
     private Vector2 desiredCameraLocation;
 
@@ -89,13 +101,16 @@ public class StoryModeController : MonoBehaviour
     private int dailySeed;
     private int weeklySeed;
 
+
+    private int rewardsRerollCount = 0;
+
     public enum MenuState
     {
         MapScreen = 0,
         PartyScreen = 10,
         GearScreen = 20,
         CardScreen = 30,
-        SkillsScreen = 40
+        ShopScreen = 40
     }
 
     public enum RewardsType
@@ -229,6 +244,12 @@ public class StoryModeController : MonoBehaviour
         }
 
         ResetDecks();
+
+        RefreshMenuIconBlanOuts();
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != GetRawDailySeed())
+            ShowMenuNotification(4, true, false);
+
+        ResetRewardsRerollLeft();
     }
 
     public void ResetDecks()
@@ -385,7 +406,7 @@ public class StoryModeController : MonoBehaviour
             case StoryRoomSetup.ChallengeComparisonType.EqualTo:
                 return value == currentRoomSetup.challengeValues[index];
             case StoryRoomSetup.ChallengeComparisonType.LessThan:
-                return value <= currentRoomSetup.challengeValues[index] && value != -1;
+                return value <= currentRoomSetup.challengeValues[index];
         }
         return false;
     }
@@ -407,6 +428,7 @@ public class StoryModeController : MonoBehaviour
         foreach (Card c in cards.Keys)
             names[c.name] = cards[c];
         CollectionController.collectionController.SetCompleteDeck(names, true);
+        EnableMenuIcon(3);
     }
 
     public void ReportEquipmentBought(Dictionary<Equipment, int> equipments)
@@ -415,6 +437,7 @@ public class StoryModeController : MonoBehaviour
         foreach (Equipment e in equipments.Keys)
             names[e.equipmentName] = equipments[e];
         CollectionController.collectionController.SetCompleteEquipments(names, true);
+        EnableMenuIcon(2);
     }
 
     public Dictionary<RewardsType, int> GetItemsBought()
@@ -485,6 +508,7 @@ public class StoryModeController : MonoBehaviour
                 unlockedItems[m] -= usedMaterials[m];
 
         InformationLogger.infoLogger.SaveStoryModeGame();
+        EnableMenuIcon(3);
     }
 
     public void ReportEquipmentBought(string equipmentName, Dictionary<RewardsType, int> usedMaterials)
@@ -498,6 +522,7 @@ public class StoryModeController : MonoBehaviour
                 unlockedItems[m] -= usedMaterials[m];
 
         InformationLogger.infoLogger.SaveStoryModeGame();
+        EnableMenuIcon(2);
     }
 
     public void SetDailyBought(Dictionary<int, bool[]> daily)
@@ -536,12 +561,12 @@ public class StoryModeController : MonoBehaviour
         return weeklyBought;
     }
 
-    public void SetCardBought(bool isDailyCard, int index)
+    public void SetCardBought(bool isDailyCard, int seed, int index)
     {
         if (isDailyCard)
-            dailyBought[GetDailySeed()][index] = true;
+            dailyBought[seed][index] = true;
         else
-            weeklyBought[GetWeeklySeed()][index] = true;
+            weeklyBought[seed][index] = true;
     }
 
     public Sprite GetRewardSprite(RewardsType reward, int index)
@@ -577,6 +602,16 @@ public class StoryModeController : MonoBehaviour
                 return ManaGem;
             case RewardsType.ManaCrystal:
                 return ManaCrystal;
+            case RewardsType.CommonWildCard:
+                return wildcardSprite;
+            case RewardsType.RareWildCard:
+                return wildcardSprite;
+            case RewardsType.LegendaryWildCard:
+                return wildcardSprite;
+            case RewardsType.CardPack:
+                return cardPackSprite;
+            case RewardsType.TavernContract:
+                return tavernContractSprite;
         }
 
         if (shards.Contains(reward))
@@ -624,6 +659,16 @@ public class StoryModeController : MonoBehaviour
                 return cardColor;
             case RewardsType.WeaponBlueprint:
                 return weaponColor;
+            case RewardsType.CommonWildCard:
+                return commonColor;
+            case RewardsType.RareWildCard:
+                return rareColor;
+            case RewardsType.LegendaryWildCard:
+                return legndaryColor;
+            case RewardsType.CardPack:
+                return cardPackColor;
+            case RewardsType.TavernContract:
+                return tavernContractColor;
         }
 
         if (energy.Contains(reward))
@@ -663,18 +708,35 @@ public class StoryModeController : MonoBehaviour
         return secondSeed;
     }
 
+    //Used for accounting for daily card randomization. Takes rerolls into account
     public int GetDailySeed()
+    {
+        return dailySeed + InformationLogger.infoLogger.GetDailyRerollsLeft() * 999999;
+    }
+
+    //Used for accounting for weekly card randomization. Takes rerolls into account
+    public int GetWeeklySeed()
+    {
+        return weeklySeed + InformationLogger.infoLogger.GetWeeklyRerollsLeft() * 999999;
+    }
+
+    //Used for day of week calculations
+    public int GetRawDailySeed()
     {
         return dailySeed;
     }
 
-    public int GetWeeklySeed()
+    //Used for week of month calculations
+    public int GetRawWeeklySeed()
     {
         return weeklySeed;
     }
 
     public void GoToMapScene()
     {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[0])
+            return;
+
         MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         MusicController.music.SetHighPassFilter(false);
         if (deckIncomplete)
@@ -698,6 +760,9 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToPartyScene()
     {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[1])
+            return;
+
         MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         MusicController.music.SetHighPassFilter(true);
         if (deckIncomplete)
@@ -714,19 +779,24 @@ public class StoryModeController : MonoBehaviour
 
         menuState = MenuState.PartyScreen;
         ShowMenuSelected(1);
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PartyMenuOpened, 1);
     }
 
     public void GoToGearScene()
     {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[2])
+            return;
+
         MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         MusicController.music.SetHighPassFilter(true);
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");
-            desiredCameraLocation = new Vector2(8, 0);
+            desiredCameraLocation = new Vector2(100, 0);
         }
         else
-            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
+            CameraController.camera.transform.position = new Vector3(100, 0, CameraController.camera.transform.position.z);
 
         CollectionController.collectionController.SetIsShowingCards(false);
         CollectionController.collectionController.SetPage(0);
@@ -738,15 +808,18 @@ public class StoryModeController : MonoBehaviour
 
     public void GoToCardScene()
     {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[3])
+            return;
+
         MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
         MusicController.music.SetHighPassFilter(true);
         if (SceneManager.GetActiveScene().name != "StoryModeScene")
         {
             SceneManager.LoadScene("StoryModeScene");
-            desiredCameraLocation = new Vector2(8, 0);
+            desiredCameraLocation = new Vector2(100, 0);
         }
         else
-            CameraController.camera.transform.position = new Vector3(8, 0, CameraController.camera.transform.position.z);
+            CameraController.camera.transform.position = new Vector3(100, 0, CameraController.camera.transform.position.z);
 
         CollectionController.collectionController.SetIsShowingCards(true);
         CollectionController.collectionController.SetPage(0);
@@ -754,6 +827,24 @@ public class StoryModeController : MonoBehaviour
 
         menuState = MenuState.CardScreen;
         ShowMenuSelected(3);
+    }
+
+    public void GoToShopScene()
+    {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[4])
+            return;
+
+        MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
+        MusicController.music.SetHighPassFilter(true);
+        if (SceneManager.GetActiveScene().name != "StoryModeShopScene")
+        {
+            SceneManager.LoadScene("StoryModeShopScene", LoadSceneMode.Single);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.ShopOpened, 1);
+            desiredCameraLocation = new Vector2(0, 0);
+        }
+
+        menuState = MenuState.ShopScreen;
+        ShowMenuSelected(4);
     }
 
     public MenuState GetMenuState()
@@ -771,6 +862,15 @@ public class StoryModeController : MonoBehaviour
         foreach (Image icon in menuIcons)
             icon.color = defaultMenuColor;
         menuIcons[index].color = selectedMenuColor;
+    }
+
+    public void RefreshMenuIconBlanOuts()
+    {
+        for (int i = 0; i < InformationLogger.infoLogger.GetMenuIconsEnabled().Length; i++)
+        {
+            menuBlankOuts[i].enabled = !InformationLogger.infoLogger.GetMenuIconsEnabled()[i];
+            menuNames[i].enabled = InformationLogger.infoLogger.GetMenuIconsEnabled()[i];
+        }
     }
 
     public void SetCombatInfoMenu(bool state)
@@ -818,6 +918,9 @@ public class StoryModeController : MonoBehaviour
 
     public void ShowMenuNotification(int index, bool state, bool notificationTypeNew)
     {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[index])
+            return;
+
         if (notificationTypeNew)
             menuNotifications[index].color = newNotificationColor;
         else
@@ -856,24 +959,16 @@ public class StoryModeController : MonoBehaviour
             case 3:
                 return MenuState.CardScreen;
             case 4:
-                return MenuState.SkillsScreen;
+                return MenuState.ShopScreen;
         }
         return MenuState.MapScreen;
     }
 
     public void SetMenuBar(bool state)
     {
-        //GetComponent<Canvas>().enabled = state;
         for (int i = 0; i < 5; i++)
         {
             menuIcons[i].gameObject.SetActive(state);
-            /*
-            menuIcons[i].enabled = state;
-            menuIcons[i].transform.GetChild(0).GetComponent<Image>().enabled = state;
-            menuIcons[i].transform.GetChild(1).GetComponent<Text>().enabled = state;
-
-            menuNotifications[i].enabled = state;
-            */
         }
     }
 
@@ -928,7 +1023,7 @@ public class StoryModeController : MonoBehaviour
     public Dictionary<int, bool[]> GetSecretShopItemsBought()
     {
         if (secretShopItemsBought == null || secretShopItemsBought.Keys.Count == 0)
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
                 secretShopItemsBought[i] = new bool[] { false, false, false, false, false };
 
         return secretShopItemsBought;
@@ -937,7 +1032,7 @@ public class StoryModeController : MonoBehaviour
     public void SetSecretShopItemsBought(Dictionary<int, bool[]> value)
     {
         if (value == null)
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
                 secretShopItemsBought[i] = new bool[] { false, false, false, false, false };
         else
             secretShopItemsBought = value;
@@ -978,9 +1073,37 @@ public class StoryModeController : MonoBehaviour
         int spentTokens = 0;
         foreach (int worldId in secretShopItemsBought.Keys)
             for (int i = 0; i < secretShopItemsBought[worldId].Length; i++)
-                if (secretShopItemsBought[worldId][i])
+                if (secretShopItemsBought[worldId][i] && secretShops[worldId] != null)
                     spentTokens += secretShops[worldId].rewardCosts[i];
 
         return StoryModeSceneController.story.GetTotalChallengeTokens() - spentTokens;
+    }
+
+    public void EnableMenuIcon(int position)
+    {
+        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[position])
+        {
+            bool[] menuIconsEnabled = InformationLogger.infoLogger.GetMenuIconsEnabled();
+            menuIconsEnabled[position] = true;
+            InformationLogger.infoLogger.SetMenuIconsEnabled(menuIconsEnabled);
+            RefreshMenuIconBlanOuts();
+        }
+    }
+
+    public int GetRewardsRerollLeft()
+    {
+        return rewardsRerollCount;
+    }
+
+    public void UseRewardsReroll(int value)
+    {
+        rewardsRerollCount -= value;
+    }
+
+    public void ResetRewardsRerollLeft()
+    {
+        rewardsRerollCount = 0;
+        if (GetItemsBought().ContainsKey(RewardsType.PlusXRewardCardRerollPerRun))
+            rewardsRerollCount += GetItemsBought()[RewardsType.PlusXRewardCardRerollPerRun];
     }
 }

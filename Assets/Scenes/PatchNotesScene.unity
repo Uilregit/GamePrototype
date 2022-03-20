@@ -485,7 +485,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1013974037}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.7916212
+  m_Size: 0.8005894
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -631,8 +631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.057128}
-  m_SizeDelta: {x: 5, y: 8.685743}
+  m_AnchoredPosition: {x: 0, y: -0.057338}
+  m_SizeDelta: {x: 5, y: 8.685324}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846196275
 MonoBehaviour:
@@ -1135,7 +1135,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5, y: 8.685743}
+  m_SizeDelta: {x: 5, y: 8.685324}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1768858658
 MonoBehaviour:
@@ -1202,7 +1202,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0.20000005, y: 0}
-  m_SizeDelta: {x: 26.422142, y: 73.1473}
+  m_SizeDelta: {x: 26.422142, y: 72.32441}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2048708230
 MonoBehaviour:
@@ -1224,35 +1224,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#####################\r\n####### 0.5.2.1 #######\r\n#####################\r\n--
-    Cards --\r\n\r\n-- Enemies --\r\n\r\n-- System --\r\nAchievement requirements
-    for world 1 room 10-H from \"End a turn with more than 6 enemies\" to \"End a
-    turn with more than 5 enemies\"\r\nMajor effects overhaul for all card effects\r\nCompressed
-    textures to half build size\r\nAdded music and sound effects volume controls
-    to settings menu\r\nAdded music and sound effects to all interactions\r\n\r\n--
-    UI --\r\nShrines will now have \"+\" signs for equipment stat numbers\r\nAll
-    in combat cards on hover enlarge scale has been increased by 20% to improve readability\r\nEnd
-    turn button and replace button will now change color to indicate that no action
-    can be taken anymore\r\nAdded glow to all on hit effects\r\nAdded glow to all
-    boss enemies\r\nAdded fade in and fade out dissolve shader to player and enemy
-    cards\r\nIf no equipment are equipped but have unequipped equipments, collection
-    menu defaults to page 1\r\n\r\n-- Audio --\r\nAdded background music to all scenes\r\nAdded
-    sound effects to all combat card interactions including drawing cards\r\nAdded
-    sound effects to all player cards\r\nAdded sound effects to all enemy cards\r\nAdded
-    passive sound effects to damaging armor, armor break, and immunity\r\nAdded footstep
-    sounds to enemies and players\r\nAdded sound effects to all out of comat card
-    interactions\r\nAdded all UI and button sound effects\r\nNormalized audio loudness
-    for all sound effects\r\nAdded lowpass filter to background music when players
-    are at low health\r\n\r\n-- Bugs --\r\nFixed normal Magic Armor passive saying
-    \"On card cast\" instead of \"On card damage\"\r\nFixed AoE, TargetedAoE, and
-    EmptyTargetedAoE from triggering on character types of the wrong type\r\nFixed
-    Magic Armor Boss from casting their cards twice on lower speed settings\r\n   
-    Changed all characters' animation lerp time from 25% to 0%\r\nFixed collection
-    controller not showing reserve colors if entered from tavern\r\nFixed char stats
-    in previous rooms overriding new char stats after changing equipment mid run\r\nFixed
-    tavern back button not going to story mode if entered from story mode\r\nFixed
-    cards in collection using -1 as ATK after combat\r\nFixed story mode menu defaulting
-    to card view after combat"
+  m_text: "#####################\r\n####### 0.5.2.3 #######\r\n#####################\r\n--
+    Cards --\r\n    - Green -\r\n        PowerShot\r\n            Deal 75% of ATK
+    times the number of cards played this turn as damage in a single strike --> Deal
+    50% of ATK times the number of cards played this turn as damage in a single strike\r\n\r\n--
+    Equipment --\r\n    - Added -\r\n        Force Staff\r\n            Attached
+    card gains Knockback 1 before the card triggers\r\n\r\n-- Enemies --\r\n\r\n--
+    System --\r\nAdded patching to move all world 0 secret shop items to world 1
+    to accomodate the new tutorial world\r\nKnockback cards now use the direction
+    between caster and cast location instead of caster and target\r\nKnockback on
+    multiple units now apply at the same time\r\nKnockback animate slightly instead
+    of teleport unit to their new locations\r\nAll card process will now trigger
+    only once per object per process call\r\nPassive tutorials will now only be shown
+    once to a player each\r\nRewards cards reroll from secret shop implemented\r\nDaily
+    and weekly shop rerolls from secret shop implemented\r\nWildcards implemented\r\nCard
+    packs and level up implemented in story mode\r\n\r\n-- UI --\r\nAdded message
+    for reaching the end of the demo\r\nReworked party menu\r\nReworked overworld
+    menu\r\nAdded UI for health previews when targeting cards on stacked targets\r\nAdded
+    UI previews for targets that would be knocked to a different location\r\nLast
+    main menu icon bar is now Shop instead of Skills. Highlights when new items are
+    available\r\nMain menu icons now are locked and unclicable on first play, and
+    get unlocked as they're relavant\r\nAdded hold to preview card/equipment for
+    story mode map room item rewards\r\nAdded hold to preview card/equipment for
+    recruit meny in tavern view\r\nAdded hold to preview card/equipment for shrine
+    scene\r\n\r\n-- Bugs --\r\nFixed bug where switching world wouldn't deselect
+    the room in the previous world\r\nFixed bug where hp bars appear in front of
+    combat end menu\r\nFixed visual bug where equipment icons on cards doesn't fade
+    when card is casted"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -23,6 +23,7 @@ public abstract class Effect
 
     public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<Vector2> location, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
+        location = location.Distinct().ToList();        //Prevent double effect triggering on forcemoved targets
         List<GameObject> target = GridController.gridController.GetObjectAtLocation(location);
         if (!GetIsLocationEffect())
             yield return GameController.gameController.StartCoroutine(ProcessCard(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
@@ -32,6 +33,7 @@ public abstract class Effect
 
     public IEnumerator ProcessCard(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier = 1)
     {
+        target = target.Distinct().ToList();            //Prevent double effect triggering on forcemoved targets
         target = CheckImmunity(caster, effectController, target, card, effectIndex, waitTimeMultiplier);
         yield return GameController.gameController.StartCoroutine(Process(caster, effectController, target, card, effectIndex, waitTimeMultiplier));
     }

@@ -97,7 +97,7 @@ public class DeckCustomizeCardController : MonoBehaviour
                     CollectionController.collectionController.SetSelectCardWhiteOut(true, i, Color.white);
             else
             {
-                float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+                float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
                 if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
                 {
                     index = (int)((positionX + 2.4f) / 0.6f);
@@ -176,13 +176,18 @@ public class DeckCustomizeCardController : MonoBehaviour
 
         if (hit.transform != null && hit.transform.GetComponent<SelectedCardController>() != null)
         {
-            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 8.0f;
+            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
             int index = (int)((positionX + 2.4f) / 0.6f);
+            Debug.Log(positionX);
+            Debug.Log(index);
 
             if (CollectionController.collectionController.GetIfViableSelectSlot(card.GetCard(), index))  //Only allow cards to be selected in their respective slots
                 SelectCard(index);
             else
+            {
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardEquippedLockedSlot, 1);
                 CollectionController.collectionController.ShowErrorMessage("Outside runs, only starter cards can be placed into locked card slots");
+            }
         }
 
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
