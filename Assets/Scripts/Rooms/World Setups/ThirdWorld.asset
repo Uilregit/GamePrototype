@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ThirdWorld
   m_EditorClassIdentifier: 
   combatBackground: {fileID: 21300000, guid: b4ab0ef1ec2d59146a61f0b22314d066, type: 3}
-  cameraBackground: {r: 1, g: 0.76375884, b: 0, a: 1}
+  cameraBackground: {r: 0.8962264, g: 0.82759196, b: 0.6045301, a: 1}
+  roomBackground: {r: 0.8962264, g: 0.71817476, b: 0.13950695, a: 1}
   roomLocations:
   - {x: -2, y: 0}
   - {x: 2, y: 0}

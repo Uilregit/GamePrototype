@@ -660,6 +660,11 @@ public class TurnController : MonoBehaviour
         return cardsPlayedThisTurn.Count;
     }
 
+    public int GetNumberOfCardsPlayed()
+    {
+        return cardsPlayed.Count;
+    }
+
     public int GetNumberOfEnemies()
     {
         return enemies.Count;

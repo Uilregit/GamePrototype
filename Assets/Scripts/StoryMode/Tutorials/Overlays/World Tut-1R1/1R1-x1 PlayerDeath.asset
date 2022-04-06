@@ -16,6 +16,8 @@ MonoBehaviour:
   prerequisiteID: -1
   isUILevel: 0
   isPopup: 1
+  slowTime: 0
+  slowDuration: 0
   overlay: {fileID: 0}
   startingCondition: 2999
   startingValue: 1
@@ -28,6 +30,6 @@ MonoBehaviour:
   endingComparisonType: 10
   OnEndUIReveal: 1
   popupTitle: Defeat
-  popupImage: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  popupImage: {fileID: -515642622903276493, guid: 8425ccd8dbeaf1e47b3f62a2ceaaefab, type: 3}
   popupDescription: If your health goes below 0, you're defeated. This can be avoided
     though, try again!

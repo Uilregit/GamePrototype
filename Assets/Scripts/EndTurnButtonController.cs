@@ -12,6 +12,9 @@ public class EndTurnButtonController : MonoBehaviour
             return;
 
         mouseOnButton = true;
+
+        if (!TurnController.turnController.GetIsPlayerTurn())
+            Time.timeScale = 3;
     }
 
     private void OnMouseExit()
@@ -20,6 +23,9 @@ public class EndTurnButtonController : MonoBehaviour
             return;
 
         mouseOnButton = false;
+
+        if (Time.timeScale != 1)
+            Time.timeScale = 1;
     }
 
     private void OnMouseUp()
@@ -27,7 +33,10 @@ public class EndTurnButtonController : MonoBehaviour
         if (TutorialController.tutorial.GetEnabled())
             return;
 
-        if (TurnController.turnController.GetIsPlayerTurn() && mouseOnButton)
+        if (TurnController.turnController.GetIsPlayerTurn() && mouseOnButton && Time.timeScale == 1)
             TurnController.turnController.SetPlayerTurn(false);
+
+        if (Time.timeScale != 1)
+            Time.timeScale = 1;
     }
 }

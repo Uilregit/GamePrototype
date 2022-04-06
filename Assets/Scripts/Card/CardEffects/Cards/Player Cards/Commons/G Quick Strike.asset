@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 2
-  description: Deal <s>50% of ATK as</s> damage, draw 1 card
+  description: Deal <s>75% of ATK as</s> damage, draw 1 card
   art: {fileID: 21300000, guid: 02d77e64985a7364fac49e139f5e6004, type: 3}
   castType: 0
   castShape: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   conditionValue: 0000000001000000
   buff:
   - {fileID: 0}
-  effectValue: 3200000001000000
+  effectValue: 4b00000001000000
   effectDuration: 0000000000000000
   spawnObject:
   - {fileID: 0}

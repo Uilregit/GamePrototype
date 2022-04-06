@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 2
-  description: At the start of the next 3 turns, add a 'Knives' that deal <s>75%
+  description: At the start of the next 3 turns, add a 'Knives' that deal <s>50%
     of ATK as</s> damage and <b>knockback</b> 1 to your hand. They cost 0
   art: {fileID: 21300000, guid: 11f9d67354b61fb43955067515c8ec68, type: 3}
   castType: 3

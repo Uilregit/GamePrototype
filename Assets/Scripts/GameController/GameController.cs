@@ -540,6 +540,11 @@ public class GameController : MonoBehaviour
         totalOverkillGold += value;
     }
 
+    public int GetOverkillGold()
+    {
+        return totalOverkillGold;
+    }
+
     public void RecordRewardCards(Card chosenCard)
     {
         for (int i = 0; i < rewardCards.Length; i++)

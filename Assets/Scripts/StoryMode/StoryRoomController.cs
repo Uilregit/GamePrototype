@@ -15,6 +15,8 @@ public class StoryRoomController : MonoBehaviour
     public Image connector;
     public Image[] colorsCompleted;
 
+    public Sprite combatBackground;
+
     private bool isHighlighted = false;
     private float outlineSize;
     public Outline outline;

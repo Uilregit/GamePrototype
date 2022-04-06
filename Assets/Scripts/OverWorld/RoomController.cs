@@ -89,6 +89,7 @@ public class RoomController : MonoBehaviour
         {
             Random.InitState(StoryModeController.story.GetSecondSeed());
             selectedLevel = -1;
+            SetWorldLevel(StoryModeController.story.GetWorldNumber());
             smallRooms = new List<SmallRoom>();
             previousRoom = new List<Vector2>();
             destroyedRooms = new List<Vector2>();
@@ -123,10 +124,12 @@ public class RoomController : MonoBehaviour
                         numRoomsPerLevel[(int)room.GetLocation().y] = 1;
 
                     maxLevel = Mathf.Max((int)room.GetLocation().y, maxLevel);
+                    room.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
                 }
 
                 bossRoom.transform.SetParent(roomParent.transform);
                 bossRoom.transform.position = transform.position + new Vector3(0, (maxLevel + 1) * 6f, 0);
+                bossRoom.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
                 roomScrollController.SetNumOfRooms(maxLevel + 2, false);
                 roomScrollController.SetRoomLocations(roomLocations);
@@ -144,6 +147,7 @@ public class RoomController : MonoBehaviour
                         obj.GetComponent<SmallRoom>().SetSetup(debugRoom, StoryModeController.story.GetCurrentRoomSetup().setups.Count - i + 1, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                     else
                         obj.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - i], StoryModeController.story.GetCurrentRoomSetup().setups.Count - i + 1, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
+                    obj.GetComponent<SmallRoom>().SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
                     smallRooms.Add(obj.GetComponent<SmallRoom>());
                     obj.transform.SetParent(roomParent.transform);
                     obj.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - i) * 3.5f, 0, 0);
@@ -159,6 +163,7 @@ public class RoomController : MonoBehaviour
                     bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1], StoryModeController.story.GetCurrentRoomSetup().setups.Count, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                 bossRoom.transform.SetParent(roomParent.transform);
                 bossRoom.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1) * 3.5f, 0, 0);
+                bossRoom.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
                 roomScrollController.SetNumOfRooms(StoryModeController.story.GetCurrentRoomSetup().setups.Count, true);
             }
@@ -195,6 +200,7 @@ public class RoomController : MonoBehaviour
             {
                 GameObject obj = Instantiate(smallRoomPrefab);
                 obj.GetComponent<SmallRoom>().SetLocation(loc);
+                obj.GetComponent<SmallRoom>().SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
                 smallRooms.Add(obj.GetComponent<SmallRoom>());
                 obj.transform.SetParent(roomParent.transform);
                 obj.transform.position = transform.position + new Vector3(loc.x * 3.5f, loc.y * 6f, 0);
@@ -218,6 +224,7 @@ public class RoomController : MonoBehaviour
 
             bossRoom.transform.SetParent(roomParent.transform);
             bossRoom.transform.position = transform.position + new Vector3(0, (maxLevel + 1) * 6f, 0);
+            bossRoom.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
             roomScrollController.SetNumOfRooms(maxLevel + 2, false);
             roomScrollController.SetRoomLocations(roomLocations);

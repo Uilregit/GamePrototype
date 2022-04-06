@@ -871,9 +871,9 @@ MonoBehaviour:
   smallRoomPrefab: {fileID: 5540920318122456573, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
   bossRoom: {fileID: 1039681367}
   worldSetups:
+  - {fileID: 11400000, guid: 0a25a9625a3bc474e97d353eadf3bb54, type: 2}
   - {fileID: 11400000, guid: 8cbff891f7c2ed245b35864334f29027, type: 2}
   - {fileID: 11400000, guid: a37adb33646b44e4eaed79782de8f683, type: 2}
-  - {fileID: 11400000, guid: a5086a6d87bcb02428d193bc0bfba8e4, type: 2}
   debugRoom: {fileID: 11400000, guid: a87befa3bf78b8d4381597beffea86f4, type: 2}
 --- !u!1 &499138600
 GameObject:
@@ -2848,9 +2848,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundNumber: {fileID: 1039681365}
   background: {fileID: 1039681364}
-  backgroundColor: {fileID: 0}
+  backgroundColor: {fileID: 1039681368}
   mainEnemyIcon: {fileID: 1039681363}
   lockedButton: {fileID: 1039681362}
+  lockedTitleButton: {fileID: 0}
   completedButton: {fileID: 1039681361}
   enemyIcons:
   - {fileID: 1039681360}
@@ -2866,6 +2867,17 @@ MonoBehaviour:
   bossBorder: {fileID: 1039681351}
   highlight: {fileID: 1039681350}
   collider: {fileID: 1039681348}
+--- !u!114 &1039681368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7252157122512078275, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
+  m_PrefabInstance: {fileID: 1039681347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1083726336
 GameObject:
   m_ObjectHideFlags: 0

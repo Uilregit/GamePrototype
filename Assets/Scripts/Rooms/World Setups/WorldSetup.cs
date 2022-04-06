@@ -7,6 +7,7 @@ public class WorldSetup : ScriptableObject
 {
     public Sprite combatBackground;
     public Color cameraBackground;
+    public Color roomBackground;
     public List<Vector2> roomLocations;
     public List<RoomSetup> innitialRooms;
     public List<RoomSetup> midRooms;

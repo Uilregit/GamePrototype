@@ -149,6 +149,35 @@ public class RewardsMenuController : MonoBehaviour
 
         if (numRewards == numRewardsTaken || type == RewardType.BypassRewards)
         {
+
+            if (!InformationLogger.infoLogger.debug)
+            {
+                InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
+                    InformationLogger.infoLogger.gameID,
+                    RoomController.roomController.worldLevel.ToString(),
+                    RoomController.roomController.selectedLevel.ToString(),
+                    RoomController.roomController.roomName,
+                    "True",
+                    ResourceController.resource.GetGold().ToString(),
+                    "-1",
+                    GameController.gameController.GetOverkillGold().ToString(),
+                    ScoreController.score.GetDamage().ToString(),
+                    ScoreController.score.GetDamageArmored().ToString(),
+                    ScoreController.score.GetDamageOverhealProtected().ToString(),
+                    ScoreController.score.GetDamageAvoided().ToString(),
+                    ((int)ScoreController.score.GetSecondsInGame()).ToString(),
+                    TurnController.turnController.GetNumberOfCardsPlayed().ToString(),
+                    AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[0]).ToString(),
+                    AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[1]).ToString(),
+                    AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[2]).ToString(),
+                    PartyController.party.GetPartyString(),
+                    "False",
+                    "False",
+                    "-1",
+                    "None",
+                    "");
+            }
+
             if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
                 InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
             {
@@ -168,6 +197,7 @@ public class RewardsMenuController : MonoBehaviour
                 RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
                 RoomController.roomController.Refresh();
                 InformationLogger.infoLogger.SaveGame(false);
+
                 if (type == RewardType.BypassRewards || !RoomController.roomController.GetCurrentRoomSetup().offerRewardCards)
                     GameController.gameController.LoadScene("OverworldScene", false, deckId);
                 else

@@ -211,6 +211,11 @@ public class PartyController : MonoBehaviour
             return new List<int> { 0, 0 };
     }
 
+    public string GetPartyString()
+    {
+        return GetPlayerColorText(partyColors[0]) + "|" + GetPlayerColorText(partyColors[1]) + "|" + GetPlayerColorText(partyColors[2]);
+    }
+
     public int GetStartingAttack(Card.CasterColor color)
     {
         switch (color)

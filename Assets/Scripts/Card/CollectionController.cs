@@ -35,6 +35,10 @@ public class CollectionController : MonoBehaviour
     public Image selectedAreaWhiteOut;
     public DeckButtonController[] deckButtons;
     public PageButtonController[] pageButtons;
+    public Image pageIcon;
+    public Image pageLine;
+    public Image[] leftCards;
+    public Image[] rightCards;
     public FinalizeButtonController finalizeButton;
     public FinalizeButtonController cardButton;
     public FinalizeButtonController gearButton;
@@ -62,6 +66,7 @@ public class CollectionController : MonoBehaviour
     private Dictionary<string, int> uniqueEquipments;
     private int deckID = 0;
     private int page = 0;
+    private int totalPages = 1;
     private List<Card.CasterColor> allColorsOrder = new List<Card.CasterColor>();
 
     public Image weaponImage;
@@ -188,7 +193,7 @@ public class CollectionController : MonoBehaviour
         return null;
     }
 
-    public void RefreshDecks()
+    public void RefreshDecks(bool setPageIcon = true)
     {
         for (int i = 0; i < custCardsDisplay.Length; i++)  //Display selectable cards
         {
@@ -217,7 +222,7 @@ public class CollectionController : MonoBehaviour
 
         RefreshSelectDecks();
         RefreshSelectedEquipments();
-        CheckPageButtons();
+        CheckPageButtons(setPageIcon);
     }
 
     public void RefreshSelectDecks()
@@ -284,7 +289,7 @@ public class CollectionController : MonoBehaviour
         }
     }
 
-    public void RefreshEquipments()
+    public void RefreshEquipments(bool setPageIcon = true)
     {
         ReCountUniqueEquipments();      //Refresh unique equipments just in case
 
@@ -375,7 +380,7 @@ public class CollectionController : MonoBehaviour
         }
 
         RefreshSelectedEquipments();
-        CheckPageButtons();
+        CheckPageButtons(setPageIcon);
     }
 
     public void RefreshSelectedEquipments()
@@ -432,31 +437,50 @@ public class CollectionController : MonoBehaviour
         SetPage(page - 1);
     }
 
-    public void SetPage(int p)
+    public void SetPage(int p, bool setPageIcon = true)
     {
         HideErrorMessage();
         page = p;
 
         if (isShowingCards)
-            RefreshDecks();
+            RefreshDecks(setPageIcon);
         else
-            RefreshEquipments();
-        CheckPageButtons();
+            RefreshEquipments(setPageIcon);
+        MusicController.music.PlaySFX(MusicController.music.paperMoveSFX[Random.Range(0, MusicController.music.paperMoveSFX.Count)]);
+        CheckPageButtons(setPageIcon);
     }
 
-    public void CheckPageButtons()
+    public void CheckPageButtons(bool setPageIcon = true)
     {
         if (page == 0)
+        {
             pageButtons[0].Enable(false);
+            foreach (Image img in leftCards)
+                img.enabled = false;
+        }
         else
+        {
             pageButtons[0].Enable(true);
+            foreach (Image img in leftCards)
+                img.enabled = true;
+        }
 
         if (isShowingCards)
         {
-            if ((custCardsDisplay.Length * (page + 1) < uniqueCards[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].Keys.Count && isShowingCards))
+            totalPages = Mathf.CeilToInt(uniqueCards[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].Keys.Count / (float)custCardsDisplay.Length);
+
+            if (custCardsDisplay.Length * (page + 1) < uniqueCards[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].Keys.Count)
+            {
                 pageButtons[1].Enable(true);
+                foreach (Image img in rightCards)
+                    img.enabled = true;
+            }
             else
+            {
                 pageButtons[1].Enable(false);
+                foreach (Image img in rightCards)
+                    img.enabled = false;
+            }
         }
         else
         {
@@ -470,13 +494,32 @@ public class CollectionController : MonoBehaviour
                 numOfUnselectedEquipments++;
 
             int selectedEquipmentPages = 1;
-            if (numOfSelectedEquipments > 6)
+            if (numOfSelectedEquipments > custCardsDisplay.Length)
                 selectedEquipmentPages = 0;
 
+            totalPages = selectedEquipmentPages + Mathf.CeilToInt(numOfUnselectedEquipments / (float)custCardsDisplay.Length);
+
             if (custCardsDisplay.Length * (page + selectedEquipmentPages) < numOfUnselectedEquipments + custCardsDisplay.Length)
+            {
                 pageButtons[1].Enable(true);
+                foreach (Image img in rightCards)
+                    img.enabled = true;
+            }
             else
+            {
                 pageButtons[1].Enable(false);
+                foreach (Image img in rightCards)
+                    img.enabled = false;
+            }
+        }
+
+        pageLine.enabled = totalPages != 1;
+        if (setPageIcon)
+        {
+            if (totalPages == 1)
+                pageIcon.transform.localPosition = new Vector2(0f, pageIcon.transform.localPosition.y);
+            else
+                pageIcon.transform.localPosition = new Vector2(pageLine.rectTransform.sizeDelta.x / -2f + pageLine.rectTransform.sizeDelta.x / (totalPages - 1) * page, pageIcon.transform.localPosition.y);
         }
     }
 
@@ -1826,5 +1869,15 @@ public class CollectionController : MonoBehaviour
         foreach (Equipment e in selectedEquipments[color.ToString()].equipments)
             output += e.atkChange;
         return output;
+    }
+
+    public int GetTotalPages()
+    {
+        return totalPages;
+    }
+
+    public int GetCurrentPage()
+    {
+        return page;
     }
 }

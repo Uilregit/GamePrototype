@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TutorialController : MonoBehaviour
 {
@@ -34,6 +35,16 @@ public class TutorialController : MonoBehaviour
     private int popupID = -1;
 
     public List<TutorialOverlay> passiveTutorials = new List<TutorialOverlay>();
+
+    public Image feedbackMenu;
+    public GameObject feedbackInputs;
+    public Image[] feedbackTypes;
+    public Text feedbackTypeDescription;
+    public Color selectedColor;
+    public Color unselectedColor;
+    public InputField comments;
+
+    private int feedbackType = -1;
 
     private List<Dialogue> currentDialogue = new List<Dialogue>();
     private List<TutorialOverlay> currentTutorialOverlays = new List<TutorialOverlay>();
@@ -271,5 +282,140 @@ public class TutorialController : MonoBehaviour
     public void SetCompletedassiveTutorials(List<int> newIds)
     {
         completedPassiveTutIDs = newIds;
+    }
+
+    public void OpenFeedback()
+    {
+        feedbackMenu.gameObject.SetActive(true);
+    }
+
+    public void CloseFeedback()
+    {
+        feedbackType = -1;
+        for (int i = 0; i < feedbackTypes.Length; i++)
+            feedbackTypes[i].color = unselectedColor;
+        comments.text = "";
+        feedbackInputs.SetActive(false);
+        feedbackMenu.gameObject.SetActive(false);
+    }
+
+    public void ReportFeedbackType(int value)
+    {
+        feedbackType = value;
+        for (int i = 0; i < feedbackTypes.Length; i++)
+            if (i == value)
+                feedbackTypes[i].color = selectedColor;
+            else
+                feedbackTypes[i].color = unselectedColor;
+
+        switch(value)
+        {
+            case 0:
+                comments.placeholder.GetComponent<Text>().text = "Please be as specific as possible in bug reports. Include steps to recreate the bug if you can.";
+                break;
+            case 1:
+                comments.placeholder.GetComponent<Text>().text = "We appreciate any and all feedback, positive or negative. Help us make the game we're aiming for.";
+                break;
+            case 2:
+                comments.placeholder.GetComponent<Text>().text = "Is there a functionality you have in mind? An accessibility option that'll benefit you? Let us know!";
+                break;
+            case 3:
+                comments.placeholder.GetComponent<Text>().text = "Any other type of responce is welcome too! Let us know what you think.";
+                break;
+        }
+
+        feedbackInputs.SetActive(true);
+    }
+
+    public void SubmitFeedback()
+    {
+        if (!InformationLogger.infoLogger.debug)
+        {
+            string feedbackTypeString = "";
+            switch (feedbackType)
+            {
+                case 0:
+                    feedbackTypeString = "Bug Report";
+                    break;
+                case 1:
+                    feedbackTypeString = "Feedback";
+                    break;
+                case 2:
+                    feedbackTypeString = "Feature Request";
+                    break;
+                case 3:
+                    feedbackTypeString = "Other";
+                    break;
+            }
+
+            int worldLevel = -1;
+            int selectedLevel = -1;
+            string roomName = "null";
+            try
+            {
+                worldLevel = RoomController.roomController.worldLevel;
+                selectedLevel = RoomController.roomController.selectedLevel;
+                roomName = RoomController.roomController.roomName;
+            }
+            catch
+            {
+                roomName = SceneManager.GetActiveScene().name;
+            }
+
+            int totalDamage = -1;
+            int damageArmored = -1;
+            int damageOverhealProtected = -1;
+            int damageAvoided = -1;
+            float secondsInGame = -1;
+
+            try
+            {
+                totalDamage = ScoreController.score.GetDamage();
+                damageArmored = ScoreController.score.GetDamageArmored();
+                damageOverhealProtected = ScoreController.score.GetDamageOverhealProtected();
+                damageAvoided = ScoreController.score.GetDamageAvoided();
+                secondsInGame = ScoreController.score.GetSecondsInGame();
+            }
+            catch { }
+
+            int achievement1Value = -1;
+            int achievement2Value = -1;
+            int achievement3Value = -1;
+
+            try
+            {
+                achievement1Value = AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[0]);
+                achievement2Value = AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[1]);
+                achievement3Value = AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[2]);
+            }
+            catch { }
+
+            InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
+                InformationLogger.infoLogger.gameID,
+                worldLevel.ToString(),
+                selectedLevel.ToString(),
+                roomName,
+                "null",
+                "-1",
+                "-1",
+                "-1",
+                totalDamage.ToString(),
+                damageArmored.ToString(),
+                damageOverhealProtected.ToString(),
+                damageAvoided.ToString(),
+                ((int)secondsInGame).ToString(),
+                "-1",
+                achievement1Value.ToString(),
+                achievement2Value.ToString(),
+                achievement3Value.ToString(),
+                PartyController.party.GetPartyString(),
+                "False",
+                "True",
+                "-1",
+                feedbackTypeString,
+                comments.text);
+        }
+
+        CloseFeedback();
     }
 }

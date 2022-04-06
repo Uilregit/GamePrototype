@@ -223,6 +223,17 @@ public class SmallRoom : MonoBehaviour
     {
         //GetComponent<Image>().color = color;
         backgroundColor.color = color;
+        roundNumber.transform.parent.GetComponent<Image>().color = color;
+        roundNumber.transform.parent.transform.GetChild(0).GetComponent<Image>().color = color;
+        roundNumber.transform.parent.transform.GetChild(1).GetComponent<Image>().color = color;
+    }
+
+    public void SetWorldColor(Color color)
+    {
+        backgroundColor.color = color;
+        roundNumber.transform.parent.GetComponent<Image>().color = color;
+        roundNumber.transform.parent.transform.GetChild(0).GetComponent<Image>().color = color;
+        roundNumber.transform.parent.transform.GetChild(1).GetComponent<Image>().color = color;
     }
 
     public Vector2 GetLocation()

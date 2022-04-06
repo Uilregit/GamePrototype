@@ -438,6 +438,52 @@ public class InformationLogger : MonoBehaviour
         File.AppendAllText(filePath, line + "\n");
     }
 
+    public void SaveSinglePlayerRoomInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string gameWon, string totalGold, string expGained, string overkill, string totalDamage,
+                                string damageArmored, string damageOverhealedProtected, string damageAvoided, string secondsInGame, string numCardUsed, string achievement1Value, string achievement2Value, string achievement3Value,
+                                string partyUsed, string isEndRoom, string isImpromptuFeedback, string ratingOutOf5, string feedbackType, string freeTextField)
+    {
+        if (InformationLogger.infoLogger.debug)
+            return;
+
+        string filePath = GetCombatPath() + "/singlePlayerRoom_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
+        Debug.Log(filePath);
+
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,gameWon,totalGold,expGained,overkill,totalDamage,damageArmored,damageOverhealedProtected,damageAvoided,secondsInGame,numCardUsed,achievement1Value,achievement2Value,achievement3Value,partyUsed,isEndRoom,isImpromptuFeedback,ratingOutOf5,feedbackType,freeTextField";
+
+        if (!File.Exists(filePath))
+            File.WriteAllText(filePath, header + "\n");
+
+        string delimiter = ",";
+        string line = SystemInfo.deviceUniqueIdentifier;
+
+        line += delimiter + patchID;
+        line += delimiter + gameID;
+        line += delimiter + worldLevel;
+        line += delimiter + encounterLevel;
+        line += delimiter + roomName;
+        line += delimiter + gameWon;
+        line += delimiter + totalGold;
+        line += delimiter + expGained;
+        line += delimiter + overkill;
+        line += delimiter + totalDamage;
+        line += delimiter + damageArmored;
+        line += delimiter + damageOverhealedProtected;
+        line += delimiter + damageAvoided;
+        line += delimiter + secondsInGame;
+        line += delimiter + numCardUsed;
+        line += delimiter + achievement1Value;
+        line += delimiter + achievement2Value;
+        line += delimiter + achievement3Value;
+        line += delimiter + partyUsed;
+        line += delimiter + isEndRoom;
+        line += delimiter + isImpromptuFeedback;
+        line += delimiter + ratingOutOf5;
+        line += delimiter + feedbackType;
+        line += delimiter + freeTextField;
+
+        File.AppendAllText(filePath, line + "\n");
+    }
+
     public void SaveDeckInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag, string attachedEquipment)
     {
         if (InformationLogger.infoLogger.debug)

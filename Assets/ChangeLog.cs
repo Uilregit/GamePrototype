@@ -1174,11 +1174,21 @@ Fixed UI bug where player's armor change indicator will be misalighed after movi
     - Green -
         PowerShot
             Deal 75% of ATK times the number of cards played this turn as damage in a single strike --> Deal 50% of ATK times the number of cards played this turn as damage in a single strike
+        Knives
+            Deal 75% of ATK as damage, knockback 1 --> Deal 50% of ATK as damage, knockback 1
+        Pressure Point
+            Remove 1 armor, then deal 100% of ATK as damage --> Remove 1 armor, then deal 150% of ATK as damage
+        Quick Strike
+            Deal 50% of ATK as damage, draw 1 card --> Deal 75% of ATK as damage, draw 1 card
 
 -- Equipment --
     - Added -
         Force Staff
             Attached card gains Knockback 1 before the card triggers
+
+-- Highlights --
+Holding the end turn button on the enemy's turn now speeds up the game by 3x
+Added feedback menu for constant feedback
 
 -- Enemies --
 
@@ -1193,18 +1203,29 @@ Rewards cards reroll from secret shop implemented
 Daily and weekly shop rerolls from secret shop implemented
 Wildcards implemented
 Card packs and level up implemented in story mode
+Added 5 star rating systems after every story mode room
+Added feedback menu for constant feedback
+Holding the end turn button on the enemy's turn now speeds up the game by 3x
 
 -- UI --
 Added message for reaching the end of the demo
 Reworked party menu
 Reworked overworld menu
+Reworked main menu
 Added UI for health previews when targeting cards on stacked targets
 Added UI previews for targets that would be knocked to a different location
+Added UI for clearer and easier page navigation in card collection
+Added ticks to healthbars to better illustrate health totals
 Last main menu icon bar is now Shop instead of Skills. Highlights when new items are available
 Main menu icons now are locked and unclicable on first play, and get unlocked as they're relavant
 Added hold to preview card/equipment for story mode map room item rewards
 Added hold to preview card/equipment for recruit meny in tavern view
 Added hold to preview card/equipment for shrine scene
+Characters will now squetch and flash when effects are applied to them
+Characters will be knocked around slightly when damaged
+Characters will now fade away when dead
+Added new combat background for the tutorial world
+Added new coloring options for worlds
 
 -- Bugs --
 Fixed bug where switching world wouldn't deselect the room in the previous world

@@ -34,6 +34,7 @@ Material:
     m_Floats:
     - Vector1_CBE59A92: 1
     - _Dissolve: 1
+    - _NoiseScale: 1
     m_Colors:
     - Color_41D9BD28: {r: 1.0592737, g: 1.0592737, b: 1.0592737, a: 1}
     - _Color: {r: 0, g: 0.4824964, b: 1.0592737, a: 1}

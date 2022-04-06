@@ -23,9 +23,15 @@ public class StoryModeEndSceenController : MonoBehaviour
     public Text cardPackNumber;
     public Image confirmPackButton;
 
+    public Image[] ratingStars;
+    public InputField comments;
+    public Color unselectedStarsColor;
+    public Color selectedStarsColor;
+
     private int unopenedCardPacks = 0;
     private bool expGainDone = false;
 
+    private int maxGold = 0;
     private int totalGold = 0;
 
     private Dictionary<StoryModeController.RewardsType, int> boughtItems = new Dictionary<StoryModeController.RewardsType, int>();
@@ -36,6 +42,8 @@ public class StoryModeEndSceenController : MonoBehaviour
     private Vector2 offset = Vector2.zero;
     private Vector2 newLocation;
     private List<bool> cardsFlipped = new List<bool>();
+
+    private int rating = -1;
 
     private void Awake()
     {
@@ -58,6 +66,7 @@ public class StoryModeEndSceenController : MonoBehaviour
     public virtual void Start()
     {
         totalGold = ResourceController.resource.GetGold();
+        maxGold = totalGold;
 
         StoryRoomSetup setup = StoryModeController.story.GetCurrentRoomSetup();
 
@@ -300,9 +309,50 @@ public class StoryModeEndSceenController : MonoBehaviour
             confirmPackButton.gameObject.SetActive(true);
     }
 
+    public void ReportRating(int value)
+    {
+        rating = value;
+
+        for (int i = 0; i < ratingStars.Length; i++)
+            if (i < value)
+                ratingStars[i].color = selectedStarsColor;
+            else
+                ratingStars[i].color = unselectedStarsColor;
+
+        exitButton.transform.parent.gameObject.SetActive(true);
+    }
+
     public virtual void BuyAndExit()
     {
         MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+
+        if (!InformationLogger.infoLogger.debug)
+        {
+            InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
+                InformationLogger.infoLogger.gameID,
+                RoomController.roomController.worldLevel.ToString(),
+                RoomController.roomController.selectedLevel.ToString(),
+                RoomController.roomController.roomName,
+                "True",
+                maxGold.ToString(),
+                totalGold.ToString(),
+                "-1",
+                ScoreController.score.GetDamage().ToString(),
+                ScoreController.score.GetDamageArmored().ToString(),
+                ScoreController.score.GetDamageOverhealProtected().ToString(),
+                ScoreController.score.GetDamageAvoided().ToString(),
+                ((int)ScoreController.score.GetSecondsInGame()).ToString(),
+                "-1",
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[0]).ToString(),
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[1]).ToString(),
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[2]).ToString(),
+                PartyController.party.GetPartyString(),
+                "True",
+                "False",
+                rating.ToString(),
+                "EndRoomFeedback",
+                comments.text);
+        }
 
         ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
         ResourceController.resource.ResetReviveUsed();

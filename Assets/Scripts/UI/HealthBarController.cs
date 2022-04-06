@@ -26,6 +26,10 @@ public class HealthBarController : MonoBehaviour
     Image damageBarImage;
     [SerializeField]
     Image damageOverTimeBarImage;
+    [SerializeField]
+    GameObject healthBarTick;
+    [SerializeField]
+    GameObject healthBarTickContainer;
     //[SerializeField]
     //Image bonusHealthDamageBar;
     [Header("Damage FXs")]
@@ -50,6 +54,8 @@ public class HealthBarController : MonoBehaviour
 
     [Header("Sprite")]
     public SpriteRenderer character;
+
+    private List<Image> healthBarTicks = new List<Image>();
 
     private Vector2 damageImagePosition;
     private Vector2 armorDamageImagePosition;
@@ -86,6 +92,7 @@ public class HealthBarController : MonoBehaviour
         damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
+        healthBarTickContainer.SetActive(false);
 
         originalDamageImageScale = damageImage.transform.localScale;
         originalDamagetextScale = damageText.transform.localScale;
@@ -95,6 +102,28 @@ public class HealthBarController : MonoBehaviour
 
         startingLocalPosition = transform.localPosition;
         //bonusHealthDamageBar.enabled = false;
+    }
+
+    public void SetMaxHealth(int value)
+    {
+        foreach (Image img in healthBarTicks)
+            Destroy(img.gameObject);
+        healthBarTicks = new List<Image>();
+
+        int counter = 1;
+        while (counter * 10 < value)
+        {
+            GameObject temp = Instantiate(healthBarTick);
+            temp.transform.SetParent(healthBarTickContainer.transform);
+            temp.transform.localPosition = new Vector3(counter * 10 / (float)value * 0.9f - 0.45f, 0f, 0f);
+            if (counter % 5 == 0)
+            {
+                temp.transform.localScale = new Vector3(2f, 1f, 1f);
+                temp.GetComponent<Image>().color = Color.black;
+            }
+            healthBarTicks.Add(temp.GetComponent<Image>());
+            counter++;
+        }
     }
 
     public void SetBar(int initialHealth, int damage, int endOfTurnDamage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken, bool permanent = false, bool simulated = false)
@@ -158,6 +187,7 @@ public class HealthBarController : MonoBehaviour
         }
         backImage.enabled = true;
         barImage.enabled = true;
+        healthBarTickContainer.SetActive(true);
         //bonusHealthDamageBar.enabled = true;
         if (!permanent)
         {
@@ -182,6 +212,7 @@ public class HealthBarController : MonoBehaviour
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
         character.enabled = false;
+        healthBarTickContainer.SetActive(false);
         //bonusHealthDamageBar.enabled = false;
     }
 

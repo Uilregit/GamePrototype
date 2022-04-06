@@ -131,6 +131,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         if (!isSimulation)
             AchievementSystem.achieve.OnNotify(0, StoryRoomSetup.ChallengeType.TakeLessThanXTotalDamage);
+
+        charDisplay.healthBar.SetMaxHealth(maxVit);
     }
 
     public BuffController GetBuffController()
@@ -193,6 +195,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             currentVit = maxVit + equipVit;
             ResetVitText(currentVit);
         }
+
+        charDisplay.healthBar.SetMaxHealth(maxVit);
     }
 
     public void SetCurrentVit(int newValue)
@@ -1136,6 +1140,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             StartCoroutine(buffController.TriggerBuff(Buff.TriggerType.OnDamageRecieved, attacker, damage, buffTrace));
             abilitiesController.TriggerAbilities(AbilitiesController.TriggerType.OnDamageTaken);
+
+            charDisplay.SquetchDown(Color.white);
+            charDisplay.ShoveSprite((transform.position - attacker.transform.position).normalized);
 
             if (isPlayer)
             {

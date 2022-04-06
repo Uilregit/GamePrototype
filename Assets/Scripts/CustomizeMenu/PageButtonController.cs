@@ -17,7 +17,6 @@ public class PageButtonController : MonoBehaviour
         if (TutorialController.tutorial.GetEnabled())
             return;
 
-        MusicController.music.PlaySFX(MusicController.music.paperMoveSFX[Random.Range(0, MusicController.music.paperMoveSFX.Count)]);
         if (dir == direction.Forward)
             CollectionController.collectionController.NextPage();
         else

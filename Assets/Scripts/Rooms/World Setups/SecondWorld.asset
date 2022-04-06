@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SecondWorld
   m_EditorClassIdentifier: 
   combatBackground: {fileID: 21300000, guid: f3f8e2021c0eace41a625ce923bfc40e, type: 3}
-  cameraBackground: {r: 0.15307939, g: 0.754717, b: 0.7360901, a: 1}
+  cameraBackground: {r: 0.57872015, g: 0.8018868, b: 0.7960524, a: 1}
+  roomBackground: {r: 0.1509434, g: 0.6037736, b: 0.5919349, a: 1}
   roomLocations:
   - {x: 0, y: 0}
   - {x: -1, y: 1}

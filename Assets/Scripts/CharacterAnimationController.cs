@@ -61,6 +61,26 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void Destroy()
     {
+        StartCoroutine(DestroyProcess());
+    }
+
+    private IEnumerator DestroyProcess()
+    {
+        CharacterDisplayController charDisplay = transform.parent.parent.GetComponent<HealthController>().charDisplay;
+        charDisplay.deathSprite.sprite = charDisplay.sprite.sprite;
+        charDisplay.deathSprite.flipX = charDisplay.sprite.flipX;
+        charDisplay.deathSprite.enabled = true;
+        charDisplay.sprite.enabled = false;
+        charDisplay.deathSprite.material.SetColor("_Color", Color.white);
+
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < 10; i++)
+        {
+            charDisplay.deathSprite.material.SetFloat("_Dissolve", (9 - i) / 9f);
+            yield return new WaitForSeconds(0.5f / 10f);
+        }
+
         if (MultiplayerGameController.gameController != null)
         {
             Card.CasterColor color = transform.parent.parent.GetComponent<MultiplayerPlayerController>().GetColorTag();
