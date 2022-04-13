@@ -598,6 +598,7 @@ public class GameController : MonoBehaviour
     //Used by button from combat room's end screen
     public void LoadEndScene()
     {
+        RoomController.roomController.SetRoomJustWon(false);
         if (StoryModeController.story != null)
             SceneManager.LoadScene("StoryModeEndScene");
         else
@@ -625,6 +626,8 @@ public class GameController : MonoBehaviour
             TurnController.turnController.StopAllCoroutines();
             CanvasController.canvasController.uiCanvas.enabled = false;
             HandController.handController.EmptyHand();
+            ScoreController.score.SetTimerPaused(true);
+            StoryModeController.story.SetAbandonButton(false);
             CanvasController.canvasController.endGameCanvas.enabled = true;
             CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = false;
             CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
@@ -695,7 +698,7 @@ public class GameController : MonoBehaviour
                 StoryModeController.story.UseRewardsReroll(1);
             }
         }
-
+        
         for (int i = 0; i < rewardCards.Length; i++)
         {
             for (int j = 0; j < 100; j++)
@@ -806,6 +809,7 @@ public class GameController : MonoBehaviour
         simulationCharacter.SetCurrentArmor(simulationTarget.GetCurrentArmor(), false);
         simulationCharacter.SetCurrentAttack(simulationTarget.GetCurrentAttack());
         simulationCharacter.SetCurrentVit(simulationTarget.GetCurrentVit());
+        simulationCharacter.SetMaxVit(simulationTarget.GetMaxVit());
         simulationCharacter.SetImmuneToEnergy(simulationTarget.GetImmuneToEnergy());
         simulationCharacter.SetImmuneToMana(simulationTarget.GetImmuneToMana());
         simulationCharacter.SetArmorDamageMultiplier(simulationTarget.GetArmorDamageMultiplier());
@@ -825,8 +829,11 @@ public class GameController : MonoBehaviour
 
     public void ReportSimulationFinished(HealthController simulationCharacter)
     {
-        simulationCharacter.transform.position = new Vector2(100, 100);
+        if (simulationCharacter.originalSimulationTarget == "")
+            return;
 
+        simulationCharacter.transform.position = new Vector2(100, 100);
+        simulationCharacter.originalSimulationTarget = "";
         simulationCharacters.Enqueue(simulationCharacter);
     }
 

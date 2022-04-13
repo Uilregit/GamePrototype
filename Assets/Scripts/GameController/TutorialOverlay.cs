@@ -22,10 +22,12 @@ public class TutorialOverlay : ScriptableObject
     public string endingStringValue;
     public StoryRoomSetup.ChallengeComparisonType endingComparisonType = StoryRoomSetup.ChallengeComparisonType.EqualTo;
     public UIRevealController.UIElement OnEndUIReveal = UIRevealController.UIElement.None;
+    public bool popupLargeImage = false;
     public string popupTitle;
     public Sprite popupImage;
     [TextArea]
     public string popupDescription;
+    public bool joinSocialsButtonsEnabled = false;
 
     public bool IfConditionsMet(Dialogue.Condition con, int value, bool isStartingCondition, string stringValue = "")
     {

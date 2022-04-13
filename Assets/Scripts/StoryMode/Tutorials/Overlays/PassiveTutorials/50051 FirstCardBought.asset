@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Your First Card!
+  popupLargeImage: 0
+  popupTitle: New Cards
   popupImage: {fileID: 21300000, guid: f75ea021077f9ac48b40fe69f3e0c190, type: 3}
   popupDescription: Bought cards stay with you, go to your collection to equip them.
     Promise me you'll only use them for murder.
+  ting: Bought cards stay with you, go to your collection to equip them. Promise
+    me you'll only use them for murder.

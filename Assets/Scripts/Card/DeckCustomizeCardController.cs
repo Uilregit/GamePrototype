@@ -178,8 +178,6 @@ public class DeckCustomizeCardController : MonoBehaviour
         {
             float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
             int index = (int)((positionX + 2.4f) / 0.6f);
-            Debug.Log(positionX);
-            Debug.Log(index);
 
             if (CollectionController.collectionController.GetIfViableSelectSlot(card.GetCard(), index))  //Only allow cards to be selected in their respective slots
                 SelectCard(index);

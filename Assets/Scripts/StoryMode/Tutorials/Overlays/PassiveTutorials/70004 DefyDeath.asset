@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Defy Death
   popupImage: {fileID: 21300000, guid: 96130f04d46d81949a1ee6939c143655, type: 3}
   popupDescription: Very rarely, a fatal hit will only bring you to 1 health, unless
     already at 1 health. Unless this service isn't covered by your healthcare provider.
+  ting: Very rarely, a fatal hit will only bring you to 1 health, unless already
+    at 1 health. Unless this service isn't covered by your healthcare provider.

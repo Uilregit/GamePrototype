@@ -770,6 +770,17 @@ public class CardDisplay : MonoBehaviour
             disabledStatusText.text += "\n" + status;
     }
 
+    public void ClearDisableStats()
+    {
+        disabledStatusText.text = "";
+        disabledStatusText.enabled = false;
+    }
+
+    public string GetDisableStats()
+    {
+        return disabledStatusText.text;
+    }
+
     public void FadeOut(float time, Color emissionColor)
     {
         outline.enabled = false;

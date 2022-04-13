@@ -13,13 +13,22 @@ MonoBehaviour:
   m_Name: 1R2-6 Use Taunt
   m_EditorClassIdentifier: 
   ID: 6
-  prerequisiteID: -1
+  prerequisiteID: 5
+  isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
   overlay: {fileID: 4920664356104767640, guid: 3885257d589863849b54aaeb43b52b98, type: 3}
   startingCondition: 10
   startingValue: 1
   startingStringValue: 
   startingComparisonType: 10
+  OnStartUIReveal: 1
   endingCondition: 1002
   endingValue: 0
   endingStringValue: Taunt
   endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 

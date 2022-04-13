@@ -28,10 +28,12 @@ public class TutorialController : MonoBehaviour
     public Text text;
 
     public GameObject popupTutorial;
-    public TutorialOverlay popupOverlay;
+    private TutorialOverlay popupOverlay = null;
     public Text popupTitle;
     public Image popupImage;
+    public Image popUpLargeImage;
     public Text popupDescription;
+    public GameObject popUpSocialsButtons;
     private int popupID = -1;
 
     public List<TutorialOverlay> passiveTutorials = new List<TutorialOverlay>();
@@ -53,6 +55,9 @@ public class TutorialController : MonoBehaviour
 
     private List<int> completedTutIDs = new List<int> { -1 };
     private List<int> completedPassiveTutIDs = new List<int> { -1 };
+    private List<int> repeatablePassiveTutorials = new List<int> { 999999, 100001, 100002, 100003, 100004, 100005, 100006 };
+
+    private List<string> latestErrorLogs = new List<string>();
 
     private void Start()
     {
@@ -69,6 +74,22 @@ public class TutorialController : MonoBehaviour
         DontDestroyOnLoad(tutorialUICanvas.gameObject);
 
         InformationLogger.infoLogger.LoadPlayerPreferences();                //Load player preferences on startup
+
+        Application.logMessageReceived += OnLocMessageReceived;
+    }
+
+    private void OnLocMessageReceived(string logString, string stackTrace, LogType type)
+    {
+        if (type == LogType.Error || type == LogType.Exception)
+        {
+            string log = "[" + System.DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "] " + logString + " # Stack Trace: # " + stackTrace;
+
+            log = log.Replace("\n", " # ");
+            log = log.Replace(",", "");
+
+            latestErrorLogs.Insert(0, log);
+            latestErrorLogs = latestErrorLogs.GetRange(0, Mathf.Min(5, latestErrorLogs.Count));
+        }
     }
 
     public void SetDialogue(List<Dialogue> tut)
@@ -131,7 +152,11 @@ public class TutorialController : MonoBehaviour
                     popupOverlay = overlay;
                     popupTitle.text = overlay.popupTitle;
                     popupImage.sprite = overlay.popupImage;
+                    popUpLargeImage.sprite = overlay.popupImage;
+                    popupImage.enabled = !overlay.popupLargeImage;
+                    popUpLargeImage.enabled = overlay.popupLargeImage;
                     popupDescription.text = overlay.popupDescription;
+                    popUpSocialsButtons.SetActive(overlay.joinSocialsButtonsEnabled);
                     popupTutorial.gameObject.SetActive(true);
                     Time.timeScale = 0;
                 }
@@ -153,20 +178,26 @@ public class TutorialController : MonoBehaviour
             currentTutorialOverlays.Remove(overlay);
 
         //Handles pop up overlays
-        foreach (TutorialOverlay overlay in passiveTutorials)
-        {
-            if (overlay.IfConditionsMet(condition, value, true, stringValue) && (!completedPassiveTutIDs.Contains(overlay.ID) || overlay.startingCondition == Dialogue.Condition.EndOfDemo))
-            {
-                popupOverlay = overlay;
-                popupTitle.text = overlay.popupTitle;
-                popupImage.sprite = overlay.popupImage;
-                popupDescription.text = overlay.popupDescription;
-                popupTutorial.gameObject.SetActive(true);
-                popupID = overlay.ID;
-                UIRevealController.UIReveal.SetElementState(popupOverlay.OnStartUIReveal, true);
-                Time.timeScale = 0;
-            }
-        }
+        if (popupOverlay == null)       //Only allows for 1 pop up overlay at a time
+            if (StoryModeController.story == null || StoryModeController.story.GetCurrentRoomSetup() == null || !StoryModeController.story.GetCurrentRoomSetup().noAchievements)   //Never show passive tutorials in tutorial rooms
+                foreach (TutorialOverlay overlay in passiveTutorials)
+                {
+                    if (overlay.IfConditionsMet(condition, value, true, stringValue) && (!completedPassiveTutIDs.Contains(overlay.ID) || repeatablePassiveTutorials.Contains(overlay.ID)))
+                    {
+                        popupOverlay = overlay;
+                        popupTitle.text = overlay.popupTitle;
+                        popupImage.sprite = overlay.popupImage;
+                        popUpLargeImage.sprite = overlay.popupImage;
+                        popupImage.enabled = !overlay.popupLargeImage;
+                        popUpLargeImage.enabled = overlay.popupLargeImage;
+                        popupDescription.text = overlay.popupDescription;
+                        popupTutorial.gameObject.SetActive(true);
+                        popUpSocialsButtons.SetActive(overlay.joinSocialsButtonsEnabled);
+                        popupID = overlay.ID;
+                        UIRevealController.UIReveal.SetElementState(popupOverlay.OnStartUIReveal, true);
+                        Time.timeScale = 0;
+                    }
+                }
     }
 
     public void PopupHide()
@@ -176,7 +207,24 @@ public class TutorialController : MonoBehaviour
         completedPassiveTutIDs.Add(popupID);
         InformationLogger.infoLogger.SavePlayerPreferences();
         UIRevealController.UIReveal.SetElementState(popupOverlay.OnEndUIReveal, true);
+        popupOverlay = null;
         TriggerTutorial(Dialogue.Condition.PopupEnded, popupID);
+    }
+
+    public void DiscordButtonPressed()
+    {
+        Application.OpenURL("https://discord.gg/yyUThk3bYg");
+    }
+
+    public void TwitterButtonPressed()
+    {
+        Application.OpenURL("https://twitter.com/deck_romancer");
+    }
+
+    public void ResetCompletedPassiveTutorialIDs()
+    {
+        completedPassiveTutIDs = new List<int> { -1 };
+        InformationLogger.infoLogger.SavePlayerPreferences();
     }
 
     //Called at the end of the room to reset everything
@@ -281,6 +329,8 @@ public class TutorialController : MonoBehaviour
 
     public void SetCompletedassiveTutorials(List<int> newIds)
     {
+        if (newIds == null)
+            newIds = new List<int> { -1 };
         completedPassiveTutIDs = newIds;
     }
 
@@ -308,7 +358,7 @@ public class TutorialController : MonoBehaviour
             else
                 feedbackTypes[i].color = unselectedColor;
 
-        switch(value)
+        switch (value)
         {
             case 0:
                 comments.placeholder.GetComponent<Text>().text = "Please be as specific as possible in bug reports. Include steps to recreate the bug if you can.";
@@ -391,7 +441,7 @@ public class TutorialController : MonoBehaviour
             catch { }
 
             InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
-                InformationLogger.infoLogger.gameID,
+                System.DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"),
                 worldLevel.ToString(),
                 selectedLevel.ToString(),
                 roomName,
@@ -413,9 +463,19 @@ public class TutorialController : MonoBehaviour
                 "True",
                 "-1",
                 feedbackTypeString,
-                comments.text);
+                comments.text,
+                GetErrorLogs());
         }
 
         CloseFeedback();
+    }
+
+    public string GetErrorLogs()
+    {
+        string output = "";
+        foreach (string log in latestErrorLogs)
+            output += log + " ## ";
+
+        return output;
     }
 }

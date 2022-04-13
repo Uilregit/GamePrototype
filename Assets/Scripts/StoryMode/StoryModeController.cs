@@ -39,6 +39,9 @@ public class StoryModeController : MonoBehaviour
     public Text[] menuNames;
     public Image[] menuNotifications;
 
+    public Image abandonRunButton;
+    public Image abandonRunWarning;
+
     public Image combatInfoMenu;
     public Text goldText;
     public Image achievementMenu;
@@ -96,11 +99,6 @@ public class StoryModeController : MonoBehaviour
 
     private MenuState menuState = MenuState.MapScreen;
     private bool deckIncomplete = false;
-
-    private int secondSeed;
-    private int dailySeed;
-    private int weeklySeed;
-
 
     private int rewardsRerollCount = 0;
 
@@ -217,11 +215,6 @@ public class StoryModeController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        System.DateTime epochStart = new System.DateTime(2020, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
-        secondSeed = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
-        dailySeed = (int)(System.DateTime.UtcNow - epochStart).TotalDays;
-        weeklySeed = (int)(dailySeed / 7);
-
         completedIds = new List<int>();
 
         ShowMenuSelected(0);
@@ -243,13 +236,13 @@ public class StoryModeController : MonoBehaviour
             InformationLogger.infoLogger.SaveStoryModeGame();
         }
 
-        ResetDecks();
-
         RefreshMenuIconBlanOuts();
-        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != GetRawDailySeed())
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != InformationLogger.infoLogger.GetRawDailySeed())
             ShowMenuNotification(4, true, false);
 
         ResetRewardsRerollLeft();
+
+        ResetDecks();
     }
 
     public void ResetDecks()
@@ -531,7 +524,7 @@ public class StoryModeController : MonoBehaviour
         if (daily == null)
         {
             dailyBought = new Dictionary<int, bool[]>();
-            dailyBought[GetDailySeed()] = new bool[] { false, false, false };
+            dailyBought[InformationLogger.infoLogger.GetDailySeed()] = new bool[] { false, false, false };
         }
     }
 
@@ -541,22 +534,22 @@ public class StoryModeController : MonoBehaviour
         if (weekly == null)
         {
             weeklyBought = new Dictionary<int, bool[]>();
-            weeklyBought[GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
+            weeklyBought[InformationLogger.infoLogger.GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
         }
     }
 
     public Dictionary<int, bool[]> GetDailyBought()
     {
-        if (!dailyBought.ContainsKey(GetDailySeed()))
-            dailyBought[GetDailySeed()] = new bool[] { false, false, false };
+        if (!dailyBought.ContainsKey(InformationLogger.infoLogger.GetDailySeed()))
+            dailyBought[InformationLogger.infoLogger.GetDailySeed()] = new bool[] { false, false, false };
 
         return dailyBought;
     }
 
     public Dictionary<int, bool[]> GetWeeklyBought()
     {
-        if (!weeklyBought.ContainsKey(GetWeeklySeed()))
-            weeklyBought[GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
+        if (!weeklyBought.ContainsKey(InformationLogger.infoLogger.GetWeeklySeed()))
+            weeklyBought[InformationLogger.infoLogger.GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
 
         return weeklyBought;
     }
@@ -701,35 +694,6 @@ public class StoryModeController : MonoBehaviour
             return AdamantiteColor;
 
         return new Color(1, 0, 1);
-    }
-
-    public int GetSecondSeed()
-    {
-        return secondSeed;
-    }
-
-    //Used for accounting for daily card randomization. Takes rerolls into account
-    public int GetDailySeed()
-    {
-        return dailySeed + InformationLogger.infoLogger.GetDailyRerollsLeft() * 999999;
-    }
-
-    //Used for accounting for weekly card randomization. Takes rerolls into account
-    public int GetWeeklySeed()
-    {
-        return weeklySeed + InformationLogger.infoLogger.GetWeeklyRerollsLeft() * 999999;
-    }
-
-    //Used for day of week calculations
-    public int GetRawDailySeed()
-    {
-        return dailySeed;
-    }
-
-    //Used for week of month calculations
-    public int GetRawWeeklySeed()
-    {
-        return weeklySeed;
     }
 
     public void GoToMapScene()
@@ -1081,7 +1045,7 @@ public class StoryModeController : MonoBehaviour
 
     public void EnableMenuIcon(int position)
     {
-        if (!InformationLogger.infoLogger.GetMenuIconsEnabled()[position])
+        if (InformationLogger.infoLogger.GetMenuIconsEnabled() != null && !InformationLogger.infoLogger.GetMenuIconsEnabled()[position])
         {
             bool[] menuIconsEnabled = InformationLogger.infoLogger.GetMenuIconsEnabled();
             menuIconsEnabled[position] = true;
@@ -1105,5 +1069,94 @@ public class StoryModeController : MonoBehaviour
         rewardsRerollCount = 0;
         if (GetItemsBought().ContainsKey(RewardsType.PlusXRewardCardRerollPerRun))
             rewardsRerollCount += GetItemsBought()[RewardsType.PlusXRewardCardRerollPerRun];
+    }
+
+    public void SetAbandonButton(bool state)
+    {
+        abandonRunButton.gameObject.SetActive(state);
+        if (state)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.AbandonRunButton, 1);
+    }
+
+    public void SetAbondonButtonColor(Color color)
+    {
+        abandonRunButton.color = color;
+        abandonRunButton.transform.GetChild(0).GetComponent<Image>().color = color;
+    }
+
+    public void SetAbandonWarningMenu(bool state)
+    {
+        abandonRunWarning.gameObject.SetActive(state);
+    }
+
+    public void AbandonRun()
+    {
+        SetAbandonWarningMenu(false);
+
+        if (!InformationLogger.infoLogger.debug)
+        {
+            InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
+                InformationLogger.infoLogger.gameID,
+                RoomController.roomController.worldLevel.ToString(),
+                RoomController.roomController.selectedLevel.ToString(),
+                RoomController.roomController.roomName,
+                "Abandoned",
+                ResourceController.resource.GetGold().ToString(),
+                "0",
+                ScoreController.score.GetOverKill().ToString(),
+                ScoreController.score.GetDamage().ToString(),
+                ScoreController.score.GetDamageArmored().ToString(),
+                ScoreController.score.GetDamageOverhealProtected().ToString(),
+                ScoreController.score.GetDamageAvoided().ToString(),
+                ((int)ScoreController.score.GetSecondsInGame()).ToString(),
+                "-1",
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[0]).ToString(),
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[1]).ToString(),
+                AchievementSystem.achieve.GetChallengeValue(StoryModeController.story.GetCurrentRoomSetup().challenges[2]).ToString(),
+                PartyController.party.GetPartyString(),
+                "False",
+                "False",
+                "-1",
+                "None",
+                "",
+                TutorialController.tutorial.GetErrorLogs());
+        }
+
+        MusicController.music.SetHighPassFilter(false);
+        MusicController.music.SetLowPassFilter(false);
+        HandController.handController.EmptyHand();
+        DeckController.deckController.ResetCardValues();
+        RelicController.relic.ResetRelics();
+
+        ReturnToMapScene();
+    }
+
+    public void ReturnToMapScene()
+    {
+        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
+
+        ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
+        ResourceController.resource.ResetReviveUsed();
+        AchievementSystem.achieve.ResetAchievements();
+
+        Destroy(RoomController.roomController.gameObject);
+        RoomController.roomController = null;
+        InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
+        InformationController.infoController.ResetCombatInfo();     //Reset all team stats tracking
+        InformationController.infoController.firstRoom = true;
+        ResetDecks();
+        ResetRewardsRerollLeft();
+        SetMenuBar(true);
+        SetCombatInfoMenu(false);
+        ShowMenuSelected(0);
+        ResourceController.resource.EnableStoryModeRelicsMenu(false);
+
+        SceneManager.LoadScene("StoryModeScene");
+
+        ScoreController.score.SetTimerPaused(true);
+        ScoreController.score.EnableTimerText(false);
+        ScoreController.score.SetSecondsInGame(0);
+
+        abandonRunButton.gameObject.SetActive(false);
     }
 }

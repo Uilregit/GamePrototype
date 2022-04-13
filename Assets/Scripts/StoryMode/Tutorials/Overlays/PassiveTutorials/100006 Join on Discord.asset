@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 100006 Join on Discord
+  m_EditorClassIdentifier: 
+  ID: 100006
+  prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 1
+  slowTime: 0
+  slowDuration: 0
+  overlay: {fileID: 0}
+  startingCondition: 99999
+  startingValue: 100005
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 0
+  endingValue: 0
+  endingStringValue: 
+  endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupLargeImage: 1
+  popupTitle: Join On Socials!
+  popupImage: {fileID: 21300000, guid: e40e79e95e449a945b53e52bcf9406b3, type: 3}
+  popupDescription: '
+
+
+    So join us for news and future events!'
+  joinSocialsButtonsEnabled: 1

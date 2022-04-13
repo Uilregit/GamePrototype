@@ -29,7 +29,14 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: It's Still Alive!
+  popupLargeImage: 0
+  popupTitle: Second Raise
   popupImage: {fileID: 21300000, guid: 7cd48e73a3e91c24e849de70d0061280, type: 3}
-  popupDescription: Revive cards will cost 1 more for each time you've used "Raise".
-    Charon ain't no charity.
+  popupDescription: '"Raise" cards will cost 1 mana more for each time you''ve used
+    "Revive".
+
+    Charon ain''t  no charity!'
+  ting: '"Raise" cards will cost 1 mana more for each time you''ve used "Revive".
+
+    Charon
+    ain''t  no charity!'

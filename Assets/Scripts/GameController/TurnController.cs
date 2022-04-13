@@ -218,6 +218,7 @@ public class TurnController : MonoBehaviour
         cardPlayedManaCap = new List<int>();
 
         //Enemy turn
+        float enemyTurnStartTime = Time.time;
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         turnText.text = "Enemy Turn";
         MusicController.music.PlaySFX(enemyTurnSound);
@@ -289,6 +290,7 @@ public class TurnController : MonoBehaviour
         //Player turn
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
+        float enemyTurnDuration = Time.time - enemyTurnStartTime;
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
         MusicController.music.PlaySFX(playerTurnSound);
@@ -308,6 +310,8 @@ public class TurnController : MonoBehaviour
         GameController.gameController.SetReplaceDone(false);
         yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand()); //Must be called after unholdcard
 
+        if (enemyTurnDuration > 10)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EndTurnToSpeedUpButton, 1);
         RelicController.relic.OnNotify(this, Relic.NotificationType.OnTurnStart, null);
 
         players = GameController.gameController.GetLivingPlayers();
@@ -521,6 +525,10 @@ public class TurnController : MonoBehaviour
     {
         currentEnergy -= energyValue;
         currentMana += energyValue;
+
+        if (currentMana > maxMana)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.ExcessManaGained, currentMana - maxMana);
+
         currentMana = Mathf.Clamp(currentMana - manaValue, 0, maxMana);
 
         ResetEnergyDisplay();

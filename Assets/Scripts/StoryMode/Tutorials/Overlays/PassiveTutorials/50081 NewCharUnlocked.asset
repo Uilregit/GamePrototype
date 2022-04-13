@@ -29,7 +29,8 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Tavern Contract
+  popupLargeImage: 0
+  popupTitle: Your New Buddy
   popupImage: {fileID: 21300000, guid: c96c6b3120d6d004c8f3b389d4fb7b39, type: 3}
   popupDescription: You can now hire more party members. Go to the tavern to meet
     them! Low commitment, easy to slip away if they're not your type.

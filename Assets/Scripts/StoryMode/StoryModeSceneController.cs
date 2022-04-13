@@ -28,6 +28,7 @@ public class StoryModeSceneController : MonoBehaviour
     public Sprite crownIcon;
     public Sprite bossCrownIcon;
     public Sprite arenaIcon;
+    public Sprite nakedArenaIcon;
     public Sprite shopIcon;
     public Sprite lockedIcon;
     public Sprite newWorldIcon;
@@ -178,7 +179,7 @@ public class StoryModeSceneController : MonoBehaviour
                     r.transform.GetChild(0).GetComponent<Image>().sprite = arenaIcon;
                     break;
                 case StoryRoomController.StoryRoomType.NakedArena:
-                    r.transform.GetChild(0).GetComponent<Image>().sprite = arenaIcon;
+                    r.transform.GetChild(0).GetComponent<Image>().sprite = nakedArenaIcon;
                     break;
                 case StoryRoomController.StoryRoomType.Shop:
                     r.transform.GetChild(0).GetComponent<Image>().sprite = shopIcon;
@@ -196,8 +197,10 @@ public class StoryModeSceneController : MonoBehaviour
                 {
                     if (r.roomType == StoryRoomController.StoryRoomType.Boss)
                         r.transform.GetChild(0).GetComponent<Image>().sprite = bossCrownIcon;
-                    else if (r.roomType == StoryRoomController.StoryRoomType.Arena || r.roomType == StoryRoomController.StoryRoomType.NakedArena)
+                    else if (r.roomType == StoryRoomController.StoryRoomType.Arena)
                         r.transform.GetChild(0).GetComponent<Image>().sprite = arenaIcon;
+                    else if (r.roomType == StoryRoomController.StoryRoomType.NakedArena)
+                        r.transform.GetChild(0).GetComponent<Image>().sprite = nakedArenaIcon;
                     else
                         r.transform.GetChild(0).GetComponent<Image>().sprite = crownIcon;
 
@@ -361,6 +364,7 @@ public class StoryModeSceneController : MonoBehaviour
         {
             MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
             MusicController.music.SetHighPassFilter(true);
+            StoryModeController.story.ShowMenuSelected(4);
             SceneManager.LoadScene("StoryModeShopScene", LoadSceneMode.Single);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.ShopOpened, 1);
         }
@@ -370,6 +374,16 @@ public class StoryModeSceneController : MonoBehaviour
             MusicController.music.SetHighPassFilter(true);
             StoryModeController.story.SetMenuBar(false);
             SceneManager.LoadScene("StoryModeSecretShopScene", LoadSceneMode.Single);
+        }
+        else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Arena)
+        {
+            MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.ArenaStart, 1);
+        }
+        else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.NakedArena)
+        {
+            MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.NakedArenaStart, 1);
         }
         else if (initialized)
             MusicController.music.PlaySFX(MusicController.music.footStepSFX[Random.Range(0, MusicController.music.footStepSFX.Count)]);
@@ -535,17 +549,24 @@ public class StoryModeSceneController : MonoBehaviour
 
         if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Combat || selectedRoom.roomType == StoryRoomController.StoryRoomType.Boss)
         {
-            if (selectedRoom.setup.overrideColors.Length == 3)
+            if (selectedRoom.setup.overrideColors != null && selectedRoom.setup.overrideColors.Length == 3)
                 PartyController.party.SetOverrideParty(selectedRoom.setup.overrideColors);
             SetCollection();
+
+            if (StoryModeController.story.GetCompletedRooms().Contains(selectedRoom.roomId))        //Allow for abandoning of all completed combat rooms
+                StoryModeController.story.SetAbandonButton(true);
+
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
         else if (selectedRoom.roomType == StoryRoomController.StoryRoomType.Arena || selectedRoom.roomType == StoryRoomController.StoryRoomType.NakedArena)
         {
-            if (selectedRoom.setup.overrideColors.Length == 3)
+            if (selectedRoom.setup.overrideColors != null && selectedRoom.setup.overrideColors.Length == 3)
                 PartyController.party.SetOverrideParty(selectedRoom.setup.overrideColors);
             SetCollection();
             ResourceController.resource.EnableStoryModeRelicsMenu(true);
+
+            StoryModeController.story.SetAbandonButton(true);                                       //Always allow for abandoning of arenas
+
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
 

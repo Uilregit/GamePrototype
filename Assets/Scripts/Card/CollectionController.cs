@@ -260,10 +260,19 @@ public class CollectionController : MonoBehaviour
 
         //Reorder all the basic slot cards
         for (int i = weaponCardSlots + accessoryCardSlots; i < 8; i++)
+        {
+            /*
+            Debug.Log(selectedDeck);
+            Debug.Log(PartyController.party.GetPlayerColorText(allColorsOrder[deckID]));
+            Debug.Log(selectedDeck[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])]);
+            Debug.Log(selectedDeck[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].deck);
+            Debug.Log(selectedDeck[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].deck[i]);
+            */
             if (selectedDeck[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].deck[i] == null)
                 numOfBlanks++;
             else
                 basicCards.Add(selectedDeck[PartyController.party.GetPlayerColorText(allColorsOrder[deckID])].deck[i]);
+        }
         basicCards = basicCards.OrderBy(o => o.GetCard().manaCost).ThenBy(o => o.GetCard().energyCost).ThenBy(o => o.GetCard().name).ToList();
         for (int i = 0; i < numOfBlanks; i++)
             basicCards.Add(null);
@@ -1364,6 +1373,19 @@ public class CollectionController : MonoBehaviour
         {
             selectedDeck[color] = new ListWrapper();
             selectedDeck[color].deck = new List<CardController>();
+
+            if (selectedDeckNames[color].Length < 8)
+            {
+                List<string> cards = new List<string>();
+                for (int i = 0; i < storyModeDeck.Length; i++)
+                    if (PartyController.party.GetPlayerColorText(storyModeDeck[i].deck[0].casterColor) == color)
+                    {
+                        foreach (Card c in storyModeDeck[i].deck)
+                            cards.Add(c.name);
+                        selectedDeckNames[color] = cards.ToArray();
+                        break;
+                    }
+            }
         }
 
         foreach (string color in PartyController.party.GetPotentialPlayerTexts())

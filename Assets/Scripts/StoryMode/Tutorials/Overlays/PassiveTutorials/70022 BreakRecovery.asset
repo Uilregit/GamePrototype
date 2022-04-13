@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Break Recovery
   popupImage: {fileID: 21300000, guid: 08921dc53dff9e841b885576c0220376, type: 3}
   popupDescription: After their second turn, broken characters gain their armor back.
     Aim for their crotch and finish the job next time.
+  ting: After their second turn, broken characters gain their armor back. Aim for
+    their crotch and finish the job next time.

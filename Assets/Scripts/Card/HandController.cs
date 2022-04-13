@@ -445,8 +445,7 @@ public class HandController : MonoBehaviour
 
         ResetReplaceText();
 
-        yield return StartCoroutine(ResolveDrawQueue());
-        //ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+        yield return StartCoroutine(ResolveDrawQueue());            //ResetCardPlayable called at the end of ResolveDrawQueue
     }
 
     public void ClearHand()
@@ -525,11 +524,19 @@ public class HandController : MonoBehaviour
     //Called from TurnController
     public void ResetCardPlayability(int energy, int mana)
     {
+        int unplayableCards = 0;
         foreach (CardController card in hand)
+        {
             card.ResetPlayability(energy, mana);
+            if (!card.GetHasEnoughResources())
+                unplayableCards++;
+        }
 
         if (currentlyHeldCard != null)
             currentlyHeldCard.ResetPlayability(energy, mana);
+
+        if (unplayableCards == hand.Count && hand.Count >= 4 && TurnController.turnController.GetCurrentEnergy() >= 0 && maxReplaceCount + bonusReplaceCount - currentReplaceCount == 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.AllUnplayableCards, 1);
     }
 
     public void ResetReplaceCounter()

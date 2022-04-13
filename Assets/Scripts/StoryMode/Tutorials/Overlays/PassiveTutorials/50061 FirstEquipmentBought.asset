@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Equipments
+  popupLargeImage: 0
+  popupTitle: New Equipment
   popupImage: {fileID: 21300000, guid: bccfc1a6d7f1bb247ba05b4f5ad08bcf, type: 3}
   popupDescription: Equipments change your stats, go to your collection to equip
     them. No warrior rides into battle without their handbag.
+  ting: Equipments change your stats, go to your collection to equip them. No warrior
+    rides into battle without their handbag.

@@ -157,10 +157,10 @@ public class RewardsMenuController : MonoBehaviour
                     RoomController.roomController.worldLevel.ToString(),
                     RoomController.roomController.selectedLevel.ToString(),
                     RoomController.roomController.roomName,
-                    "True",
+                    "In Progress",
                     ResourceController.resource.GetGold().ToString(),
                     "-1",
-                    GameController.gameController.GetOverkillGold().ToString(),
+                    ScoreController.score.GetOverKill().ToString(),
                     ScoreController.score.GetDamage().ToString(),
                     ScoreController.score.GetDamageArmored().ToString(),
                     ScoreController.score.GetDamageOverhealProtected().ToString(),
@@ -175,7 +175,8 @@ public class RewardsMenuController : MonoBehaviour
                     "False",
                     "-1",
                     "None",
-                    "");
+                    "",
+                    TutorialController.tutorial.GetErrorLogs());
             }
 
             if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
@@ -188,6 +189,7 @@ public class RewardsMenuController : MonoBehaviour
 
                 ScoreController.score.EnableTimerText(false);
                 ScoreController.score.SetSecondsInGame(0);
+                RoomController.roomController.SetRoomJustWon(true);
                 SceneManager.LoadScene("StoryModeEndScene");
             }
             else

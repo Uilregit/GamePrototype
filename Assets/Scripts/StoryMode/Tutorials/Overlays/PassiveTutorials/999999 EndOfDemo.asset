@@ -29,7 +29,8 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Congratulations!
+  popupLargeImage: 0
+  popupTitle: End of Demo
   popupImage: {fileID: 21300000, guid: 51ae6bb1eaf67af438dad2fa443b9f22, type: 3}
   popupDescription: Thank you so much for reaching the end of the demo! Try getting
-    every achievement for a surprise!
+    every achievement for a surprise! Look forward to the full release!

@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Sold Out!
+  popupLargeImage: 0
+  popupTitle: Sould Out
   popupImage: {fileID: 21300000, guid: 3c324849005967c4498d2a70bbddcf8e, type: 3}
   popupDescription: Achievement tied items can only be purchased once. Non-fungible,
     like god intended apes to be.
+  ting: Achievement tied items can only be purchased once. Non-fungible, like god
+    intended apes to be.

@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Locked Items
   popupImage: {fileID: 21300000, guid: d560e4e0fcad1ab42afa61230834ca71, type: 3}
   popupDescription: Some items only unlock once you complete certain achievements.
     Just llike real life, unfortunately.
+  ting: Some items only unlock once you complete certain achievements. Just llike
+    real life, unfortunately.

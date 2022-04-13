@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Unlocked Forge
+  popupLargeImage: 0
+  popupTitle: Shop
   popupImage: {fileID: 21300000, guid: 65e5c4a0ec3354049a39bcefd504dc40, type: 3}
   popupDescription: Use your crafting materials to craft new cards and equipments!
     Gems only, we don't accept credit.
+  ting: Use your crafting materials to craft new cards and equipments! Gems only,
+    we don't accept credit.

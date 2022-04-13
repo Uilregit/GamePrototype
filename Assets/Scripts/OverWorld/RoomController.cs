@@ -53,6 +53,8 @@ public class RoomController : MonoBehaviour
     private List<Vector2> destroyedRooms;
     private int maxLevel = 0;
 
+    private bool roomJustWon = false;
+
     private Canvas canvas;
 
     // Start is called before the first frame update
@@ -87,7 +89,7 @@ public class RoomController : MonoBehaviour
 
         if (InformationLogger.infoLogger.isStoryMode)
         {
-            Random.InitState(StoryModeController.story.GetSecondSeed());
+            Random.InitState(InformationLogger.infoLogger.GetSecondSeed());
             selectedLevel = -1;
             SetWorldLevel(StoryModeController.story.GetWorldNumber());
             smallRooms = new List<SmallRoom>();
@@ -95,6 +97,8 @@ public class RoomController : MonoBehaviour
             destroyedRooms = new List<Vector2>();
             canvas = GetComponent<Canvas>();
             roomSeeds = new List<int>();
+
+            StoryModeController.story.SetAbondonButtonColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
             //Setting up arena rooms
             if (StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.Arena || StoryModeController.story.GetCurrentRoomType() == StoryRoomController.StoryRoomType.NakedArena)
@@ -652,5 +656,15 @@ public class RoomController : MonoBehaviour
     public RoomScrollController GetRoomScrollController()
     {
         return roomScrollController;
+    }
+
+    public bool GetRoomJustWon()
+    {
+        return roomJustWon;
+    }
+
+    public void SetRoomJustWon(bool state)
+    {
+        roomJustWon = state;
     }
 }

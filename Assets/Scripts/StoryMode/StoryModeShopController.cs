@@ -53,14 +53,14 @@ public class StoryModeShopController : MonoBehaviour
         UpdateInventoryMaterials();
         StoryModeController.story.SetCombatInfoMenu(false);
 
-        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != StoryModeController.story.GetRawDailySeed())
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() != InformationLogger.infoLogger.GetRawDailySeed())
             if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXDailyDealsRerollPerDay))
                 InformationLogger.infoLogger.SetDailyRerollsLeft(StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXDailyDealsRerollPerDay]);
-        if (InformationLogger.infoLogger.GetLatestDayShopOpened() / 7 != StoryModeController.story.GetRawWeeklySeed())
+        if (InformationLogger.infoLogger.GetLatestDayShopOpened() / 7 != InformationLogger.infoLogger.GetRawWeeklySeed())
             if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXWeeklyWaresRerollPerWeek))
                 InformationLogger.infoLogger.SetWeeklyRerollsLeft(StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXWeeklyWaresRerollPerWeek]);
 
-        InformationLogger.infoLogger.SetLatestDayShopOpened(StoryModeController.story.GetRawDailySeed());
+        InformationLogger.infoLogger.SetLatestDayShopOpened(InformationLogger.infoLogger.GetRawDailySeed());
         InformationLogger.infoLogger.SavePlayerPreferences();
 
         dailyReroll.transform.GetChild(0).GetComponent<Text>().text = "Reroll x" + InformationLogger.infoLogger.GetDailyRerollsLeft();
@@ -150,7 +150,7 @@ public class StoryModeShopController : MonoBehaviour
                 dailyReroll.gameObject.SetActive(false);
         }
 
-        int day = StoryModeController.story.GetDailySeed();
+        int day = InformationLogger.infoLogger.GetDailySeed();
         float equipmentChance = 0.3f;
 
         //Initialize the daily cards
@@ -168,7 +168,7 @@ public class StoryModeShopController : MonoBehaviour
                 weeklyReroll.gameObject.SetActive(false);
         }
 
-        int week = StoryModeController.story.GetWeeklySeed();
+        int week = InformationLogger.infoLogger.GetWeeklySeed();
         float equipmentChance = 0.3f;
 
         //Iniitialize the weekly cards
@@ -284,6 +284,8 @@ public class StoryModeShopController : MonoBehaviour
             wildCardButton.transform.GetChild(1).GetComponent<Image>().color = StoryModeController.story.GetRewardsColor(rarity);
         }
         wildCardButton.gameObject.SetActive(wildCardNum > 0);
+        if (wildCardNum > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.WildCardOptionInShop, 1);
 
         soldOut.gameObject.SetActive(bought);
 

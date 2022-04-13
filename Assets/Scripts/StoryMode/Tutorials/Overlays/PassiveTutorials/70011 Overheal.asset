@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Overheal
   popupImage: {fileID: 21300000, guid: 03be35738d3d612429e624b2713a1ce0, type: 3}
   popupDescription: Oh no you overhealed! Don't worry the extra health stay till
     the start of the next turn. It's not a mistake, it's a strategy!
+  ting: Oh no you overhealed! Don't worry the extra health stay till the start of
+    the next turn. It's not a mistake, it's a strategy!

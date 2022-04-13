@@ -32,6 +32,9 @@ public class HealthBarController : MonoBehaviour
     GameObject healthBarTickContainer;
     //[SerializeField]
     //Image bonusHealthDamageBar;
+    [SerializeField]
+    Image skullIcon;
+
     [Header("Damage FXs")]
     public Animator bloodSplatter;
 
@@ -104,18 +107,18 @@ public class HealthBarController : MonoBehaviour
         //bonusHealthDamageBar.enabled = false;
     }
 
-    public void SetMaxHealth(int value)
+    public void SetHealthBarTicks(int maxHealth)
     {
         foreach (Image img in healthBarTicks)
             Destroy(img.gameObject);
         healthBarTicks = new List<Image>();
 
         int counter = 1;
-        while (counter * 10 < value)
+        while (counter * 10 < maxHealth)
         {
             GameObject temp = Instantiate(healthBarTick);
             temp.transform.SetParent(healthBarTickContainer.transform);
-            temp.transform.localPosition = new Vector3(counter * 10 / (float)value * 0.9f - 0.45f, 0f, 0f);
+            temp.transform.localPosition = new Vector3(counter * 10 / (float)maxHealth * 0.9f - 0.45f, 0f, 0f);
             if (counter % 5 == 0)
             {
                 temp.transform.localScale = new Vector3(2f, 1f, 1f);
@@ -131,18 +134,37 @@ public class HealthBarController : MonoBehaviour
         if (healthBarHide != null)
             StopCoroutine(healthBarHide);
 
-        damage = Mathf.Min(damage, initialHealth);          //Always ensure that damage bar doesn't become bigger than the remaining health bar
+        SetHealthBarTicks(Mathf.Max(new int[] { maxHealth, initialHealth - damage, initialHealth - damage - endOfTurnDamage }));    //Set health bar ticks to either the max health, or in the case of healing (negative deamage), overhealed max health
 
-        int maxSize = Mathf.Max(new int[] { maxHealth, initialHealth - damage, initialHealth }); //The max between either damage, overheal, or the initial overhealed amount
-        int bonusHealth = Mathf.Max(0, initialHealth - damage - maxHealth);
+        damage = Mathf.Min(damage, initialHealth);          //Always ensure that damage bar doesn't become bigger than the remaining health bar, even in overkill
 
-        float HPPercentage = Mathf.Clamp((float)initialHealth - damage, 0.0f, maxHealth) / (float)maxSize;
+        int maxSize = Mathf.Max(new int[] { maxHealth, initialHealth - damage, initialHealth - damage - endOfTurnDamage, initialHealth }); //The max between either damage, overheal, or the initial overhealed amount
+        int bonusHealth = Mathf.Max(0, maxSize - maxHealth);
+
+        float HPPercentage = Mathf.Clamp((float)initialHealth - damage, 0.0f, maxHealth) / (float)maxSize;  //Clamped between 0 and max health. Parts over max health is for bonus health
         float bonusHealthPercentage = (float)bonusHealth / (float)maxSize;
-        float damagePercentage = Mathf.Clamp((float)damage, initialHealth - maxSize, initialHealth) / (float)maxSize;
-        float damageOverTimePercentage = Mathf.Clamp((float)endOfTurnDamage, initialHealth - maxSize, initialHealth) / (float)maxSize;
+        float damagePercentage = 0;
+        if (damage >= 0)
+            //damagePercentage = Mathf.Clamp((float)damage, initialHealth - maxSize, initialHealth) / (float)maxSize;
+            damagePercentage = Mathf.Min((float)damage, (float)maxSize) / (float)maxSize;
+        else
+        {
+            damagePercentage = Mathf.Max((float)damage, (float)initialHealth - maxHealth) / (float)maxSize;    //Healing never goes over max health, that portion is bonushealth's area
+            if (initialHealth < 0)
+                damagePercentage = -(float)Mathf.Max(0f, initialHealth - damage) / (float)maxSize;
+        }
+
+        //float damageOverTimePercentage = Mathf.Clamp((float)endOfTurnDamage, initialHealth - maxSize, initialHealth) / (float)maxSize;
+        float damageOverTimePercentage = Mathf.Min((float)endOfTurnDamage, initialHealth - damage) / (float)maxSize;
         //float bonusHealthDamagePercentage = Mathf.Min(damage, bonusHealth) / (float) maxSize;
 
-        if (initialHealth <= 0)
+        /*
+        Debug.Log(maxHealth + "|" + maxSize);
+        Debug.Log(initialHealth + "|" + damage + "|" + endOfTurnDamage + "|" + bonusHealth);
+        Debug.Log(HPPercentage + "|" + damagePercentage + "|" + damageOverTimePercentage + "|" + bonusHealthPercentage);
+        */
+
+        if (initialHealth <= 0 && initialHealth - damage - endOfTurnDamage <= 0)
             damagePercentage = 0;
 
         backImage.rectTransform.position = center + new Vector2(0, 1.15f + index * 0.25f) * size;
@@ -150,18 +172,27 @@ public class HealthBarController : MonoBehaviour
 
         barImage.rectTransform.localScale = new Vector2(HPPercentage, 1);
 
-        if (initialHealth > 0)  //If overkill, don't show any other bar
+        skullIcon.enabled = initialHealth - damage - endOfTurnDamage <= 0;
+
+        if (initialHealth - damage - endOfTurnDamage > 0 || initialHealth > 0)  //If overkill, don't show any other bar
         {
             bonusHealthBar.rectTransform.localScale = new Vector2(bonusHealthPercentage, 1);
-            bonusHealthBar.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage) * 0.86f, 0, 0) * size;
+            bonusHealthBar.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage) * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
 
             damageBarImage.rectTransform.localScale = new Vector2(damagePercentage, 1);
-            damageBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+            if (damage > 0)
+                damageBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
+            else
+                damageBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3(HPPercentage * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
 
             damageOverTimeBarImage.rectTransform.localScale = new Vector3(damageOverTimePercentage, 1);
-            damageOverTimeBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+            if (endOfTurnDamage > 0)
+                damageOverTimeBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage + bonusHealthPercentage) * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
+            else
+                damageOverTimeBarImage.rectTransform.position = barImage.rectTransform.position + new Vector3(HPPercentage * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
+
             //bonusHealthDamageBar.rectTransform.localScale = new Vector2(bonusHealthDamagePercentage, 1);
-            //bonusHealthDamageBar.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage + bonusHealthPercentage) * 0.86f, 0, 0) * size;
+            //bonusHealthDamageBar.rectTransform.position = barImage.rectTransform.position + new Vector3(0.02f + (HPPercentage + bonusHealthPercentage) * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
 
             //backImage.color = Color.black;
             if (broken)
@@ -213,6 +244,7 @@ public class HealthBarController : MonoBehaviour
         bonusHealthBar.enabled = false;
         character.enabled = false;
         healthBarTickContainer.SetActive(false);
+        skullIcon.enabled = false;
         //bonusHealthDamageBar.enabled = false;
     }
 

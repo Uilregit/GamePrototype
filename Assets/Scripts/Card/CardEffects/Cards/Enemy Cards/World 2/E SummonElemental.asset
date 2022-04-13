@@ -23,7 +23,7 @@ MonoBehaviour:
   radius: 2
   casterColor: 6
   description: Summons a 10 Attack/10 Armor/10 Health Elemental
-  art: {fileID: 21300000, guid: f3c6a9415f323e44abcda0706f4a7e30, type: 3}
+  art: {fileID: 21300000, guid: 0b510853cf42217448d259111695394c, type: 3}
   castType: 5
   castShape: 0
   targetType: 02000000

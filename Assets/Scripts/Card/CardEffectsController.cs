@@ -210,7 +210,9 @@ public class CardEffectsController : MonoBehaviour
                     }
 
                     if (isSimulation)
+                    {
                         yield return StartCoroutine(effects[i].ProcessCard(caster, this, t, card.GetCard(), i, 0));
+                    }
                     else
                     {
                         foreach (GameObject obj in movedObjects)
@@ -335,6 +337,7 @@ public class CardEffectsController : MonoBehaviour
                 }
             }
         }
+
         //Triggers equipment effects before trigger if there are any
         if (card.GetAttachedEquipment() != null && card.GetAttachedEquipment().afterTriggerCard != null)
             yield return StartCoroutine(TriggerEquipmentEffect(caster, targets, targetLocs, movedObjects, isSimulation, false, simulatedSelf));

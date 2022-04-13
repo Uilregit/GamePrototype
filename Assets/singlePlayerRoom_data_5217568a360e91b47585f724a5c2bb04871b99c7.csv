@@ -1,0 +1,11 @@
+deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,gameWon,totalGold,expGained,overkill,totalDamage,damageArmored,damageOverhealedProtected,damageAvoided,secondsInGame,numCardUsed,achievement1Value,achievement2Value,achievement3Value,partyUsed,isEndRoom,isImpromptuFeedback,ratingOutOf5,feedbackType,freeTextField
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:39,0,0,World Tut-1R1,TRUE,0,-1,1,6,23,0,0,40,4,-1,-1,-1,Green|Black|White,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:45,0,0,World Tut-1R1,TRUE,0,-1,1,6,23,0,0,30,4,-1,-1,-1,Green|Black|White,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:45,0,1,World Tut-1R2,TRUE,0,-1,6,22,41,0,13,105,7,-1,-1,-1,Green|Red|Black,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:45,0,2,World Tut-1R3,TRUE,0,-1,9,71,68,0,26,178,7,-1,-1,-1,Green|Red|Blue,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:45,0,2,World Tut-1R3,TRUE,0,0,-1,71,68,0,26,0,-1,1,1,1,Green|Red|Blue,TRUE,FALSE,-1,EndRoomFeedback,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 15:49,0,-1,Overworld,Abandoned,0,0,-1,0,0,0,0,0,-1,-1,-1,-1,Green|Red|Blue,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/9/2022 16:30,0,-1,Overworld,Abandoned,0,0,-1,0,0,0,0,0,-1,-1,-1,-1,Green|Red|Blue,FALSE,FALSE,-1,None,
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/10/2022 0:18,-1,-1,MainMenuScene,null,-1,-1,-1,0,0,0,0,0,-1,-1,-1,-1,Green|Red|Blue,FALSE,TRUE,-1,Bug Report,test test
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/10/2022 0:26,-1,-1,MainMenuScene,null,-1,-1,-1,0,0,0,0,0,-1,-1,-1,-1,Green|Red|Blue,FALSE,TRUE,-1,Bug Report,test test
+5217568a360e91b47585f724a5c2bb04871b99c7,0.5.2.3,4/10/2022 0:33,-1,-1,MainMenuScene,null,-1,-1,-1,0,0,0,0,0,-1,-1,-1,-1,Green|Red|Blue,FALSE,TRUE,-1,Feedback,maybe now it's faster?

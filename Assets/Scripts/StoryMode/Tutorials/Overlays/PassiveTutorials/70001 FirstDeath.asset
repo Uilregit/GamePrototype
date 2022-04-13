@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Raise
+  popupLargeImage: 0
+  popupTitle: Death
   popupImage: {fileID: 21300000, guid: b5012d6e224881948b9a19b4b1fe8de8, type: 3}
   popupDescription: Death from here on out won't restart the room. There'll be ways
     to revive them though, you'll see!
+  ting: Death from here on out won't restart the room. There'll be ways to revive
+    them though, you'll see!

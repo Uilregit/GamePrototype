@@ -196,7 +196,7 @@ public class BuffFactory : MonoBehaviour
     }
 
     //public abstract IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<Buff> buffTrace);
-    public virtual IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<BuffFactory> traceList, List<Relic> relicTrace)
+    public virtual IEnumerator Trigger(HealthController selfHealthController, HealthController attackerHealthController, int value, List<BuffFactory> traceList, List<Relic> relicTrace, float waitTimeMultiplier = 1)
     {
         HealthController target = null;
         if (buff.onTriggerTarget == Buff.TriggerTarget.Self)
@@ -226,13 +226,13 @@ public class BuffFactory : MonoBehaviour
                     vitDamage += target.GetSimulatedVitDamage(GetValue(value));
                     armorDamage += target.GetSimulatedArmorDamage(GetValue(value));
                     target.TakeVitDamage(GetValue(value), selfHealthController, traceList, null, (GetTriggerType() == Buff.TriggerType.AtEndOfTurn || GetTriggerType() == Buff.TriggerType.AtStartOfTurn));
-                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
                     yield return selfHealthController.GetComponent<BuffController>().StartCoroutine(selfHealthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, selfHealthController.GetComponent<HealthController>(), vitDamage, traceList));
                     break;
                 case Buff.BuffEffectType.PiercingDamage:
                     vitDamage += target.GetSimulatedPiercingDamage(GetValue(value));
                     target.TakePiercingDamage(GetValue(value), selfHealthController, traceList);
-                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+                    yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
                     yield return selfHealthController.GetComponent<BuffController>().StartCoroutine(selfHealthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, selfHealthController.GetComponent<HealthController>(), vitDamage, traceList));
                     break;
                 case Buff.BuffEffectType.ArmorDamage:
@@ -296,7 +296,7 @@ public class BuffFactory : MonoBehaviour
                     Debug.Log("Trigger Not implimented");
                     break;
             }
-            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
 
         totalArmorDamage += armorDamage;

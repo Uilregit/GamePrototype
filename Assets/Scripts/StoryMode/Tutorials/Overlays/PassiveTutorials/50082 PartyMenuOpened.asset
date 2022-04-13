@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Your New Buddy
+  popupLargeImage: 0
+  popupTitle: New Allies
   popupImage: {fileID: 21300000, guid: 6dca24f31b2124f46985427d7174c7fb, type: 3}
   popupDescription: Choose 1 out of 3 new colors, they come with a completely different
     set of cards and diversity hire tax credits!
+  ting: Choose 1 out of 3 new colors, they come with a completely different set of
+    cards and diversity hire tax credits!

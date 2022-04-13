@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Microsoft.Win32.SafeHandles;
 using System.Linq;
+using Google.Apis.Services;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
 
 [System.Serializable]
 public class SaveFile
@@ -223,11 +227,21 @@ public class InformationLogger : MonoBehaviour
     public string gameID;
     public Text versionText;
     public Text seedText;
+
+    private int secondSeed;
+    private int dailySeed;
+    private int weeklySeed;
+
     public int roomRandomizedIndex = -1;
 
     public bool loadGameOnLevelLoad = false;
     private int roomControllerRoomLevel;
     private List<Vector2> roomControllerPreviousRooms;
+
+    private string spreadsheetID = "1Pl2QRxb2CzoaFNLdJXfmrJwbNjVxZLPg12QOtmSgoVk";
+    private string serviceAccountID = "unity-google-sheets@solar-century-183500.iam.gserviceaccount.com";
+    private string key = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC8PoFHQPNvKQkK\nHdRginvFTXpUptXw/jwYgcx1YdsFm9ZY+v1Ufiem8f8okqfn65XcwNu+nJLEiCoR\nULWsGZ1n2PEBk/WtC+9Jnf8/VBkBEEv1B1MkfU6fRKEkqewneaiEFXrASVJ/eVA7\n2bJ3GD8sOyDCrTok9oTz8KIuyy+BoCZRhV7mAH4pAZwFjqMjaF9ap4qt9hvzk6uR\nr4OLfT0QL+SGav4OnnhUOq8kVdjF9ACOpQtH2queD5973bVAYUWlOrRlowFb8dj6\nbjZW5mJoJJjJfa/ecmRa3sEBm+zTivdO7cFv9uTePt75qEs+unyZKTmhngZCA+1K\n9xFJVLbFAgMBAAECggEABYi2Nui16g1Zcq6we6tr5WpYWlISoA8ZUoRzr6USJ0wO\n38whKRwRq7AZluZuK+dFH0RG3DJbg45CjlfCai4mmShLjYb9W0+qgo4z3sy+H3CM\nixuNWi6aN8cbZaneg2/pgFiRT0Mt5bQko7MhXVbyedO91tCjkPVJBf2LsbckzQ63\nL8NlSkFysyP8kPeODmzwO1YdYnaHHFSwQOoMI6rQ+re3Da61YRTT5NChkNhx0K2O\nF+TsvyWLPJmG0oap2HiRsoKZYcktX0w0wFPlOyoFnb9el+dsLGBN2vsQ+R3R4UtT\nK6B4Qy0E1GZF85LJwv66JyygYUve9AIOIRzJrxr6AQKBgQD+jv7HcNzvV0842smr\nwIzKmLDBFH5+MhOqdQ15G3N+fCapVezOZRCZjh9OM6HIH+laC1Yzc25ZSrx0tomq\nVWRIt/wQycbGw9S5hbc65qRpOSK7+doi14DHq7pkoCW8yBak/DVcLVoF5aZxbdbt\nX1JGsm2Sm/RPMwXO+iGtaq3I5QKBgQC9T2GaEqCB/DaW8vJzIwkc9Y+VQn32T8nN\nsupcPHIB35ecns7re42QP+zSqNzQMH1CwUSo30evwntIWZfYt/+2LxwbUdIQuICB\nLcOH4FLglrGQBN/GobhyQpiV7yzMa35brMRHuJwpXjqS2/lnu+ja8P5TJVd6fCsC\nyfrBEku4YQKBgHvBHwHsz6wYAS69xu+V05ym8L9dbEWDqOXktCEdhF+Ike8fE9of\nbhuI6ZVGKq+1O+gHvOeUhaApYkdHetPxYaissYGj5tw41lE/PZ4IBQQWv9ktFax8\nomHwDdTfupj1mXSqHHLspWhahjl80dFi1wgBtJ1i7joWrws5tWeuhkA1AoGAXCP4\n417RlLLHdy0EaJnS4695lTJp0KsBFAdTHlWlP9guGOMK336hZmZWxCnAX+xZ61Xa\nLz+NyrQkARDqYWcdJPVE/t8SGWVT1owJsWazr/BouCpHKIyqE6LqVX+2FED1nXU3\ni5kFGPVuGPDMMXs6WOYXQyzXqRwqaw8X50UaacECgYBCU4gxy0GPXW/G8sg8Oh2F\n3/qWYVomS6NuCSo758nBaUZcNeI0ZIMYp3wDmkSYJOLxR1ej8TsGCGRN1VMtjRwk\n6jMZcET33aHX+kMoG9G2Hlk9XQDjG0CIIz0gcKEUdjJ3zvJsVEjG7QMRHR0lWwV0\nlprroriBtrj4xMQOnW8KKg==\n-----END PRIVATE KEY-----\n";
+    private SheetsService service;
 
     void Awake()
     {
@@ -247,7 +261,12 @@ public class InformationLogger : MonoBehaviour
             seed = Random.Range(1, 1000000000);
         Random.InitState(seed);
 
-        gameID = System.DateTime.Now.ToString();
+        gameID = System.DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+
+        System.DateTime epochStart = new System.DateTime(2020, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        secondSeed = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
+        dailySeed = (int)(System.DateTime.UtcNow - epochStart).TotalDays;
+        weeklySeed = (int)(dailySeed / 7);
 
         try                 //For debugging purposes, prevents crashes when running from overworldScene
         {
@@ -257,6 +276,11 @@ public class InformationLogger : MonoBehaviour
             seedText.enabled = true;
         }
         catch { }
+
+        ServiceAccountCredential.Initializer initializer = new ServiceAccountCredential.Initializer(serviceAccountID);
+
+        ServiceAccountCredential credential = new ServiceAccountCredential(initializer.FromPrivateKey(key));
+        service = new SheetsService(new BaseClientService.Initializer() { HttpClientInitializer = credential });
     }
 
     public void SaveCombatInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string turnID, string castOrder, string cardColor, string cardName, string heldFlag, string replacedFlag,
@@ -440,48 +464,70 @@ public class InformationLogger : MonoBehaviour
 
     public void SaveSinglePlayerRoomInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string roomName, string gameWon, string totalGold, string expGained, string overkill, string totalDamage,
                                 string damageArmored, string damageOverhealedProtected, string damageAvoided, string secondsInGame, string numCardUsed, string achievement1Value, string achievement2Value, string achievement3Value,
-                                string partyUsed, string isEndRoom, string isImpromptuFeedback, string ratingOutOf5, string feedbackType, string freeTextField)
+                                string partyUsed, string isEndRoom, string isImpromptuFeedback, string ratingOutOf5, string feedbackType, string freeTextField, string errorLogs)
     {
         if (InformationLogger.infoLogger.debug)
             return;
 
         string filePath = GetCombatPath() + "/singlePlayerRoom_data_" + SystemInfo.deviceUniqueIdentifier + ".csv";
-        Debug.Log(filePath);
 
-        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,gameWon,totalGold,expGained,overkill,totalDamage,damageArmored,damageOverhealedProtected,damageAvoided,secondsInGame,numCardUsed,achievement1Value,achievement2Value,achievement3Value,partyUsed,isEndRoom,isImpromptuFeedback,ratingOutOf5,feedbackType,freeTextField";
+        string header = "deviceID,patchID,gameID,worldLevel,encounterLevel,roomName,gameWon,totalGold,expGained,overkill,totalDamage,damageArmored,damageOverhealedProtected,damageAvoided,secondsInGame,numCardUsed,achievement1Value,achievement2Value,achievement3Value,partyUsed,isEndRoom,isImpromptuFeedback,ratingOutOf5,feedbackType,freeTextField,errorLogs";
 
         if (!File.Exists(filePath))
             File.WriteAllText(filePath, header + "\n");
 
+        List<object> value = new List<object>();
+        value.Add(SystemInfo.deviceUniqueIdentifier);
+        value.Add(patchID);
+        value.Add(gameID);
+        value.Add(worldLevel);
+        value.Add(encounterLevel);
+        value.Add(roomName);
+        value.Add(gameWon);
+        value.Add(totalGold);
+        value.Add(expGained);
+        value.Add(overkill);
+        value.Add(totalDamage);
+        value.Add(damageArmored);
+        value.Add(damageOverhealedProtected);
+        value.Add(damageAvoided);
+        value.Add(secondsInGame);
+        value.Add(numCardUsed);
+        value.Add(achievement1Value);
+        value.Add(achievement2Value);
+        value.Add(achievement3Value);
+        value.Add(partyUsed);
+        value.Add(isEndRoom);
+        value.Add(isImpromptuFeedback);
+        value.Add(ratingOutOf5);
+        value.Add(feedbackType);
+        value.Add(freeTextField);
+        value.Add(errorLogs);
+
         string delimiter = ",";
         string line = SystemInfo.deviceUniqueIdentifier;
 
-        line += delimiter + patchID;
-        line += delimiter + gameID;
-        line += delimiter + worldLevel;
-        line += delimiter + encounterLevel;
-        line += delimiter + roomName;
-        line += delimiter + gameWon;
-        line += delimiter + totalGold;
-        line += delimiter + expGained;
-        line += delimiter + overkill;
-        line += delimiter + totalDamage;
-        line += delimiter + damageArmored;
-        line += delimiter + damageOverhealedProtected;
-        line += delimiter + damageAvoided;
-        line += delimiter + secondsInGame;
-        line += delimiter + numCardUsed;
-        line += delimiter + achievement1Value;
-        line += delimiter + achievement2Value;
-        line += delimiter + achievement3Value;
-        line += delimiter + partyUsed;
-        line += delimiter + isEndRoom;
-        line += delimiter + isImpromptuFeedback;
-        line += delimiter + ratingOutOf5;
-        line += delimiter + feedbackType;
-        line += delimiter + freeTextField;
+        for (int i = 1; i < value.Count; i++)
+            line += delimiter + (string)value[i];
 
         File.AppendAllText(filePath, line + "\n");
+
+        //try
+        //{
+        string range = "Sheet1!A:Z";
+        SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum valueInputOption = (SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum)1;
+        SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum insertDataOption = (SpreadsheetsResource.ValuesResource.AppendRequest.InsertDataOptionEnum)1;
+        Google.Apis.Sheets.v4.Data.ValueRange requestBody = new Google.Apis.Sheets.v4.Data.ValueRange();
+        requestBody.Range = "Sheet1!A:Z";
+        requestBody.Values = new List<IList<object>>();
+        requestBody.Values.Add(value);
+        requestBody.MajorDimension = "ROWS";
+        SpreadsheetsResource.ValuesResource.AppendRequest request = service.Spreadsheets.Values.Append(requestBody, spreadsheetID, range);
+        request.ValueInputOption = valueInputOption;
+        request.InsertDataOption = insertDataOption;
+        request.ExecuteAsync();
+        //}
+        //catch { }
     }
 
     public void SaveDeckInfo(string patchID, string gameID, string worldLevel, string encounterLevel, string cardColor, string cardName, string energyCost, string manaCost, string chosenFlag, string removedFlag, string finalDeckListFlag, string attachedEquipment)
@@ -758,7 +804,7 @@ public class InformationLogger : MonoBehaviour
         string path = GetCombatPath() + "/storyModeSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
         if (debug)
             path = GetCombatPath() + "/storyModeDebugSaveFile" + SystemInfo.deviceUniqueIdentifier + ".sav";
-        Debug.Log(path);
+
         StoryModeSaveFile saveFile = null;
         if (File.Exists(path))
         {
@@ -941,7 +987,7 @@ public class InformationLogger : MonoBehaviour
         string[] colors = PartyController.party.GetPlayerColorTexts();
 
         preferences.lastPatchRead = lastPatchRead;
-        preferences.latestDateShopOpened = StoryModeController.story.GetDailySeed();
+        preferences.latestDateShopOpened = GetDailySeed();
         preferences.dailyRerollsLeft = dailyRerollsLeft;
         preferences.weeklyRerollsLeft = weeklyRerollsLeft;
         preferences.tutorialCompleted = tutorialCompleted;
@@ -1261,6 +1307,35 @@ public class InformationLogger : MonoBehaviour
     public void SetMenuIconsEnabled(bool[] value)
     {
         menuIconEnabled = value;
+    }
+
+    public int GetSecondSeed()
+    {
+        return secondSeed;
+    }
+
+    //Used for accounting for daily card randomization. Takes rerolls into account
+    public int GetDailySeed()
+    {
+        return dailySeed + InformationLogger.infoLogger.GetDailyRerollsLeft() * 999999;
+    }
+
+    //Used for accounting for weekly card randomization. Takes rerolls into account
+    public int GetWeeklySeed()
+    {
+        return weeklySeed + InformationLogger.infoLogger.GetWeeklyRerollsLeft() * 999999;
+    }
+
+    //Used for day of week calculations
+    public int GetRawDailySeed()
+    {
+        return dailySeed;
+    }
+
+    //Used for week of month calculations
+    public int GetRawWeeklySeed()
+    {
+        return weeklySeed;
     }
 
     private void OnDestroy()

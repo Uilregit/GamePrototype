@@ -44,7 +44,17 @@ public class LootController : MonoBehaviour
 
     public void ResetPartyLootTable()
     {
-        Debug.Log("Party is: " + PartyController.party.partyColors[0] + "|" + PartyController.party.partyColors[1] + "|" + PartyController.party.partyColors[2] + "|");
+        rareCards = new List<Card>();
+        commonCards = new List<Card>();
+        starterDefenceCards = new List<Card>();
+        starterAttackCards = new List<Card>();
+        starterSpecialCards = new List<Card>();
+
+        allEnergyCards = new List<Card>();
+        allManaCards = new List<Card>();
+        allRareCards = new List<Card>();
+        allCommonCards = new List<Card>();
+
         foreach (Card card in cardLootTable.cardLoot)
         {
             if (card.manaCost > 0)

@@ -29,7 +29,9 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Locked Slots
   popupImage: {fileID: 21300000, guid: 76aa083addbf877419b73fe461176b98, type: 3}
-  popupDescription: Outside encounters, non starter cards can only be equipped to
-    equipment slots. That's how the shop keepers get ya.
+  popupDescription: Outside encounters, you can only attach your non-starter cards
+    to equipments. Go buy them at the shop! That's how the shopkeepers get ya
+  ting: 

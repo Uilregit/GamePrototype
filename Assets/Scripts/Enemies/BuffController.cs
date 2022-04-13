@@ -62,7 +62,7 @@ public class BuffController : MonoBehaviour
                 if (traceList != null && traceList.Any(x => x.GetTriggerEffectType() == buff.GetTriggerEffectType())) //Prevent infinite loops of buffs triggering itself in chains. (heal on damage, damage on heal, triggering eachother in a loop)
                     continue;
 
-                yield return StartCoroutine(buff.Trigger(selfHealthController, healthController, value, traceList, null));
+                yield return StartCoroutine(buff.Trigger(selfHealthController, healthController, value, traceList, null, waitTimeMultiplier));
 
                 if (MultiplayerGameController.gameController != null)   //For multiplayer sync
                 {

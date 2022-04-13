@@ -35,7 +35,10 @@ public class CardDragController : DragController
 
     private List<HealthController> knockbackPreviews = new List<HealthController>();
 
+    private List<GameObject> simulationObjs = new List<GameObject>();
+
     private Coroutine showingToolTip;
+    private Coroutine showingSimulatedHealthBar = null;
 
     // Start is called before the first frame update
     void Start()
@@ -203,10 +206,15 @@ public class CardDragController : DragController
                     TileCreator.tileCreator.CreateTiles(this.gameObject, GridController.gridController.GetRoundedVector(mousePosition, 1), Card.CastShape.Circle, castTileSize, new Color(0.6f, 0, 0), 1);
                     castLocation = GridController.gridController.GetRoundedVector(mousePosition, 1);
 
-                    StopAllCoroutines();
+                    if (showingSimulatedHealthBar != null)
+                    {
+                        StopCoroutine(showingSimulatedHealthBar);
+                        cardController.StopAllCoroutines();
+                        ResetSimulationObjects();
+                    }
                     cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
                     card.SetCenter(castLocation);
-                    StartCoroutine(ShowSimulatedHealthBar(TileCreator.tileCreator.GetTilePositions(1)));
+                    showingSimulatedHealthBar = StartCoroutine(ShowSimulatedHealthBar(TileCreator.tileCreator.GetTilePositions(1)));
 
                     //StartCoroutine(ShowSimulatedHealthBar(new List<Vector2>() { castLocation }));
                 }
@@ -253,6 +261,8 @@ public class CardDragController : DragController
     {
         if (TutorialController.tutorial.GetEnabled())
             return;
+
+        ResetSimulationObjects();
 
         desiredRotation = Vector2.zero;
 
@@ -443,6 +453,7 @@ public class CardDragController : DragController
             obj.GetComponent<HealthController>().HideHealthBar();
         foreach (EnemyController obj in TurnController.turnController.GetEnemies())
             obj.GetComponent<HealthController>().HideHealthBar();
+        HideKnockbackPreview();
 
         int numPositionsWithMultiTargets = 0;
         int maxTargetsPerPosition = 0;
@@ -462,52 +473,99 @@ public class CardDragController : DragController
         int currentLocationId = 0;
         Vector2 multiloc = locations[0];
         bool flipped = false;
-        foreach (Vector2 loc in locations)           //Show damage that would have been done
+
+        //Block for creating the simulation objects and processing their simulations
+        Dictionary<HealthController, HealthController> simulations = new Dictionary<HealthController, HealthController>();
+        Dictionary<Vector2, List<HealthController>> objLocations = new Dictionary<Vector2, List<HealthController>>();
+        ResetSimulationObjects();
+        GameObject simulationCaster = null;
+        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(locations, new string[] { "Player", "Enemy" }))
         {
-            List<GameObject> targets = GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" });
-            if (targets.Count == 1)
-            {
-                HealthController hlthController = targets[0].GetComponent<HealthController>();
-                HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+            HealthController hlthController = obj.GetComponent<HealthController>();
 
-                yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true, simulation.gameObject));
+            if (hlthController.GetIsSimulation())
+                continue;
 
-                Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f);
-                hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true);
-                ShowKnockbackPreview(hlthController, simulation);
-            }
-            else if (targets.Count > 1)
-            {
-                int currentTargetId = 0;
-                multiloc = loc;
-                foreach (GameObject obj in targets)
-                {
-                    HealthController hlthController = obj.GetComponent<HealthController>();
-                    HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+            HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
 
-                    yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), new List<GameObject> { simulation.gameObject }, new List<Vector2> { simulation.transform.position }, false, true, simulation.gameObject));
+            simulations.Add(hlthController, simulation);
 
-                    Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f + currentTargetId * 1.5f);
-                    if (positionsWithTargets.Any(x => x.x == loc.x && x.y > loc.y && x != loc))
-                    {
-                        offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, -3.1f - currentTargetId * 1.5f);
-                        flipped = true;
-                    }
-                    StartCoroutine(hlthController.ShowDamagePreviewBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), simulation, hlthController.charDisplay.sprite.sprite, loc + offset));
-                    ShowKnockbackPreview(hlthController, simulation);
-                    currentTargetId++;
-                }
-            }
-            if (targets.Count > 1)
-                currentLocationId++;
+            if (objLocations.ContainsKey((Vector2)obj.transform.position))
+                objLocations[(Vector2)obj.transform.position].Add(hlthController);
+            else
+                objLocations[(Vector2)obj.transform.position] = new List<HealthController> { hlthController };
+
+            simulationObjs.Add(simulation.gameObject);
+
+            if (obj == cardController.GetCaster())
+                simulationCaster = simulation.gameObject;
         }
-        Vector2 backdropOffset = new Vector2(0, 1f);
-        if (flipped)
-            backdropOffset = new Vector2(0, -1f);
-        if (numPositionsWithMultiTargets > 0)
-            GameController.gameController.SetDamagePrevieBackdrop(multiloc + backdropOffset, numPositionsWithMultiTargets, maxTargetsPerPosition, flipped);
-        else
-            GameController.gameController.SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+        if (simulationCaster == null && !cardController.GetCaster().GetComponent<HealthController>().GetIsSimulation())
+            simulationCaster = GameController.gameController.GetSimulationCharacter(cardController.GetCaster().GetComponent<HealthController>()).gameObject;
+
+        if (objLocations.Keys.Count != 0)
+        {
+            yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), simulationObjs, locations, false, true, simulationCaster));
+
+            //Block for displaying the simulation health information
+            foreach (Vector2 loc in objLocations.Keys)           //Show damage that would have been done
+            {
+                List<HealthController> targets = objLocations[loc];
+                if (targets.Count == 1)                 //If single enemy per location, then show health previews normally
+                {
+                    HealthController hlthController = targets[0];
+                    HealthController simulation = simulations[hlthController];
+                    Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f);
+                    hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
+
+                    ShowKnockbackPreview(hlthController, simulation);
+                }
+                else if (targets.Count > 1)             //If enemies are stacked, show health previews with yellow backdrop
+                {
+                    int currentTargetId = 0;
+                    multiloc = loc;
+                    foreach (HealthController hlthController in targets)
+                    {
+                        HealthController simulation = simulations[hlthController];
+
+                        Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f + currentTargetId * 1.5f);
+                        if (positionsWithTargets.Any(x => x.x == loc.x && x.y > loc.y && x != loc))
+                        {
+                            offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, -3.1f - currentTargetId * 1.5f);
+                            flipped = true;
+                        }
+                        StartCoroutine(hlthController.ShowDamagePreviewBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), simulation, hlthController.charDisplay.sprite.sprite, loc + offset));
+                        ShowKnockbackPreview(hlthController, simulation);
+                        currentTargetId++;
+                    }
+                }
+                if (targets.Count > 1)
+                    currentLocationId++;
+            }
+
+            //Block for moving the backdrop for when overlapping targets are being targeted
+            Vector2 backdropOffset = new Vector2(0, 1f);
+            if (flipped)
+                backdropOffset = new Vector2(0, -1f);
+            if (numPositionsWithMultiTargets > 0)
+                GameController.gameController.SetDamagePrevieBackdrop(multiloc + backdropOffset, numPositionsWithMultiTargets, maxTargetsPerPosition, flipped);
+            else
+                GameController.gameController.SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+        }
+        ResetSimulationObjects();
+        GameController.gameController.ReportSimulationFinished(simulationCaster.GetComponent<HealthController>());
+
+        showingSimulatedHealthBar = null;
+    }
+
+    private void ResetSimulationObjects()
+    {
+        //Might be overkill returning simulations that would have been returned at the end of the simulated health previews process
+        //Or remove from there and keep all simulation controlls here
+
+        foreach (GameObject obj in simulationObjs)
+            GameController.gameController.ReportSimulationFinished(obj.GetComponent<HealthController>());
+        simulationObjs = new List<GameObject>();
     }
 
     private void ShowKnockbackPreview(HealthController original, HealthController simulation)

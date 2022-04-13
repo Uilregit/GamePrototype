@@ -78,8 +78,11 @@ public class StoryModeShopCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
+        Debug.Log("here");
         if (TutorialController.tutorial.GetEnabled())
             return;
+
+        Debug.Log("there");
 
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
@@ -147,8 +150,6 @@ public class StoryModeShopCardController : MonoBehaviour
             hasEnoughMaterials = true;
         else if (rarity == Card.Rarity.Legendary && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.LegendaryWildCard) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.LegendaryWildCard] > 0)
             hasEnoughMaterials = true;
-
-        Debug.Log(hasEnoughMaterials);
 
         if (hasEnoughMaterials)
             Show();

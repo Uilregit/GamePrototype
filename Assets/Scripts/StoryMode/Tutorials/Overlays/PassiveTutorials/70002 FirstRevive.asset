@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: It's Alive!
+  popupLargeImage: 0
+  popupTitle: Raise
   popupImage: {fileID: 21300000, guid: 7cd48e73a3e91c24e849de70d0061280, type: 3}
   popupDescription: Death turns all that color's cards into "Raise" cards. Cast it
     to bring them back with full health and PTSD!
+  ting: Death turns all that color's cards into "Raise" cards. Cast it to bring them
+    back with full health and PTSD!

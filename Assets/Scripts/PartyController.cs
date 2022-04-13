@@ -338,7 +338,6 @@ public class PartyController : MonoBehaviour
 
     public void SetOverrideParty(bool state)
     {
-        Debug.Log("override party called");
         if (state)
             SetOverrideParty(RoomController.roomController.GetCurrentRoomSetup().overrideParty);
         else

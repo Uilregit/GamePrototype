@@ -51,6 +51,8 @@ public class StoryModeEndSceenController : MonoBehaviour
         if (setup.overrideColors != null && setup.overrideColors.Length == 3)
             PartyController.party.SetOverrideParty(false);
 
+        StoryModeController.story.SetAbandonButton(false);
+
         //Skip final rewards. Used by tutorials
         if (setup.skipFinalRewards)
             BuyAndExit();
@@ -218,7 +220,7 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public void OpenPack()
     {
-        Random.InitState(StoryModeController.story.GetSecondSeed());
+        Random.InitState(InformationLogger.infoLogger.GetSecondSeed());
         for (int i = 0; i < cards.Length; i++)
         {
             if (Random.Range(0f, 1f) < 0.2)                                                 //~1 equipment per pack
@@ -324,8 +326,6 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public virtual void BuyAndExit()
     {
-        MusicController.music.PlaySFX(MusicController.music.uiUseHighSFX);
-
         if (!InformationLogger.infoLogger.debug)
         {
             InformationLogger.infoLogger.SaveSinglePlayerRoomInfo(InformationLogger.infoLogger.patchID,
@@ -333,10 +333,10 @@ public class StoryModeEndSceenController : MonoBehaviour
                 RoomController.roomController.worldLevel.ToString(),
                 RoomController.roomController.selectedLevel.ToString(),
                 RoomController.roomController.roomName,
-                "True",
+                RoomController.roomController.GetRoomJustWon().ToString(),
                 maxGold.ToString(),
                 totalGold.ToString(),
-                "-1",
+                ScoreController.score.GetOverKill().ToString(),
                 ScoreController.score.GetDamage().ToString(),
                 ScoreController.score.GetDamageArmored().ToString(),
                 ScoreController.score.GetDamageOverhealProtected().ToString(),
@@ -351,28 +351,17 @@ public class StoryModeEndSceenController : MonoBehaviour
                 "False",
                 rating.ToString(),
                 "EndRoomFeedback",
-                comments.text);
+                comments.text,
+                TutorialController.tutorial.GetErrorLogs());
         }
 
-        ResourceController.resource.ChangeGold(-ResourceController.resource.GetGold());
-        ResourceController.resource.ResetReviveUsed();
-        AchievementSystem.achieve.ResetAchievements();
         StoryModeController.story.ReportItemsBought(boughtItems);
         StoryModeController.story.ReportCardsBought(boughtCards);
         StoryModeController.story.ReportEquipmentBought(boughtEquipiments);
         StoryModeController.story.AddChallengeItemsBought(StoryModeController.story.GetCurrentRoomID(), challengeItemsBought);
         StoryModeController.story.ReportColorsCompleted(StoryModeController.story.GetCurrentRoomID(), PartyController.party.GetPlayerCasterColors());
-        Destroy(RoomController.roomController.gameObject);
-        RoomController.roomController = null;
-        InformationLogger.infoLogger.SaveStoryModeGame();   //Must come before reset decks otherwise items will be overwritten
-        InformationController.infoController.ResetCombatInfo();     //Reset all team stats tracking
-        InformationController.infoController.firstRoom = true;
-        StoryModeController.story.ResetDecks();
-        StoryModeController.story.ResetRewardsRerollLeft();
-        StoryModeController.story.SetMenuBar(true);
-        StoryModeController.story.SetCombatInfoMenu(false);
-        StoryModeController.story.ShowMenuSelected(0);
-        ResourceController.resource.EnableStoryModeRelicsMenu(false);
+
+        StoryModeController.story.ReturnToMapScene();
 
         if (!UnlocksController.unlock.GetUnlocks().firstTutorialRoomCompleted)
         {
@@ -381,8 +370,6 @@ public class StoryModeEndSceenController : MonoBehaviour
         }
 
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuExit, 1);
-
-        SceneManager.LoadScene("StoryModeScene");
 
         if (boughtCards.Keys.Count > 0)
         {
@@ -399,6 +386,12 @@ public class StoryModeEndSceenController : MonoBehaviour
             StoryModeController.story.EnableMenuIcon(1);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.NewCharUnlocked, 1);
         }
+        if (boughtItems.ContainsKey(StoryModeController.RewardsType.CommonWildCard) && boughtItems[StoryModeController.RewardsType.CommonWildCard] > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.WildCardUnlocked, 1);
+        if (boughtItems.ContainsKey(StoryModeController.RewardsType.RareWildCard) && boughtItems[StoryModeController.RewardsType.RareWildCard] > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.WildCardUnlocked, 1);
+        if (boughtItems.ContainsKey(StoryModeController.RewardsType.LegendaryWildCard) && boughtItems[StoryModeController.RewardsType.LegendaryWildCard] > 0)
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.WildCardUnlocked, 1);
     }
 
     public void ReportLevelUp()

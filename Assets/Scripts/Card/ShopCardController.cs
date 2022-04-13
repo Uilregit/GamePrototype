@@ -10,7 +10,6 @@ public class ShopCardController : MonoBehaviour
     private Equipment equipment;
     private int price;
     private float clickedTime;
-    private Collider2D col;
     private CardDisplay cardDisplay;
     private bool picked = false;
 
@@ -26,7 +25,6 @@ public class ShopCardController : MonoBehaviour
     private void Awake()
     {
         cardDisplay = transform.GetChild(0).GetComponent<CardDisplay>();
-        col = GetComponent<Collider2D>();
         localScale = transform.localScale;
         originalLocation = transform.position;
         originalCanvas = transform.parent.GetComponent<Canvas>();
@@ -53,7 +51,7 @@ public class ShopCardController : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (TutorialController.tutorial.GetEnabled())
+        if (TutorialController.tutorial.GetEnabled() || !cardDisplay.GetHighlight())
             return;
 
         clickedTime = Time.time;
@@ -62,7 +60,7 @@ public class ShopCardController : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (TutorialController.tutorial.GetEnabled())
+        if (TutorialController.tutorial.GetEnabled() || !cardDisplay.GetHighlight())
             return;
 
         if (equipment == null)
@@ -98,9 +96,9 @@ public class ShopCardController : MonoBehaviour
             ShopController.shop.ReportBoughtCard(card);
         }
 
-        col.enabled = false;
         cardDisplay.Hide();
         priceTag.enabled = false;
+        gameObject.SetActive(false);
     }
 
     public void ResetBuyable()
@@ -117,13 +115,11 @@ public class ShopCardController : MonoBehaviour
     public void Hide()
     {
         cardDisplay.SetHighLight(false);
-        col.enabled = false;
     }
 
     public void Show()
     {
         cardDisplay.SetHighLight(true);
-        col.enabled = true;
     }
 
     private IEnumerator EnlargeCard()

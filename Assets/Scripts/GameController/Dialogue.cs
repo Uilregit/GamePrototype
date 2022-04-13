@@ -94,6 +94,13 @@ public class Dialogue : ScriptableObject
         NewCharUnlocked = 50081,            //
         PartyMenuOpened = 50082,            //
 
+        WildCardUnlocked = 51001,           //
+        WildCardOptionInShop = 51002,       //
+
+            //Suggestions
+        AllUnplayableCards = 60001,         //
+        ExcessManaGained = 60002,           //
+
             //Combat infos
         FirstDeath = 70001,                 //
         FirstRevive = 70002,                //
@@ -104,14 +111,21 @@ public class Dialogue : ScriptableObject
         Break2ndTurn = 70021,               //
         BreakRecovery = 70022,              //
 
-        DiscardPileShuffle = 70051,     //maybe remove?
+        DiscardPileShuffle = 70051,         //maybe remove?
 
         FirstClassicModeRelic = 80001,
         FirstArenaRelic = 80002,
 
         EnemyHasPassive = 90001,            //
 
+            //Game quality of life
+        AbandonRunButton = 95001,
+        EndTurnToSpeedUpButton = 95002,
+
+            //Game modes
         ClassicModeStart = 99001,
+        ArenaStart = 99010,                 //
+        NakedArenaStart = 99020,            //
 
         //Ending popups
         PopupEnded = 99999,                 //

@@ -6190,7 +6190,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -935817297
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_TargetDisplay: 0
 --- !u!224 &922887930
 RectTransform:
@@ -12026,6 +12026,7 @@ GameObject:
   - component: {fileID: 1938481802}
   - component: {fileID: 1938481804}
   - component: {fileID: 1938481803}
+  - component: {fileID: 1938481807}
   m_Layer: 5
   m_Name: RewardCardRerolls
   m_TagString: Untagged
@@ -12129,6 +12130,27 @@ RectTransform:
   m_AnchoredPosition: {x: 2.53, y: 4.28}
   m_SizeDelta: {x: 2.36, y: 0.73}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &1938481807
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938481801}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -935817297
+  m_SortingOrder: 11
+  m_TargetDisplay: 0
 --- !u!1 &1955658611
 GameObject:
   m_ObjectHideFlags: 0

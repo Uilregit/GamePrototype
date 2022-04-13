@@ -131,8 +131,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         if (!isSimulation)
             AchievementSystem.achieve.OnNotify(0, StoryRoomSetup.ChallengeType.TakeLessThanXTotalDamage);
-
-        charDisplay.healthBar.SetMaxHealth(maxVit);
     }
 
     public BuffController GetBuffController()
@@ -195,8 +193,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             currentVit = maxVit + equipVit;
             ResetVitText(currentVit);
         }
-
-        charDisplay.healthBar.SetMaxHealth(maxVit);
     }
 
     public void SetCurrentVit(int newValue)
@@ -854,10 +850,22 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             yield break; //Show resist on UI
         isBeingKnockedBack = true;
 
+        if (knockbackDirection.x == 0 ^ knockbackDirection.y == 0)                          //If knockback is in a cardinal direction, use that
+            knockbackDirection = knockbackDirection.normalized;
+        else if (Mathf.Abs(knockbackDirection.x) != Mathf.Abs(knockbackDirection.y))        //If knockback is more on one direction than another, round to the nearest cardinal direction
+        {
+            if (Mathf.Abs(knockbackDirection.x) > Mathf.Abs(knockbackDirection.y))
+                knockbackDirection = new Vector2(Mathf.Sign(knockbackDirection.x), 0);
+            else
+                knockbackDirection = new Vector2(0, Mathf.Sign(knockbackDirection.y));
+        }
+        else                                                                                //If knockback is in a diagonal, knockback is also diagonal
+            knockbackDirection = new Vector2(Mathf.Pow(1f, 0.5f) * Mathf.Sign(knockbackDirection.x), Mathf.Pow(1f, 0.5f) * Mathf.Sign(knockbackDirection.y));
+
         Vector2 originalLocation = transform.position;
         for (int i = 1; i <= Mathf.Abs(steps); i++)
         {
-            Vector2 knockedToCenter = originalLocation + knockbackDirection.normalized * i * Mathf.Sign(steps);
+            Vector2Int knockedToCenter = Vector2Int.RoundToInt(originalLocation + knockbackDirection * i * Mathf.Sign(steps));
 
             List<Vector2> aboutToBePositions = new List<Vector2>();
             foreach (Vector2 loc in occupiedSpaces)
@@ -901,7 +909,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 yield return StartCoroutine(LerpToPosition(transform.position, knockedToCenter, 0.05f * TimeController.time.timerMultiplier));
             }
             else
-                transform.position = knockedToCenter;
+                transform.position = new Vector3(knockedToCenter.x, knockedToCenter.y, transform.position.z);
 
             try
             {
@@ -1174,7 +1182,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         if (oldHealth > 0 && oldHealth - damage <= 0 && !isSimulation)   //Trigger on health below 0 actions
         {
-            if (isPlayer && Random.Range(0, 100) <= 20)                   //Give all players a 20% chance of defying death and retain health
+            if (isPlayer && Random.Range(0, 100) <= 20 && (StoryModeController.story == null || StoryModeController.story.GetCurrentRoomSetup() == null || !StoryModeController.story.GetCurrentRoomSetup().noAchievements))                   //Give all players a 20% chance of defying death and retain health, but not during tutorials
             {
                 SetCurrentVit(1);
                 charDisplay.healthBar.SetStatusText("Defied", new Color(224, 37, 0));
@@ -1233,7 +1241,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (oldHealth == -1)
             oldHealth = currentVit + bonusVit;
 
-        if (simHlthController == null)
+        if (simHlthController == null && !isSimulation)
             simHlthController = GameController.gameController.GetSimulationCharacter(this);
 
         if (!isSimulation)
@@ -1269,6 +1277,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         }
     }
 
+    //Used for overlapping characters
     public IEnumerator ShowDamagePreviewBar(int damage, int oldHealth, HealthController simHlthController, Sprite sprite, Vector2 castLocation)
     {
         yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));

@@ -35,7 +35,7 @@ public class RoomSetup : ScriptableObject
     public Card[] cardOrder;
     public int overrideHandSize = -1;
     public int overrideReplaces = -1;
-    public Card.CasterColor[] overrideParty;
+    public Card.CasterColor[] overrideParty = new Card.CasterColor[0];
     public int overrideSeed = -1;
 
     public List<UIRevealController.UIElement> hiddenUIElements;

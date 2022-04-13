@@ -29,6 +29,8 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: Passive Abilities
   popupImage: {fileID: 21300000, guid: 55e7a812efd0c134b9840d57296f91cc, type: 3}
   popupDescription: Some enemies have passive abilities. Tap them to see details.
+  ting: Some enemies have passive abilities. Tap them to see details.

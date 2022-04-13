@@ -315,33 +315,40 @@ public class CardController : MonoBehaviour
         else
             cardDisplay.SetHighLight(false);
 
+        bool hasDisabledStats = false;
         if (caster.GetComponent<HealthController>().GetStunned())
         {
             cardDisplay.SetHighLight(false);
             cardDisplay.SetDisableStats("Stunned");
             highlight = false;
+            hasDisabledStats = true;
         }
         if (card.manaCost > 0 && GetCaster().GetComponent<HealthController>().GetSilenced())
         {
             cardDisplay.SetHighLight(false);
             cardDisplay.SetDisableStats("Silenced");
             highlight = false;
+            hasDisabledStats = true;
         }
         if (card.manaCost == 0 && GetCaster().GetComponent<HealthController>().GetDisarmed())
         {
             cardDisplay.SetHighLight(false);
             cardDisplay.SetDisableStats("Disarmed");
             highlight = false;
+            hasDisabledStats = true;
         }
+        if (!hasDisabledStats)
+            cardDisplay.ClearDisableStats();
 
         if (highlight)
-        {
             ResetConditionHighlight();              //Only allow conditional highlight if the card is playable
-            cardDisplay.disabledStatusText.enabled = false;
-            cardDisplay.disabledStatusText.text = "";
-        }
         else
             cardDisplay.SetConditionHighlight(false);
+    }
+
+    public bool GetHasEnoughResources()
+    {
+        return cardDisplay.GetHighlight() && cardDisplay.GetDisableStats() == "";
     }
 
     public void ResetCard()

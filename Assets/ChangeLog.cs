@@ -1168,7 +1168,7 @@ Fixed bug where enemies will stay in place if their target is out of range
 Fixed UI bug where player's armor change indicator will be misalighed after moving the player
 
 #####################
-###### 0.5.2.3 ######
+####### 0.5.3 #######
 #####################
 -- Cards --
     - Green -
@@ -1189,6 +1189,9 @@ Fixed UI bug where player's armor change indicator will be misalighed after movi
 -- Highlights --
 Holding the end turn button on the enemy's turn now speeds up the game by 3x
 Added feedback menu for constant feedback
+Added option to abandon runs and return to maps for rooms you've already completed
+Added anonymous tracking of feedback and room info that uploads to google sheets
+Added teases of features that would be included in the full release at the end of the demo
 
 -- Enemies --
 
@@ -1206,6 +1209,11 @@ Card packs and level up implemented in story mode
 Added 5 star rating systems after every story mode room
 Added feedback menu for constant feedback
 Holding the end turn button on the enemy's turn now speeds up the game by 3x
+Optimized health preview speed when multiple characters are targeted by a single card
+Knockback is now more robust to different angles, and will now support diagonal knockback
+Added option to abandon runs and return to maps for rooms you've already completed
+Added anonymous tracking of feedback and room info that uploads to google sheets
+Passive tutorials and defying death can no longer trigger during tutorials
 
 -- UI --
 Added message for reaching the end of the demo
@@ -1226,11 +1234,25 @@ Characters will be knocked around slightly when damaged
 Characters will now fade away when dead
 Added new combat background for the tutorial world
 Added new coloring options for worlds
+Added skull icon for dead character's health bars
+Improved health preview time on characters with status effects
+Added teases of features that would be included in the full release at the end of the demo
+Imporved preview health bar accuracy
+    Health bar ticks now account for increased max health due to overhealing
+    Fixed various bugs when healing and damaging around 0 health
+    Fixed various bugs when healing and damaging around max health
+    Fixed various bugs when current health is above max health
+Added various passive tutorials to streamline new features
+Passive tutorials will now only trigger 1 at a time
 
 -- Bugs --
 Fixed bug where switching world wouldn't deselect the room in the previous world
 Fixed bug where hp bars appear in front of combat end menu
 Fixed visual bug where equipment icons on cards doesn't fade when card is casted
+Fixed bug where one character's health bar preview will use another target's values when targeting multiple targets
+Fixed bug where old colors' cards could be offered as rewards after switching colors
+Fixed timer and abandon button not resetting when all players die
+Fixed bugs where shop cards could not be selected
 
 -- To dos --
 Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

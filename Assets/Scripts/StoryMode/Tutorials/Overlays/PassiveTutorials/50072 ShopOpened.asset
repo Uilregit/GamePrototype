@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: The Forge
+  popupLargeImage: 0
+  popupTitle: Buy Cards
   popupImage: {fileID: 21300000, guid: 55d7f240cd4418f47b12d77a1032ac30, type: 3}
   popupDescription: Daily Deals and Weekly Wares change once in a while, come back
     often! Inventory limited by supply chain issues.
+  ting: Daily Deals and Weekly Wares change once in a while, come back often! Inventory
+    limited by supply chain issues.

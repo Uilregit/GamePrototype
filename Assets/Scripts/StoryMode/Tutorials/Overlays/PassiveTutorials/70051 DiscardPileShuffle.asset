@@ -29,7 +29,9 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Card Shuffle
+  popupLargeImage: 0
+  popupTitle: Out of Cards
   popupImage: {fileID: 21300000, guid: 873a8e0a31c062946a0a73fc4c5332da, type: 3}
   popupDescription: 'If you''ve used every card, they''re shuffled and you draw them
     again. '
+  ting: 'If you''ve used every card, they''re shuffled and you draw them again. '

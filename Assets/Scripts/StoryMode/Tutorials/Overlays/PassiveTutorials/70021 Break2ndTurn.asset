@@ -29,7 +29,10 @@ MonoBehaviour:
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
-  popupTitle: Break
+  popupLargeImage: 0
+  popupTitle: Stay Broken
   popupImage: {fileID: 21300000, guid: 4e2075f27c5bbc749ad9cf0200999c38, type: 3}
   popupDescription: Broken characters stay broken for 1 extra turn. Quick, kick em
     while they're down!
+  ting: Broken characters stay broken for 1 extra turn. Quick, kick em while they're
+    down!

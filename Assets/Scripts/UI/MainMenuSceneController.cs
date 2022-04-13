@@ -28,7 +28,6 @@ public class MainMenuSceneController : MonoBehaviour
         }
         else
         {
-            patchNotification.enabled = InformationLogger.infoLogger.GetLastPatchRead() != InformationLogger.infoLogger.patchID;
             //newGameButton.enabled = false;
             string[] partyColors = InformationLogger.infoLogger.GetLoadPartyColors();
             loadGameButton.transform.GetChild(1).GetComponent<Image>().color = PartyController.party.GetPlayerColor(PartyController.party.GetPlayerCasterColor(partyColors[0]));
@@ -41,6 +40,8 @@ public class MainMenuSceneController : MonoBehaviour
             newGameButton.gameObject.SetActive(false);
             loadGameButton.gameObject.SetActive(false);
         }
+
+        patchNotification.enabled = InformationLogger.infoLogger.GetLastPatchRead() != InformationLogger.infoLogger.patchID;
     }
 
     private void FixedUpdate()

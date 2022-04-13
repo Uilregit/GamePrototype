@@ -365,7 +365,6 @@ public class DeckController : MonoBehaviour
 
     public void SetDecks(Dictionary<string, ListWrapper> value)
     {
-        Debug.Log("Set decks");
         ListWrapper[] newList = new ListWrapper[3];
         for (int i = 0; i < 3; i++)
             newList[i] = value[PartyController.party.GetPlayerColorTexts()[i]];

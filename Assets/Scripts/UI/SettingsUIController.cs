@@ -18,6 +18,7 @@ public class SettingsUIController : MonoBehaviour
     public Image[] soundEffectsVolumeOptions;
     public Image backgroundMusicVolumeMuteOption;
     public Image soundEffectsVolumeMuteOption;
+    public Image resetTutorialsOption;
     public Text backgroundMusicTitle;
     public Text soundEffectsTitle;
     private int backGroundMusicVolume;
@@ -224,6 +225,14 @@ public class SettingsUIController : MonoBehaviour
                 remainingMoveRangeIndicatorOptions[i].transform.GetChild(1).GetComponent<Text>().color = unselectedColor;
             }
         }
+    }
+
+    public void ResetTutorials()
+    {
+        TutorialController.tutorial.ResetCompletedPassiveTutorialIDs();
+        resetTutorialsOption.color = selectedColor;
+        resetTutorialsOption.transform.GetChild(0).GetComponent<Image>().color = selectedColor;
+        resetTutorialsOption.transform.GetChild(1).GetComponent<Text>().color = selectedColor;
     }
 
     public void BackButton()

@@ -38,8 +38,7 @@ public class VitDamageEffect : Effect
 
                 targetHealthController.TakeVitDamage(damageValue, caster.GetComponent<HealthController>());
             }
-            //yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
-            yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
         if (totalDamageValue > 0 && waitTimeMultiplier != 0)        //Don't trigger on damage dealt on simulations
             caster.GetComponent<BuffController>().StartCoroutine(caster.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.OnDamageDealt, caster.GetComponent<HealthController>(), totalDamageValue));
