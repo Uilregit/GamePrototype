@@ -221,6 +221,7 @@ public class TurnController : MonoBehaviour
         float enemyTurnStartTime = Time.time;
         CameraController.camera.ScreenShake(0.03f, 0.05f);
         turnText.text = "Enemy Turn";
+        SetEndTurnButtonEnabled(false);
         MusicController.music.PlaySFX(enemyTurnSound);
         turnText.enabled = true;
         turnTextBack.enabled = true;
@@ -294,8 +295,10 @@ public class TurnController : MonoBehaviour
         CameraController.camera.ScreenShake(0.06f, 0.05f);
         turnText.text = "Your Turn";
         MusicController.music.PlaySFX(playerTurnSound);
+        SetEndTurnButtonEnabled(true);
         turnText.enabled = true;
         turnTextBack.enabled = true;
+
         yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
         turnText.enabled = false;
         turnTextBack.enabled = false;

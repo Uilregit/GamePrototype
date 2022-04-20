@@ -35,6 +35,9 @@ public class DeckCustomizeCardController : MonoBehaviour
     private bool hasNeverBeenShrunk = true;
     private int custCardSlots = 0;
 
+    private float selectedCardsLeftBorder;
+    private float selectedCardsWidth;
+
     private void Awake()
     {
         DontDestroyOnLoad(selectedCardCanvas);
@@ -49,6 +52,9 @@ public class DeckCustomizeCardController : MonoBehaviour
     {
         if (TutorialController.tutorial.GetEnabled())
             return;
+
+        selectedCardsLeftBorder = CollectionController.collectionController.GetSelectedCardLeftBorder();
+        selectedCardsWidth = CollectionController.collectionController.GetSelectedCardWidth();
 
         hasNeverBeenShrunk = true;                              //Used so where the card can potentially go is shown
         transform.SetParent(selectedCardCanvas.transform);
@@ -97,19 +103,27 @@ public class DeckCustomizeCardController : MonoBehaviour
                     CollectionController.collectionController.SetSelectCardWhiteOut(true, i, Color.white);
             else
             {
+                CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
                 float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
-                if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
+                if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder))                           //If card is dragged inside selected card range, show the card slots it can go into
                 {
-                    index = (int)((positionX + 2.4f) / 0.6f);
+                    index = (int)((positionX - selectedCardsLeftBorder) / selectedCardsWidth);
                     CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
                     if (index < custCardSlots)                                                  //Only white out select cards if the card is dragged over slots it can go into
+                    {
                         CollectionController.collectionController.SetSelectCardWhiteOut(true, index, Color.white);
+                        CollectionController.collectionController.SetSelectedCardHighlightIndex(true, index, Color.green);
+                    }
                     else
                         CollectionController.collectionController.SetSelectCardWhiteOut(true, index, Color.red);
                 }
                 else
                     CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);  //If the card is outside range, hide all whiteouts
             }
+        }
+        else
+        {
+            CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
         }
 
         //Enlarge and shink cards
@@ -172,12 +186,10 @@ public class DeckCustomizeCardController : MonoBehaviour
         Show();
         selectedCard.Hide();
 
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 9999, LayerMask.GetMask("Raycast"));
-
-        if (hit.transform != null && hit.transform.GetComponent<SelectedCardController>() != null)
+        float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
+        if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder))                           //If card is dragged inside selected card range, show the card slots it can go into
         {
-            float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
-            int index = (int)((positionX + 2.4f) / 0.6f);
+            int index = (int)((positionX - selectedCardsLeftBorder) / selectedCardsWidth);
 
             if (CollectionController.collectionController.GetIfViableSelectSlot(card.GetCard(), index))  //Only allow cards to be selected in their respective slots
                 SelectCard(index);
@@ -190,6 +202,7 @@ public class DeckCustomizeCardController : MonoBehaviour
 
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
         CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
+        CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
         selectedCardCanvas.transform.SetAsLastSibling();
     }
 

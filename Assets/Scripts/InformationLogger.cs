@@ -144,9 +144,9 @@ public class PlayerPreferences
 [System.Serializable]
 public class Settings
 {
-    public int backgroundMusicVolume = 10;
+    public int backgroundMusicVolume = 5;
     public bool backgroundMusicMuted = false;
-    public int soundEffectsVolume = 10;
+    public int soundEffectsVolume = 5;
     public bool soundEffectsMuted = false;
 
     public int gameSpeedIndex;
@@ -759,7 +759,7 @@ public class InformationLogger : MonoBehaviour
 
     public void LoadStoryModeGame()
     {
-        Debug.Log("#### Loading story mode game ####");
+        Debug.Log("#### Loading story mode game ####" + GetCombatPath());
         StoryModeSaveFile file = LoadStoryModeGameFile();
 
         StoryModeController.story.SetCompletedRooms(file.unlockedRoomIds.ToList());

@@ -7,9 +7,6 @@ public class PathFindController : MonoBehaviour
 {
     public static PathFindController pathFinder;
 
-    private List<AStarNode> openList;
-    private List<AStarNode> closedList;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,14 +14,14 @@ public class PathFindController : MonoBehaviour
             PathFindController.pathFinder = this;
         else
             Destroy(this.gameObject);
-
-        openList = new List<AStarNode>();
-        closedList = new List<AStarNode>();
     }
 
     //Use A* pathfinding to return the full path
     public List<Vector2> PathFind(Vector2 startingLoc, Vector2 endingLoc, string[] pathThroughTag, List<Vector2> occupiedSpaces, int objectSize = 1)
     {
+        List<AStarNode> openList = new List<AStarNode>();
+        List<AStarNode> closedList = new List<AStarNode>();
+
         List<Vector2> output = new List<Vector2>();
 
         float hCost = GetHCost(startingLoc, endingLoc);
@@ -133,10 +130,6 @@ public class PathFindController : MonoBehaviour
         output.Add(currentNode.position);//Add back the first node's position
 
         output.Reverse();
-
-        //Reset for the next pathfind call
-        openList = new List<AStarNode>();
-        closedList = new List<AStarNode>();
 
         return output;
     }

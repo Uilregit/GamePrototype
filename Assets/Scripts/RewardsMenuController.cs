@@ -188,7 +188,7 @@ public class RewardsMenuController : MonoBehaviour
                 RelicController.relic.ResetRelics();
 
                 ScoreController.score.EnableTimerText(false);
-                ScoreController.score.SetSecondsInGame(0);
+                ScoreController.score.SetTimerPaused(true);
                 RoomController.roomController.SetRoomJustWon(true);
                 SceneManager.LoadScene("StoryModeEndScene");
             }

@@ -485,7 +485,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1013974037}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.3855877
+  m_Size: 0.27708554
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -631,8 +631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.21}
-  m_SizeDelta: {x: 5, y: 8.993212}
+  m_AnchoredPosition: {x: 0, y: -0.219}
+  m_SizeDelta: {x: 5, y: 9.01334}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846196275
 MonoBehaviour:
@@ -1030,7 +1030,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5, y: 0.6}
+  m_SizeDelta: {x: 7.2, y: 0.6}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1331992406
 MonoBehaviour:
@@ -1202,7 +1202,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0.20000005, y: 0}
-  m_SizeDelta: {x: 26.422142, y: 150.16599}
+  m_SizeDelta: {x: 26.422142, y: 208.9685}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2048708230
 MonoBehaviour:
@@ -1239,52 +1239,80 @@ MonoBehaviour:
     feedback\r\nAdded option to abandon runs and return to maps for rooms you've
     already completed\r\nAdded anonymous tracking of feedback and room info that
     uploads to google sheets\r\nAdded teases of features that would be included in
-    the full release at the end of the demo\r\n\r\n-- Enemies --\r\n\r\n-- System
-    --\r\nAdded patching to move all world 0 secret shop items to world 1 to accomodate
-    the new tutorial world\r\nKnockback cards now use the direction between caster
-    and cast location instead of caster and target\r\nKnockback on multiple units
-    now apply at the same time\r\nKnockback animate slightly instead of teleport
-    unit to their new locations\r\nAll card process will now trigger only once per
-    object per process call\r\nPassive tutorials will now only be shown once to a
-    player each\r\nRewards cards reroll from secret shop implemented\r\nDaily and
-    weekly shop rerolls from secret shop implemented\r\nWildcards implemented\r\nCard
-    packs and level up implemented in story mode\r\nAdded 5 star rating systems after
-    every story mode room\r\nAdded feedback menu for constant feedback\r\nHolding
-    the end turn button on the enemy's turn now speeds up the game by 3x\r\nOptimized
-    health preview speed when multiple characters are targeted by a single card\r\nKnockback
-    is now more robust to different angles, and will now support diagonal knockback\r\nAdded
-    option to abandon runs and return to maps for rooms you've already completed\r\nAdded
-    anonymous tracking of feedback and room info that uploads to google sheets\r\nPassive
-    tutorials and defying death can no longer trigger during tutorials\r\n\r\n--
-    UI --\r\nAdded message for reaching the end of the demo\r\nReworked party menu\r\nReworked
-    overworld menu\r\nReworked main menu\r\nAdded UI for health previews when targeting
-    cards on stacked targets\r\nAdded UI previews for targets that would be knocked
-    to a different location\r\nAdded UI for clearer and easier page navigation in
-    card collection\r\nAdded ticks to healthbars to better illustrate health totals\r\nLast
-    main menu icon bar is now Shop instead of Skills. Highlights when new items are
-    available\r\nMain menu icons now are locked and unclicable on first play, and
-    get unlocked as they're relavant\r\nAdded hold to preview card/equipment for
-    story mode map room item rewards\r\nAdded hold to preview card/equipment for
-    recruit meny in tavern view\r\nAdded hold to preview card/equipment for shrine
-    scene\r\nCharacters will now squetch and flash when effects are applied to them\r\nCharacters
-    will be knocked around slightly when damaged\r\nCharacters will now fade away
-    when dead\r\nAdded new combat background for the tutorial world\r\nAdded new
-    coloring options for worlds\r\nAdded skull icon for dead character's health bars\r\nImproved
-    health preview time on characters with status effects\r\nAdded teases of features
-    that would be included in the full release at the end of the demo\r\nImporved
-    preview health bar accuracy\r\n    Health bar ticks now account for increased
-    max health due to overhealing\r\n    Fixed various bugs when healing and damaging
-    around 0 health\r\n    Fixed various bugs when healing and damaging around max
-    health\r\n    Fixed various bugs when current health is above max health\r\nAdded
-    various passive tutorials to streamline new features\r\nPassive tutorials will
-    now only trigger 1 at a time\r\n\r\n-- Bugs --\r\nFixed bug where switching world
-    wouldn't deselect the room in the previous world\r\nFixed bug where hp bars appear
-    in front of combat end menu\r\nFixed visual bug where equipment icons on cards
-    doesn't fade when card is casted\r\nFixed bug where one character's health bar
-    preview will use another target's values when targeting multiple targets\r\nFixed
-    bug where old colors' cards could be offered as rewards after switching colors\r\nFixed
+    the full release at the end of the demo\r\n\r\n-- Enemies --\r\n\r\n-- Pacing
+    --\r\nRebalanced World 1 Room 3 Encounter 3 to be easier\r\nEXP needed to level
+    up to level 1 is now 200 instead of 500\r\n\r\n-- System --\r\nAdded patching
+    to move all world 0 secret shop items to world 1 to accomodate the new tutorial
+    world\r\nKnockback cards now use the direction between caster and cast location
+    instead of caster and target\r\nKnockback on multiple units now apply at the
+    same time\r\nKnockback animate slightly instead of teleport unit to their new
+    locations\r\nAll card process will now trigger only once per object per process
+    call\r\nPassive tutorials will now only be shown once to a player each\r\nRewards
+    cards reroll from secret shop implemented\r\nDaily and weekly shop rerolls from
+    secret shop implemented\r\nWildcards implemented\r\nCard packs and level up implemented
+    in story mode\r\nAdded 5 star rating systems after every story mode room\r\nAdded
+    feedback menu for constant feedback\r\nHolding the end turn button on the enemy's
+    turn now speeds up the game by 3x\r\nOptimized health preview speed when multiple
+    characters are targeted by a single card\r\nKnockback is now more robust to different
+    angles, and will now support diagonal knockback\r\nAdded option to abandon runs
+    and return to maps for rooms you've already completed\r\nAdded anonymous tracking
+    of feedback and room info that uploads to google sheets\r\nPassive tutorials
+    and defying death can no longer trigger during tutorials\r\nDoubled sound volume
+    when high or lowpass filter is applied\r\nBuffs of trigger type None will no
+    longer take time during trigger calls\r\nExp reworked. Instead of 1 exp per leftover
+    gold, it's not 10exp per encounter in room times world multiplier, plus 1 exp
+    per 10 leftover gold.\r\n\r\n-- UI --\r\nAdded message for reaching the end of
+    the demo\r\nReworked party menu\r\nReworked overworld menu\r\nReworked main menu\r\nAdded
+    UI for health previews when targeting cards on stacked targets\r\nAdded UI previews
+    for targets that would be knocked to a different location\r\nAdded UI for clearer
+    and easier page navigation in card collection\r\nAdded ticks to healthbars to
+    better illustrate health totals\r\nLast main menu icon bar is now Shop instead
+    of Skills. Highlights when new items are available\r\nMain menu icons now are
+    locked and unclicable on first play, and get unlocked as they're relavant\r\nAdded
+    hold to preview card/equipment for story mode map room item rewards\r\nAdded
+    hold to preview card/equipment for recruit meny in tavern view\r\nAdded hold
+    to preview card/equipment for shrine scene\r\nCharacters will now squetch and
+    flash when effects are applied to them\r\nCharacters will be knocked around slightly
+    when damaged\r\nCharacters will now fade away when dead\r\nAdded new combat background
+    for the tutorial world\r\nAdded new coloring options for worlds\r\nAdded skull
+    icon for dead character's health bars\r\nImproved health preview time on characters
+    with status effects\r\nAdded teases of features that would be included in the
+    full release at the end of the demo\r\nImporved preview health bar accuracy\r\n   
+    Health bar ticks now account for increased max health due to overhealing\r\n   
+    Fixed various bugs when healing and damaging around 0 health\r\n    Fixed various
+    bugs when healing and damaging around max health\r\n    Fixed various bugs when
+    current health is above max health\r\nAdded various passive tutorials to streamline
+    new features\r\nPassive tutorials will now only trigger 1 at a time\r\nFeedback
+    input area is now autocorrected and allows for text wrapping\r\nFeedback menu
+    now pauses the game while it's up\r\nAdded green highlight to collection controller
+    indicated exactly which card slot the card is being dragged into\r\nAdded a 1
+    second grace period after speeding up enemy turns where pressing the end turn
+    button doesn't advance turn\r\nEnd turn button will now have the enemy turn state\r\nAfter
+    an encounter, if the rewards card is added to a later page, it will now default
+    to that page\r\nAdded UI pop up for attack change in the same style as armor
+    change\r\nRearranged world 1 to have more rightward progression in the first
+    half\r\nAdded more visual and music fanfair to boss deaths\r\nAdded more visual
+    fanfair to boss intros\r\n\r\n-- Bugs --\r\nFixed bug where switching world wouldn't
+    deselect the room in the previous world\r\nFixed bug where hp bars appear in
+    front of combat end menu\r\nFixed visual bug where equipment icons on cards doesn't
+    fade when card is casted\r\nFixed bug where one character's health bar preview
+    will use another target's values when targeting multiple targets\r\nFixed bug
+    where old colors' cards could be offered as rewards after switching colors\r\nFixed
     timer and abandon button not resetting when all players die\r\nFixed bugs where
-    shop cards could not be selected"
+    shop cards could not be selected\r\nFixed bug where EndRoomFeedback will always
+    log 0 secondsInGame\r\nFixed replace and end turn button colliders not being
+    in the right place\r\nFixed power shot damage preview showing 0 damage\r\nFixed
+    collection controller not adding in cards dragged between selected card slots\r\nFixed
+    cards casted on space with no targets not resetting correctly\r\nFixed game breaking
+    bug where collection will try to go to page -1 after some rooms\r\nFixed tavern
+    recruit button using unlock controller's instead of storymodecontroller's tavern
+    contracts\r\nFixed white and black being recruitable in demo\r\nFixed bug where
+    characters will not start with the right health if their equipments modified
+    health\r\nFixed bug where simulated characters didn't copy drawn cards attached
+    to buffs properly\r\nFixed bug where simulated buff triggers would draw cards\r\nFixed
+    character attack and armor icons being misalligned with their stats icons sometimes\r\nFixed
+    bug where if player was defeated, end screen would crash and world map would
+    show completed colors"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

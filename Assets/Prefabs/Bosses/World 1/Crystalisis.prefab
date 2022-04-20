@@ -78,6 +78,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c28e4fc66295794584fbb554663f7ba, type: 2}
   moveType: 1
   targetType: 10
+  isBoss: 1
+  bossName: CRYSTALISIS
+  bossTitle: Crystal Core
+  bossSpriteBackColor: {r: 0.36784396, g: 0.33397114, b: 0.745283, a: 1}
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

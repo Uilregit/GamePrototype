@@ -25,11 +25,11 @@ MonoBehaviour:
   valueType: 000000000a00000001000000
   challengeValues: 000000000200000003000000
   challengeComparisonType: 000000000000000000000000
-  bestChallengeValues: ffffffffffffffffffffffff
+  bestChallengeValues: 010000000600000003000000
   skipFinalRewards: 0
   allowRewardsRebuy: 0
   noAchievements: 0
-  rewardTypes: 0000000005000000282300005000000046000000
+  rewardTypes: 2823000008000000f40100005000000046000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
   - {fileID: 0}
   rewardEquipment:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 072e26fc705eba2448fdd5065f9cbd2d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

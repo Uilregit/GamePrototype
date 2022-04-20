@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 7279703294496383875}
   - component: {fileID: 7705537758445358561}
   - component: {fileID: 7480356308148933436}
+  - component: {fileID: 313702843239285550}
   m_Layer: 8
   m_Name: SelectedDeckDisplayCard
   m_TagString: Untagged
@@ -396,6 +397,7 @@ MonoBehaviour:
   collider2d: {fileID: 7480356308148933436}
   whiteOut: {fileID: 684455466687181961}
   cardDisplay: {fileID: 4277768232193029262}
+  canvasGroup: {fileID: 313702843239285550}
 --- !u!61 &7480356308148933436
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -422,6 +424,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.07, y: 0.3}
   m_EdgeRadius: 0
+--- !u!225 &313702843239285550
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279703294496383878}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7279703295559410040
 GameObject:
   m_ObjectHideFlags: 0

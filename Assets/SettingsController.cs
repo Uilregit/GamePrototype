@@ -8,8 +8,8 @@ public class SettingsController : MonoBehaviour
 
     public AudioClip SFXSampleClip;
 
-    private int backGroundMusicVolume = 10;
-    private int soundEffectsVolume = 10;
+    private int backGroundMusicVolume = 5;
+    private int soundEffectsVolume = 5;
     private bool backGroundMusicMuted = false;
     private bool soundEffectsMuted = false;
     private int gameSpeedIndex;

@@ -39,6 +39,7 @@ public class CollectionController : MonoBehaviour
     public Image pageLine;
     public Image[] leftCards;
     public Image[] rightCards;
+    public Image selectedCardHighlight;
     public FinalizeButtonController finalizeButton;
     public FinalizeButtonController cardButton;
     public FinalizeButtonController gearButton;
@@ -57,7 +58,7 @@ public class CollectionController : MonoBehaviour
     private EquipmentWrapper newEquipments = new EquipmentWrapper();
     private EquipmentWrapper completeEquipments;
     private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife", "Force Staff" };
-    private List<string> debugCards = new List<string>() { "Meteor" };
+    private List<string> debugCards = new List<string>() { "Meteor", "Power Shot", "Warcry", "Thousand Knives" };
     private Dictionary<string, EquipmentWrapper> selectedEquipments = new Dictionary<string, EquipmentWrapper>();
     private CardController recentRewardsCard;
     private Equipment recentRewardsEquipment;
@@ -449,7 +450,7 @@ public class CollectionController : MonoBehaviour
     public void SetPage(int p, bool setPageIcon = true)
     {
         HideErrorMessage();
-        page = p;
+        page = Mathf.Max(0, p);
 
         if (isShowingCards)
             RefreshDecks(setPageIcon);
@@ -539,9 +540,11 @@ public class CollectionController : MonoBehaviour
         int startingIndex = (int)ranges.x;
         int range = (int)ranges.y;
 
-        //If any of the slots in the available ranges are null, insert the new card there
+        //If none of the slots in the available ranges are null, remove it first so the new card can be inserted there
         if (!selectedDeck[newCard.GetCard().casterColor.ToString()].deck.GetRange(startingIndex, range).Any(x => x == null))
+        {
             RemoveCard(selectedDeck[newCard.GetCard().casterColor.ToString()].deck[index], index, false);
+        }
 
         if (selectedDeck[newCard.GetCard().casterColor.ToString()].deck.GetRange(startingIndex, range).Any(x => x == null))
         {
@@ -1509,6 +1512,18 @@ public class CollectionController : MonoBehaviour
         }
     }
 
+    public Card GetRecentRewardsCardCard()
+    {
+        try
+        {
+            return recentRewardsCard.GetCard();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public int GetNumberOfCardsNotStartedInDeck()
     {
         int output = 0;
@@ -1541,6 +1556,13 @@ public class CollectionController : MonoBehaviour
 
         for (int i = startingIndex; i < startingIndex + range; i++)
             selectedCardsDisplay[i].SetWhiteOut(state, c);
+    }
+
+    public void SetSelectedCardHighlightIndex(bool state, int index, Color c)
+    {
+        selectedCardHighlight.gameObject.SetActive(state);
+        selectedCardHighlight.color = new Color(c.r, c.g, c.b, selectedCardHighlight.color.a);
+        selectedCardHighlight.transform.localPosition = new Vector3(-2.1f + 0.6f * index, selectedCardHighlight.transform.localPosition.y, 0f);
     }
 
     //Takes in the select card index and returns the startingIndex and range of select cards that belong in the same weapon/accessory/basic categories
@@ -1666,6 +1688,13 @@ public class CollectionController : MonoBehaviour
             selectedEquipments[color] = new EquipmentWrapper();
             selectedEquipments[color].equipments = equipments;
         }
+    }
+
+    public int GetPageOfCard(Card card)
+    {
+        if (card == null)
+            return 0;
+        return Mathf.FloorToInt(uniqueCards[PartyController.party.GetPlayerColorText(card.casterColor)].Keys.ToList().IndexOf(card.name) / 6f);
     }
 
     ////////////////////////////////////////////
@@ -1901,5 +1930,15 @@ public class CollectionController : MonoBehaviour
     public int GetCurrentPage()
     {
         return page;
+    }
+
+    public float GetSelectedCardLeftBorder()
+    {
+        return (selectedCardsDisplay[0].transform.localPosition.x - selectedCardsDisplay[0].transform.GetChild(7).GetComponent<RectTransform>().sizeDelta.y / 2f) * GetComponent<RectTransform>().localScale.x;
+    }
+
+    public float GetSelectedCardWidth()
+    {
+        return selectedCardsDisplay[0].transform.GetChild(7).GetComponent<RectTransform>().sizeDelta.y * selectedCardsDisplay[0].GetComponent<RectTransform>().localScale.x * GetComponent<RectTransform>().localScale.x;
     }
 }

@@ -565,10 +565,21 @@ public class HandController : MonoBehaviour
 
     public void ResetCardDisplays()
     {
+        List<CardController> emptyCards = new List<CardController>();
         foreach (CardController c in hand)
         {
-            c.cardDisplay.SetCard(c);
+            try
+            {
+                c.cardDisplay.SetCard(c);
+            }
+            catch
+            {
+                emptyCards.Add(c);
+            }
         }
+        foreach (CardController c in emptyCards)
+            hand.Remove(c);
+
         if (currentlyHeldCard != null)
             currentlyHeldCard.GetComponent<CardDisplay>().SetCard(currentlyHeldCard);
     }

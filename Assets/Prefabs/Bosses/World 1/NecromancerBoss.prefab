@@ -80,6 +80,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcd607155a0e43e4e975884adec5b7d4, type: 2}
   moveType: 0
   targetType: 2
+  isBoss: 1
+  bossName: ARIOM
+  bossTitle: Failed Doctor
+  bossSpriteBackColor: {r: 0.8584906, g: 0.20652366, b: 0.5478902, a: 1}
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

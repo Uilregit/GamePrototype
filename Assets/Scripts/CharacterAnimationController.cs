@@ -68,6 +68,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         CharacterDisplayController charDisplay = transform.parent.parent.GetComponent<HealthController>().charDisplay;
         charDisplay.deathSprite.sprite = charDisplay.sprite.sprite;
+        charDisplay.deathSprite.color = charDisplay.sprite.color;
         charDisplay.deathSprite.flipX = charDisplay.sprite.flipX;
         charDisplay.deathSprite.enabled = true;
         charDisplay.sprite.enabled = false;
@@ -75,10 +76,10 @@ public class CharacterAnimationController : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
-            charDisplay.deathSprite.material.SetFloat("_Dissolve", (9 - i) / 9f);
-            yield return new WaitForSeconds(0.5f / 10f);
+            charDisplay.deathSprite.material.SetFloat("_Dissolve", (19 - i) / 19f);
+            yield return new WaitForSeconds(1f / 20f);
         }
 
         if (MultiplayerGameController.gameController != null)

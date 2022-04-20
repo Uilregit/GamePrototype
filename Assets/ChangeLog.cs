@@ -1195,6 +1195,10 @@ Added teases of features that would be included in the full release at the end o
 
 -- Enemies --
 
+-- Pacing --
+Rebalanced World 1 Room 3 Encounter 3 to be easier
+EXP needed to level up to level 1 is now 200 instead of 500
+
 -- System --
 Added patching to move all world 0 secret shop items to world 1 to accomodate the new tutorial world
 Knockback cards now use the direction between caster and cast location instead of caster and target
@@ -1214,6 +1218,9 @@ Knockback is now more robust to different angles, and will now support diagonal 
 Added option to abandon runs and return to maps for rooms you've already completed
 Added anonymous tracking of feedback and room info that uploads to google sheets
 Passive tutorials and defying death can no longer trigger during tutorials
+Doubled sound volume when high or lowpass filter is applied
+Buffs of trigger type None will no longer take time during trigger calls
+Exp reworked. Instead of 1 exp per leftover gold, it's not 10exp per encounter in room times world multiplier, plus 1 exp per 10 leftover gold.
 
 -- UI --
 Added message for reaching the end of the demo
@@ -1244,6 +1251,16 @@ Imporved preview health bar accuracy
     Fixed various bugs when current health is above max health
 Added various passive tutorials to streamline new features
 Passive tutorials will now only trigger 1 at a time
+Feedback input area is now autocorrected and allows for text wrapping
+Feedback menu now pauses the game while it's up
+Added green highlight to collection controller indicated exactly which card slot the card is being dragged into
+Added a 1 second grace period after speeding up enemy turns where pressing the end turn button doesn't advance turn
+End turn button will now have the enemy turn state
+After an encounter, if the rewards card is added to a later page, it will now default to that page
+Added UI pop up for attack change in the same style as armor change
+Rearranged world 1 to have more rightward progression in the first half
+Added more visual and music fanfair to boss deaths
+Added more visual fanfair to boss intros
 
 -- Bugs --
 Fixed bug where switching world wouldn't deselect the room in the previous world
@@ -1253,6 +1270,19 @@ Fixed bug where one character's health bar preview will use another target's val
 Fixed bug where old colors' cards could be offered as rewards after switching colors
 Fixed timer and abandon button not resetting when all players die
 Fixed bugs where shop cards could not be selected
+Fixed bug where EndRoomFeedback will always log 0 secondsInGame
+Fixed replace and end turn button colliders not being in the right place
+Fixed power shot damage preview showing 0 damage
+Fixed collection controller not adding in cards dragged between selected card slots
+Fixed cards casted on space with no targets not resetting correctly
+Fixed game breaking bug where collection will try to go to page -1 after some rooms
+Fixed tavern recruit button using unlock controller's instead of storymodecontroller's tavern contracts
+Fixed white and black being recruitable in demo
+Fixed bug where characters will not start with the right health if their equipments modified health
+Fixed bug where simulated characters didn't copy drawn cards attached to buffs properly
+Fixed bug where simulated buff triggers would draw cards
+Fixed character attack and armor icons being misalligned with their stats icons sometimes
+Fixed bug where if player was defeated, end screen would crash and world map would show completed colors
 
 -- To dos --
 Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

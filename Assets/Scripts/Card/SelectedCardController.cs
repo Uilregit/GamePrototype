@@ -19,6 +19,7 @@ public class SelectedCardController : MonoBehaviour
     public Collider2D collider2d;
     public Image whiteOut;
     public CardDisplay cardDisplay;
+    public CanvasGroup canvasGroup;
     private bool clickable = true;
 
     private int manacost = -1;
@@ -30,6 +31,28 @@ public class SelectedCardController : MonoBehaviour
 
     private int custCardSlots = 0;
     private int cardDragIndex = 0;
+
+    private float selectedCardsLeftBorder;
+    private float selectedCardsWidth;
+
+    private bool isMovingCards = false;
+    private List<IEnumerator> cardMovementQueue = new List<IEnumerator>();
+
+    private void Awake()
+    {
+        originalPosition = transform.localPosition;
+        originalRotation = transform.rotation;
+    }
+
+    private void FixedUpdate()
+    {
+        if (cardMovementQueue.Count > 0 && !isMovingCards)
+        {
+            isMovingCards = true;
+            StartCoroutine(cardMovementQueue[0]);
+            cardMovementQueue.RemoveAt(0);
+        }
+    }
 
     public void SetCard(CardController card)
     {
@@ -155,9 +178,10 @@ public class SelectedCardController : MonoBehaviour
         if (!clickable)
             return;
 
+        selectedCardsLeftBorder = CollectionController.collectionController.GetSelectedCardLeftBorder();
+        selectedCardsWidth = CollectionController.collectionController.GetSelectedCardWidth();
+
         cardDisplay.cardSounds.PlaySelectSound();
-        originalPosition = transform.position;
-        originalRotation = transform.rotation;
     }
 
     public void OnMouseDrag()
@@ -212,18 +236,26 @@ public class SelectedCardController : MonoBehaviour
         //Find the index location that the card is being dragged over
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3)
         {
+            CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
             float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
-            if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
+            if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder))                           //If card is dragged inside selected card range, show the card slots it can go into
             {
-                cardDragIndex = (int)((positionX + 2.4f) / 0.6f);
+                cardDragIndex = (int)((positionX - selectedCardsLeftBorder) / selectedCardsWidth);
                 CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
                 if (cardDragIndex < custCardSlots)                                                  //Only white out select cards if the card is dragged over slots it can go into
+                {
                     CollectionController.collectionController.SetSelectCardWhiteOut(true, cardDragIndex, Color.white);
+                    CollectionController.collectionController.SetSelectedCardHighlightIndex(true, cardDragIndex, Color.green);
+                }
                 else
                     CollectionController.collectionController.SetSelectCardWhiteOut(true, cardDragIndex, Color.red);
             }
             else
                 CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);  //If the card is outside range, hide all whiteouts
+        }
+        else
+        {
+            CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
         }
     }
 
@@ -240,10 +272,11 @@ public class SelectedCardController : MonoBehaviour
         cardDisplay.Hide();
         Show();
         transform.rotation = originalRotation;
-        transform.position = originalPosition;
+        transform.localPosition = originalPosition;
 
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
         CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
+        CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
 
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
         {
@@ -253,7 +286,7 @@ public class SelectedCardController : MonoBehaviour
         else if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y < -1.3 && cardDragIndex != index)        //If card is dragged to another equipped card's location
         {
             float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
-            if (positionX == Mathf.Clamp(positionX, -2.4f, 2.4f))                           //If card is dragged inside selected card range, show the card slots it can go into
+            if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder))                           //If card is dragged inside selected card range, show the card slots it can go into
                 if (cardDragIndex < custCardSlots)
                     CollectionController.collectionController.SwapCards(cardDragIndex, index);
                 else
@@ -268,5 +301,67 @@ public class SelectedCardController : MonoBehaviour
     {
         whiteOut.enabled = state;
         whiteOut.color = new Color(c.r, c.g, c.b, whiteOut.color.a);
+    }
+
+    public void AddToCollection()
+    {
+        cardMovementQueue.Add(MovePosition(Vector3.down, true, true, false));
+    }
+
+    public void RemoveFromCollection()
+    {
+        cardMovementQueue.Add(MovePosition(Vector3.up, false, true, true));
+    }
+
+    public void MoveRight(bool moveToOriginalPosition)
+    {
+        cardMovementQueue.Add(MovePosition(Vector3.right * CollectionController.collectionController.GetSelectedCardWidth() / 2f, moveToOriginalPosition, false, true));
+    }
+
+    public void MoveLeft(bool moveToOriginalPosition)
+    {
+        cardMovementQueue.Add(MovePosition(Vector3.left * CollectionController.collectionController.GetSelectedCardWidth() / 2f, moveToOriginalPosition, false, true));
+    }
+
+    private IEnumerator MovePosition(Vector3 direction, bool moveToOriginalPosition, bool fade, bool fadeOut)
+    {
+        float startingAlpha = 0f;
+        float endingAlpha = 1f;
+        if (fadeOut)
+        {
+            startingAlpha = 1f;
+            endingAlpha = 0f;
+        }
+        if (!fade)
+        {
+            startingAlpha = 1f;
+            endingAlpha = 1f;
+        }
+        Vector3 startPosition = originalPosition;
+        Vector3 endPosition = transform.localPosition + direction;
+        if (moveToOriginalPosition)
+        {
+            startPosition = transform.localPosition - direction;
+            endPosition = originalPosition;
+        }
+
+        transform.localPosition = startPosition;
+        canvasGroup.alpha = startingAlpha;
+        cardName.color = new Color(cardName.color.r, cardName.color.g, cardName.color.b, startingAlpha);
+
+        for (int i = 0; i < 5; i++)
+        {
+            transform.localPosition = Vector3.Lerp(startPosition, endPosition, i / 4f);
+            canvasGroup.alpha = Mathf.Lerp(startingAlpha, endingAlpha, i / 4f);
+            cardName.color = Color.Lerp(new Color(cardName.color.r, cardName.color.g, cardName.color.b, startingAlpha), new Color(cardName.color.r, cardName.color.g, cardName.color.b, endingAlpha), i / 4f);
+            yield return new WaitForSeconds(0.1f / 5);
+        }
+
+        isMovingCards = false;
+
+        if (isShowing)
+            Show();
+        else
+            Hide();
     }
 }

@@ -72,6 +72,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be80c48c9db69db46bd9f5608e9ac693, type: 2}
   moveType: 0
   targetType: 0
+  isBoss: 1
+  bossName: Y'TROM
+  bossTitle: Time Traveler (Hard)
+  bossSpriteBackColor: {r: 0.46329972, g: 0.30277678, b: 0.7924528, a: 1}
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

@@ -336,6 +336,8 @@ public class TutorialController : MonoBehaviour
 
     public void OpenFeedback()
     {
+        Time.timeScale = 0;
+
         feedbackMenu.gameObject.SetActive(true);
     }
 
@@ -347,6 +349,8 @@ public class TutorialController : MonoBehaviour
         comments.text = "";
         feedbackInputs.SetActive(false);
         feedbackMenu.gameObject.SetActive(false);
+
+        Time.timeScale = 1;
     }
 
     public void ReportFeedbackType(int value)

@@ -72,6 +72,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 310a92f3e639e5146a69744b5adefc6b, type: 2}
   moveType: 0
   targetType: 3
+  isBoss: 1
+  bossName: SELAROM
+  bossTitle: Broodmother (Hard)
+  bossSpriteBackColor: {r: 0.41349235, g: 0.8679245, b: 0.7093188, a: 1}
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

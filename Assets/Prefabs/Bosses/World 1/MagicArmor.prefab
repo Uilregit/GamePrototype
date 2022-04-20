@@ -75,6 +75,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83b5dd691c949ef4f9664bbbf24b0a68, type: 2}
   moveType: 0
   targetType: 0
+  isBoss: 1
+  bossName: ORIAM
+  bossTitle: Armored Thief
+  bossSpriteBackColor: {r: 1, g: 0.7607843, b: 0, a: 1}
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

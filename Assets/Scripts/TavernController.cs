@@ -27,6 +27,8 @@ public class TavernController : MonoBehaviour
     public Text selectedColorATK;
     public Text selectedColorDef;
     public Text selectedColorHlth;
+    public Image confirmRecruitButton;
+    public Image lockedRecruitButton;
 
     public SpriteRenderer selectedColorSprite;
 
@@ -91,9 +93,9 @@ public class TavernController : MonoBehaviour
             shardText.text = "";
             shardText.transform.parent.GetComponent<Image>().enabled = false;
         }
-        if (unlocked.tavernContracts > 0)
+        if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.TavernContract) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.TavernContract] > 0)
         {
-            contractText.text = "Contracts: " + unlocked.tavernContracts;
+            contractText.text = "Contracts: " + StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.TavernContract];
             contractText.transform.parent.GetComponent<Image>().enabled = true;
             recruitButton.gameObject.SetActive(true);
         }
@@ -212,6 +214,9 @@ public class TavernController : MonoBehaviour
         recruitInfo.SetActive(true);
 
         recruitColor = newColor;
+
+        confirmRecruitButton.gameObject.SetActive(newColor != Card.CasterColor.White && newColor != Card.CasterColor.Black);
+        lockedRecruitButton.gameObject.SetActive(newColor == Card.CasterColor.White || newColor == Card.CasterColor.Black);
     }
 
     public void GoToRecruitingMenu()
@@ -285,7 +290,7 @@ public class TavernController : MonoBehaviour
         UnlocksController.unlock.SetUnlocks(unlocked);
         InformationLogger.infoLogger.SaveUnlocks();
 
-        if (unlocked.tavernContracts > 0)
+        if (StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.TavernContract) && StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.TavernContract] > 0)
         {
             contractText.text = "Contracts: " + unlocked.tavernContracts;
             contractText.transform.parent.GetComponent<Image>().enabled = true;
@@ -336,7 +341,8 @@ public class TavernController : MonoBehaviour
         contractText.text = "";
         contractText.transform.parent.GetComponent<Image>().enabled = false;
 
-        if (UnlocksController.unlock.GetUnlocks().tavernContracts <= 0)
+        Debug.Log(StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.TavernContract]);
+        if (!StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.TavernContract) || StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.TavernContract] <= 0)
         {
             recruitButton.enabled = false;
             recruitButton.GetComponent<Collider2D>().enabled = false;

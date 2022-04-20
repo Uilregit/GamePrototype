@@ -25,7 +25,7 @@ public class StoryModeEndItemController : MonoBehaviour
     private int itemCost;
     private bool selected = false;
 
-    private bool selectable = false;
+    public bool selectable = false;
 
     private StoryModeController.RewardsType thisName;
     private Card thisCard;

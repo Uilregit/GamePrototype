@@ -20,6 +20,7 @@ public class MusicController : MonoBehaviour
 
     public float backgroundVolume = 1;
     public float soundFXVolume = 1;
+    private float backgroundVolumeMultplier = 1;
 
     private AudioClip currentBackgroundMusic;
 
@@ -40,8 +41,14 @@ public class MusicController : MonoBehaviour
     public void SetBackGroundVolume(float volume)
     {
         backgroundVolume = volume;
-        backgroundSource.volume = volume;
-        backgroundSource.enabled = !(volume == 0);
+        backgroundVolumeMultplier = 1;
+        if (highPass.enabled)
+            backgroundVolumeMultplier *= 2f;
+        if (lowPass.enabled)
+            backgroundVolumeMultplier *= 2f;
+
+        backgroundSource.volume = volume * backgroundVolumeMultplier;
+        backgroundSource.enabled = !(volume * backgroundVolumeMultplier == 0);
     }
 
     public void SetSFXVolume(float volume)
@@ -74,11 +81,13 @@ public class MusicController : MonoBehaviour
     public void SetHighPassFilter(bool state)
     {
         highPass.enabled = state;
+        SetBackGroundVolume(backgroundVolume);
     }
 
     public void SetLowPassFilter(bool state)
     {
         lowPass.enabled = state;
+        SetBackGroundVolume(backgroundVolume);
     }
 
     //Returns the normalized (0 --> 1) amplitude of the background music in 8 frequency bands ([0] low freq, [7] high freq)

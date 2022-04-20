@@ -556,6 +556,11 @@ public class StoryModeController : MonoBehaviour
 
     public void SetCardBought(bool isDailyCard, int seed, int index)
     {
+        if (!dailyBought.ContainsKey(seed))
+            dailyBought[seed] = new bool[] { false, false, false };
+        if (!weeklyBought.ContainsKey(seed))
+            weeklyBought[InformationLogger.infoLogger.GetWeeklySeed()] = new bool[] { false, false, false, false, false, false };
+
         if (isDailyCard)
             dailyBought[seed][index] = true;
         else
@@ -940,8 +945,13 @@ public class StoryModeController : MonoBehaviour
     {
         if (StoryModeController.story != this)
             return;
-        if (SceneManager.GetActiveScene().name != "CombatScene")
+        if (new List<string> { "OverworldScene", "StoryModeScene" }.Contains(SceneManager.GetActiveScene().name))
             CameraController.camera.transform.position = new Vector3(desiredCameraLocation.x, desiredCameraLocation.y, CameraController.camera.transform.position.z);
+    }
+
+    public void SetDesiredCameraLocation(Vector2 loc)
+    {
+        desiredCameraLocation = loc;
     }
 
     public void SetLastSelectedRoomID(int value)

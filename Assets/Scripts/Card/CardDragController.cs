@@ -298,11 +298,7 @@ public class CardDragController : DragController
         {
             if (currentState == State.Highlighted)
             {
-                //Shrunken
-                transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
-                transform.position = originalLocation;
-                offset = Vector2.zero;
-                HandController.handController.StartCoroutine(HandController.handController.ResetCardPositions());
+                UncastAndResetCard();
 
                 if (isHeld)
                 {
@@ -320,6 +316,15 @@ public class CardDragController : DragController
         if (cardController.GetNetEnergyCost() > 0)
             UIController.ui.SetEnergyGlow(false);
         currentState = State.Default;
+    }
+
+    private void UncastAndResetCard()
+    {
+        //Shrunken
+        transform.localScale = new Vector3(HandController.handController.cardStartingSize, HandController.handController.cardStartingSize, 1);
+        transform.position = originalLocation;
+        offset = Vector2.zero;
+        HandController.handController.StartCoroutine(HandController.handController.ResetCardPositions());
     }
 
     public override void OnMouseDown()
@@ -378,7 +383,10 @@ public class CardDragController : DragController
                 cardDisplay.SetToolTip(false);
 
                 isHolding = true;
-                transform.position = trn.position;
+                Vector3 cardOffset = new Vector3(-0.65f, 0.75f, 0);
+                if (trn.tag == "Hold")
+                    cardOffset = new Vector3(0.65f, 0.75f, 0);
+                transform.position = trn.position + cardOffset;
                 transform.localScale = new Vector3(HandController.handController.cardHoldSize, HandController.handController.cardHoldSize, 1);
                 rectTransform.rotation = Quaternion.Euler(originalRotation);
             }
@@ -431,7 +439,11 @@ public class CardDragController : DragController
 
         List<Vector2> targetedLocs = GetTargetLocations();
         if (targetedLocs.Count == 0)
+        {
+            UncastAndResetCard();
+            UnCast();
             return;
+        }
 
         cardDisplay.cardSounds.PlayCastSound();
         cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);

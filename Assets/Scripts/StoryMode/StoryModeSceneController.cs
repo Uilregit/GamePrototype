@@ -540,6 +540,7 @@ public class StoryModeSceneController : MonoBehaviour
         StoryModeController.story.SetLastSelectedRoomID(selectedRoom.roomId);
         StoryModeController.story.SetLastSelectedAchievemnts(GetNumChallengeSatisfied(selectedRoom));
         StoryModeController.story.SetLastSelectedComplete(StoryModeController.story.GetCompletedRooms().Contains(selectedRoom.roomId));
+        StoryModeController.story.SetDesiredCameraLocation(Vector2.zero);
 
         InformationLogger.infoLogger.SaveStoryModeGame();
 

@@ -74,6 +74,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eba364d9df0c6ea45aba06e43e98a70b, type: 2}
   moveType: 1
   targetType: 0
+  isBoss: 1
   desiredTarget:
   - {fileID: 0}
   - {fileID: 0}

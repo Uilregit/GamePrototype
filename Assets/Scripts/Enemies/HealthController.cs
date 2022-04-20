@@ -157,8 +157,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 int gotMaxVit = InformationController.infoController.GetMaxVit(color);
                 SetMaxVit(gotMaxVit);
 
-                int gotCurrentVit = InformationController.infoController.GetCurrentVit(color);
-                SetCurrentVit(Mathf.Min(gotCurrentVit, maxVit + equipVit));
+                if (InformationController.infoController.GetCombatInfo().maxVit[color] > 0)
+                {
+                    int gotCurrentVit = InformationController.infoController.GetCurrentVit(color);
+                    SetCurrentVit(Mathf.Min(gotCurrentVit, maxVit + equipVit));
+                }
 
                 int gotStartingAttack = InformationController.infoController.GetStartingAttack(color);
                 SetStartingAttack(startingAttack);
@@ -294,9 +297,15 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetBonusAttack(int newValue, bool relative)
     {
         if (relative)
+        {
+            ShowAttackChangeNumber(-newValue);
             bonusAttack += newValue;
+        }
         else
+        {
+            ShowAttackChangeNumber(bonusAttack - newValue);
             bonusAttack = newValue;
+        }
         ResetAttackText(GetAttack());
         try
         {
@@ -829,7 +838,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     public void ChangeAttack(int value)
     {
-        currentAttack = Mathf.Max(currentAttack - value, 0); //Attack can never be lower than 0
+        charDisplay.healthBar.SetAttackChangeImage(currentAttack, Mathf.Max(currentAttack + bonusAttack - value, 0) - currentAttack);
+        currentAttack = Mathf.Max(currentAttack + bonusAttack - value, 0); //Attack can never be lower than 0
         charDisplay.attackText.text = (currentAttack + bonusAttack).ToString();
     }
 
@@ -1220,6 +1230,14 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         drawBarCoroutine = DarwBar(damage, oldHealth, simulated, simHlthController, isEndOfTurn);
         StartCoroutine(drawBarCoroutine);
+    }
+
+    private void ShowAttackChangeNumber(int attackChange)
+    {
+        if (isSimulation)
+            return;
+
+        charDisplay.healthBar.SetAttackChangeImage(GetAttack(), attackChange);
     }
 
     public IEnumerator DarwBar(int damage = 0, int oldHealth = -1, bool simulated = false, HealthController simHlthController = null, bool isEndOfTurn = false)

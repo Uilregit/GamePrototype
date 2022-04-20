@@ -50,6 +50,11 @@ public class HealthBarController : MonoBehaviour
     public Text armorDamageText;
     public Animator armorBreakAnim;
 
+    [Header("Armor Damage Image")]
+    public Image attackDamageImage;
+    public Image attackDamageImage2;
+    public Text attackDamageText;
+
     [Header("Damage Sprites")]
     public Sprite normalDamageSprite;
     public Sprite brokenDamageSprite;
@@ -62,15 +67,21 @@ public class HealthBarController : MonoBehaviour
 
     private Vector2 damageImagePosition;
     private Vector2 armorDamageImagePosition;
+    private Vector2 attackImagePosition;
     private Vector2 originalDamageImageScale;
     private Vector2 originalDamagetextScale;
     private Vector2 originalArmorDamageImageScale;
     private Vector2 originalArmorDamagetextScale;
+    private Vector2 originalAttackImageScale;
+    private Vector2 originalAttackTextScale;
     private int oldDamageInt = 0;
     private int oldArmorDamgeInt = 0;
     private int oldArmorAmount = 0;
+    private int oldAttackChangeInt = 0;
+    private int oldAttackAmount = 0;
     private bool hidingDamageImage = false;
     private bool hidingArmorDamageImage = false;
+    private bool hidingAttackImage = false;
 
     private Vector3 startingLocalPosition;
 
@@ -79,15 +90,16 @@ public class HealthBarController : MonoBehaviour
     private IEnumerator statusTextHide;
     private IEnumerator armorDamageNumberHide;
     private IEnumerator resetArmorImageHide;
+    private IEnumerator attackNumberHide;
+    private IEnumerator resetAttackImageHide;
     //private bool runningCoroutine = false;
 
     // Start is called before the first frame update
     void Awake()
     {
-        damageImagePosition = damageImage.transform.position - transform.position;
-        armorDamageImagePosition = armorDamageImage.transform.position - transform.position;
-        armorDamageImage.transform.position = (Vector2)transform.position + armorDamageImagePosition;
-        armorDamageImage2.transform.position = (Vector2)transform.position + armorDamageImagePosition;
+        damageImagePosition = damageImage.transform.localPosition;
+        armorDamageImagePosition = armorDamageImage.transform.localPosition;
+        attackImagePosition = attackDamageImage.transform.localPosition;
 
         backImage = GetComponent<Image>();
         backImage.enabled = false;
@@ -102,6 +114,9 @@ public class HealthBarController : MonoBehaviour
 
         originalArmorDamageImageScale = armorDamageImage.transform.localScale;
         originalArmorDamagetextScale = armorDamageText.transform.localScale;
+
+        originalAttackImageScale = attackDamageImage.transform.localScale;
+        originalAttackTextScale = attackDamageText.transform.localScale;
 
         startingLocalPosition = transform.localPosition;
         //bonusHealthDamageBar.enabled = false;
@@ -358,9 +373,9 @@ public class HealthBarController : MonoBehaviour
         oldArmorDamgeInt = armorDamage;
         oldArmorAmount = armorValue;
 
-        Vector2 newPosition = (Vector2)transform.position + armorDamageImagePosition;
-        armorDamageImage.transform.position = newPosition;
-        armorDamageImage2.transform.position = newPosition;
+        armorDamageImage.transform.localPosition = armorDamageImagePosition;
+        armorDamageImage2.transform.localPosition = armorDamageImagePosition;
+        armorDamageText.transform.localPosition = armorDamageImagePosition;
 
         armorDamageImage.enabled = true;
         armorDamageImage2.enabled = true;
@@ -409,7 +424,7 @@ public class HealthBarController : MonoBehaviour
         armorDamageText.transform.localScale = originalArmorDamagetextScale;
     }
 
-    public IEnumerator HideArmorDamageNumber()
+    private IEnumerator HideArmorDamageNumber()
     {
         yield return new WaitForSeconds(TimeController.time.numberShownDuration);
         armorDamageImage.enabled = false;
@@ -417,6 +432,66 @@ public class HealthBarController : MonoBehaviour
         armorDamageText.enabled = false;
 
         hidingArmorDamageImage = false;
+    }
+
+    public void SetAttackChangeImage(int attackValue, int attackChange)
+    {
+        if (hidingAttackImage)
+        {
+            attackDamageImage.transform.localScale = originalAttackImageScale;
+            attackDamageImage2.transform.localScale = originalAttackImageScale;
+            attackDamageText.transform.localScale = originalAttackTextScale;
+
+            if (Mathf.Sign(attackChange) == Mathf.Sign(oldAttackChangeInt))
+                attackChange += oldAttackChangeInt;
+            attackValue = oldAttackAmount;
+
+            StopCoroutine(attackNumberHide);
+        }
+
+        oldAttackChangeInt = attackChange;
+        oldAttackAmount = attackValue;
+
+        attackDamageImage.transform.localPosition = attackImagePosition;
+        attackDamageImage2.transform.localPosition = attackImagePosition;
+        attackDamageText.transform.localPosition = attackImagePosition;
+
+        attackDamageImage.enabled = true;
+        attackDamageImage2.enabled = true;
+        attackDamageText.enabled = true;
+
+        attackNumberHide = HideAttackDamageNumber();
+        resetAttackImageHide = ResetAttackImage(attackValue, attackChange);
+        StartCoroutine(attackNumberHide);
+        StartCoroutine(resetAttackImageHide);
+    }
+
+    private IEnumerator ResetAttackImage(int attackValue, int attackChange)
+    {
+        hidingAttackImage = true;
+
+        attackDamageText.text = attackValue.ToString();
+        yield return new WaitForSeconds(TimeController.time.numberShownDuration / 3.0f);
+
+        attackDamageText.text = Mathf.Max(attackValue - attackChange, 0).ToString();
+        attackDamageImage.transform.localScale = originalAttackImageScale * 1.25f;
+        attackDamageImage2.transform.localScale = originalAttackImageScale * 1.25f;
+        attackDamageText.transform.localScale = originalAttackTextScale * 1.25f;
+        yield return new WaitForSeconds(TimeController.time.numberExpandDuration);
+
+        attackDamageImage.transform.localScale = originalAttackImageScale;
+        attackDamageImage2.transform.localScale = originalAttackImageScale;
+        attackDamageText.transform.localScale = originalAttackTextScale;
+    }
+
+    private IEnumerator HideAttackDamageNumber()
+    {
+        yield return new WaitForSeconds(TimeController.time.numberShownDuration);
+        attackDamageImage.enabled = false;
+        attackDamageImage2.enabled = false;
+        attackDamageText.enabled = false;
+
+        hidingAttackImage = false;
     }
 
     public void SetStatusText(string text, Color color)

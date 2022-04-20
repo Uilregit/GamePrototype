@@ -33,6 +33,11 @@ public class EnemyController : MonoBehaviour
     public enum TargetType { Nearest, Furthest, LowestVit, LowestArmor, HighestArmor, HighestVit, MostMissingHealth, RedPlayer, GreenPlayer, BluePlayer, Self, Default, HighestAttack, LowestAttack };
     public TargetType targetType = TargetType.Nearest;
 
+    public bool isBoss = false;
+    public string bossName = "";
+    public string bossTitle = "";
+    public Color bossSpriteBackColor;
+
     //public Card[] attackCards;
 
     //public SpriteRenderer sprite;
@@ -77,6 +82,8 @@ public class EnemyController : MonoBehaviour
         healthController.SetCastRange(castRange);
         healthController.SetMaxVit(maxVit);
         healthController.SetCurrentVit(maxVit);
+        //healthController.SetMaxVit(1);
+        //healthController.SetCurrentVit(1);
         healthController.SetStartingArmor(startingArmor);
         healthController.SetCurrentAttack(attack);
 
@@ -97,6 +104,9 @@ public class EnemyController : MonoBehaviour
         occupiedSpace = GetComponent<HealthController>().GetOccupiedSpaces();
         spRenderer = healthController.charDisplay.sprite.GetComponent<SpriteRenderer>();
         previousPosition = transform.position;
+
+        if (isBoss)
+            GameController.gameController.SetBossInfo(healthController.charDisplay.sprite.sprite, bossName, bossTitle, bossSpriteBackColor);
     }
 
     private void Start()
@@ -241,12 +251,21 @@ public class EnemyController : MonoBehaviour
     public GameObject[] GetTargetArray()
     {
         GameObject[] target = new GameObject[attacksPerTurn];
-        if (healthController.GetTauntedTarget() != null)          //Taunt target
+        try
+        {
+            if (healthController.GetTauntedTarget() != null)          //Taunt target
+                for (int i = 0; i < attacksPerTurn; i++)
+                    target[i] = healthController.GetTauntedTarget().gameObject;
+            else
+                for (int i = 0; i < attacksPerTurn; i++)
+                    target[i] = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex + i].castType, attackCardIndex + i))[0];                     //Get the target according to the card in question
+        }
+        catch
+        {
+            //If normal tareting fails, target the nearest player as default
             for (int i = 0; i < attacksPerTurn; i++)
-                target[i] = healthController.GetTauntedTarget().gameObject;
-        else
-            for (int i = 0; i < attacksPerTurn; i++)
-                target[i] = GridController.gridController.GetObjectAtLocation(GetCardTarget(attackSequence[attackCardIndex + i].castType, attackCardIndex + i))[0];                     //Get the target according to the card in question
+                target[i] = GridController.gridController.GetObjectAtLocation(GetNearest(Card.CastType.Player))[0];
+        }
         return target;
     }
 

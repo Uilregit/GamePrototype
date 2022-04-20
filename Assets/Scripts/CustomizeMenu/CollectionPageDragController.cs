@@ -34,9 +34,6 @@ public class CollectionPageDragController : MonoBehaviour
         Vector3 tappedLoc = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - pageLine.transform.position;
         int currentPage = Mathf.RoundToInt((tappedLoc.x + pageLine.rectTransform.sizeDelta.x / 2f) / (pageLine.rectTransform.sizeDelta.x / (collection.GetTotalPages() - 1)));
 
-        Debug.Log(tappedLoc.x);
-        Debug.Log(currentPage);
-
         if (currentPage != collection.GetCurrentPage())
             collection.SetPage(currentPage);
     }

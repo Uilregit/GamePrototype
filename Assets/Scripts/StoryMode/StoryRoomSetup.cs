@@ -107,7 +107,7 @@ public class StoryRoomSetup : ScriptableObject
         switch (challenges[index])
         {
             case ChallengeType.Complete:
-                output += "Complete The Run";
+                output += "Complete the room";
                 break;
             case ChallengeType.TotalTurnsUsed:
                 output += "Complete in {ct} X turns";
@@ -116,13 +116,13 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Complete in {ct} X minsY";
                 break;
             case ChallengeType.CastLocationsPerTurn:
-                output += "Have 1 character cast from {ct} X locations in 1 turn";
+                output += "Have any character cast from {ct} X locations in 1 turn";
                 break;
             case ChallengeType.CharDistMovedPerTurn:
-                output += "Have 1 character move {ct} X spaces in 1 turn";
+                output += "Have any character move {ct} X spaces in 1 turn";
                 break;
             case ChallengeType.AddCardsToDeck:
-                output += "Add {ct} X cards that didn't start in your deck to your deck";
+                output += "Add {ct} X new cards into your deck";
                 break;
             case ChallengeType.ReplaceCards:
                 output += "Replace {ct} X cards";
@@ -131,7 +131,7 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Spend {ct} X mana in 1 turn";
                 break;
             case ChallengeType.UnspentEnergyPerTurn:
-                output += "Leave {ct} X total energy unsent at the end of turns";
+                output += "Leave {ct} X energy unspent at the end of your turns";
                 break;
             case ChallengeType.BeBroken:
                 output += "Be broken {ct} X times";

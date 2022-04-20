@@ -254,6 +254,8 @@ public class BuffFactory : MonoBehaviour
                     thisBuff.OnApply(target, attackerHealthController, GetValue(value), buff.appliedBuffDuration, card, false, traceList, relicTrace);
                     break;
                 case Buff.BuffEffectType.DrawCard:
+                    if (waitTimeMultiplier == 0)        //Never draw cards from simulated buff triggers
+                        break;
                     List<Card> spawnCards = new List<Card>();
                     foreach (Card spawnCard in buff.GetDrawnCards())
                         if (spawnCard != null)
@@ -542,6 +544,7 @@ public class BuffFactory : MonoBehaviour
         output.value = buff.value;
         output.obj = buff.obj;
         output.card = buff.card;
+        output.SetDrawnCards(buff.GetDrawnCards());
 
         BuffFactory buffFactory = new BuffFactory();
         buffFactory.buff = output;

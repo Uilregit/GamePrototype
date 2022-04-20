@@ -23,6 +23,5 @@ public class RecruitButtonController : MonoBehaviour
     public void SetEnable(bool state)
     {
         GetComponent<Image>().enabled = state;
-        GetComponent<Collider2D>().enabled = state;
     }
 }

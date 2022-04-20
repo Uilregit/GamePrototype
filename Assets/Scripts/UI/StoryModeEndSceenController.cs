@@ -9,6 +9,7 @@ public class StoryModeEndSceenController : MonoBehaviour
     [Header("End Scene")]
     public Text goldText;
     public Text exitButton;
+    public Text disabledExitButtonText;
 
     public StoryModeEndItemController[] items;
 
@@ -80,9 +81,15 @@ public class StoryModeEndSceenController : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
-            items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && (!challengeItemsBought[i] || setup.allowRewardsRebuy) && totalGold >= setup.rewardCosts[i]);
-            if (!StoryModeController.story.ChallengeSatisfied(i))
-                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StoryModeEndItemLocked, 1);
+            if (RoomController.roomController.GetRoomJustWon())
+            {
+                items[i].SetEnabled(StoryModeController.story.ChallengeSatisfied(i) && (!challengeItemsBought[i] || setup.allowRewardsRebuy) && totalGold >= setup.rewardCosts[i]);
+                if (!StoryModeController.story.ChallengeSatisfied(i))
+                    TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StoryModeEndItemLocked, 1);
+            }
+            else
+                items[i].SetEnabled(false);
+
             if (challengeItemsBought[i])
                 TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StoryModeEndItemSoldOut, 1);
         }
@@ -168,7 +175,10 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            items[i].SetGreyout(!(StoryModeController.story.ChallengeSatisfied(i) && totalGold >= setup.rewardCosts[i]));
+            if (RoomController.roomController.GetRoomJustWon())
+                items[i].SetGreyout(!(StoryModeController.story.ChallengeSatisfied(i) && totalGold >= setup.rewardCosts[i]));
+            else
+                items[i].SetGreyout(true);
             if (challengeItemsBought[i] && !items[i].GetSelected() && !setup.allowRewardsRebuy)
                 items[i].SetBought();
         }
@@ -184,7 +194,11 @@ public class StoryModeEndSceenController : MonoBehaviour
         }
 
         goldText.text = totalGold.ToString();
-        exitButton.text = "Exit with " + totalGold.ToString() + "xp";
+        if (RoomController.roomController.GetRoomJustWon())
+            exitButton.text = "Exit with " + Mathf.RoundToInt(Mathf.Max(1, RoomController.roomController.GetNumberofWorldLayers()) * 10 * (0.5f + Mathf.Max(1, StoryModeController.story.GetWorldNumber()) * 0.5f)) + "+" + Mathf.RoundToInt(totalGold / 10f) + "xp";
+        else
+            exitButton.text = "Exit with " + Mathf.RoundToInt(totalGold / 10f) + "xp";
+        disabledExitButtonText.text = exitButton.text;
     }
 
     public int GetCurrentGold()
@@ -213,7 +227,10 @@ public class StoryModeEndSceenController : MonoBehaviour
         expBar.SetValues(level, numerator, true, Color.black, Card.CasterColor.Enemy);
         expBar.SetStoryModeEndSceneController(this);
         expBar.SetEnabled(true);
-        yield return expBar.StartCoroutine(expBar.GainEXP(totalGold));
+        if (RoomController.roomController.GetRoomJustWon())
+            yield return expBar.StartCoroutine(expBar.GainEXP(Mathf.RoundToInt(Mathf.Max(1, RoomController.roomController.GetNumberofWorldLayers()) * 10 * (0.5f + Mathf.Max(1, StoryModeController.story.GetWorldNumber()) * 0.5f)) + Mathf.RoundToInt(totalGold / 10f)));
+        else
+            yield return expBar.StartCoroutine(expBar.GainEXP(Mathf.RoundToInt(totalGold / 10f)));
 
         expGainDone = true;
     }
@@ -355,11 +372,14 @@ public class StoryModeEndSceenController : MonoBehaviour
                 TutorialController.tutorial.GetErrorLogs());
         }
 
+        ScoreController.score.SetSecondsInGame(0);
+
         StoryModeController.story.ReportItemsBought(boughtItems);
         StoryModeController.story.ReportCardsBought(boughtCards);
         StoryModeController.story.ReportEquipmentBought(boughtEquipiments);
         StoryModeController.story.AddChallengeItemsBought(StoryModeController.story.GetCurrentRoomID(), challengeItemsBought);
-        StoryModeController.story.ReportColorsCompleted(StoryModeController.story.GetCurrentRoomID(), PartyController.party.GetPlayerCasterColors());
+        if (RoomController.roomController.GetRoomJustWon())
+            StoryModeController.story.ReportColorsCompleted(StoryModeController.story.GetCurrentRoomID(), PartyController.party.GetPlayerCasterColors());
 
         StoryModeController.story.ReturnToMapScene();
 

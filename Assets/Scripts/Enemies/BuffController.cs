@@ -44,7 +44,7 @@ public class BuffController : MonoBehaviour
             if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn) //All non start or end of turn, turn buffs (ie lifesteal)
                 buff.duration -= 1;
 
-            if (buff.GetTriggerType() == type)
+            if (buff.GetTriggerType() == type && buff.GetTriggerEffectType() != Buff.BuffEffectType.None)
             {
                 if (buff.GetDurationType() == Buff.DurationType.Use)                                            //Reduce duration for all use buffs
                     buff.duration -= 1;
