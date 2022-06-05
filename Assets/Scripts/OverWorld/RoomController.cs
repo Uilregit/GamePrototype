@@ -111,7 +111,7 @@ public class RoomController : MonoBehaviour
                     obj.GetComponent<SmallRoom>().SetLocation(loc);
                     smallRooms.Add(obj.GetComponent<SmallRoom>());
                     obj.transform.SetParent(roomParent.transform);
-                    obj.transform.position = transform.position + new Vector3(loc.x * 3.5f, loc.y * 6f, 0);
+                    obj.transform.localPosition = new Vector3(loc.x * 3.5f, loc.y * 6f, 0);
 
                     obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
 
@@ -132,7 +132,7 @@ public class RoomController : MonoBehaviour
                 }
 
                 bossRoom.transform.SetParent(roomParent.transform);
-                bossRoom.transform.position = transform.position + new Vector3(0, (maxLevel + 1) * 6f, 0);
+                bossRoom.transform.localPosition = new Vector3(0, (maxLevel + 1) * 6f, 0);
                 bossRoom.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
                 roomScrollController.SetNumOfRooms(maxLevel + 2, false);
@@ -154,7 +154,7 @@ public class RoomController : MonoBehaviour
                     obj.GetComponent<SmallRoom>().SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
                     smallRooms.Add(obj.GetComponent<SmallRoom>());
                     obj.transform.SetParent(roomParent.transform);
-                    obj.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - i) * 3.5f, 0, 0);
+                    obj.transform.localPosition = new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - i) * 3.5f, 0, 0);
 
                     obj.GetComponent<SmallRoom>().SetSeed(Random.Range(1, 1000000000));
                 }
@@ -166,7 +166,7 @@ public class RoomController : MonoBehaviour
                 else
                     bossRoom.GetComponent<SmallRoom>().SetSetup(StoryModeController.story.GetCurrentRoomSetup().setups[StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1], StoryModeController.story.GetCurrentRoomSetup().setups.Count, StoryModeController.story.GetCurrentRoomSetup().setups.Count);
                 bossRoom.transform.SetParent(roomParent.transform);
-                bossRoom.transform.position = transform.position + new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1) * 3.5f, 0, 0);
+                bossRoom.transform.localPosition = new Vector3((StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1) * 3.5f, 0, 0);
                 bossRoom.SetWorldColor(worldSetups[StoryModeController.story.GetWorldNumber()].roomBackground);
 
                 roomScrollController.SetNumOfRooms(StoryModeController.story.GetCurrentRoomSetup().setups.Count, true);

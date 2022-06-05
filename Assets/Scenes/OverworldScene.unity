@@ -2084,7 +2084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20784315, g: 0.7372549, b: 0.3254902, a: 1}
+  m_Color: {r: 0.21176471, g: 0.7372549, b: 0.3254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2648,6 +2648,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5241617033086603381, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1039681367}
+    - target: {fileID: 5241617033086603381, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Enter
+      objectReference: {fileID: 0}
     - target: {fileID: 5540920318122456573, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
       propertyPath: m_Name
       value: BossRoom
@@ -2655,27 +2663,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3166401779935971282, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
---- !u!61 &1039681348 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 6914243240641370663, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
-  m_PrefabInstance: {fileID: 1039681347}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1039681349 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2471292325536478959, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
   m_PrefabInstance: {fileID: 1039681347}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1039681350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4079888847846284564, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
-  m_PrefabInstance: {fileID: 1039681347}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039681366}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1039681351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4429779521389230263, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
@@ -2865,8 +2857,6 @@ MonoBehaviour:
   - {fileID: 1039681353}
   line: {fileID: 1039681352}
   bossBorder: {fileID: 1039681351}
-  highlight: {fileID: 1039681350}
-  collider: {fileID: 1039681348}
 --- !u!114 &1039681368 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7252157122512078275, guid: adda0d541e3c39a48bb2f6ba7d973fcd, type: 3}
@@ -4104,7 +4094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20784315, g: 0.7372549, b: 0.3254902, a: 1}
+  m_Color: {r: 0.21176471, g: 0.7372549, b: 0.3254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -7,6 +7,7 @@ public class HealthBarController : MonoBehaviour
 {
     [Header("Color Settings")]
     public Color damageColor;
+    public Color damageImageColor;
     //public Color damageBonusHealthColor;
     public Color healingColor;
     //public Color healingBonusHealthColor;
@@ -15,10 +16,14 @@ public class HealthBarController : MonoBehaviour
     public Color armorDefaultColor;
     public Color armorDownColor;
     public Color armorUpColor;
+    public Color armorBrokenColor;
 
     [Header("Health Bar")]
     [SerializeField]
+    GameObject healthBarObject;
+    [SerializeField]
     Image barImage;
+    [SerializeField]
     Image backImage;
     [SerializeField]
     Image bonusHealthBar;
@@ -30,10 +35,24 @@ public class HealthBarController : MonoBehaviour
     GameObject healthBarTick;
     [SerializeField]
     GameObject healthBarTickContainer;
+    [SerializeField]
+    Text healthNumber;
+    [SerializeField]
+    Image armorIcon;
+    [SerializeField]
+    Text armorNumber;
+    [SerializeField]
+    Text breakText;
+    [SerializeField]
+    Text healthBarStatusText;
     //[SerializeField]
     //Image bonusHealthDamageBar;
     [SerializeField]
     Image skullIcon;
+    [SerializeField]
+    Sprite armorSprite;
+    [SerializeField]
+    Sprite armorBrokenSprite;
 
     [Header("Damage FXs")]
     public Animator bloodSplatter;
@@ -94,20 +113,25 @@ public class HealthBarController : MonoBehaviour
     private IEnumerator resetAttackImageHide;
     //private bool runningCoroutine = false;
 
+    private StatusTypes[] statusPriority = new StatusTypes[] { StatusTypes.Stunned, StatusTypes.Silenced, StatusTypes.Disarmed, StatusTypes.Taunted };
+    private Dictionary<StatusTypes, bool> currentStatusTypes = new Dictionary<StatusTypes, bool>();
+
+    private bool raised = false;
+
+    public enum StatusTypes
+    {
+        Stunned = 0,
+        Silenced = 1,
+        Disarmed = 2,
+        Taunted = 3,
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
         damageImagePosition = damageImage.transform.localPosition;
         armorDamageImagePosition = armorDamageImage.transform.localPosition;
         attackImagePosition = attackDamageImage.transform.localPosition;
-
-        backImage = GetComponent<Image>();
-        backImage.enabled = false;
-        damageBarImage.enabled = false;
-        damageOverTimeBarImage.enabled = false;
-        barImage.enabled = false;
-        bonusHealthBar.enabled = false;
-        healthBarTickContainer.SetActive(false);
 
         originalDamageImageScale = damageImage.transform.localScale;
         originalDamagetextScale = damageText.transform.localScale;
@@ -118,7 +142,10 @@ public class HealthBarController : MonoBehaviour
         originalAttackImageScale = attackDamageImage.transform.localScale;
         originalAttackTextScale = attackDamageText.transform.localScale;
 
-        startingLocalPosition = transform.localPosition;
+        startingLocalPosition = healthBarObject.transform.localPosition;
+
+        UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Armor, armorIcon.gameObject);
+        UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Armor, armorNumber.gameObject);
         //bonusHealthDamageBar.enabled = false;
     }
 
@@ -133,7 +160,7 @@ public class HealthBarController : MonoBehaviour
         {
             GameObject temp = Instantiate(healthBarTick);
             temp.transform.SetParent(healthBarTickContainer.transform);
-            temp.transform.localPosition = new Vector3(counter * 10 / (float)maxHealth * 0.9f - 0.45f, 0f, 0f);
+            temp.transform.localPosition = new Vector3(counter * 10 / (float)maxHealth * 0.6f - 0.15f, 0f, 0f);
             if (counter % 5 == 0)
             {
                 temp.transform.localScale = new Vector3(2f, 1f, 1f);
@@ -182,7 +209,7 @@ public class HealthBarController : MonoBehaviour
         if (initialHealth <= 0 && initialHealth - damage - endOfTurnDamage <= 0)
             damagePercentage = 0;
 
-        backImage.rectTransform.position = center + new Vector2(0, 1.15f + index * 0.25f) * size;
+        //backImage.rectTransform.position = center + new Vector2(0, 1.15f + index * 0.25f) * size;
         backImage.rectTransform.localScale = new Vector2(scale, 1);
 
         barImage.rectTransform.localScale = new Vector2(HPPercentage, 1);
@@ -252,6 +279,8 @@ public class HealthBarController : MonoBehaviour
     //Called by other scripts to hide healthbars when letting go
     public void RemoveHealthBar()
     {
+        healthBarObject.SetActive(false);
+        /*
         backImage.enabled = false;
         damageBarImage.enabled = false;
         damageOverTimeBarImage.enabled = false;
@@ -260,13 +289,33 @@ public class HealthBarController : MonoBehaviour
         character.enabled = false;
         healthBarTickContainer.SetActive(false);
         skullIcon.enabled = false;
+        */
         //bonusHealthDamageBar.enabled = false;
+    }
+
+    //Used to initialize bar when characer is created
+    public void ShowHealthBar()
+    {
+        healthBarObject.SetActive(true);
+
+        damageBarImage.transform.localScale = new Vector3(0, 1, 1);
+        damageOverTimeBarImage.transform.localScale = new Vector3(0, 1, 1);
+        bonusHealthBar.transform.localScale = new Vector3(0, 1, 1);
+        /*
+        backImage.enabled = true;
+        barImage.enabled = true;
+        healthBarTickContainer.SetActive(true);
+        healthNumber.enabled = true;
+        armorNumber.enabled = true;
+        */
     }
 
     private IEnumerator HideHealthBar()
     {
         yield return new WaitForSeconds(TimeController.time.barShownDuration);
-        RemoveHealthBar();
+        damageBarImage.transform.localScale = new Vector3(0, 1, 1);
+        skullIcon.enabled = false;
+        //RemoveHealthBar();
     }
 
     public void SetDamageImage(int initialHealth, int damage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken)
@@ -305,7 +354,7 @@ public class HealthBarController : MonoBehaviour
         {
             if (broken)                                //Broken Damage
             {
-                Color c = brokenColor;
+                Color c = armorBrokenColor;
                 damageImage.color = c;
                 damageText.color = c;
                 damageImage.sprite = armorDamageSprite;
@@ -313,8 +362,8 @@ public class HealthBarController : MonoBehaviour
             }
             else                                                        //Not Broken Damage
             {
-                damageImage.color = damageColor;
-                damageText.color = damageColor;
+                damageImage.color = damageImageColor;
+                damageText.color = damageImageColor;
                 damageImage.sprite = normalDamageSprite;
                 damageImage2.sprite = normalDamageSprite;
             }
@@ -528,8 +577,76 @@ public class HealthBarController : MonoBehaviour
         }
     }
 
-    public void ResetPosition()
+    public void SetPositionRaised(bool state)
     {
-        transform.localPosition = startingLocalPosition;
+        raised = state;
+
+        if (state)
+            healthBarObject.transform.localPosition = startingLocalPosition + new Vector3(0, 1.15f, 0);
+        else
+            healthBarObject.transform.localPosition = startingLocalPosition;
+    }
+
+    public bool GetPositionRaised()
+    {
+        return raised;
+    }
+
+    public void SetHealth(int value)
+    {
+        if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Overkill))
+            value = Mathf.Max(0, value);
+        healthNumber.text = value.ToString();
+    }
+
+    public void SetArmor(int value)
+    {
+        armorNumber.text = value.ToString();
+        armorNumber.enabled = value > 0;
+        armorIcon.enabled = value >= 0;
+        breakText.enabled = value == 0;
+
+        if (value > 0)
+        {
+            armorIcon.color = armorDefaultColor;
+            armorIcon.sprite = armorSprite;
+        }
+        else if (value == 0)
+        {
+            armorIcon.color = armorBrokenColor;
+            armorIcon.sprite = armorBrokenSprite;
+        }
+    }
+
+    public void SetHealthBarStatusText(StatusTypes status, bool state)
+    {
+        currentStatusTypes[status] = state;
+
+        healthBarStatusText.text = GetHealthStatusText();
+        healthBarStatusText.enabled = state;
+    }
+
+    private string GetHealthStatusText()
+    {
+        foreach (StatusTypes status in statusPriority)
+            if (currentStatusTypes.ContainsKey(status) && currentStatusTypes[status])
+                return GetHealthStatusString(status);
+        return "";
+    }
+
+    private string GetHealthStatusString(StatusTypes status)
+    {
+        switch (status)
+        {
+            case StatusTypes.Stunned:
+                return "STUNNED";
+            case StatusTypes.Silenced:
+                return "SILENCED";
+            case StatusTypes.Disarmed:
+                return "DISARMED";
+            case StatusTypes.Taunted:
+                return "TAUNTED";
+        }
+        return "";
     }
 }

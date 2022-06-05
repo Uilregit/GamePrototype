@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0051563aec72cc4aa53aaacaa8e2dd8, type: 3}
+  m_Name: World TutV2-7
+  m_EditorClassIdentifier: 
+  roomName: World 1 Room 7
+  useDefaultCardsAndEquipments: 0
+  setups:
+  - {fileID: 11400000, guid: a9c2e3f81cb098949953128bf0e9f07e, type: 2}
+  - {fileID: 11400000, guid: f2cb01ae576b4394493c350ec85e4465, type: 2}
+  - {fileID: 11400000, guid: 4b72c92f1224d6547801d7ebed175f8b, type: 2}
+  arenaSetup: {fileID: 0}
+  challenges: 000000000000000000000000
+  valueType: 000000000000000000000000
+  challengeValues: 000000000000000000000000
+  challengeComparisonType: 000000000000000000000000
+  roundSpecific: 000000000000000000000000
+  bestChallengeValues: 010000000200000004000000
+  skipFinalRewards: 1
+  allowRewardsRebuy: 0
+  noAchievements: 0
+  rewardTypes: 000000000000000000000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 000000000000000000000000
+  rewardCosts: 000000000000000000000000
+  challengeRewardBought: 000000
+  flavorText: 
+  overrideColors: 

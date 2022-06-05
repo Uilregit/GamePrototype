@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -90,6 +91,8 @@ public class CardDisplay : MonoBehaviour
     private CardController thisCard;
     private Equipment thisEquipment;
 
+    private bool isFacingUp = true;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -152,29 +155,64 @@ public class CardDisplay : MonoBehaviour
 
     public void PlaceFaceDown()
     {
-        transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+        if (isFacingUp)
+            transform.rotation = transform.rotation * Quaternion.Euler(new Vector3(0, -180, 0));
+        isFacingUp = false;
         Hide();
         cardBack.enabled = true;
     }
 
-    public void FlipOver()
+    public void PlaceFaceUp()
     {
-        StartCoroutine(Flip());
+        if (!isFacingUp)
+            transform.rotation = transform.rotation * Quaternion.Euler(new Vector3(0, -180, 0));
+        isFacingUp = true;
+        Show();
+        cardBack.enabled = false;
     }
 
-    private IEnumerator Flip()
+    public void FlipUp(float duration = 0.5f)
     {
+        isFacingUp = true;
+        StartCoroutine(FlipUpProcess(duration));
+    }
+
+    private IEnumerator FlipUpProcess(float duration)
+    {
+        Quaternion originalRotation = transform.rotation;
         for (int i = 0; i < 20; i++)
         {
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(new Vector3(0, -180, 0)), Quaternion.Euler(new Vector3(0, 0, 0)), i / 19f);
+            transform.rotation = Quaternion.Lerp(originalRotation, originalRotation * Quaternion.Euler(new Vector3(0, 180, 0)), i / 19f);
             if (transform.rotation.eulerAngles.y < 90)
             {
                 Show();
                 cardBack.enabled = false;
             }
-            yield return new WaitForSeconds(0.5f / 20f);
+            yield return new WaitForSeconds(duration / 20f);
         }
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        transform.rotation = originalRotation * Quaternion.Euler(new Vector3(0, 180, 0));
+    }
+
+    public void FlipDown(float duration = 0.5f)
+    {
+        isFacingUp = false;
+        StartCoroutine(FlipDownProcess(duration));
+    }
+
+    private IEnumerator FlipDownProcess(float duration)
+    {
+        Quaternion originalRotation = transform.rotation;
+        for (int i = 0; i < 10; i++)
+        {
+            transform.rotation = Quaternion.Lerp(originalRotation, originalRotation * Quaternion.Euler(new Vector3(0, 181, 0)), i / 9f);
+            if (0 < transform.rotation.eulerAngles.y && transform.rotation.eulerAngles.y < 270)
+            {
+                Hide();
+                cardBack.enabled = true;
+            }
+            yield return new WaitForSeconds(duration / 10f);
+        }
+        transform.rotation = originalRotation * Quaternion.Euler(new Vector3(0, 180, 0));
     }
 
     public void SetEquipment(Equipment equip, Card.CasterColor equipedChar)
@@ -330,6 +368,13 @@ public class CardDisplay : MonoBehaviour
                 thisToolTips.Add(tt);
             }
         }
+    }
+
+    public void SetCard(Card card, bool dynamicNumbers = true)
+    {
+        CardController c = this.gameObject.AddComponent<CardController>();
+        c.SetCardDisplay(this);
+        c.SetCard(card, false, true, dynamicNumbers);
     }
 
     public void SetCard(CardController card, bool dynamicNumbers = true)
@@ -699,6 +744,44 @@ public class CardDisplay : MonoBehaviour
         }
     }
 
+    public int GetDynamicNumberOnCard()
+    {
+        int output = 0;
+
+        if (thisCard.GetCard().description.Contains("<s>"))
+        {
+            string descriptionText = thisCard.GetCard().description.Replace('|', '\n'); ;
+            int startingCheckIndex = 0;
+            if (descriptionText.IndexOf("<s>") != -1)
+            {
+                int s = descriptionText.IndexOf("<s>");
+
+                int percentage = 100;
+                int.TryParse(descriptionText.Substring(s + 3, descriptionText.IndexOf("%", startingCheckIndex) - s - 3), out percentage);
+
+                output = Mathf.CeilToInt(transform.parent.GetComponent<CardController>().FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetAttack() * percentage / 100.0f);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < thisCard.GetCard().cardEffectName.Length; i++)
+            {
+                if (thisCard.GetCard().cardEffectName[i] == Card.EffectType.AbsoluteDamage)
+                {
+                    output = thisCard.GetCard().effectValue[i];
+                    break;
+                }
+                else if (thisCard.GetCard().cardEffectName[i] == Card.EffectType.ArmorDamage || thisCard.GetCard().cardEffectName[i] == Card.EffectType.ArmorDamageAll || thisCard.GetCard().cardEffectName[i] == Card.EffectType.ArmorDamageDivided)
+                {
+                    output = thisCard.GetCard().effectValue[i];
+                    break;
+                }
+            }
+        }
+
+        return Mathf.Abs(output);
+    }
+
     public void SetConditionHighlight(bool value)
     {
         outline.enabled = value;
@@ -852,5 +935,10 @@ public class CardDisplay : MonoBehaviour
 
             yield return new WaitForSeconds(time / 10f);
         }
+    }
+
+    public bool GetIsFacingUp()
+    {
+        return isFacingUp;
     }
 }

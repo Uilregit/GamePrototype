@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 1
-  description: <b>Targeted AoE|</b>Deal <s>80% of ATK as</s> damage to <b>ALL</b>
+  description: <b>Targeted Area|</b>Deal <s>80% of ATK as</s> damage to <b>ALL</b>
     in 1 radius
   art: {fileID: 21300000, guid: 8c163b5fdd796fd4395fcf3415a0ac78, type: 3}
   castType: 7

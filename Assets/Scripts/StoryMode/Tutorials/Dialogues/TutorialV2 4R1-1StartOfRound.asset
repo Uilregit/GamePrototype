@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 4R1-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10331
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 90010000c80000000000000000000000020000002c01000064000000
+  texts:
+  - <i>Huff... Puff...</i> I just had to fight a reanimated magic armor. It was <b>super</b>
+    tough.
+  - Did that affect you guys out there? Oh now everyone has <b>armor?</b>
+  - If armor works like it did in here, it'll <b>block damage equal to the strength
+    of the armor.</b>
+  - The strength of <b>armor will then degrade by one every time it's hit.</b>
+  - Even if they have a tonne of armor though, you'll <b>always deal at least 1 damage.</b>
+  - I'm as naked as the day I ate my way out of my mother's womb, killing her in
+    the process...
+  - And you guys all got armor to wear... Rediculous!

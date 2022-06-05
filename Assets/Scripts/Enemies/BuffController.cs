@@ -44,7 +44,7 @@ public class BuffController : MonoBehaviour
             if (buff.GetDurationType() == Buff.DurationType.Turn && type == Buff.TriggerType.AtStartOfTurn) //All non start or end of turn, turn buffs (ie lifesteal)
                 buff.duration -= 1;
 
-            if (buff.GetTriggerType() == type && buff.GetTriggerEffectType() != Buff.BuffEffectType.None)
+            if (buff.GetTriggerType() == type)
             {
                 if (buff.GetDurationType() == Buff.DurationType.Use)                                            //Reduce duration for all use buffs
                     buff.duration -= 1;
@@ -62,7 +62,8 @@ public class BuffController : MonoBehaviour
                 if (traceList != null && traceList.Any(x => x.GetTriggerEffectType() == buff.GetTriggerEffectType())) //Prevent infinite loops of buffs triggering itself in chains. (heal on damage, damage on heal, triggering eachother in a loop)
                     continue;
 
-                yield return StartCoroutine(buff.Trigger(selfHealthController, healthController, value, traceList, null, waitTimeMultiplier));
+                if (buff.GetTriggerEffectType() != Buff.BuffEffectType.None)     //Prevent time being wasted on buffs that don't have on trigger effects
+                    yield return StartCoroutine(buff.Trigger(selfHealthController, healthController, value, traceList, null, waitTimeMultiplier));
 
                 if (MultiplayerGameController.gameController != null)   //For multiplayer sync
                 {

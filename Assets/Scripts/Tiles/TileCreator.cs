@@ -53,11 +53,20 @@ public class TileCreator : MonoBehaviour
     public Sprite pDRSprite;
 
     [Header("Moverange Sprites")]
+    public Sprite left0Sprite;
     public Sprite left1Sprite;
     public Sprite left2Sprite;
     public Sprite left3Sprite;
     public Sprite left4Sprite;
     public Sprite left5Sprite;
+    public Sprite left6Sprite;
+    public Sprite left7Sprite;
+    public Sprite left8Sprite;
+    public Sprite left9Sprite;
+    public Sprite left10Sprite;
+    public Sprite left11Sprite;
+    public Sprite left12Sprite;
+    public Sprite left13Sprite;
 
     private Dictionary<Vector2, Tile>[] tiles;
     private Dictionary<Vector2, int>[] tilePositions;
@@ -331,7 +340,7 @@ public class TileCreator : MonoBehaviour
                 pathTileMap[layer].SetTile(Vector3Int.RoundToInt(loc), tile);
             }
 
-            if (moveRangeLeft > 0)
+            if (moveRangeLeft >= 0)
             {
                 tile = ScriptableObject.CreateInstance<Tile>();
                 tile.color = tileColor;
@@ -349,7 +358,7 @@ public class TileCreator : MonoBehaviour
     public List<Vector2> GetPathTilePositions(int layer)
     {
         return pathTiles[layer].Keys.ToList();
-    }    
+    }
 
     public void RefreshPathTiles(int layer, Vector2 startingLoc, Vector2 endingLoc, int len, int moveRangeLeft)
     {
@@ -411,25 +420,52 @@ public class TileCreator : MonoBehaviour
             pathTileMap[layer].RefreshTile(Vector3Int.RoundToInt(location));
         }
 
-        if (moveRangeLeft > 0)
-            switch (moveRangeLeft)
-            {
-                case (1):
-                    moveRangeTiles[layer][startingLoc].sprite = left1Sprite;
-                    break;
-                case (2):
-                    moveRangeTiles[layer][startingLoc].sprite = left2Sprite;
-                    break;
-                case (3):
-                    moveRangeTiles[layer][startingLoc].sprite = left3Sprite;
-                    break;
-                case (4):
-                    moveRangeTiles[layer][startingLoc].sprite = left4Sprite;
-                    break;
-                default:
-                    moveRangeTiles[layer][startingLoc].sprite = left5Sprite;
-                    break;
-            }
+        //if (moveRangeLeft >= 0)
+        switch (moveRangeLeft)
+        {
+            case (0):
+                moveRangeTiles[layer][startingLoc].sprite = left0Sprite;
+                break;
+            case (1):
+                moveRangeTiles[layer][startingLoc].sprite = left1Sprite;
+                break;
+            case (2):
+                moveRangeTiles[layer][startingLoc].sprite = left2Sprite;
+                break;
+            case (3):
+                moveRangeTiles[layer][startingLoc].sprite = left3Sprite;
+                break;
+            case (4):
+                moveRangeTiles[layer][startingLoc].sprite = left4Sprite;
+                break;
+            case (5):
+                moveRangeTiles[layer][startingLoc].sprite = left5Sprite;
+                break;
+            case (6):
+                moveRangeTiles[layer][startingLoc].sprite = left6Sprite;
+                break;
+            case (7):
+                moveRangeTiles[layer][startingLoc].sprite = left7Sprite;
+                break;
+            case (8):
+                moveRangeTiles[layer][startingLoc].sprite = left8Sprite;
+                break;
+            case (9):
+                moveRangeTiles[layer][startingLoc].sprite = left9Sprite;
+                break;
+            case (10):
+                moveRangeTiles[layer][startingLoc].sprite = left10Sprite;
+                break;
+            case (11):
+                moveRangeTiles[layer][startingLoc].sprite = left11Sprite;
+                break;
+            case (12):
+                moveRangeTiles[layer][startingLoc].sprite = left12Sprite;
+                break;
+            default:
+                moveRangeTiles[layer][startingLoc].sprite = left13Sprite;
+                break;
+        }
         moveRangeTileMap[layer].RefreshTile(Vector3Int.RoundToInt(startingLoc));
     }
 

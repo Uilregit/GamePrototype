@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
+  m_Name: World TutV2-4R2
+  m_EditorClassIdentifier: 
+  isBossRoom: 0
+  roomName: World TutV2-4R2
+  enemies:
+  - {fileID: 8004321289452204103, guid: 746fadb9981dffc49b0cb820d176c8fc, type: 3}
+  blockNumber: 0
+  level1: 01000000010000000100000001000000010000000100000001000000
+  level2: 01000000010000000000000000000000000000000100000001000000
+  level3: 01000000020000000000000000000000000000000000000001000000
+  level4: 01000000020000000000000000000000030000000000000001000000
+  level5: 01000000020000000000000000000000000000000000000001000000
+  level6: 01000000010000000000000000000000000000000100000001000000
+  level7: 01000000010000000100000001000000010000000100000001000000
+  offerRewardGold: 0
+  offerRewardCards: 0
+  relicReward: 0
+  overrideSingleGoalsSplashIndex: 1
+  dialogues:
+  - {fileID: 11400000, guid: d803aba12f65c1e42982690695127eaa, type: 2}
+  overlays: []
+  lastRewardCardOnTop: 0
+  overrideCardShuffle: 1
+  cardOrder:
+  - {fileID: 11400000, guid: aea3c2b4c356b8647bc94c657e1f1b66, type: 2}
+  - {fileID: 11400000, guid: 0cd7716c0837aa54ca884bfbdd893618, type: 2}
+  - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
+  - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
+  - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
+  - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
+  - {fileID: 11400000, guid: a00f5680a4be6c24796496f38ba618c3, type: 2}
+  - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
+  - {fileID: 11400000, guid: aea3c2b4c356b8647bc94c657e1f1b66, type: 2}
+  - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
+  - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
+  - {fileID: 11400000, guid: 0cd7716c0837aa54ca884bfbdd893618, type: 2}
+  - {fileID: 11400000, guid: a00f5680a4be6c24796496f38ba618c3, type: 2}
+  - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
+  - {fileID: 11400000, guid: 0cd7716c0837aa54ca884bfbdd893618, type: 2}
+  - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
+  overrideHandSize: 5
+  overrideReplaces: 0
+  overrideParty: 020000000100000000000000
+  overrideSeed: 0
+  drawHandCondition: 0
+  drawHandConditionValue: 1
+  hiddenUIElements: 1f00000035000000
+  endRoomUnlockCard: {fileID: 0}
+  endRoomUnlockChar: {fileID: 0}
+  endRoomUnlockAbility: {fileID: 0}
+  endRoomUnlockAbilityName: 
+  revealedUIElements: 

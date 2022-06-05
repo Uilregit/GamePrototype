@@ -50,13 +50,13 @@ public class EnemyInformationController : MonoBehaviour
     void Awake()
     {
         //anim = GetComponent<HealthController>().charDisplay.sprite.GetComponent<Animator>();
-        charAnimController = GetComponent<HealthController>().charDisplay.charAnimController;
         enemyController = GetComponent<EnemyController>();
+        charAnimController = enemyController.GetHealthController().charDisplay.charAnimController;
         targetLine = GetComponent<LineRenderer>();
         moveableLocations = new List<Vector2>();
         attackableLocations = new List<Vector2>();
 
-        Image intentLocation = GetComponent<HealthController>().charDisplay.intentLocation;
+        Image intentLocation = enemyController.GetHealthController().charDisplay.intentLocation;
 
         currentIntentTypeIndicators = new List<Image>();
         currentIntentMultipliers = new List<Text>();
@@ -64,6 +64,9 @@ public class EnemyInformationController : MonoBehaviour
         {
             Image im = Instantiate(intentTypeIndicator);
             Text tx = Instantiate(intentMultiplier);
+
+            UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Intents, im.gameObject);
+            UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Intents, tx.gameObject);
 
             currentIntentTypeIndicators.Add(im);
             currentIntentTypeIndicators[i].transform.SetParent(transform);
@@ -76,12 +79,12 @@ public class EnemyInformationController : MonoBehaviour
             if (enemyController.attacksPerTurn % 2 == 0)
             {
                 currentIntentTypeIndicators[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0f);  //Even
-                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0f) + new Vector2(0.3f, -0.1f);
+                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2 + 0.5f) * 0.35f, 0f) + new Vector2(0.37f, -0.1f);
             }
             else
             {
                 currentIntentTypeIndicators[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0f);  //Odd
-                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0f) + new Vector2(0.3f, -0.1f);
+                currentIntentMultipliers[i].transform.localPosition = new Vector2((i - enemyController.attacksPerTurn / 2) * 0.35f, 0f) + new Vector2(0.37f, -0.1f);
             }
         }
 
@@ -97,6 +100,7 @@ public class EnemyInformationController : MonoBehaviour
         clickedTime = DateTime.Now;
 
         CreateRangeIndicators();
+        enemyController.GetHealthController().SetCombatStatsHighlight(0);
 
         foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
             obj.GetComponent<HealthController>().ShowHealthBar();
@@ -116,19 +120,19 @@ public class EnemyInformationController : MonoBehaviour
             attackRangeColor = Color.clear;
         }
 
-        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
+        int bonusMoveRange = enemyController.GetHealthController().GetBonusMoveRange();
 
         string[] avoidTags = new string[0];
-        if (!GetComponent<HealthController>().GetPhasedMovement())
+        if (!enemyController.GetHealthController().GetPhasedMovement())
             avoidTags = new string[] { "Player", "Blockade" };
         else
             avoidTags = new string[] { };
 
-        foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+        foreach (Vector2 vec in enemyController.GetHealthController().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, moveRangeColor, avoidTags, 1);
 
         //If phased movement is enabled, still can't end on an occupied spot
-        if (GetComponent<HealthController>().GetPhasedMovement())
+        if (enemyController.GetHealthController().GetPhasedMovement())
         {
             List<Vector2> destroyLocs = new List<Vector2>();
             foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))
@@ -178,12 +182,14 @@ public class EnemyInformationController : MonoBehaviour
                 case Card.IndicatorType.Attack:
                     int attackValue = card.GetSimulatedTotalAttackValue(i);
                     currentIntentTypeIndicators[i].sprite = attackIntent[attackIntentDamageCutoffs.Length - 1];     //Default to the largest attack possible
+                    /*
                     for (int j = 0; j < attackIntentDamageCutoffs.Length; j++)
                         if (attackValue <= attackIntentDamageCutoffs[j])
                         {
                             currentIntentTypeIndicators[i].sprite = attackIntent[j];                            //If attack value is between specified range, use appropriate attack image
                             break;
                         }
+                    */
                     break;
                 case Card.IndicatorType.Guard:
                     currentIntentTypeIndicators[i].sprite = blockIntent;
@@ -201,14 +207,24 @@ public class EnemyInformationController : MonoBehaviour
                     currentIntentTypeIndicators[i].sprite = otherIntent;
                     break;
             }
-            currentIntentMultipliers[i].text = card.GetCard().indicatorMultiplier;
+            int cardDynamicNumber = card.GetDynamicNumberOnCard();
+            if (cardDynamicNumber == 0)
+            {
+                currentIntentMultipliers[i].text = "";
+                currentIntentTypeIndicators[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
+            else
+            {
+                currentIntentMultipliers[i].text = cardDynamicNumber.ToString() + card.GetCard().indicatorMultiplier;
+                currentIntentTypeIndicators[i].transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
 
     //Refresh intent without having to call with card. Used for healthcontroller forced movement to update target color
     public void RefreshIntent()
     {
-        if (GetComponent<HealthController>().GetStunned() || GetComponent<HealthController>().GetVit() < 0)
+        if (enemyController.GetHealthController().GetStunned() || enemyController.GetHealthController().GetVit() < 0)
             return;
         CreateRangeIndicators(false); //Refresh the attackable and moveable locations
         RefreshIntentColors();
@@ -248,6 +264,7 @@ public class EnemyInformationController : MonoBehaviour
                     intentColor.a = 0.5f;
             }
 
+            currentIntentTypeIndicators[i].gameObject.SetActive(true);
             currentIntentTypeIndicators[i].color = intentColor;
             if ((targetColor.a + targetColor.b + targetColor.g) / 3.0f < 0.4f) //If the target color is too dark, make the outline white instead
                 currentIntentTypeIndicators[i].GetComponent<Outline>().effectColor = new Color(0.85f, 0.85f, 0.85f);
@@ -256,12 +273,21 @@ public class EnemyInformationController : MonoBehaviour
         }
     }
 
+    public void ShowIntent()
+    {
+        for (int i = 0; i < enemyController.attacksPerTurn; i++)
+        {
+            currentIntentTypeIndicators[i].gameObject.SetActive(true);
+            currentIntentMultipliers[i].gameObject.SetActive(true);
+        }
+    }
+
     public void HideIntent()
     {
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
         {
-            currentIntentTypeIndicators[i].color = new Color(0, 0, 0, 0);
-            currentIntentMultipliers[i].text = "";
+            currentIntentTypeIndicators[i].gameObject.SetActive(false);
+            currentIntentMultipliers[i].gameObject.SetActive(false);
         }
     }
 
@@ -281,15 +307,16 @@ public class EnemyInformationController : MonoBehaviour
 
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2)
         {
-            HealthController hlth = GetComponent<HealthController>();
             List<CardController> cards = new List<CardController>();
             cards.AddRange(enemyController.GetCard());
             foreach (CardController c in cards)
                 c.SetCaster(this.gameObject);
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, hlth, cards, hlth.GetBuffController().GetBuffs(), null, GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(enemyController.GetHealthController().charDisplay.sprite.sprite, enemyController.GetHealthController(), cards, enemyController.GetHealthController().GetBuffController().GetBuffs(), null, GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyTapped, 1);
         }
+
+        enemyController.GetHealthController().charDisplay.healthBar.SetPositionRaised(false);
     }
 
     public void DrawCards()
@@ -402,9 +429,9 @@ public class EnemyInformationController : MonoBehaviour
     {
         CardController cc = displayedCards[cardIndex].GetComponent<CardController>();
 
-        if (enemyController.GetComponent<HealthController>().GetTauntedTarget() != null)
-            if (!targets.Contains(enemyController.GetComponent<HealthController>().GetTauntedTarget().transform.position))
-                targets.Add(enemyController.GetComponent<HealthController>().GetTauntedTarget().transform.position);            //Alwasy include the taunted target's location in cast
+        if (enemyController.GetHealthController().GetTauntedTarget() != null)
+            if (!targets.Contains(enemyController.GetHealthController().GetTauntedTarget().transform.position))
+                targets.Add(enemyController.GetHealthController().GetTauntedTarget().transform.position);            //Alwasy include the taunted target's location in cast
         charAnimController.TriggerAttack(this.gameObject, targets, cc.GetComponent<CardEffectsController>());
 
         isTriggeringCard = true;
@@ -499,8 +526,8 @@ public class EnemyInformationController : MonoBehaviour
     public List<GameObject> GetAttackableTargets(string[] tags)
     {
         //Gets the moverange of this enemy ignoring all collisions
-        int bonusMoveRange = GetComponent<HealthController>().GetBonusMoveRange();
-        foreach (Vector2 vec in GetComponent<HealthController>().GetOccupiedSpaces())
+        int bonusMoveRange = enemyController.GetHealthController().GetBonusMoveRange();
+        foreach (Vector2 vec in enemyController.GetHealthController().GetOccupiedSpaces())
             TileCreator.tileCreator.CreateTiles(this.gameObject, (Vector2)transform.position + vec, Card.CastShape.Circle, enemyController.moveRange + bonusMoveRange, Color.clear, new string[] { "Player", "Enemy", "Blockade" }, 2);
         List<Vector2> movePositions = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
@@ -510,18 +537,18 @@ public class EnemyInformationController : MonoBehaviour
         foreach (Vector2 vec in movePositions)
         {
             int counter = 0;
-            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, vec, new string[] { "Enemy" }, GetComponent<HealthController>().GetOccupiedSpaces(), GetComponent<HealthController>().size);
+            List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, vec, new string[] { "Enemy" }, enemyController.GetHealthController().GetOccupiedSpaces(), enemyController.GetHealthController().size);
             foreach (Vector2 loc in path)
             {
                 if (counter > enemyController.moveRange + bonusMoveRange)
                     break;
                 List<Vector2> v = new List<Vector2>();
-                foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                foreach (Vector2 space in enemyController.GetHealthController().GetOccupiedSpaces())
                     v.Add(loc + space);
 
                 List<GameObject> colissions = GridController.gridController.GetObjectAtLocation(v, new string[] { "Player", "Blockade" });
                 if (colissions.Count == 0)
-                    foreach (Vector2 space in GetComponent<HealthController>().GetOccupiedSpaces())
+                    foreach (Vector2 space in enemyController.GetHealthController().GetOccupiedSpaces())
                         TileCreator.tileCreator.CreateTiles(this.gameObject, loc + space, Card.CastShape.Circle, 0, Color.clear, new string[] { "None" }, 2);
                 counter += 1;
             }
@@ -560,7 +587,7 @@ public class EnemyInformationController : MonoBehaviour
                 temp.SetCardDisplay(displayedCards[0].transform.GetChild(0).GetComponent<CardDisplay>());
                 temp.SetCard(abilityCards[i], false, true);
                 ShowUsedCard(temp, transform.position, true);
-                GetComponent<HealthController>().charDisplay.hitEffectAnim.SetTrigger("Glow");
+                enemyController.GetHealthController().charDisplay.hitEffectAnim.SetTrigger("Glow");
                 yield return new WaitForSeconds(TimeController.time.enemyAttackCardHangTime * TimeController.time.timerMultiplier);
 
                 DestroyUsedCard();
@@ -575,7 +602,7 @@ public class EnemyInformationController : MonoBehaviour
         hasShownAbilities = true;
     }
 
-    public bool GetHasShownAbilities ()
+    public bool GetHasShownAbilities()
     {
         return hasShownAbilities;
     }

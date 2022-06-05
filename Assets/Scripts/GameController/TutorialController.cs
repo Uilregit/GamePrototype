@@ -26,6 +26,7 @@ public class TutorialController : MonoBehaviour
     public Image background;
     public Image emoticon;
     public Text text;
+    public Image skipDialogueButton;
 
     public GameObject popupTutorial;
     private TutorialOverlay popupOverlay = null;
@@ -52,6 +53,7 @@ public class TutorialController : MonoBehaviour
     private List<TutorialOverlay> currentTutorialOverlays = new List<TutorialOverlay>();
     private Dictionary<TutorialOverlay, GameObject> existingOverlays = new Dictionary<TutorialOverlay, GameObject>();
     private bool dialogueClicked = false;
+    private bool dialogueSkipped = false;
 
     private List<int> completedTutIDs = new List<int> { -1 };
     private List<int> completedPassiveTutIDs = new List<int> { -1 };
@@ -124,6 +126,7 @@ public class TutorialController : MonoBehaviour
         }
         if (convo != null)
         {
+            Time.timeScale = 0;
             StartCoroutine(DisplayTexts(convo));
             currentDialogue.Remove(matchedDialogue);
         }
@@ -142,23 +145,16 @@ public class TutorialController : MonoBehaviour
         foreach (TutorialOverlay overlay in currentTutorialOverlays)
         {
             //Create all overlays with the starting conditions met
-            if (overlay.IfConditionsMet(condition, value, true, stringValue) && (completedTutIDs.Contains(overlay.prerequisiteID) || completedPassiveTutIDs.Contains(overlay.prerequisiteID)))
+            if (overlay.IfConditionsMet(condition, value, true, stringValue) &&
+                (completedTutIDs.Contains(overlay.prerequisiteID) || completedPassiveTutIDs.Contains(overlay.prerequisiteID)) &&
+                !completedTutIDs.Contains(overlay.ID))
             {
                 if (overlay.slowTime)
                     StartCoroutine(SlowTime(overlay.slowDuration));
 
                 if (overlay.isPopup)
                 {
-                    popupOverlay = overlay;
-                    popupTitle.text = overlay.popupTitle;
-                    popupImage.sprite = overlay.popupImage;
-                    popUpLargeImage.sprite = overlay.popupImage;
-                    popupImage.enabled = !overlay.popupLargeImage;
-                    popUpLargeImage.enabled = overlay.popupLargeImage;
-                    popupDescription.text = overlay.popupDescription;
-                    popUpSocialsButtons.SetActive(overlay.joinSocialsButtonsEnabled);
-                    popupTutorial.gameObject.SetActive(true);
-                    Time.timeScale = 0;
+                    DisplayOverlayTutorial(overlay);
                 }
                 else
                 {
@@ -177,27 +173,38 @@ public class TutorialController : MonoBehaviour
         foreach (TutorialOverlay overlay in matchedOverlays)
             currentTutorialOverlays.Remove(overlay);
 
-        //Handles pop up overlays
+        //Handles passive tutorial pop up overlays
         if (popupOverlay == null)       //Only allows for 1 pop up overlay at a time
             if (StoryModeController.story == null || StoryModeController.story.GetCurrentRoomSetup() == null || !StoryModeController.story.GetCurrentRoomSetup().noAchievements)   //Never show passive tutorials in tutorial rooms
                 foreach (TutorialOverlay overlay in passiveTutorials)
                 {
-                    if (overlay.IfConditionsMet(condition, value, true, stringValue) && (!completedPassiveTutIDs.Contains(overlay.ID) || repeatablePassiveTutorials.Contains(overlay.ID)))
+                    if (overlay.IfConditionsMet(condition, value, true, stringValue) &&
+                        (!completedPassiveTutIDs.Contains(overlay.ID) || repeatablePassiveTutorials.Contains(overlay.ID)))
                     {
-                        popupOverlay = overlay;
-                        popupTitle.text = overlay.popupTitle;
-                        popupImage.sprite = overlay.popupImage;
-                        popUpLargeImage.sprite = overlay.popupImage;
-                        popupImage.enabled = !overlay.popupLargeImage;
-                        popUpLargeImage.enabled = overlay.popupLargeImage;
-                        popupDescription.text = overlay.popupDescription;
-                        popupTutorial.gameObject.SetActive(true);
-                        popUpSocialsButtons.SetActive(overlay.joinSocialsButtonsEnabled);
-                        popupID = overlay.ID;
-                        UIRevealController.UIReveal.SetElementState(popupOverlay.OnStartUIReveal, true);
+                        DisplayOverlayTutorial(overlay);
                         Time.timeScale = 0;
                     }
                 }
+
+        //If tutorial room doesn't draw the full hand at the start, trigger it when appropriate
+        if (GameController.gameController != null && HandController.handController != null)
+            if (condition == GameController.gameController.GetRoomSetup().drawHandCondition && value == GameController.gameController.GetRoomSetup().drawHandConditionValue)
+                HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+    }
+
+    private void DisplayOverlayTutorial(TutorialOverlay overlay)
+    {
+        popupOverlay = overlay;
+        popupTitle.text = overlay.popupTitle;
+        popupImage.sprite = overlay.popupImage;
+        popUpLargeImage.sprite = overlay.popupImage;
+        popupImage.enabled = !overlay.popupLargeImage;
+        popUpLargeImage.enabled = overlay.popupLargeImage;
+        popupDescription.text = overlay.popupDescription;
+        popupTutorial.gameObject.SetActive(true);
+        popUpSocialsButtons.SetActive(overlay.joinSocialsButtonsEnabled);
+        popupID = overlay.ID;
+        UIRevealController.UIReveal.SetElementState(popupOverlay.OnStartUIReveal, true);
     }
 
     public void PopupHide()
@@ -205,6 +212,9 @@ public class TutorialController : MonoBehaviour
         Time.timeScale = 1;
         popupTutorial.gameObject.SetActive(false);
         completedPassiveTutIDs.Add(popupID);
+        completedTutIDs.Add(popupID);
+        foreach (int value in completedTutIDs)
+            Debug.Log(value);
         InformationLogger.infoLogger.SavePlayerPreferences();
         UIRevealController.UIReveal.SetElementState(popupOverlay.OnEndUIReveal, true);
         popupOverlay = null;
@@ -240,23 +250,43 @@ public class TutorialController : MonoBehaviour
 
     private IEnumerator DisplayTexts(Conversation conversation)
     {
+        Time.timeScale = 0;
         SetEnabled(true);
         for (int i = 0; i < conversation.texts.Length; i++)
         {
             emoticon.sprite = GetEmoticon(conversation.emoticon[i]);
+            text.enabled = false;
             text.text = conversation.texts[i];
+            skipDialogueButton.gameObject.SetActive(StoryModeController.story.GetCompletedRooms().Contains(StoryModeController.story.GetCurrentRoomID()));  //Allow dialogue skips in rooms already completed
+            yield return new WaitForSecondsRealtime(0.1f);  //Flash text between every dialogue to indicate text change
+            text.enabled = true;
 
-            while (!dialogueClicked)
-                yield return new WaitForSeconds(0.1f);
+            while (!dialogueClicked && !dialogueSkipped)
+            {
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+
+            if (dialogueSkipped)
+            {
+                dialogueSkipped = false;
+                break;
+            }
 
             dialogueClicked = false;
         }
         SetEnabled(false);
+        Time.timeScale = 1;
+        TriggerTutorial(Dialogue.Condition.DialogueDone, 1);
     }
 
     public void ClickedDialogue()
     {
         dialogueClicked = true;
+    }
+
+    public void ClickedSkipDialogue()
+    {
+        dialogueSkipped = true;
     }
 
     private Sprite GetEmoticon(Dialogue.Emotion emote)
@@ -301,9 +331,7 @@ public class TutorialController : MonoBehaviour
 
     private void SetEnabled(bool state)
     {
-        emoticon.enabled = state;
-        text.enabled = state;
-        background.enabled = state;
+        background.gameObject.SetActive(state);
 
         if (ScoreController.score != null)
             ScoreController.score.SetTimerPaused(state);
@@ -311,7 +339,7 @@ public class TutorialController : MonoBehaviour
 
     public bool GetEnabled()
     {
-        return background.enabled;
+        return background.gameObject.active;
     }
 
     private IEnumerator SlowTime(float duration)

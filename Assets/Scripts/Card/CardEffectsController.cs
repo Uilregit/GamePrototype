@@ -403,6 +403,15 @@ public class CardEffectsController : MonoBehaviour
             DeckController.deckController.ReportUsedCard(card);
 
         finished = true;
+        try
+        {
+            if (!isSimulation)
+            {
+                card.GetComponent<CardDragController>().SetHealthBars(true, new List<GameObject>());
+                card.GetCaster().GetComponent<HealthController>().SetCombatStatsHighlight(0);
+            }
+        }
+        catch { }
 
         try
         {
@@ -627,6 +636,8 @@ public class CardEffectsController : MonoBehaviour
                 card.GetCard().SetPreviousConditionTrue(true);
                 if (damageTypes.Contains(card.GetCard().cardEffectName[i]))
                     totalAttack += Mathf.CeilToInt(caster.GetComponent<HealthController>().GetAttack() * card.GetCard().effectValue[i] / 100.0f);
+                else if (card.GetCard().cardEffectName[i] == Card.EffectType.AbsoluteDamage)
+                    totalAttack += card.GetCard().effectValue[i];
             }
             else
             {

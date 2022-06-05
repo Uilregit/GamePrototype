@@ -34,6 +34,12 @@ public class CharacterDisplayController : MonoBehaviour
     private Vector3 spritePosition = Vector3.zero;
     private bool isBeingShoved = false;
 
+    private string originalSpriteSortingLayer;
+    private int originalSpriteSortingID;
+    private string originalUISortingLayer;
+    private int originalUISortingID;
+    private Canvas UISortingLayer;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,6 +48,12 @@ public class CharacterDisplayController : MonoBehaviour
 
         deathSprite.material = new Material(deathSprite.material);
         deathSprite.material.SetFloat("_NoiseSize", 5f);
+
+        UISortingLayer = GetComponent<Canvas>();
+        originalUISortingLayer = UISortingLayer.sortingLayerName;
+        originalUISortingID = UISortingLayer.sortingOrder;
+        originalSpriteSortingLayer = sprite.sortingLayerName;
+        originalSpriteSortingID = sprite.sortingOrder;
     }
 
     public void TriggerOnHitEffect(Card.HitEffect triggerName, string triggerOverride = "")
@@ -109,6 +121,26 @@ public class CharacterDisplayController : MonoBehaviour
         squetchSprite.flipX = sprite.flipX;
 
         StartCoroutine(ShoveSpriteProcess(direction));
+    }
+
+    public void SetHighlight(bool state)
+    {
+        string newUISortingLayerName = "Card";
+        int newUISortingLayerID = 0;
+        string newSpriteSortingLayerName = "Card";
+        int newSpriteSortingLayerID = -1;
+        if (!state)
+        {
+            newUISortingLayerName = originalUISortingLayer;
+            newUISortingLayerID = originalUISortingID;
+            newSpriteSortingLayerName = originalSpriteSortingLayer;
+            newSpriteSortingLayerID = originalSpriteSortingID;
+        }
+
+        sprite.sortingLayerName = newSpriteSortingLayerName;
+        sprite.sortingOrder = newSpriteSortingLayerID;
+        UISortingLayer.sortingLayerName = newUISortingLayerName;
+        UISortingLayer.sortingOrder = newUISortingLayerID;
     }
 
     private IEnumerator SquetchUpProcess()

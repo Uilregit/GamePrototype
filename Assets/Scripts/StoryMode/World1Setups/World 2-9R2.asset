@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
+  m_Name: World 2-9R2
+  m_EditorClassIdentifier: 
+  isBossRoom: 0
+  offerRewardGold: 1
+  offerRewardCards: 1
+  relicReward: 0
+  roomName: World 2-9R2
+  enemies:
+  - {fileID: 8004321289452204103, guid: 1a933e97b1c5e4e4988c9335722f8da4, type: 3}
+  - {fileID: 8004321289452204103, guid: 1a933e97b1c5e4e4988c9335722f8da4, type: 3}
+  - {fileID: 486108287864838809, guid: 69fa743f9b4564a48be8829f73460a28, type: 3}
+  blockNumber: 99
+  level1: 01000000010000000100000003000000010000000100000001000000
+  level2: 01000000010000000100000003000000010000000100000001000000
+  level3: 01000000010000000100000003000000010000000100000001000000
+  level4: 01000000010000000000000000000000000000000100000001000000
+  level5: 01000000010000000100000002000000010000000100000001000000
+  level6: 01000000010000000100000002000000010000000100000001000000
+  level7: 01000000010000000000000002000000000000000100000001000000
+  overrideSingleGoalsSplashIndex: -1
+  dialogues: []
+  overlays: []
+  lastRewardCardOnTop: 0
+  overrideCardShuffle: 0
+  cardOrder: []
+  overrideHandSize: -1
+  overrideReplaces: -1
+  overrideParty: 
+  overrideSeed: -1
+  drawHandCondition: 0
+  drawHandConditionValue: 0
+  hiddenUIElements: 
+  endRoomUnlockCard: {fileID: 0}
+  endRoomUnlockChar: {fileID: 0}
+  endRoomUnlockAbility: {fileID: 0}
+  endRoomUnlockAbilityName: 

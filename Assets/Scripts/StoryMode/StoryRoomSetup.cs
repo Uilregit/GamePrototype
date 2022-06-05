@@ -34,6 +34,9 @@ public class StoryRoomSetup : ScriptableObject
     {
         Complete = 0,
         TotalTurnsUsed = 10,
+        TurinInRound1Used = 11,
+        TurinInRound2Used = 12,
+        TurinInRound3Used = 13,
         TotalTimeUsed = 20,
 
         CastLocationsPerTurn = 1012,
@@ -81,6 +84,9 @@ public class StoryRoomSetup : ScriptableObject
 
         UseOriginalTeam = 1950,
 
+        //Tutorial only
+        DamageTakenRound1 = 9001,
+
         SacrificeNothing = 9999,
     }
 
@@ -101,7 +107,7 @@ public class StoryRoomSetup : ScriptableObject
         NotEqualTo = 30
     }
 
-    public string GetChallengeText(int roomID, int index, int bestValue = -1, bool useValueAsIs = false)
+    public string GetChallengeText(int roomID, int index, int bestValue = -1, bool useValueAsIs = false, bool containsProgressText = true)
     {
         string output = "";
         switch (challenges[index])
@@ -110,22 +116,31 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Complete the room";
                 break;
             case ChallengeType.TotalTurnsUsed:
-                output += "Complete in {ct} X turns";
+                output += "Complete {r} in {ct} X total turn{s}";
+                break;
+            case ChallengeType.TurinInRound1Used:
+                output += "Complete round 1 in {ct} X turn{s}";
+                break;
+            case ChallengeType.TurinInRound2Used:
+                output += "Complete round 2 in {ct} X turn{s}";
+                break;
+            case ChallengeType.TurinInRound3Used:
+                output += "Complete round 3 in {ct} X turn{s}";
                 break;
             case ChallengeType.TotalTimeUsed:
                 output += "Complete in {ct} X minsY";
                 break;
             case ChallengeType.CastLocationsPerTurn:
-                output += "Have any character cast from {ct} X locations in 1 turn";
+                output += "Have any character cast from {ct} X location{s} in 1 turn";
                 break;
             case ChallengeType.CharDistMovedPerTurn:
-                output += "Have any character move {ct} X spaces in 1 turn";
+                output += "Have any character move {ct} X space{s} in 1 turn";
                 break;
             case ChallengeType.AddCardsToDeck:
-                output += "Add {ct} X new cards into your deck";
+                output += "Add {ct} X new card{s} into your deck";
                 break;
             case ChallengeType.ReplaceCards:
-                output += "Replace {ct} X cards";
+                output += "Replace {ct} X card{s}";
                 break;
             case ChallengeType.SpendManaPerTurn:
                 output += "Spend {ct} X mana in 1 turn";
@@ -134,37 +149,37 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Leave {ct} X energy unspent at the end of your turns";
                 break;
             case ChallengeType.BeBroken:
-                output += "Be broken {ct} X times";
+                output += "Be broken {ct} X time{s}";
                 break;
             case ChallengeType.BreakEnemies:
-                output += "Break {ct} X enemies";
+                output += "Break {ct} X enem{ies}";
                 break;
             case ChallengeType.TotalOverkillGold:
                 output += "Earn {ct} X total overkill gold";
                 break;
             case ChallengeType.CharsStacked:
-                output += "Stack {ct} X characters together";
+                output += "Stack {ct} X character{s} together";
                 break;
             case ChallengeType.EnemyFriendlyKill:
-                output += "Make {ct} X enemies kill another";
+                output += "Make {ct} X enem{ies} kill another";
                 break;
             case ChallengeType.TauntAwayFromAlly:
-                output += "Taunt {ct} X enemies targeting an other ally";
+                output += "Taunt {ct} X enem{ies} targeting an other ally";
                 break;
             case ChallengeType.HealedByEnemy:
-                output += "Be healed by {ct} X enemies";
+                output += "Be healed by {ct} X enem{ies}";
                 break;
             case ChallengeType.BonusHealthCompleteBlock:
-                output += "Entirely block {ct} X instance of damage with overheal’s bonus health";
+                output += "Entirely block {ct} X instance{s} of damage with overheal";
                 break;
             case ChallengeType.HealthAndArmorCombinedPerTurn:
                 output += "End a turn with {ct} X combined health and armor on 1 character";
                 break;
             case ChallengeType.DamageDealtWithSingeCard:
-                output += "Deal {ct} X Damage With A Single Card";
+                output += "Deal {ct} X damage with a single card";
                 break;
             case ChallengeType.KillWithSingleCard:
-                output += "Bring {ct} X characters below 0 health with 1 card";
+                output += "Bring {ct} X character{s} below 0 health with 1 card";
                 break;
             case ChallengeType.ArmorRemovedFromEnemy:
                 output += "Remove {ct} X total armor from enemies";
@@ -173,45 +188,59 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Remove {ct} X armor from enemies with a single card";
                 break;
             case ChallengeType.DefeatBossInTurn:
-                output += "Defeat the boss in {ct} X turns";
+                output += "Defeat the boss in {ct} X turn{s}";
                 break;
             case ChallengeType.DefeatBossOnEnemyTurn:
                 output += "Defeat the boss on the enemy's turn";
                 break;
             case ChallengeType.PlayMoreThanXCardsPerTurn:
-                output += "Play {ct} X cards in 1 turn";
+                output += "Play {ct} X card{s} in 1 turn";
                 break;
             case ChallengeType.TakeLessThanXTotalDamage:
                 output += "Take {ct} X total damage";
                 break;
             case ChallengeType.EnemiesTravelLessThanXSpaces:
-                output += "Ensure enemies travel {ct} X total spaces";
+                output += "Ensure enemies travel {ct} X total space{s}";
                 break;
             case ChallengeType.EndTurnWithXEnemies:
-                output += "End a turn with {ct} X enemies";
+                output += "End a turn with {ct} X enem{ies}";
                 break;
             case ChallengeType.SacrificeNothing:
                 output += "Defeat all boss summons before they’re sacrificed";
                 break;
             case ChallengeType.UseLessThanXCards:
-                output += "Use {ct} X cards";
+                output += "Use {ct} X card{s}";
                 break;
             case ChallengeType.UseOriginalTeam:
                 output += "Complete with the original team (Red, Green, Blue)";
                 break;
             case ChallengeType.CastOnAnotherally:
-                output += "Cast {ct} X cards on another ally";
+                output += "Cast {ct} X card{s} on another ally";
                 break;
             case ChallengeType.CastFromAllColorsForXTurns:
-                output += "Use cards from all three colors in {ct} X turns";
+                output += "Use cards from all three colors in {ct} X turn{s}";
                 break;
             case ChallengeType.XNumOfImmunedCards:
-                output += "Have {ct} X cards be blocked by immunity";
+                output += "Have {ct} X card{s} be blocked by immunity";
+                break;
+            case ChallengeType.DamageTakenRound1:
+                output += "Take {ct} X damage in round 1";
                 break;
             default:
                 output += "";
                 output += "Not implemented";
                 break;
+        }
+
+        if (challengeValues[index] == 1)
+        {
+            output = output.Replace("{s}", "");
+            output = output.Replace("{ies}", "y");
+        }
+        else
+        {
+            output = output.Replace("{s}", "s");
+            output = output.Replace("{ies}", "ies");
         }
 
         switch (challengeComparisonType[index])
@@ -238,29 +267,45 @@ public class StoryRoomSetup : ScriptableObject
         else
             output = output.Replace("X", challengeValues[index].ToString());
 
+        if (containsProgressText)
+            output += " " + GetChallengeProgressText(roomID, index, bestValue, useValueAsIs);
+
+        return output;
+    }
+
+    public string GetChallengeProgressText(int roomID, int index, int bestValue = -1, bool useValueAsIs = false)
+    {
+        string output = "";
         if (challenges[index] != ChallengeType.Complete && challengeValues[index] != 0)
         {
             if (bestValue != -1)
                 if (challenges[index] == ChallengeType.TotalTimeUsed)
-                    output += " (" + bestValue / 60 + ":" + (bestValue % 60).ToString("00") + "/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
+                    output = "(" + bestValue / 60 + ":" + (bestValue % 60).ToString("00") + "/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
                 else
-                    output += " (" + bestValue + "/" + challengeValues[index] + ")";
+                    output = "(" + bestValue + "/" + challengeValues[index] + ")";
             else if (StoryModeController.story.GetChallengeValues().ContainsKey(roomID) && !useValueAsIs)
             {
                 if (StoryModeController.story.GetChallengeValues()[roomID][index] == -1)
-                    output += " (0/" + challengeValues[index] + ")";
+                    output = "(0/" + challengeValues[index] + ")";
                 else if (challenges[index] == ChallengeType.TotalTimeUsed)
-                    output += " (" + StoryModeController.story.GetChallengeValues()[roomID][index] / 60 + ":" + (StoryModeController.story.GetChallengeValues()[roomID][index] % 60).ToString("00") + "/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
+                    output = "(" + StoryModeController.story.GetChallengeValues()[roomID][index] / 60 + ":" + (StoryModeController.story.GetChallengeValues()[roomID][index] % 60).ToString("00") + "/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
                 else
-                    output += " (" + StoryModeController.story.GetChallengeValues()[roomID][index] + "/" + challengeValues[index] + ")";
+                    output = "(" + StoryModeController.story.GetChallengeValues()[roomID][index] + "/" + challengeValues[index] + ")";
             }
             else
             {
                 if (challenges[index] == ChallengeType.TotalTimeUsed)
-                    output += " (0:00/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
+                    output = "(0:00/" + challengeValues[index] / 60 + ":" + (challengeValues[index] % 60).ToString("00") + ")";
                 else
-                    output += " (0/" + challengeValues[index] + ")";
+                    output = "(0/" + challengeValues[index] + ")";
             }
+        }
+        else if (challenges[index] == ChallengeType.Complete)
+        {
+            if (bestValue == 1)
+                output += "(1/1)";
+            else
+                output += "(0/1)";
         }
         return output;
     }

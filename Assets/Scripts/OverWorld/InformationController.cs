@@ -73,8 +73,8 @@ public class InformationController : MonoBehaviour
             if (index == -1)
                 continue;
 
-            combatInfo.vit[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetCurrentVit();
             combatInfo.maxVit[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetMaxVit();
+            combatInfo.vit[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetCurrentVit();
             combatInfo.atk[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetStartingAttack();
             combatInfo.armor[player.GetComponent<PlayerController>().GetColorTag()] = player.GetComponent<HealthController>().GetStartingArmor();
 

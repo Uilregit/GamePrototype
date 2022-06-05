@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 2R2-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10221
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 0200000000000000000000000200000002000000
+  texts:
+  - Nero <i>the Backseat Magician</i> says you can make your friends run further
+    too!
+  - You can use almost <b>any</b> card on anyone, <b>friend or foe</b>.
+  - If they're highlighted <b>yellow</b> when you're holding a card, you <b>can target</b>
+    them.
+  - The <b>Undecked</b> are clumped pretty close...
+  - You could probably do this in <b>1 turn</b> and save me on some paperwork...

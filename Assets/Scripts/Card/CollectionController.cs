@@ -174,7 +174,11 @@ public class CollectionController : MonoBehaviour
     {
         foreach (string color in selectedDeck.Keys)
             foreach (CardController card in selectedDeck[color].deck)
-                uniqueCards[card.GetCard().casterColor.ToString()][card.GetCard().name] -= 1;
+                try
+                {
+                    uniqueCards[card.GetCard().casterColor.ToString()][card.GetCard().name] -= 1;
+                }
+                catch { };
     }
 
     public void ResolveSelectedEquipmentList()

@@ -34,8 +34,6 @@ public class TurnController : MonoBehaviour
 
     public Image endTurnButton;
     [SerializeField] private Color turnEnabledColor, turnDisabledColor;
-    public Text turnText;
-    public Image turnTextBack;
     public float turnChangeDuration;
     public float turnGracePeriod;
     public float enemyExecutionStagger;
@@ -120,6 +118,12 @@ public class TurnController : MonoBehaviour
         AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
         AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
         AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
+        if (RoomController.roomController.selectedLevel == 0)
+            AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TurinInRound1Used);
+        else if (RoomController.roomController.selectedLevel == 1)
+            AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TurinInRound2Used);
+        else if (RoomController.roomController.selectedLevel == 2)
+            AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TurinInRound3Used);
         AchievementSystem.achieve.OnNotify(cardsPlayedThisTurn.Count, StoryRoomSetup.ChallengeType.PlayMoreThanXCardsPerTurn);
         AchievementSystem.achieve.OnNotify(enemies.Count, StoryRoomSetup.ChallengeType.EndTurnWithXEnemies);
 
@@ -165,8 +169,6 @@ public class TurnController : MonoBehaviour
 
     public IEnumerator EnemyTurn()
     {
-        turnID += 1;
-
         int manaCardsPlayed = 0;
         int energyCardsPlayed = 0;
         foreach (Card c in cardsPlayedThisTurn)
@@ -220,14 +222,10 @@ public class TurnController : MonoBehaviour
         //Enemy turn
         float enemyTurnStartTime = Time.time;
         CameraController.camera.ScreenShake(0.03f, 0.05f);
-        turnText.text = "Enemy Turn";
+        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Enemy Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Purple);
         SetEndTurnButtonEnabled(false);
         MusicController.music.PlaySFX(enemyTurnSound);
-        turnText.enabled = true;
-        turnTextBack.enabled = true;
-        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
-        turnText.enabled = false;
-        turnTextBack.enabled = false;
+        yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.turnChangeDuration));
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
         //Trigger all begining of turn effects
@@ -292,16 +290,12 @@ public class TurnController : MonoBehaviour
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
         float enemyTurnDuration = Time.time - enemyTurnStartTime;
+        turnID += 1;
         CameraController.camera.ScreenShake(0.06f, 0.05f);
-        turnText.text = "Your Turn";
+        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Your Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Green);
         MusicController.music.PlaySFX(playerTurnSound);
         SetEndTurnButtonEnabled(true);
-        turnText.enabled = true;
-        turnTextBack.enabled = true;
-
-        yield return new WaitForSeconds(TimeController.time.turnChangeDuration * TimeController.time.timerMultiplier);
-        turnText.enabled = false;
-        turnTextBack.enabled = false;
+        yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.turnChangeDuration));
         yield return new WaitForSeconds(TimeController.time.turnGracePeriod * TimeController.time.timerMultiplier);
 
         //Allow players to move, reset mana, and draw a full hand
@@ -387,6 +381,7 @@ public class TurnController : MonoBehaviour
 
     public IEnumerator SetMultiplayerTurn(int playerNumber)
     {
+        /*
         multiplayerTurnPlayer = playerNumber;
 
         if (ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber() != playerNumber)
@@ -516,6 +511,8 @@ public class TurnController : MonoBehaviour
             HandController.handController.ClearHand();
         }
         turnID += 1;
+        */
+        yield return new WaitForSeconds(0);
     }
 
     public void ResetEnergyDisplay()
@@ -586,7 +583,7 @@ public class TurnController : MonoBehaviour
         else
             currentMana = 0;
         UIController.ui.ResetManaBar(currentMana);
-        turnID = 0;
+        turnID = 1;
 
         HandController.handController.ResetReplaceCounter();
     }

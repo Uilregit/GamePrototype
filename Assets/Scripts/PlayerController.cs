@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             HandController.handController.SetBonusHandSize(equipBonusHandSize, true);
             try
             {
-                if (InformationController.infoController.GetMaxVit(colorTag) != -1)     //If InformationController has not be reset to default values, use those stats instead
+                if (InformationController.infoController.GetMaxVit(colorTag) > 0)     //If InformationController has not be reset to default values, use those stats instead
                     healthController.LoadCombatInformation(colorTag); //Must go after SetMaxVit
             }
             catch { }
@@ -133,6 +133,12 @@ public class PlayerController : MonoBehaviour
     {
         return moveRange;
     }
+
+    public void SetMoveRange(int value)
+    {
+        moveRange = value;
+    }
+
     public int GetAttackRange()
     {
         return attackRange;

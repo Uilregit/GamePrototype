@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 3R3-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10331
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: c800000065000000c900000065000000c8000000c8000000c800000003000000
+  texts:
+  - Okay I just broke another spell in here and got my socks back. <b>Only</b> my
+    socks back.
+  - Which honestly makes me feel <b>more</b> naked.
+  - So I took it off and they disappeared.
+  - Hopefully that didn't reverberate into the fabric of your side of existence.
+  - Oh it's created a magical vacum?
+  - That you can dump cards you don't have enough <b>Mana</b> for?
+  - And get a new card in exchange?
+  - I guess if it doesn't smell like Nero <i>the Pending Podiatrist Patient</i>'s
+    feet, go ahead and use it.

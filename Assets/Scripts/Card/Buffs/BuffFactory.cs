@@ -94,6 +94,8 @@ public class BuffFactory : MonoBehaviour
                 break;
             case Buff.BuffEffectType.BonusMoveRange:
                 healthController.SetBonusMoveRange(cardValue);
+                if (healthController.isPlayer && healthController.GetIsSimulation())
+                    healthController.GetComponent<PlayerMoveController>().UpdateOrigin(healthController.transform.position);
                 break;
             case Buff.BuffEffectType.CharEnergyCap:
                 healthController.SetEnergyCostCap(cardValue);
@@ -134,18 +136,22 @@ public class BuffFactory : MonoBehaviour
                 }
                 break;
             case Buff.BuffEffectType.Disarm:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Disarmed, true);
                 healthController.SetDisarmed(true);
                 break;
             case Buff.BuffEffectType.Silence:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Silenced, true);
                 healthController.SetSilenced(true);
                 break;
             case Buff.BuffEffectType.Stun:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stunned, true);
                 healthController.SetStunned(true);
                 break;
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(true);
                 break;
             case Buff.BuffEffectType.Taunt:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Taunted, true);
                 healthController.SetTauntTarget(casterHealthController);
                 try { healthController.GetComponent<EnemyInformationController>().RefreshIntent(); }
                 catch { }
@@ -423,18 +429,22 @@ public class BuffFactory : MonoBehaviour
                 }
                 break;
             case Buff.BuffEffectType.Disarm:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Disarmed, false);
                 healthController.SetDisarmed(false);
                 break;
             case Buff.BuffEffectType.Silence:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Silenced, false);
                 healthController.SetSilenced(false);
                 break;
             case Buff.BuffEffectType.Stun:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stunned, false);
                 healthController.SetStunned(false);
                 break;
             case Buff.BuffEffectType.Preserve:
                 healthController.SetPreserveBonusVit(false);
                 break;
             case Buff.BuffEffectType.Taunt:
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Taunted, false);
                 healthController.SetTauntTarget(null);
                 try { healthController.GetComponent<EnemyInformationController>().RefreshIntent(); }
                 catch { }

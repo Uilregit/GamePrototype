@@ -84,7 +84,6 @@ public class StoryModeSceneController : MonoBehaviour
         ReportRoomSelected(selectedRoom.roomId);
         RefreshWorldLook();
         initialized = true;
-        StarsViewSelected();
 
         StartCoroutine(HighlightRooms());
 
@@ -288,22 +287,24 @@ public class StoryModeSceneController : MonoBehaviour
         List<StoryRoomController> newly3AchievementsUnlockedRooms = new List<StoryRoomController>();
 
         foreach (StoryRoomController room in rooms[StoryModeController.story.GetWorldNumber()])
-            if (room.unlockRequirementID == lastSelectedRoom.roomId && StoryModeController.story.GetCompletedRooms().Contains(lastSelectedRoom.roomId))
+        {
+            if (lastSelectedRoom != null && room.unlockRequirementID == lastSelectedRoom.roomId && StoryModeController.story.GetCompletedRooms().Contains(lastSelectedRoom.roomId))
             {
                 if (!room.unlockRequire3Stars && !StoryModeController.story.GetLastSelectedComplete())
                     newlyUnlockedRooms.Add(room);
                 else if (room.unlockRequire3Stars && GetNumChallengeSatisfied(lastSelectedRoom) == 3)
                     newly3AchievementsUnlockedRooms.Add(room);
             }
+        }
 
         //Code for highlighting the room going from not complete to complete
-        if (!StoryModeController.story.GetLastSelectedComplete() && StoryModeController.story.GetCompletedRooms().Contains(lastSelectedRoom.roomId))
+        if (lastSelectedRoom != null && !StoryModeController.story.GetLastSelectedComplete() && StoryModeController.story.GetCompletedRooms().Contains(lastSelectedRoom.roomId))
             yield return StartCoroutine(HighlightSpecificRoom(lastSelectedRoom, lockedColor, 1f));
         //Code for highlingthing the new rooms being unlocked
         foreach (StoryRoomController room in newlyUnlockedRooms)
             yield return StartCoroutine(HighlightSpecificRoom(room, lockedColor, 3f));
         //Code for highlighting the rrom from complete to challenge satisfied
-        if (StoryModeController.story.GetLastSelectedAchievents() != 3 && GetNumChallengeSatisfied(lastSelectedRoom) == 3)
+        if (lastSelectedRoom != null && StoryModeController.story.GetLastSelectedAchievents() != 3 && GetNumChallengeSatisfied(lastSelectedRoom) == 3)
             yield return StartCoroutine(HighlightSpecificRoom(lastSelectedRoom, unlockedColor, 1f));
         //Code for highlighting the new rooms from being unlocked
         foreach (StoryRoomController room in newly3AchievementsUnlockedRooms)
@@ -415,19 +416,30 @@ public class StoryModeSceneController : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificCard)
-                itemsList[i].text = selectedRoom.setup.rewardCards[i].name + " x" + selectedRoom.setup.rewardAmounts[i];
-            else if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificEquipment)
-                itemsList[i].text = selectedRoom.setup.rewardEquipment[i].equipmentName + " x" + selectedRoom.setup.rewardAmounts[i];
-            else
-                itemsList[i].text = selectedRoom.setup.rewardTypes[i] + " x" + selectedRoom.setup.rewardAmounts[i];
-            itemsIcons[i].sprite = StoryModeController.story.GetRewardSprite(selectedRoom.setup.rewardTypes[i], i);
-            itemsIcons[i].color = StoryModeController.story.GetRewardsColor(selectedRoom.setup.rewardTypes[i]);
+            if (selectedRoom.setup.rewardTypes.Length > i)
+            {
+                if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificCard)
+                    itemsList[i].text = selectedRoom.setup.rewardCards[i].name + " x" + selectedRoom.setup.rewardAmounts[i];
+                else if (selectedRoom.setup.rewardTypes[i] == StoryModeController.RewardsType.SpecificEquipment)
+                    itemsList[i].text = selectedRoom.setup.rewardEquipment[i].equipmentName + " x" + selectedRoom.setup.rewardAmounts[i];
+                else
+                    itemsList[i].text = selectedRoom.setup.rewardTypes[i] + " x" + selectedRoom.setup.rewardAmounts[i];
+                itemsIcons[i].sprite = StoryModeController.story.GetRewardSprite(selectedRoom.setup.rewardTypes[i], i);
+                itemsIcons[i].color = StoryModeController.story.GetRewardsColor(selectedRoom.setup.rewardTypes[i]);
 
-            if (i < 3 && StoryModeController.story.GetChallengeItemsBought().ContainsKey(roomId))
-                itemsSoldOutIcons[i].gameObject.SetActive(StoryModeController.story.GetChallengeItemsBought()[roomId][i]);
+                if (i < 3 && StoryModeController.story.GetChallengeItemsBought().ContainsKey(roomId))
+                    itemsSoldOutIcons[i].gameObject.SetActive(StoryModeController.story.GetChallengeItemsBought()[roomId][i]);
+                else
+                    itemsSoldOutIcons[i].gameObject.SetActive(false);
+
+                itemsList[i].gameObject.SetActive(true);
+                itemsIcons[i].gameObject.SetActive(true);
+            }
             else
-                itemsSoldOutIcons[i].gameObject.SetActive(false);
+            {
+                itemsList[i].gameObject.SetActive(false);
+                itemsIcons[i].gameObject.SetActive(false);
+            }
         }
 
         enterButton.color = unlockedColor;

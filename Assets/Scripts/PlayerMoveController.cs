@@ -31,6 +31,8 @@ public class PlayerMoveController : MonoBehaviour
     private DateTime clickedTime;
     private Vector2 clickedLocation;
 
+    private int currentMoveRangeLeft;
+
     //Achievement tracking
     private List<Vector2> castFromLocation = new List<Vector2>();
 
@@ -47,6 +49,7 @@ public class PlayerMoveController : MonoBehaviour
         lastHoverLocation = transform.position;
         originalPosition = transform.position;
         movedDistance = 0;
+        currentMoveRangeLeft = GetMoveRangeLeft();
         path = new List<Vector2>();
         TileCreator.tileCreator.DestroyTiles(this.gameObject);
         TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
@@ -58,7 +61,8 @@ public class PlayerMoveController : MonoBehaviour
     public void UpdateMovePosition(Vector2 newlocation)
     {
         Vector2 roundedPosition = GridController.gridController.GetRoundedVector(newlocation, GetComponent<HealthController>().size);
-        int moveRangeLeft = Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0);
+        int moveRangeLeft = GetMoveRangeLeft();
+        bool updateCombatStatsHighlight = roundedPosition != lastHoverLocation;
 
         if (CheckIfPositionValid(roundedPosition))          //If it's a valid pathable position, draw path preview to location
         {
@@ -80,7 +84,8 @@ public class PlayerMoveController : MonoBehaviour
                             break;
                     }
                     TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - path.Count + 1, moveRangeIndicatorColor);
+                    currentMoveRangeLeft = moveRangeLeft - path.Count + 1;
+                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, currentMoveRangeLeft, moveRangeIndicatorColor);
                 }
             }
         }
@@ -101,9 +106,24 @@ public class PlayerMoveController : MonoBehaviour
                         break;
                 }
                 TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-                TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
+                currentMoveRangeLeft = moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition);
+                TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, currentMoveRangeLeft, moveRangeIndicatorColor);
             }
         }
+
+        if (updateCombatStatsHighlight)
+            healthController.SetCombatStatsHighlight(0);
+    }
+
+    private int GetMoveRangeLeft()
+    {
+        Debug.Log(player.GetMoveRange() + "|" + healthController.GetBonusMoveRange() + "|" + movedDistance);
+        return Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0);
+    }
+
+    public int GetCurrentMoveRangeLeft()
+    {
+        return currentMoveRangeLeft;
     }
 
     public Vector2 GetMoveLocation()
@@ -132,6 +152,7 @@ public class PlayerMoveController : MonoBehaviour
 
     public void ResetMoveDistance(int value)
     {
+        Debug.Log(value);
         movedDistance = value;
     }
 
@@ -153,7 +174,7 @@ public class PlayerMoveController : MonoBehaviour
         UpdateOrigin(transform.position);
         movedDistance = 0;
         SetMoveable(true);
-        GetComponent<HealthController>().AtStartOfTurn();
+        healthController.AtStartOfTurn();
     }
 
     public void ReportTurnBasedAchievements()
@@ -189,7 +210,7 @@ public class PlayerMoveController : MonoBehaviour
             {
                 if (!healthController.GetPhasedMovement())
                 {
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(),
                                                         PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
                     if (SettingsController.settings.GetRemainingMoveRangeIndicator() && path.Count > 1)       //If the option is enabled and player moved, create remaining move range indicator
                         TileCreator.tileCreator.CreateTiles(this.gameObject, lastGoodPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
@@ -197,7 +218,7 @@ public class PlayerMoveController : MonoBehaviour
                 }
                 else    //If phased movement, then player can move through, but not on enemies
                 {
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0),
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(),
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { }, 0);    //Does not avoid Enemies for move range calculation
                     List<Vector2> destroyLocs = new List<Vector2>();
                     foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies and blockades, can't move onto them
@@ -230,11 +251,11 @@ public class PlayerMoveController : MonoBehaviour
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
                     if (!healthController.GetPhasedMovement())
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(), //Draw faded tiles on where the player could have moved if not taunted
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Enemy", "Blockade" }, 1);
                     else    //If phased movement, then player can move through, but not on enemies
                     {
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0), //Draw faded tiles on where the player could have moved if not taunted
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(), //Draw faded tiles on where the player could have moved if not taunted
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
@@ -266,9 +287,12 @@ public class PlayerMoveController : MonoBehaviour
     public void CommitMove()
     {
         movedDistance += GridController.gridController.GetManhattanDistance(transform.position, originalPosition); //Allow movement after action
+        currentMoveRangeLeft = GetMoveRangeLeft();
+        Debug.Log(gameObject + "|" + currentMoveRangeLeft);
         originalPosition = transform.position;
         path = new List<Vector2>();
-        TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
+        if (gameObject.tag != "Simulation")
+            TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
         //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
     }
 
@@ -317,6 +341,7 @@ public class PlayerMoveController : MonoBehaviour
         clickedLocation = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 
         healthController.ShowHealthBar();
+        healthController.SetCombatStatsHighlight(0);
     }
 
     public void OnMouseUp()
@@ -326,12 +351,12 @@ public class PlayerMoveController : MonoBehaviour
 
         CameraController.camera.ScreenShake(0.03f, 0.1f);
 
-        GetComponent<HealthController>().HideHealthBar();
+        healthController.HideHealthBar();
 
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
         {
             List<CardController> cards = new List<CardController>();
-            CharacterInformationController.charInfoController.SetDescription(GetComponent<HealthController>().charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), CollectionController.collectionController.GetEquipmentList(player.GetColorTag()), GetComponent<AbilitiesController>());
+            CharacterInformationController.charInfoController.SetDescription(healthController.charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), CollectionController.collectionController.GetEquipmentList(player.GetColorTag()), GetComponent<AbilitiesController>());
             CharacterInformationController.charInfoController.Show();
         }
 
@@ -340,7 +365,7 @@ public class PlayerMoveController : MonoBehaviour
                 StartCoroutine(healthController.GetBuffController().TriggerBuff(Buff.TriggerType.OnMove, healthController, GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition)));
 
         HandController.handController.ResetCardDisplays();
-        healthController.charDisplay.healthBar.ResetPosition();
+        healthController.charDisplay.healthBar.SetPositionRaised(false);
     }
 
     public Vector2 GetPreviousPosition()

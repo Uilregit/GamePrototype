@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PatchController : MonoBehaviour
 {
-    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1", "0.5.1.3", "0.5.2.2", "0.5.2.3" };
+    private string[] oldPatchVersions = new string[] { "0.5.0.4", "0.5.1", "0.5.1.1", "0.5.1.3", "0.5.2.2", "0.5.2.3", "0.5.3.2" };
     public GameObject[] worlds;
 
     // Start is called before the first frame update
@@ -114,6 +114,13 @@ public class PatchController : MonoBehaviour
                 ScoreController.score.teamLevel = 0;
                 ScoreController.score.currentEXP = 0;
                 InformationLogger.infoLogger.SavePlayerPreferences();
+                break;
+            case "0.5.3.2":
+                Unlocks unlocked = UnlocksController.unlock.GetUnlocks();
+                unlocked.uiElementUnlocked[UIRevealController.UIElement.EnergyBar] = true;
+                unlocked.uiElementUnlocked[UIRevealController.UIElement.ManaBar] = true;
+                UnlocksController.unlock.SetUnlocks(unlocked);
+                InformationLogger.infoLogger.SaveUnlocks();
                 break;
         }
         Debug.Log("######## Patching successful ########");

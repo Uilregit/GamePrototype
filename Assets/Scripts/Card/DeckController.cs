@@ -113,7 +113,6 @@ public class DeckController : MonoBehaviour
             else
                 numberOfManaCardsInDiscard -= 1;
         }
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
     }
 
@@ -164,9 +163,6 @@ public class DeckController : MonoBehaviour
                 numberOfManaCardsInDiscard -= 1;
             }
         }
-
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
-
         return drawnCard;
     }
 
@@ -212,8 +208,6 @@ public class DeckController : MonoBehaviour
                 numberOfEnergyCardsInDiscard -= 1;
             }
         }
-
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return drawnCard;
     }
 
@@ -247,8 +241,6 @@ public class DeckController : MonoBehaviour
                         numberOfEnergyCardsInDiscard -= 1;
                     break;
                 }
-
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
         return output;
     }
 
@@ -325,7 +317,6 @@ public class DeckController : MonoBehaviour
         numberOfManaCardsInDraw = numberOfManaCardsInDiscard;
         numberOfEnergyCardsInDiscard = 0;
         numberOfManaCardsInDiscard = 0;
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
 
     public void ReportUsedCard(CardController card)
@@ -350,7 +341,6 @@ public class DeckController : MonoBehaviour
                     numberOfManaCardsInDraw += 1;
             }
         }
-        UIController.ui.ResetPileCounts(drawPile.Count, discardPile.Count);
     }
 
     public int GetDrawPileSize()

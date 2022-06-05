@@ -1283,6 +1283,67 @@ Fixed bug where simulated characters didn't copy drawn cards attached to buffs p
 Fixed bug where simulated buff triggers would draw cards
 Fixed character attack and armor icons being misalligned with their stats icons sometimes
 Fixed bug where if player was defeated, end screen would crash and world map would show completed colors
+Fixed bugs where trigger type none buffs never got reverted
+
+#####################
+####### 0.5.4 #######
+#####################
+-- Cards --
+    - Green -
+        - Wind Strike -
+            No longer forced to cast in a + shape, now can be cast in a circle like every other card
+            When cast diagonally, the knockback will be diagonal
+        - Knife -
+            No longer forced to cast in a + shape, now can be cast in a circle like every other card
+            When cast diagonally, the knockback will be diagonal
+
+-- Equipment --
+
+-- Highlights --
+Added improved UI and animations for draw and discard piles
+
+-- Enemies --
+
+-- Pacing --
+
+-- System --
+Added enemies that don't have armor for tutorial purposes
+Added option for rooms to not draw cards until certain conditions have been met
+Removed plus shaped casting cards
+Targeted AoE keyword renamed to Targeted Area
+
+-- UI --
+Added menu for new abilities and new chars at the end of rooms
+Added ability for more UI elements to be hidden
+Move range left indicator is now numerical instead of sized, and can go up to 13
+Chagned UI for draw and discard pile to be much more clear what they are
+Added UI animation for drawing cards from the draw pile
+Added UI animation for replacing cards
+Added UI animation for casted cards going to the discard pile
+Added UI animation for shuffing the discard pile
+Drawn cards are now bigger
+Updated character stats and health bar UI
+Added Round and Optional Goals UI at the start of every turn
+Updated turn texts UI
+New Round and Optional Goals UI is now skippable by tapping
+Reworked status and break texts on the health bar
+Healthbars of characters not part of a card cast is now hidden during cast
+Enemy intents will now be hidden if their health bar is highlighted
+Added Combat status to combat rooms
+    Fix additional moverange not showing
+Fix delay in achievement skip
+Add skip to draw
+
+-- Bugs --
+Fixed bug where turn based goals weren't reported on the last turn
+Fixed bug where highlighted characters will be darkened by attack range lowlight
+Fixed bug where end turn could be pressed during pre combat animations
+Fixed bug where turns were counted up on enemy turns, not player's
+Fixed bug where non boss rooms had boss emblelishments
+Fixed bug where caster simulated objects weren't returned properly
+Fixed bug where knocking back self will cause a diagonal knockback
+
+##########
 
 -- To dos --
 Add shop and crafting (1 normal shop, probably connected to room 2 or 3, 1 secret shop, revealed when you 3 star room 5 or 6 or 7)

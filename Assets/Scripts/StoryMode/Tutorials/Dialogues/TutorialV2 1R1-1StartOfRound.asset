@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 1R1-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10111
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: c90000002c01000000000000650000002c01000064000000c90000002c01000065000000c900000002000000
+  texts:
+  - MONSIEUR FLUFFYBUTT!
+  - <b>I</b>, Nero <i>the All Powerful</i>, need your help...
+  - Now I <i>know</i> we've had our differences.
+  - You didn' want to be turned into a corgi, and I didn't want to hear you talk
+    about it.
+  - But someone messed with the <b>Deckronomicon</b> and ripped out most of the pages.
+  - Monsters inscribed on those pages aren't bound by the book anymore, they're running
+    free!
+  - They're the <b>Undecked</b>!
+  - Also I'm trapped in the <b>Deckronomicon</b> so I can't turn you back.
+  - 'Unless... '
+  - You kill the <b>Undecked</b> and return them to the <b> Deckronomicon</b>.
+  - Go forth! Deck them in the face like Nero <i>the Pacifist</i> showed you how!

@@ -59,6 +59,90 @@ TextureImporter:
   - first:
       213: 21300036
     second: PathTiles_18
+  - first:
+      213: -8721824247832618279
+    second: PathTiles_0
+  - first:
+      213: 4684770170740167479
+    second: PathTiles_1
+  - first:
+      213: 8079534527529485137
+    second: PathTiles_2
+  - first:
+      213: 7892681714008469783
+    second: PathTiles_3
+  - first:
+      213: 4171788892392221896
+    second: PathTiles_4
+  - first:
+      213: -5323589230393760543
+    second: PathTiles_5
+  - first:
+      213: -5866785496868955311
+    second: PathTiles_6
+  - first:
+      213: -8739393487490673509
+    second: PathTiles_7
+  - first:
+      213: -5403100710592409662
+    second: PathTiles_8
+  - first:
+      213: 2819695822223351990
+    second: PathTiles_9
+  - first:
+      213: 2578975565952050099
+    second: PathTiles_10
+  - first:
+      213: 6807293457561090932
+    second: PathTiles_11
+  - first:
+      213: 5736980458354176432
+    second: PathTiles_12
+  - first:
+      213: 4834094699993500735
+    second: PathTiles_13
+  - first:
+      213: 5818405674972343237
+    second: PathTiles_14
+  - first:
+      213: 1607158098717503768
+    second: PathTiles_15
+  - first:
+      213: 6594877831287115550
+    second: PathTiles_16
+  - first:
+      213: 143495898698054963
+    second: PathTiles_17
+  - first:
+      213: 8158384936208316041
+    second: PathTiles_18
+  - first:
+      213: -3951250780891144263
+    second: PathTiles_19
+  - first:
+      213: 8935913086055981135
+    second: PathTiles_20
+  - first:
+      213: -781871701842261240
+    second: PathTiles_21
+  - first:
+      213: -4277695241851282873
+    second: PathTiles_22
+  - first:
+      213: -5743688046809080787
+    second: PathTiles_23
+  - first:
+      213: -450231671352974075
+    second: PathTiles_24
+  - first:
+      213: -2498356085469236067
+    second: PathTiles_25
+  - first:
+      213: 742447464728529106
+    second: PathTiles_26
+  - first:
+      213: -3597521388045069390
+    second: PathTiles_27
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -162,7 +246,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 72
         width: 12
         height: 12
       alignment: 0
@@ -172,8 +256,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da93c4621d1bcc840baa620db8fa21df
-      internalID: 21300000
+      spriteID: 9da5c8a8e0bd5f680800000000000000
+      internalID: -8721824247832618279
       vertices: []
       indices: 
       edges: []
@@ -183,7 +267,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 48
+        y: 72
         width: 12
         height: 12
       alignment: 0
@@ -193,8 +277,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9bf57cd40b071546bd7f74ab706e6f1
-      internalID: 21300002
+      spriteID: 733505936a5a30140800000000000000
+      internalID: 4684770170740167479
       vertices: []
       indices: 
       edges: []
@@ -204,7 +288,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 48
+        y: 72
         width: 12
         height: 12
       alignment: 0
@@ -214,8 +298,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d887600b3612bc4ca1daba45fecc140
-      internalID: 21300004
+      spriteID: 15306e778d5402070800000000000000
+      internalID: 8079534527529485137
       vertices: []
       indices: 
       edges: []
@@ -225,6 +309,111 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 36
+        y: 72
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71132b0a330788d60800000000000000
+      internalID: 7892681714008469783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc65f005eb25e930800000000000000
+      internalID: 4171788892392221896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_5
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 60
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e4e840fccfce16b0800000000000000
+      internalID: -5323589230393760543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_6
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 60
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15b56b59cadf49ea0800000000000000
+      internalID: -5866785496868955311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_7
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 60
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9491c92def67b680800000000000000
+      internalID: -8739393487490673509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_8
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 48
         width: 12
         height: 12
@@ -235,113 +424,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66cc74a9aeeccfc4ebd67ff8d00562dc
-      internalID: 21300006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PathTiles_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 36
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 890b52cf841ce214cb57715f119a12f5
-      internalID: 21300008
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PathTiles_5
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 36
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94768d912b8ee084689aa04aea6c4abd
-      internalID: 21300010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PathTiles_6
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 36
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5997ca019dd00ad43b757187f39d3359
-      internalID: 21300012
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PathTiles_7
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 36
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b486ebc822015a54b85568c094167951
-      internalID: 21300014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PathTiles_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 24
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 42fd8fa25573a32489414529ae5c9684
-      internalID: 21300016
+      spriteID: 2cf8a73d7845405b0800000000000000
+      internalID: -5403100710592409662
       vertices: []
       indices: 
       edges: []
@@ -351,7 +435,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 24
+        y: 48
         width: 12
         height: 12
       alignment: 0
@@ -361,8 +445,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1639c05f6cf807d49bd1f4a41e90fb4e
-      internalID: 21300018
+      spriteID: 6b0a6423962912720800000000000000
+      internalID: 2819695822223351990
       vertices: []
       indices: 
       edges: []
@@ -372,7 +456,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 24
+        y: 48
         width: 12
         height: 12
       alignment: 0
@@ -382,8 +466,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08f8d1ae68a9084418706b5b2eacd883
-      internalID: 21300020
+      spriteID: 3b3ebfcfc9c5ac320800000000000000
+      internalID: 2578975565952050099
       vertices: []
       indices: 
       edges: []
@@ -393,6 +477,111 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 36
+        y: 48
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47bf4c3455d587e50800000000000000
+      internalID: 6807293457561090932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b1fe8fb459dd9f40800000000000000
+      internalID: 5736980458354176432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_13
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 36
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c06bb7487261340800000000000000
+      internalID: 4834094699993500735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_14
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 36
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cbe7d752212fb050800000000000000
+      internalID: 5818405674972343237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_15
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 36
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 811f2f396c5cd4610800000000000000
+      internalID: 1607158098717503768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_16
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 24
         width: 12
         height: 12
@@ -403,14 +592,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a88cab1d79d5a654e82ef08f59cb20d0
-      internalID: 21300022
+      spriteID: e1f87f64276b58b50800000000000000
+      internalID: 6594877831287115550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_12
+      name: PathTiles_17
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33d7f9472cccdf100800000000000000
+      internalID: 143495898698054963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_18
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 986389fdfd7683170800000000000000
+      internalID: 8158384936208316041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_19
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf9f7279565a29c0800000000000000
+      internalID: -3951250780891144263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_20
       rect:
         serializedVersion: 2
         x: 0
@@ -424,14 +676,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f122d38fba6a88845845da8ed1b6659f
-      internalID: 21300024
+      spriteID: f40a1267b9db20c70800000000000000
+      internalID: 8935913086055981135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_13
+      name: PathTiles_21
       rect:
         serializedVersion: 2
         x: 12
@@ -445,14 +697,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acab1229f64549d4f8003832bd69640f
-      internalID: 21300026
+      spriteID: 80b03c764db3625f0800000000000000
+      internalID: -781871701842261240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_14
+      name: PathTiles_22
       rect:
         serializedVersion: 2
         x: 24
@@ -466,14 +718,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99799fb4f71809845b8bec3f2b151a42
-      internalID: 21300028
+      spriteID: 74a531c77d292a4c0800000000000000
+      internalID: -4277695241851282873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_15
+      name: PathTiles_23
       rect:
         serializedVersion: 2
         x: 36
@@ -487,14 +739,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3d1bc155f7b6a6428caf8d5fa5e25b0
-      internalID: 21300030
+      spriteID: d2c994d17225a40b0800000000000000
+      internalID: -5743688046809080787
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_16
+      name: PathTiles_24
       rect:
         serializedVersion: 2
         x: 0
@@ -508,14 +760,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f2e098de6f86b940bad7009478c088c
-      internalID: 21300032
+      spriteID: 505206a2ea470c9f0800000000000000
+      internalID: -450231671352974075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_17
+      name: PathTiles_25
       rect:
         serializedVersion: 2
         x: 12
@@ -529,14 +781,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 617600ea61e09ec4f8011d4c77d16a36
-      internalID: 21300034
+      spriteID: d94bb2b806e045dd0800000000000000
+      internalID: -2498356085469236067
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PathTiles_18
+      name: PathTiles_26
       rect:
         serializedVersion: 2
         x: 24
@@ -550,8 +802,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 341bd66012f17284287e140ddbd04acb
-      internalID: 21300036
+      spriteID: 2d888871904bd4a00800000000000000
+      internalID: 742447464728529106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PathTiles_27
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b314b9ab59031ec0800000000000000
+      internalID: -3597521388045069390
       vertices: []
       indices: 
       edges: []

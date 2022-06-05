@@ -1169,4 +1169,19 @@ public class StoryModeController : MonoBehaviour
 
         abandonRunButton.gameObject.SetActive(false);
     }
+
+    public Color GetCompletedColor()
+    {
+        return completedColor;
+    }
+
+    public Color GetShopColor()
+    {
+        return shopColor;
+    }
+
+    public Color GetGoldColor()
+    {
+        return goldColor;
+    }
 }

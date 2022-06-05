@@ -13,6 +13,15 @@ public class UIRevealController : MonoBehaviour
         ManaBar = 11,
         EndTurnButton = 20,
 
+        Intents = 31,
+        Armor = 32,
+
+        Gold = 51,
+        Achievements = 52,
+        Overkill = 53,
+
+        Timer = 61,
+
         CombatCharacterStats = 101,
 
         OverworldDeckButton = 501,
@@ -28,7 +37,8 @@ public class UIRevealController : MonoBehaviour
         StoryModeMapSceneItem = 1102,
     }
 
-    private Dictionary<UIElement, GameObject> elements = new Dictionary<UIElement, GameObject>();
+    private Dictionary<UIElement, List<GameObject>> elements = new Dictionary<UIElement, List<GameObject>>();
+    private Dictionary<UIElement, bool> elementStates = new Dictionary<UIElement, bool>();
 
     private void Awake()
     {
@@ -44,9 +54,9 @@ public class UIRevealController : MonoBehaviour
     public void ReportElement(UIElement elementName, GameObject obj)
     {
         if (!elements.ContainsKey(elementName))
-            elements.Add(elementName, obj);
+            elements.Add(elementName, new List<GameObject> { obj });
         else
-            elements[elementName] = obj;
+            elements[elementName].Add(obj);
 
         if (UnlocksController.unlock.GetUnlocks().uiElementUnlocked != null && UnlocksController.unlock.GetUnlocks().uiElementUnlocked.ContainsKey(elementName))
             obj.SetActive(UnlocksController.unlock.GetUnlocks().uiElementUnlocked[elementName]);
@@ -57,7 +67,11 @@ public class UIRevealController : MonoBehaviour
     public void SetElementState(UIElement elementName, bool state)
     {
         if (elements.ContainsKey(elementName))
-            elements[elementName].SetActive(state);
+            foreach (GameObject obj in elements[elementName])
+                if (obj != null)
+                    obj.SetActive(state);
+
+        elementStates[elementName] = state;
 
         if (state && elements.ContainsKey(elementName))
         {
@@ -69,5 +83,12 @@ public class UIRevealController : MonoBehaviour
                 UnlocksController.unlock.GetUnlocks().uiElementUnlocked.Add(elementName, true);
             InformationLogger.infoLogger.SaveUnlocks();
         }
+    }
+
+    public bool GetElementState(UIElement elementName)
+    {
+        if (elementStates.ContainsKey(elementName))
+            return elementStates[elementName];
+        return true;
     }
 }

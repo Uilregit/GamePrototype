@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 1
-  description: <b>Targeted AoE|</b>Gain 1 mana for every enemy in range
+  description: <b>Targeted Area|</b>Gain 1 mana for every enemy in range
   art: {fileID: 21300000, guid: 89333d6b8e430d8479ae1ee475f305eb, type: 3}
   castType: 7
   castShape: 0

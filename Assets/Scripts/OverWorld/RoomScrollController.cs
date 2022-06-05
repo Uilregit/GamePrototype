@@ -22,7 +22,7 @@ public class RoomScrollController : MonoBehaviour
 
     protected Vector2 offset = Vector2.zero;
     protected Vector2 newLocation;
-    private Vector3 desiredPosition;
+    private Vector3 desiredPosition = new Vector3(0, 0, 0);
 
     private bool isHorizontal = true;
     private bool isDragging = false;
@@ -92,9 +92,9 @@ public class RoomScrollController : MonoBehaviour
             GameObject temp = Instantiate(scrollRoomIcon);
             temp.transform.SetParent(scrollBar.transform);
             if (isHorizontal)
-                temp.transform.position = new Vector3((-(value - 1) / 2f + i) * 0.5f, -2.99f, 0);
+                temp.transform.localPosition = new Vector3((-(value - 1) / 2f + i) * 0.5f, -2.99f, 0);
             else
-                temp.transform.position = new Vector3(2f, (-(value - 1) / 2f + i) * 0.5f, 0);
+                temp.transform.localPosition = new Vector3(2f, (-(value - 1) / 2f + i) * 0.5f, 0);
             scrollRoomIcons.Add(temp);
         }
         SetCurrentRoom(0);

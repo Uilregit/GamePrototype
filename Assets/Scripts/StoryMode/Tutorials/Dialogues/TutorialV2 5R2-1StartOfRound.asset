@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 5R2-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10331
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 0000000002000000c9000000c8000000
+  texts:
+  - If you insult the <b>undecked</b>'s moms you can <b>taunt</b> them.
+  - No matter who they <b>were</b> targeting, they'll <b>target you instead.</b>
+  - Which is weird since they're created by the nightmares of the cosmic butterfly...
+  - They don't even have moms...

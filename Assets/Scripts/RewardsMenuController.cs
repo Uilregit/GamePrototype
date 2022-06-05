@@ -179,35 +179,7 @@ public class RewardsMenuController : MonoBehaviour
                     TutorialController.tutorial.GetErrorLogs());
             }
 
-            if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
-                InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
-            {
-                AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
-                AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
-                StoryModeController.story.ReportRoomCompleted();
-                RelicController.relic.ResetRelics();
-
-                ScoreController.score.EnableTimerText(false);
-                ScoreController.score.SetTimerPaused(true);
-                RoomController.roomController.SetRoomJustWon(true);
-                SceneManager.LoadScene("StoryModeEndScene");
-            }
-            else
-            {
-                if (RoomController.roomController.GetWorldLevel() != 2 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)                                           //eles go to overworld
-                    RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
-                RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
-                RoomController.roomController.Refresh();
-                InformationLogger.infoLogger.SaveGame(false);
-
-                if (type == RewardType.BypassRewards || !RoomController.roomController.GetCurrentRoomSetup().offerRewardCards)
-                    GameController.gameController.LoadScene("OverworldScene", false, deckId);
-                else
-                {
-                    MusicController.music.SetHighPassFilter(true);
-                    GameController.gameController.LoadScene("OverworldScene", true, deckId);
-                }
-            }
+            GameController.gameController.FinishRoomAndExit(type, deckId);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuExit, 1);
         }
     }

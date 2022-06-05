@@ -11,10 +11,12 @@ public class Conversation
 [CreateAssetMenu]
 public class Dialogue : ScriptableObject
 {
+    public int id;  //WRRED (World, Room, Encounter, Dialogue)
     public Condition condition;
     public int conditionValue = -1;
     public StoryRoomSetup.ChallengeComparisonType comparisonType = StoryRoomSetup.ChallengeComparisonType.EqualTo;
     public Emotion[] emoticon;
+    [TextArea]
     public string[] texts;
 
     public enum Emotion
@@ -35,12 +37,19 @@ public class Dialogue : ScriptableObject
     public enum Condition
     {
         None = 0,
+        StartOfRound = 1,
+        DialogueDone = 5,
+
         turn = 10,
 
         Replace = 20,
 
         PlayerPosition = 1001,
         CardsUsed = 1002,
+
+        CastTypeNormalSelected = 1500,
+        CastTypeTargetedAoESelected = 1501,
+        CastTypeAoESelected = 1502,
 
         PlayerMoved = 2001,
         PlayerDeath = 2901,

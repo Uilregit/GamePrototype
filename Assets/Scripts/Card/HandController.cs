@@ -39,6 +39,7 @@ public class HandController : MonoBehaviour
     private List<CardController> hand;
     private List<CardController> drawnCards;
     private List<CardController> drawQueue;
+    private bool drawPileWasAt0 = false;
 
     private GameObject replace;
     private GameObject hold;
@@ -55,6 +56,12 @@ public class HandController : MonoBehaviour
         hand = new List<CardController>();
         drawnCards = new List<CardController>();
         drawQueue = new List<CardController>();
+
+        /*
+        drawPileCards = GameController.gameController.drawPileCards;
+        discardPileCards = GameController.gameController.discardPileCards;
+        cardShuffleAnimationCards = GameController.gameController.cardShuffleAnimationCards;
+        */
 
         ResetHoldsAndReplaces();
     }
@@ -97,9 +104,11 @@ public class HandController : MonoBehaviour
         cardController.SetCardController(drawnCard, true);
 
         if (fromDrawPile)
-            cardController.transform.position = new Vector3(-5, -3, 0);
+            cardController.drawnOriginalPosition = new Vector3(-3.5f, -5, 0);
         else
-            cardController.transform.position = new Vector3(5, -3, 0);
+            cardController.drawnOriginalPosition = new Vector3(3.5f, -5, 0);
+        cardController.transform.localPosition = new Vector3(100, 0, 0);
+        cardController.cardDisplay.PlaceFaceDown();
         cardController.cardDisplay.SetHighLight(true);
         cardController.GetComponent<CardDragController>().SetActive(false);
 
@@ -116,16 +125,17 @@ public class HandController : MonoBehaviour
 
         if (fromNothing)
         {
-            cardController.transform.position = new Vector3(10, 0);
+            cardController.drawnOriginalPosition = new Vector3(10, 0);
             cardController.cardDisplay.cardWhiteOut.enabled = true;
         }
         else
         {
             if (fromDrawPile)
-                cardController.transform.position = new Vector3(-5, -3, 0);
+                cardController.drawnOriginalPosition = new Vector3(-3.5f, -5, 0);
             else
-                cardController.transform.position = new Vector3(5, -3, 0);
+                cardController.drawnOriginalPosition = new Vector3(3.5f, -5, 0);
         }
+        cardController.transform.localPosition = new Vector3(100, 0, 0);
         cardController.cardDisplay.SetHighLight(true);
         cardController.GetComponent<CardDragController>().SetActive(false);
 
@@ -139,6 +149,14 @@ public class HandController : MonoBehaviour
             drawQueue[0].cardDisplay.cardSounds.PlayDragSound();
             drawnCards.Add(drawQueue[0]);
             drawQueue.RemoveAt(0);
+            if (drawPileWasAt0)
+            {
+                drawPileWasAt0 = false;
+                yield return StartCoroutine(UIController.ui.AnimateShuffleCardProcess());
+            }
+            if (DeckController.deckController.GetDrawPileSize() + drawQueue.Count == 0) //If draw pile is at 0 count, then the next draw card will trigger a shuffle
+                drawPileWasAt0 = true;
+            UIController.ui.ResetPileCounts(DeckController.deckController.GetDrawPileSize() + drawQueue.Count, DeckController.deckController.GetDiscardPileSize());
             yield return StartCoroutine(AnimateDrawCard());
         }
 
@@ -152,19 +170,31 @@ public class HandController : MonoBehaviour
         ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
     }
 
+    //Animates each card being drawn and moved to the center of the screen
+    //Animation of moving cards to hand is done in ResetCardPositions()
     private IEnumerator AnimateDrawCard()
     {
+        //Calculate the spacing between cards in the middle of the screen view
         float elapsedTime = 0;
         float spaceBetweenCards = cardSpacing * 1.2f;
         if (drawnCards.Count > 6)
             spaceBetweenCards = cardSpacing * 6 / drawnCards.Count * 1.2f;
 
+        //Find the list of original positions
         List<Vector3> originalPositions = new List<Vector3>();
         List<Vector3> desiredPosition = new List<Vector3>();
+        List<Vector3> originalScale = new List<Vector3>();
 
         foreach (CardController card in drawnCards)
-            originalPositions.Add(card.transform.position);
+        {
+            if (card.cardDisplay.GetIsFacingUp())
+                originalPositions.Add(card.transform.position);
+            else
+                originalPositions.Add(card.drawnOriginalPosition);
+            originalScale.Add(card.transform.localScale);
+        }
 
+        //Set the list of where every card should go
         for (int i = 0; i < drawnCards.Count; i++)
             if (drawnCards.Count % 2 == 1)
                 desiredPosition.Add(-new Vector3((i - drawnCards.Count / 2) * spaceBetweenCards, 0, 0));
@@ -172,15 +202,22 @@ public class HandController : MonoBehaviour
             else
                 desiredPosition.Add(-new Vector3((i - drawnCards.Count / 2 + 0.5f) * spaceBetweenCards, 0, 0));
 
+        //Draw each card individually
         while (elapsedTime < 0.5f * TimeController.time.timerMultiplier)
         {
             for (int i = 0; i < drawnCards.Count; i++)
-                if (drawnCards[i].cardDisplay.cardWhiteOut.enabled == false)
+                if (drawnCards[i].cardDisplay.cardWhiteOut.enabled == false)    //For drawn cards
+                {
                     drawnCards[i].transform.position = Vector3.Lerp(originalPositions[i], desiredPosition[i], elapsedTime / 0.1f * TimeController.time.timerMultiplier);
-                else
+                    drawnCards[i].transform.localScale = Vector3.Lerp(originalScale[i], new Vector3(cardHighlightSize, cardHighlightSize, 1), elapsedTime / 0.1f * TimeController.time.timerMultiplier);
+                    if (elapsedTime == 0 && !drawnCards[i].cardDisplay.GetIsFacingUp())
+                        drawnCards[i].cardDisplay.FlipUp(0.3f);
+                }
+                else                                                            //For manifested cards
                 {
                     drawnCards[i].cardDisplay.cardWhiteOut.color = Color.Lerp(Color.white, Color.clear, elapsedTime / 0.1f * TimeController.time.timerMultiplier);
                     drawnCards[i].transform.position = desiredPosition[i];
+                    drawnCards[i].transform.localScale = new Vector3(cardHighlightSize, cardHighlightSize, 1);
                     if (elapsedTime == 0)
                         drawnCards[i].cardDisplay.FadeIn(0.5f * TimeController.time.timerMultiplier, Color.clear);
                 }
@@ -188,6 +225,7 @@ public class HandController : MonoBehaviour
             yield return null;
         }
 
+        //Set every card to their desired position in case the animation lerp didn't work 100%
         for (int i = 0; i < drawnCards.Count; i++)
         {
             drawnCards[i].transform.position = desiredPosition[i];
@@ -357,12 +395,11 @@ public class HandController : MonoBehaviour
         if (currentReplaceCount < maxReplaceCount + bonusReplaceCount)
         {
             hand.Remove(replacedCard);
-            //StartCoroutine(ResetCardPositions());
             DeckController.deckController.ReportUsedCard(replacedCard);
             DrawAnyCard();
             Destroy(replacedCard.gameObject);
 
-            StartCoroutine(ResolveDrawQueue());
+            StartCoroutine(AnimateReplaceCards(replacedCard));
 
             currentReplaceCount += 1;
             ResetReplaceText();
@@ -407,6 +444,12 @@ public class HandController : MonoBehaviour
         }
 
         AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.ReplaceCards);
+    }
+
+    private IEnumerator AnimateReplaceCards(CardController replacedCard)
+    {
+        yield return StartCoroutine(UIController.ui.AnimateDiscardCardProcess(replacedCard.GetCard(), replacedCard.transform.position, replacedCard.transform.localScale));
+        yield return StartCoroutine(ResolveDrawQueue());
     }
 
     //Removes the card from the hand and commit movement for the caster of the card

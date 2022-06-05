@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0051563aec72cc4aa53aaacaa8e2dd8, type: 3}
+  m_Name: World 2-7
+  m_EditorClassIdentifier: 
+  roomName: World 2 Room 7
+  useDefaultCardsAndEquipments: 0
+  setups:
+  - {fileID: 11400000, guid: d7cac3b2495cc7b438c4e618810811c3, type: 2}
+  - {fileID: 11400000, guid: 35f34fa5a00505445a0e03199d8650c3, type: 2}
+  - {fileID: 11400000, guid: c065d6a2c3bd96a4080771e87f35429f, type: 2}
+  arenaSetup: {fileID: 0}
+  challenges: 000000003004000031040000
+  valueType: 000000000100000001000000
+  challengeValues: 00000000010000001e000000
+  challengeComparisonType: 000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  skipFinalRewards: 0
+  allowRewardsRebuy: 0
+  noAchievements: 0
+  rewardTypes: 0000000008000000080000008200000032000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 70afea9573876534a94be6496eef5966, type: 2}
+  - {fileID: 11400000, guid: 017c540e00e6ef54faabc07da74fe4c9, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0100000001000000010000000600000004000000
+  rewardCosts: 320000003c0000003c0000001400000014000000
+  challengeRewardBought: 000000
+  flavorText: With everything rotting instead of dying, mages have to use healing
+    magic to things... fresh
+  overrideColors: 

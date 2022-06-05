@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 1
-  description: <b>Targeted AoE|</b>Restore <s>150% of ATK as</s> health to the center
+  description: <b>Targeted Area|</b>Restore <s>150% of ATK as</s> health to the center
     target, deal <s>150% of ATK as</s> damage to surrounding targets
   art: {fileID: 21300000, guid: edfdcff4491dffa4aabb768753f44c16, type: 3}
   castType: 7

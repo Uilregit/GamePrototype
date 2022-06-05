@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 3R2-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10321
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 00000000020000000100000065000000000000002c0100000000000002000000
+  texts:
+  - Don't have enough mana to cast all your little spells?
+  - Oof. Nero <i>the Overcompensating</i> never had <b>that</b> happen.
+  - I bet that's just super embarassing for you!
+  - All your mage friends took pictures and still call you names on your annual camping
+    trip...
+  - Anyways just make more by using all the <b>Energy</b> you have each turn.
+  - Because you're a better mage now and isn't defined by your past failures.
+  - I'll keep poking around here in the <b>Deckronomicon</b>...
+  - And you keep trying to move past your traumas.

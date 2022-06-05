@@ -96,8 +96,13 @@ public class StoryModeEndSceenController : MonoBehaviour
 
         for (int i = 3; i < 5; i++)
         {
-            items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
-            items[i].SetEnabled(setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i]);
+            if (setup.rewardTypes.Length > i)
+            {
+                items[i].SetValues(setup.rewardTypes[i], setup.rewardAmounts[i], setup.rewardCosts[i], i);
+                items[i].SetEnabled(setup.rewardTypes.Length > i && totalGold >= setup.rewardCosts[i]);
+            }
+            else
+                items[i].gameObject.SetActive(false);
         }
 
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuShown, 1);
@@ -208,6 +213,8 @@ public class StoryModeEndSceenController : MonoBehaviour
 
     public void GoToLevelScene()
     {
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuExit, 1);
+
         CameraController.camera.transform.position = new Vector2(-100, 0);
         returnToMapButtonText.transform.parent.gameObject.SetActive(false);
         StartCoroutine(StartLevelScene());
@@ -281,7 +288,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         }
         confirmPackButton.gameObject.SetActive(false);
         cardContainer.SetActive(true);
-        cards[0].FlipOver();
+        cards[0].FlipUp();
         cardsFlipped[0] = true;
     }
 
@@ -321,7 +328,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         for (int i = 0; i < cardsFlipped.Count; i++)
             if (!cardsFlipped[i] && cardContainer.transform.localPosition.x / -2.8f + 0.1f >= i)
             {
-                cards[i].FlipOver();
+                cards[i].FlipUp();
                 cardsFlipped[i] = true;
             }
         if (cardsFlipped[cardsFlipped.Count - 1])
@@ -388,9 +395,6 @@ public class StoryModeEndSceenController : MonoBehaviour
             UnlocksController.unlock.GetUnlocks().firstTutorialRoomCompleted = true;
             InformationLogger.infoLogger.SaveUnlocks();
         }
-
-        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.FinalRewardsMenuExit, 1);
-
         if (boughtCards.Keys.Count > 0)
         {
             StoryModeController.story.EnableMenuIcon(3);

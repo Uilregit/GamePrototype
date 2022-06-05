@@ -214,16 +214,21 @@ public class CardDragController : DragController
                     }
                     cardController.GetComponent<CardEffectsController>().SetCastLocation(castLocation);
                     card.SetCenter(castLocation);
-                    showingSimulatedHealthBar = StartCoroutine(ShowSimulatedHealthBar(TileCreator.tileCreator.GetTilePositions(1)));
-
-                    //StartCoroutine(ShowSimulatedHealthBar(new List<Vector2>() { castLocation }));
+                    if (GridController.gridController.GetObjectAtLocation(TileCreator.tileCreator.GetTilePositions(1)).Count > 0)
+                    {
+                        showingSimulatedHealthBar = StartCoroutine(ShowSimulatedHealthBar(TileCreator.tileCreator.GetTilePositions(1)));
+                        SetHealthBars(false, GridController.gridController.GetObjectAtLocation(TileCreator.tileCreator.GetTilePositions(1)));
+                    }
+                    else
+                    {
+                        HideSimulatedHealthBars();
+                        SetHealthBars(true, new List<GameObject>());
+                    }
                 }
                 else
                 {
-                    foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
-                        obj.GetComponent<HealthController>().HideHealthBar();
-                    foreach (EnemyController obj in TurnController.turnController.GetEnemies())
-                        obj.GetComponent<HealthController>().HideHealthBar();
+                    HideSimulatedHealthBars();
+                    SetHealthBars(true, new List<GameObject>());
                 }
             }
 
@@ -316,6 +321,8 @@ public class CardDragController : DragController
         if (cardController.GetNetEnergyCost() > 0)
             UIController.ui.SetEnergyGlow(false);
         currentState = State.Default;
+
+        AttackRangeHighlightController.attackRangeHighlight.HideAllTiles();
     }
 
     private void UncastAndResetCard()
@@ -332,7 +339,19 @@ public class CardDragController : DragController
         if (TutorialController.tutorial.GetEnabled())
             return;
 
+        try
+        {
+            if (cardController.GetCard().castType == Card.CastType.TargetedAoE)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CastTypeTargetedAoESelected, 1);
+            else if (cardController.GetCard().castType == Card.CastType.AoE)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CastTypeAoESelected, 1);
+            else
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CastTypeNormalSelected, 1);
+        }
+        catch { }
+
         cardDisplay.cardSounds.PlaySelectSound();
+        cardController.GetCaster().GetComponent<HealthController>().SetCombatStatsHighlight(0);
 
         currentState = State.Highlighted;
         previousMousePosition = Input.mousePosition;
@@ -350,6 +369,8 @@ public class CardDragController : DragController
         cardController.GetCaster().GetComponent<HealthController>().charDisplay.charAnimController.SetCasting(true);
 
         cardController.CreateRangeIndicator();
+        //Must go after create range indicator
+        AttackRangeHighlightController.attackRangeHighlight.StartCoroutine(AttackRangeHighlightController.attackRangeHighlight.HighlightAttackRange(cardController.GetCaster().transform.position, cardController.GetCaster(), 99, true));
 
         if (cardController.GetNetManaCost() > 0)
             UIController.ui.SetAnticipatedManaLoss(cardController.GetNetManaCost());
@@ -430,10 +451,7 @@ public class CardDragController : DragController
 
     private void Trigger()
     {
-        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
-            obj.GetComponent<HealthController>().HideHealthBar();
-        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
-            obj.GetComponent<HealthController>().HideHealthBar();
+        HideSimulatedHealthBars();
 
         isTriggeringEffect = true;
 
@@ -442,11 +460,13 @@ public class CardDragController : DragController
         {
             UncastAndResetCard();
             UnCast();
+            SetHealthBars(true, new List<GameObject>());
             return;
         }
 
         cardDisplay.cardSounds.PlayCastSound();
-        cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
+        if (card.exhaust)
+            cardDisplay.FadeOut(0.5f * TimeController.time.timerMultiplier, Color.clear);
 
         line.enabled = false;
 
@@ -461,15 +481,14 @@ public class CardDragController : DragController
 
     private IEnumerator ShowSimulatedHealthBar(List<Vector2> locations)
     {
-        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
-            obj.GetComponent<HealthController>().HideHealthBar();
-        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
-            obj.GetComponent<HealthController>().HideHealthBar();
+        HideSimulatedHealthBars();
+        SetHealthBars(true, new List<GameObject>());
         HideKnockbackPreview();
 
         int numPositionsWithMultiTargets = 0;
         int maxTargetsPerPosition = 0;
         List<Vector2> positionsWithTargets = new List<Vector2>();
+
         foreach (Vector2 loc in locations)           //Show damage that would have been done
         {
             List<GameObject> targets = GridController.gridController.GetObjectAtLocation(loc, new string[] { "Player", "Enemy" });
@@ -498,7 +517,7 @@ public class CardDragController : DragController
             if (hlthController.GetIsSimulation())
                 continue;
 
-            HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController);
+            HealthController simulation = GameController.gameController.GetSimulationCharacter(hlthController, true);
 
             simulations.Add(hlthController, simulation);
 
@@ -513,11 +532,18 @@ public class CardDragController : DragController
                 simulationCaster = simulation.gameObject;
         }
         if (simulationCaster == null && !cardController.GetCaster().GetComponent<HealthController>().GetIsSimulation())
+        {
             simulationCaster = GameController.gameController.GetSimulationCharacter(cardController.GetCaster().GetComponent<HealthController>()).gameObject;
+            simulationObjs.Add(simulationCaster);       //Added simulationcaster to simulated objs to be return in case this coroutine is stopped early
+        }
+
+        UIController.ui.combatStats.SetStatus2CharactersCount(simulations.Count);
 
         if (objLocations.Keys.Count != 0)
         {
             yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), simulationObjs, locations, false, true, simulationCaster));
+
+            bool alreadySetHighlight = false;
 
             //Block for displaying the simulation health information
             foreach (Vector2 loc in objLocations.Keys)           //Show damage that would have been done
@@ -528,9 +554,17 @@ public class CardDragController : DragController
                     HealthController hlthController = targets[0];
                     HealthController simulation = simulations[hlthController];
                     Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f);
+
+                    if (!alreadySetHighlight)    //Must come before show health bar since that advances all buffs by a turn
+                    {
+                        simulation.SetCombatStatsHighlight(1, hlthController.GetVit() - simulation.GetVit(), hlthController.GetArmor() - simulation.GetArmor());
+                        alreadySetHighlight = true;
+                    }
+                    SetDamageArrows(hlthController, simulation);
                     hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
 
                     ShowKnockbackPreview(hlthController, simulation);
+                    hlthController.charDisplay.healthBar.SetPositionRaised(true);
                 }
                 else if (targets.Count > 1)             //If enemies are stacked, show health previews with yellow backdrop
                 {
@@ -546,8 +580,22 @@ public class CardDragController : DragController
                             offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, -3.1f - currentTargetId * 1.5f);
                             flipped = true;
                         }
+
+                        if (currentTargetId == 0)    //Must come before show health bar since that advances all buffs by a turn
+                        {
+                            if (!alreadySetHighlight)
+                            {
+                                simulation.SetCombatStatsHighlight(1, hlthController.GetVit() - simulation.GetVit(), hlthController.GetArmor() - simulation.GetArmor());
+                                alreadySetHighlight = true;
+                            }
+
+                            SetDamageArrows(hlthController, simulation);
+                        }
+
                         StartCoroutine(hlthController.ShowDamagePreviewBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), simulation, hlthController.charDisplay.sprite.sprite, loc + offset));
+                        hlthController.charDisplay.healthBar.SetPositionRaised(true);
                         ShowKnockbackPreview(hlthController, simulation);
+
                         currentTargetId++;
                     }
                 }
@@ -568,6 +616,79 @@ public class CardDragController : DragController
         GameController.gameController.ReportSimulationFinished(simulationCaster.GetComponent<HealthController>());
 
         showingSimulatedHealthBar = null;
+    }
+
+    private void SetDamageArrows(HealthController hlthController, HealthController simulation)
+    {
+        if (hlthController.GetVit() - simulation.GetVit() != 0)
+            UIController.ui.combatStats.SetArrow(hlthController.GetVit() - simulation.GetVit(), CombatStatsHighlightController.numberType.number);
+        else if (card.buff.ToList().Any(x => x != null))
+        {
+            for (int i = 0; i < card.buff.Length; i++)
+                if (card.buff[i] != null)
+                    UIController.ui.combatStats.SetArrow(card.effectDuration[i], CombatStatsHighlightController.numberType.turn, card.buff[i].description.Substring(0, card.buff[i].description.IndexOf(":")));
+        }
+        else
+            UIController.ui.combatStats.SetArrow(0, CombatStatsHighlightController.numberType.number);
+        UIController.ui.combatStats.SetDamageArrowEnabled(true);
+    }
+
+    private void HideSimulatedHealthBars()
+    {
+        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+        {
+            HealthController hlth = obj.GetComponent<HealthController>();
+            if (hlth.charDisplay.healthBar.GetPositionRaised())
+            {
+                hlth.HideHealthBar();
+                hlth.ResetHealthBar();
+                hlth.charDisplay.healthBar.SetPositionRaised(false);
+                hlth.charDisplay.healthBar.SetArmor(obj.GetComponent<HealthController>().GetArmor());
+            }
+        }
+        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+        {
+            HealthController hlth = obj.GetComponent<HealthController>();
+            if (obj.GetComponent<HealthController>().charDisplay.healthBar.GetPositionRaised())
+            {
+                hlth.HideHealthBar();
+                hlth.ResetHealthBar();
+                hlth.charDisplay.healthBar.SetPositionRaised(false);
+                hlth.charDisplay.healthBar.SetArmor(obj.GetComponent<HealthController>().GetArmor());
+            }
+        }
+
+        UIController.ui.combatStats.SetStatusEnabled(1, false);
+        UIController.ui.combatStats.SetDamageArrowEnabled(false);
+    }
+
+    public void SetHealthBars(bool state, List<GameObject> avoidedObjects)
+    {
+        foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+        {
+            if (avoidedObjects.Contains(obj))
+                continue;
+            HealthController hlth = obj.GetComponent<HealthController>();
+            if (state)
+                hlth.charDisplay.healthBar.ShowHealthBar();
+            else
+                hlth.charDisplay.healthBar.RemoveHealthBar();
+        }
+        foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+        {
+            if (state)
+                obj.GetComponent<EnemyInformationController>().ShowIntent();
+            else if (avoidedObjects.Contains(obj.gameObject))
+                obj.GetComponent<EnemyInformationController>().HideIntent();
+
+            if (avoidedObjects.Contains(obj.gameObject))
+                continue;
+            HealthController hlth = obj.GetComponent<HealthController>();
+            if (state)
+                hlth.charDisplay.healthBar.ShowHealthBar();
+            else
+                hlth.charDisplay.healthBar.RemoveHealthBar();
+        }
     }
 
     private void ResetSimulationObjects()
@@ -736,6 +857,9 @@ public class CardDragController : DragController
         }
 
         //cardController.TriggerEffect();  //disable for attack queue
+
+        if (!card.exhaust)
+            StartCoroutine(UIController.ui.AnimateDiscardCardProcess(card, transform.position, transform.localScale));
         cardDisplay.Hide();
 
         yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), locations));

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 2R1-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10211
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 01000000010000002c0100002c0100000000000000000000f4010000f4010000
+  texts:
+  - Monsieur Fluffybutt, meet Madameoiselle Lacroix.
+  - She is an A+ mage who has a side hussle making C- beverages.
+  - 'We have some history, but let''s just say she''s <i>Mademoiselle</i> Lacroix
+    for a reason.
+
+'
+  - Maybe you two will work better together.
+  - You two can move and use cards in any order you like.
+  - Just know that your <b>move ranges</b> and <b>attack ranges</b> are different.
+  - Her magic isn't nearly as good as Nero <i>the Bitter Ex</i>'s
+  - But her <b>Thunder</b> will hit everyone around where it's cast

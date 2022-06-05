@@ -30,6 +30,8 @@ public class CardController : MonoBehaviour
 
     private bool startedInDeck = false;
 
+    public Vector3 drawnOriginalPosition;  //Used only for animating drawing this card
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -565,6 +567,11 @@ public class CardController : MonoBehaviour
     public int GetSimulatedTotalAttackValue(int attackCardIndex)
     {
         return cardEffects.GetSimulatedAttackValue(caster, new List<Vector2> { caster.GetComponent<EnemyController>().desiredTarget[attackCardIndex].transform.position });
+    }
+
+    public int GetDynamicNumberOnCard()
+    {
+        return cardDisplay.GetDynamicNumberOnCard();
     }
 
     public bool GetStartedInDeck()

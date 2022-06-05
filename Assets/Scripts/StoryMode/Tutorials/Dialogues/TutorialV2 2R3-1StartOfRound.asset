@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 2R3-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10231
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  emoticon: 6500000002000000650000002c0100000000000002000000650000002c010000
+  texts:
+  - Did you know that Nero <i>the Job Creator</i> still has to do your paperwork?
+  - Since you're my apprentice and all.
+  - In exchange for tax credits but still...
+  - You'd think turning you into a corgi will get me out of that with the Lazuli
+    Mages.
+  - So be polite, be efficient, have a plan to kill everyone you meet.
+  - Try to finish up <b>in one turn.</b>
+  - Otherwise your benefit harms ratio becomes increasingly...
+  - I mean save me from this magical book prison <i>please!</i>

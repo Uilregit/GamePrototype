@@ -253,7 +253,7 @@ public class EnemyController : MonoBehaviour
         GameObject[] target = new GameObject[attacksPerTurn];
         try
         {
-            if (healthController.GetTauntedTarget() != null)          //Taunt target
+            if (healthController.GetTauntedTarget() != null && healthController.GetTauntedTarget().GetComponent<HealthController>().GetCurrentVit() > 0)          //Taunt target
                 for (int i = 0; i < attacksPerTurn; i++)
                     target[i] = healthController.GetTauntedTarget().gameObject;
             else
@@ -1182,5 +1182,10 @@ public class EnemyController : MonoBehaviour
     public bool GetCanPathToTarget()
     {
         return enemyInformation.GetCanPathToTarget();
+    }
+
+    public HealthController GetHealthController()
+    {
+        return healthController;
     }
 }

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0051563aec72cc4aa53aaacaa8e2dd8, type: 3}
+  m_Name: World 2-8
+  m_EditorClassIdentifier: 
+  roomName: World 2 Room 8
+  useDefaultCardsAndEquipments: 0
+  setups:
+  - {fileID: 11400000, guid: f2a561836cac0254abf4635e824bfe53, type: 2}
+  - {fileID: 11400000, guid: d76ebcdabe2351043be938ca8df1303a, type: 2}
+  - {fileID: 11400000, guid: 49a0bc80a53c438428db653d4be28875, type: 2}
+  arenaSetup: {fileID: 0}
+  challenges: 000000003a0400003b040000
+  valueType: 000000000100000001000000
+  challengeValues: 000000009600000003000000
+  challengeComparisonType: 000000000000000000000000
+  bestChallengeValues: ffffffffffffffffffffffff
+  skipFinalRewards: 0
+  allowRewardsRebuy: 0
+  noAchievements: 0
+  rewardTypes: 0000000007000000080000002800000050000000
+  rewardCards:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: c173bcca82acb454ebb14bd8402cbee0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardEquipment:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: a21e74898c82738448d02b28153d9d0a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  rewardAmounts: 0100000001000000010000000400000004000000
+  rewardCosts: 320000003c0000003c0000001400000014000000
+  challengeRewardBought: 000000
+  flavorText: When divide and conquer requires too much math, combine and dominate
+    instead
+  overrideColors: 

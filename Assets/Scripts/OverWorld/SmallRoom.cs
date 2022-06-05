@@ -19,8 +19,6 @@ public class SmallRoom : MonoBehaviour
 
     public GameObject bossBorder;
 
-    public Outline highlight;
-    public Collider2D collider;
     private Vector2 location;
 
     private bool destroyed = false;
@@ -56,6 +54,9 @@ public class SmallRoom : MonoBehaviour
 
     public void Enter()
     {
+        if (TutorialController.tutorial.GetEnabled() || !selectable)
+            return;
+
         RoomController.roomController.SetCurrentRoomSetup(setup);
         if (setup != null)
             RoomController.roomController.roomName = setup.roomName;
@@ -157,18 +158,14 @@ public class SmallRoom : MonoBehaviour
             enemyIcons[i].enabled = false;
             enemyCounts[i].enabled = false;
         }
+
+        bossBorder.SetActive(newSetup.isBossRoom);
     }
 
     public void SetSelectable(bool state)
     {
-        if (highlight == null)
-            highlight = GetComponent<Outline>();
-        if (collider == null)
-            collider = GetComponent<Collider2D>();
 
         selectable = state;
-        highlight.enabled = state;
-        collider.enabled = state;
         lockedButton.gameObject.SetActive(!state);
         /*  Used to enter room immediatel if it's the first room
         if (selectable && (RoomController.roomController.GetCurrentRoomSetup() == null))
@@ -205,8 +202,6 @@ public class SmallRoom : MonoBehaviour
     {
         GetComponent<Image>().enabled = false;
         selectable = false;
-        highlight.enabled = false;
-        collider.enabled = false;
         line.enabled = false;
     }
 
@@ -214,8 +209,6 @@ public class SmallRoom : MonoBehaviour
     {
         GetComponent<Image>().enabled = true;
         //selectable = true;
-        //highlight.enabled = true;
-        //collider.enabled = true;
         line.enabled = true;
     }
 

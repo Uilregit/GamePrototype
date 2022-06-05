@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf36dcd8811fe44a9dd143bfca1bb13, type: 3}
+  m_Name: Rb Shield Slam
+  m_EditorClassIdentifier: 
+  exhaust: 0
+  shuffleToDiscardPile: 1
+  canCastOnSelf: 1
+  rarity: 0
+  name: Shield Slam
+  energyCost: 2
+  manaCost: 0
+  range: 1
+  radius: 0
+  casterColor: 0
+  description: Deal <s>100% of ATK </s> as damage and gain +2 temporary armor
+  art: {fileID: 21300000, guid: e85dfc9da0536e44b854be233efbeaf8, type: 3}
+  castType: 0
+  castShape: 0
+  targetType: 0300000002000000
+  cardEffectName: 000000000d000000
+  hitEffect: 00000000
+  soundEffect: 00000000
+  conditionType: 0000000000000000
+  conditionValue: 0000000000000000
+  buff:
+  - {fileID: 0}
+  effectValue: 6400000002000000
+  effectDuration: 0000000001000000
+  spawnObject:
+  - {fileID: 0}
+  - {fileID: 0}
+  cards:
+  - {fileID: 0}
+  - {fileID: 0}
+  indicatorType: 0
+  targetBehaviour: 10
+  indicatorMultiplier: 
+  executionPriority: 0
+  highlightCondition: 0
+  materials: 
+  materialAmounts: 

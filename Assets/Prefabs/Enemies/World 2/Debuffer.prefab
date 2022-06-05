@@ -82,6 +82,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 12c8687f8771ff042b080404dbd8b3c8, type: 2}
   moveType: 0
   targetType: 0
+  isBoss: 0
+  bossName: 
+  bossTitle: 
+  bossSpriteBackColor: {r: 0, g: 0, b: 0, a: 0}
   desiredTarget:
   - {fileID: 0}
 --- !u!114 &3831162959890059579
@@ -102,7 +106,7 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 2.5
   intentTypeIndicator: {fileID: 4825013667722813554, guid: c22e1b61d15ae7e4abe1eed88fc6598b, type: 3}
-  intentMultiplier: {fileID: 8407552717821305770, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
+  intentMultiplier: {fileID: 5925497826733914107, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
   attackIntentDamageCutoffs: 050000000a0000001400000064000000
   attackIntent:
   - {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}

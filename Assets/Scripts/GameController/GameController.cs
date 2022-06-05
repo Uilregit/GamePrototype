@@ -26,13 +26,15 @@ public class GameController : MonoBehaviour
     public Image endTurnButton;
     public Color notYetDoneColor;
     public Color doneColor;
-    public Image replaceImage;
+    public Image replaceIcon;
+    public Text replaceCount;
 
-    public Text text;
     public CardDisplay[] rewardCards;
     public Image rewardCardRerolls;
     private int numOfRerolls = 2;
     private List<Card> pastRewards = new List<Card>();
+
+    public NewAbilitiesMenu abilitiesMenu;
 
     [SerializeField]
     GameObject block;
@@ -46,6 +48,9 @@ public class GameController : MonoBehaviour
     public Buff attackBuff;
     public Buff armorBuff;
     public Buff stunBuff;
+
+    [Header("IntroSplash")]
+    public CombatIntroSplashController splashController;
 
     [Header("Boss Intro Anims")]
     public Image bossIntroBackground;
@@ -92,6 +97,8 @@ public class GameController : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        endTurnButton.GetComponent<Collider2D>().enabled = false;
+
         deadChars = new List<Card.CasterColor>();
         simulationCharacters = new Queue<HealthController>();
         for (int i = 0; i < 49; i++)
@@ -113,8 +120,8 @@ public class GameController : MonoBehaviour
         TutorialController.tutorial.SetDialogue(setup.dialogues);
         TutorialController.tutorial.SetTutorialOverlays(setup.overlays);
 
-        if (setup.GetLocations(RoomSetup.BoardType.P).Count >= 3 && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length ||                              //If level setup satisfies basic requiremnts, use level plan
-            setup.GetLocations(RoomSetup.BoardType.P).Count >= setup.overrideParty.Length && setup.GetLocations(RoomSetup.BoardType.E).Count >= setup.enemies.Length)       //Or if it's a override, use those requirements instead
+        if (setup.GetAnyPlayerPositions().Count >= 3 && setup.GetAnyEnemyPositions().Count >= setup.enemies.Length ||                              //If level setup satisfies basic requiremnts, use level plan
+            setup.GetAnyPlayerPositions().Count >= setup.overrideParty.Length && setup.GetAnyEnemyPositions().Count >= setup.enemies.Length)       //Or if it's a override, use those requirements instead
             InitializeRoom();
         else                                                                                                                                    //If level setup doesn't satisfy basic requirements, randomize
             RandomizeRoom();
@@ -141,6 +148,8 @@ public class GameController : MonoBehaviour
             music.music = combatMusic;
         music.PlayMusic();
 
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StartOfRound, 1);
+
         StartCoroutine(StartOfGame());
 
         ScoreController.score.SetTimerPaused(false);
@@ -151,9 +160,56 @@ public class GameController : MonoBehaviour
 
     private IEnumerator StartOfGame()
     {
+        //If this is a boss room, start with the boss splash first
         if (bossSprite != null)
             yield return StartCoroutine(BossIntroProcess(bossSprite, bossNameText, bossTitleText, RoomController.roomController.GetCurrentWorldSetup().cameraBackground));
-        yield return ShowAbilities();
+
+        //Splash the round number
+        int round = RoomController.roomController.selectedLevel + 1;
+        if (setup.isBossRoom)
+            splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Boss Round", StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
+        else
+            splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Round " + round.ToString(), StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
+        yield return splashController.AnimateSplashImage();
+
+        //Splash the optional goals for the room
+        StoryRoomSetup currentStoryRoomSetup = StoryModeController.story.GetCurrentRoomSetup();
+        int currentRoomId = StoryModeController.story.GetCurrentRoomID();
+        for (int i = 0; i < 3; i++)
+        {
+            Color c = Color.cyan;
+            int bestValue = currentStoryRoomSetup.GetBestValues(currentStoryRoomSetup.bestChallengeValues[i], AchievementSystem.achieve.GetChallengeValue(currentStoryRoomSetup.challenges[i]), i, currentStoryRoomSetup.challengeComparisonType[i]);
+            bool goalSatisfied = StoryModeController.story.ChallengeSatisfied(i, bestValue);
+            if (goalSatisfied)
+            {
+                if (StoryModeController.story.GetChallengeValues().ContainsKey(currentRoomId) && StoryModeController.story.GetChallengeItemsBought().ContainsKey(currentRoomId) && StoryModeController.story.GetChallengeItemsBought()[currentRoomId][i])
+                    c = StoryModeController.story.GetShopColor();
+                else
+                    c = StoryModeController.story.GetGoldColor();
+            }
+            else
+            {
+                c = StoryModeController.story.GetCompletedColor();
+                bestValue = AchievementSystem.achieve.GetChallengeValue(currentStoryRoomSetup.challenges[i]);
+            }
+            float progress = Mathf.Clamp((float)bestValue / currentStoryRoomSetup.challengeValues[i], 0f, 1f);
+            if (currentStoryRoomSetup.challengeValues[i] == 0)
+                progress = Mathf.Clamp(bestValue, 0, 1);
+            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, true);
+        }
+
+        if (setup.overrideSingleGoalsSplashIndex == -1)
+            yield return splashController.AnimateGoalsImage();
+        else
+            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex);
+
+        if (setup.drawHandCondition == Dialogue.Condition.None)
+            yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+
+        //Animate passive abilities of every enemy in the room
+        yield return StartCoroutine(ShowAbilities());
+
+        endTurnButton.GetComponent<Collider2D>().enabled = true;    //Doesn't allow the end turn button to be pressed during start of game animations
     }
 
     public void SetupDeckAndHand()
@@ -191,6 +247,8 @@ public class GameController : MonoBehaviour
             GameObject.FindGameObjectWithTag("Hold").GetComponent<Image>().enabled = false;
             GameObject.FindGameObjectWithTag("Hold").transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
+
+        UIController.ui.ResetPileCounts(DeckController.deckController.GetDrawPileSize(), DeckController.deckController.GetDiscardPileSize());
     }
 
     public void FixedUpdate()
@@ -201,8 +259,6 @@ public class GameController : MonoBehaviour
 
     private IEnumerator ShowAbilities()
     {
-        yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
-
         yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier);
 
         yield return StartCoroutine(DisplayAbilityCards());
@@ -242,9 +298,16 @@ public class GameController : MonoBehaviour
                 DestroyImmediate(player.gameObject);
                 continue;
             }
-            Vector2 spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
+            Vector2 spawnedLocation = Vector2.zero;
+            if (viableSpawnLocations.Count > 0)         //Prevent error if all player locations have been specified and is not random
+                spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
+            //If a more specific spawn location exists, spawn player there instead
+            Vector2 specificSpawnLocation = GetSpawnLocation(true, PartyController.party.partyColors.ToList().IndexOf(player.GetComponent<PlayerController>().GetColorTag()));
+            if (specificSpawnLocation != new Vector2(-100, -100))
+                spawnedLocation = specificSpawnLocation;
+            else
+                viableSpawnLocations.Remove(spawnedLocation);
             player.GetComponent<PlayerController>().Spawn(spawnedLocation + new Vector2(-3, -2));
-            viableSpawnLocations.Remove(spawnedLocation);
 
             // If the player was dead from before, remove them
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
@@ -261,13 +324,22 @@ public class GameController : MonoBehaviour
         }
         //Then spawn enemies
         viableSpawnLocations = setup.GetLocations(RoomSetup.BoardType.E);
+        int enemyCounter = 0;
         foreach (GameObject enemy in setup.enemies)
         {
             GameObject thisEnemy = Instantiate(enemy);
-            Vector2 spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
-            viableSpawnLocations.Remove(spawnedLocation);
+            Vector2 spawnedLocation = Vector2.zero;
+            if (viableSpawnLocations.Count > 0)         //Prevent error if all enemy locations have been specified and is not random
+                spawnedLocation = viableSpawnLocations[Random.Range(0, viableSpawnLocations.Count)];
+            //If a more specific spawn location exists, spawn player there instead
+            Vector2 specificSpawnLocation = GetSpawnLocation(false, enemyCounter);
+            if (specificSpawnLocation != new Vector2(-100, -100))
+                spawnedLocation = specificSpawnLocation;
+            else
+                viableSpawnLocations.Remove(spawnedLocation);
             thisEnemy.GetComponent<EnemyController>().Spawn(spawnedLocation + new Vector2(-3, -2));
             enemies.Add(thisEnemy);
+            enemyCounter++;
         }
 
         //Lastly spawn blocks
@@ -284,6 +356,66 @@ public class GameController : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
             enemy.GetComponent<EnemyController>().RefreshIntent();
+    }
+
+    private Vector2 GetSpawnLocation(bool isplayer, int index)
+    {
+        Vector2 output = new Vector2(-100, -100);
+        List<Vector2> viableSpots = new List<Vector2>();
+        if (isplayer)
+        {
+            switch (index)
+            {
+                case 0:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.P1);
+                    break;
+                case 1:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.P2);
+                    break;
+                case 2:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.P3);
+                    break;
+            }
+        }
+        else
+        {
+            switch (index)
+            {
+                case 0:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E1);
+                    break;
+                case 1:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E2);
+                    break;
+                case 2:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E3);
+                    break;
+                case 3:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E4);
+                    break;
+                case 4:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E5);
+                    break;
+                case 5:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E6);
+                    break;
+                case 6:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E7);
+                    break;
+                case 7:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E8);
+                    break;
+                case 8:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E9);
+                    break;
+                case 9:
+                    viableSpots = setup.GetLocations(RoomSetup.BoardType.E10);
+                    break;
+            }
+        }
+        if (viableSpots.Count > 0)
+            output = viableSpots[0];
+        return output;
     }
 
     public void RandomizeRoom()
@@ -451,15 +583,45 @@ public class GameController : MonoBehaviour
 
     private IEnumerator DisplayVictoryText()
     {
+        TurnController.turnController.ReportTurnBasedAchievements();
         TutorialController.tutorial.DestroyAndReset();
         InformationController.infoController.SaveCombatInformation();
         CameraController.camera.ScreenShake(0.06f, 0.05f);
-        text.text = "VICTORY";
+        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Victory", StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
         MusicController.music.SetLowPassFilter(false);
         MusicController.music.PlayBackground(victoryFanfair, false);
-        text.enabled = true;
-        yield return new WaitForSeconds(TimeController.time.victoryTextDuration * TimeController.time.timerMultiplier);
-        text.enabled = false;
+        yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.victoryTextDuration));
+
+        //Splash the optional goals for the room
+        StoryRoomSetup currentStoryRoomSetup = StoryModeController.story.GetCurrentRoomSetup();
+        int currentRoomId = StoryModeController.story.GetCurrentRoomID();
+        for (int i = 0; i < 3; i++)
+        {
+            Color c = Color.cyan;
+            int bestValue = currentStoryRoomSetup.GetBestValues(currentStoryRoomSetup.bestChallengeValues[i], AchievementSystem.achieve.GetChallengeValue(currentStoryRoomSetup.challenges[i]), i, currentStoryRoomSetup.challengeComparisonType[i]);
+            bool goalSatisfied = StoryModeController.story.ChallengeSatisfied(i, bestValue);
+            if (goalSatisfied)
+            {
+                if (StoryModeController.story.GetChallengeValues().ContainsKey(currentRoomId) && StoryModeController.story.GetChallengeItemsBought().ContainsKey(currentRoomId) && StoryModeController.story.GetChallengeItemsBought()[currentRoomId][i])
+                    c = StoryModeController.story.GetShopColor();
+                else
+                    c = StoryModeController.story.GetGoldColor();
+            }
+            else
+            {
+                c = StoryModeController.story.GetCompletedColor();
+                bestValue = AchievementSystem.achieve.GetChallengeValue(currentStoryRoomSetup.challenges[i]);
+            }
+            float progress = Mathf.Clamp((float)bestValue / currentStoryRoomSetup.challengeValues[i], 0f, 1f);
+            if (currentStoryRoomSetup.challengeValues[i] == 0)
+                progress = Mathf.Clamp(bestValue, 0, 1);
+            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, false);
+        }
+
+        if (setup.overrideSingleGoalsSplashIndex == -1)
+            yield return splashController.AnimateGoalsImage();
+        else
+            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex);
     }
 
     public IEnumerator Victory()
@@ -528,6 +690,20 @@ public class GameController : MonoBehaviour
             RewardsMenuController.rewardsMenu.ShowMenu();
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuShown, 1);
         }
+        else if (setup.endRoomUnlockCard != null || setup.endRoomUnlockChar != null || setup.endRoomUnlockAbility != null)
+        {
+            if (setup.endRoomUnlockAbility != null)
+                abilitiesMenu.SetAbility(setup.endRoomUnlockAbility, setup.endRoomUnlockAbilityName);
+            if (setup.endRoomUnlockCard != null)
+                abilitiesMenu.SetCard(setup.endRoomUnlockCard);
+            if (setup.endRoomUnlockChar != null)
+                abilitiesMenu.SetCharacter(setup.endRoomUnlockChar);
+
+            foreach (UIRevealController.UIElement element in setup.revealedUIElements)
+                UIRevealController.UIReveal.SetElementState(element, true);
+
+            abilitiesMenu.StartDisplaying();
+        }
         else
         {
             yield return new WaitForSeconds(0.5f);
@@ -566,6 +742,39 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(rezDelay);
         }
         deadChars = new List<Card.CasterColor>();
+    }
+
+    public void FinishRoomAndExit(RewardsMenuController.RewardType type, int deckId)
+    {
+        if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
+                InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
+        {
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
+            AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
+            StoryModeController.story.ReportRoomCompleted();
+            RelicController.relic.ResetRelics();
+
+            ScoreController.score.EnableTimerText(false);
+            ScoreController.score.SetTimerPaused(true);
+            RoomController.roomController.SetRoomJustWon(true);
+            SceneManager.LoadScene("StoryModeEndScene");
+        }
+        else
+        {
+            if (RoomController.roomController.GetWorldLevel() != 2 && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)                                           //eles go to overworld
+                RoomController.roomController.LoadNewWorld(RoomController.roomController.GetWorldLevel() + 1);
+            RoomController.roomController.SetViableRoom(new Vector2(-999, -999));
+            RoomController.roomController.Refresh();
+            InformationLogger.infoLogger.SaveGame(false);
+
+            if (type == RewardsMenuController.RewardType.BypassRewards || !RoomController.roomController.GetCurrentRoomSetup().offerRewardCards)
+                GameController.gameController.LoadScene("OverworldScene", false, deckId);
+            else
+            {
+                MusicController.music.SetHighPassFilter(true);
+                GameController.gameController.LoadScene("OverworldScene", true, deckId);
+            }
+        }
     }
 
     public void ReportOverkillGold(int value)
@@ -738,7 +947,7 @@ public class GameController : MonoBehaviour
 
         bossName.color = new Color(bossName.color.r, bossName.color.g, bossName.color.b, 0);
         bossName.enabled = true;
-        for(int i = 0; i < 5; i ++)
+        for (int i = 0; i < 5; i++)
         {
             bossName.color = Color.Lerp(new Color(bossName.color.r, bossName.color.g, bossName.color.b, 0), new Color(bossName.color.r, bossName.color.g, bossName.color.b, 1), i / 4f);
             yield return new WaitForSecondsRealtime(0.1f / 5);
@@ -902,9 +1111,15 @@ public class GameController : MonoBehaviour
     public void SetReplaceDone(bool state)
     {
         if (state)
-            replaceImage.color = doneColor;
+        {
+            replaceIcon.color = doneColor;
+            replaceCount.color = doneColor;
+        }
         else
-            replaceImage.color = notYetDoneColor;
+        {
+            replaceIcon.color = notYetDoneColor;
+            replaceCount.color = notYetDoneColor;
+        }
     }
 
     public void RollAndShowRewardsCards(bool isReroll)
@@ -1021,14 +1236,21 @@ public class GameController : MonoBehaviour
     {
         HealthController simulationCharacter = simulationCharacters.Dequeue();
 
-        simulationCharacter.originalSimulationTarget = simulationTarget.gameObject.name;
+        simulationCharacter.SetOriginalSimulationTarget(simulationTarget);
 
         foreach (BuffFactory buff in simulationCharacter.GetComponent<BuffController>().GetBuffs())
             buff.Revert(simulationCharacter);
 
         simulationCharacter.GetComponent<BuffController>().SetBuffs(simulationTarget.GetComponent<BuffController>().GetBuffs(), false);
 
+        simulationCharacter.charDisplay.sprite.sprite = simulationTarget.charDisplay.sprite.sprite;
         simulationCharacter.gameObject.tag = simulationTarget.gameObject.tag;
+        simulationCharacter.isPlayer = simulationTarget.isPlayer;
+        if (simulationTarget.isPlayer)
+        {
+            simulationCharacter.GetComponent<PlayerController>().SetMoveRange(simulationTarget.GetComponent<PlayerController>().GetMoveRange());
+            simulationCharacter.GetComponent<PlayerMoveController>().ResetMoveDistance(simulationTarget.GetComponent<PlayerMoveController>().GetMovedDistance());
+        }
         simulationCharacter.SetBonusArmor(simulationTarget.GetBonusArmor(), null, false);
         simulationCharacter.SetBonusAttack(simulationTarget.GetBonusAttack(), false);
         simulationCharacter.SetBonusVit(simulationTarget.GetBonusVit(), false);
@@ -1055,11 +1277,11 @@ public class GameController : MonoBehaviour
 
     public void ReportSimulationFinished(HealthController simulationCharacter)
     {
-        if (simulationCharacter.originalSimulationTarget == "")
+        if (simulationCharacter.GetOriginalSimulationTarget() == null)
             return;
 
         simulationCharacter.transform.position = new Vector2(100, 100);
-        simulationCharacter.originalSimulationTarget = "";
+        simulationCharacter.ResetOriginalSimulationTarget();
         simulationCharacters.Enqueue(simulationCharacter);
     }
 
@@ -1071,6 +1293,11 @@ public class GameController : MonoBehaviour
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, -1);
         else
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, 1);
+    }
+
+    public RoomSetup GetRoomSetup()
+    {
+        return setup;
     }
 
     public void SetBossInfo(Sprite value, string name, string title, Color spriteBackColor)
