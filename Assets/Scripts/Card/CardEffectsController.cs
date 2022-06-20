@@ -126,6 +126,7 @@ public class CardEffectsController : MonoBehaviour
                         // t = GridController.gridController.GetObjectAtLocation(targets, new string[] { caster.GetComponent<HealthController>().GetTauntedTarget().tag });    //If the caster is taunted, then it casts to the target's tag instead
                         t = targets.Where(x => x.tag == caster.GetComponent<HealthController>().GetTauntedTarget().tag).ToList();
                     else
+                    {
                         switch (card.GetCard().targetType[i])
                         {
                             //If the target of the effect is the self
@@ -155,6 +156,12 @@ public class CardEffectsController : MonoBehaviour
                                 t = targets;
                                 break;
                         }
+                        if (isSimulation)
+                        {
+                            t.AddRange(targets);
+                            t = t.Distinct().ToList();
+                        }
+                    }
 
                     t.AddRange(movedObjects);       //Add force moved objects to list so they're still affected after the position change
 
@@ -249,9 +256,7 @@ public class CardEffectsController : MonoBehaviour
 
                         damage = targetTotalVit - newTotalVit;
                         vitDamage += damage;
-                    }
 
-                    if (!isSimulation)
                         switch (card.GetCard().hitEffect[i])
                         {
                             case Card.HitEffect.PlayerAttack:
@@ -267,14 +272,11 @@ public class CardEffectsController : MonoBehaviour
                                 break;
                         }
 
-                    float minHealthPercentage = 1;
-                    bool hasPlayer = false;
-                    foreach (Vector2 targ in locs)
-                        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(targ, new string[] { "Player", "Enemy" }))
-                        {
-                            if (!isSimulation)
+                        float minHealthPercentage = 1;
+                        bool hasPlayer = false;
+                        foreach (Vector2 targ in locs)
+                            foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(targ, new string[] { "Player", "Enemy" }))
                             {
-
                                 if (card.GetCard().hitEffect[i] == Card.HitEffect.PlayerAttack)
                                 {
                                     if (damage <= 5)
@@ -309,12 +311,12 @@ public class CardEffectsController : MonoBehaviour
                                     }
                                 }
                             }
-                        }
 
-                    if (hasPlayer && damage > 0 && !isSimulation)
-                    {
-                        GetComponent<PlayerController>();
-                        GameController.gameController.SetDamageOverlay(minHealthPercentage);
+                        if (hasPlayer && damage > 0)
+                        {
+                            GetComponent<PlayerController>();
+                            GameController.gameController.SetDamageOverlay(minHealthPercentage);
+                        }
                     }
 
                     if (card.GetCard().cardEffectName[i] == Card.EffectType.CreateObject)

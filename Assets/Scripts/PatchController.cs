@@ -122,6 +122,25 @@ public class PatchController : MonoBehaviour
                 UnlocksController.unlock.SetUnlocks(unlocked);
                 InformationLogger.infoLogger.SaveUnlocks();
                 break;
+                /*
+            case "0.5.4.99":
+                unlocked = UnlocksController.unlock.GetUnlocks();
+                unlocked.uiElementUnlocked[UIRevealController.UIElement.EndTurnButton] = true;
+                unlocked.uiElementUnlocked[UIRevealController.UIElement.Intents] = true;
+                unlocked.uiElementUnlocked[UIRevealController.UIElement.Armor] = true;
+                UnlocksController.unlock.SetUnlocks(unlocked);
+                InformationLogger.infoLogger.SaveUnlocks();
+                InformationLogger.infoLogger.SaveUnlocks();
+
+                foreach (Card.CasterColor color in new List<Card.CasterColor> { Card.CasterColor.Red, Card.CasterColor.Green, Card.CasterColor.Blue, Card.CasterColor.Orange, Card.CasterColor.White })
+                    foreach (Card c in LootController.loot.GetAllCards(color))
+                        StoryModeController.story.ReportCardBought(c.name, new Dictionary<StoryModeController.RewardsType, int>());
+                foreach (Equipment e in LootController.loot.GetAllEquipments())
+                    StoryModeController.story.ReportEquipmentBought(e.equipmentName, new Dictionary<StoryModeController.RewardsType, int>());
+
+                break;
+                */
+
         }
         Debug.Log("######## Patching successful ########");
         InformationLogger.infoLogger.SaveStoryModeGame();

@@ -66,17 +66,25 @@ public class AttackRangeHighlightController : MonoBehaviour
 
         if (iteration > 0)
         {
-            if (!tiles[xLoc + xOffset + 2, yLoc + yOffset + 3].GetActive() && !isOriginal)
-                tiles[xLoc + xOffset + 2, yLoc + yOffset + 3].SetActive(true);
+            try
+            {
+                if (!tiles[xLoc + xOffset + 2, yLoc + yOffset + 3].GetActive() && !isOriginal)
+                    tiles[xLoc + xOffset + 2, yLoc + yOffset + 3].SetActive(true);
+            }
+            catch { }
             yield return new WaitForSeconds(flipDelay / 10f);
-            if (xLoc + xOffset + 2 > 0 && !tiles[xLoc - 1 + xOffset + 2, yLoc + yOffset + 3].GetActive())
-                StartCoroutine(HighlightAttackRange(new Vector2(xLoc - 1, yLoc), caster, 99, false));
-            if (xLoc + xOffset + 2 < xSize - 1 && !tiles[xLoc + 1 + xOffset + 2, yLoc + yOffset + 3].GetActive())
-                StartCoroutine(HighlightAttackRange(new Vector2(xLoc + 1, yLoc), caster, 99, false));
-            if (yLoc + yOffset + 3 > 0 && !tiles[xLoc + xOffset + 2, yLoc - 1 + yOffset + 3].GetActive())
-                StartCoroutine(HighlightAttackRange(new Vector2(xLoc, yLoc - 1), caster, 99, false));
-            if (yLoc + yOffset + 3 < ySize - 1 && !tiles[xLoc + xOffset + 2, yLoc + 1 + yOffset + 3].GetActive())
-                StartCoroutine(HighlightAttackRange(new Vector2(xLoc, yLoc + 1), caster, 99, false));
+            try
+            {
+                if (xLoc + xOffset + 2 > 0 && !tiles[xLoc - 1 + xOffset + 2, yLoc + yOffset + 3].GetActive())
+                    StartCoroutine(HighlightAttackRange(new Vector2(xLoc - 1, yLoc), caster, 99, false));
+                if (xLoc + xOffset + 2 < xSize - 1 && !tiles[xLoc + 1 + xOffset + 2, yLoc + yOffset + 3].GetActive())
+                    StartCoroutine(HighlightAttackRange(new Vector2(xLoc + 1, yLoc), caster, 99, false));
+                if (yLoc + yOffset + 3 > 0 && !tiles[xLoc + xOffset + 2, yLoc - 1 + yOffset + 3].GetActive())
+                    StartCoroutine(HighlightAttackRange(new Vector2(xLoc, yLoc - 1), caster, 99, false));
+                if (yLoc + yOffset + 3 < ySize - 1 && !tiles[xLoc + xOffset + 2, yLoc + 1 + yOffset + 3].GetActive())
+                    StartCoroutine(HighlightAttackRange(new Vector2(xLoc, yLoc + 1), caster, 99, false));
+            }
+            catch { }
         }
     }
 

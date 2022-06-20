@@ -31,7 +31,7 @@ public class PlayerMoveController : MonoBehaviour
     private DateTime clickedTime;
     private Vector2 clickedLocation;
 
-    private int currentMoveRangeLeft;
+    //private int currentMoveRangeLeft;
 
     //Achievement tracking
     private List<Vector2> castFromLocation = new List<Vector2>();
@@ -49,7 +49,7 @@ public class PlayerMoveController : MonoBehaviour
         lastHoverLocation = transform.position;
         originalPosition = transform.position;
         movedDistance = 0;
-        currentMoveRangeLeft = GetMoveRangeLeft();
+        //currentMoveRangeLeft = GetMoveRangeLeft();
         path = new List<Vector2>();
         TileCreator.tileCreator.DestroyTiles(this.gameObject);
         TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
@@ -61,7 +61,7 @@ public class PlayerMoveController : MonoBehaviour
     public void UpdateMovePosition(Vector2 newlocation)
     {
         Vector2 roundedPosition = GridController.gridController.GetRoundedVector(newlocation, GetComponent<HealthController>().size);
-        int moveRangeLeft = GetMoveRangeLeft();
+        //int moveRangeLeft = healthController.GetCurrentMoveRange();
         bool updateCombatStatsHighlight = roundedPosition != lastHoverLocation;
 
         if (CheckIfPositionValid(roundedPosition))          //If it's a valid pathable position, draw path preview to location
@@ -79,13 +79,14 @@ public class PlayerMoveController : MonoBehaviour
                         if (healthController.GetPhasedMovement())
                             avoidTag = new string[] { "Player", "Enemy", "Blockade" };
                         path = PathFindController.pathFinder.PathFind(originalPosition, roundedPosition, avoidTag, new List<Vector2> { Vector2.zero }, 1);
+                        healthController.SetCurrentPathLength(path.Count - 1);
 
-                        if (path.Count < moveRangeLeft)
+                        if (path.Count < healthController.GetCurrentMoveRange())
                             break;
                     }
                     TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-                    currentMoveRangeLeft = moveRangeLeft - path.Count + 1;
-                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, currentMoveRangeLeft, moveRangeIndicatorColor);
+                    //currentMoveRangeLeft = moveRangeLeft - path.Count + 1;
+                    TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, healthController.GetCurrentMoveRange() - path.Count + 1, moveRangeIndicatorColor);
                 }
             }
         }
@@ -102,28 +103,19 @@ public class PlayerMoveController : MonoBehaviour
                     if (healthController.GetPhasedMovement())
                         avoidTag = new string[] { "Player", "Enemy", "Blockade" };
                     path = PathFindController.pathFinder.PathFind(originalPosition, lastGoodPosition, avoidTag, new List<Vector2> { Vector2.zero }, 1);
-                    if (path.Count < moveRangeLeft)
+                    healthController.SetCurrentPathLength(path.Count - 1);
+
+                    if (path.Count < healthController.GetCurrentMoveRange())
                         break;
                 }
                 TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-                currentMoveRangeLeft = moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition);
-                TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, currentMoveRangeLeft, moveRangeIndicatorColor);
+                //currentMoveRangeLeft = moveRangeLeft - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition);
+                TileCreator.tileCreator.CreatePathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()), path, healthController.GetCurrentMoveRange() - GridController.gridController.GetManhattanDistance(originalPosition, lastGoodPosition), moveRangeIndicatorColor);
             }
         }
 
         if (updateCombatStatsHighlight)
             healthController.SetCombatStatsHighlight(0);
-    }
-
-    private int GetMoveRangeLeft()
-    {
-        Debug.Log(player.GetMoveRange() + "|" + healthController.GetBonusMoveRange() + "|" + movedDistance);
-        return Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance, 0);
-    }
-
-    public int GetCurrentMoveRangeLeft()
-    {
-        return currentMoveRangeLeft;
     }
 
     public Vector2 GetMoveLocation()
@@ -152,7 +144,6 @@ public class PlayerMoveController : MonoBehaviour
 
     public void ResetMoveDistance(int value)
     {
-        Debug.Log(value);
         movedDistance = value;
     }
 
@@ -210,15 +201,15 @@ public class PlayerMoveController : MonoBehaviour
             {
                 if (!healthController.GetPhasedMovement())
                 {
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(),
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, healthController.GetCurrentMoveRange(),
                                                         PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { "Enemy", "Blockade" }, 0);
                     if (SettingsController.settings.GetRemainingMoveRangeIndicator() && path.Count > 1)       //If the option is enabled and player moved, create remaining move range indicator
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, lastGoodPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, lastGoodPosition, Card.CastShape.Circle, Mathf.Max(healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
                                                             PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Enemy", "Blockade" }, 1);
                 }
                 else    //If phased movement, then player can move through, but not on enemies
                 {
-                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(),
+                    TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, healthController.GetCurrentMoveRange(),
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()), new string[] { }, 0);    //Does not avoid Enemies for move range calculation
                     List<Vector2> destroyLocs = new List<Vector2>();
                     foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(0))        //Remove all positions with enemies and blockades, can't move onto them
@@ -228,7 +219,7 @@ public class PlayerMoveController : MonoBehaviour
 
                     if (SettingsController.settings.GetRemainingMoveRangeIndicator() && path.Count > 1)       //If the option is enabled and player moved, create remaining move range indicator
                     {
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(player.GetMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, Mathf.Max(healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - movedDistance - Mathf.Max(path.Count, 1) + 1, 0),
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Blockade" }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
@@ -251,11 +242,11 @@ public class PlayerMoveController : MonoBehaviour
                     TileCreator.tileCreator.DestroySpecificTiles(this.gameObject, destroyLocs, 0);
 
                     if (!healthController.GetPhasedMovement())
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(), //Draw faded tiles on where the player could have moved if not taunted
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, healthController.GetCurrentMoveRange(), //Draw faded tiles on where the player could have moved if not taunted
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { "Enemy", "Blockade" }, 1);
                     else    //If phased movement, then player can move through, but not on enemies
                     {
-                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, GetMoveRangeLeft(), //Draw faded tiles on where the player could have moved if not taunted
+                        TileCreator.tileCreator.CreateTiles(this.gameObject, originalPosition, Card.CastShape.Circle, healthController.GetCurrentMoveRange(), //Draw faded tiles on where the player could have moved if not taunted
                                                     PartyController.party.GetPlayerColor(player.GetColorTag()) * new Color(0.7f, 0.7f, 0.7f, 0.7f), new string[] { }, 1);    //Does not avoid Enemies for move range calculation
                         destroyLocs = new List<Vector2>();
                         foreach (Vector2 loc in TileCreator.tileCreator.GetTilePositions(1))        //Remove all positions with enemies, can't move onto them
@@ -287,13 +278,23 @@ public class PlayerMoveController : MonoBehaviour
     public void CommitMove()
     {
         movedDistance += GridController.gridController.GetManhattanDistance(transform.position, originalPosition); //Allow movement after action
-        currentMoveRangeLeft = GetMoveRangeLeft();
-        Debug.Log(gameObject + "|" + currentMoveRangeLeft);
+        healthController.SetCurrentMoveRange(healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - movedDistance, false);
+        healthController.SetCurrentPathLength(0);
         originalPosition = transform.position;
         path = new List<Vector2>();
         if (gameObject.tag != "Simulation")
             TileCreator.tileCreator.DestroyPathTiles(PartyController.party.GetPartyIndex(player.GetColorTag()));
-        //movedDistance = player.GetMoveRange() + GetComponent<HealthController>().GetBonusMoveRange(); //Disable movement after action
+    }
+
+    //Used by simulation creation to ensure accurate moverange calculations on the simulated character
+    public void SetOriginalPosition(Vector2 value)
+    {
+        originalPosition = value;
+    }
+
+    public Vector2 GetOriginalPosition()
+    {
+        return originalPosition;
     }
 
     public void ReportCast()
@@ -301,9 +302,11 @@ public class PlayerMoveController : MonoBehaviour
         castFromLocation.Add(transform.position);
     }
 
+    //Used only by forcemovement to adjust for commitmove
     public void ChangeMoveDistance(int value)
     {
         movedDistance += value;
+        healthController.SetCurrentMoveRange(healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - movedDistance, false);
     }
 
     //Moves the player to the location
@@ -353,12 +356,10 @@ public class PlayerMoveController : MonoBehaviour
 
         healthController.HideHealthBar();
 
+        /*
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && ((Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - clickedLocation).magnitude <= 0.3)
-        {
-            List<CardController> cards = new List<CardController>();
-            CharacterInformationController.charInfoController.SetDescription(healthController.charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), CollectionController.collectionController.GetEquipmentList(player.GetColorTag()), GetComponent<AbilitiesController>());
-            CharacterInformationController.charInfoController.Show();
-        }
+            SetCharacterInfoDescription();
+        */
 
         if ((Vector2)transform.position != lastGoodPosition)
             for (int i = 0; i < GridController.gridController.GetManhattanDistance(transform.position, lastGoodPosition) + 1; i++)
@@ -366,6 +367,13 @@ public class PlayerMoveController : MonoBehaviour
 
         HandController.handController.ResetCardDisplays();
         healthController.charDisplay.healthBar.SetPositionRaised(false);
+    }
+
+    public void SetCharacterInfoDescription()
+    {
+        List<CardController> cards = new List<CardController>();
+        CharacterInformationController.charInfoController.SetDescription(healthController.charDisplay.sprite.sprite, healthController, cards, healthController.GetBuffController().GetBuffs(), CollectionController.collectionController.GetEquipmentList(player.GetColorTag()), GetComponent<AbilitiesController>());
+        CharacterInformationController.charInfoController.Show();
     }
 
     public Vector2 GetPreviousPosition()

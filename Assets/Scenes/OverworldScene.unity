@@ -1299,7 +1299,7 @@ MonoBehaviour:
   playerNumber: 3
   cardStartingHeight: -4.2
   cardHighlightHeight: 2.8
-  cardStartingSize: 0.3
+  cardStartingSize: 0.4
   cardHighlightSize: 1.1
   cardAimSize: 0.4
   cardHoldSize: 0.4

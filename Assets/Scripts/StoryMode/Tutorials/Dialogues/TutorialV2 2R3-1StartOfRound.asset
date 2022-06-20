@@ -16,14 +16,12 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  emoticon: 6500000002000000650000002c0100000000000002000000650000002c010000
+  speaker: 0000000000000000000000000000000000000000
+  emoticon: 2c01000065000000c8000000650000002c010000
   texts:
   - Did you know that Nero <i>the Job Creator</i> still has to do your paperwork?
-  - Since you're my apprentice and all.
-  - In exchange for tax credits but still...
-  - You'd think turning you into a corgi will get me out of that with the Lazuli
+  - Since you're my apprentice and all. In exchange for tax credits but still...
+  - You'd think turning you into a corgi would get me out of that with the Lazuli
     Mages.
-  - So be polite, be efficient, have a plan to kill everyone you meet.
-  - Try to finish up <b>in one turn.</b>
-  - Otherwise your benefit harms ratio becomes increasingly...
-  - I mean save me from this magical book prison <i>please!</i>
+  - Try to finish up <b>in one turn.</b> Otherwise your benefit harms ratio...
+  - I mean save me from this magical book prison! <i>Please!</i>

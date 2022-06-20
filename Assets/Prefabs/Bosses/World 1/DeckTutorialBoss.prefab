@@ -36,7 +36,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5507351293116451947}
+  - {fileID: 4262696491511759417}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,7 +96,6 @@ MonoBehaviour:
   size: 1
   isSimulation: 0
   charDisplay: {fileID: 8124094990149397557}
-  originalSimulationTarget: 
 --- !u!61 &3149853040009221859
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,7 +140,7 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 2.5
   intentTypeIndicator: {fileID: 4825013667722813554, guid: c22e1b61d15ae7e4abe1eed88fc6598b, type: 3}
-  intentMultiplier: {fileID: 8407552717821305770, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
+  intentMultiplier: {fileID: 5925497826733914107, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
   attackIntentDamageCutoffs: 050000000a0000001400000064000000
   attackIntent:
   - {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
@@ -431,9 +430,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
---- !u!4 &5507351293116451947 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+--- !u!224 &4262696491511759417 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5031976373941298706, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
   m_PrefabInstance: {fileID: 9150478840541291563}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8124094990149397557 stripped

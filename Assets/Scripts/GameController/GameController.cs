@@ -170,7 +170,7 @@ public class GameController : MonoBehaviour
             splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Boss Round", StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
         else
             splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Round " + round.ToString(), StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
-        yield return splashController.AnimateSplashImage();
+        yield return splashController.AnimateSplashImage(9999);
 
         //Splash the optional goals for the room
         StoryRoomSetup currentStoryRoomSetup = StoryModeController.story.GetCurrentRoomSetup();
@@ -590,7 +590,7 @@ public class GameController : MonoBehaviour
         GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.exclamation, "Victory", StoryModeController.story.GetCurrentRoomSetup().roomName.ToUpper(), CombatIntroSplashController.colors.Red);
         MusicController.music.SetLowPassFilter(false);
         MusicController.music.PlayBackground(victoryFanfair, false);
-        yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.victoryTextDuration));
+        yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(9999));
 
         //Splash the optional goals for the room
         StoryRoomSetup currentStoryRoomSetup = StoryModeController.story.GetCurrentRoomSetup();
@@ -1175,11 +1175,12 @@ public class GameController : MonoBehaviour
         MusicController.music.SetLowPassFilter(state);
         showingDamageOverlay = state;
         if (!state)
-            StartCoroutine(FadeDamageOverlay(0));
+            StartCoroutine(FadeDamageOverlay(1));
     }
 
     public void SetDamageOverlay(float remainingHealthPercentage)
     {
+        Debug.Log("Trace");
         damageOverlay.color = new Color(1, 0, 0, 1 - remainingHealthPercentage / 2);
         StartCoroutine(FadeDamageOverlay(remainingHealthPercentage / 2));
     }
@@ -1201,12 +1202,12 @@ public class GameController : MonoBehaviour
     {
         circleHighlight.transform.position = location;
         if (value)
-            StartCoroutine(FadeInDamageOverlay());
+            StartCoroutine(FadeInCircleOverlay());
         else
-            StartCoroutine(FadeOutDamageOverlay());
+            StartCoroutine(FadeOutCircleOverlay());
     }
 
-    private IEnumerator FadeInDamageOverlay()
+    private IEnumerator FadeInCircleOverlay()
     {
         float elapsedTime = 0;
         while (elapsedTime < 0.1f)
@@ -1215,11 +1216,9 @@ public class GameController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        damageOverlay.color = new Color(0, 0, 0, 0.5f);
     }
 
-    private IEnumerator FadeOutDamageOverlay()
+    private IEnumerator FadeOutCircleOverlay()
     {
         float elapsedTime = 0;
         while (elapsedTime < 0.1f)
@@ -1228,8 +1227,6 @@ public class GameController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        damageOverlay.color = new Color(0, 0, 0, 0);
     }
 
     public HealthController GetSimulationCharacter(HealthController simulationTarget, bool SetSimOnTarget = true)
@@ -1247,10 +1244,10 @@ public class GameController : MonoBehaviour
         simulationCharacter.gameObject.tag = simulationTarget.gameObject.tag;
         simulationCharacter.isPlayer = simulationTarget.isPlayer;
         if (simulationTarget.isPlayer)
-        {
-            simulationCharacter.GetComponent<PlayerController>().SetMoveRange(simulationTarget.GetComponent<PlayerController>().GetMoveRange());
-            simulationCharacter.GetComponent<PlayerMoveController>().ResetMoveDistance(simulationTarget.GetComponent<PlayerMoveController>().GetMovedDistance());
-        }
+            simulationCharacter.GetComponent<PlayerMoveController>().SetOriginalPosition(simulationTarget.GetComponent<PlayerMoveController>().GetOriginalPosition());
+        simulationCharacter.SetMaxMoveRange(simulationTarget.GetMaxMoveRange());
+        simulationCharacter.SetBonusMoveRange(simulationTarget.GetBonusMoveRange());
+        simulationCharacter.SetCurrentMoveRange(simulationTarget.GetMoveRangeLeft(), false);
         simulationCharacter.SetBonusArmor(simulationTarget.GetBonusArmor(), null, false);
         simulationCharacter.SetBonusAttack(simulationTarget.GetBonusAttack(), false);
         simulationCharacter.SetBonusVit(simulationTarget.GetBonusVit(), false);
@@ -1271,7 +1268,6 @@ public class GameController : MonoBehaviour
 
         if (SetSimOnTarget)
             simulationTarget.SetSimCharacter(simulationCharacter);
-
         return simulationCharacter;
     }
 
@@ -1293,6 +1289,22 @@ public class GameController : MonoBehaviour
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, -1);
         else
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, 1);
+
+        if (center == new Vector2(999, 999))
+        {
+            foreach (GameObject obj in GameController.gameController.GetLivingPlayers())        //Hide all previous health bars
+            {
+                HealthController hlth = obj.GetComponent<HealthController>();
+                hlth.charDisplay.healthBar.character.enabled = false;
+                hlth.charDisplay.healthBar.ResetPosition();
+            }
+            foreach (EnemyController obj in TurnController.turnController.GetEnemies())
+            {
+                HealthController hlth = obj.GetComponent<HealthController>();
+                hlth.charDisplay.healthBar.character.enabled = false;
+                hlth.charDisplay.healthBar.ResetPosition();
+            }
+        }
     }
 
     public RoomSetup GetRoomSetup()

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R2-3 Move lock in
+  m_EditorClassIdentifier: 
+  ID: 3
+  prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
+  overlay: {fileID: 2595041317568353481, guid: 1f87c1f1ba2c08c4c89e45267e4c6467, type: 3}
+  startingCondition: 1002
+  startingValue: 1
+  startingStringValue: 
+  startingComparisonType: 0
+  OnStartUIReveal: 1
+  endingCondition: 10
+  endingValue: 1
+  endingStringValue: 
+  endingComparisonType: 0
+  OnEndUIReveal: 1
+  popupLargeImage: 0
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 
+  joinSocialsButtonsEnabled: 0

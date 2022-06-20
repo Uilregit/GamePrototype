@@ -141,6 +141,14 @@ public class LootController : MonoBehaviour
         return output;
     }
 
+    public List<Equipment> GetAllEquipments()
+    {
+        List<Equipment> output = new List<Equipment>();
+        foreach (Equipment e in equipmentLootTable.equipmentLoot)
+            output.Add(e);
+        return output;
+    }
+
     public Card GetCardWithName(string name)
     {
         foreach (Card c in cardLootTable.cardLoot)

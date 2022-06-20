@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: ArmorBuff
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.12997675, b: 1, a: 1}
-  description: 'Armor: Modify temporary armor by {+-v} for {d} turn(s)'
+  description: 'Armor Buff: Modify temporary armor by {+-v} for {d} turn(s)'
   triggerType: 1
   triggerModificationProtection: 0
   durationType: 1
   onApplyEffects: 31
   onTriggerTarget: 0
   onTriggerEffects: 0
+  onTriggerAppliedCount: 1
   valueManipulationType: 0
   appliedBuff: {fileID: 0}
   appliedBuffDuration: 0
@@ -27,3 +28,5 @@ MonoBehaviour:
   tempValue: 0
   duration: 0
   value: 0
+  obj: {fileID: 0}
+  card: {fileID: 0}

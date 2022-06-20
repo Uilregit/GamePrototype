@@ -128,7 +128,7 @@ public class CharacterDisplayController : MonoBehaviour
         string newUISortingLayerName = "Card";
         int newUISortingLayerID = 0;
         string newSpriteSortingLayerName = "Card";
-        int newSpriteSortingLayerID = -1;
+        int newSpriteSortingLayerID = -2;
         if (!state)
         {
             newUISortingLayerName = originalUISortingLayer;

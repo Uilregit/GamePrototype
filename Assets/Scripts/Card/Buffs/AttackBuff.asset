@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: AttackBuff
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.12997675, b: 1, a: 1}
-  description: 'Attack: Modify attack by {+-v} for {d} turn(s)'
-  triggerType: 1
+  description: 'Attack Buff: Modify attack by {+-v} for {d} turn(s)'
+  triggerType: 0
+  triggerModificationProtection: 0
   durationType: 1
   onApplyEffects: 30
   onTriggerTarget: 0
   onTriggerEffects: 0
+  onTriggerAppliedCount: 1
   valueManipulationType: 0
   appliedBuff: {fileID: 0}
   appliedBuffDuration: 0
@@ -26,3 +28,5 @@ MonoBehaviour:
   tempValue: 0
   duration: 0
   value: 0
+  obj: {fileID: 0}
+  card: {fileID: 0}

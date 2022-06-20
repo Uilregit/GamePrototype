@@ -19,7 +19,7 @@ MonoBehaviour:
   slowTime: 0
   slowDuration: 0
   overlay: {fileID: 0}
-  startingCondition: 1500
+  startingCondition: 1501
   startingValue: 1
   startingStringValue: 
   startingComparisonType: 10

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: World TutV2-6R2
   m_EditorClassIdentifier: 
   isBossRoom: 0
-  roomName: World TutV2-5R2
+  roomName: World TutV2-6R2
   enemies:
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
@@ -29,7 +29,8 @@ MonoBehaviour:
   offerRewardCards: 0
   relicReward: 0
   overrideSingleGoalsSplashIndex: -1
-  dialogues: []
+  dialogues:
+  - {fileID: 11400000, guid: ee27c4f57986ab94cbd147bd104b91cb, type: 2}
   overlays: []
   lastRewardCardOnTop: 0
   overrideCardShuffle: 1
@@ -40,7 +41,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13458bb1fa4a20e4695f14e4e1967bca, type: 2}
   - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
   - {fileID: 11400000, guid: 0cd7716c0837aa54ca884bfbdd893618, type: 2}
-  - {fileID: 11400000, guid: ffee8a9075f6bf242980729bebb52aed, type: 2}
+  - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
   - {fileID: 11400000, guid: a00f5680a4be6c24796496f38ba618c3, type: 2}
   - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
   - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}

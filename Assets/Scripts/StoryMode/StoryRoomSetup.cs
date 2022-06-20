@@ -116,7 +116,7 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Complete the room";
                 break;
             case ChallengeType.TotalTurnsUsed:
-                output += "Complete {r} in {ct} X total turn{s}";
+                output += "Complete in {ct} X total turn{s}";
                 break;
             case ChallengeType.TurinInRound1Used:
                 output += "Complete round 1 in {ct} X turn{s}";

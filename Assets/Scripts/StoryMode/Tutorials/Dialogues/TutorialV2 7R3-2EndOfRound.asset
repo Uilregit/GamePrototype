@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 7R3-2EndOfRound
+  m_EditorClassIdentifier: 
+  id: 10331
+  condition: 10011
+  conditionValue: 1
+  comparisonType: 10
+  speaker: 000000000000000000000000
+  emoticon: c8000000c900000000000000
+  texts:
+  - So Chaos gonna run a shop... Huh... Don't think anyone else takes this type of
+    money.
+  - I mean if anyone is going to be a racketeer and run a company store, it'll be
+    them...
+  - They'll only sell the orange items to those who entertained them enough through
+    <b>optional objectives.</b>

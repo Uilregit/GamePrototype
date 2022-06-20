@@ -16,14 +16,10 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  emoticon: 00000000020000000100000065000000000000002c0100000000000002000000
+  speaker: 00000000000000000000000000000000
+  emoticon: 000000000200000001000000f4010000
   texts:
   - Don't have enough mana to cast all your little spells?
   - Oof. Nero <i>the Overcompensating</i> never had <b>that</b> happen.
   - I bet that's just super embarassing for you!
-  - All your mage friends took pictures and still call you names on your annual camping
-    trip...
   - Anyways just make more by using all the <b>Energy</b> you have each turn.
-  - Because you're a better mage now and isn't defined by your past failures.
-  - I'll keep poking around here in the <b>Deckronomicon</b>...
-  - And you keep trying to move past your traumas.

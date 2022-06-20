@@ -53,6 +53,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private int startingAttack;
     private int currentAttack;
     private int equipAttack = 0;
+    private int maxMoveRange = 0;
+    private int currentMoveRange = 0;
+    private int currentPathLength = 0;
     private int bonusAttack;
     private int bonusVit;
     private int bonusArmor;
@@ -215,6 +218,24 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         ResetVitText(newValue);
     }
 
+    public void SetCurrentMoveRange(int value, bool relative)
+    {
+        if (relative)
+            currentMoveRange -= value;
+        else
+            currentMoveRange = value;
+    }
+
+    public void SetMaxMoveRange(int value)
+    {
+        maxMoveRange = value;
+    }
+
+    public void SetCurrentPathLength(int value)
+    {
+        currentPathLength = value;
+    }
+
     public int GetMaxVit()
     {
         return maxVit;
@@ -243,6 +264,21 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public int GetEquipAttack()
     {
         return equipAttack;
+    }
+
+    public int GetCurrentMoveRange()
+    {
+        return currentMoveRange;
+    }
+
+    public int GetMaxMoveRange()
+    {
+        return maxMoveRange;
+    }
+
+    public int GetMoveRangeLeft()
+    {
+        return currentMoveRange - currentPathLength;
     }
 
     public void SetInstantKill()
@@ -1063,6 +1099,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetBonusMoveRange(int value)
     {
         bonusMoveRange += value;
+        currentMoveRange += value;
     }
 
     public int GetBonusMoveRange()
@@ -1155,6 +1192,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         if (!preserveBonusVit)
             bonusVit = 0;
+        currentPathLength = 0;
+        currentMoveRange = maxMoveRange + bonusMoveRange;
         ResetVitText(currentVit + bonusVit);
     }
 
@@ -1351,6 +1390,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         int endOfTurnDamage = GetVit() - simHlthController.GetVit() - damage;
 
         charDisplay.healthBar.SetBar(Mathf.Max(0, oldHealth), damage, endOfTurnDamage, maxVit + equipVit, castLocation + new Vector2(0, 0.5f), 1, 1, 1, GetArmor() == 0, true, true);
+        charDisplay.healthBar.SetPosition(castLocation + new Vector2(0, 2f));
         charDisplay.healthBar.SetCharacter(sprite, castLocation);
         charDisplay.healthBar.SetArmor(simHlthController.GetArmor());
         charDisplay.healthBar.SetHealth(simHlthController.GetVit());
@@ -1426,32 +1466,16 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         charDisplay.attackText.enabled = state;
     }
 
-    public void SetCombatStatsHighlight(int index, int damage = 0, int armorDamage = 0)
+    public void SetCombatStatsHighlight(int index, int damage = 0, int armorDamage = 0, bool refresh = true, HealthController originalHealthController = null)
     {
-        int moveRange = 0;
-        int moveRangeLeft = 0;
-        HealthController target = this;
         Sprite sprite = charDisplay.sprite.sprite;
 
         if (isSimulation && originalSimulationObject != null)
-        {
             sprite = originalSimulationObject.charDisplay.sprite.sprite;
-            //target = originalSimulationObject;
-        }
+        if (isSimulation && originalHealthController != null)
+            sprite = originalHealthController.charDisplay.sprite.sprite;
 
-        if (isPlayer)
-        {
-            moveRange = target.GetComponent<PlayerController>().GetMoveRange() + bonusMoveRange;
-            moveRangeLeft = target.GetComponent<PlayerMoveController>().GetCurrentMoveRangeLeft();
-            Debug.Log(target + "|" + gameObject + "|" + target.GetComponent<PlayerController>().GetMoveRange() + "+" + bonusMoveRange + "|" + moveRangeLeft);
-        }
-        else
-        {
-            moveRange = target.GetComponent<EnemyController>().moveRange + bonusMoveRange;
-            moveRangeLeft = moveRange;
-        }
-
-        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit(), damage, GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), moveRangeLeft, moveRange);
+        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit(), damage, GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), GetMoveRangeLeft(), maxMoveRange + bonusMoveRange, refresh);
         UIController.ui.combatStats.SetStatusEnabled(index, true);
     }
 

@@ -113,7 +113,7 @@ public class CombatIntroSplashController : MonoBehaviour
         splashObject.SetActive(false);
     }
 
-    public IEnumerator AnimateGoalsImage(float duration = 3f)
+    public IEnumerator AnimateGoalsImage(float duration = 9999f)
     {
         //Animate the cards coming in
         List<Vector3> originalPosition = new List<Vector3>() { new Vector3(-10, 0, 0), new Vector3(10, 0, 0), new Vector3(-10, 0, 0) };
@@ -176,7 +176,7 @@ public class CombatIntroSplashController : MonoBehaviour
         }
     }
 
-    public IEnumerator AnimateSingleGoalsImage(int index, float duration = 3f)
+    public IEnumerator AnimateSingleGoalsImage(int index, float duration = 9999f)
     {
         float newProgress = goalProgressBars[index].transform.localScale.x;
         goalProgressBars[index].transform.localScale = new Vector3(originalGoalsPercentages[index], 1, 1);

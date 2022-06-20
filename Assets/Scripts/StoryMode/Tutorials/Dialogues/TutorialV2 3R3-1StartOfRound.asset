@@ -16,15 +16,14 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  emoticon: c800000065000000c900000065000000c8000000c8000000c800000003000000
+  speaker: 0000000000000000000000000000000000000000
+  emoticon: c800000065000000c900000000000000c8000000
   texts:
-  - Okay I just broke another spell in here and got my socks back. <b>Only</b> my
-    socks back.
-  - Which honestly makes me feel <b>more</b> naked.
-  - So I took it off and they disappeared.
+  - Okay I just broke another orb in here and got my socks back. <b>Only</b> my socks
+    back.
   - Hopefully that didn't reverberate into the fabric of your side of existence.
   - Oh it's created a magical vacum?
-  - That you can dump cards you don't have enough <b>Mana</b> for?
-  - And get a new card in exchange?
-  - I guess if it doesn't smell like Nero <i>the Pending Podiatrist Patient</i>'s
-    feet, go ahead and use it.
+  - That you can dump cards you don't have enough <b>Mana</b> for and get a new card
+    in exchange?
+  - I guess go ahead and use it. I feel even <i>more</i> naked with just socks on
+    so I'm gonna take them off.

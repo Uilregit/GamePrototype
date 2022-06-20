@@ -22,7 +22,7 @@ MonoBehaviour:
   challenges: 0b000000120400003a040000
   valueType: 010000001400000001000000
   challengeValues: 01000000010000001e000000
-  challengeComparisonType: 0a0000000a00000000000000
+  challengeComparisonType: 0a0000000000000000000000
   bestChallengeValues: 010000001e00000002000000
   skipFinalRewards: 1
   allowRewardsRebuy: 0

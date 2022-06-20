@@ -16,9 +16,11 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
+  speaker: 00000000000000000000000000000000
   emoticon: 00000000020000006500000003000000
   texts:
-  - Seems like you can move and use cards as many times as you want, and in any order.
+  - Seems like <b>you can move and use cards as many times as you want, and in any
+    order.</b>
   - Probably could get these two <b>Undecked</b> monsters <b>in one turn.</b>
   - Meanwile I'll look for a way out of the <b>Deckronomicon</b> and a pair of pants.
-  - For the sake of your eyes, hopefully not in that order...
+  - For the sake of your eyes, I won't succeed in <i>that</i> order...

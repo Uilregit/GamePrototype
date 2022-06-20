@@ -16,15 +16,13 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  emoticon: c8000000c8000000650000000000000001000000020000000000000065000000
+  speaker: 0000000000000000000000000000000000000000
+  emoticon: c8000000c8000000650000000000000001000000
   texts:
   - Nero <i>the Tastefully Nude</i> just broke a spell in here and is still bereft
     of pants...
   - So I'm guessing something happened out there?
   - Oh no is that <b>Mana</b> out there? Oof.
   - <b>Mana</b> is gonna build up every time you use an <b>Energy</b> card.
-  - Let the mage handle the <b>Mana</b> business.
-  - If you're interested in learning to use <b>Mana</b> you better bring an impressive
-    resume.
-  - It's an entry level position so I'm only looking for 2-5 years experience but...
-  - It says here you never finished your last apprenticeship, so...
+  - Let the mage handle the <b>Mana</b> business. You didn't even finish your apprenticeship
+    with me...

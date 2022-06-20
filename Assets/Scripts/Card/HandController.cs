@@ -160,7 +160,7 @@ public class HandController : MonoBehaviour
             yield return StartCoroutine(AnimateDrawCard());
         }
 
-        yield return new WaitForSeconds(0.3f * TimeController.time.timerMultiplier);
+        yield return new WaitForSeconds(0.3f);      //Must not speed up faster than 0.3f, otherwise last drawn mana card will be playable even if not enough mana
 
         hand.AddRange(drawnCards);
         drawnCards = new List<CardController>();
@@ -301,9 +301,9 @@ public class HandController : MonoBehaviour
     //Redraw all card positions so they're centered
     public IEnumerator ResetCardPositions()
     {
-        float spaceBetweenCards = cardSpacing;
-        if (hand.Count > 6)
-            spaceBetweenCards = cardSpacing * 6 / hand.Count;
+        float spaceBetweenCards = cardSpacing * 1.2f;
+        if (hand.Count > 5)
+            spaceBetweenCards = cardSpacing * 5 / hand.Count * 1.2f;
 
         List<Vector3> originalPositions = new List<Vector3>();
         List<Vector3> originalSize = new List<Vector3>();

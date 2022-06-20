@@ -117,6 +117,7 @@ public class HealthBarController : MonoBehaviour
     private Dictionary<StatusTypes, bool> currentStatusTypes = new Dictionary<StatusTypes, bool>();
 
     private bool raised = false;
+    private bool positionSet = false;
 
     public enum StatusTypes
     {
@@ -267,11 +268,12 @@ public class HealthBarController : MonoBehaviour
             healthBarHide = HideHealthBar();
             StartCoroutine(healthBarHide);
         }
+        healthBarObject.SetActive(true);
     }
 
     public void SetCharacter(Sprite sprite, Vector2 center)
     {
-        character.transform.position = center + new Vector2(0, 1);
+        //character.transform.position = center + new Vector2(0, 1);
         character.sprite = sprite;
         character.enabled = true;
     }
@@ -280,13 +282,13 @@ public class HealthBarController : MonoBehaviour
     public void RemoveHealthBar()
     {
         healthBarObject.SetActive(false);
+        character.enabled = false;
         /*
         backImage.enabled = false;
         damageBarImage.enabled = false;
         damageOverTimeBarImage.enabled = false;
         barImage.enabled = false;
         bonusHealthBar.enabled = false;
-        character.enabled = false;
         healthBarTickContainer.SetActive(false);
         skullIcon.enabled = false;
         */
@@ -590,6 +592,19 @@ public class HealthBarController : MonoBehaviour
     public bool GetPositionRaised()
     {
         return raised;
+    }
+
+    public void SetPosition(Vector2 location)
+    {
+        healthBarObject.transform.localPosition = location;
+        positionSet = true;
+    }
+
+    public void ResetPosition()
+    {
+        if (positionSet)
+            SetPositionRaised(false);
+        positionSet = false;
     }
 
     public void SetHealth(int value)

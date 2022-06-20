@@ -329,6 +329,12 @@ public class StoryModeController : MonoBehaviour
         completedIds = value;
     }
 
+    //Used by patchcontroller to add completed rooms for testing
+    public void AddCompletedRooms(List<int> value)
+    {
+        completedIds.AddRange(value);
+    }
+
     public void SetChallengeValues(Dictionary<int, int[]> value)
     {
         challengeValues = value;
@@ -1137,6 +1143,7 @@ public class StoryModeController : MonoBehaviour
         HandController.handController.EmptyHand();
         DeckController.deckController.ResetCardValues();
         RelicController.relic.ResetRelics();
+        TutorialController.tutorial.DestroyAndReset();
 
         ReturnToMapScene();
     }

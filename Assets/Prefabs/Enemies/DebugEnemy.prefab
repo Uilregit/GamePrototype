@@ -36,7 +36,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7405496933139415755}
+  - {fileID: 1262051556403399833}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65,20 +65,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castRange: 3
-  maxVit: 1
+  castRange: 1
+  maxVit: 10
   vitVariate: 1
-  startingArmor: 1
-  attack: 100
-  moveRange: 4
+  startingArmor: 2
+  attack: 5
+  moveRange: 3
   randomStartRange: 2
   attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 48a11567c2d2bf54f99be8907e8b8ad4, type: 2}
+  - {fileID: 11400000, guid: 0effdfd9a82c7e048b9f5038cad251b7, type: 2}
   moveType: 0
-  targetType: 0
+  targetType: 3
   isBoss: 0
   bossName: 
   bossTitle: 
@@ -101,7 +101,6 @@ MonoBehaviour:
   size: 1
   isSimulation: 0
   charDisplay: {fileID: 6491098502223438485}
-  originalSimulationTarget: 
 --- !u!61 &5812241472637964539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,7 +145,6 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 2.5
   intentTypeIndicator: {fileID: 4825013667722813554, guid: c22e1b61d15ae7e4abe1eed88fc6598b, type: 3}
-  intentMultiplier: {fileID: 5925497826733914107, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
   attackIntentDamageCutoffs: 050000000a0000001400000064000000
   attackIntent:
   - {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
@@ -428,9 +426,9 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1f1b501d427db1048ab9653a54e440b4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
---- !u!4 &7405496933139415755 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3644259634242365504, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
+--- !u!224 &1262051556403399833 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5031976373941298706, guid: 39efd4ac353259e46a24b32fe337dbb7, type: 3}
   m_PrefabInstance: {fileID: 6077219491371723403}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6491098502223438485 stripped

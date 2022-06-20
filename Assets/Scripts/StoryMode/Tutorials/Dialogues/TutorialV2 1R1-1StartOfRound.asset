@@ -16,6 +16,7 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
+  speaker: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   emoticon: c90000002c01000000000000650000002c01000064000000c90000002c01000065000000c900000002000000
   texts:
   - MONSIEUR FLUFFYBUTT!
@@ -30,4 +31,5 @@ MonoBehaviour:
   - Also I'm trapped in the <b>Deckronomicon</b> so I can't turn you back.
   - 'Unless... '
   - You kill the <b>Undecked</b> and return them to the <b> Deckronomicon</b>.
-  - Go forth! Deck them in the face like Nero <i>the Pacifist</i> showed you how!
+  - Go forth! <i>Deck</i> them in the face like Nero <i>the Pacifist</i> showed you
+    how!

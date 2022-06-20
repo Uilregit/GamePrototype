@@ -16,6 +16,7 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
+  speaker: 0000000000000000000000000000000000000000
   emoticon: 0200000000000000000000000200000002000000
   texts:
   - Nero <i>the Backseat Magician</i> says you can make your friends run further

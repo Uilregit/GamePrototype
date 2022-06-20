@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,17 +12,19 @@ public class TutorialController : MonoBehaviour
     public Canvas tutorialCanvas;
     public Canvas tutorialUICanvas;
 
-    public Sprite neutralEmote;
-    public Sprite happyEmote;
-    public Sprite winkEmote;
-    public Sprite kissEmote;
-    public Sprite angryEmote;
-    public Sprite frustratedEmote;
-    public Sprite confusedEmote;
-    public Sprite surprisedEmote;
-    public Sprite sadEmote;
-    public Sprite sleepEmote;
-    public Sprite sunglassesEmote;
+    public Dialogue.Speaker[] speakerOrder;
+
+    public Sprite[] neutralEmote;
+    public Sprite[] happyEmote;
+    public Sprite[] winkEmote;
+    public Sprite[] kissEmote;
+    public Sprite[] angryEmote;
+    public Sprite[] frustratedEmote;
+    public Sprite[] confusedEmote;
+    public Sprite[] surprisedEmote;
+    public Sprite[] sadEmote;
+    public Sprite[] sleepEmote;
+    public Sprite[] sunglassesEmote;
 
     public Image background;
     public Image emoticon;
@@ -46,6 +49,8 @@ public class TutorialController : MonoBehaviour
     public Color selectedColor;
     public Color unselectedColor;
     public InputField comments;
+
+    private bool handDrawn = false;
 
     private int feedbackType = -1;
 
@@ -187,9 +192,20 @@ public class TutorialController : MonoBehaviour
                 }
 
         //If tutorial room doesn't draw the full hand at the start, trigger it when appropriate
-        if (GameController.gameController != null && HandController.handController != null)
+        if (GameController.gameController != null && HandController.handController != null && !handDrawn)
             if (condition == GameController.gameController.GetRoomSetup().drawHandCondition && value == GameController.gameController.GetRoomSetup().drawHandConditionValue)
+            {
+                handDrawn = true;
                 HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
+            }
+    }
+
+    public bool GetHasOverlayWithCondition(Dialogue.Condition condition, int value)
+    {
+        foreach (TutorialOverlay overlay in currentTutorialOverlays)
+            if (overlay.startingCondition == condition && overlay.startingValue == value && !completedTutIDs.Contains(overlay.ID))
+                return true;
+        return false;
     }
 
     private void DisplayOverlayTutorial(TutorialOverlay overlay)
@@ -213,12 +229,15 @@ public class TutorialController : MonoBehaviour
         popupTutorial.gameObject.SetActive(false);
         completedPassiveTutIDs.Add(popupID);
         completedTutIDs.Add(popupID);
-        foreach (int value in completedTutIDs)
-            Debug.Log(value);
         InformationLogger.infoLogger.SavePlayerPreferences();
         UIRevealController.UIReveal.SetElementState(popupOverlay.OnEndUIReveal, true);
         popupOverlay = null;
         TriggerTutorial(Dialogue.Condition.PopupEnded, popupID);
+    }
+
+    public bool GetPopupIsShowing()
+    {
+        return popupOverlay != null;
     }
 
     public void DiscordButtonPressed()
@@ -254,7 +273,7 @@ public class TutorialController : MonoBehaviour
         SetEnabled(true);
         for (int i = 0; i < conversation.texts.Length; i++)
         {
-            emoticon.sprite = GetEmoticon(conversation.emoticon[i]);
+            emoticon.sprite = GetEmoticon(conversation.speaker[i], conversation.emoticon[i]);
             text.enabled = false;
             text.text = conversation.texts[i];
             skipDialogueButton.gameObject.SetActive(StoryModeController.story.GetCompletedRooms().Contains(StoryModeController.story.GetCurrentRoomID()));  //Allow dialogue skips in rooms already completed
@@ -289,40 +308,41 @@ public class TutorialController : MonoBehaviour
         dialogueSkipped = true;
     }
 
-    private Sprite GetEmoticon(Dialogue.Emotion emote)
+    private Sprite GetEmoticon(Dialogue.Speaker person, Dialogue.Emotion emote)
     {
-        Sprite output = neutralEmote;
+        int index = speakerOrder.ToList().IndexOf(person);
+        Sprite output = neutralEmote[index];
         switch (emote)
         {
             case Dialogue.Emotion.Happy:
-                output = happyEmote;
+                output = happyEmote[index];
                 break;
             case Dialogue.Emotion.Wink:
-                output = winkEmote;
+                output = winkEmote[index];
                 break;
             case Dialogue.Emotion.Kiss:
-                output = kissEmote;
+                output = kissEmote[index];
                 break;
             case Dialogue.Emotion.Angry:
-                output = angryEmote;
+                output = angryEmote[index];
                 break;
             case Dialogue.Emotion.Frustrated:
-                output = frustratedEmote;
+                output = frustratedEmote[index];
                 break;
             case Dialogue.Emotion.Confused:
-                output = confusedEmote;
+                output = confusedEmote[index];
                 break;
             case Dialogue.Emotion.Surprised:
-                output = surprisedEmote;
+                output = surprisedEmote[index];
                 break;
             case Dialogue.Emotion.Sad:
-                output = sadEmote;
+                output = sadEmote[index];
                 break;
             case Dialogue.Emotion.Sleep:
-                output = sleepEmote;
+                output = sleepEmote[index];
                 break;
             case Dialogue.Emotion.Sunglasses:
-                output = sunglassesEmote;
+                output = sunglassesEmote[index];
                 break;
         }
 

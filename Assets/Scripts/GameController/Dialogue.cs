@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Conversation
 {
+    public Dialogue.Speaker[] speaker;
     public Dialogue.Emotion[] emoticon;
     public string[] texts;
 }
@@ -15,9 +16,16 @@ public class Dialogue : ScriptableObject
     public Condition condition;
     public int conditionValue = -1;
     public StoryRoomSetup.ChallengeComparisonType comparisonType = StoryRoomSetup.ChallengeComparisonType.EqualTo;
+    public Speaker[] speaker;
     public Emotion[] emoticon;
     [TextArea]
     public string[] texts;
+
+    public enum Speaker
+    {
+        Deckromancer = 0,
+        Shopkeeper = 1,
+    }
 
     public enum Emotion
     {
@@ -41,6 +49,7 @@ public class Dialogue : ScriptableObject
         DialogueDone = 5,
 
         turn = 10,
+        EndedTurnWithPlayableCards = 15,
 
         Replace = 20,
 
@@ -148,6 +157,7 @@ public class Dialogue : ScriptableObject
         if (GetConditionMet(con, value))
         {
             thisConvo = new Conversation();
+            thisConvo.speaker = speaker;
             thisConvo.emoticon = emoticon;
             thisConvo.texts = texts;
         }

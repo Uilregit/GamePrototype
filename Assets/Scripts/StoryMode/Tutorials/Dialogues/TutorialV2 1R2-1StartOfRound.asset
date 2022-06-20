@@ -16,10 +16,11 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  emoticon: f401000001000000c8000000c9000000c9000000c8000000
+  speaker: 000000000000000000000000000000000000000000000000
+  emoticon: f401000001000000c8000000c90000002c010000c8000000
   texts:
   - <i>GASP!!!</i> You've learned to run further!
-  - You should use that card on yourself, see how much further you can go!
+  - You should <b>use Haste on yourself</b>, see how much further you can go!
   - Seems the <b>Deckronomicon</b> has turned <i>running</i> into cards...
   - Hey don't look at me! Nero <i>the Meditative</i> was passed out drunk!
   - Possibly naked!

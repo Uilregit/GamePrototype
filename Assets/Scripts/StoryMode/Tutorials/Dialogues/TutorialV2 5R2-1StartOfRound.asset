@@ -16,6 +16,7 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
+  speaker: 00000000000000000000000000000000
   emoticon: 0000000002000000c9000000c8000000
   texts:
   - If you insult the <b>undecked</b>'s moms you can <b>taunt</b> them.

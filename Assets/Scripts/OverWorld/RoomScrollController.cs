@@ -23,6 +23,7 @@ public class RoomScrollController : MonoBehaviour
     protected Vector2 offset = Vector2.zero;
     protected Vector2 newLocation;
     private Vector3 desiredPosition = new Vector3(0, 0, 0);
+    private Vector3 mouseDownPosition = Vector3.zero;
 
     private bool isHorizontal = true;
     private bool isDragging = false;
@@ -44,6 +45,7 @@ public class RoomScrollController : MonoBehaviour
     {
         isDragging = true;
         offset = transform.position - CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+        mouseDownPosition = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
     }
 
     public void OnMouseDrag()
@@ -65,6 +67,12 @@ public class RoomScrollController : MonoBehaviour
         isDragging = false;
         if (isHorizontal)
         {
+            /*
+            if (CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).x - mouseDownPosition.x > 0.5)
+                desiredPosition = new Vector3(x, 0, 0);
+            else if (CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)).x - mouseDownPosition.x < - 0.5)
+                desiredPosition = new Vector3(x, 0, 0);
+            */
             float x = Mathf.Clamp(Mathf.Round(transform.position.x / -3.5f / transform.localScale.x), 0, maxNumberOfRooms - 1) * -3.5f * transform.localScale.x;
             desiredPosition = new Vector3(x, 0, 0);
         }

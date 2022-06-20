@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: World Tutv2-8R3
   m_EditorClassIdentifier: 
   isBossRoom: 0
-  offerRewardGold: 1
-  offerRewardCards: 1
-  relicReward: 0
   roomName: World Tutv2-8R3
   enemies:
   - {fileID: 3199024419837817711, guid: 7b6c4a9ea5bbcc7479e39678e4104211, type: 3}
@@ -27,8 +24,12 @@ MonoBehaviour:
   level5: 00000000000000000000000000000000000000000000000000000000
   level6: 01000000000000000200000002000000020000000000000001000000
   level7: 01000000010000000000000000000000000000000100000001000000
+  offerRewardGold: 1
+  offerRewardCards: 1
+  relicReward: 0
   overrideSingleGoalsSplashIndex: -1
-  dialogues: []
+  dialogues:
+  - {fileID: 11400000, guid: 3c1cb5cd3eef6a645b27f71f3d8290d4, type: 2}
   overlays:
   - {fileID: 11400000, guid: 413be1e0065efa947bfebbe4822fe7f6, type: 2}
   lastRewardCardOnTop: 1
@@ -45,3 +46,4 @@ MonoBehaviour:
   endRoomUnlockChar: {fileID: 0}
   endRoomUnlockAbility: {fileID: 0}
   endRoomUnlockAbilityName: 
+  revealedUIElements: 

@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
             healthController.SetStartingArmor(startingArmor);
             healthController.SetStartingAttack(attack);
             healthController.SetBonusMoveRange(equipBonusMoveRange);
+            healthController.SetMaxMoveRange(moveRange);
+            healthController.SetCurrentMoveRange(moveRange, false);
 
             HandController.handController.SetBonusReplace(equipBonusReplace, true);
             HandController.handController.SetBonusHandSize(equipBonusHandSize, true);
@@ -127,16 +129,6 @@ public class PlayerController : MonoBehaviour
     public int GetAttack()
     {
         return healthController.GetCurrentAttack();
-    }
-
-    public int GetMoveRange()
-    {
-        return moveRange;
-    }
-
-    public void SetMoveRange(int value)
-    {
-        moveRange = value;
     }
 
     public int GetAttackRange()

@@ -1329,10 +1329,8 @@ New Round and Optional Goals UI is now skippable by tapping
 Reworked status and break texts on the health bar
 Healthbars of characters not part of a card cast is now hidden during cast
 Enemy intents will now be hidden if their health bar is highlighted
-Added Combat status to combat rooms
-    Fix additional moverange not showing
-Fix delay in achievement skip
-Add skip to draw
+Added Combat status to combat rooms, allies and enemies
+Added scrubbing to cycle through combat status for when multiple units are selected
 
 -- Bugs --
 Fixed bug where turn based goals weren't reported on the last turn
@@ -1342,6 +1340,12 @@ Fixed bug where turns were counted up on enemy turns, not player's
 Fixed bug where non boss rooms had boss emblelishments
 Fixed bug where caster simulated objects weren't returned properly
 Fixed bug where knocking back self will cause a diagonal knockback
+Fixed bug where phased movement enemies will move into blocks or onto their target
+Fixed bug where mana cards will sometimes be playable when there is not enough mana on highest speed settings
+Fixed bug where enemy intent numbers are sometimes hidden
+Fixed visual bug on enemy intents not easily readable when targeting White or Black
+Fixed visual bug where having too many cards in hand scrolled off screen
+Fixed visual bug where all encounters will start with a red damaged overlay
 
 ##########
 

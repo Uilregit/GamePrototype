@@ -16,6 +16,7 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
+  speaker: 000000000000000000000000000000000000000000000000
   emoticon: 65000000c9000000000000000200000001000000f4010000
   texts:
   - Maybe I should stop breaking things in here...
@@ -23,5 +24,5 @@ MonoBehaviour:
   - They're simple creatures, and <b>won't attack anyone except their target.</b>
   - Even if someone else is <b>standing right in front of them.</b>
   - They're dumb creatures with a singular focus they will follow at their detriment.
-  - Anyways, Niro <i>the Wise</i> will continue to smash things in here for a way
-    out!
+  - Anyways, Niro <i>the Wise</i> will continue to smash things in here looking for
+    a way out!

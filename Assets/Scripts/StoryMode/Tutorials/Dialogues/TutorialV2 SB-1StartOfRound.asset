@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
+  m_Name: TutorialV2 SB-1StartOfRound
+  m_EditorClassIdentifier: 
+  id: 10331
+  condition: 1
+  conditionValue: 1
+  comparisonType: 10
+  speaker: 00000000000000000000000000000000
+  emoticon: 010000006500000002000000f4010000
+  texts:
+  - With this <b>Chapter Boss</b> returned to the <b>Deckronomicon</b>, you can fight
+    them again!
+  - They're closer to their source of power, so they'll be stronger.
+  - They'll trapped here, so you can fight them again as many times as you want,
+    whenever you want.
+  - They'll be here, a boulder for you to roll up the hill forever.

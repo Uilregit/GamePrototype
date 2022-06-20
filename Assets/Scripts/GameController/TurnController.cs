@@ -76,6 +76,13 @@ public class TurnController : MonoBehaviour
         playerTurn = newTurn;
         if (!playerTurn)
         {
+            if (TutorialController.tutorial.GetHasOverlayWithCondition(Dialogue.Condition.EndedTurnWithPlayableCards, 1) && HandController.handController.GetNumberOfPlayableCards() != 0)
+            {
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EndedTurnWithPlayableCards, HandController.handController.GetNumberOfPlayableCards());
+                playerTurn = true;
+                return;
+            }
+
             try
             {
                 InformationLogger.infoLogger.SaveTimeInfo(InformationLogger.infoLogger.patchID,
@@ -222,7 +229,7 @@ public class TurnController : MonoBehaviour
         //Enemy turn
         float enemyTurnStartTime = Time.time;
         CameraController.camera.ScreenShake(0.03f, 0.05f);
-        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Enemy Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Purple);
+        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Enemy Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Red);
         SetEndTurnButtonEnabled(false);
         MusicController.music.PlaySFX(enemyTurnSound);
         yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.turnChangeDuration));
@@ -292,7 +299,7 @@ public class TurnController : MonoBehaviour
         float enemyTurnDuration = Time.time - enemyTurnStartTime;
         turnID += 1;
         CameraController.camera.ScreenShake(0.06f, 0.05f);
-        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Your Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Green);
+        GameController.gameController.splashController.SetSplashImage(CombatIntroSplashController.icons.hourglass, "Your Turn", "TURN " + turnID.ToString(), CombatIntroSplashController.colors.Red);
         MusicController.music.PlaySFX(playerTurnSound);
         SetEndTurnButtonEnabled(true);
         yield return StartCoroutine(GameController.gameController.splashController.AnimateSplashImage(TimeController.time.turnChangeDuration));
@@ -579,7 +586,7 @@ public class TurnController : MonoBehaviour
 
         ResetEnergyDisplay();
         if (InformationLogger.infoLogger.debug)
-            currentMana = 10;
+            currentMana = 0;
         else
             currentMana = 0;
         UIController.ui.ResetManaBar(currentMana);
