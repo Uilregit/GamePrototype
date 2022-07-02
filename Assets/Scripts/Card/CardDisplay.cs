@@ -191,6 +191,11 @@ public class CardDisplay : MonoBehaviour
             yield return new WaitForSeconds(duration / 20f);
         }
         transform.rotation = originalRotation * Quaternion.Euler(new Vector3(0, 180, 0));
+        try
+        {
+            thisCard.ResetPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+        }
+        catch { }
     }
 
     public void FlipDown(float duration = 0.5f)

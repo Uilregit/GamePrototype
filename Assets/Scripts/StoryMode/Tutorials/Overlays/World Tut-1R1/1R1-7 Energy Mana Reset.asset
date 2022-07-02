@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034fc95e11753f4fbeb37bbdaaacd05, type: 3}
+  m_Name: 1R1-7 Energy Mana Reset
+  m_EditorClassIdentifier: 
+  ID: 7
+  prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
+  overlay: {fileID: 7000162950523800986, guid: 61b01fedfb25675418403e41359ab079, type: 3}
+  startingCondition: 10
+  startingValue: 2
+  startingStringValue: 
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 10
+  endingValue: -1
+  endingStringValue: 
+  endingComparisonType: 30
+  OnEndUIReveal: 1
+  popupLargeImage: 0
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 
+  joinSocialsButtonsEnabled: 0

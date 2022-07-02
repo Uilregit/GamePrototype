@@ -51,6 +51,7 @@ public class TurnController : MonoBehaviour
     private List<int> cardPlayedManaReduction = new List<int>();
     private List<int> cardPlayedEnergyCap = new List<int>();
     private List<int> cardPlayedManaCap = new List<int>();
+    private List<int> damageDealtToEnemiesThisTurn = new List<int>();
 
     public int multiplayerTurnPlayer = 0;
 
@@ -76,9 +77,15 @@ public class TurnController : MonoBehaviour
         playerTurn = newTurn;
         if (!playerTurn)
         {
-            if (TutorialController.tutorial.GetHasOverlayWithCondition(Dialogue.Condition.EndedTurnWithPlayableCards, 1) && HandController.handController.GetNumberOfPlayableCards() != 0)
+            if (TutorialController.tutorial.GetHasOverlayWithCondition(Dialogue.Condition.EndedTurnWithPlayableCards, 1) && HandController.handController.GetNumberOfPlayableCards() > 0 && GetEnemies().Any(x => x.GetHealthController().GetVit() > 0))
             {
                 TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EndedTurnWithPlayableCards, HandController.handController.GetNumberOfPlayableCards());
+                playerTurn = true;
+                return;
+            }
+            if (TutorialController.tutorial.GetHasOverlayWithCondition(Dialogue.Condition.EndedTurnWithReplacesLeft, 1) && HandController.handController.GetReplacesLeft() > 0 && GetEnemies().Any(x => x.GetHealthController().GetVit() > 0))
+            {
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EndedTurnWithReplacesLeft, HandController.handController.GetReplacesLeft());
                 playerTurn = true;
                 return;
             }
@@ -136,6 +143,7 @@ public class TurnController : MonoBehaviour
 
         if (cardsPlayedThisTurn.Select(x => x.casterColor).ToList().Distinct().Count() == 3)
             AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.CastFromAllColorsForXTurns);
+        AchievementSystem.achieve.OnNotify(damageDealtToEnemiesThisTurn.Sum(), StoryRoomSetup.ChallengeType.DamageDealtInSingleTurn);
 
         List<GameObject> players = GameController.gameController.GetLivingPlayers();
         foreach (GameObject player in players)
@@ -176,6 +184,8 @@ public class TurnController : MonoBehaviour
 
     public IEnumerator EnemyTurn()
     {
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, turnID);
+
         int manaCardsPlayed = 0;
         int energyCardsPlayed = 0;
         foreach (Card c in cardsPlayedThisTurn)
@@ -287,6 +297,7 @@ public class TurnController : MonoBehaviour
         cardPlayedManaCap = new List<int>();
         manaSpent = new List<int>();
         energySpent = new List<int>();
+        damageDealtToEnemiesThisTurn = new List<int>();
 
         if ((object)HandController.handController.GetHeldCard() != null)
             HandController.handController.GetHeldCard().GetComponent<Collider2D>().enabled = false;
@@ -343,6 +354,8 @@ public class TurnController : MonoBehaviour
             if (!thisEnemy.GetSacrificed())
                 thisEnemy.GetComponent<EnemyController>().RefreshIntent();
 
+        TileCreator.tileCreator.RefreshDangerArea();
+
         SetPlayerTurn(true); //Trigger all player start of turn effects
 
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, turnID);
@@ -377,12 +390,16 @@ public class TurnController : MonoBehaviour
         if (state)
         {
             endTurnButton.color = turnEnabledColor;
-            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "End Turn";
+            endTurnButton.transform.GetChild(0).GetComponent<Image>().color = turnEnabledColor;
+            endTurnButton.transform.GetChild(1).GetComponent<Image>().color = turnEnabledColor;
+            endTurnButton.transform.GetChild(2).GetComponent<Text>().text = "End Turn";
         }
         else
         {
             endTurnButton.color = turnDisabledColor;
-            endTurnButton.transform.GetChild(0).GetComponent<Text>().text = "Enemy Turn";
+            endTurnButton.transform.GetChild(0).GetComponent<Image>().color = turnDisabledColor;
+            endTurnButton.transform.GetChild(1).GetComponent<Image>().color = turnDisabledColor;
+            endTurnButton.transform.GetChild(2).GetComponent<Text>().text = "Enemy Turn";
         }
     }
 
@@ -569,6 +586,7 @@ public class TurnController : MonoBehaviour
         cardsPlayedThisTurn = new List<Card>();
         manaSpent = new List<int>();
         energySpent = new List<int>();
+        damageDealtToEnemiesThisTurn = new List<int>();
         cardPlayedEnergyReduction = new List<int>();
         cardPlayedManaReduction = new List<int>();
         cardPlayedEnergyCap = new List<int>();
@@ -636,6 +654,11 @@ public class TurnController : MonoBehaviour
 
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardsUsed, cardsPlayed.Count);
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardsUsed, -1, card.name);
+    }
+
+    public void ReportDamageDealtToEnemy(int value)
+    {
+        damageDealtToEnemiesThisTurn.Add(value);
     }
 
     public List<int> GetCardPlayedEnergyReduction()

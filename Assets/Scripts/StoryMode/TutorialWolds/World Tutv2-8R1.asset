@@ -34,12 +34,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1f25db82c901d142a65e59d69d96504, type: 2}
   overlays:
   - {fileID: 11400000, guid: 0841e000a1a49114da5699f0b1066bdf, type: 2}
-  - {fileID: 11400000, guid: b4aea51050e95d04c9ca9a4f38b7dfea, type: 2}
-  - {fileID: 11400000, guid: 9c6ef1fa74cede44f9e024210f193642, type: 2}
-  - {fileID: 11400000, guid: d9a55754de15b254bb955fd9b261724b, type: 2}
-  - {fileID: 11400000, guid: f6f444efe6226494cae6eb85ba20491d, type: 2}
-  - {fileID: 11400000, guid: 99781352b534523428027cda6e5f5b50, type: 2}
-  - {fileID: 11400000, guid: 2065c0c12257c3747bd37faf7985e4bb, type: 2}
+  - {fileID: 11400000, guid: 6490b343fd4574c42beecc0f0e9e4abe, type: 2}
+  - {fileID: 11400000, guid: 7695d18cd2bd6444a81fe72031760f75, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 0
   cardOrder: []

@@ -40,7 +40,7 @@ MonoBehaviour:
   - {fileID: 0}
   cards:
   - {fileID: 0}
-  indicatorType: 0
+  indicatorType: 1
   targetBehaviour: 11
   indicatorMultiplier: 
   executionPriority: 0

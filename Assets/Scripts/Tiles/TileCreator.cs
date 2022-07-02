@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 using System;
 using System.Linq;
 
@@ -13,6 +14,8 @@ public class TileCreator : MonoBehaviour
     public Sprite selectableTileSprite;
     public Tilemap selectableTileMap;
     public Tilemap[] tileMap;
+    public Tilemap dangerAreaTileMap;
+    public Tilemap selectedEnemiesDangerAreaTileMap;
 
     [Header("Select Range Sprites")]
     public Sprite uSprite;
@@ -68,12 +71,23 @@ public class TileCreator : MonoBehaviour
     public Sprite left12Sprite;
     public Sprite left13Sprite;
 
+    [Header("Buttons")]
+    public Image dangerAreaButton;
+
     private Dictionary<Vector2, Tile>[] tiles;
     private Dictionary<Vector2, int>[] tilePositions;
-    private List<Vector2> selectableTilePositions;
+    private List<Vector2> selectableTilePositions = new List<Vector2>();
+    private List<Vector2> dangerAreaPositions = new List<Vector2>();
+    private List<Vector2> selectedEnemiesDangerAreaPositions = new List<Vector2>();
 
     private Dictionary<Vector2, Tile>[] pathTiles;
     private Dictionary<Vector2, Tile>[] moveRangeTiles;
+    private Dictionary<Vector2, Tile> dangerAreaTiles = new Dictionary<Vector2, Tile>();
+    private Dictionary<Vector2, Tile> selectedEnemiesDangerAreaTiles = new Dictionary<Vector2, Tile>();
+
+    private List<EnemyController> selectedEnemies = new List<EnemyController>();
+    private bool dangerAreaEnabled = false;
+
     //private bool committed = false;
 
     private GameObject creator;
@@ -103,6 +117,8 @@ public class TileCreator : MonoBehaviour
             moveRangeTiles[i] = new Dictionary<Vector2, Tile>();
 
         selectableTilePositions = new List<Vector2>();
+
+        dangerAreaTileMap.GetComponent<TilemapRenderer>().enabled = false;
     }
 
     public void CreateTiles(GameObject newCreator, Vector2 startLocation, Card.CastShape shape, int range, Color color, int layer = 0)
@@ -118,6 +134,87 @@ public class TileCreator : MonoBehaviour
         InstantiateTiles(startLocation, shape, range, color, avoidTag, layer, true);
         RefreshTiles(layer);
         //}
+    }
+
+    public void ToggleDangerArea()
+    {
+        dangerAreaEnabled = !dangerAreaEnabled;
+        dangerAreaTileMap.GetComponent<TilemapRenderer>().enabled = dangerAreaEnabled;
+        if (dangerAreaEnabled)
+            dangerAreaButton.color = GameController.gameController.notYetDoneColor;
+        else
+            dangerAreaButton.color = GameController.gameController.doneColor;
+    }
+
+    public void RefreshDangerArea()
+    {
+        foreach (Vector2 position in dangerAreaPositions)
+            dangerAreaTileMap.SetTile(Vector3Int.RoundToInt(position), null);
+
+        dangerAreaPositions = new List<Vector2>();
+        dangerAreaTiles = new Dictionary<Vector2, Tile>();
+        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
+        {
+            dangerAreaPositions.AddRange(enemy.GetEnemyInformationController().GetAttackableLocations());
+        }
+        dangerAreaPositions = dangerAreaPositions.Distinct().ToList();
+
+        foreach (Vector2 location in dangerAreaPositions)
+        {
+            Tile tile = ScriptableObject.CreateInstance<Tile>();
+            dangerAreaTiles[location] = tile;
+            tile.color = Color.red;
+            dangerAreaTileMap.SetTile(Vector3Int.RoundToInt(location), tile);
+        }
+
+        RefreshTiles(dangerAreaTileMap, dangerAreaTiles, dangerAreaPositions);
+        RefreshSelectedEnemiesDangerArea();
+    }
+
+    private void RefreshSelectedEnemiesDangerArea()
+    {
+        foreach (Vector2 position in selectedEnemiesDangerAreaPositions)
+            selectedEnemiesDangerAreaTileMap.SetTile(Vector3Int.RoundToInt(position), null);
+
+        selectedEnemiesDangerAreaPositions = new List<Vector2>();
+        selectedEnemiesDangerAreaTiles = new Dictionary<Vector2, Tile>();
+
+        List<EnemyController> aliveEnemies = new List<EnemyController>();
+        foreach (EnemyController enemy in selectedEnemies)
+            if (TurnController.turnController.GetEnemies().Contains(enemy))
+                aliveEnemies.Add(enemy);
+        selectedEnemies = aliveEnemies;
+        foreach (EnemyController enemy in selectedEnemies)
+        {
+            selectedEnemiesDangerAreaPositions.AddRange(enemy.GetEnemyInformationController().GetAttackableLocations());
+        }
+        selectedEnemiesDangerAreaPositions = selectedEnemiesDangerAreaPositions.Distinct().ToList();
+
+        foreach (Vector2 location in selectedEnemiesDangerAreaPositions)
+        {
+            Tile tile = ScriptableObject.CreateInstance<Tile>();
+            selectedEnemiesDangerAreaTiles[location] = tile;
+            tile.color = Color.red;
+            selectedEnemiesDangerAreaTileMap.SetTile(Vector3Int.RoundToInt(location), tile);
+        }
+
+        RefreshTiles(selectedEnemiesDangerAreaTileMap, selectedEnemiesDangerAreaTiles, selectedEnemiesDangerAreaPositions);
+    }
+
+    public void AddSelectedEnemy(EnemyController enemy)
+    {
+        if (selectedEnemies.Contains(enemy))
+        {
+            selectedEnemies.Remove(enemy);
+            enemy.GetHealthController().charDisplay.sprite.color = Color.white;
+        }
+        else
+        {
+            selectedEnemies.Add(enemy);
+            enemy.GetHealthController().charDisplay.sprite.color = Color.red;
+        }
+
+        RefreshSelectedEnemiesDangerArea();
     }
 
     //Destroys tiles in ALL layers
@@ -265,6 +362,7 @@ public class TileCreator : MonoBehaviour
 
     public void RefreshTiles(int layer)
     {
+        /*
         foreach (Vector2 location in tilePositions[layer].Keys)
         {
             bool u, d, l, r;
@@ -313,6 +411,61 @@ public class TileCreator : MonoBehaviour
                 tiles[layer][location].sprite = allSprite;
 
             tileMap[layer].RefreshTile(Vector3Int.RoundToInt(location));
+        }
+        */
+        RefreshTiles(tileMap[layer], tiles[layer], tilePositions[layer].Keys.ToList());
+    }
+
+    private void RefreshTiles(Tilemap map, Dictionary<Vector2, Tile> tiles, List<Vector2> positions)
+    {
+        foreach (Vector2 location in positions)
+        {
+            bool u, d, l, r;
+            u = d = l = r = false;
+
+            if (!tiles.ContainsKey(location + new Vector2(0, 1)))
+                u = true;
+            if (!tiles.ContainsKey(location + new Vector2(0, -1)))
+                d = true;
+            if (!tiles.ContainsKey(location + new Vector2(1, 0)))
+                r = true;
+            if (!tiles.ContainsKey(location + new Vector2(-1, 0)))
+                l = true;
+
+            if (u && !d && !r && !l)
+                tiles[location].sprite = uSprite;
+            else if (!u && d && !r && !l)
+                tiles[location].sprite = dSprite;
+            else if (!u && !d && r && !l)
+                tiles[location].sprite = rSprite;
+            else if (!u && !d && !r && l)
+                tiles[location].sprite = lSprite;
+            else if (u && !d && r && !l)
+                tiles[location].sprite = urSprite;
+            else if (u && !d && !r && l)
+                tiles[location].sprite = ulSprite;
+            else if (!u && d && r && !l)
+                tiles[location].sprite = drSprite;
+            else if (!u && d && !r && l)
+                tiles[location].sprite = dlSprite;
+            else if (u && d && !r && !l)
+                tiles[location].sprite = udSprite;
+            else if (!u && !d && r && l)
+                tiles[location].sprite = lrSprite;
+            else if (u && !d && r && l)
+                tiles[location].sprite = urlSprite;
+            else if (!u && d && r && l)
+                tiles[location].sprite = drlSprite;
+            else if (u && d && r && !l)
+                tiles[location].sprite = rudSprite;
+            else if (u && d && !r && l)
+                tiles[location].sprite = ludSprite;
+            else if (!u && !d && !r && !l)
+                tiles[location].sprite = noneSprite;
+            else
+                tiles[location].sprite = allSprite;
+
+            map.RefreshTile(Vector3Int.RoundToInt(location));
         }
     }
 

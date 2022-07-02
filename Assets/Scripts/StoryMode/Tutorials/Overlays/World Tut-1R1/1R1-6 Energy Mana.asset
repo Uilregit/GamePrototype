@@ -13,13 +13,24 @@ MonoBehaviour:
   m_Name: 1R1-6 Energy Mana
   m_EditorClassIdentifier: 
   ID: 6
-  prerequisiteID: 5
-  overlay: {fileID: 7000162950523800986, guid: 61b01fedfb25675418403e41359ab079, type: 3}
-  startingCondition: 20
+  prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
+  overlay: {fileID: 7000162950523800986, guid: 511b1a0c6a981d546ab3c2cf35d6fd00, type: 3}
+  startingCondition: 10
   startingValue: 1
   startingStringValue: 
-  startingComparisonType: 0
-  endingCondition: 1002
-  endingValue: 3
+  startingComparisonType: 10
+  OnStartUIReveal: 1
+  endingCondition: 10
+  endingValue: -1
   endingStringValue: 
-  endingComparisonType: 10
+  endingComparisonType: 30
+  OnEndUIReveal: 1
+  popupLargeImage: 0
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 
+  joinSocialsButtonsEnabled: 0

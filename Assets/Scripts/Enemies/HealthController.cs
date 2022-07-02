@@ -95,6 +95,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     private GameObject creator;
     private AbilitiesController abilitiesController;
     private BuffController buffController;
+    private int damageTakenAttempted = 0;
+    private Dictionary<int, int> damageTakenAttemptedRecord = new Dictionary<int, int>();   //Damage value, frequency
 
     private bool wasBroken = false;
     private int maxEndOfTurnDamage = 0;
@@ -204,7 +206,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetMaxVit(int newValue)
     {
         maxVit = newValue;
-        charDisplay.healthBar.SetBar(maxVit + equipVit, 0, 0, maxVit + equipVit, transform.position, size, 1, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() == 0, false, false);
+        if (!isSimulation)
+            charDisplay.healthBar.SetBar(maxVit + equipVit, 0, 0, maxVit + equipVit, transform.position, size, 1, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() == 0, false, false);
         if (InformationController.infoController.firstRoom == true || (isPlayer && !isSimulation && currentVit <= 0 && !InformationController.infoController.GetIfDead(GetComponent<PlayerController>().GetColorTag())))
         {
             currentVit = maxVit + equipVit;
@@ -353,6 +356,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             ShowAttackChangeNumber(bonusAttack - newValue);
             bonusAttack = newValue;
         }
+        charDisplay.healthBar.SetBonusAttack(bonusAttack);
         ResetAttackText(GetAttack());
         try
         {
@@ -541,6 +545,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             try
             {
                 GetComponent<EnemyInformationController>().HideIntent();
+                TileCreator.tileCreator.RefreshDangerArea();
             }
             catch { }
     }
@@ -563,6 +568,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetSilenced(bool state)
     {
         silenced = state;
+        TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public bool GetSilenced()
@@ -583,6 +589,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetDisarmed(bool state)
     {
         disarmed = state;
+        TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public bool GetDisarmed()
@@ -672,6 +679,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         int oldHealth = currentVit + bonusVit;
         if (value > 0)
         {
+            damageTakenAttempted += value;
+            if (damageTakenAttemptedRecord.ContainsKey(value))
+                damageTakenAttemptedRecord[value] += 1;
+            else
+                damageTakenAttemptedRecord[value] = 1;
+
             int multiplier = 1;
             if (GetArmor() == 0)
                 multiplier = 2;
@@ -870,8 +883,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         if (damage > 0)
         {
-            currentVit = currentVit + Mathf.Min(0, bonusVit - damage); //Always takes at least 1 damage;
+            currentVit = currentVit + Mathf.Min(0, bonusVit - damage);
             bonusVit = Mathf.Max(0, bonusVit - damage);
+            damageTakenAttempted += damage;
+            if (damageTakenAttemptedRecord.ContainsKey(value))
+                damageTakenAttemptedRecord[value] += 1;
+            else
+                damageTakenAttemptedRecord[value] = 1;
         }
         ResetVitText(currentVit + bonusVit);
 
@@ -894,21 +912,6 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
         output.SetValues(simH);
         output.currentVit -= Mathf.Max(value, 0);
-        return output;
-    }
-
-    public void ChangeAttack(int value)
-    {
-        charDisplay.healthBar.SetAttackChangeImage(currentAttack, Mathf.Max(currentAttack + bonusAttack - value, 0) - currentAttack);
-        currentAttack = Mathf.Max(currentAttack + bonusAttack - value, 0); //Attack can never be lower than 0
-        charDisplay.attackText.text = (currentAttack + bonusAttack).ToString();
-    }
-
-    public SimHealthController SimulateChangeAttack(SimHealthController simH, int value)
-    {
-        SimHealthController output = new SimHealthController(); //Java is pass by reference, make new object
-        output.SetValues(simH);
-        output.currentAttack = Mathf.Max(output.currentAttack - value, 0); //Attack can never be lower than 0
         return output;
     }
 
@@ -1167,6 +1170,37 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         healingMulitpliers = value;
     }
 
+    public void ResetDamageTakenAttempted()
+    {
+        damageTakenAttempted = 0;
+        damageTakenAttemptedRecord = new Dictionary<int, int>();
+    }
+
+    public int GetDamageTakenAttempted()
+    {
+        return damageTakenAttempted;
+    }
+
+    public string GetDamageTakenAttemptedText()
+    {
+        string damageTakenAttemptedText = "";
+
+        foreach (int damage in damageTakenAttemptedRecord.Keys)
+        {
+            if (damageTakenAttemptedText != "")
+                damageTakenAttemptedText += "+";
+            if (damageTakenAttemptedRecord[damage] > 1)
+                damageTakenAttemptedText += damage.ToString() + "x" + damageTakenAttemptedRecord[damage].ToString();
+            else
+                damageTakenAttemptedText += damage.ToString();
+        }
+
+        if (damageTakenAttemptedRecord.Keys.Count > 1)
+            damageTakenAttemptedText = "(" + damageTakenAttemptedText + ")";
+
+        return damageTakenAttemptedText;
+    }
+
     public void ResolveBroken()
     {
         currentBrokenTurns++;
@@ -1212,10 +1246,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     {
         //Handheld.Vibrate();
 
-        if (!isPlayer && damage > 0)
+        if (!isPlayer && damage > 0 && !isSimulation)
         {
             ScoreController.score.UpdateDamage(damage);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyDamageTaken, damage);
+            TurnController.turnController.ReportDamageDealtToEnemy(damage);
         }
 
         ShowHealthBar(damage, oldHealth, false, null, isEndOfTurn);
@@ -1279,6 +1314,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyOverkill, GetCurrentVit());
 
         GridController.gridController.ResetOverlapOrder(transform.position);
+        TileCreator.tileCreator.RefreshDangerArea();
     }
 
     private void ShowArmorDamageNumber(int armorDamage)
@@ -1314,7 +1350,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (isSimulation)
             return;
 
-        charDisplay.healthBar.SetAttackChangeImage(GetAttack(), attackChange);
+        charDisplay.healthBar.SetAttackChangeImage(GetBonusAttack(), attackChange);
     }
 
     public IEnumerator DarwBar(int damage = 0, int oldHealth = -1, bool simulated = false, HealthController simHlthController = null, bool isEndOfTurn = false)
@@ -1385,15 +1421,25 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Used for overlapping characters
     public IEnumerator ShowDamagePreviewBar(int damage, int oldHealth, HealthController simHlthController, Sprite sprite, Vector2 castLocation)
     {
-        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));
-        yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, simHlthController, 0, null, 0));         //Triggering both start and end of turn for player and enemy damage over time
-        int endOfTurnDamage = GetVit() - simHlthController.GetVit() - damage;
+        int endOfTurnDamage = 0;
+        if (simHlthController != null)
+        {
+            yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtEndOfTurn, simHlthController, 0, null, 0));
+            yield return StartCoroutine(simHlthController.GetComponent<BuffController>().TriggerBuff(Buff.TriggerType.AtStartOfTurn, simHlthController, 0, null, 0));         //Triggering both start and end of turn for player and enemy damage over time
+            endOfTurnDamage = GetVit() - simHlthController.GetVit() - damage;
+            charDisplay.healthBar.SetArmor(simHlthController.GetArmor());
+            charDisplay.healthBar.SetHealth(simHlthController.GetVit());
+        }
+        else
+        {
+            charDisplay.healthBar.SetArmor(GetArmor());
+            charDisplay.healthBar.SetHealth(GetVit());
+        }
 
         charDisplay.healthBar.SetBar(Mathf.Max(0, oldHealth), damage, endOfTurnDamage, maxVit + equipVit, castLocation + new Vector2(0, 0.5f), 1, 1, 1, GetArmor() == 0, true, true);
         charDisplay.healthBar.SetPosition(castLocation + new Vector2(0, 2f));
         charDisplay.healthBar.SetCharacter(sprite, castLocation);
-        charDisplay.healthBar.SetArmor(simHlthController.GetArmor());
-        charDisplay.healthBar.SetHealth(simHlthController.GetVit());
+
     }
 
     public void SetSimCharacter(HealthController simuChar)
@@ -1464,6 +1510,12 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         charDisplay.vitText.enabled = state;
         charDisplay.armorText.enabled = state;
         charDisplay.attackText.enabled = state;
+
+        if (!isSimulation && !isPlayer)
+            if (state)
+                GetComponent<EnemyInformationController>().ShowIntent();
+            else
+                GetComponent<EnemyInformationController>().HideIntent();
     }
 
     public void SetCombatStatsHighlight(int index, int damage = 0, int armorDamage = 0, bool refresh = true, HealthController originalHealthController = null)
@@ -1616,5 +1668,10 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public bool GetIsSimulation()
     {
         return isSimulation;
+    }
+
+    public AbilitiesController GetAbilityController()
+    {
+        return abilitiesController;
     }
 }

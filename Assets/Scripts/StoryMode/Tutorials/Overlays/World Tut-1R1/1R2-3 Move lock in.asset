@@ -25,9 +25,9 @@ MonoBehaviour:
   startingComparisonType: 0
   OnStartUIReveal: 1
   endingCondition: 10
-  endingValue: 1
+  endingValue: -1
   endingStringValue: 
-  endingComparisonType: 0
+  endingComparisonType: 30
   OnEndUIReveal: 1
   popupLargeImage: 0
   popupTitle: 

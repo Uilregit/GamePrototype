@@ -326,6 +326,8 @@ public class PlayerMoveController : MonoBehaviour
         TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.PlayerMoved, 1);
 
         HandController.handController.ResetCardPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+
+        TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public int GetMovedDistance()
@@ -343,7 +345,7 @@ public class PlayerMoveController : MonoBehaviour
         clickedTime = DateTime.Now;
         clickedLocation = CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 
-        healthController.ShowHealthBar();
+        //healthController.ShowHealthBar(); //Re-enable for character based healthbar
         healthController.SetCombatStatsHighlight(0);
     }
 

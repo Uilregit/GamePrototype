@@ -14,12 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   prerequisiteID: -1
+  isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
   overlay: {fileID: 7303563501793619707, guid: 31d41a76a454a2049bef0a22d6938440, type: 3}
   startingCondition: 10
-  startingValue: 0
+  startingValue: 1
   startingStringValue: 
   startingComparisonType: 10
+  OnStartUIReveal: 1
   endingCondition: 3001
   endingValue: 1
   endingStringValue: 
   endingComparisonType: 10
+  OnEndUIReveal: 1
+  popupLargeImage: 0
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 
+  joinSocialsButtonsEnabled: 0

@@ -1087,6 +1087,16 @@ public class StoryModeController : MonoBehaviour
             rewardsRerollCount += GetItemsBought()[RewardsType.PlusXRewardCardRerollPerRun];
     }
 
+    public bool GetCanAbandon()
+    {
+        if (currentRoomType == StoryRoomController.StoryRoomType.Arena || currentRoomType == StoryRoomController.StoryRoomType.NakedArena)
+            return true;                                        //Always allow for abandoning of arenas
+        else if (currentRoomType == StoryRoomController.StoryRoomType.Combat || currentRoomType == StoryRoomController.StoryRoomType.Boss)
+            if (GetCompletedRooms().Contains(currentRoomId))
+                return true;                                    //Allow for abandoning of all completed combat rooms
+        return false;
+    }
+
     public void SetAbandonButton(bool state)
     {
         abandonRunButton.gameObject.SetActive(state);

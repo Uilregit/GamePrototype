@@ -52,7 +52,7 @@ public class StoryModeEndSceenController : MonoBehaviour
         if (setup.overrideColors != null && setup.overrideColors.Length == 3)
             PartyController.party.SetOverrideParty(false);
 
-        StoryModeController.story.SetAbandonButton(false);
+        //StoryModeController.story.SetAbandonButton(false);
 
         //Skip final rewards. Used by tutorials
         if (setup.skipFinalRewards)

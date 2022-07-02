@@ -25,10 +25,12 @@ MonoBehaviour:
   startingComparisonType: 0
   OnStartUIReveal: 1
   endingCondition: 10
-  endingValue: 1
+  endingValue: 2
   endingStringValue: 
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: 
   popupImage: {fileID: 0}
   popupDescription: 
+  joinSocialsButtonsEnabled: 0

@@ -1311,6 +1311,9 @@ Added enemies that don't have armor for tutorial purposes
 Added option for rooms to not draw cards until certain conditions have been met
 Removed plus shaped casting cards
 Targeted AoE keyword renamed to Targeted Area
+Before Intents are unlocked, enemies will always target a random player at the start of their turn
+Enemies can now phase through each other during their turn
+    Enemies will still only stop on empty locations
 
 -- UI --
 Added menu for new abilities and new chars at the end of rooms
@@ -1331,6 +1334,24 @@ Healthbars of characters not part of a card cast is now hidden during cast
 Enemy intents will now be hidden if their health bar is highlighted
 Added Combat status to combat rooms, allies and enemies
 Added scrubbing to cycle through combat status for when multiple units are selected
+Added UI in damage arrow to show armor calculation
+Added a bottom tray to host new options during combat
+Added button to see current optional goals progress
+Added button to show danger area of all enemies on screen
+Changed abandon button location to be near the new buttons
+Added option to select specific enemies to display their danger areas
+Character health bar no longer shows previews
+All health bar preview is now shown on top
+Fixed visual bug where cards will always be playable after being drawn on the highest gamespeed settings
+Fixed visual bug where stacked enemies highlight will overlap with damage preview
+Added scrubbing for stacked objects without using a card
+Combat stats now shows intent
+Stacked is now treated as a status effect in the UI
+Stacked scrubbing now also scrubs move/attack range
+Added intent image for knockback based cards
+Added UI for bonus attack on characters
+Recolored combat stats to be blue for players, red for enemies
+Combat arrows now show what percentage of the card's damage is blocked
 
 -- Bugs --
 Fixed bug where turn based goals weren't reported on the last turn
@@ -1346,6 +1367,14 @@ Fixed bug where enemy intent numbers are sometimes hidden
 Fixed visual bug on enemy intents not easily readable when targeting White or Black
 Fixed visual bug where having too many cards in hand scrolled off screen
 Fixed visual bug where all encounters will start with a red damaged overlay
+Fixed visual bug where certain combat UI is too small with the new aspect ratio
+Fixed bug where self cast cards also casted on targets during damage preview
+Fixed visual bug with health bar ticks being drawn wrong
+Fixed visual bug with cards animating too low on the screen
+Fixed bug where enemies using AoE targeting will trigger their card even if their target isn't in range
+Fixed bug where enemies using knockback always knocked back from (0,0)
+Fixed bug where enemy gravity effects will sometimes suck characters into walls
+Fixed bug where enemy gravity effects will be cast at a range larger than their cast range
 
 ##########
 

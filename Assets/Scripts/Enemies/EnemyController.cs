@@ -183,6 +183,11 @@ public class EnemyController : MonoBehaviour
         UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetCurrentMoveRange(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
         UIController.ui.combatStats.SetStatusEnabled(0, true);
 
+        if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents))         //Before intents are available, always target the nearest player when targeting players
+            for (int i = 0; i < attacksPerTurn; i++)
+                if (attackSequence[attackCardIndex + i].castType == Card.CastType.Player)
+                    desiredTarget[i] = GridController.gridController.GetObjectAtLocation(GetRandomInRange(Card.CastType.Player))[0];
+
         for (int i = 0; i < attacksPerTurn; i++)
         {
             if (desiredTarget[i].GetComponent<HealthController>().GetIsDead())                  //In case the desired target died before the turn happened
@@ -205,13 +210,20 @@ public class EnemyController : MonoBehaviour
 
                 //Generate the targeted locations for the queued attack
                 List<Vector2> targetLocs = new List<Vector2>();
+                Vector2 castLocation = desiredTarget[i].transform.position;
                 if (attackSequence[attackCardIndex].cardEffectName.Any(x => x == Card.EffectType.GravityEffect))
                 {
-                    targetLocs.AddRange(FindBestGravityLocation(desiredTarget[currentAttackSquence % attacksPerTurn], attackSequence[attackCardIndex].radius));
+                    targetLocs.AddRange(FindBestGravityLocation(desiredTarget[i], attackSequence[attackCardIndex].radius));
+                    castLocation = targetLocs[0];
                 }
                 else if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)
+                {
                     foreach (Vector2 loc in occupiedSpace)
                         targetLocs.AddRange(GridController.gridController.GetLocationsInAoE(GridController.gridController.GetRoundedVector((Vector2)transform.position + loc, 1), attackSequence[attackCardIndex].radius, new string[] { "All" }));
+                    if (!targetLocs.Contains(desiredTarget[i].transform.position))  //Doesn't trigger AoE attacks if the desired target isn't part of the range
+                        targetLocs = new List<Vector2>();
+                    castLocation = transform.position;
+                }
                 else if (attackSequence[attackCardIndex].castType == Card.CastType.Player ||
                          attackSequence[attackCardIndex].castType == Card.CastType.Enemy)
                 {
@@ -230,7 +242,7 @@ public class EnemyController : MonoBehaviour
                 }
 
                 targetLocs = targetLocs.Distinct().ToList();
-                yield return StartCoroutine(Attack(i, targetLocs));
+                yield return StartCoroutine(Attack(i, targetLocs, castLocation));     //Only execute if targetLocs > 0
             }
             else
             {
@@ -360,13 +372,29 @@ public class EnemyController : MonoBehaviour
             foreach (Vector2 loc in traveledPath)
                 TileCreator.tileCreator.CreateTiles(this.gameObject, loc, Card.CastShape.Circle, 0, Color.yellow, 2);
 
-        traveledPath = traveledPath.GetRange(1, Mathf.Min(traveledPath.Count - 1, moveRange + GetComponent<HealthController>().GetBonusMoveRange() - amountMovedthisTurn)); //Leave at least 1 space so it never paths ON the target
+        //Move until the rest of the path is all blocked by something
+        int finalIndex = traveledPath.Count;
+        for (int i = traveledPath.Count - 1; i > 0; i--)
+            if (GridController.gridController.GetObjectAtLocation(traveledPath[i]).Count == 0)
+            {
+                finalIndex = i;
+                break;
+            }
+        try
+        {
+            traveledPath = traveledPath.GetRange(1, finalIndex);
+        }
+        catch { }
+
+        //Limit travel path to the max moverange length
+        if (traveledPath.Count > healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange())
+            traveledPath = traveledPath.GetRange(0, healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
 
         BuffController buffController = GetComponent<BuffController>();
         foreach (Vector2 position in traveledPath)
         {
             if (healthController.GetStunned() ||   //In case that it is stunned while moving, stop turn
-                (GridController.gridController.GetObjectAtLocation(position).Count != 0 && !healthController.GetPhasedMovement()))  //If position is filled and movement isn't phased, stop turn
+                (GridController.gridController.GetObjectAtLocation(position, new string[] { "Blockade", "Player" }).Count != 0 && !healthController.GetPhasedMovement()))  //If position is filled and movement isn't phased, stop turn
             {
                 foreach (Vector2 vec in occupiedSpace)
                     GridController.gridController.ReportPosition(this.gameObject, (Vector2)transform.position + vec);
@@ -421,7 +449,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //Show the attack card and target line, then trigger the attack card
-    private IEnumerator Attack(int displayCardIndex, List<Vector2> target)
+    private IEnumerator Attack(int displayCardIndex, List<Vector2> target, Vector2 castLocation)
     {
         if (target.Count > 0)
         {
@@ -447,13 +475,14 @@ public class EnemyController : MonoBehaviour
 
             HealthController simulation = GameController.gameController.GetSimulationCharacter(desiredTarget[0].GetComponent<HealthController>());
             HealthController simulatedSelf = GameController.gameController.GetSimulationCharacter(healthController);
+            enemyInformation.GetCardController(displayCardIndex).GetComponent<CardEffectsController>().SetCastLocation(castLocation);
             yield return StartCoroutine(enemyInformation.GetCardController(displayCardIndex).GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, new List<GameObject> { simulation.gameObject }, new List<Vector2> { desiredTarget[0].transform.position }, false, true, simulatedSelf.gameObject));
             HealthController displaySim = simulation;
             if (desiredTarget[0] == this.gameObject)
                 displaySim = simulatedSelf;
             displaySim.SetCombatStatsHighlight(1, desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), desiredTarget[0].GetComponent<HealthController>().GetArmor() - displaySim.GetArmor(), desiredTarget[0].GetComponent<HealthController>());
             if (desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit() != 0)
-                UIController.ui.combatStats.SetArrow(desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), CombatStatsHighlightController.numberType.number);
+                UIController.ui.combatStats.SetArrow(desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), CombatStatsHighlightController.numberType.number, "Damage", displaySim.GetDamageTakenAttemptedText(), displaySim.GetDamageTakenAttempted(), desiredTarget[0].GetComponent<HealthController>().GetArmor());
             else if (enemyInformation.GetCardController(displayCardIndex).GetCard().cardEffectName.Any(x => x == Card.EffectType.Buff))
             {
                 for (int i = 0; i < enemyInformation.GetCardController(displayCardIndex).GetCard().cardEffectName.Length; i++)
@@ -482,57 +511,68 @@ public class EnemyController : MonoBehaviour
             UIController.ui.combatStats.SetDamageArrowEnabled(false);
             GameController.gameController.ReportSimulationFinished(simulation);
             GameController.gameController.ReportSimulationFinished(simulatedSelf);
+
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardsUsed, -1, "E " + enemyInformation.GetCardController(displayCardIndex).GetCard().name);
         }
     }
 
     //Find best cast location for gravity effect
     private List<Vector2> FindBestGravityLocation(GameObject target, int radius)
     {
+        //List<Vector2> attackablePositions = enemyInformation.GetAttackableLocations();
+
+        //Find list of viable final locations that will hit the target and is within the attack range of this enemy
         TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, Card.CastShape.Circle, radius, Color.clear, 2);
-        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, Card.CastShape.Circle, radius, Color.black, 1);
-        List<Vector2> viableLocs = TileCreator.tileCreator.GetTilePositions(2);
+        List<Vector2> viableFinalLocs = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
 
+        //Ensure characters are never pulled into walls
+        List<Vector2> noBlockadeLocs = new List<Vector2>();
+        foreach (Vector2 loc in viableFinalLocs)
+            if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Blockade" }).Count == 0 && GridController.gridController.GetManhattanDistance(loc, transform.position) <= radius)
+                noBlockadeLocs.Add(loc);
+        viableFinalLocs = noBlockadeLocs;
+
+        Debug.Log(target.transform.position);
+        foreach (Vector2 loc in viableFinalLocs)
+            Debug.Log("    " + loc);
+
+        //find list of nearby traps to potentially knock players into
         List<TrapController> nearbyTraps = new List<TrapController>();
         foreach (TrapController t in GridController.gridController.traps)
-            if (viableLocs.Contains(t.transform.position))
+            if (viableFinalLocs.Contains(t.transform.position))
                 nearbyTraps.Add(t);
 
-        List<GameObject> nearbyPlayers = GridController.gridController.GetObjectsInAoE(target.transform.position, radius + 1, new string[] { target.tag }); //+1 to radius to include players just outside of range
+        List<GameObject> nearbyTargets = GridController.gridController.GetObjectsInAoE(target.transform.position, radius + 1, new string[] { target.tag }); //+1 to radius to include players just outside of range
 
         Vector2 finalLocation = target.transform.position;      //Default to not moving the player
 
-        if (nearbyPlayers.Count > 1)        //Prioritize knocking players into eachother
+        if (nearbyTargets.Count > 1)        //Prioritize knocking players into eachother
         {
-            List<Vector2> viablePositions = new List<Vector2>();
-            foreach (GameObject obj in nearbyPlayers)
+            int maxTrappableTargets = 0;
+            foreach (Vector2 loc in viableFinalLocs)
             {
-                TileCreator.tileCreator.CreateTiles(this.gameObject, obj.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
-                List<Vector2> attackFromLocation = TileCreator.tileCreator.GetTilePositions(2);
-                TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
-
-                foreach (Vector2 loc in attackFromLocation)
-                    if (viableLocs.Contains(loc))
-                        viablePositions.Add(loc);
+                int taretsTrappedInAoE = GridController.gridController.GetObjectsInAoE(loc, radius, new string[] { target.tag }).Count;
+                if (taretsTrappedInAoE > maxTrappableTargets)
+                {
+                    maxTrappableTargets = taretsTrappedInAoE;
+                    finalLocation = loc;
+                }
             }
-
-            //Return the position that can attack the most targets
-            if (viablePositions.Count == 0)
-                finalLocation = target.transform.position;
-            else
-                finalLocation = viablePositions.GroupBy(x => x).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
         }
         else if (nearbyTraps.Count > 0)                         //Else prioritize knocking players into traps
         {
-            finalLocation = nearbyTraps[0].transform.position;
             int maxTrappablePlayers = 0;
             foreach (TrapController t in nearbyTraps)
             {
-                int playerInTrapAoE = GridController.gridController.GetObjectsInAoE(t.transform.position, radius, new string[] { target.tag }).Count;
-                if (playerInTrapAoE > maxTrappablePlayers)
+                if (viableFinalLocs.Contains(t.transform.position))
                 {
-                    maxTrappablePlayers = playerInTrapAoE;
-                    finalLocation = t.transform.position;
+                    int playerInTrapAoE = GridController.gridController.GetObjectsInAoE(t.transform.position, radius, new string[] { target.tag }).Count;
+                    if (playerInTrapAoE > maxTrappablePlayers)
+                    {
+                        maxTrappablePlayers = playerInTrapAoE;
+                        finalLocation = t.transform.position;
+                    }
                 }
             }
         }
@@ -581,7 +621,7 @@ public class EnemyController : MonoBehaviour
         }
         string[] pathThroughTags = new string[0];
         if (!healthController.GetPhasedMovement())
-            pathThroughTags = new string[] { "None" };
+            pathThroughTags = new string[] { "Enemy" };
         else
             pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
@@ -611,37 +651,27 @@ public class EnemyController : MonoBehaviour
         //Get all the possible targets
         string[] tags = GetTargetTags(attackSequence[attackCardIndex].castType, attackSequence[attackCardIndex].targetType[0]);
 
-        List<GameObject> possibleTargets = new List<GameObject>();
+        //Always ensure that the target of the card is included in the AoE
+        List<GameObject> targets = new List<GameObject> { target };
         if (tags.Contains("Player"))
-            possibleTargets.AddRange(GameController.gameController.GetLivingPlayers());
+            targets.AddRange(GameController.gameController.GetLivingPlayers());
         if (tags.Contains("Enemy"))
         {
-            possibleTargets.AddRange(TurnController.turnController.GetEnemies().Select(x => x.gameObject));
-            possibleTargets.AddRange(TurnController.turnController.GetQueuedEnemies().Select(x => x.gameObject));   //In case the previous card spawned enemies
-            possibleTargets.Remove(this.gameObject);
-        }
-
-        //If a pathable position can attack a target, add it to the list. repeat for each target to get counts of how many targets that position can attack
-        List<Vector2> viablePositions = new List<Vector2>();
-
-        //If desired target is a single player, then always ensure that player is included in the AoE
-        List<GameObject> targets = possibleTargets;
-        if (desiredTarget[currentAttackSquence % attacksPerTurn].tag == "Player")
-        {
-            targets.Add(desiredTarget[currentAttackSquence % attacksPerTurn]);
+            targets.AddRange(TurnController.turnController.GetEnemies().Select(x => x.gameObject));
+            targets.AddRange(TurnController.turnController.GetQueuedEnemies().Select(x => x.gameObject));   //In case the previous card spawned enemies
             targets = targets.Distinct().ToList();
         }
 
-        foreach (GameObject obj in targets)
-        {
-            TileCreator.tileCreator.CreateTiles(this.gameObject, obj.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
-            List<Vector2> attackFromLocation = TileCreator.tileCreator.GetTilePositions(2);
-            TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
+        //If a pathable position can attack a target, add it to the list.
+        List<Vector2> viablePositions = new List<Vector2>();
 
-            foreach (Vector2 loc in attackFromLocation)
-                if (moveablePositions.Contains(loc))
-                    viablePositions.Add(loc);
-        }
+        TileCreator.tileCreator.CreateTiles(this.gameObject, target.transform.position, attackSequence[attackCardIndex].castShape, attackSequence[attackCardIndex].radius, Color.clear, 2);
+        List<Vector2> attackFromLocation = TileCreator.tileCreator.GetTilePositions(2);
+        TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
+
+        foreach (Vector2 loc in attackFromLocation)
+            if (moveablePositions.Contains(loc))
+                viablePositions.Add(loc);
 
         //Return the position that can attack the most targets
         Vector2 finalLocation;
@@ -660,10 +690,7 @@ public class EnemyController : MonoBehaviour
             //Find the list of all locations tied for getting the most targets in AoE
             Dictionary<Vector2, int> counts = new Dictionary<Vector2, int>();
             foreach (Vector2 loc in viablePositions)
-                if (counts.ContainsKey(loc))
-                    counts[loc] += 1;
-                else
-                    counts[loc] = 1;
+                counts[loc] = GridController.gridController.GetObjectsInAoE(loc, attackSequence[attackCardIndex].radius, tags).Count;
             Dictionary<int, List<Vector2>> c = new Dictionary<int, List<Vector2>>();
             foreach (Vector2 loc in counts.Keys)
                 if (c.ContainsKey(counts[loc]))
@@ -683,7 +710,7 @@ public class EnemyController : MonoBehaviour
         }
         string[] pathThroughTags = new string[0];
         if (!healthController.GetPhasedMovement())
-            pathThroughTags = new string[] { "None" };
+            pathThroughTags = new string[] { "Enemy" };
         else
             pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
@@ -721,7 +748,7 @@ public class EnemyController : MonoBehaviour
     {
         string[] pathThroughTags = new string[0];
         if (!healthController.GetPhasedMovement())
-            pathThroughTags = new string[] { "None" };
+            pathThroughTags = new string[] { "Enemy" };
         else
             pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
@@ -733,9 +760,8 @@ public class EnemyController : MonoBehaviour
             List<Vector2> path = PathFindController.pathFinder.PathFind(transform.position, target.transform.position, new string[] { "Player", "Enemy" }, occupiedSpace, size);
             foreach (Vector2 loc in path)
                 if (GridController.gridController.GetObjectAtLocation(loc, new string[] { "Enemy" }).Count > 0)         //Only count enemy in penialities so player body blocking is not taken into account
-                    output += 1000;                 //Penialize enemies for each character in their way to ensure those with less in their way goes first
+                    output += 1000;                 //Penialize enemies for each other in their way to ensure those with less in their way goes first
             output += path.Count;
-
         }
 
         return output;
@@ -750,23 +776,12 @@ public class EnemyController : MonoBehaviour
 
         string[] pathThroughTags = new string[0];
         if (!healthController.GetPhasedMovement())
-            pathThroughTags = new string[] { "None" };
+            pathThroughTags = new string[] { "Enemy" };
         else
             pathThroughTags = new string[] { "Player", "Enemy", "Blockade" };
 
         List<Vector2> output = new List<Vector2>();
-        //If minimizing movement, just path to target instead
-        if (minimizeMovement)
-        {
-            output = FindFurthestPointInRange(target, pathThroughTags, true);
-            /*
-            output = PathFindController.pathFinder.PathFind(this.transform.position, target.transform.position, pathThroughTags, occupiedSpace);
-            output = output.GetRange(0, output.Count - 1);   //Doesn't include the last location, which is where the target is, to be consistent with FindFurthestPointInRange
-            output = output.GetRange(0, Mathf.Clamp(output.Count - kiteDistance + 1, 1, output.Count));     //If pathing directly to target, kite for the distance specified. +1 so 1 cast range chars can still hit
-            */
-        }
-        else
-            output = FindFurthestPointInRange(target, pathThroughTags);
+        output = FindFurthestPointInRange(target, pathThroughTags, minimizeMovement);
 
         if (output.Count == 1 && target != this.gameObject && !minimizeMovement)  //If a path could not be found, find path as if other enemies don't exist to avoid paths being blocked by enemies causing unpathable enemies to stay still
         {
@@ -989,6 +1004,22 @@ public class EnemyController : MonoBehaviour
                 output = target;
             }
         }
+        return output.transform.position;
+    }
+
+    private Vector2 GetRandomInRange(Card.CastType type)
+    {
+        GameObject output = null;
+
+        string[] tag = new string[] { "Player" };
+        if (type == Card.CastType.Enemy || type == Card.CastType.TargetedAoE && attackSequence[attackCardIndex].targetType[0] == Card.TargetType.Enemy)
+            tag = new string[] { "Enemy" };
+
+        List<GameObject> viableTargets = enemyInformation.GetAttackableTargets(tag);
+        if (viableTargets.Count == 0)
+            return GetNearest(type);
+
+        output = viableTargets[Random.Range(0, viableTargets.Count - 1)];
         return output.transform.position;
     }
 
@@ -1238,5 +1269,10 @@ public class EnemyController : MonoBehaviour
     public HealthController GetHealthController()
     {
         return healthController;
+    }
+
+    public EnemyInformationController GetEnemyInformationController()
+    {
+        return enemyInformation;
     }
 }

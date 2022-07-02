@@ -20,14 +20,14 @@ MonoBehaviour:
   slowDuration: 0
   overlay: {fileID: 2595041317568353481, guid: a1dc75208d01341489037ee3c67ae265, type: 3}
   startingCondition: 10
-  startingValue: 0
+  startingValue: 1
   startingStringValue: 
   startingComparisonType: 10
   OnStartUIReveal: 1
   endingCondition: 10
-  endingValue: 1
+  endingValue: -1
   endingStringValue: 
-  endingComparisonType: 0
+  endingComparisonType: 30
   OnEndUIReveal: 1
   popupLargeImage: 0
   popupTitle: 

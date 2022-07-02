@@ -2,19 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CombatStatsHighlightController : MonoBehaviour
 {
+    [Header("Health Bar Colors")]
     public Color healthBarDamageColor;
     public Color healthBarHealingColor;
 
+    [Header("ArmorColors")]
+    public Color armorColor;
+    public Color armorShadowColor;
+    public Color armorBreakColor;
+    public Color armorBreakShadowColor;
+
+    [Header("Arrow Text Colors")]
     public Color damageColor;
     public Color buffColor;
     public Color healingColor;
 
+    [Header("Stats Back Colors")]
+    public Color redBack;
+    public Color redMid;
+    public Color redFront;
+    public Color redText;
+    public Color redOutline;
+    public Color redShadow;
+    public Color blueBack;
+    public Color blueMid;
+    public Color blueFront;
+    public Color blueText;
+    public Color blueOutline;
+    public Color blueShadow;
+
+    [Header("Stats Color Images")]
+    public List<Image> stat1BackImages;
+    public List<Image> stat1MidImages;
+    public List<Image> stat1FrontImages;
+    public List<Image> stat1ShadowImages;
+    public List<Text> stat1Texts;
+    public List<Image> stat2BackImages;
+    public List<Image> stat2MidImages;
+    public List<Image> stat2FrontImages;
+    public List<Image> stat2ShadowImages;
+    public List<Text> stat2Texts;
+
+    [Header("Armor Sprites")]
     public Sprite armorSprite;
     public Sprite brokenSprite;
 
+    [Header("Statuses")]
     public CanvasGroup[] canvasGroup;
     public GameObject status1Background;
     public SpriteRenderer[] charSprite;
@@ -27,23 +64,30 @@ public class CombatStatsHighlightController : MonoBehaviour
     public Text[] moverange;
     public Text[] passiveTexts;
     public Image[] passiveIcons;
+    public Image[] intents;
 
+    [Header("Stacked Counts")]
     public GameObject[] status1CharacterCounts;
     public GameObject[] status2CharacterCounts;
     public GameObject[] statusCharacterCountContainer;
     public GameObject[] stackCount;
     public Text[] stackCountText;
 
+    [Header("Damage Arrow")]
     public Text damageArrowStatus;
+    public TextMeshProUGUI damageArrowCalculation;
     public Text damageArrowNumber;
     public Text damageArrowNumberType;
+    public Image damageArrowMask;
 
+    [Header("Game Objects")]
     public GameObject[] statsInfo;
     public GameObject damageArrow;
 
     private Vector3[] statsInfoOriginalPosition = new Vector3[2];
     private Vector3[] statsStacksOriginalPosition = new Vector3[2];
     private Vector3 damageArrowStartingPosition = new Vector3();
+    private Vector2 damageArrowMaskStartingWidth = Vector2.zero;
     private HealthController[] statusObjects = new HealthController[2];
     private int[] stackSize = new int[2];
 
@@ -60,6 +104,7 @@ public class CombatStatsHighlightController : MonoBehaviour
         statsStacksOriginalPosition[0] = statusCharacterCountContainer[0].transform.localPosition;
         statsStacksOriginalPosition[1] = statusCharacterCountContainer[1].transform.localPosition;
         damageArrowStartingPosition = damageArrow.transform.localPosition;
+        damageArrowMaskStartingWidth = damageArrowMask.rectTransform.sizeDelta;
     }
 
     public void SetStatus(int index, HealthController obj, Sprite sprite, int currentVit, int maxVit, int damage, int currentArmor, int armorDamage, int currentAttack, int bonusAttack, int currentMoverange, int maxMoverange, bool refresh = true)
@@ -69,7 +114,7 @@ public class CombatStatsHighlightController : MonoBehaviour
         else
             health[index].text = currentVit + "/" + maxVit;
         healthBar[index].transform.localScale = new Vector3(Mathf.Clamp((float)currentVit / maxVit, 0, 1), 1, 1);
-        healthDamageBar[index].transform.localScale = new Vector3(-(float)damage / currentVit, 1, 1);
+        healthDamageBar[index].transform.localScale = new Vector3(Mathf.Clamp(-(float)damage / currentVit, -1, 0), 1, 1);
         if (currentVit <= 0)
         {
             healthBar[index].transform.localScale = new Vector3(Mathf.Clamp((float)(currentVit + damage) / maxVit, 0, 1), 1, 1);
@@ -85,10 +130,14 @@ public class CombatStatsHighlightController : MonoBehaviour
         if (armorDamage != 0)
             armor[index].text = (currentArmor + armorDamage) + " -> " + currentArmor.ToString();
         armorIcon[index].sprite = armorSprite;
+        armorIcon[index].color = armorColor;
+        armorIcon[index].GetComponent<Shadow>().effectColor = armorShadowColor;
         if (currentArmor == 0)
         {
-            armor[index].text = "BROKEN";
+            armor[index].text = "BREAK";
             armorIcon[index].sprite = brokenSprite;
+            armorIcon[index].color = armorBreakColor;
+            armorIcon[index].GetComponent<Shadow>().effectColor = armorBreakShadowColor;
         }
 
         attack[index].text = currentAttack.ToString();
@@ -102,6 +151,33 @@ public class CombatStatsHighlightController : MonoBehaviour
         passiveTexts[0].enabled = false;
         passiveTexts[1].enabled = false;
 
+        try
+        {
+            int counter = 0;
+            foreach (Equipment e in obj.GetComponent<PlayerController>().GetEquippedEquipments())
+            {
+                passiveIcons[counter].enabled = true;
+                passiveTexts[counter].enabled = true;
+                passiveTexts[counter].text = e.equipmentName;
+                counter++;
+                if (counter >= passiveIcons.Length)
+                    break;
+            }
+        }
+        catch
+        {
+            int counter = 0;
+            foreach (string abilityName in obj.GetAbilityController().GetAbilityNames())
+            {
+                passiveIcons[counter].enabled = true;
+                passiveTexts[counter].enabled = true;
+                passiveTexts[counter].text = abilityName;
+                counter++;
+                if (counter >= passiveIcons.Length)
+                    break;
+            }
+        }
+
         charSprite[index].sprite = sprite;
 
         if (obj != statusObjects[index])
@@ -113,6 +189,104 @@ public class CombatStatsHighlightController : MonoBehaviour
             else
             {
                 ScrubStatus(index, true);
+            }
+        }
+
+        try
+        {
+            Image enemyIntent;
+            if (index == 0)
+                enemyIntent = obj.GetComponent<EnemyInformationController>().GetIntent();
+            else
+                enemyIntent = obj.GetOriginalSimulationTarget().GetComponent<EnemyInformationController>().GetIntent();
+            intents[index].gameObject.SetActive(obj.GetVit() > 0);
+            intents[index].transform.GetChild(0).localScale = enemyIntent.transform.GetChild(0).localScale;
+            intents[index].transform.GetChild(0).gameObject.SetActive(enemyIntent.transform.GetChild(3).GetComponent<Text>().text != "");
+            intents[index].transform.GetChild(0).GetComponent<Image>().enabled = enemyIntent.transform.GetChild(0).GetComponent<Image>().enabled;
+            intents[index].transform.GetChild(1).GetComponent<Image>().color = enemyIntent.transform.GetChild(1).GetComponent<Image>().color;
+            intents[index].transform.GetChild(2).GetComponent<Image>().sprite = enemyIntent.transform.GetChild(2).GetComponent<Image>().sprite;
+            intents[index].transform.GetChild(3).GetComponent<Text>().text = enemyIntent.transform.GetChild(3).GetComponent<Text>().text;
+            intents[index].transform.GetChild(3).GetComponent<Text>().color = enemyIntent.transform.GetChild(3).GetComponent<Text>().color;
+            intents[index].transform.GetChild(4).gameObject.SetActive(enemyIntent.transform.GetChild(4).gameObject.active);
+        }
+        catch
+        {
+            intents[index].gameObject.SetActive(false);
+        }
+
+        //Coloring the statuses to blue for players, red for enemies
+        if (obj.isPlayer)
+        {
+            if (index == 0)
+            {
+                foreach (Image img in stat1BackImages)
+                    img.color = new Color(blueBack.r, blueBack.g, blueBack.b, img.color.a);
+                foreach (Image img in stat1MidImages)
+                    img.color = new Color(blueMid.r, blueMid.g, blueMid.b, img.color.a);
+                foreach (Image img in stat1FrontImages)
+                    img.color = new Color(blueFront.r, blueFront.g, blueFront.b, img.color.a);
+                foreach (Image img in stat1ShadowImages)
+                    img.GetComponent<Shadow>().effectColor = blueOutline;
+                foreach (Text text in stat1Texts)
+                {
+                    text.color = blueText;
+                    text.GetComponent<Outline>().effectColor = blueOutline;
+                    text.transform.GetComponent<Shadow>().effectColor = blueShadow;
+                }
+            }
+            else
+            {
+                foreach (Image img in stat2BackImages)
+                    img.color = new Color(blueBack.r, blueBack.g, blueBack.b, img.color.a);
+                foreach (Image img in stat2MidImages)
+                    img.color = new Color(blueMid.r, blueMid.g, blueMid.b, img.color.a);
+                foreach (Image img in stat2FrontImages)
+                    img.color = new Color(blueFront.r, blueFront.g, blueFront.b, img.color.a);
+                foreach (Image img in stat2ShadowImages)
+                    img.GetComponent<Shadow>().effectColor = blueOutline;
+                foreach (Text text in stat2Texts)
+                {
+                    text.color = blueText;
+                    text.GetComponent<Outline>().effectColor = blueOutline;
+                    text.transform.GetComponent<Shadow>().effectColor = blueShadow;
+                }
+            }
+        }
+        else
+        {
+            if (index == 0)
+            {
+                foreach (Image img in stat1BackImages)
+                    img.color = new Color(redBack.r, redBack.g, redBack.b, img.color.a);
+                foreach (Image img in stat1MidImages)
+                    img.color = new Color(redMid.r, redMid.g, redMid.b, img.color.a);
+                foreach (Image img in stat1FrontImages)
+                    img.color = new Color(redFront.r, redFront.g, redFront.b, img.color.a);
+                foreach (Image img in stat1ShadowImages)
+                    img.GetComponent<Shadow>().effectColor = redOutline;
+                foreach (Text text in stat1Texts)
+                {
+                    text.color = redText;
+                    text.GetComponent<Outline>().effectColor = redOutline;
+                    text.transform.GetComponent<Shadow>().effectColor = redShadow;
+                }
+            }
+            else
+            {
+                foreach (Image img in stat2BackImages)
+                    img.color = new Color(redBack.r, redBack.g, redBack.b, img.color.a);
+                foreach (Image img in stat2MidImages)
+                    img.color = new Color(redMid.r, redMid.g, redMid.b, img.color.a);
+                foreach (Image img in stat2FrontImages)
+                    img.color = new Color(redFront.r, redFront.g, redFront.b, img.color.a);
+                foreach (Image img in stat2ShadowImages)
+                    img.GetComponent<Shadow>().effectColor = redOutline;
+                foreach (Text text in stat2Texts)
+                {
+                    text.color = redText;
+                    text.GetComponent<Outline>().effectColor = redOutline;
+                    text.transform.GetComponent<Shadow>().effectColor = redShadow;
+                }
             }
         }
 
@@ -197,25 +371,41 @@ public class CombatStatsHighlightController : MonoBehaviour
         charSprite[index].color = Color.white;
     }
 
-    public void SetArrow(int number, numberType type, string status = "Damage")
+    public void SetArrow(int number, numberType type, string status = "Damage", string cardDamageText = "0", int cardDamage = 0, int armor = 0)
     {
         damageArrowNumber.text = number.ToString();
         if (number == 0)
             damageArrowNumber.text = "---";
 
         damageArrowStatus.text = status;
+        string calculationText = cardDamageText + "<sprite=0> ";
+        if (armor > 0)
+            calculationText += "- " + armor.ToString() + "<sprite=1>=";
+        else
+            calculationText += "x 2<sprite=2>=";
+        damageArrowCalculation.text = calculationText;
 
         switch (type)
         {
             case numberType.number:
                 damageArrowNumberType.text = "pt(s)";
+                if (number > 0)
+                    damageArrowNumberType.text = "dmg";
+                if (cardDamage <= armor && number == 1)
+                    damageArrowNumberType.text = "min dmg";
                 damageArrowNumber.color = damageColor;
                 damageArrowStatus.color = damageColor;
+                damageArrowNumberType.color = damageColor;
+                damageArrowCalculation.gameObject.SetActive(number > 0 && UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Armor));
+                damageArrowStatus.gameObject.SetActive(number <= 0 || !UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Armor));
                 break;
             case numberType.turn:
                 damageArrowNumberType.text = "trn(s)";
                 damageArrowNumber.color = buffColor;
                 damageArrowStatus.color = buffColor;
+                damageArrowNumberType.color = buffColor;
+                damageArrowCalculation.gameObject.SetActive(false);
+                damageArrowStatus.gameObject.SetActive(true);
                 break;
         }
 
@@ -225,7 +415,15 @@ public class CombatStatsHighlightController : MonoBehaviour
             damageArrowNumber.text = (-number).ToString();
             damageArrowStatus.color = healingColor;
             damageArrowNumber.color = healingColor;
+            damageArrowNumberType.color = healingColor;
+            damageArrowCalculation.gameObject.SetActive(false);
+            damageArrowStatus.gameObject.SetActive(true);
         }
+
+        if (status == "Damage" && number > 0)
+            damageArrowMask.rectTransform.sizeDelta = new Vector2(damageArrowMaskStartingWidth.x * number / cardDamage, damageArrowMaskStartingWidth.y);
+        else
+            damageArrowMask.rectTransform.sizeDelta = damageArrowMaskStartingWidth;
     }
 
     public void SetStatusEnabled(int index, bool state)

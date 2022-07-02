@@ -36,6 +36,9 @@ public class CombatIntroSplashController : MonoBehaviour
     [Header("Skipping")]
     public Image skippingImage;
 
+    [Header("Buttons")]
+    public Image goalsButton;
+
     private List<bool> goalsCompleted = new List<bool> { false, false, false };
     private List<bool> goalsCompletedThisRound = new List<bool> { false, false, false };
     private List<float> originalGoalsPercentages = new List<float> { 0, 0, 0 };
@@ -115,6 +118,8 @@ public class CombatIntroSplashController : MonoBehaviour
 
     public IEnumerator AnimateGoalsImage(float duration = 9999f)
     {
+        goalsButton.color = GameController.gameController.notYetDoneColor;
+
         //Animate the cards coming in
         List<Vector3> originalPosition = new List<Vector3>() { new Vector3(-10, 0, 0), new Vector3(10, 0, 0), new Vector3(-10, 0, 0) };
         for (int index = 0; index < 3; index++)
@@ -174,10 +179,14 @@ public class CombatIntroSplashController : MonoBehaviour
             }
             goalObjects[index].SetActive(false);
         }
+
+        goalsButton.color = GameController.gameController.doneColor;
     }
 
     public IEnumerator AnimateSingleGoalsImage(int index, float duration = 9999f)
     {
+        goalsButton.color = GameController.gameController.notYetDoneColor;
+
         float newProgress = goalProgressBars[index].transform.localScale.x;
         goalProgressBars[index].transform.localScale = new Vector3(originalGoalsPercentages[index], 1, 1);
 
@@ -231,6 +240,16 @@ public class CombatIntroSplashController : MonoBehaviour
         }
         goalObjects[0].SetActive(false);
         goalAdditionalTitles[0].text = "OPTIONAL GOALS";
+
+        goalsButton.color = GameController.gameController.doneColor;
+    }
+
+    public void ShowGoalsButtonPressed()
+    {
+        if (GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex == -1)
+            StartCoroutine(AnimateGoalsImage());
+        else
+            StartCoroutine(AnimateSingleGoalsImage(GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex));
     }
 
     private Color GetHighlightColor(colors c)

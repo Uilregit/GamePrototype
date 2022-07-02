@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private HealthController healthController;
     private PlayerMoveController moveController;
 
+    private List<Equipment> equipments = new List<Equipment>();
+
     [HideInInspector]
     public int equipBonusVit = 0;
     [HideInInspector]
@@ -43,8 +45,6 @@ public class PlayerController : MonoBehaviour
     public void SetupStats()
     {
         //Assess all passive stat bonuses from the player color
-        List<Equipment> equipments = new List<Equipment>();
-
         if (colorTag != Card.CasterColor.Gray)                //Doesn't load info for simulated objects
         {
             if (!healthController.GetIsSimulation() && CollectionController.collectionController.GetSelectEquipments().ContainsKey(colorTag.ToString()))
@@ -89,6 +89,11 @@ public class PlayerController : MonoBehaviour
 
             healthController.GetComponent<BuffController>().Cleanse(healthController, false, true);
         }
+    }
+
+    public List<Equipment> GetEquippedEquipments()
+    {
+        return equipments;
     }
 
     public void Spawn()

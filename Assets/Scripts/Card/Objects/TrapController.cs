@@ -46,8 +46,6 @@ public class TrapController : MonoBehaviour
             yield return StartCoroutine(effect.ProcessCard(caster, null, new List<Vector2>() { transform.position }, card, effectIndex));
             yield return new WaitForSeconds(0.5f * TimeController.time.timerMultiplier);
         }
-
-        Debug.Log("finished trap trigger");
     }
 
     public void ReduceDuration()

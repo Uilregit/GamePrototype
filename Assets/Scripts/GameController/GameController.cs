@@ -44,6 +44,9 @@ public class GameController : MonoBehaviour
     public int[] playerSpawnBox = new int[4]; //(x1,x2,y1,y2)
     public int[] enemySpawnBox = new int[4];
 
+    [Header("Buttons")]
+    public Image abandonRunButton;
+
     [Header("Buffs")]
     public Buff attackBuff;
     public Buff armorBuff;
@@ -98,6 +101,7 @@ public class GameController : MonoBehaviour
             Destroy(this.gameObject);
 
         endTurnButton.GetComponent<Collider2D>().enabled = false;
+        SetAbandonButton(StoryModeController.story.GetCanAbandon());
 
         deadChars = new List<Card.CasterColor>();
         simulationCharacters = new Queue<HealthController>();
@@ -152,10 +156,7 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(StartOfGame());
 
-        ScoreController.score.SetTimerPaused(false);
         UpdatePlayerDamage();
-
-        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, 0);
     }
 
     private IEnumerator StartOfGame()
@@ -209,7 +210,12 @@ public class GameController : MonoBehaviour
         //Animate passive abilities of every enemy in the room
         yield return StartCoroutine(ShowAbilities());
 
+        TileCreator.tileCreator.RefreshDangerArea();
+
         endTurnButton.GetComponent<Collider2D>().enabled = true;    //Doesn't allow the end turn button to be pressed during start of game animations
+
+        ScoreController.score.SetTimerPaused(false);
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.turn, 1);
     }
 
     public void SetupDeckAndHand()
@@ -876,7 +882,7 @@ public class GameController : MonoBehaviour
         CanvasController.canvasController.uiCanvas.enabled = false;
         HandController.handController.EmptyHand();
         ScoreController.score.SetTimerPaused(true);
-        StoryModeController.story.SetAbandonButton(false);
+        SetAbandonButton(false);
         CanvasController.canvasController.endGameCanvas.enabled = true;
         CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = false;
         CanvasController.canvasController.endGameCanvas.GetComponent<CanvasScaler>().enabled = true;
@@ -1103,9 +1109,17 @@ public class GameController : MonoBehaviour
     public void SetTurnButtonDone(bool state)
     {
         if (state)
+        {
             endTurnButton.color = doneColor;
+            endTurnButton.transform.GetChild(0).GetComponent<Image>().color = doneColor;
+            endTurnButton.transform.GetChild(1).GetComponent<Image>().color = doneColor;
+        }
         else
+        {
             endTurnButton.color = notYetDoneColor;
+            endTurnButton.transform.GetChild(0).GetComponent<Image>().color = notYetDoneColor;
+            endTurnButton.transform.GetChild(1).GetComponent<Image>().color = notYetDoneColor;
+        }
     }
 
     public void SetReplaceDone(bool state)
@@ -1180,7 +1194,6 @@ public class GameController : MonoBehaviour
 
     public void SetDamageOverlay(float remainingHealthPercentage)
     {
-        Debug.Log("Trace");
         damageOverlay.color = new Color(1, 0, 0, 1 - remainingHealthPercentage / 2);
         StartCoroutine(FadeDamageOverlay(remainingHealthPercentage / 2));
     }
@@ -1227,6 +1240,16 @@ public class GameController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void SetAbandonButton(bool state)
+    {
+        abandonRunButton.gameObject.SetActive(state);
+    }
+
+    public void SetAbandonWarningMenu(bool state)
+    {
+        StoryModeController.story.SetAbandonWarningMenu(state);
     }
 
     public HealthController GetSimulationCharacter(HealthController simulationTarget, bool SetSimOnTarget = true)
@@ -1278,17 +1301,73 @@ public class GameController : MonoBehaviour
 
         simulationCharacter.transform.position = new Vector2(100, 100);
         simulationCharacter.ResetOriginalSimulationTarget();
+        simulationCharacter.ResetDamageTakenAttempted();
         simulationCharacters.Enqueue(simulationCharacter);
     }
+
+    /*
+    public void ShowStackedCharacters(List<HealthController> targets)
+    {
+        Dictionary<Vector2, List<HealthController>> objLocations = new Dictionary<Vector2, List<HealthController>> { { targets[0].transform.position, targets } };
+
+        bool flipped = false;
+        int currentTargetId = 0;
+        int maxTargetsPerPosition = targets.Count;
+
+        //Block for displaying the simulation health information
+        foreach (HealthController hlthController in targets)
+        {
+            Vector2 offset = new Vector2(0, 0.4f + currentTargetId * 1.5f);
+            if (targets[0].transform.position.y > 2)
+            {
+                offset = new Vector2(0, -3.1f - currentTargetId * 1.5f);
+                flipped = true;
+            }
+
+            StartCoroutine(hlthController.ShowDamagePreviewBar(0, hlthController.GetVit(), null, hlthController.charDisplay.sprite.sprite, offset));
+
+            //hlthController.charDisplay.healthBar.SetPositionRaised(true);
+
+            currentTargetId++;
+        }
+
+        UIController.ui.combatStats.SetStatusCharactersCount(0, targets.Count);
+
+        //Block for moving the backdrop for when overlapping targets are being targeted
+        Vector2 backdropOffset = new Vector2(0, 1f);
+        if (flipped)
+            backdropOffset = new Vector2(0, -1f);
+        SetDamagePrevieBackdrop((Vector2)targets[0].transform.position + backdropOffset, 1, maxTargetsPerPosition, flipped);
+    }
+
+    public void HideStackedCharacters(List<HealthController> targets)
+    {
+        foreach (HealthController hlth in targets)
+        {
+            hlth.HideHealthBar();
+            hlth.ResetHealthBar();
+            hlth.charDisplay.healthBar.SetPositionRaised(false);
+            hlth.charDisplay.healthBar.SetArmor(hlth.GetArmor());
+        }
+        UIController.ui.combatStats.SetStatusCharactersCount(0, 1);
+        SetDamagePrevieBackdrop(new Vector2(999, 999), 1, 1, false);
+    }
+*/
 
     public void SetDamagePrevieBackdrop(Vector2 center, int charWidth, int charHeight, bool flipped)
     {
         characterDamagePreviewBackdrop.transform.position = center;
         characterDamagePreviewBackdrop.rectTransform.sizeDelta = new Vector2(1.5f * charWidth, 1.5f * charHeight);
         if (flipped)
+        {
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, -1);
+            characterDamagePreviewBackdrop.transform.GetChild(0).transform.localScale = new Vector2(0.45f, -0.45f);
+        }
         else
+        {
             characterDamagePreviewBackdrop.rectTransform.localScale = new Vector2(1, 1);
+            characterDamagePreviewBackdrop.transform.GetChild(0).transform.localScale = new Vector2(0.45f, 0.45f);
+        }
 
         if (center == new Vector2(999, 999))
         {

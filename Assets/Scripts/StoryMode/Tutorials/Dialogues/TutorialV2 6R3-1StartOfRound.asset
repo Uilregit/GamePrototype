@@ -16,11 +16,10 @@ MonoBehaviour:
   condition: 1
   conditionValue: 1
   comparisonType: 10
-  speaker: 000000000000000000000000
-  emoticon: 00000000020000002c010000
+  speaker: 00000000000000000000000000000000
+  emoticon: 0000000002000000010000002c010000
   texts:
-  - You know, all this intimacy is reminding Nero <i>the Hermaphrodite</i> of my
-    own marriage.
-  - It was hard finding someone who could match my charisma, uniqueness... So naturally
-    I married me.
+  - All this intimacy is reminding Nero <i>the Hermaphrodite</i> of my own marriage.
+  - 'It was hard finding someone who could match my charisma, uniqueness... '
+  - So in a move of self love and acceptance, I married me.
   - But dang the divorce was rough. Being a single parent is worse...

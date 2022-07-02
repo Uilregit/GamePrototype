@@ -67,6 +67,7 @@ public class NewAbilitiesMenu : MonoBehaviour
             character.gameObject.SetActive(false);
             ability.sprite = thisAbility;
             gameObject.SetActive(true);
+            StartCoroutine(ZoomIn());
             thisAbility = null;
         }
         else if (thisCharacter != null)
@@ -78,6 +79,7 @@ public class NewAbilitiesMenu : MonoBehaviour
             character.gameObject.SetActive(true);
             character.sprite = thisCharacter;
             gameObject.SetActive(true);
+            StartCoroutine(ZoomIn());
             thisCharacter = null;
         }
         else if (thisCard != null)
@@ -90,7 +92,17 @@ public class NewAbilitiesMenu : MonoBehaviour
             card.SetCard(thisCard, true);
             card.SetHighLight(true);
             gameObject.SetActive(true);
+            StartCoroutine(ZoomIn());
             thisCard = null;
+        }
+    }
+
+    private IEnumerator ZoomIn()
+    {
+        for(int i = 0; i < 5; i ++)
+        {
+            transform.localScale = Vector3.Lerp(new Vector3(0, 0, 1), new Vector3(1, 1, 1), i / 4);
+            yield return new WaitForSecondsRealtime(0.3f / 5f);
         }
     }
 

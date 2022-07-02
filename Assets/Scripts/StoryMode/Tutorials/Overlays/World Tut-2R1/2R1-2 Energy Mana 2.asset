@@ -15,12 +15,22 @@ MonoBehaviour:
   ID: 2
   prerequisiteID: -1
   isUILevel: 0
+  isPopup: 0
+  slowTime: 0
+  slowDuration: 0
   overlay: {fileID: 7000162950523800986, guid: 654f0ad142bee724aacb5bdf78d1b748, type: 3}
   startingCondition: 10
-  startingValue: 1
+  startingValue: 2
   startingStringValue: 
   startingComparisonType: 10
+  OnStartUIReveal: 1
   endingCondition: 1002
   endingValue: -1
   endingStringValue: 
   endingComparisonType: 30
+  OnEndUIReveal: 1
+  popupLargeImage: 0
+  popupTitle: 
+  popupImage: {fileID: 0}
+  popupDescription: 
+  joinSocialsButtonsEnabled: 0

@@ -109,7 +109,8 @@ public class HandController : MonoBehaviour
             cardController.drawnOriginalPosition = new Vector3(3.5f, -5, 0);
         cardController.transform.localPosition = new Vector3(100, 0, 0);
         cardController.cardDisplay.PlaceFaceDown();
-        cardController.cardDisplay.SetHighLight(true);
+        cardController.ResetPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+        //cardController.cardDisplay.SetHighLight(true);
         cardController.GetComponent<CardDragController>().SetActive(false);
 
         return cardController;
@@ -136,7 +137,8 @@ public class HandController : MonoBehaviour
                 cardController.drawnOriginalPosition = new Vector3(3.5f, -5, 0);
         }
         cardController.transform.localPosition = new Vector3(100, 0, 0);
-        cardController.cardDisplay.SetHighLight(true);
+        cardController.ResetPlayability(TurnController.turnController.GetCurrentEnergy(), TurnController.turnController.GetCurrentMana());
+        //cardController.cardDisplay.SetHighLight(true);
         cardController.GetComponent<CardDragController>().SetActive(false);
 
         return cardController;
@@ -594,6 +596,11 @@ public class HandController : MonoBehaviour
     private void ResetReplaceText()
     {
         replace.transform.GetChild(1).GetComponent<Text>().text = "x" + (maxReplaceCount + bonusReplaceCount - currentReplaceCount).ToString();
+    }
+
+    public int GetReplacesLeft()
+    {
+        return maxReplaceCount + bonusReplaceCount - currentReplaceCount;
     }
 
     public CardController GetHeldCard()

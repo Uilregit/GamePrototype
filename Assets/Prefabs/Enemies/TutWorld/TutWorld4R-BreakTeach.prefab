@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8527169863384825438}
   - component: {fileID: -4262348491362063822}
   m_Layer: 0
-  m_Name: TutWorld4R1-BreakTeach
+  m_Name: TutWorld4R-BreakTeach
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,6 @@ MonoBehaviour:
   size: 1
   isSimulation: 0
   charDisplay: {fileID: 9018792852486230154}
-  originalSimulationTarget: 
 --- !u!61 &7549931461910042059
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +137,6 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 2.5
   intentTypeIndicator: {fileID: 4825013667722813554, guid: c22e1b61d15ae7e4abe1eed88fc6598b, type: 3}
-  intentMultiplier: {fileID: 5925497826733914107, guid: 16bb37cb766637a4186f90d5a8d8605e, type: 3}
   attackIntentDamageCutoffs: 050000000a0000001400000064000000
   attackIntent:
   - {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
@@ -149,6 +147,7 @@ MonoBehaviour:
   buffIntent: {fileID: 21300004, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   debuffIntent: {fileID: 21300006, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   healIntent: {fileID: 21300016, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  knockBackIntent: {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   otherIntent: {fileID: 21300008, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   displayedCards: []
 --- !u!120 &8832068878691606979

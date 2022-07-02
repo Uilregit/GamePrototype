@@ -50,11 +50,13 @@ public class Dialogue : ScriptableObject
 
         turn = 10,
         EndedTurnWithPlayableCards = 15,
+        EndedTurnWithReplacesLeft = 16,
 
         Replace = 20,
 
         PlayerPosition = 1001,
         CardsUsed = 1002,
+        CardSelected = 1005,
 
         CastTypeNormalSelected = 1500,
         CastTypeTargetedAoESelected = 1501,
@@ -66,6 +68,8 @@ public class Dialogue : ScriptableObject
 
         EnemyHeld = 3001,
         EnemyTapped = 3005,
+
+        EnemyIntentOutOfRange = 3010,
 
         EnemyBroken = 4001,
         EnemyOverkill = 4002,

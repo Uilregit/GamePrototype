@@ -566,8 +566,8 @@ public class StoryModeSceneController : MonoBehaviour
                 PartyController.party.SetOverrideParty(selectedRoom.setup.overrideColors);
             SetCollection();
 
-            if (StoryModeController.story.GetCompletedRooms().Contains(selectedRoom.roomId))        //Allow for abandoning of all completed combat rooms
-                StoryModeController.story.SetAbandonButton(true);
+            //if (StoryModeController.story.GetCompletedRooms().Contains(selectedRoom.roomId))        //Allow for abandoning of all completed combat rooms
+            //    StoryModeController.story.SetAbandonButton(true);
 
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }
@@ -578,7 +578,7 @@ public class StoryModeSceneController : MonoBehaviour
             SetCollection();
             ResourceController.resource.EnableStoryModeRelicsMenu(true);
 
-            StoryModeController.story.SetAbandonButton(true);                                       //Always allow for abandoning of arenas
+            //StoryModeController.story.SetAbandonButton(true);                                       //Always allow for abandoning of arenas
 
             SceneManager.LoadScene("OverworldScene", LoadSceneMode.Single);
         }

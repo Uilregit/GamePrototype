@@ -32,7 +32,8 @@ MonoBehaviour:
   overrideSingleGoalsSplashIndex: -1
   dialogues:
   - {fileID: 11400000, guid: 71025ff12d4c5b7458e1c4259b13f01a, type: 2}
-  overlays: []
+  overlays:
+  - {fileID: 11400000, guid: b6a34fa89fe850444975bbc506b510c0, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 1
   cardOrder:

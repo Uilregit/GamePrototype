@@ -231,7 +231,7 @@ public class UIController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 10; i++)
         {
-            flipCard.transform.localPosition = Vector3.Lerp(originalLocalPosition, new Vector3(3.5f, -5.6f, 0f) + new Vector3(0, discardPileHeight, 0), i / 9f);
+            flipCard.transform.localPosition = Vector3.Lerp(originalLocalPosition, new Vector3(3.5f, -4.65f, 0f) + new Vector3(0, discardPileHeight, 0), i / 9f);
             flipCard.transform.localScale = Vector3.Lerp(scale, new Vector3(0.35f, 0.35f, 1), i / 9f);
             yield return new WaitForSeconds(0.1f / 10f);
         }

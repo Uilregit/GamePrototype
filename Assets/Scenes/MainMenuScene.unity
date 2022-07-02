@@ -25362,7 +25362,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.84, y: -0.7}
+  m_AnchoredPosition: {x: -0.8399658, y: -0.6999512}
   m_SizeDelta: {x: 19.52, y: 9}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &865380005
@@ -35596,7 +35596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1236325109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35613,8 +35613,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1.64}
-  m_SizeDelta: {x: 5.99, y: 4.17}
+  m_AnchoredPosition: {x: 0.09, y: -1.37}
+  m_SizeDelta: {x: 7, y: 5}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1236325110
 MonoBehaviour:
@@ -35623,7 +35623,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236325108}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -35636,7 +35636,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e40e79e95e449a945b53e52bcf9406b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 775cdd9126b58974f9d5b1fddb1d0c4a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -36204,9 +36204,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wildcards can be used to craft any card of that rarity in the shop! They
-    used to give someone a pack and 10mins in a shop and watch them scramble for
-    fun
+  m_Text: '
+
+
+
+    Thank you so much for reaching the end of the demo!'
 --- !u!222 &1266190774
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -55849,7 +55851,7 @@ MonoBehaviour:
   enemyMoveStepTime: 0.2
   enemyStunnedTurnTime: 0.5
   enemyAttackCardHangTime: 2
-  timeTillCardDisplay: 1
+  timeTillCardDisplay: 0.5
   turnChangeDuration: 2
   turnGracePeriod: 0.25
   enemyExecutionStagger: 0.5

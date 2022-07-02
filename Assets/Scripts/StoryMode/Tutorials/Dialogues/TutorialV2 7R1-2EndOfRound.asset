@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1923b5bdef38d478b64cc81e4a3b4f, type: 3}
   m_Name: TutorialV2 7R1-2EndOfRound
   m_EditorClassIdentifier: 
-  id: 10331
+  id: 10332
   condition: 10001
   conditionValue: 1
   comparisonType: 10

@@ -363,6 +363,7 @@ public class CardDragController : DragController
 
         try
         {
+            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CardSelected, 0, cardController.GetCard().name);
             if (cardController.GetCard().castType == Card.CastType.TargetedAoE)
                 TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.CastTypeTargetedAoESelected, 1);
             else if (cardController.GetCard().castType == Card.CastType.AoE)
@@ -584,10 +585,10 @@ public class CardDragController : DragController
                         }
                         SetDamageArrows(hlthController, simulation);
                     }
-                    hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);
+                    //hlthController.ShowHealthBar(hlthController.GetVit() - simulation.GetVit(), hlthController.GetVit(), true, simulation);   //Re-enable for showing simulated health on char health bar during cast
+                    //hlthController.charDisplay.healthBar.SetPositionRaised(true);                                                             //Re-enable for showing simulated health on char health bar during cast
 
                     ShowKnockbackPreview(hlthController, simulation);
-                    hlthController.charDisplay.healthBar.SetPositionRaised(true);
                 }
                 else if (targets.Count > 1)             //If enemies are stacked, show health previews with yellow backdrop
                 {
@@ -599,7 +600,7 @@ public class CardDragController : DragController
                         HealthController simulation = simulations[hlthController];
 
                         Vector2 offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, 0.4f + currentTargetId * 1.5f);
-                        if (positionsWithTargets.Any(x => x.x == loc.x && x.y > loc.y && x != loc))
+                        if (positionsWithTargets.Any(x => x.x == loc.x && x.y > loc.y && x != loc) || positionsWithTargets.Any(x => x.y > 2))
                         {
                             offset = new Vector2((-(numPositionsWithMultiTargets - 1) / 2f + currentLocationId) * 1.5f, -3.1f - currentTargetId * 1.5f);
                             flipped = true;
@@ -662,7 +663,7 @@ public class CardDragController : DragController
     private void SetDamageArrows(HealthController hlthController, HealthController simulation)
     {
         if (hlthController.GetVit() - simulation.GetVit() != 0)
-            UIController.ui.combatStats.SetArrow(hlthController.GetVit() - simulation.GetVit(), CombatStatsHighlightController.numberType.number);
+            UIController.ui.combatStats.SetArrow(hlthController.GetVit() - simulation.GetVit(), CombatStatsHighlightController.numberType.number, "Damage", simulation.GetDamageTakenAttemptedText(), simulation.GetDamageTakenAttempted(), hlthController.GetArmor());
         else if (card.cardEffectName.Any(x => x == Card.EffectType.Buff))
         {
             for (int i = 0; i < card.cardEffectName.Length; i++)
@@ -720,10 +721,12 @@ public class CardDragController : DragController
         }
         foreach (EnemyController obj in TurnController.turnController.GetEnemies())
         {
+            /*
             if (state)
                 obj.GetComponent<EnemyInformationController>().ShowIntent();
             else if (avoidedObjects.Contains(obj.gameObject))
                 obj.GetComponent<EnemyInformationController>().HideIntent();
+            */
 
             if (avoidedObjects.Contains(obj.gameObject))
                 continue;

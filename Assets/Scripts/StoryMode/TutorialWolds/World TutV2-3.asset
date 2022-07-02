@@ -23,8 +23,7 @@ MonoBehaviour:
   valueType: 01000000000000000a000000
   challengeValues: 0f0000000200000001000000
   challengeComparisonType: 0a0000001400000000000000
-  roundSpecific: 000000000000000000000000
-  bestChallengeValues: 01000000020000000b000000
+  bestChallengeValues: 0f000000020000000b000000
   skipFinalRewards: 1
   allowRewardsRebuy: 0
   noAchievements: 0

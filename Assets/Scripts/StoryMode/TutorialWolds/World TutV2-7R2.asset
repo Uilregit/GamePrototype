@@ -25,14 +25,16 @@ MonoBehaviour:
   level5: 01000000000000000200000002000000020000000000000001000000
   level6: 01000000010000000200000002000000020000000000000001000000
   level7: 01000000010000000100000001000000010000000100000001000000
-  offerRewardGold: 0
-  offerRewardCards: 0
+  offerRewardGold: 1
+  offerRewardCards: 1
   relicReward: 0
   overrideSingleGoalsSplashIndex: -1
   dialogues:
   - {fileID: 11400000, guid: 50a0a83ff2af8f540a460e97331f2f2b, type: 2}
-  overlays: []
-  lastRewardCardOnTop: 0
+  overlays:
+  - {fileID: 11400000, guid: 7acc450c09f897b429d4c9dd6039b4f4, type: 2}
+  - {fileID: 11400000, guid: 26f6a4c9fda7f1d4cb1bf0772a780f69, type: 2}
+  lastRewardCardOnTop: 1
   overrideCardShuffle: 0
   cardOrder: []
   overrideHandSize: 5

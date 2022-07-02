@@ -45,9 +45,9 @@ MonoBehaviour:
   - {fileID: 0}
   cards:
   - {fileID: 0}
-  indicatorType: 0
+  indicatorType: 6
   targetBehaviour: 11
-  indicatorMultiplier: 
+  indicatorMultiplier: x2
   executionPriority: 0
   highlightCondition: 0
   materials: 

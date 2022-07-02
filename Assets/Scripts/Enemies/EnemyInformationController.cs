@@ -22,6 +22,7 @@ public class EnemyInformationController : MonoBehaviour
     [SerializeField] private Sprite buffIntent;
     [SerializeField] private Sprite debuffIntent;
     [SerializeField] private Sprite healIntent;
+    [SerializeField] private Sprite knockBackIntent;
     [SerializeField] private Sprite otherIntent;
 
     private List<Vector2> moveableLocations;
@@ -39,6 +40,9 @@ public class EnemyInformationController : MonoBehaviour
     private bool hasShownAbilities = false;
     private bool isTriggeringCard = false;
     private bool canPathToTarget = false;
+
+    private List<GameObject> stackedObjs = new List<GameObject>();
+    private int stackedIndex = 0;
 
     //private Animator anim;
 
@@ -78,25 +82,7 @@ public class EnemyInformationController : MonoBehaviour
         //DrawCards();
     }
 
-    //Create attack and move range and Display cards
-    private void OnMouseDown()
-    {
-        if (TutorialController.tutorial.GetEnabled())
-            return;
-
-        clickedTime = DateTime.Now;
-
-        CreateRangeIndicators();
-        enemyController.GetHealthController().SetCombatStatsHighlight(0);
-
-        foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
-            obj.GetComponent<HealthController>().ShowHealthBar();
-
-        displayCardCoroutine = ShowCards();
-        StartCoroutine(displayCardCoroutine);
-    }
-
-    private void CreateRangeIndicators(bool visible = true)
+    public void CreateRangeIndicators(bool visible = true)
     {
         Color moveRangeColor = enemyController.moveRangeColor;
         Color attackRangeColor = enemyController.attackRangeColor;
@@ -180,6 +166,9 @@ public class EnemyInformationController : MonoBehaviour
                 case Card.IndicatorType.Heal:
                     currentIntentTypeIndicators[i].transform.GetChild(2).GetComponent<Image>().sprite = healIntent;
                     break;
+                case Card.IndicatorType.Knockback:
+                    currentIntentTypeIndicators[i].transform.GetChild(2).GetComponent<Image>().sprite = knockBackIntent;
+                    break;
                 default:
                     currentIntentTypeIndicators[i].transform.GetChild(2).GetComponent<Image>().sprite = otherIntent;
                     break;
@@ -247,13 +236,15 @@ public class EnemyInformationController : MonoBehaviour
             }
 
             currentIntentTypeIndicators[i].transform.GetChild(4).gameObject.SetActive(!canPathToTarget);
+            if (!canPathToTarget)
+                TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyIntentOutOfRange, 1);
 
             currentIntentTypeIndicators[i].gameObject.SetActive(true);
             currentIntentTypeIndicators[i].transform.GetChild(1).GetComponent<Image>().color = intentColor;
-            if ((intentColor.r + intentColor.g + intentColor.b) / 3f > 0.8f)    //Color correction for when white is being targeted
+            if ((intentColor.r + intentColor.g + intentColor.b) / 3f > 0.8f && intentColor.r == intentColor.g && intentColor.g == intentColor.b)    //Color correction for when white is being targeted
                 currentIntentTypeIndicators[i].transform.GetChild(1).GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 1);
             currentIntentTypeIndicators[i].transform.GetChild(3).GetComponent<Text>().color = intentColor;
-            if ((intentColor.r + intentColor.g + intentColor.b) / 3f < 0.2f)    //Color correction for when black is being targeted
+            if ((intentColor.r + intentColor.g + intentColor.b) / 3f < 0.2f && intentColor.r == intentColor.g && intentColor.g == intentColor.b)    //Color correction for when black is being targeted
                 currentIntentTypeIndicators[i].transform.GetChild(3).GetComponent<Text>().color = new Color(0.5f, 0.5f, 0.5f, 1);
             if ((targetColor.a + targetColor.b + targetColor.g) / 3.0f < 0.4f) //If the target color is too dark, make the outline white instead
                 currentIntentTypeIndicators[i].GetComponent<Outline>().effectColor = new Color(0.85f, 0.85f, 0.85f);
@@ -264,7 +255,7 @@ public class EnemyInformationController : MonoBehaviour
 
     public void ShowIntent()
     {
-        if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents))
+        if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents) || enemyController.GetHealthController().GetVit() <= 0)
             return;
 
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
@@ -275,6 +266,79 @@ public class EnemyInformationController : MonoBehaviour
     {
         for (int i = 0; i < enemyController.attacksPerTurn; i++)
             currentIntentTypeIndicators[i].gameObject.SetActive(false);
+    }
+
+    public Image GetIntent()
+    {
+        return currentIntentTypeIndicators[0];
+    }
+
+    //Create attack and move range and Display cards
+    private void OnMouseDown()
+    {
+        if (TutorialController.tutorial.GetEnabled())
+            return;
+
+        clickedTime = DateTime.Now;
+
+        displayCardCoroutine = ShowCards();
+        if (GridController.gridController.GetObjectAtLocation(transform.position).Count > 1)
+        {
+            stackedObjs = GridController.gridController.GetObjectAtLocation(transform.position);
+            UIController.ui.combatStats.SetStatusCharactersCount(0, stackedObjs.Count);
+
+            Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
+            int newStackedIndex = (int)Mathf.Floor((mousePosition.x + 0.5f - Mathf.Floor(mousePosition.x + 0.5f)) * stackedObjs.Count);
+            stackedObjs[newStackedIndex].GetComponent<HealthController>().SetCombatStatsHighlight(0);
+
+            UIController.ui.combatStats.SetStatusCharactersIndex(0, newStackedIndex + 1);
+            try
+            {
+                stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().StartCoroutine(stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().ShowCards());
+                stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().CreateRangeIndicators();
+            }
+            catch { }
+        }
+        else
+        {
+            CreateRangeIndicators();
+            enemyController.GetHealthController().SetCombatStatsHighlight(0);
+
+            //foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position))
+            //    obj.GetComponent<HealthController>().ShowHealthBar();     //Re-eabled for character based health bars
+
+            StartCoroutine(displayCardCoroutine);
+        }
+    }
+
+    private void OnMouseDrag()
+    {
+        if (stackedObjs.Count < 1)
+            return;
+
+        Vector2 mousePosition = CameraController.camera.ScreenToWorldPoint(Input.mousePosition);
+        int newStackedIndex = (int)Mathf.Floor((mousePosition.x + 0.5f - Mathf.Floor(mousePosition.x + 0.5f)) * stackedObjs.Count);
+        if (newStackedIndex != stackedIndex)
+        {
+            StopCoroutine(displayCardCoroutine);
+            HideCards();
+            TileCreator.tileCreator.DestroyTiles(stackedObjs[stackedIndex]);
+            try
+            {
+                stackedObjs[stackedIndex].GetComponent<EnemyInformationController>().StopAllCoroutines();
+                stackedObjs[stackedIndex].GetComponent<EnemyInformationController>().HideCards();
+            }
+            catch { }
+            stackedIndex = newStackedIndex;
+            stackedObjs[newStackedIndex].GetComponent<HealthController>().SetCombatStatsHighlight(0);
+            stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().CreateRangeIndicators();
+            UIController.ui.combatStats.SetStatusCharactersIndex(0, newStackedIndex + 1);
+            try
+            {
+                stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().StartCoroutine(stackedObjs[newStackedIndex].GetComponent<EnemyInformationController>().ShowCards());
+            }
+            catch { }
+        }
     }
 
     //Destroy attack and move range
@@ -295,8 +359,20 @@ public class EnemyInformationController : MonoBehaviour
         if ((DateTime.Now - clickedTime).TotalSeconds < 0.2)
             SetCharacterInfoDescription();
         */
+        if ((DateTime.Now - clickedTime).TotalSeconds < 0.2 && UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents))
+            foreach (GameObject obj in GridController.gridController.GetObjectAtLocation(transform.position, new string[] { "Enemy" }))
+                TileCreator.tileCreator.AddSelectedEnemy(obj.GetComponent<EnemyController>());
 
         enemyController.GetHealthController().charDisplay.healthBar.SetPositionRaised(false);
+
+        UIController.ui.combatStats.SetStatusCharactersCount(0, 1);
+        try
+        {
+            stackedObjs[stackedIndex].GetComponent<EnemyInformationController>().StopAllCoroutines();
+            stackedObjs[stackedIndex].GetComponent<EnemyInformationController>().HideCards();
+        }
+        catch { }
+        stackedObjs = new List<GameObject>();
     }
 
     public void SetCharacterInfoDescription()
@@ -521,6 +597,15 @@ public class EnemyInformationController : MonoBehaviour
     //Gets a list of all gameobjects that this enemy can attack this turn
     public List<GameObject> GetAttackableTargets(string[] tags)
     {
+        return GridController.gridController.GetObjectAtLocation(GetAttackableLocations(), tags);
+    }
+
+    public List<Vector2> GetAttackableLocations()
+    {
+        if (enemyController.GetHealthController().GetVit() <= 0 || enemyController.GetHealthController().GetStunned())
+            return new List<Vector2>();
+
+        /*
         //Gets the moverange of this enemy ignoring all collisions
         int bonusMoveRange = enemyController.GetHealthController().GetBonusMoveRange();
         foreach (Vector2 vec in enemyController.GetHealthController().GetOccupiedSpaces())
@@ -563,8 +648,9 @@ public class EnemyInformationController : MonoBehaviour
 
         List<Vector2> attackablePositions = TileCreator.tileCreator.GetTilePositions(2);
         TileCreator.tileCreator.DestroyTiles(this.gameObject, 2);
+        */
 
-        return GridController.gridController.GetObjectAtLocation(attackablePositions, tags);
+        return attackableLocations;
     }
 
     public List<Vector2> GetMoveablePositions()

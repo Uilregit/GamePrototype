@@ -69,16 +69,16 @@ MonoBehaviour:
   maxVit: 10
   vitVariate: 1
   startingArmor: 2
-  attack: 5
+  attack: 1
   moveRange: 3
   randomStartRange: 2
   attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 0effdfd9a82c7e048b9f5038cad251b7, type: 2}
+  - {fileID: 11400000, guid: dd04c1b69fceaa647b3b9158e8993a49, type: 2}
   moveType: 0
-  targetType: 3
+  targetType: 1
   isBoss: 0
   bossName: 
   bossTitle: 
@@ -155,6 +155,7 @@ MonoBehaviour:
   buffIntent: {fileID: 21300004, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   debuffIntent: {fileID: 21300006, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   healIntent: {fileID: 21300016, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  knockBackIntent: {fileID: 21300010, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   otherIntent: {fileID: 21300008, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
   displayedCards: []
 --- !u!120 &1099689026976394631

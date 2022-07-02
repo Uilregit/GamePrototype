@@ -19,11 +19,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbfa14040eaf70f4c9fe95ac772e9b9a, type: 2}
   - {fileID: 11400000, guid: fcf6ecd312398de4ea1126d1dd574794, type: 2}
   arenaSetup: {fileID: 0}
-  challenges: 0b000000120400003a040000
-  valueType: 010000001400000001000000
-  challengeValues: 01000000010000001e000000
+  challenges: 0b0000003a0400003d040000
+  valueType: 010000000100000001000000
+  challengeValues: 010000001e00000032000000
   challengeComparisonType: 0a0000000000000000000000
-  bestChallengeValues: 010000001e00000002000000
+  bestChallengeValues: 010000001e0000001e000000
   skipFinalRewards: 1
   allowRewardsRebuy: 0
   noAchievements: 0

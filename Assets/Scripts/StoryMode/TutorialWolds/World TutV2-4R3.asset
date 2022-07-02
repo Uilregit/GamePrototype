@@ -30,7 +30,9 @@ MonoBehaviour:
   overrideSingleGoalsSplashIndex: 2
   dialogues:
   - {fileID: 11400000, guid: c88613623da7ac54191ab790927ea342, type: 2}
-  overlays: []
+  overlays:
+  - {fileID: 11400000, guid: b2cb511d8ea54124397371ac694aae84, type: 2}
+  - {fileID: 11400000, guid: 0262514c16081824bbde9b958089da47, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 1
   cardOrder:
@@ -59,6 +61,6 @@ MonoBehaviour:
   hiddenUIElements: 1f00000035000000
   endRoomUnlockCard: {fileID: 11400000, guid: 89aacd03862578742a80d27b3c21482d, type: 2}
   endRoomUnlockChar: {fileID: 0}
-  endRoomUnlockAbility: {fileID: 21300012, guid: f66728d70240ecd40ba83cfaba620cc3, type: 3}
+  endRoomUnlockAbility: {fileID: 21300000, guid: 9ca9bd038251dcb41aacc32523098ff7, type: 3}
   endRoomUnlockAbilityName: See Enemy Intents!
   revealedUIElements: 1f000000

@@ -63,6 +63,7 @@ public class StoryRoomSetup : ScriptableObject
 
         DamageDealtWithSingeCard = 1082,
         KillWithSingleCard = 1083,
+        DamageDealtInSingleTurn = 1085,
 
         ArmorRemovedFromEnemy = 1092,
         AromrRemovedWithSingleCard = 1093,
@@ -180,6 +181,9 @@ public class StoryRoomSetup : ScriptableObject
                 break;
             case ChallengeType.KillWithSingleCard:
                 output += "Bring {ct} X character{s} below 0 health with 1 card";
+                break;
+            case ChallengeType.DamageDealtInSingleTurn:
+                output += "Deal {ct} X damage with a single turn";
                 break;
             case ChallengeType.ArmorRemovedFromEnemy:
                 output += "Remove {ct} X total armor from enemies";

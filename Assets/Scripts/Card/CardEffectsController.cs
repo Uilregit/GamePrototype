@@ -139,28 +139,32 @@ public class CardEffectsController : MonoBehaviour
                             //If the target of the effect is not the self
                             case Card.TargetType.AllEnemies:
                                 t = targets.Where(x => x.tag == "Enemy").ToList();
+                                if (isSimulation)
+                                    t = targets;
                                 break;
                             case Card.TargetType.AllPlayers:
                                 t = targets.Where(x => x.tag == "Player").ToList();
+                                if (isSimulation)
+                                    t = targets;
                                 break;
                             case Card.TargetType.Any:
                                 t = targets;
                                 break;
                             case Card.TargetType.Enemy:
                                 t = targets.Where(x => x.tag == "Enemy").ToList();
+                                if (isSimulation)
+                                    t = targets;
                                 break;
                             case Card.TargetType.Player:
                                 t = targets.Where(x => x.tag == "Player").ToList();
+                                if (isSimulation)
+                                    t = targets;
                                 break;
                             default:
                                 t = targets;
                                 break;
                         }
-                        if (isSimulation)
-                        {
-                            t.AddRange(targets);
-                            t = t.Distinct().ToList();
-                        }
+                        t = t.Distinct().ToList();
                     }
 
                     t.AddRange(movedObjects);       //Add force moved objects to list so they're still affected after the position change

@@ -20,7 +20,7 @@ MonoBehaviour:
   slowDuration: 0
   overlay: {fileID: 4920664356104767640, guid: 3885257d589863849b54aaeb43b52b98, type: 3}
   startingCondition: 10
-  startingValue: 1
+  startingValue: 2
   startingStringValue: 
   startingComparisonType: 10
   OnStartUIReveal: 1
@@ -29,6 +29,8 @@ MonoBehaviour:
   endingStringValue: Taunt
   endingComparisonType: 10
   OnEndUIReveal: 1
+  popupLargeImage: 0
   popupTitle: 
   popupImage: {fileID: 0}
   popupDescription: 
+  joinSocialsButtonsEnabled: 0

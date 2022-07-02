@@ -6,14 +6,15 @@ public class ForcedMovementEffect : Effect
 {
     protected override IEnumerator Process(GameObject caster, CardEffectsController effectController, List<GameObject> target, Card card, int effectIndex, float waitTimeMultiplier)
     {
+        Vector2 knockBackDirection = (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized;
         List<GameObject> deepCopy = new List<GameObject>();
         foreach (GameObject obj in target) //Prevent list modify error
             deepCopy.Add(obj);
         for (int i = 0; i < deepCopy.Count; i++)
             if (i == deepCopy.Count - 1)
-                yield return deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized, card.effectValue[effectIndex]));
+                yield return deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, knockBackDirection, card.effectValue[effectIndex]));
             else
-                deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized, card.effectValue[effectIndex]));
+                deepCopy[i].GetComponent<HealthController>().StartCoroutine(deepCopy[i].GetComponent<HealthController>().ForcedMovement(caster.transform.position, knockBackDirection, card.effectValue[effectIndex]));
 
         effectController.SetCastLocation(effectController.GetCastLocation() + (effectController.GetCastLocation() - (Vector2)caster.transform.position).normalized * card.effectValue[effectIndex]);
         yield return new WaitForSeconds(0);

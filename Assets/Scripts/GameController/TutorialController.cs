@@ -185,10 +185,7 @@ public class TutorialController : MonoBehaviour
                 {
                     if (overlay.IfConditionsMet(condition, value, true, stringValue) &&
                         (!completedPassiveTutIDs.Contains(overlay.ID) || repeatablePassiveTutorials.Contains(overlay.ID)))
-                    {
                         DisplayOverlayTutorial(overlay);
-                        Time.timeScale = 0;
-                    }
                 }
 
         //If tutorial room doesn't draw the full hand at the start, trigger it when appropriate
@@ -210,6 +207,7 @@ public class TutorialController : MonoBehaviour
 
     private void DisplayOverlayTutorial(TutorialOverlay overlay)
     {
+        Time.timeScale = 0;
         popupOverlay = overlay;
         popupTitle.text = overlay.popupTitle;
         popupImage.sprite = overlay.popupImage;
@@ -352,6 +350,8 @@ public class TutorialController : MonoBehaviour
     private void SetEnabled(bool state)
     {
         background.gameObject.SetActive(state);
+        tutorialUICanvas.gameObject.SetActive(!state);
+        tutorialCanvas.gameObject.SetActive(!state);
 
         if (ScoreController.score != null)
             ScoreController.score.SetTimerPaused(state);

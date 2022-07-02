@@ -211,7 +211,7 @@ public class Card : ScriptableObject
 
     public enum IndicatorType
     {
-        Attack, Guard, Buff, Debuff, Other, Heal
+        Attack, Guard, Buff, Debuff, Other, Heal, Knockback
     }
     public IndicatorType indicatorType;
     public EnemyController.TargetType targetBehaviour = EnemyController.TargetType.Default;

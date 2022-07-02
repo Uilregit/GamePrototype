@@ -19,7 +19,7 @@ MonoBehaviour:
   speaker: 000000000000000000000000
   emoticon: 02000000650000002c010000
   texts:
-  - You can <b>stack your enemies together</b> and your cards will hit all <b>stacked</b>
-    ones together!
-  - They say divide and conquer but then you gotta juggle balls and herd cats.
-  - I know I shouldn't complain but herding you guys is hard enough already...
+  - 'You can <b>stack your enemies together</b> by <b>knocking</b> then onto each
+    other. '
+  - When you hit one <b>stacked</b> enemy, you hit them all!
+  - They say divide and conquer, but then you gotta juggle balls and herd cats...

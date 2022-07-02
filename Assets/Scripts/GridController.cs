@@ -69,6 +69,9 @@ public class GridController : MonoBehaviour
     //Adds the reporting object into the location inside of the object grid
     public void ReportPosition(GameObject obj, Vector2 location)
     {
+        if (obj.tag == "Simulation")    //Never add simulations to the grid
+            return;
+
         int xLoc = Mathf.RoundToInt(location.x);
         int yLoc = Mathf.RoundToInt(location.y);
 
@@ -398,14 +401,17 @@ public class GridController : MonoBehaviour
                         }
                         */
                         temp.GetComponent<HealthController>().SetStatTexts(true);       //Renable stat texts after no longer being overlapped
+                        temp.GetComponent<HealthController>().charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, false);
                     }
                     objects[x, y][0].GetComponent<HealthController>().SetStatTexts(true);
+                    objects[x, y][0].GetComponent<HealthController>().charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, false);
                 }
                 else if (objects[x, y].Count == 1)
                 {
                     try
                     {
                         objects[x, y][0].GetComponent<HealthController>().SetStatTexts(true);
+                        objects[x, y][0].GetComponent<HealthController>().charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, false);
                     }
                     catch { };
                 }
@@ -414,8 +420,8 @@ public class GridController : MonoBehaviour
     public Vector2 FindNearestEmptyLocation(Vector2 startingLoc, List<Vector2> occupiedLocations, int size)
     {
         Dictionary<int, Vector2> locations = new Dictionary<int, Vector2>();
-        for (int x = -3; x < 3; x++)
-            for (int y = -3; y < 3; y++)
+        for (int x = -5; x < 5; x++)
+            for (int y = -5; y < 5; y++)
             {
                 Vector2 newLoc = GetRoundedVector(startingLoc, size) + new Vector2(x, y);
                 //Debug.Log(newLoc);
@@ -423,7 +429,9 @@ public class GridController : MonoBehaviour
                 foreach (Vector2 loc in occupiedLocations)
                     newLocs.Add(newLoc + loc);
                 if (!CheckIfOutOfBounds(newLocs) && GetObjectAtLocation(newLocs, new string[] { "Player", "Enemy", "Blockade" }).Count == 0)
+                {
                     locations[GetManhattanDistance(startingLoc, newLoc)] = newLoc;
+                }
             }
         //DebugPlus.LogOnScreen(locations.Keys.ToString()).Duration(10);
         return locations[locations.Keys.Min()];
@@ -519,7 +527,11 @@ public class GridController : MonoBehaviour
             foreach (GameObject o in objects)           //Only allow the top object to display it's stats
             {
                 if (topObject == o)
+                {
                     o.GetComponent<HealthController>().SetStatTexts(true);
+                    if (objects.Count > 1)
+                        o.GetComponent<HealthController>().charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, true);
+                }
                 else
                     o.GetComponent<HealthController>().SetStatTexts(false);
             }

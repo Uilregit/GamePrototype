@@ -42,6 +42,10 @@ public class HealthBarController : MonoBehaviour
     [SerializeField]
     Text armorNumber;
     [SerializeField]
+    Image attackIcon;
+    [SerializeField]
+    Text attackNumber;
+    [SerializeField]
     Text breakText;
     [SerializeField]
     Text healthBarStatusText;
@@ -113,7 +117,7 @@ public class HealthBarController : MonoBehaviour
     private IEnumerator resetAttackImageHide;
     //private bool runningCoroutine = false;
 
-    private StatusTypes[] statusPriority = new StatusTypes[] { StatusTypes.Stunned, StatusTypes.Silenced, StatusTypes.Disarmed, StatusTypes.Taunted };
+    private StatusTypes[] statusPriority = new StatusTypes[] { StatusTypes.Stacked, StatusTypes.Stunned, StatusTypes.Silenced, StatusTypes.Disarmed, StatusTypes.Taunted };
     private Dictionary<StatusTypes, bool> currentStatusTypes = new Dictionary<StatusTypes, bool>();
 
     private bool raised = false;
@@ -125,6 +129,7 @@ public class HealthBarController : MonoBehaviour
         Silenced = 1,
         Disarmed = 2,
         Taunted = 3,
+        Stacked = 4,
     }
 
     // Start is called before the first frame update
@@ -161,7 +166,7 @@ public class HealthBarController : MonoBehaviour
         {
             GameObject temp = Instantiate(healthBarTick);
             temp.transform.SetParent(healthBarTickContainer.transform);
-            temp.transform.localPosition = new Vector3(counter * 10 / (float)maxHealth * 0.6f - 0.15f, 0f, 0f);
+            temp.transform.localPosition = new Vector3(counter * 10 / (float)maxHealth * 0.65f - 0.179f, -0.103f, 0f);
             if (counter % 5 == 0)
             {
                 temp.transform.localScale = new Vector3(2f, 1f, 1f);
@@ -485,6 +490,13 @@ public class HealthBarController : MonoBehaviour
         hidingArmorDamageImage = false;
     }
 
+    public void SetBonusAttack(int atk)
+    {
+        attackIcon.enabled = atk != 0;
+        attackNumber.enabled = atk != 0;
+        attackNumber.text = atk.ToString("+#;-#;0");
+    }
+
     public void SetAttackChangeImage(int attackValue, int attackChange)
     {
         if (hidingAttackImage)
@@ -521,10 +533,10 @@ public class HealthBarController : MonoBehaviour
     {
         hidingAttackImage = true;
 
-        attackDamageText.text = attackValue.ToString();
+        attackDamageText.text = attackValue.ToString("+#;-#;0");
         yield return new WaitForSeconds(TimeController.time.numberShownDuration / 3.0f);
 
-        attackDamageText.text = Mathf.Max(attackValue - attackChange, 0).ToString();
+        attackDamageText.text = Mathf.Max(attackValue - attackChange, 0).ToString("+#;-#;0");
         attackDamageImage.transform.localScale = originalAttackImageScale * 1.25f;
         attackDamageImage2.transform.localScale = originalAttackImageScale * 1.25f;
         attackDamageText.transform.localScale = originalAttackTextScale * 1.25f;
@@ -638,7 +650,7 @@ public class HealthBarController : MonoBehaviour
         currentStatusTypes[status] = state;
 
         healthBarStatusText.text = GetHealthStatusText();
-        healthBarStatusText.enabled = state;
+        healthBarStatusText.enabled = true;
     }
 
     private string GetHealthStatusText()
@@ -661,6 +673,8 @@ public class HealthBarController : MonoBehaviour
                 return "DISARMED";
             case StatusTypes.Taunted:
                 return "TAUNTED";
+            case StatusTypes.Stacked:
+                return "STACKED";
         }
         return "";
     }

@@ -44,7 +44,7 @@ MonoBehaviour:
   - {fileID: 0}
   indicatorType: 0
   targetBehaviour: 11
-  indicatorMultiplier: 
+  indicatorMultiplier: x2
   executionPriority: 0
   highlightCondition: 0
   materials: 
