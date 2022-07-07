@@ -16,10 +16,10 @@ MonoBehaviour:
   equipmentName: Stout Shield
   rarity: 0
   equipmentDescription: Attached card gains you +2 Armor when played|
-  isWeapon: 0
+  isWeapon: 1
   numOfCardSlots: 1
   atkChange: 0
-  armorChange: 1
+  armorChange: 0
   healthChange: 0
   moveRangeChange: 0
   castRangeChange: 0
@@ -30,5 +30,7 @@ MonoBehaviour:
   attachedCardCastRangeChange: 0
   beforeTriggerCard: {fileID: 11400000, guid: 4e020b4ec3548ca41b5dde67f2810779, type: 2}
   afterTriggerCard: {fileID: 0}
+  overrideCastShape: 0
+  overridedCastShape: 0
   materialTypes: 0500000064000000
   materialAmounts: 0100000011000000

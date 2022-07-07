@@ -653,6 +653,11 @@ public class HealthBarController : MonoBehaviour
         healthBarStatusText.enabled = true;
     }
 
+    public Dictionary<StatusTypes, bool> GetCurrentStatusTypes()
+    {
+        return currentStatusTypes;
+    }
+
     private string GetHealthStatusText()
     {
         foreach (StatusTypes status in statusPriority)

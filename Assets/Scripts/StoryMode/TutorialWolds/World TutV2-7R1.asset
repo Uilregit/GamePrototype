@@ -41,6 +41,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7acc450c09f897b429d4c9dd6039b4f4, type: 2}
   - {fileID: 11400000, guid: 26f6a4c9fda7f1d4cb1bf0772a780f69, type: 2}
   - {fileID: 11400000, guid: 657a76dbf0fb335449263b5225b7077d, type: 2}
+  - {fileID: 11400000, guid: 6490b343fd4574c42beecc0f0e9e4abe, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 0
   cardOrder: []
@@ -50,7 +51,7 @@ MonoBehaviour:
   overrideSeed: 0
   drawHandCondition: 0
   drawHandConditionValue: 1
-  hiddenUIElements: 
+  hiddenUIElements: 35000000
   endRoomUnlockCard: {fileID: 0}
   endRoomUnlockChar: {fileID: 0}
   endRoomUnlockAbility: {fileID: 0}

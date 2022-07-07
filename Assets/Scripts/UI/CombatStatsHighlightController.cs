@@ -114,7 +114,10 @@ public class CombatStatsHighlightController : MonoBehaviour
         else
             health[index].text = currentVit + "/" + maxVit;
         healthBar[index].transform.localScale = new Vector3(Mathf.Clamp((float)currentVit / maxVit, 0, 1), 1, 1);
-        healthDamageBar[index].transform.localScale = new Vector3(Mathf.Clamp(-(float)damage / currentVit, -1, 0), 1, 1);
+        if (damage >= 0)
+            healthDamageBar[index].transform.localScale = new Vector3(Mathf.Clamp(-(float)damage / currentVit, -1, 0), 1, 1);
+        else
+            healthDamageBar[index].transform.localScale = new Vector3(-(float)damage / currentVit, 1, 1);
         if (currentVit <= 0)
         {
             healthBar[index].transform.localScale = new Vector3(Mathf.Clamp((float)(currentVit + damage) / maxVit, 0, 1), 1, 1);

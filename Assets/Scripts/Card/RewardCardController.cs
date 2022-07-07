@@ -20,6 +20,8 @@ public class RewardCardController : MonoBehaviour
         if (TutorialController.tutorial.GetEnabled())
             return;
 
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuCardPressed, 1);
+
         clickedTime = Time.time;
         StartCoroutine(EnlargeCard());
     }

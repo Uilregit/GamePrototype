@@ -80,7 +80,7 @@ public class Dialogue : ScriptableObject
 
         RewardsMenuShown = 10001,
         RewardsMenuItemTaken = 10002,
-        RewardsMenuCardTaken = 10003,
+        RewardsMenuCardPressed = 10003,
         RewardsMenuExit = 10004,
 
         FinalRewardsMenuShown = 10011,

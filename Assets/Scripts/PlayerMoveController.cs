@@ -313,6 +313,13 @@ public class PlayerMoveController : MonoBehaviour
     public void MoveTo(Vector2 location)
     {
         GridController.gridController.ReportPosition(this.gameObject, location);
+        if (healthController.charDisplay.healthBar.GetCurrentStatusTypes().ContainsKey(HealthBarController.StatusTypes.Stacked) && healthController.charDisplay.healthBar.GetCurrentStatusTypes()[HealthBarController.StatusTypes.Stacked])
+        {
+            if (GridController.gridController.GetObjectAtLocation(location).Count < 2)
+                healthController.charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, false);
+            if (GridController.gridController.GetObjectAtLocation(lastGoodPosition).Count == 1 && GridController.gridController.GetObjectAtLocation(lastGoodPosition)[0] != this)
+                GridController.gridController.GetObjectAtLocation(lastGoodPosition)[0].GetComponent<HealthController>().charDisplay.healthBar.SetHealthBarStatusText(HealthBarController.StatusTypes.Stacked, false);
+        }
         transform.position = location;
         moveShadow.transform.position = location;
         previousPosition = lastGoodPosition;

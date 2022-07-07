@@ -374,10 +374,11 @@ public class EnemyController : MonoBehaviour
 
         //Move until the rest of the path is all blocked by something
         int finalIndex = traveledPath.Count;
-        for (int i = traveledPath.Count - 1; i > 0; i--)
+        for (int i = traveledPath.Count - 1; i >= 0; i--)
             if (GridController.gridController.GetObjectAtLocation(traveledPath[i]).Count == 0)
             {
                 finalIndex = i;
+                Debug.Log("Stopped prematurely at index " + finalIndex);
                 break;
             }
         try
@@ -401,6 +402,9 @@ public class EnemyController : MonoBehaviour
                 healthController.charDisplay.charAnimController.SetRunning(false);
                 yield break;
             }
+
+            if (GridController.gridController.GetObjectAtLocation(position).Count > 0)
+                Debug.Log("Position has people at " + position);
 
             CameraController.camera.ScreenShake(0.06f, 0.05f);
 

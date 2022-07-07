@@ -15,10 +15,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 69ec2e88f82e00f4696417cb3d521d27, type: 3}
   equipmentName: Force Staff
   rarity: 0
-  equipmentDescription: Attacked card gains <b>Knockback</b> 1 before the card triggers|
-  isWeapon: 0
+  equipmentDescription: Attached card gains <b>Knockback</b> 1 before the card triggers|
+  isWeapon: 1
   numOfCardSlots: 1
-  atkChange: 1
+  atkChange: 0
   armorChange: 0
   healthChange: 0
   moveRangeChange: 0

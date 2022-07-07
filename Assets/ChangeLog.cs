@@ -1352,6 +1352,7 @@ Added intent image for knockback based cards
 Added UI for bonus attack on characters
 Recolored combat stats to be blue for players, red for enemies
 Combat arrows now show what percentage of the card's damage is blocked
+Story mode scene now will not have items view for rooms with no items to buy
 
 -- Bugs --
 Fixed bug where turn based goals weren't reported on the last turn
@@ -1375,6 +1376,9 @@ Fixed bug where enemies using AoE targeting will trigger their card even if thei
 Fixed bug where enemies using knockback always knocked back from (0,0)
 Fixed bug where enemy gravity effects will sometimes suck characters into walls
 Fixed bug where enemy gravity effects will be cast at a range larger than their cast range
+Fixed bug where stacked players being moved won't get rid of the stacked status text
+Fixed bug where healing wasn't showing up in the damage preview bar
+Fixed bug where victory healing didn't heal the health bar
 
 ##########
 

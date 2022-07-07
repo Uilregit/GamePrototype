@@ -47,6 +47,7 @@ public class StoryModeSceneController : MonoBehaviour
     public RectTransform stars;
     public RectTransform items;
     public Image starsButton;
+    public Image wideStarsButton;
     public Image itemsButton;
     public Image[] blankStarsIcon;
     public Text[] itemsList;
@@ -447,17 +448,24 @@ public class StoryModeSceneController : MonoBehaviour
 
         itemsButton.gameObject.SetActive(!selectedRoom.setup.noAchievements);
         starsButton.gameObject.SetActive(!selectedRoom.setup.noAchievements);
+        itemsButton.gameObject.SetActive(!selectedRoom.setup.skipFinalRewards);
+        starsButton.gameObject.SetActive(!selectedRoom.setup.skipFinalRewards);
+        wideStarsButton.gameObject.SetActive(selectedRoom.setup.skipFinalRewards);
         if (selectedRoom.setup.noAchievements)
         {
             stars.gameObject.SetActive(false);
             items.gameObject.SetActive(false);
         }
+        else if (selectedRoom.setup.skipFinalRewards)
+        {
+            StarsViewSelected();
+        }
         else
         {
-            if (items.gameObject.active)
-                ItemsViewSelected();
-            else
+            if (stars.gameObject.active)
                 StarsViewSelected();
+            else
+                ItemsViewSelected();
         }
         foreach (Image blankIcon in blankStarsIcon)
             blankIcon.gameObject.SetActive(selectedRoom.setup.noAchievements);

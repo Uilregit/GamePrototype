@@ -19,25 +19,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f2cb01ae576b4394493c350ec85e4465, type: 2}
   - {fileID: 11400000, guid: 4b72c92f1224d6547801d7ebed175f8b, type: 2}
   arenaSetup: {fileID: 0}
-  challenges: 000000000000000000000000
-  valueType: 000000000000000000000000
-  challengeValues: 000000000000000000000000
+  challenges: 00000000ff030000fe030000
+  valueType: 000000001400000001000000
+  challengeValues: 000000000500000003000000
   challengeComparisonType: 000000000000000000000000
   bestChallengeValues: 010000000200000004000000
   skipFinalRewards: 0
   allowRewardsRebuy: 0
   noAchievements: 0
-  rewardTypes: 000000000000000000000000
+  rewardTypes: 000000000800000008000000
   rewardCards:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   rewardEquipment:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  rewardAmounts: 000000000000000000000000
-  rewardCosts: 000000000000000000000000
+  - {fileID: 11400000, guid: 3e3fad7983ac8e1439ac9e123786c90f, type: 2}
+  - {fileID: 11400000, guid: a90883a48deffe54695bd0043c844847, type: 2}
+  rewardAmounts: 010000000100000001000000
+  rewardCosts: 140000001400000014000000
   challengeRewardBought: 000000
   flavorText: 
   overrideColors: 

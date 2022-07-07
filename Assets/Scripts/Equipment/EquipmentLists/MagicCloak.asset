@@ -15,11 +15,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 4002b5e7b65f93c4b885f6d211979b01, type: 3}
   equipmentName: Magic Cloak
   rarity: 0
-  equipmentDescription: '|Replace +1'
-  isWeapon: 1
+  equipmentDescription: '|Team has +1 Replace'
+  isWeapon: 0
   numOfCardSlots: 3
   atkChange: 0
-  armorChange: -1
+  armorChange: 0
   healthChange: 0
   moveRangeChange: 0
   castRangeChange: 0
@@ -30,5 +30,7 @@ MonoBehaviour:
   attachedCardCastRangeChange: 0
   beforeTriggerCard: {fileID: 0}
   afterTriggerCard: {fileID: 0}
+  overrideCastShape: 0
+  overridedCastShape: 0
   materialTypes: 0500000082000000
   materialAmounts: 0100000011000000

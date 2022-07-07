@@ -731,6 +731,7 @@ public class GameController : MonoBehaviour
             player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
             player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
             player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
+            player.charDisplay.healthBar.SetBar(player.GetCurrentVit(), 0, 0, player.GetCurrentVit(), player.transform.position, 1, 1, 0, false);
             foreach (Card.CasterColor deadCharColor in deadChars)
             {
                 if (obj.GetComponent<PlayerController>().GetColorTag() == deadCharColor)        //Resurrect all dead players for free

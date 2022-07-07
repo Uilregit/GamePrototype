@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castRange: 1
-  maxVit: 10
+  maxVit: 1
   vitVariate: 1
   startingArmor: 2
   attack: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: dd04c1b69fceaa647b3b9158e8993a49, type: 2}
+  - {fileID: 11400000, guid: 54ead397660fb7243b69b41b72cccaf1, type: 2}
   moveType: 0
   targetType: 1
   isBoss: 0

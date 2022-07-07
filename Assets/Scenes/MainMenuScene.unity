@@ -15635,7 +15635,7 @@ MonoBehaviour:
   debugStoryCopyRealSaveFile: 0
   debugStoryCopyDebugSaveFile: 0
   isStoryMode: 0
-  patchID: 0.5.4
+  patchID: 0.5.4.e
   seed: 0
   gameID: 
   versionText: {fileID: 2125512850}

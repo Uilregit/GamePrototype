@@ -17,9 +17,9 @@ MonoBehaviour:
   rarity: 0
   equipmentDescription: Attached card deals <s>25% of ATK as</s> damage to targets
     after trigger|
-  isWeapon: 0
+  isWeapon: 1
   numOfCardSlots: 1
-  atkChange: 1
+  atkChange: 0
   armorChange: 0
   healthChange: 0
   moveRangeChange: 0
@@ -31,5 +31,7 @@ MonoBehaviour:
   attachedCardCastRangeChange: 0
   beforeTriggerCard: {fileID: 0}
   afterTriggerCard: {fileID: 11400000, guid: ba6bc509ba44f1241b628308ac46120b, type: 2}
+  overrideCastShape: 0
+  overridedCastShape: 0
   materialTypes: 0500000064000000
   materialAmounts: 0100000011000000

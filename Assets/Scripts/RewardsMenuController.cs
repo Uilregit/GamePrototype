@@ -144,8 +144,6 @@ public class RewardsMenuController : MonoBehaviour
             MusicController.music.PlaySFX(MusicController.music.uiUseLowSFX[Random.Range(0, MusicController.music.uiUseLowSFX.Count)]);
 
         numRewardsTaken += 1;
-        if (type == RewardType.Card)
-            TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.RewardsMenuCardTaken, 1);
 
         if (numRewards == numRewardsTaken || type == RewardType.BypassRewards)
         {

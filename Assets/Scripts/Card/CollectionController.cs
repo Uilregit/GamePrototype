@@ -58,7 +58,7 @@ public class CollectionController : MonoBehaviour
     private EquipmentWrapper newEquipments = new EquipmentWrapper();
     private EquipmentWrapper completeEquipments;
     private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife", "Force Staff" };
-    private List<string> debugCards = new List<string>() { "Meteor", "Power Shot", "Warcry", "Thousand Knives" };
+    private List<string> debugCards = new List<string>() { };
     private Dictionary<string, EquipmentWrapper> selectedEquipments = new Dictionary<string, EquipmentWrapper>();
     private CardController recentRewardsCard;
     private Equipment recentRewardsEquipment;

@@ -63,7 +63,7 @@ MonoBehaviour:
   overrideSeed: 0
   drawHandCondition: 0
   drawHandConditionValue: 1
-  hiddenUIElements: 
+  hiddenUIElements: 35000000
   endRoomUnlockCard: {fileID: 11400000, guid: 8126ff637cacaaf45ac49ba5c9bb29a4, type: 2}
   endRoomUnlockChar: {fileID: 0}
   endRoomUnlockAbility: {fileID: 0}

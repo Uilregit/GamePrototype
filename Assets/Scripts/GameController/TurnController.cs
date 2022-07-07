@@ -604,7 +604,7 @@ public class TurnController : MonoBehaviour
 
         ResetEnergyDisplay();
         if (InformationLogger.infoLogger.debug)
-            currentMana = 0;
+            currentMana = 10;
         else
             currentMana = 0;
         UIController.ui.ResetManaBar(currentMana);
