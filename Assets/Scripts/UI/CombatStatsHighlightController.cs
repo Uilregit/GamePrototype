@@ -64,7 +64,8 @@ public class CombatStatsHighlightController : MonoBehaviour
     public Text[] moverange;
     public Text[] passiveTexts;
     public Image[] passiveIcons;
-    public Image[] intents;
+    public Image[] intents1;
+    public Image[] intents2;
 
     [Header("Stacked Counts")]
     public GameObject[] status1CharacterCounts;
@@ -88,6 +89,8 @@ public class CombatStatsHighlightController : MonoBehaviour
     private Vector3[] statsStacksOriginalPosition = new Vector3[2];
     private Vector3 damageArrowStartingPosition = new Vector3();
     private Vector2 damageArrowMaskStartingWidth = Vector2.zero;
+    private Vector2[] index1IntentsOriginalPosition = new Vector2[2];
+    private Vector2[] index2IntentsOriginalPosition = new Vector2[2];
     private HealthController[] statusObjects = new HealthController[2];
     private int[] stackSize = new int[2];
 
@@ -105,6 +108,10 @@ public class CombatStatsHighlightController : MonoBehaviour
         statsStacksOriginalPosition[1] = statusCharacterCountContainer[1].transform.localPosition;
         damageArrowStartingPosition = damageArrow.transform.localPosition;
         damageArrowMaskStartingWidth = damageArrowMask.rectTransform.sizeDelta;
+        index1IntentsOriginalPosition[0] = intents1[0].transform.localPosition;
+        index1IntentsOriginalPosition[1] = intents1[1].transform.localPosition;
+        index2IntentsOriginalPosition[0] = intents2[0].transform.localPosition;
+        index2IntentsOriginalPosition[1] = intents2[1].transform.localPosition;
     }
 
     public void SetStatus(int index, HealthController obj, Sprite sprite, int currentVit, int maxVit, int damage, int currentArmor, int armorDamage, int currentAttack, int bonusAttack, int currentMoverange, int maxMoverange, bool refresh = true)
@@ -195,26 +202,65 @@ public class CombatStatsHighlightController : MonoBehaviour
             }
         }
 
-        try
+        //Handle intent display
+        if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents) || obj.isPlayer)
         {
-            Image enemyIntent;
-            if (index == 0)
-                enemyIntent = obj.GetComponent<EnemyInformationController>().GetIntent();
-            else
-                enemyIntent = obj.GetOriginalSimulationTarget().GetComponent<EnemyInformationController>().GetIntent();
-            intents[index].gameObject.SetActive(obj.GetVit() > 0);
-            intents[index].transform.GetChild(0).localScale = enemyIntent.transform.GetChild(0).localScale;
-            intents[index].transform.GetChild(0).gameObject.SetActive(enemyIntent.transform.GetChild(3).GetComponent<Text>().text != "");
-            intents[index].transform.GetChild(0).GetComponent<Image>().enabled = enemyIntent.transform.GetChild(0).GetComponent<Image>().enabled;
-            intents[index].transform.GetChild(1).GetComponent<Image>().color = enemyIntent.transform.GetChild(1).GetComponent<Image>().color;
-            intents[index].transform.GetChild(2).GetComponent<Image>().sprite = enemyIntent.transform.GetChild(2).GetComponent<Image>().sprite;
-            intents[index].transform.GetChild(3).GetComponent<Text>().text = enemyIntent.transform.GetChild(3).GetComponent<Text>().text;
-            intents[index].transform.GetChild(3).GetComponent<Text>().color = enemyIntent.transform.GetChild(3).GetComponent<Text>().color;
-            intents[index].transform.GetChild(4).gameObject.SetActive(enemyIntent.transform.GetChild(4).gameObject.active);
+            intents1[index].gameObject.SetActive(false);
+            intents2[index].gameObject.SetActive(false);
         }
-        catch
+        else if (!obj.isPlayer)
         {
-            intents[index].gameObject.SetActive(false);
+            try
+            {
+                Image enemyIntent;
+                EnemyInformationController enemyInfo;
+                if (index == 0)
+                    enemyInfo = obj.GetComponent<EnemyInformationController>();
+                else
+                    enemyInfo = obj.GetOriginalSimulationTarget().GetComponent<EnemyInformationController>();
+                enemyIntent = enemyInfo.GetIntent(0);
+
+                intents1[index].gameObject.SetActive(obj.GetVit() > 0);
+                intents1[index].transform.GetChild(0).localScale = enemyIntent.transform.GetChild(0).localScale;
+                intents1[index].transform.GetChild(0).gameObject.SetActive(enemyIntent.transform.GetChild(3).GetComponent<Text>().text != "");
+                intents1[index].transform.GetChild(0).GetComponent<Image>().enabled = enemyIntent.transform.GetChild(0).GetComponent<Image>().enabled;
+                intents1[index].transform.GetChild(1).GetComponent<Image>().color = enemyIntent.transform.GetChild(1).GetComponent<Image>().color;
+                intents1[index].transform.GetChild(2).GetComponent<Image>().sprite = enemyIntent.transform.GetChild(2).GetComponent<Image>().sprite;
+                intents1[index].transform.GetChild(3).GetComponent<Text>().text = enemyIntent.transform.GetChild(3).GetComponent<Text>().text;
+                intents1[index].transform.GetChild(3).GetComponent<Text>().color = enemyIntent.transform.GetChild(3).GetComponent<Text>().color;
+                intents1[index].transform.GetChild(4).gameObject.SetActive(enemyIntent.transform.GetChild(4).gameObject.active);
+
+                intents1[index].transform.localPosition = index1IntentsOriginalPosition[index];
+
+                if (enemyInfo.GetEnemyController().attacksPerTurn > 1)
+                {
+                    if (index == 0)
+                        enemyIntent = obj.GetComponent<EnemyInformationController>().GetIntent(1);
+                    else
+                        enemyIntent = obj.GetOriginalSimulationTarget().GetComponent<EnemyInformationController>().GetIntent(1);
+
+                    intents2[index].gameObject.SetActive(obj.GetVit() > 0);
+                    intents2[index].transform.GetChild(0).localScale = enemyIntent.transform.GetChild(0).localScale;
+                    intents2[index].transform.GetChild(0).gameObject.SetActive(enemyIntent.transform.GetChild(3).GetComponent<Text>().text != "");
+                    intents2[index].transform.GetChild(0).GetComponent<Image>().enabled = enemyIntent.transform.GetChild(0).GetComponent<Image>().enabled;
+                    intents2[index].transform.GetChild(1).GetComponent<Image>().color = enemyIntent.transform.GetChild(1).GetComponent<Image>().color;
+                    intents2[index].transform.GetChild(2).GetComponent<Image>().sprite = enemyIntent.transform.GetChild(2).GetComponent<Image>().sprite;
+                    intents2[index].transform.GetChild(3).GetComponent<Text>().text = enemyIntent.transform.GetChild(3).GetComponent<Text>().text;
+                    intents2[index].transform.GetChild(3).GetComponent<Text>().color = enemyIntent.transform.GetChild(3).GetComponent<Text>().color;
+                    intents2[index].transform.GetChild(4).gameObject.SetActive(enemyIntent.transform.GetChild(4).gameObject.active);
+
+                    intents1[index].transform.localPosition = index1IntentsOriginalPosition[index] + index1IntentsOriginalPosition[index] - index2IntentsOriginalPosition[index];
+                }
+                else
+                {
+                    intents2[index].gameObject.SetActive(false);
+                }
+            }
+            catch
+            {
+                intents1[index].gameObject.SetActive(false);
+                intents2[index].gameObject.SetActive(false);
+            }
         }
 
         //Coloring the statuses to blue for players, red for enemies

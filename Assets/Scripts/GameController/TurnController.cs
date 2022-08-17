@@ -127,9 +127,10 @@ public class TurnController : MonoBehaviour
         }
     }
 
-    public void ReportTurnBasedAchievements()
+    public void ReportTurnBasedAchievements(bool isWinningTurn = false)
     {
-        AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
+        if (!isWinningTurn)
+            AchievementSystem.achieve.OnNotify(TurnController.turnController.currentEnergy, StoryRoomSetup.ChallengeType.UnspentEnergyPerTurn);
         AchievementSystem.achieve.OnNotify(manaSpent.Sum(), StoryRoomSetup.ChallengeType.SpendManaPerTurn);
         AchievementSystem.achieve.OnNotify(turnID, StoryRoomSetup.ChallengeType.TotalTurnsUsed);
         if (RoomController.roomController.selectedLevel == 0)

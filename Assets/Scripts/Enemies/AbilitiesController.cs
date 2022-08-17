@@ -43,6 +43,9 @@ public class AbilitiesController : MonoBehaviour
         ArmorChange = 1,
         AttackChange = 2,
 
+        MoverangeChange = 5,
+        CastRangeChange = 6,
+
         FullHeal = 10,
         Break = 11,
 
@@ -130,6 +133,12 @@ public class AbilitiesController : MonoBehaviour
                             break;
                         case AbilityType.AttackChange:
                             obj.GetComponent<HealthController>().SetBonusAttack(abilityValue[i], true);
+                            break;
+                        case AbilityType.MoverangeChange:
+                            obj.GetComponent<HealthController>().SetBonusMoveRange(abilityValue[i]);
+                            break;
+                        case AbilityType.CastRangeChange:
+                            obj.GetComponent<HealthController>().SetBonusCastRange(abilityValue[i]);
                             break;
                         case AbilityType.Break:
                             obj.GetComponent<HealthController>().TakeArmorDamage(9999999, null);
@@ -319,6 +328,12 @@ public class AbilitiesController : MonoBehaviour
                     break;
                 case AbilityType.VitChange:
                     s += "Health";
+                    break;
+                case AbilityType.MoverangeChange:
+                    s += "Movement Range";
+                    break;
+                case AbilityType.CastRangeChange:
+                    s += "Cast Range";
                     break;
                 case AbilityType.FullHeal:
                     s += "Restore To Full Health";

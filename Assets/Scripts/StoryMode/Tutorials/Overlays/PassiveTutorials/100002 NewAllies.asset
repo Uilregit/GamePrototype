@@ -35,5 +35,7 @@ MonoBehaviour:
   popupDescription: '
 
 
+
+
     2 new allies with their own set of new cards...'
-  joinDiscordButtonEnabled: 0
+  joinSocialsButtonsEnabled: 0

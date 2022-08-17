@@ -198,7 +198,7 @@ public class SelectedCardController : MonoBehaviour
         Vector3 newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
 
-        CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3);
+        CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6);
 
         if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -1.3)
         {
@@ -277,8 +277,7 @@ public class SelectedCardController : MonoBehaviour
         CollectionController.collectionController.SetSelectAreaWhiteOut(false);
         CollectionController.collectionController.SetSelectCardWhiteOut(false, 0, Color.white);
         CollectionController.collectionController.SetSelectedCardHighlightIndex(false, 0, Color.white);
-
-        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6)
         {
             clickable = false;
             CollectionController.collectionController.RemoveCard(thisCard, index);

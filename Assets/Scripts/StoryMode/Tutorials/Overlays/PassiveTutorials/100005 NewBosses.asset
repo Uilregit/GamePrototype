@@ -35,5 +35,7 @@ MonoBehaviour:
   popupDescription: '
 
 
+
+
     And loads of brand new bosses to beat up!'
-  joinDiscordButtonEnabled: 0
+  joinSocialsButtonsEnabled: 0

@@ -36,6 +36,8 @@ public class StoryModeController : MonoBehaviour
     public Color newNotificationColor;
     public Image[] menuIcons;
     public Image[] menuBlankOuts;
+    public Image[] menuSelected;
+    public Image[] menuUnselected;
     public Text[] menuNames;
     public Image[] menuNotifications;
 
@@ -393,7 +395,10 @@ public class StoryModeController : MonoBehaviour
 
     public bool ChallengeSatisfied(int index)
     {
-        return ChallengeSatisfied(index, GetChallengeValues()[currentRoomId][index]);
+        if (GetChallengeValues().ContainsKey(currentRoomId))
+            return ChallengeSatisfied(index, GetChallengeValues()[currentRoomId][index]);
+        else
+            return false;
     }
 
     public bool ChallengeSatisfied(int index, int value)
@@ -837,6 +842,8 @@ public class StoryModeController : MonoBehaviour
         foreach (Image icon in menuIcons)
             icon.color = defaultMenuColor;
         menuIcons[index].color = selectedMenuColor;
+        for (int i = 0; i < menuSelected.Length; i++)
+            menuSelected[i].gameObject.SetActive(i == index);
     }
 
     public void RefreshMenuIconBlanOuts()
@@ -855,6 +862,9 @@ public class StoryModeController : MonoBehaviour
 
     public void RefreshAchievementValues()
     {
+        if (achievementIcons[0] == null)
+            return;
+
         for (int i = 0; i < 3; i++)
         {
             Color c = Color.cyan;
@@ -877,6 +887,11 @@ public class StoryModeController : MonoBehaviour
 
             achievementTexts[i].text = currentRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true);
         }
+    }
+
+    public void SetAchievementImages(List<Image> values)
+    {
+        achievementIcons = values.ToArray();
     }
 
     public void RefreshGoldValue()
@@ -1154,6 +1169,7 @@ public class StoryModeController : MonoBehaviour
         DeckController.deckController.ResetCardValues();
         RelicController.relic.ResetRelics();
         TutorialController.tutorial.DestroyAndReset();
+        TutorialController.tutorial.ResetCompletedTutorialIDs();
 
         ReturnToMapScene();
     }

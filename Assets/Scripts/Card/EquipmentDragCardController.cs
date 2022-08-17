@@ -47,8 +47,8 @@ public class EquipmentDragCardController : DragController
         newLocation = offset + (Vector2)CameraController.camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         transform.position = newLocation;
 
-        CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3);
-        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
+        CollectionController.collectionController.SetSelectAreaWhiteOut(CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6);
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6)
             CollectionController.collectionController.ResetStatsTexts(thisEquip, false);
         else
             CollectionController.collectionController.ResetStatsTexts();
@@ -61,7 +61,7 @@ public class EquipmentDragCardController : DragController
 
         cardDisplay.cardSounds.PlayCastSound();
         cardDisplay.Hide();
-        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6)
         {
             CollectionController.collectionController.AddEquipment(thisEquip, thisCasterColor);
             CollectionController.collectionController.SetIsShowingCards(false);

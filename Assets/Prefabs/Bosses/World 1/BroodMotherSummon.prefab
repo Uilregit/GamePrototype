@@ -309,13 +309,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45db4310fa803f0428d3e9dd115ed650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityNames: []
-  abilitySprites: []
-  targetTypes: 
-  conditionTypes: 
-  triggerTypes: 
-  abilityTypes: 
-  abilityValue: 
+  abilityNames:
+  - Swiftness
+  abilitySprites:
+  - {fileID: 21300000, guid: 4d674a40d67d7bd4db63cfcfb8cfc586, type: 3}
+  targetTypes: 00000000
+  conditionTypes: 00000000
+  triggerTypes: e8030000
+  abilityTypes: 05000000
+  abilityValue: 01000000
 --- !u!114 &2180203252917503197
 MonoBehaviour:
   m_ObjectHideFlags: 0

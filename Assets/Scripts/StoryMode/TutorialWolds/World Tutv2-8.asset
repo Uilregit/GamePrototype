@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: World Tutv2-8
   m_EditorClassIdentifier: 
   roomName: World 1 Room 8
-  useDefaultCardsAndEquipments: 1
+  useDefaultCardsAndEquipments: 0
   setups:
   - {fileID: 11400000, guid: 26be3d0cec58cb34e83e24c0cd8d4b7b, type: 2}
   - {fileID: 11400000, guid: 4412c15ec48cfd4459759e6bbe5df4ce, type: 2}
@@ -21,8 +21,8 @@ MonoBehaviour:
   arenaSetup: {fileID: 0}
   challenges: 000000000a00000012040000
   valueType: 000000001400000014000000
-  challengeValues: 000000000c00000008000000
-  challengeComparisonType: 000000001400000000000000
+  challengeValues: 010000000c00000008000000
+  challengeComparisonType: 0a0000001400000000000000
   bestChallengeValues: 010000000200000004000000
   skipFinalRewards: 0
   allowRewardsRebuy: 0
@@ -46,3 +46,12 @@ MonoBehaviour:
   flavorText: No one dying after the Deckromancer killed Thanatos was cool and all
     but then the undead turned rampant and everthing started to smell...
   overrideColors: 000000000200000001000000
+  abilityNames:
+  - Shatter Time
+  abilitySprites:
+  - {fileID: 21300000, guid: 55e7a812efd0c134b9840d57296f91cc, type: 3}
+  targetTypes: 1e000000
+  conditionTypes: 00000000
+  triggerTypes: 05000000
+  abilityTypes: e7030000
+  abilityValue: 03000000

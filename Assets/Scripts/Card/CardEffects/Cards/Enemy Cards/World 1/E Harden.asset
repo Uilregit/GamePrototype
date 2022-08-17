@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: Gain +5 armor
+  description: Gain +3 armor
   art: {fileID: 21300000, guid: e9b2e6cc01eba1444be7ec8a9b6cea06, type: 3}
   castType: 1
   castShape: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   conditionValue: 00000000
   buff:
   - {fileID: 0}
-  effectValue: fbffffff
+  effectValue: fdffffff
   effectDuration: 01000000
   spawnObject:
   - {fileID: 0}

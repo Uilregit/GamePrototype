@@ -25,7 +25,7 @@ MonoBehaviour:
   startingComparisonType: 10
   OnStartUIReveal: 1
   endingCondition: 1001
-  endingValue: -1
+  endingValue: 30
   endingStringValue: 
   endingComparisonType: 30
   OnEndUIReveal: 1

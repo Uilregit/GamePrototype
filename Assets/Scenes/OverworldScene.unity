@@ -1110,13 +1110,13 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8231600189119494898, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -5.8
+    - target: {fileID: 8231600188673925148, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 8231600189119494898, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0.8
+    - target: {fileID: 8231600188673925148, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8231600189119494898, guid: dd82c6f0c62bcd64bbca3b0dd4f82341, type: 3}
       propertyPath: m_LocalScale.x

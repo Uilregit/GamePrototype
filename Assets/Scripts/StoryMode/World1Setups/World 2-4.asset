@@ -21,8 +21,8 @@ MonoBehaviour:
   arenaSetup: {fileID: 0}
   challenges: 000000001204000013040000
   valueType: 000000000a0000000a000000
-  challengeValues: 000000000500000064000000
-  challengeComparisonType: 000000000000000000000000
+  challengeValues: 010000000500000064000000
+  challengeComparisonType: 0a0000000000000000000000
   bestChallengeValues: ffffffffffffffffffffffff
   skipFinalRewards: 0
   allowRewardsRebuy: 0

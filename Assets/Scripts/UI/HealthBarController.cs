@@ -48,6 +48,8 @@ public class HealthBarController : MonoBehaviour
     [SerializeField]
     Text breakText;
     [SerializeField]
+    List<Image> breakCountdown;
+    [SerializeField]
     Text healthBarStatusText;
     //[SerializeField]
     //Image bonusHealthDamageBar;
@@ -120,6 +122,8 @@ public class HealthBarController : MonoBehaviour
     private StatusTypes[] statusPriority = new StatusTypes[] { StatusTypes.Stacked, StatusTypes.Stunned, StatusTypes.Silenced, StatusTypes.Disarmed, StatusTypes.Taunted };
     private Dictionary<StatusTypes, bool> currentStatusTypes = new Dictionary<StatusTypes, bool>();
 
+    private HealthController healthController = null;
+
     private bool raised = false;
     private bool positionSet = false;
 
@@ -150,6 +154,8 @@ public class HealthBarController : MonoBehaviour
 
         startingLocalPosition = healthBarObject.transform.localPosition;
 
+        healthController = transform.parent.parent.GetComponent<HealthController>();
+
         UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Armor, armorIcon.gameObject);
         UIRevealController.UIReveal.ReportElement(UIRevealController.UIElement.Armor, armorNumber.gameObject);
         //bonusHealthDamageBar.enabled = false;
@@ -175,6 +181,11 @@ public class HealthBarController : MonoBehaviour
             healthBarTicks.Add(temp.GetComponent<Image>());
             counter++;
         }
+    }
+
+    public void ResetBar(HealthController health)
+    {
+        SetBar(health.GetCurrentVit(), 0, 0, health.GetMaxVit() + health.GetEquipVit(), health.transform.position, 1, 1, 0, health.GetArmor() == 0);
     }
 
     public void SetBar(int initialHealth, int damage, int endOfTurnDamage, int maxHealth, Vector2 center, int size, float scale, int index, bool broken, bool permanent = false, bool simulated = false)
@@ -225,6 +236,7 @@ public class HealthBarController : MonoBehaviour
         if (initialHealth - damage - endOfTurnDamage > 0 || initialHealth > 0)  //If overkill, don't show any other bar
         {
             bonusHealthBar.rectTransform.localScale = new Vector2(bonusHealthPercentage, 1);
+
             bonusHealthBar.rectTransform.position = barImage.rectTransform.position + new Vector3((HPPercentage) * bonusHealthBar.rectTransform.sizeDelta.x, 0, 0) * size;
 
             damageBarImage.rectTransform.localScale = new Vector2(damagePercentage, 1);
@@ -305,9 +317,10 @@ public class HealthBarController : MonoBehaviour
     {
         healthBarObject.SetActive(true);
 
-        damageBarImage.transform.localScale = new Vector3(0, 1, 1);
-        damageOverTimeBarImage.transform.localScale = new Vector3(0, 1, 1);
-        bonusHealthBar.transform.localScale = new Vector3(0, 1, 1);
+        //damageBarImage.transform.localScale = new Vector3(0, 1, 1);
+        //damageOverTimeBarImage.transform.localScale = new Vector3(0, 1, 1);
+        //bonusHealthBar.transform.localScale = new Vector3(0, 1, 1);
+
         /*
         backImage.enabled = true;
         barImage.enabled = true;
@@ -578,7 +591,9 @@ public class HealthBarController : MonoBehaviour
 
     public void FadeInEffect(float alpha, float time)
     {
-        SpriteRenderer img = transform.parent.parent.GetComponent<HealthController>().charDisplay.passiveEffectAnim.GetComponent<SpriteRenderer>();
+        if (healthController == null)
+            healthController = transform.parent.parent.GetComponent<HealthController>();
+        SpriteRenderer img = healthController.charDisplay.passiveEffectAnim.GetComponent<SpriteRenderer>();
         StartCoroutine(FadeInEffect(img, alpha, img.color.a, time));
     }
 
@@ -631,7 +646,17 @@ public class HealthBarController : MonoBehaviour
         armorNumber.text = value.ToString();
         armorNumber.enabled = value > 0;
         armorIcon.enabled = value >= 0;
-        breakText.enabled = value == 0;
+        breakText.gameObject.SetActive(value == 0);
+        if (value == 0)
+        {
+            for (int i = 0; i < breakCountdown.Count; i++)
+            {
+                if (i < healthController.GetBrokenTurnsLeft())
+                    breakCountdown[i].color = armorBrokenColor;
+                else
+                    breakCountdown[i].color = Color.black;
+            }
+        }
 
         if (value > 0)
         {

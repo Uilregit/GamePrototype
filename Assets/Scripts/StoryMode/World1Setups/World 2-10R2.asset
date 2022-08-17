@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: World 2-10R2
   m_EditorClassIdentifier: 
   isBossRoom: 0
-  offerRewardGold: 1
-  offerRewardCards: 1
-  relicReward: 0
   roomName: World 2-10R2
   enemies:
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
@@ -32,6 +29,9 @@ MonoBehaviour:
   level5: 03000000000000000100000002000000010000000000000003000000
   level6: 00000000030000000000000000000000000000000300000000000000
   level7: 00000000000000000300000000000000030000000000000000000000
+  offerRewardGold: 1
+  offerRewardCards: 1
+  relicReward: 0
   overrideSingleGoalsSplashIndex: -1
   dialogues: []
   overlays: []
@@ -49,3 +49,4 @@ MonoBehaviour:
   endRoomUnlockChar: {fileID: 0}
   endRoomUnlockAbility: {fileID: 0}
   endRoomUnlockAbilityName: 
+  revealedUIElements: 

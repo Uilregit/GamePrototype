@@ -57,7 +57,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0157c8e37c695f347a46d1139ca0e844, type: 2}
   - {fileID: 11400000, guid: 3ca4048e1b12c5045a2030a88a8d9ae1, type: 2}
   - {fileID: 11400000, guid: 89aacd03862578742a80d27b3c21482d, type: 2}
-  - {fileID: 11400000, guid: 236adbb34c2dbcc4a839e7d6c85a033e, type: 2}
+  - {fileID: 11400000, guid: aea3c2b4c356b8647bc94c657e1f1b66, type: 2}
   overrideHandSize: 5
   overrideReplaces: 0
   overrideParty: 020000000100000000000000

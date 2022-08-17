@@ -206,7 +206,7 @@ public class CardDisplay : MonoBehaviour
 
     private IEnumerator FlipDownProcess(float duration)
     {
-        Quaternion originalRotation = transform.rotation;
+        Quaternion originalRotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, Mathf.RoundToInt(transform.rotation.eulerAngles.y / 180f) * 180, transform.rotation.eulerAngles.z));
         for (int i = 0; i < 10; i++)
         {
             transform.rotation = Quaternion.Lerp(originalRotation, originalRotation * Quaternion.Euler(new Vector3(0, 181, 0)), i / 9f);
@@ -557,7 +557,8 @@ public class CardDisplay : MonoBehaviour
         }
 
         //Formatting Codes for dynamic card text
-        string[] formattingCodes = new string[] { "cp", "ch", "ba", "bh", "ms", "es", "dm", "l", "d" };
+        Dictionary<string, int> formattingCodes = GetFormattingCodes();
+        List<string> formattingKeys = formattingCodes.Keys.ToList();
 
         if (dynamicNumbers)
         {
@@ -593,44 +594,16 @@ public class CardDisplay : MonoBehaviour
                 descriptionText = descriptionText.Replace(attackText, finalText);
             }
 
-            int dm = 0;
-            try { dm = card.FindCaster(thisCard.GetCard()).GetComponent<PlayerMoveController>().GetMovedDistance(); } catch { };
-
-            //Formatting Nums for dynamic card text
-            int[] formattingNums = new int[0];
-            try
-            {
-                formattingNums = new int[] { TurnController.turnController.GetNumerOfCardsPlayedInTurn(),
-                                               HandController.handController.GetHand().Count,
-                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusArmor(),
-                                               card.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusVit(),
-                                               TurnController.turnController.GetManaSpent(),
-                                               TurnController.turnController.GetEnergySpent(),
-                                               dm,
-                                               ResourceController.resource.GetNumberOfRevivesUsed(),
-                                               GameController.gameController.GetDoomCounter()};
-            }
-            catch
-            {
-                formattingNums = new int[] { 0,
-                                             0,
-                                             0,
-                                             0,
-                                             0,
-                                             0,
-                                             0,
-                                             0};
-            }
-            for (int i = 0; i < formattingCodes.Length; i++)
-                while (descriptionText.IndexOf("<%>".Replace("%", formattingCodes[i])) != -1)
+            for (int i = 0; i < formattingKeys.Count; i++)
+                while (descriptionText.IndexOf("<%>".Replace("%", formattingKeys[i])) != -1)
                 {
-                    int start = descriptionText.IndexOf("<%>".Replace("%", formattingCodes[i]));
-                    int end = descriptionText.IndexOf("</%>".Replace("%", formattingCodes[i]));
+                    int start = descriptionText.IndexOf("<%>".Replace("%", formattingKeys[i]));
+                    int end = descriptionText.IndexOf("</%>".Replace("%", formattingKeys[i]));
 
-                    string cardText = descriptionText.Substring(start, end - start + formattingCodes[i].Length + 3);
-                    string newCardText = cardText.Replace("x", formattingNums[i].ToString())
-                                                 .Replace("<%>".Replace("%", formattingCodes[i]), "")
-                                                 .Replace("</%>".Replace("%", formattingCodes[i]), "");
+                    string cardText = descriptionText.Substring(start, end - start + formattingKeys[i].Length + 3);
+                    string newCardText = cardText.Replace("x", formattingCodes[formattingKeys[i]].ToString())
+                                                 .Replace("<%>".Replace("%", formattingKeys[i]), "")
+                                                 .Replace("</%>".Replace("%", formattingKeys[i]), "");
 
                     descriptionText = descriptionText.Replace(cardText, newCardText);
                 }
@@ -673,12 +646,12 @@ public class CardDisplay : MonoBehaviour
             }
             description.text = description.text.Replace("<s>", "").Replace("</s>", "");
 
-            for (int i = 0; i < formattingCodes.Length; i++)
+            for (int i = 0; i < formattingKeys.Count; i++)
             {
-                int start = description.text.IndexOf("<%>".Replace("%", formattingCodes[i]));
-                int end = description.text.IndexOf("</%>".Replace("%", formattingCodes[i]));
+                int start = description.text.IndexOf("<%>".Replace("%", formattingKeys[i]));
+                int end = description.text.IndexOf("</%>".Replace("%", formattingKeys[i]));
                 if (start != -1)
-                    description.text = description.text.Replace(description.text.Substring(start, end - start + 3 + formattingCodes[i].Length), "");
+                    description.text = description.text.Replace(description.text.Substring(start, end - start + 3 + formattingKeys[i].Length), "");
             }
         }
 
@@ -782,9 +755,67 @@ public class CardDisplay : MonoBehaviour
                     break;
                 }
             }
+
+            //If the damage number is 0, and thus calculated from a get effect
+            if (output == 0)
+            {
+                Dictionary<string, int> formattingCodes = GetFormattingCodes();
+                List<string> formattingKeys = formattingCodes.Keys.ToList();
+                string descriptionText = thisCard.GetCard().description;
+                for (int i = 0; i < formattingKeys.Count; i++)
+                    if (descriptionText.IndexOf("<%>".Replace("%", formattingKeys[i])) != -1)
+                    {
+                        output = formattingCodes[formattingKeys[i]];
+                        break;
+                    }
+            }
         }
 
         return Mathf.Abs(output);
+    }
+
+    private Dictionary<string, int> GetFormattingCodes()
+    {
+        Dictionary<string, int> formattingCodes = new Dictionary<string, int>()
+            {
+                { "cp" , 0 },
+                { "ch", 0},
+                { "ba" , 0 },
+                { "bh", 0},
+                { "ms" , 0 },
+                { "es", 0},
+                { "dm" , 0 },
+                { "l", 0},
+                { "d" , 0 },
+                { "ar", 0},
+            };
+
+        try
+        {
+            int dm = 0;
+            try
+            {
+                dm = thisCard.FindCaster(thisCard.GetCard()).GetComponent<PlayerMoveController>().GetMovedDistance();
+            }
+            catch { };
+
+            formattingCodes = new Dictionary<string, int>()
+                {
+                    { "cp" , TurnController.turnController.GetNumerOfCardsPlayedInTurn() },
+                    { "ch", HandController.handController.GetHand().Count},
+                    { "ba" , thisCard.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusArmor() },
+                    { "bh", thisCard.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetBonusVit()},
+                    { "ms" , TurnController.turnController.GetManaSpent() },
+                    { "es", TurnController.turnController.GetEnergySpent()},
+                    { "dm" , dm },
+                    { "l", ResourceController.resource.GetNumberOfRevivesUsed()},
+                    { "d" , GameController.gameController.GetDoomCounter() },
+                    { "ar", thisCard.FindCaster(thisCard.GetCard()).GetComponent<HealthController>().GetArmor()},
+                };
+        }
+        catch { }
+
+        return formattingCodes;
     }
 
     public void SetConditionHighlight(bool value)

@@ -20,7 +20,15 @@ public class CombatIntroSplashController : MonoBehaviour
     public Text[] goalProgressTexts;
     public Image[] goalProgressBars;
     public Text[] goalCompletedTexts;
-
+    public Text[] goalFailedTexts;
+    public Image[] goalsCap;
+    public Image[] goalsCheckmark;
+    public Image[] goalsXMark;
+    [Header("Bottom Tray")]
+    public GameObject singleGoalsImage;
+    public GameObject trippleGoalsImage;
+    public Image singleGoals;
+    public List<Image> trippleGoals;
     [Header("Colors")]
     public Color redHighlight;
     public Color redLowlight;
@@ -28,6 +36,9 @@ public class CombatIntroSplashController : MonoBehaviour
     public Color greenLowlight;
     public Color purpleHighlight;
     public Color purpleLowlight;
+    public Color redBarColor;
+    public Color greenBarColor;
+    public Color yellowBarColor;
 
     [Header("Icons")]
     public Sprite exclamationIcon;
@@ -40,7 +51,11 @@ public class CombatIntroSplashController : MonoBehaviour
     public Image goalsButton;
 
     private List<bool> goalsCompleted = new List<bool> { false, false, false };
-    private List<bool> goalsCompletedThisRound = new List<bool> { false, false, false };
+    //private List<bool> goalsCompletedThisRound = new List<bool> { false, false, false };
+    private List<bool> goalsCompletedShouldAnimate = new List<bool> { false, false, false };
+    private List<bool> goalsFailed = new List<bool> { false, false, false };
+    //private List<bool> goalsFailedThisRound = new List<bool> { false, false, false };
+    private List<bool> goalsFailedShouldAnimate = new List<bool> { false, false, false };
     private List<float> originalGoalsPercentages = new List<float> { 0, 0, 0 };
 
     private bool skipPressed = false;
@@ -67,10 +82,25 @@ public class CombatIntroSplashController : MonoBehaviour
             img.color = GetHighlightColor(color);
         foreach (Image img in splashLowLights)
             img.color = GetLowlightColor(color);
+
+        singleGoalsImage.gameObject.SetActive(GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex != -1);
+        trippleGoalsImage.gameObject.SetActive(GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex == -1);
+
+        List<Image> achievementIcons = trippleGoals;
+        if (GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex != -1)
+            achievementIcons[GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex] = singleGoals;
+        StoryModeController.story.SetAchievementImages(achievementIcons);
+        StoryModeController.story.RefreshAchievementValues();
     }
 
-    public void SetGoalsImage(int index, Color goalIconColor, string goalDescription, string goalProcress, float goalProcessPercentage, bool goalSatisfied, bool isStartOfRound)
+    public void SetGoalsImage(int index, Color goalIconColor, string goalDescription, string goalProcress, float goalProcessPercentage, bool goalSatisfied, bool isStartOfRound, bool endOfRound)
     {
+        bool goalSatisfiedSaveGame = StoryModeController.story.ChallengeSatisfied(index);
+        StoryRoomSetup currentStoryRoomSetup = StoryModeController.story.GetCurrentRoomSetup();
+        int bestValue = currentStoryRoomSetup.GetBestValues(currentStoryRoomSetup.bestChallengeValues[index], AchievementSystem.achieve.GetChallengeValue(currentStoryRoomSetup.challenges[index]), index, currentStoryRoomSetup.challengeComparisonType[index]);
+        bool goalSatisfiedCurrently = StoryModeController.story.ChallengeSatisfied(index, bestValue);
+        StoryRoomSetup.ChallengeComparisonType comparisonType = StoryModeController.story.GetCurrentRoomSetup().challengeComparisonType[index];
+
         goalIcons[index].color = goalIconColor;
         goalTexts[index].text = goalDescription;
         goalProgressTexts[index].text = goalProcress;
@@ -78,16 +108,71 @@ public class CombatIntroSplashController : MonoBehaviour
 
         if (!isStartOfRound)
         {
+            /*
             if (goalSatisfied && !goalsCompleted[index])
                 goalsCompletedThisRound[index] = true;
+            if (!goalSatisfied && !goalsFailed[index])
+                goalsFailedThisRound[index] = true;
+            */
         }
         else
             originalGoalsPercentages[index] = goalProcessPercentage;
         goalsCompleted[index] = goalSatisfied;
+        goalsFailed[index] = !goalSatisfied;
+
+        switch (comparisonType)
+        {
+            case StoryRoomSetup.ChallengeComparisonType.GreaterThan:
+                {
+                    goalProgressBars[index].color = greenBarColor;
+                    goalsCap[index].gameObject.SetActive(true);
+                    goalsCheckmark[index].gameObject.SetActive(true);
+                    goalsXMark[index].gameObject.SetActive(false);
+                    break;
+                }
+            case StoryRoomSetup.ChallengeComparisonType.LessThan:
+                {
+                    goalProgressBars[index].color = redBarColor;
+                    goalsCap[index].gameObject.SetActive(true);
+                    goalsCheckmark[index].gameObject.SetActive(false);
+                    goalsXMark[index].gameObject.SetActive(true);
+                    break;
+                }
+            default:
+                {
+                    goalProgressBars[index].color = yellowBarColor;
+                    goalsCap[index].gameObject.SetActive(false);
+                    break;
+                }
+        }
+
+        goalCompletedTexts[index].gameObject.SetActive(false);
+        goalFailedTexts[index].gameObject.SetActive(false);
+
+        //Setting the complete and failed texts
+        if (goalSatisfiedSaveGame)
+        {
+            goalCompletedTexts[index].gameObject.SetActive(true);
+            goalFailedTexts[index].gameObject.SetActive(false);
+            goalsCompletedShouldAnimate[index] = true;
+            goalsFailedShouldAnimate[index] = false;
+        }
+        else if (GameController.gameController.GetIfBossRoom() && endOfRound)        //last room end of round
+        {
+            goalsCompletedShouldAnimate[index] = goalSatisfiedCurrently;
+            goalsFailedShouldAnimate[index] = !goalSatisfiedCurrently;
+        }
+        else
+        {
+            goalsCompletedShouldAnimate[index] = false;
+            goalsFailedShouldAnimate[index] = false;
+        }
     }
 
     public IEnumerator AnimateSplashImage(float duration = 2f)
     {
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(true);
+
         Vector3 originalPosition = new Vector3(-10, 0, 0);
         splashObject.transform.localPosition = originalPosition;
         splashObject.SetActive(true);
@@ -114,41 +199,126 @@ public class CombatIntroSplashController : MonoBehaviour
             yield return new WaitForSeconds(0.1f / 5);
         }
         splashObject.SetActive(false);
+
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(false);
     }
 
     public IEnumerator AnimateGoalsImage(float duration = 9999f)
     {
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(true);
+
         goalsButton.color = GameController.gameController.notYetDoneColor;
 
         //Animate the cards coming in
-        List<Vector3> originalPosition = new List<Vector3>() { new Vector3(-10, 0, 0), new Vector3(10, 0, 0), new Vector3(-10, 0, 0) };
+        List<Vector3> originalPosition = new List<Vector3>() { new Vector3(-10, goalObjects[0].transform.localPosition.y, 0), new Vector3(10, goalObjects[1].transform.localPosition.y, 0), new Vector3(-10, goalObjects[2].transform.localPosition.y, 0) };
         for (int index = 0; index < 3; index++)
         {
-            originalPosition[index] = new Vector3(originalPosition[index].x, goalObjects[index].transform.localPosition.y, 0);
-            goalObjects[index].transform.localPosition = originalPosition[index];
-            goalCompletedTexts[index].gameObject.SetActive(goalsCompleted[index] && !goalsCompletedThisRound[index]);
-            goalObjects[index].SetActive(true);
-            for (int i = 0; i < 5; i++)
-            {
-                goalObjects[index].transform.localPosition = Vector3.Lerp(originalPosition[index], new Vector3(0, originalPosition[index].y, 0), i / 4f);
-                yield return new WaitForSeconds(0.1f / 5);
-            }
+            yield return StartCoroutine(AnimateGoalSlideIn(index, originalPosition[index]));
         }
         yield return new WaitForSeconds(0.3f);
 
         //Animate the completed word if the goal was completed this round
         for (int index = 0; index < 3; index++)
         {
-            float newProgress = goalProgressBars[index].transform.localScale.x;
-            goalProgressBars[index].transform.localScale = new Vector3(originalGoalsPercentages[index], 1, 1);
+            yield return StartCoroutine(AnimateGoalComplete(index));
+        }
 
-            for (int i = 0; i < 5; i++)
-            {
-                goalProgressBars[index].transform.localScale = Vector3.Lerp(new Vector3(originalGoalsPercentages[index], 1, 1), new Vector3(newProgress, 1, 1), i / 4f);
-                yield return new WaitForSeconds(0.1f / 5);
-            }
+        //Wait till elapsed time has gone or skipped
+        skippingImage.gameObject.SetActive(true);
+        float startingTime = Time.time;
+        while (!skipPressed && Time.time - startingTime < duration * TimeController.time.timerMultiplier)
+            yield return new WaitForSeconds(0.1f);
+        skipPressed = false;
+        skippingImage.gameObject.SetActive(false);
 
-            if (goalsCompletedThisRound[index])
+        //Animate the card going back out
+        for (int index = 0; index < 3; index++)
+        {
+            yield return StartCoroutine(AnimateGoalSlideOut(index, originalPosition[index]));
+        }
+
+        goalsButton.color = GameController.gameController.doneColor;
+
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(false);
+    }
+
+    public IEnumerator AnimateSingleGoalsImage(int index, bool startOfRound, bool endOfRound, float duration = 9999f)
+    {
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(true);
+
+        goalsButton.color = GameController.gameController.notYetDoneColor;
+
+        SetGoalsImage(0, goalIcons[index].color, goalTexts[index].text, goalProgressTexts[index].text, goalProgressBars[index].transform.localScale.x, goalsCompleted[index], startOfRound, endOfRound);
+        Vector3 originalPosition = new Vector3(-10, 0, 0);
+        goalAdditionalTitles[0].text = "OPTIONAL GOAL";
+        goalObjects[0].SetActive(true);
+
+        //Animate the card coming in
+        yield return StartCoroutine(AnimateGoalSlideIn(0, originalPosition));
+
+        yield return new WaitForSeconds(0.3f);
+
+        //Animate the completed word if the goal was completed this round
+        yield return StartCoroutine(AnimateGoalComplete(0));
+
+        //Wait till elapsed time has gone or skipped
+        skippingImage.gameObject.SetActive(true);
+        float startingTime = Time.time;
+        while (!skipPressed && Time.time - startingTime < duration * TimeController.time.timerMultiplier)
+            yield return new WaitForSeconds(0.1f);
+        skipPressed = false;
+        skippingImage.gameObject.SetActive(false);
+
+        //Animate the card going back out
+        yield return StartCoroutine(AnimateGoalSlideOut(0, originalPosition));
+        goalAdditionalTitles[0].text = "OPTIONAL GOALS";
+
+        goalsButton.color = GameController.gameController.doneColor;
+
+        GameController.gameController.cutsceneCanvas.gameObject.SetActive(false);
+    }
+
+    private IEnumerator AnimateGoalSlideIn(int index, Vector2 originalPosition)
+    {
+        goalObjects[index].transform.localPosition = originalPosition;
+        goalObjects[index].SetActive(true);
+
+        //Animate the card coming in
+        for (int i = 0; i < 5; i++)
+        {
+            goalObjects[index].transform.localPosition = Vector3.Lerp(originalPosition, new Vector3(0, originalPosition.y, 0), i / 4f);
+            yield return new WaitForSeconds(0.1f / 5);
+        }
+    }
+
+    private IEnumerator AnimateGoalSlideOut(int index, Vector2 originalPosition)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            goalObjects[index].transform.localPosition = Vector3.Lerp(new Vector3(0, goalObjects[index].transform.localPosition.y, 0), originalPosition, i / 4f);
+            yield return new WaitForSeconds(0.1f / 5);
+        }
+        goalObjects[index].SetActive(false);
+    }
+
+    private IEnumerator AnimateGoalComplete(int index)
+    {
+        //Reset the goals progress to it's original size
+        float newProgress = goalProgressBars[index].transform.localScale.x;
+        goalProgressBars[index].transform.localScale = new Vector3(originalGoalsPercentages[index], 1, 1);
+
+        //Animate the goals 
+        for (int i = 0; i < 5; i++)
+        {
+            goalProgressBars[index].transform.localScale = Vector3.Lerp(new Vector3(originalGoalsPercentages[index], 1, 1), new Vector3(newProgress, 1, 1), i / 4f);
+            yield return new WaitForSeconds(0.1f / 5);
+        }
+
+        //Animate the COMPLETE or FAILED texts
+        if (!goalCompletedTexts[index].gameObject.active && !goalFailedTexts[index].gameObject.active)  //If neither COMPLETE or FAILED text is already shown
+        {
+            //Animate the COMPLETE text
+            if (goalsCompletedShouldAnimate[index])
             {
                 Vector3 originalScale = goalCompletedTexts[index].transform.localScale;
                 goalCompletedTexts[index].transform.localScale = originalScale * 3;
@@ -159,89 +329,19 @@ public class CombatIntroSplashController : MonoBehaviour
                     yield return new WaitForSeconds(0.1f / 5);
                 }
             }
-        }
-
-        //Wait till elapsed time has gone or skipped
-        skippingImage.gameObject.SetActive(true);
-        float startingTime = Time.time;
-        while (!skipPressed && Time.time - startingTime < duration * TimeController.time.timerMultiplier)
-            yield return new WaitForSeconds(0.1f);
-        skipPressed = false;
-        skippingImage.gameObject.SetActive(false);
-
-        //Animate the card going back out
-        for (int index = 0; index < 3; index++)
-        {
-            for (int i = 0; i < 5; i++)
+            //Animate the FAILED text
+            if (goalsFailedShouldAnimate[index])
             {
-                goalObjects[index].transform.localPosition = Vector3.Lerp(new Vector3(0, originalPosition[index].y, 0), originalPosition[index], i / 4f);
-                yield return new WaitForSeconds(0.1f / 5);
-            }
-            goalObjects[index].SetActive(false);
-        }
-
-        goalsButton.color = GameController.gameController.doneColor;
-    }
-
-    public IEnumerator AnimateSingleGoalsImage(int index, float duration = 9999f)
-    {
-        goalsButton.color = GameController.gameController.notYetDoneColor;
-
-        float newProgress = goalProgressBars[index].transform.localScale.x;
-        goalProgressBars[index].transform.localScale = new Vector3(originalGoalsPercentages[index], 1, 1);
-
-        SetGoalsImage(0, goalIcons[index].color, goalTexts[index].text, goalProgressTexts[index].text, goalProgressBars[index].transform.localScale.x, goalsCompleted[index], false);
-        Vector3 originalPosition = new Vector3(-10, 0, 0);
-        goalObjects[0].transform.localPosition = originalPosition;
-        goalCompletedTexts[0].gameObject.SetActive(goalsCompleted[0] && !goalsCompletedThisRound[0]);
-        goalAdditionalTitles[0].text = "OPTIONAL GOAL";
-        goalObjects[0].SetActive(true);
-
-        //Animate the card coming in
-        for (int i = 0; i < 5; i++)
-        {
-            goalObjects[0].transform.localPosition = Vector3.Lerp(originalPosition, Vector3.zero, i / 4f);
-            yield return new WaitForSeconds(0.1f / 5);
-        }
-        yield return new WaitForSeconds(0.3f);
-
-        for (int i = 0; i < 5; i++)
-        {
-            goalProgressBars[index].transform.localScale = Vector3.Lerp(new Vector3(originalGoalsPercentages[index], 1, 1), new Vector3(newProgress, 1, 1), i / 4f);
-            yield return new WaitForSeconds(0.1f / 5);
-        }
-
-        //Animate the completed word if the goal was completed this round
-        if (goalsCompletedThisRound[index])
-        {
-            Vector3 originalScale = goalCompletedTexts[0].transform.localScale;
-            goalCompletedTexts[0].transform.localScale = originalScale * 3;
-            goalCompletedTexts[0].gameObject.SetActive(true);
-            for (int i = 0; i < 5; i++)
-            {
-                goalCompletedTexts[0].transform.localScale = Vector3.Lerp(originalScale * 3, originalScale, i / 4f);
-                yield return new WaitForSeconds(0.1f / 5);
+                Vector3 originalScale = goalFailedTexts[index].transform.localScale;
+                goalFailedTexts[index].transform.localScale = originalScale * 3;
+                goalFailedTexts[index].gameObject.SetActive(true);
+                for (int i = 0; i < 5; i++)
+                {
+                    goalFailedTexts[index].transform.localScale = Vector3.Lerp(originalScale * 3, originalScale, i / 4f);
+                    yield return new WaitForSeconds(0.1f / 5);
+                }
             }
         }
-
-        //Wait till elapsed time has gone or skipped
-        skippingImage.gameObject.SetActive(true);
-        float startingTime = Time.time;
-        while (!skipPressed && Time.time - startingTime < duration * TimeController.time.timerMultiplier)
-            yield return new WaitForSeconds(0.1f);
-        skipPressed = false;
-        skippingImage.gameObject.SetActive(false);
-
-        //Animate the card going back out
-        for (int i = 0; i < 5; i++)
-        {
-            goalObjects[0].transform.localPosition = Vector3.Lerp(Vector3.zero, originalPosition, i / 4f);
-            yield return new WaitForSeconds(0.1f / 5);
-        }
-        goalObjects[0].SetActive(false);
-        goalAdditionalTitles[0].text = "OPTIONAL GOALS";
-
-        goalsButton.color = GameController.gameController.doneColor;
     }
 
     public void ShowGoalsButtonPressed()
@@ -249,7 +349,7 @@ public class CombatIntroSplashController : MonoBehaviour
         if (GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex == -1)
             StartCoroutine(AnimateGoalsImage());
         else
-            StartCoroutine(AnimateSingleGoalsImage(GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex));
+            StartCoroutine(AnimateSingleGoalsImage(GameController.gameController.GetRoomSetup().overrideSingleGoalsSplashIndex, false, false));
     }
 
     private Color GetHighlightColor(colors c)

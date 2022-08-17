@@ -392,29 +392,11 @@ public class CardController : MonoBehaviour
         if (thisCard.casterColor == Card.CasterColor.Enemy)   //If it's an enemy card, return caster stored in the card
             return caster;
 
-        List<GameObject> players = GameController.gameController.GetLivingPlayers(); //Else return caster based on color. Will have to change if more colored players are added
-        players.AddRange(GameController.gameController.GetDeadPlayers());            //Also include dead chars for resurrect casting
+        try
+        {
+            List<GameObject> players = GameController.gameController.GetLivingPlayers(); //Else return caster based on color. Will have to change if more colored players are added
+            players.AddRange(GameController.gameController.GetDeadPlayers());            //Also include dead chars for resurrect casting
 
-        try     //Multiplayer
-        {
-            players[0].GetComponent<PlayerController>().GetColorTag();
-        }
-        catch
-        {
-            caster = players[0];
-            foreach (GameObject player in players)
-            {
-                if (player.GetComponent<MultiplayerPlayerController>().GetColorTag() == thisCard.casterColor)
-                {
-                    caster = player;
-                    casterHealthController = player.GetComponent<HealthController>();
-                }
-            }
-            return caster;
-        }
-
-        try //Singleplayer
-        {
             caster = players[0];
             foreach (GameObject player in players)
             {

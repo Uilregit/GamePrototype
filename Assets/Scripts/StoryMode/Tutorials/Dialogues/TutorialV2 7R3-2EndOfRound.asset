@@ -16,12 +16,12 @@ MonoBehaviour:
   condition: 10011
   conditionValue: 1
   comparisonType: 10
-  speaker: 000000000000000000000000
-  emoticon: c8000000c900000000000000
+  speaker: 0000000000000000000000000000000000000000
+  emoticon: c8000000c9000000010000000000000002000000
   texts:
-  - So Chaos gonna run a shop... Huh... Don't think anyone else takes this type of
-    money.
+  - 'So Chaos'' gonna run a shop... '
+  - Huh... Don't think anyone else takes this type of money.
   - I mean if anyone is going to be a racketeer and run a company store, it'll be
     them...
-  - They'll only sell the orange items to those who entertained them enough through
-    <b>optional objectives.</b>
+  - They'll only sell the orange items to those who entertained them enough.
+  - So try to achieve those <b>optional objectives.</b>

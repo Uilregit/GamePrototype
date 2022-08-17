@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class NewAbilitiesMenu : MonoBehaviour
 {
+    public GameObject abilitiesMenu;
+
     public Text title;
     public Image lightRays1;
     public Image lightRays2;
@@ -48,7 +50,7 @@ public class NewAbilitiesMenu : MonoBehaviour
         thisCharacter = characterSprite;
     }
 
-    public void SetAbility (Sprite img, string ablName)
+    public void SetAbility(Sprite img, string ablName)
     {
         thisAbility = img;
         thisAbilityName = ablName;
@@ -56,9 +58,11 @@ public class NewAbilitiesMenu : MonoBehaviour
 
     public void StartDisplaying()
     {
+        GameController.gameController.rewardCanvas.gameObject.SetActive(true);
+        abilitiesMenu.SetActive(true);
+
         if (thisAbility != null)
         {
-            Debug.Log("Displaying new ability");
             title.text = "New Ability!";
             abilityName.text = thisAbilityName;
             abilityName.gameObject.SetActive(true);
@@ -99,7 +103,7 @@ public class NewAbilitiesMenu : MonoBehaviour
 
     private IEnumerator ZoomIn()
     {
-        for(int i = 0; i < 5; i ++)
+        for (int i = 0; i < 5; i++)
         {
             transform.localScale = Vector3.Lerp(new Vector3(0, 0, 1), new Vector3(1, 1, 1), i / 4);
             yield return new WaitForSecondsRealtime(0.3f / 5f);
@@ -111,6 +115,10 @@ public class NewAbilitiesMenu : MonoBehaviour
         if (thisCard != null)
             StartDisplaying();
         else
+        {
             GameController.gameController.FinishRoomAndExit(RewardsMenuController.RewardType.BypassRewards, 0);
+            abilitiesMenu.SetActive(false);
+            GameController.gameController.rewardCanvas.gameObject.SetActive(false);
+        }
     }
 }

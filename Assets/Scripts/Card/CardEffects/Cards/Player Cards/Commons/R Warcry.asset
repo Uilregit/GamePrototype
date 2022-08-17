@@ -22,7 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 0
-  description: Force <b>ALL</b> enemies in 1 radius to attack you for 2 turns
+  description: For 2 turns, <b>Taunt</b> <b>ALL</b> enemies in 1 radius around you,
+    and force them to use their card on you
   art: {fileID: 21300000, guid: a91b8c7f9771d5a439ac0accbbc91918, type: 3}
   castType: 5
   castShape: 0

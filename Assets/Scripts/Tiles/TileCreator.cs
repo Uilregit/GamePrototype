@@ -155,6 +155,7 @@ public class TileCreator : MonoBehaviour
         dangerAreaTiles = new Dictionary<Vector2, Tile>();
         foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
         {
+            enemy.GetEnemyInformationController().RefreshIntent();
             dangerAreaPositions.AddRange(enemy.GetEnemyInformationController().GetAttackableLocations());
         }
         dangerAreaPositions = dangerAreaPositions.Distinct().ToList();
@@ -186,6 +187,7 @@ public class TileCreator : MonoBehaviour
         selectedEnemies = aliveEnemies;
         foreach (EnemyController enemy in selectedEnemies)
         {
+            enemy.GetEnemyInformationController().RefreshIntent();
             selectedEnemiesDangerAreaPositions.AddRange(enemy.GetEnemyInformationController().GetAttackableLocations());
         }
         selectedEnemiesDangerAreaPositions = selectedEnemiesDangerAreaPositions.Distinct().ToList();
@@ -206,12 +208,16 @@ public class TileCreator : MonoBehaviour
         if (selectedEnemies.Contains(enemy))
         {
             selectedEnemies.Remove(enemy);
-            enemy.GetHealthController().charDisplay.sprite.color = Color.white;
+            enemy.GetHealthController().charDisplay.sprite.material = new Material(enemy.GetHealthController().charDisplay.sprite.material);
+            enemy.GetHealthController().charDisplay.sprite.material.SetFloat("_OutlineThickness", 0);
+            //enemy.GetHealthController().charDisplay.sprite.color = Color.white;
         }
         else
         {
             selectedEnemies.Add(enemy);
-            enemy.GetHealthController().charDisplay.sprite.color = Color.red;
+            enemy.GetHealthController().charDisplay.sprite.material = new Material(enemy.GetHealthController().charDisplay.sprite.material);
+            enemy.GetHealthController().charDisplay.sprite.material.SetFloat("_OutlineThickness", 2);
+            //enemy.GetHealthController().charDisplay.sprite.color = Color.red;
         }
 
         RefreshSelectedEnemiesDangerArea();

@@ -22,6 +22,6 @@ MonoBehaviour:
   - '<b>Your health does not heal between rounds.</b> '
   - If any of your health falls to 0, that person is out. If you're all out, you're
     done.
-  - Cards on the table, me smash things in here isn't working great and I don't have
-    backups for you guys...
+  - Cards on the table, me smash things in here isn't working and I don't have backups
+    for you guys...
   - So not that y'alls were thrilled about dying before, but, you know, heal up.

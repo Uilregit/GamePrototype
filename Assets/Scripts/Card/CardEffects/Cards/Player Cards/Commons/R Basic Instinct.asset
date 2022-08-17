@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 1
   casterColor: 0
-  description: All enemies in 1 radius loose ATK equal to your armor this turn
+  description: This turn, all enemies in 1 radius loose ATK equal to your armor
   art: {fileID: 21300000, guid: 53b6c90b071b83a48857b0c87708176e, type: 3}
   castType: 5
   castShape: 0

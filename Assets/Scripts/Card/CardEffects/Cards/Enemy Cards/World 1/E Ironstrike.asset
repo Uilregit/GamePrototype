@@ -22,19 +22,20 @@ MonoBehaviour:
   range: 1
   radius: 0
   casterColor: 6
-  description: Deal <s>100% of ATK as</s> damage and gain +1 armor
+  description: Deal damage equal to your armor|<ar>(x damage)</ar>
   art: {fileID: 21300000, guid: e9b2e6cc01eba1444be7ec8a9b6cea06, type: 3}
   castType: 2
   castShape: 0
-  targetType: 0100000002000000
-  cardEffectName: 000000000a000000
-  hitEffect: 64000000c8000000
-  soundEffect: 0200000096000000
+  targetType: 0200000001000000
+  cardEffectName: 0a02000000000000
+  hitEffect: 3f420f0064000000
+  soundEffect: 0000000001000000
   conditionType: 0000000000000000
   conditionValue: 0000000000000000
   buff:
   - {fileID: 0}
-  effectValue: 64000000ffffffff
+  - {fileID: 0}
+  effectValue: 0000000000000000
   effectDuration: 0000000000000000
   spawnObject:
   - {fileID: 0}

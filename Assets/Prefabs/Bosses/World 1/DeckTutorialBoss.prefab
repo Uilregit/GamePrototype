@@ -61,7 +61,7 @@ MonoBehaviour:
   maxVit: 70
   vitVariate: 1
   startingArmor: 6
-  attack: 14
+  attack: 8
   moveRange: 4
   randomStartRange: 0
   attacksPerTurn: 2

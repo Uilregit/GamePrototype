@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 5
-  description: Target's bonus health does not reset for the next 3 turns
+  description: For 3 turns, target's bonus health does not reset
   art: {fileID: 21300000, guid: b943939e1b47ec14ba1f89ee46a8e609, type: 3}
   castType: 0
   castShape: 0

@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 1
-  description: All mana cards cost 1 less this turn
+  description: This turn, all mana cards cost 1 less
   art: {fileID: 21300000, guid: 85139de0829d20440a81c9d2a31406bb, type: 3}
   castType: 3
   castShape: 0

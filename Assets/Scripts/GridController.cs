@@ -83,6 +83,12 @@ public class GridController : MonoBehaviour
                     o.GetComponent<Collider2D>().enabled = true;
                 else
                     o.GetComponent<Collider2D>().enabled = false;
+        else if (objects[xLoc + xOffset, yLoc + yOffset].Count == 1)
+            try
+            {
+                objects[xLoc + xOffset, yLoc + yOffset][0].GetComponent<Collider2D>().enabled = true;
+            }
+            catch { }
 
         if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
         {
@@ -92,28 +98,10 @@ public class GridController : MonoBehaviour
                 TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemiesStacked, enemyCount);
         }
 
-        /*
-        if (objects[xLoc + xOffset, yLoc + yOffset].Count > 1)
+        try         //If enemies are moved during the player turn, refresh the danger area
         {
-            Vector3 jitterVec = (Vector3)Random.insideUnitCircle * jitter;
-            try
-            {
-                obj.GetComponent<PlayerController>().sprite.transform.position = obj.transform.position + jitterVec;
-                obj.GetComponent<PlayerController>().shadow.transform.position = obj.transform.position + jitterVec;
-            }
-            catch
-            {
-                obj.GetComponent<EnemyController>().sprite.transform.position = obj.transform.position + jitterVec;
-                obj.GetComponent<EnemyController>().shadow.transform.position = obj.transform.position + jitterVec;
-            }
-        }
-        */
-        try
-        {
-            GetComponent<MultiplayerGridController>().SetGrid(objects);
-            //MultiplayerInformationController.player.DebugReportGrid(DebugGrid(), MultiplayerInformationController.player.GetPlayerNumber());
-            int playerNumber = ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().GetPlayerNumber();
-            ClientScene.localPlayer.GetComponent<MultiplayerInformationController>().ReportGrid(GetComponent<MultiplayerGridController>().GetGrid(), playerNumber);
+            if (TurnController.turnController.GetIsPlayerTurn() && !obj.GetComponent<HealthController>().isPlayer)
+                TileCreator.tileCreator.RefreshDangerArea();
         }
         catch { }
     }

@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 0
-  description: Target looses 2 armor at the end of the next 3 turns
+  description: 'At the end of the next 3 turns, target looses 2 armor '
   art: {fileID: 21300000, guid: 29721610301092f4bb807cbce4bc1b0d, type: 3}
   castType: 0
   castShape: 0

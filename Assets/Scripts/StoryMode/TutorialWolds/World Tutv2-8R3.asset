@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a70a5121bdc94e4ebd56a6f122e196d, type: 3}
   m_Name: World Tutv2-8R3
   m_EditorClassIdentifier: 
-  isBossRoom: 0
+  isBossRoom: 1
   roomName: World Tutv2-8R3
   enemies:
   - {fileID: 3199024419837817711, guid: 7b6c4a9ea5bbcc7479e39678e4104211, type: 3}

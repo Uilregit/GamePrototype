@@ -1298,12 +1298,18 @@ Fixed bugs where trigger type none buffs never got reverted
             When cast diagonally, the knockback will be diagonal
 
 -- Equipment --
+    - Force Staff -
+        No longer force attached card to cast in a + shape
 
 -- Highlights --
 Added improved UI and animations for draw and discard piles
 
 -- Enemies --
-
+    - Deer -
+        - Harden -
+            Gain +5 armor --> gain +3 armor
+        - Iron Strike -
+            Deal 100% of ATK as damage and gain 1 armor --> Deal damage equal to your armor
 -- Pacing --
 
 -- System --
@@ -1314,6 +1320,10 @@ Targeted AoE keyword renamed to Targeted Area
 Before Intents are unlocked, enemies will always target a random player at the start of their turn
 Enemies can now phase through each other during their turn
     Enemies will still only stop on empty locations
+Certain cutscenes are now using the timeline feature for future editing
+Dead allies will now rez with 1 health between rounds
+Bosses now grant their passives to all normal enemies before their room
+Boss rooms now grant 50 gold upon completion
 
 -- UI --
 Added menu for new abilities and new chars at the end of rooms
@@ -1353,6 +1363,15 @@ Added UI for bonus attack on characters
 Recolored combat stats to be blue for players, red for enemies
 Combat arrows now show what percentage of the card's damage is blocked
 Story mode scene now will not have items view for rooms with no items to buy
+Added visual effects for breaking characters
+Updated the visuals of the collection manager
+There will now be slight delays between consecutive popup tutorials for clarity
+Added UI to indicate how many more turns a character will remain broken
+Optional goals progress icons moved from top right to lower left
+Updated UI for all of the storymode menu scene
+Improved card dynamic numbers pull algorithm
+Combat stats can now show multiple intents
+Optional goal progress will now show you if a goal is COMPLETED or FAILED
 
 -- Bugs --
 Fixed bug where turn based goals weren't reported on the last turn
@@ -1379,6 +1398,17 @@ Fixed bug where enemy gravity effects will be cast at a range larger than their 
 Fixed bug where stacked players being moved won't get rid of the stacked status text
 Fixed bug where healing wasn't showing up in the damage preview bar
 Fixed bug where victory healing didn't heal the health bar
+Fixed bug where overhealth didn't reset at the end of the turn in the health bar
+Fixed bug where stolen cards with self effects not applying to self
+Fixed bug where enemy cards dealing damage/healing will not show on the target's health bar correctly
+Fixed bug where enemy cards casting on self not showing the correct target in combat previews
+Fixed bug where player can replace cards on the enemy turn
+Fixed bug where knockback effects not refreshing enemy danger areas
+Fixed bug where moverange buffs not refreshing enemy danger areas
+Fixed bug where swaps and teleports are not refreshing enemy danger areas
+Fixed bug where enemies with 2+ cards per turn move more squares than their moverange allows
+Fixed bug where clicking cards in the collection would equip them
+Fixed bug where cards shuffled to the draw pile didn't visually shuffle to the draw pile
 
 ##########
 

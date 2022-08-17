@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 3
-  description: Deal 3 damage for every mana spent this turn in a single burst<ms>|(x
+  description: Deal 3 damage for every mana spent this turn in a single strike<ms>|(x
     mana spent)</ms>
   art: {fileID: 21300000, guid: d01733078fc5bc740bbd235c4049a1fc, type: 3}
   castType: 0

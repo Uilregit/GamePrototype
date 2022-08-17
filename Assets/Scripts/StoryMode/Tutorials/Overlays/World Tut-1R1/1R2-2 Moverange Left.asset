@@ -20,7 +20,7 @@ MonoBehaviour:
   slowDuration: 0
   overlay: {fileID: 2595041317568353481, guid: 306481034f752234799c651e797447ec, type: 3}
   startingCondition: 1001
-  startingValue: -1
+  startingValue: 30
   startingStringValue: 
   startingComparisonType: 30
   OnStartUIReveal: 1

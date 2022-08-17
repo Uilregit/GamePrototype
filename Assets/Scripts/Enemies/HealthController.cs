@@ -544,8 +544,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (stunned)
             try
             {
-                GetComponent<EnemyInformationController>().HideIntent();
-                TileCreator.tileCreator.RefreshDangerArea();
+                if (!isSimulation)
+                {
+                    GetComponent<EnemyInformationController>().HideIntent();
+                    TileCreator.tileCreator.RefreshDangerArea();
+                }
             }
             catch { }
     }
@@ -568,7 +571,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetSilenced(bool state)
     {
         silenced = state;
-        TileCreator.tileCreator.RefreshDangerArea();
+        if (!isSimulation)
+            TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public bool GetSilenced()
@@ -589,7 +593,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     public void SetDisarmed(bool state)
     {
         disarmed = state;
-        TileCreator.tileCreator.RefreshDangerArea();
+        if (!isSimulation)
+            TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public bool GetDisarmed()
@@ -629,8 +634,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
     private void ResetVitText(int value)
     {
+        if (isSimulation)
+            return;
         charDisplay.vitText.text = value.ToString();
         charDisplay.healthBar.SetHealth(value);
+        charDisplay.healthBar.ResetBar(this);
         if (value > maxVit + equipVit)
             charDisplay.vitText.GetComponent<Outline>().effectColor = new Color(0, 1, 0, 0.5f);
         else if (value == maxVit + equipVit)
@@ -645,15 +653,15 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         charDisplay.healthBar.SetArmor(value);
         if (value == 0)
         {
-            charDisplay.sprite.material = new Material(charDisplay.sprite.material);
-            charDisplay.sprite.material.SetFloat("_OutlineThickness", 2);
-            //charDisplay.sprite.color = Color.red;
+            //charDisplay.sprite.material = new Material(charDisplay.sprite.material);
+            //charDisplay.sprite.material.SetFloat("_OutlineThickness", 2);
+            charDisplay.sprite.color = Color.red;
         }
         else
         {
-            charDisplay.sprite.material = new Material(charDisplay.sprite.material);
-            charDisplay.sprite.material.SetFloat("_OutlineThickness", 0);
-            //charDisplay.sprite.color = Color.white;
+            //charDisplay.sprite.material = new Material(charDisplay.sprite.material);
+            //charDisplay.sprite.material.SetFloat("_OutlineThickness", 0);
+            charDisplay.sprite.color = Color.white;
         }
         if (bonusArmor == 0)
             charDisplay.armorText.GetComponent<Outline>().effectColor = new Color(0, 0, 0, 0.5f);
@@ -701,6 +709,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
             if (multiplier == 0)
                 damage = 0;
+
+            if (damage > 0 && !UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Overkill))
+                damage = Mathf.Min(damage, GetVit());
 
             if (damage != 0)
             {
@@ -796,8 +807,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 if (!isSimulation)
                 {
                     charDisplay.onHitSoundController.PlayArmorSound(Card.SoundEffect.ArmorBreak, 0);
-
                     charDisplay.healthBar.SetStatusText("Broken", new Color(255, 102, 0));
+                    GameController.gameController.ShowBreakHighlight(transform.position);
+
                     if (!isPlayer)
                     {
                         AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.BreakEnemies);
@@ -857,9 +869,13 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
     //Simply remove value from health
     public void TakePiercingDamage(int value, HealthController attacker, List<BuffFactory> traceList = null, List<Relic> relicTrace = null)
     {
-        int oldHealth = currentVit + bonusVit;
-        int damage = 0;
-        if (value > 0)
+        int oldHealth = GetVit();
+        int damage = value;
+
+        if (damage > 0 && !UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Overkill))
+            damage = Mathf.Min(damage, GetVit());
+
+        if (damage > 0)
         {
             damage = value;
             foreach (int i in vitDamageMultipliers)
@@ -891,7 +907,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             else
                 damageTakenAttemptedRecord[value] = 1;
         }
-        ResetVitText(currentVit + bonusVit);
+        //ResetVitText(currentVit + bonusVit);
 
         OnDamage(attacker, damage, oldHealth, traceList);
     }
@@ -985,7 +1001,9 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 yield return StartCoroutine(LerpToPosition(transform.position, knockedToCenter, 0.05f * TimeController.time.timerMultiplier));
             }
             else
+            {
                 transform.position = new Vector3(knockedToCenter.x, knockedToCenter.y, transform.position.z);
+            }
 
             try
             {
@@ -1023,6 +1041,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             yield return new WaitForSeconds(duration / 3f);
         }
         transform.position = endingLoc;
+        if (!isSimulation)
+            TileCreator.tileCreator.RefreshDangerArea();
     }
 
     public void ApplyKnockBackBuffs(List<Vector2> aboutToBePositions)
@@ -1208,8 +1228,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         {
             if (currentArmor < startingArmor && GetCurrentVit() > 0)        //Trigger break recovery only if the character is not dead
             {
-                charDisplay.hitEffectAnim.SetTrigger("BreakRecovery");
-                SetStartingArmor(startingArmor);
+                StartCoroutine(BreakRecoveryProcess());
                 TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.BreakRecovery, 1);
             }
             else
@@ -1218,8 +1237,29 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
                 ResetArmorText(currentArmor);
             }
         }
-        else if (GetCurrentArmor() == 0 && GetCurrentVit() > 0)
+        else if (GetArmor() == 0 && GetCurrentVit() > 0)
+        {
+            charDisplay.healthBar.SetArmor(0);
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.Break2ndTurn, 1);
+        }
+    }
+
+    private IEnumerator BreakRecoveryProcess()
+    {
+        charDisplay.healthBar.SetArmor(0);
+        yield return new WaitForSeconds(0.3f);
+        charDisplay.hitEffectAnim.SetTrigger("BreakRecovery");
+        SetStartingArmor(startingArmor);
+    }
+
+    public int GetBrokenTurnsLeft()
+    {
+        return maxBrokenTurns - currentBrokenTurns;
+    }
+
+    public int GetMaxBrokenTurns()
+    {
+        return maxBrokenTurns;
     }
 
     public void AtStartOfTurn()
@@ -1314,7 +1354,8 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
             TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.EnemyOverkill, GetCurrentVit());
 
         GridController.gridController.ResetOverlapOrder(transform.position);
-        TileCreator.tileCreator.RefreshDangerArea();
+        if (!isSimulation)
+            TileCreator.tileCreator.RefreshDangerArea();
     }
 
     private void ShowArmorDamageNumber(int armorDamage)
@@ -1405,7 +1446,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
 
         charDisplay.healthBar.SetBar(oldHealth, damage, maxEndOfTurnDamage, maxVit + equipVit, center, maxSize, maxSize / size, GridController.gridController.GetIndexAtPosition(this.gameObject, transform.position), GetArmor() == 0, simulated, simulated);
         charDisplay.healthBar.SetArmor(simHlthController.GetArmor());
-        charDisplay.healthBar.SetHealth(simHlthController.GetVit());
+        charDisplay.healthBar.SetHealth(oldHealth - damage);
         ReturnSimulatedCharacter();
     }
 
@@ -1527,7 +1568,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (isSimulation && originalHealthController != null)
             sprite = originalHealthController.charDisplay.sprite.sprite;
 
-        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit(), damage, GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), GetMoveRangeLeft(), maxMoveRange + bonusMoveRange, refresh);
+        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit() + GetEquipVit(), damage, GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), GetMoveRangeLeft(), maxMoveRange + bonusMoveRange, refresh);
         UIController.ui.combatStats.SetStatusEnabled(index, true);
     }
 

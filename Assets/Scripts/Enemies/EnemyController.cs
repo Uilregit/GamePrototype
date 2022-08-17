@@ -90,6 +90,20 @@ public class EnemyController : MonoBehaviour
         healthController.SetMaxMoveRange(moveRange);
         healthController.SetCurrentMoveRange(moveRange, false);
 
+        AbilitiesController abilityController = GetComponent<AbilitiesController>();
+        //Setting up boss passive abilities if applicable (non abilitied, non boss enemies in setups with abilities)
+        if (StoryModeController.story.GetCurrentRoomSetup().abilityNames.Count > 0 && abilityController.abilityNames.Count == 0 && !RoomController.roomController.GetCurrentRoomSetup().isBossRoom)
+        {
+            abilityController.abilityNames.AddRange(StoryModeController.story.GetCurrentRoomSetup().abilityNames);
+            abilityController.abilitySprites.AddRange(StoryModeController.story.GetCurrentRoomSetup().abilitySprites);
+            abilityController.targetTypes.AddRange(StoryModeController.story.GetCurrentRoomSetup().targetTypes);
+            abilityController.conditionTypes.AddRange(StoryModeController.story.GetCurrentRoomSetup().conditionTypes);
+            abilityController.triggerTypes.AddRange(StoryModeController.story.GetCurrentRoomSetup().triggerTypes);
+            abilityController.abilityTypes.AddRange(StoryModeController.story.GetCurrentRoomSetup().abilityTypes);
+            abilityController.abilityValue.AddRange(StoryModeController.story.GetCurrentRoomSetup().abilityValue);
+            abilityController.TriggerAbilities(AbilitiesController.TriggerType.OnSpawn);
+        }
+
         enemyInformation = GetComponent<EnemyInformationController>();
 
         desiredTarget = new GameObject[attacksPerTurn];
@@ -180,7 +194,7 @@ public class EnemyController : MonoBehaviour
         enemyInformation.OnMouseUp();
         healthController.charDisplay.outline.enabled = true;
 
-        UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetCurrentMoveRange(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+        UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetCurrentMoveRange(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
         UIController.ui.combatStats.SetStatusEnabled(0, true);
 
         if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents))         //Before intents are available, always target the nearest player when targeting players
@@ -364,7 +378,7 @@ public class EnemyController : MonoBehaviour
             traveledPath = FindBestKnockbackFromPath(target, attackSequence[attackCardIndex].effectValue[index], healthController.GetTotalCastRange());
         }
         else if (attackSequence[attackCardIndex].castType == Card.CastType.AoE)                                     //Movement for if the attack card is AoE cast
-            traveledPath = FindMostInAoE(target);
+            traveledPath = FindMostInAoE(target, minimizeMovement);
         else                                                                                                        //Default movement path
             traveledPath = FindPath(target, minimizeMovement, healthController.GetTotalCastRange());
 
@@ -378,7 +392,6 @@ public class EnemyController : MonoBehaviour
             if (GridController.gridController.GetObjectAtLocation(traveledPath[i]).Count == 0)
             {
                 finalIndex = i;
-                Debug.Log("Stopped prematurely at index " + finalIndex);
                 break;
             }
         try
@@ -387,9 +400,9 @@ public class EnemyController : MonoBehaviour
         }
         catch { }
 
-        //Limit travel path to the max moverange length
-        if (traveledPath.Count > healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange())
-            traveledPath = traveledPath.GetRange(0, healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+        //Limit travel path to the max total moverange length
+        if (traveledPath.Count > healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - amountMovedthisTurn)
+            traveledPath = traveledPath.GetRange(0, healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange() - amountMovedthisTurn);
 
         BuffController buffController = GetComponent<BuffController>();
         foreach (Vector2 position in traveledPath)
@@ -416,7 +429,7 @@ public class EnemyController : MonoBehaviour
 
             amountMovedthisTurn++;
             healthController.SetCurrentPathLength(amountMovedthisTurn);
-            UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+            UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
             UIController.ui.combatStats.SetStatusEnabled(0, true);
             //yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
@@ -480,11 +493,15 @@ public class EnemyController : MonoBehaviour
             HealthController simulation = GameController.gameController.GetSimulationCharacter(desiredTarget[0].GetComponent<HealthController>());
             HealthController simulatedSelf = GameController.gameController.GetSimulationCharacter(healthController);
             enemyInformation.GetCardController(displayCardIndex).GetComponent<CardEffectsController>().SetCastLocation(castLocation);
+            //Simulate the damage for combat stat purposes
             yield return StartCoroutine(enemyInformation.GetCardController(displayCardIndex).GetComponent<CardEffectsController>().TriggerEffect(this.gameObject, new List<GameObject> { simulation.gameObject }, new List<Vector2> { desiredTarget[0].transform.position }, false, true, simulatedSelf.gameObject));
             HealthController displaySim = simulation;
+            //Return simulated objects so the simulated characters aren't stuck in the pre damage forms
+            desiredTarget[0].GetComponent<HealthController>().ReturnSimulatedCharacter();
+            healthController.ReturnSimulatedCharacter();
             if (desiredTarget[0] == this.gameObject)
                 displaySim = simulatedSelf;
-            displaySim.SetCombatStatsHighlight(1, desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), desiredTarget[0].GetComponent<HealthController>().GetArmor() - displaySim.GetArmor(), desiredTarget[0].GetComponent<HealthController>());
+            displaySim.SetCombatStatsHighlight(1, desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), desiredTarget[0].GetComponent<HealthController>().GetArmor() - displaySim.GetArmor(), true, desiredTarget[0].GetComponent<HealthController>());
             if (desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit() != 0)
                 UIController.ui.combatStats.SetArrow(desiredTarget[0].GetComponent<HealthController>().GetVit() - displaySim.GetVit(), CombatStatsHighlightController.numberType.number, "Damage", displaySim.GetDamageTakenAttemptedText(), displaySim.GetDamageTakenAttempted(), desiredTarget[0].GetComponent<HealthController>().GetArmor());
             else if (enemyInformation.GetCardController(displayCardIndex).GetCard().cardEffectName.Any(x => x == Card.EffectType.Buff))
@@ -505,7 +522,7 @@ public class EnemyController : MonoBehaviour
                 yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
 
             if (desiredTarget[0] == this.gameObject)
-                UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+                UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
 
             TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
 
@@ -648,7 +665,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //Will move to the location to get the most amount of targets in the AoE range
-    protected virtual List<Vector2> FindMostInAoE(GameObject target)
+    protected virtual List<Vector2> FindMostInAoE(GameObject target, bool minimizeMovement)
     {
         List<Vector2> moveablePositions = GetMoveablePositions();
 
@@ -702,15 +719,28 @@ public class EnemyController : MonoBehaviour
                 else
                     c[counts[loc]] = new List<Vector2>() { loc };
             viablePositions = c[c.Keys.Max()];
-            //Find the location that's the furthest away from the starting location
-            int maxDistance = -1;
             finalLocation = viablePositions[0];
-            foreach (Vector2 loc in viablePositions)
-                if (GridController.gridController.GetManhattanDistance(loc, transform.position) > maxDistance)
-                {
-                    maxDistance = GridController.gridController.GetManhattanDistance(loc, transform.position);
-                    finalLocation = loc;
-                }
+
+            if (!minimizeMovement)          //Find the location that's the furthest away from the starting location
+            {
+                int maxDistance = -1;
+                foreach (Vector2 loc in viablePositions)
+                    if (GridController.gridController.GetManhattanDistance(loc, transform.position) > maxDistance)
+                    {
+                        maxDistance = GridController.gridController.GetManhattanDistance(loc, transform.position);
+                        finalLocation = loc;
+                    }
+            }
+            else                            //Find the location that's the closest from the starting location
+            {
+                int minDistance = 9999;
+                foreach (Vector2 loc in viablePositions)
+                    if (GridController.gridController.GetManhattanDistance(loc, transform.position) < minDistance)
+                    {
+                        minDistance = GridController.gridController.GetManhattanDistance(loc, transform.position);
+                        finalLocation = loc;
+                    }
+            }
         }
         string[] pathThroughTags = new string[0];
         if (!healthController.GetPhasedMovement())

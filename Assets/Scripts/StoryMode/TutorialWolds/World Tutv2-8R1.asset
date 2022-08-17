@@ -17,7 +17,6 @@ MonoBehaviour:
   enemies:
   - {fileID: 8004321289452204103, guid: 1a933e97b1c5e4e4988c9335722f8da4, type: 3}
   - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
-  - {fileID: 3234652053163052453, guid: a0859aae54287d7469f8850544fe06c9, type: 3}
   blockNumber: 99
   level1: 00000000000000000000000000000000000000000000000000000000
   level2: 00000000000000000000000001000000000000000000000000000000
@@ -33,7 +32,6 @@ MonoBehaviour:
   dialogues:
   - {fileID: 11400000, guid: f1f25db82c901d142a65e59d69d96504, type: 2}
   overlays:
-  - {fileID: 11400000, guid: 0841e000a1a49114da5699f0b1066bdf, type: 2}
   - {fileID: 11400000, guid: 7695d18cd2bd6444a81fe72031760f75, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 0

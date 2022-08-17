@@ -20,7 +20,7 @@ MonoBehaviour:
   energyCost: 0
   manaCost: 10
   range: 0
-  radius: 3
+  radius: 2
   casterColor: 6
   description: Summon a Time Crystal.|When broken, they grant 3 temporary cards from
     the future that costs (0)

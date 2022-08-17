@@ -303,7 +303,7 @@ public class CardDragController : DragController
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out hit, 1000000, LayerMask.GetMask("Raycast"));
             Transform trn = hit.transform;
-            if (trn != null)
+            if (trn != null && TurnController.turnController.GetIsPlayerTurn())
             {
                 if (trn.tag == "Hold" && HandController.handController.GetHeldCard() == null)
                     Hold();
@@ -418,7 +418,7 @@ public class CardDragController : DragController
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out hit, 1000000, LayerMask.GetMask("Raycast"));
         Transform trn = hit.transform;
-        if (trn != null)
+        if (trn != null && TurnController.turnController.GetIsPlayerTurn())
         {
             if (trn.tag == "Replace" || (trn.tag == "Hold" && (HandController.handController.GetHeldCard() == this || HandController.handController.GetHeldCard() == null)))
             {
@@ -906,7 +906,7 @@ public class CardDragController : DragController
         //cardController.TriggerEffect();  //disable for attack queue
 
         if (!card.exhaust)
-            StartCoroutine(UIController.ui.AnimateDiscardCardProcess(card, transform.position, transform.localScale));
+            StartCoroutine(UIController.ui.AnimateDiscardCardProcess(card, transform.position, transform.localScale, card.shuffleToDiscardPile));
         cardDisplay.Hide();
 
         yield return StartCoroutine(cardController.GetComponent<CardEffectsController>().TriggerEffect(cardController.FindCaster(cardController.GetCard()), locations));

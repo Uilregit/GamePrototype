@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 2
-  description: Give the target +2 move range this turn
+  description: This turn, give the target +2 move range
   art: {fileID: 2905516251257467173, guid: e2d0b16678a0d5445b8eaee539100b30, type: 3}
   castType: 0
   castShape: 0

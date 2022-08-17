@@ -44,7 +44,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         //col = GetComponent<Collider2D>();
         localScale = transform.localScale;
         originalLocation = transform.position;
-        originalCanvas = transform.parent.GetComponent<Canvas>();
+        originalCanvas = transform.parent.parent.GetComponent<Canvas>();
         //originalSorterOrder = transform.GetChild(0).GetComponent<CardDisplay>().Show();.cardName.GetComponent<MeshRenderer>().sortingOrder;
     }
 
@@ -127,7 +127,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         }
 
         //Enlarge and shink cards
-        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.3)           //If the card is above the select cards threshold
+        if (CameraController.camera.ScreenToWorldPoint(Input.mousePosition).y > -0.6)           //If the card is above the select cards threshold
         {
             if (!cardEnlarged)
                 EnlargeCard();
@@ -187,7 +187,7 @@ public class DeckCustomizeCardController : MonoBehaviour
         selectedCard.Hide();
 
         float positionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - 100.0f;
-        if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder))                           //If card is dragged inside selected card range, show the card slots it can go into
+        if (positionX == Mathf.Clamp(positionX, selectedCardsLeftBorder, -selectedCardsLeftBorder) && Camera.main.ScreenToWorldPoint(Input.mousePosition).y < -1.3)         //If card is dragged inside selected card range, show the card slots it can go into
         {
             int index = (int)((positionX - selectedCardsLeftBorder) / selectedCardsWidth);
 

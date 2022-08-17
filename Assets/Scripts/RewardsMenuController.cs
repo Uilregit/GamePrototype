@@ -61,6 +61,8 @@ public class RewardsMenuController : MonoBehaviour
 
     public void ShowMenu()
     {
+        GameController.gameController.rewardCanvas.gameObject.SetActive(true);
+
         menuBack.enabled = true;
         for (int i = 0; i < numRewards; i++)
         {
@@ -121,6 +123,9 @@ public class RewardsMenuController : MonoBehaviour
             menuItemBack[i].transform.GetChild(0).GetComponent<Image>().enabled = false;
             menuItemBack[i].transform.GetChild(1).GetComponent<Text>().enabled = false;
         }
+
+        if (GameController.gameController != null)
+            GameController.gameController.rewardCanvas.gameObject.SetActive(false);
     }
 
     public void SetItemsClickable(bool state)

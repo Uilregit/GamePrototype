@@ -30,7 +30,7 @@ MonoBehaviour:
   attachedCardCastRangeChange: 0
   beforeTriggerCard: {fileID: 11400000, guid: c51939a7c4b71a5479d87270ed4a6e13, type: 2}
   afterTriggerCard: {fileID: 0}
-  overrideCastShape: 1
+  overrideCastShape: 0
   overridedCastShape: 1
   materialTypes: 0500000082000000
   materialAmounts: 0100000011000000

@@ -9,6 +9,7 @@ public class ResourceController : MonoBehaviour
 
     [Header("Gold Gain Settings")]
     public int goldGainPerCombat;
+    public int goldGainPerBoss;
 
     [Header("Shop Settings")]
     public int commonCardPrice;

@@ -167,8 +167,8 @@ public class BuffFactory : MonoBehaviour
                 break;
         }
 
-        foreach (EnemyController enemy in TurnController.turnController.GetEnemies())
-            enemy.GetComponent<EnemyInformationController>().RefreshIntent();
+        if (!healthController.GetIsSimulation())
+            TileCreator.tileCreator.RefreshDangerArea();
 
         totalArmorDamage += armorDamage;
         totalVitDamage += vitDamage;
@@ -306,6 +306,9 @@ public class BuffFactory : MonoBehaviour
             }
             yield return new WaitForSeconds(TimeController.time.attackBufferTime * TimeController.time.timerMultiplier * waitTimeMultiplier);
         }
+
+        if (!selfHealthController.GetIsSimulation())
+            TileCreator.tileCreator.RefreshDangerArea();
 
         totalArmorDamage += armorDamage;
         totalVitDamage += vitDamage;
@@ -457,6 +460,9 @@ public class BuffFactory : MonoBehaviour
                 Debug.Log("Revert Not implimented");
                 break;
         }
+
+        if (!healthController.GetIsSimulation())
+            TileCreator.tileCreator.RefreshDangerArea();
 
         totalArmorDamage += armorDamage;
         totalVitDamage += vitDamage;

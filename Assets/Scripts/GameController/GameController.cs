@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 using System.Linq;
 
 public class GameController : MonoBehaviour
@@ -12,10 +13,12 @@ public class GameController : MonoBehaviour
     //public Sprite background;
     public Image damageOverlay;
     public Image circleHighlight;
+    public PlayableDirector breakHighlight;
 
     public Image characterDamagePreviewBackdrop;
 
     private bool showingDamageOverlay = false;
+    private IEnumerator showingBreakHighlightProcess;
 
     public BackgroundMusicController music;
     public AudioClip combatMusic;
@@ -56,6 +59,9 @@ public class GameController : MonoBehaviour
     public CombatIntroSplashController splashController;
 
     [Header("Boss Intro Anims")]
+    public PlayableDirector bossIntroDirector;
+    private bool bossIntroClipDone = false;
+    private bool bossDeathClipDone = false;
     public Image bossIntroBackground;
     public SpriteRenderer bossIntroSprite;
     public SpriteRenderer bossIntroSpriteBack;
@@ -65,15 +71,26 @@ public class GameController : MonoBehaviour
     public Text bossTitle;
 
     [Header("Boss Death Anims")]
+    public PlayableDirector bossDeathDirector;
     public Image bossDeathBackground;
     public Image bossDeathFlash;
     public SpriteRenderer bossDeathSprite;
     public List<LineRenderer> bossDeathRays;
 
+    [Header("Canvases")]
+    public Canvas cutsceneCanvas;
+    public Canvas manifestCardCanvas;
+    public Canvas rewardCanvas;
+    public Canvas cardDrawCanvas;
+    public Canvas combatOverlayCanvas;
+
     private Sprite bossSprite;
     private string bossNameText;
     private string bossTitleText;
     private Color bossSpriteBackColor;
+
+    private Vector3 originalCombatCameraLocation;
+    private float originalCombatCameraFieldOfView;
 
     private Vector3 cameraLocation;
     private int deckID;
@@ -121,6 +138,7 @@ public class GameController : MonoBehaviour
         }
 
         setup = RoomController.roomController.GetCurrentRoomSetup();
+        TutorialController.tutorial.DestroyAndReset();
         TutorialController.tutorial.SetDialogue(setup.dialogues);
         TutorialController.tutorial.SetTutorialOverlays(setup.overlays);
 
@@ -152,8 +170,6 @@ public class GameController : MonoBehaviour
             music.music = combatMusic;
         music.PlayMusic();
 
-        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StartOfRound, 1);
-
         StartCoroutine(StartOfGame());
 
         UpdatePlayerDamage();
@@ -164,6 +180,8 @@ public class GameController : MonoBehaviour
         //If this is a boss room, start with the boss splash first
         if (bossSprite != null)
             yield return StartCoroutine(BossIntroProcess(bossSprite, bossNameText, bossTitleText, RoomController.roomController.GetCurrentWorldSetup().cameraBackground));
+
+        TutorialController.tutorial.TriggerTutorial(Dialogue.Condition.StartOfRound, 1);
 
         //Splash the round number
         int round = RoomController.roomController.selectedLevel + 1;
@@ -196,13 +214,13 @@ public class GameController : MonoBehaviour
             float progress = Mathf.Clamp((float)bestValue / currentStoryRoomSetup.challengeValues[i], 0f, 1f);
             if (currentStoryRoomSetup.challengeValues[i] == 0)
                 progress = Mathf.Clamp(bestValue, 0, 1);
-            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, true);
+            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, true, false);
         }
 
         if (setup.overrideSingleGoalsSplashIndex == -1)
             yield return splashController.AnimateGoalsImage();
         else
-            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex);
+            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex, true, false);
 
         if (setup.drawHandCondition == Dialogue.Condition.None)
             yield return HandController.handController.StartCoroutine(HandController.handController.DrawFullHand());
@@ -320,11 +338,13 @@ public class GameController : MonoBehaviour
 
             if (InformationController.infoController.GetIfDead(colorTag))
             {
-                Debug.Log(colorTag + " was dead");
+                player.GetComponent<HealthController>().SetCurrentVit(1);
+                /*
                 GridController.gridController.ReportPlayerDead(player, colorTag);
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
                 ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
+                */
                 //viableSpawnLocations.Add(spawnedLocation);
             }
         }
@@ -449,10 +469,13 @@ public class GameController : MonoBehaviour
             Card.CasterColor colorTag = player.GetComponent<PlayerController>().GetColorTag();
             if (InformationController.infoController.GetIfDead(colorTag))
             {
+                player.GetComponent<HealthController>().SetCurrentVit(1);
+                /*
                 GridController.gridController.ReportPlayerDead(player, colorTag);
                 GridController.gridController.RemoveFromPosition(player, player.transform.position);
                 ReportDeadChar(colorTag, player);
                 GridController.gridController.OnPlayerDeath(player, colorTag);
+                */
             }
             counter += 1;
         }
@@ -589,7 +612,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator DisplayVictoryText()
     {
-        TurnController.turnController.ReportTurnBasedAchievements();
+        TurnController.turnController.ReportTurnBasedAchievements(true);
         TutorialController.tutorial.DestroyAndReset();
         InformationController.infoController.SaveCombatInformation();
         CameraController.camera.ScreenShake(0.06f, 0.05f);
@@ -621,13 +644,13 @@ public class GameController : MonoBehaviour
             float progress = Mathf.Clamp((float)bestValue / currentStoryRoomSetup.challengeValues[i], 0f, 1f);
             if (currentStoryRoomSetup.challengeValues[i] == 0)
                 progress = Mathf.Clamp(bestValue, 0, 1);
-            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, false);
+            splashController.SetGoalsImage(i, c, currentStoryRoomSetup.GetChallengeText(currentRoomId, i, bestValue, true, false), currentStoryRoomSetup.GetChallengeProgressText(currentRoomId, i, bestValue, true), progress, goalSatisfied, false, true);
         }
 
         if (setup.overrideSingleGoalsSplashIndex == -1)
             yield return splashController.AnimateGoalsImage();
         else
-            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex);
+            yield return splashController.AnimateSingleGoalsImage(setup.overrideSingleGoalsSplashIndex, false, true);
     }
 
     public IEnumerator Victory()
@@ -639,11 +662,16 @@ public class GameController : MonoBehaviour
         HandController.handController.EmptyHand();
 
         DeckController.deckController.ResetCardValues();
+        TutorialController.tutorial.ResetCompletedTutorialIDs();
 
-        if (RoomController.roomController.GetCurrentRoomSetup().isBossRoom || RoomController.roomController.selectedLevel == RoomController.roomController.GetNumberofWorldLayers() || RoomController.roomController.GetNumberofWorldLayers() == 1)        //If the room is the boss room (classic) or the last room (story), full rez and heal all chars
+        AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
+
+        if (GetIfBossRoom())        //If the room is the boss room (classic) or the last room (story), full rez and heal all chars
         {
             AchievementSystem.achieve.OnNotify(TurnController.turnController.turnID, StoryRoomSetup.ChallengeType.DefeatBossInTurn);
             AchievementSystem.achieve.OnNotify((int)ScoreController.score.GetSecondsInGame(), StoryRoomSetup.ChallengeType.TotalTimeUsed);
+            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
+
             if (!TurnController.turnController.GetIsPlayerTurn())
                 AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.DefeatBossOnEnemyTurn);
             if (PartyController.party.partyColors.Contains(Card.CasterColor.Red) && PartyController.party.partyColors.Contains(Card.CasterColor.Green) && PartyController.party.partyColors.Contains(Card.CasterColor.Blue))
@@ -652,7 +680,9 @@ public class GameController : MonoBehaviour
             ScoreController.score.UpdateBossesDefeated();
 
             if (bossSprite != null)
+            {
                 yield return StartCoroutine(BossDeathProcess(bossSprite));
+            }
             else
             {
                 CameraController.camera.ScreenShake(0.4f, 1f, true);
@@ -680,7 +710,11 @@ public class GameController : MonoBehaviour
             int bonusPassiveGold = 0;
             if (StoryModeController.story != null && StoryModeController.story.GetItemsBought().ContainsKey(StoryModeController.RewardsType.PlusXGoldPerRoom))
                 bonusPassiveGold = StoryModeController.story.GetItemsBought()[StoryModeController.RewardsType.PlusXGoldPerRoom];
-            RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat + bonusPassiveGold);
+            if (GetIfBossRoom())
+                RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerCombat + bonusPassiveGold);
+            else
+                RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.PassiveGold, null, ResourceController.resource.goldGainPerBoss + bonusPassiveGold);
+
             if (totalOverkillGold > 0)
                 RewardsMenuController.rewardsMenu.AddReward(RewardsMenuController.RewardType.OverkillGold, null, totalOverkillGold);
         }
@@ -720,6 +754,11 @@ public class GameController : MonoBehaviour
             PartyController.party.SetOverrideParty(false);
     }
 
+    public bool GetIfBossRoom()
+    {
+        return (RoomController.roomController.GetCurrentRoomSetup().isBossRoom || RoomController.roomController.selectedLevel == RoomController.roomController.GetNumberofWorldLayers() || RoomController.roomController.GetNumberofWorldLayers() == 1);
+    }
+
     public IEnumerator RezAndHealAllPlayers(float rezDelay)
     {
         HealthController player = null;
@@ -731,7 +770,7 @@ public class GameController : MonoBehaviour
             player.SetCurrentAttack(InformationController.infoController.GetStartingAttack(player.GetComponent<PlayerController>().GetColorTag()));
             player.SetCurrentArmor(InformationController.infoController.GetStartingArmor(player.GetComponent<PlayerController>().GetColorTag()), false);
             player.SetCurrentVit(InformationController.infoController.GetMaxVit(player.GetComponent<PlayerController>().GetColorTag()));
-            player.charDisplay.healthBar.SetBar(player.GetCurrentVit(), 0, 0, player.GetCurrentVit(), player.transform.position, 1, 1, 0, false);
+            player.charDisplay.healthBar.ResetBar(player);
             foreach (Card.CasterColor deadCharColor in deadChars)
             {
                 if (obj.GetComponent<PlayerController>().GetColorTag() == deadCharColor)        //Resurrect all dead players for free
@@ -756,8 +795,6 @@ public class GameController : MonoBehaviour
         if (InformationLogger.infoLogger.isStoryMode && RoomController.roomController.selectedLevel == StoryModeController.story.GetCurrentRoomSetup().setups.Count - 1 ||
                 InformationLogger.infoLogger.isStoryMode && RoomController.roomController.GetCurrentRoomSetup().isBossRoom)        //If it's story mode's last room, go to end
         {
-            AchievementSystem.achieve.OnNotify(1, StoryRoomSetup.ChallengeType.Complete);
-            AchievementSystem.achieve.OnNotify(CollectionController.collectionController.GetNumberOfCardsNotStartedInDeck(), StoryRoomSetup.ChallengeType.AddCardsToDeck);
             StoryModeController.story.ReportRoomCompleted();
             RelicController.relic.ResetRelics();
 
@@ -925,16 +962,9 @@ public class GameController : MonoBehaviour
     //Boss intro animations
     private IEnumerator BossIntroProcess(Sprite bossSprite, string name, string title, Color backgroundColor)
     {
-        Time.timeScale = 0; //Pause game during boss intro
+        cutsceneCanvas.gameObject.SetActive(true);
 
-        bossIntroFlash.enabled = true;
         bossIntroFlash.color = Color.white;
-        bossIntroSprite.enabled = true;
-        bossIntroSpriteBack.enabled = true;
-        bossName.enabled = false;
-        bossTitle.enabled = false;
-        bossIntroBackground.enabled = true;
-        bossIntroNamePlate.enabled = true;
         bossIntroSprite.sprite = bossSprite;
         bossIntroSpriteBack.sprite = bossSprite;
         bossName.text = name;
@@ -942,57 +972,25 @@ public class GameController : MonoBehaviour
         bossName.color = backgroundColor;
         bossIntroBackground.color = backgroundColor;
         bossIntroSpriteBack.color = bossSpriteBackColor;
-        bossIntroBackground.gameObject.SetActive(true);
 
-        for (int i = 0; i < 5; i++)
+        Time.timeScale = 0; //Pause game during boss intro
+
+        bossIntroClipDone = false;
+        bossIntroDirector.gameObject.SetActive(true);
+
+        bossIntroDirector.Play();
+        while (!bossIntroClipDone)
         {
-            bossIntroFlash.color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), i / 4f);
-            yield return new WaitForSecondsRealtime(0.1f / 5);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
-        yield return new WaitForSecondsRealtime(1f);
-
-        bossName.color = new Color(bossName.color.r, bossName.color.g, bossName.color.b, 0);
-        bossName.enabled = true;
-        for (int i = 0; i < 5; i++)
-        {
-            bossName.color = Color.Lerp(new Color(bossName.color.r, bossName.color.g, bossName.color.b, 0), new Color(bossName.color.r, bossName.color.g, bossName.color.b, 1), i / 4f);
-            yield return new WaitForSecondsRealtime(0.1f / 5);
-        }
-
-        yield return new WaitForSecondsRealtime(1f);
-
-        bossTitle.color = new Color(bossTitle.color.r, bossTitle.color.g, bossTitle.color.b, 0);
-        bossTitle.enabled = true;
-        for (int i = 0; i < 5; i++)
-        {
-            bossTitle.color = Color.Lerp(new Color(bossTitle.color.r, bossTitle.color.g, bossTitle.color.b, 0), new Color(bossTitle.color.r, bossTitle.color.g, bossTitle.color.b, 1), i / 4f);
-            yield return new WaitForSecondsRealtime(0.1f / 5);
-        }
-
-        yield return new WaitForSecondsRealtime(1f);
-
-        for (int i = 0; i < 5; i++)
-        {
-            bossIntroFlash.color = Color.Lerp(new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), i / 4f);
-            yield return new WaitForSecondsRealtime(0.1f / 5);
-        }
-
-        bossIntroSprite.enabled = false;
-        bossIntroSpriteBack.enabled = false;
-        bossName.enabled = false;
-        bossTitle.enabled = false;
-        bossIntroBackground.enabled = false;
-        bossIntroNamePlate.enabled = false;
-
-        for (int i = 0; i < 5; i++)
-        {
-            bossIntroFlash.color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), i / 4f);
-            yield return new WaitForSecondsRealtime(0.1f / 5);
-        }
-
-        bossIntroBackground.gameObject.SetActive(false);
         Time.timeScale = 1;
+    }
+    public void BossIntroClipEnd()
+    {
+        bossIntroClipDone = true;
+        bossIntroDirector.gameObject.SetActive(false);
+
+        cutsceneCanvas.gameObject.SetActive(false);
     }
 
     /// 
@@ -1000,6 +998,8 @@ public class GameController : MonoBehaviour
     /// 
     private IEnumerator BossDeathProcess(Sprite bossSprite)
     {
+        cutsceneCanvas.gameObject.SetActive(true);
+
         MusicController.music.SetLowPassFilter(false);
         MusicController.music.PlayBackground(bossDefeatMusic, false);
         //30 frames a second
@@ -1028,20 +1028,6 @@ public class GameController : MonoBehaviour
         bossDeathBackground.enabled = true;
         bossDeathFlash.enabled = true;
         bossDeathSprite.enabled = true;
-
-        //Fade from white
-        for (int i = 0; i < 20; i++)
-        {
-            bossDeathFlash.color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), i / 19f);
-            yield return new WaitForSeconds(0.6f / 20f);
-        }
-
-        yield return new WaitForSeconds(0.6f);
-
-        //Flash white twice
-        yield return StartCoroutine(BossDeathFlashFadeOut(0.1f));
-        yield return StartCoroutine(BossDeathFlashFadeOut(0.2f));
-
         //Setup the death rays
         foreach (LineRenderer line in bossDeathRays)
         {
@@ -1049,62 +1035,21 @@ public class GameController : MonoBehaviour
             line.enabled = false;
         }
 
-        //Shwo the death rays one by one
-        for (int i = 0; i < 31; i++)
+        bossDeathClipDone = false;
+        bossDeathDirector.gameObject.SetActive(true);
+        bossDeathDirector.Play();
+
+        while (!bossDeathClipDone)
         {
-            if (i % 6 == 0)
-            {
-                if (i / 6 < bossDeathRays.Count)
-                    bossDeathRays[i / 6].enabled = true;
-                if (i / 6 == 3)
-                    StartCoroutine(BossDeathFlashFadeOut(0.2f));
-                //if (i / 6 == 5)
-                //    StartCoroutine(BossDeathFlashFadeOut(0.4f));
-            }
-            yield return new WaitForSeconds(1.3f / 31f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
-
-        bossDeathFlash.color = Color.white;
-        //Flash white from center till it fills the screen
-        for (int i = 0; i < 5; i++)
-        {
-            bossDeathFlash.transform.localScale = Vector3.Lerp(new Vector3(1f, 0f, 1f), new Vector3(1f, 1f, 1f), i / 4f);
-            yield return new WaitForSeconds(0.1f / 5f);
-        }
-
-        //Hide all non background elements
-        bossDeathSprite.enabled = false;
-        foreach (LineRenderer line in bossDeathRays)
-            line.enabled = false;
-
-        yield return new WaitForSeconds(0.6f);
-
-        //Fade back to black
-        for (int i = 0; i < 20; i++)
-        {
-            bossDeathFlash.color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), i / 19f);
-            yield return new WaitForSeconds(1f / 20f);
-        }
-
-        yield return new WaitForSeconds(2f);
-
-        //Fade back to normal
-        for (int i = 0; i < 10; i++)
-        {
-            bossDeathBackground.color = Color.Lerp(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), i / 9f);
-            yield return new WaitForSeconds(0.3f / 9f);
-        }
-
-        bossDeathBackground.gameObject.SetActive(false);
     }
-
-    private IEnumerator BossDeathFlashFadeOut(float time)
+    public void BossDeathClipEnd()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            bossDeathFlash.color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), i / 4f);
-            yield return new WaitForSeconds(time / 5f);
-        }
+        bossDeathClipDone = true;
+        bossDeathDirector.gameObject.SetActive(false);
+
+        cutsceneCanvas.gameObject.SetActive(false);
     }
 
     public void SetTurnButtonDone(bool state)
@@ -1187,6 +1132,8 @@ public class GameController : MonoBehaviour
 
     private void SetIsShowingDamageOverlay(bool state)
     {
+        damageOverlay.enabled = state;
+
         MusicController.music.SetLowPassFilter(state);
         showingDamageOverlay = state;
         if (!state)
@@ -1212,6 +1159,38 @@ public class GameController : MonoBehaviour
         damageOverlay.color = new Color(1, 0, 0, 0);
     }
 
+    public void ShowBreakHighlight(Vector2 location)
+    {
+        breakHighlight.Play();
+
+        /*
+        originalCombatCameraLocation = Camera.main.transform.position;
+        originalCombatCameraFieldOfView = Camera.main.fieldOfView;
+
+        Camera.main.transform.position = originalCombatCameraLocation + (Vector3)location;
+        Camera.main.fieldOfView = 30;
+
+        StartCoroutine(ShowBreakHighlightProcess());
+        */
+    }
+
+    /*
+     * Would zoom into the broken enemy, but will need work for it to not look super janky
+    private IEnumerator ShowBreakHighlightProcess()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        Vector3 combatCameraStartingPosition = Camera.main.transform.position;
+
+        for (int i = 0; i < 10; i++)
+        {
+            Camera.main.transform.position = Vector3.Lerp(combatCameraStartingPosition, originalCombatCameraLocation, i / 9f);
+            Camera.main.fieldOfView = Mathf.Lerp(30, originalCombatCameraFieldOfView, i / 9f);
+            yield return new WaitForSeconds(0.3f / 10f);
+        }
+    }
+    */
+
     public void SetCircleOverlay(bool value, Vector2 location)
     {
         circleHighlight.transform.position = location;
@@ -1223,6 +1202,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator FadeInCircleOverlay()
     {
+        circleHighlight.enabled = true;
+
         float elapsedTime = 0;
         while (elapsedTime < 0.1f)
         {
@@ -1241,6 +1222,8 @@ public class GameController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        circleHighlight.enabled = false;
     }
 
     public void SetAbandonButton(bool state)

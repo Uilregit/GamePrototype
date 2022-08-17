@@ -30,7 +30,7 @@ public class StealCardEffect : Effect
                     break;
             }
             for (int i = 0; i < c.targetType.Length; i++)
-                switch(c.targetType[i])
+                switch (c.targetType[i])
                 {
                     case Card.TargetType.Player:
                         c.targetType[i] = Card.TargetType.Any;
@@ -38,9 +38,11 @@ public class StealCardEffect : Effect
                     case Card.TargetType.Enemy:
                         c.targetType[i] = Card.TargetType.Player;
                         break;
+                        /*
                     case Card.TargetType.Self:
                         c.targetType[i] = Card.TargetType.Any;
                         break;
+                        */
                 }
             c.exhaust = true;
 

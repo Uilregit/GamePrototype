@@ -17,14 +17,12 @@ MonoBehaviour:
   setups:
   - {fileID: 11400000, guid: 8f1e4e0dfcdaf5f4389dda9b52839d49, type: 2}
   - {fileID: 11400000, guid: 5ed6269b9e37fce4fb84a00fe0d98940, type: 2}
-  - {fileID: 11400000, guid: 913e28061357c4340a2ffb6bbc7b1294, type: 2}
-  - {fileID: 11400000, guid: 27eac7dc5f5e9ea43968f0994a3553fd, type: 2}
   - {fileID: 11400000, guid: b63fe2680f15f6449a91598ce1bfe98e, type: 2}
   arenaSetup: {fileID: 0}
   challenges: 000000004e04000011040000
   valueType: 000000000100000014000000
-  challengeValues: 000000000400000002000000
-  challengeComparisonType: 000000001400000014000000
+  challengeValues: 010000000400000002000000
+  challengeComparisonType: 0a0000001400000014000000
   bestChallengeValues: ffffffffffffffffffffffff
   skipFinalRewards: 0
   allowRewardsRebuy: 0
@@ -47,3 +45,12 @@ MonoBehaviour:
   challengeRewardBought: 000000
   flavorText: The Broodfather went out for milk and never came back
   overrideColors: 
+  abilityNames:
+  - Swiftness
+  abilitySprites:
+  - {fileID: 21300000, guid: 4d674a40d67d7bd4db63cfcfb8cfc586, type: 3}
+  targetTypes: 00000000
+  conditionTypes: 00000000
+  triggerTypes: e8030000
+  abilityTypes: 05000000
+  abilityValue: 01000000

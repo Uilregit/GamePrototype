@@ -35,6 +35,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd7a8b63b5be18348a4ff71441846042, type: 2}
   - {fileID: 11400000, guid: b2cb511d8ea54124397371ac694aae84, type: 2}
   - {fileID: 11400000, guid: 0262514c16081824bbde9b958089da47, type: 2}
+  - {fileID: 11400000, guid: 53f2b84411ec2f945a4508880149d397, type: 2}
   lastRewardCardOnTop: 0
   overrideCardShuffle: 1
   cardOrder:

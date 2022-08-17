@@ -22,7 +22,7 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 5
-  description: For this turn, target looses 2 moverange
+  description: This turn, target looses 2 moverange
   art: {fileID: 21300000, guid: aa60dfa0266553d4ebaee71b63ed552f, type: 3}
   castType: 0
   castShape: 0

@@ -35,5 +35,7 @@ MonoBehaviour:
   popupDescription: '
 
 
+
+
     2+ brand new worlds with brand new enemies in each...'
-  joinDiscordButtonEnabled: 0
+  joinSocialsButtonsEnabled: 0

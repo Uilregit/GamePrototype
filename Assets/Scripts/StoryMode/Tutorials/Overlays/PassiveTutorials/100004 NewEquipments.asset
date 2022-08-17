@@ -35,5 +35,7 @@ MonoBehaviour:
   popupDescription: '
 
 
+
+
     Over 50+ new pieces of equipment...'
-  joinDiscordButtonEnabled: 0
+  joinSocialsButtonsEnabled: 0

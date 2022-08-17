@@ -65,24 +65,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 801162138b4a73348b00d40a90bce35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castRange: 1
+  castRange: 2
   maxVit: 1
   vitVariate: 1
   startingArmor: 2
   attack: 1
-  moveRange: 3
+  moveRange: 4
   randomStartRange: 2
   attacksPerTurn: 1
   moveRangeColor: {r: 0.6784314, g: 0.003921569, b: 0.9960785, a: 1}
   attackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   attackSequence:
-  - {fileID: 11400000, guid: 54ead397660fb7243b69b41b72cccaf1, type: 2}
+  - {fileID: 11400000, guid: 0effdfd9a82c7e048b9f5038cad251b7, type: 2}
   moveType: 0
   targetType: 1
   isBoss: 0
-  bossName: 
-  bossTitle: 
-  bossSpriteBackColor: {r: 0, g: 0, b: 0, a: 0}
+  bossName: debug
+  bossTitle: testing testing 123
+  bossSpriteBackColor: {r: 0, g: 0.36552286, b: 1, a: 1}
   desiredTarget:
   - {fileID: 0}
 --- !u!114 &5951074765162750196

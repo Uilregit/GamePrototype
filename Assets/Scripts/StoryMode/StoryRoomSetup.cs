@@ -30,6 +30,15 @@ public class StoryRoomSetup : ScriptableObject
 
     public Card.CasterColor[] overrideColors;
 
+    [Header("Boss Passives")]
+    public List<string> abilityNames = new List<string>();
+    public List<Sprite> abilitySprites = new List<Sprite>();
+    public List<AbilitiesController.TargetType> targetTypes = new List<AbilitiesController.TargetType>();
+    public List<AbilitiesController.ConditionType> conditionTypes = new List<AbilitiesController.ConditionType>();
+    public List<AbilitiesController.TriggerType> triggerTypes = new List<AbilitiesController.TriggerType>();
+    public List<AbilitiesController.AbilityType> abilityTypes = new List<AbilitiesController.AbilityType>();
+    public List<int> abilityValue = new List<int>();
+
     public enum ChallengeType
     {
         Complete = 0,
@@ -147,7 +156,7 @@ public class StoryRoomSetup : ScriptableObject
                 output += "Spend {ct} X mana in 1 turn";
                 break;
             case ChallengeType.UnspentEnergyPerTurn:
-                output += "Leave {ct} X energy unspent at the end of your turns";
+                output += "Leave {ct} X total energy unspent at the end of your turns";
                 break;
             case ChallengeType.BeBroken:
                 output += "Be broken {ct} X time{s}";

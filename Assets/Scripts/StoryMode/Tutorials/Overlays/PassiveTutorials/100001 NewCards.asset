@@ -35,5 +35,7 @@ MonoBehaviour:
   popupDescription: '
 
 
+
+
     The full release will have over 100 new cards...'
-  joinDiscordButtonEnabled: 0
+  joinSocialsButtonsEnabled: 0

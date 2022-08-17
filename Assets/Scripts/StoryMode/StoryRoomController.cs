@@ -19,7 +19,8 @@ public class StoryRoomController : MonoBehaviour
 
     private bool isHighlighted = false;
     private float outlineSize;
-    public Outline outline;
+    public Outline selectOutline;
+    public Outline normalOutline;
 
     public enum StoryRoomType
     {
@@ -35,7 +36,7 @@ public class StoryRoomController : MonoBehaviour
 
     public void Start()
     {
-        outlineSize = outline.effectDistance.x;
+        outlineSize = selectOutline.effectDistance.x;
     }
 
     public void Update()
@@ -43,14 +44,15 @@ public class StoryRoomController : MonoBehaviour
         if (isHighlighted)
         {
             float effectDistance = Mathf.Lerp(outlineSize, outlineSize * 1.4f, MusicController.music.GetBackgroundAmplitude()[0]);
-            outline.effectDistance = new Vector2(effectDistance, effectDistance);
+            selectOutline.effectDistance = new Vector2(effectDistance, effectDistance);
         }
     }
 
     public void SetHighlighted(bool state)
     {
         isHighlighted = state;
-        outline.enabled = state;
+        selectOutline.enabled = state;
+        normalOutline.enabled = !state;
     }
 
     public void SetColorsCompleted(List<Card.CasterColor> colors)

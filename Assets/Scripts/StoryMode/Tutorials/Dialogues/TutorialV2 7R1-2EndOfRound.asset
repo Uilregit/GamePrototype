@@ -16,9 +16,9 @@ MonoBehaviour:
   condition: 10001
   conditionValue: 1
   comparisonType: 10
-  speaker: 0000000000000000
-  emoticon: c900000002000000
+  speaker: 000000000000000000000000
+  emoticon: c90000000200000000000000
   texts:
   - Seems the Chaos is rewarding you with random skills in the form of cards as well?
-  - 'They''re also offering a deal you can''t refuse: <b>money...</b> I''m not gonna
-    ask why, just take the money.'
+  - 'They''re also offering a deal you can''t refuse: <b>money...</b>'
+  - I'm not gonna ask why, just take the money.

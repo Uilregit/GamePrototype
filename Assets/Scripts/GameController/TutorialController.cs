@@ -109,10 +109,14 @@ public class TutorialController : MonoBehaviour
     public void SetTutorialOverlays(List<TutorialOverlay> overlays)
     {
         currentTutorialOverlays = new List<TutorialOverlay>();
-        completedTutIDs = new List<int> { -1 };
 
         foreach (TutorialOverlay o in overlays)
             currentTutorialOverlays.Add(o);
+    }
+
+    public void ResetCompletedTutorialIDs()
+    {
+        completedTutIDs = new List<int> { -1 };
     }
 
     public void TriggerTutorial(Dialogue.Condition condition, int value, string stringValue = "")
@@ -207,6 +211,13 @@ public class TutorialController : MonoBehaviour
 
     private void DisplayOverlayTutorial(TutorialOverlay overlay)
     {
+        StartCoroutine(PopupShow(overlay));
+    }
+
+    private IEnumerator PopupShow(TutorialOverlay overlay)
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+
         Time.timeScale = 0;
         popupOverlay = overlay;
         popupTitle.text = overlay.popupTitle;

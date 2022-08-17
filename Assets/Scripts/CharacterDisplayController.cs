@@ -123,6 +123,7 @@ public class CharacterDisplayController : MonoBehaviour
         StartCoroutine(ShoveSpriteProcess(direction));
     }
 
+    //Highlight the character during card casts so it appears above the grayout
     public void SetHighlight(bool state)
     {
         string newUISortingLayerName = "Card";

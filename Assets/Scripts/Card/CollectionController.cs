@@ -30,7 +30,9 @@ public class CollectionController : MonoBehaviour
     public bool isSinglePlayer;
     public bool isStoryMode = false;
     public DeckCustomizeCardController[] custCardsDisplay;
-    [SerializeField]
+    public Image colorIcon;
+    public Image cardIcon;
+    public Image weaponIcon;
     public SelectedCardController[] selectedCardsDisplay;
     public Image selectedAreaWhiteOut;
     public DeckButtonController[] deckButtons;
@@ -58,7 +60,7 @@ public class CollectionController : MonoBehaviour
     private EquipmentWrapper newEquipments = new EquipmentWrapper();
     private EquipmentWrapper completeEquipments;
     private List<string> debugEquipments = new List<string>() { "Echo Blade", "Throwing Knife", "Force Staff" };
-    private List<string> debugCards = new List<string>() { };
+    private List<string> debugCards = new List<string>() { "Swap", "Alacrity", "Adapt", "Boomerang" };
     private Dictionary<string, EquipmentWrapper> selectedEquipments = new Dictionary<string, EquipmentWrapper>();
     private CardController recentRewardsCard;
     private Equipment recentRewardsEquipment;
@@ -1074,6 +1076,7 @@ public class CollectionController : MonoBehaviour
                 otherColors.Add(color);
 
         ResetAllColorsOrder();
+        colorIcon.color = PartyController.party.GetPlayerColor(allColorsOrder[deckID]);
 
         for (int i = 0; i < 3; i++)
         {
@@ -1763,17 +1766,14 @@ public class CollectionController : MonoBehaviour
     {
         isShowingCards = state;
         if (isShowingCards)
-        {
             StoryModeController.story.ShowMenuSelected(3);
-            cardButton.Enable(false);
-            gearButton.Enable(true);
-        }
         else
-        {
             StoryModeController.story.ShowMenuSelected(2);
-            cardButton.Enable(true);
-            gearButton.Enable(false);
-        }
+        cardButton.Enable(!isShowingCards);
+        gearButton.Enable(isShowingCards);
+        cardIcon.gameObject.SetActive(isShowingCards);
+        weaponIcon.gameObject.SetActive(!isShowingCards);
+
         CheckPageButtons();
     }
 

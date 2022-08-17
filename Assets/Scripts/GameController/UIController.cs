@@ -29,6 +29,8 @@ public class UIController : MonoBehaviour
     private float discardPileHeight = 0;
 
     public CardController flipCard;
+    private Vector3 discardPilePosition = new Vector3(3.5f, -4.75f, 0);
+    private Vector3 drawPilePosition = new Vector3(-3.5f, -4.75f, 0);
 
     [Header("Manifest Cards")]
     public Text choose1Text;
@@ -56,12 +58,6 @@ public class UIController : MonoBehaviour
             icon.GetComponent<Outline>().effectColor = anticipatedLooseOutlineColor;
             icon.material = new Material(icon.material);
             icon.material.SetFloat("_Intensity", 0f);
-        }
-
-        for (int i = 0; i < manifestCards.Count; i++)
-        {
-            manifestCards[i].GetComponent<Collider2D>().enabled = false;
-            manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
         }
 
         HandController.handController.SetHoldAndReplace(hold, replace);
@@ -141,6 +137,8 @@ public class UIController : MonoBehaviour
 
     public void SetManifestCards(List<CardController> cards, Effect effect)
     {
+        GameController.gameController.manifestCardCanvas.gameObject.SetActive(true);
+
         choose1Text.enabled = true;
         hideButton.enabled = true;
         hideButton.transform.GetChild(0).GetComponent<Text>().enabled = true;
@@ -187,6 +185,8 @@ public class UIController : MonoBehaviour
             manifestCards[i].GetComponent<Collider2D>().enabled = false;
             manifestCards[i].transform.GetChild(0).GetComponent<CardDisplay>().Hide();
         }
+
+        GameController.gameController.manifestCardCanvas.gameObject.SetActive(false);
     }
 
     public void SetEnergyGlow(bool state)
@@ -217,8 +217,10 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public IEnumerator AnimateDiscardCardProcess(Card card, Vector3 position, Vector3 scale)
+    public IEnumerator AnimateDiscardCardProcess(Card card, Vector3 position, Vector3 scale, bool shuffleToDiscardPile = true)
     {
+        GameController.gameController.cardDrawCanvas.gameObject.SetActive(true);
+
         flipCard.SetCard(card, false, true, true);
         if (!flipCard.cardDisplay.GetIsFacingUp())
             flipCard.cardDisplay.PlaceFaceUp();
@@ -226,22 +228,32 @@ public class UIController : MonoBehaviour
         flipCard.transform.position = position;
 
         Vector3 originalLocalPosition = flipCard.transform.localPosition;
+        Vector3 desiredPosition = discardPilePosition;
+        if (!shuffleToDiscardPile)
+            desiredPosition = drawPilePosition;
 
         flipCard.cardDisplay.FlipDown(0.08f);
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < 10; i++)
         {
-            flipCard.transform.localPosition = Vector3.Lerp(originalLocalPosition, new Vector3(3.5f, -4.65f, 0f) + new Vector3(0, discardPileHeight, 0), i / 9f);
+            flipCard.transform.localPosition = Vector3.Scale(Vector3.Lerp(originalLocalPosition, desiredPosition + new Vector3(0, discardPileHeight, 0), i / 9f), new Vector3(1, 1, 0));
             flipCard.transform.localScale = Vector3.Lerp(scale, new Vector3(0.35f, 0.35f, 1), i / 9f);
             yield return new WaitForSeconds(0.1f / 10f);
         }
-        ResetPileCounts(DeckController.deckController.GetDrawPileSize(), DeckController.deckController.GetDiscardPileSize() + 1);
+        if (shuffleToDiscardPile)
+            ResetPileCounts(DeckController.deckController.GetDrawPileSize(), DeckController.deckController.GetDiscardPileSize() + 1);
+        else
+            ResetPileCounts(DeckController.deckController.GetDrawPileSize() + 1, DeckController.deckController.GetDiscardPileSize());
 
         flipCard.transform.position = new Vector3(100, 0, 0);
+
+        GameController.gameController.cardDrawCanvas.gameObject.SetActive(false);
     }
 
     public IEnumerator AnimateShuffleCardProcess()
     {
+        GameController.gameController.cardDrawCanvas.gameObject.SetActive(true);
+
         foreach (Image card in cardShuffleAnimationCards)
             card.enabled = true;
         foreach (Image card in drawPileCards)
@@ -249,14 +261,13 @@ public class UIController : MonoBehaviour
         foreach (Image card in discardPileCards)
             card.enabled = false;
 
-        Vector3 cardStartingPosition = cardShuffleAnimationCards[0].transform.localPosition;
         //Move all discard pile cards into the draw pile
         Vector3 cardOriginalPosition = cardShuffleAnimationCards[0].transform.localPosition;
         int maxCardsInPile = Mathf.Max(discardPileCards.Count, drawPileCards.Count);
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < cardShuffleAnimationCards.Count; j++)
-                cardShuffleAnimationCards[j].transform.localPosition = Vector3.Lerp(cardOriginalPosition + new Vector3(0, 0.07f * j, 0), new Vector3(-7f, cardOriginalPosition.y, cardOriginalPosition.z), (i - j) / 6f);
+                cardShuffleAnimationCards[j].transform.localPosition = Vector3.Lerp(cardOriginalPosition + new Vector3(0, 0.07f * j, 0), new Vector3(drawPilePosition.x, cardOriginalPosition.y, cardOriginalPosition.z), (i - j) / 6f);
             ResetPileCounts((int)Mathf.Lerp(0, maxCardsInPile, i / 9f), (int)Mathf.Lerp(maxCardsInPile, 0, i / 9f));
             yield return new WaitForSeconds(0.3f / 9f);
         }
@@ -267,14 +278,14 @@ public class UIController : MonoBehaviour
         Quaternion cardOriginalRotation = cardShuffleAnimationCards[2].transform.rotation;
         for (int i = 0; i < 5; i++)
         {
-            cardShuffleAnimationCards[2].transform.localPosition = Vector3.Lerp(cardOriginalPosition, cardOriginalPosition + new Vector3(1.5f, 0, 0), i / 4f);
+            cardShuffleAnimationCards[2].transform.localPosition = Vector3.Lerp(new Vector3(drawPilePosition.x, 0, 0), new Vector3(drawPilePosition.x, 0, 0) + new Vector3(1.5f, 0, 0), i / 4f);
             cardShuffleAnimationCards[2].transform.rotation = Quaternion.Lerp(cardOriginalRotation, cardOriginalRotation * Quaternion.Euler(0, 0, -20f), i / 4f);
             yield return new WaitForSeconds(0.05f / 5f);
         }
         cardShuffleAnimationCards[2].transform.SetAsLastSibling();
         for (int i = 0; i < 5; i++)
         {
-            cardShuffleAnimationCards[2].transform.localPosition = Vector3.Lerp(cardOriginalPosition + new Vector3(1.5f, 0, 0), cardOriginalPosition, i / 4f);
+            cardShuffleAnimationCards[2].transform.localPosition = Vector3.Lerp(new Vector3(drawPilePosition.x, 0, 0) + new Vector3(1.5f, 0, 0), new Vector3(drawPilePosition.x, 0, 0), i / 4f);
             cardShuffleAnimationCards[2].transform.rotation = Quaternion.Lerp(cardOriginalRotation * Quaternion.Euler(0, 0, -20f), cardOriginalRotation, i / 4f);
             yield return new WaitForSeconds(0.05f / 5f);
         }
@@ -283,14 +294,14 @@ public class UIController : MonoBehaviour
         cardOriginalRotation = cardShuffleAnimationCards[3].transform.rotation;
         for (int i = 0; i < 5; i++)
         {
-            cardShuffleAnimationCards[3].transform.localPosition = Vector3.Lerp(cardOriginalPosition, cardOriginalPosition - new Vector3(1.5f, 0, 0), i / 4f);
+            cardShuffleAnimationCards[3].transform.localPosition = Vector3.Lerp(new Vector3(drawPilePosition.x, 0, 0), new Vector3(drawPilePosition.x, 0, 0) - new Vector3(1.5f, 0, 0), i / 4f);
             cardShuffleAnimationCards[3].transform.rotation = Quaternion.Lerp(cardOriginalRotation, cardOriginalRotation * Quaternion.Euler(0, 0, 20f), i / 4f);
             yield return new WaitForSeconds(0.05f / 5f);
         }
         cardShuffleAnimationCards[3].transform.SetAsLastSibling();
         for (int i = 0; i < 5; i++)
         {
-            cardShuffleAnimationCards[3].transform.localPosition = Vector3.Lerp(cardOriginalPosition - new Vector3(1.5f, 0, 0), cardOriginalPosition, i / 4f);
+            cardShuffleAnimationCards[3].transform.localPosition = Vector3.Lerp(new Vector3(drawPilePosition.x, 0, 0) - new Vector3(1.5f, 0, 0), new Vector3(drawPilePosition.x, 0, 0), i / 4f);
             cardShuffleAnimationCards[3].transform.rotation = Quaternion.Lerp(cardOriginalRotation * Quaternion.Euler(0, 0, 20f), cardOriginalRotation, i / 4f);
             yield return new WaitForSeconds(0.05f / 5f);
         }
@@ -299,7 +310,9 @@ public class UIController : MonoBehaviour
         for (int j = 0; j < cardShuffleAnimationCards.Count; j++)
         {
             cardShuffleAnimationCards[j].enabled = false;
-            cardShuffleAnimationCards[j].transform.localPosition = cardStartingPosition + new Vector3(0, 0.07f * j, 0);
+            cardShuffleAnimationCards[j].transform.localPosition = cardOriginalPosition + new Vector3(0, 0.07f * j, 0);
         }
+
+        GameController.gameController.cardDrawCanvas.gameObject.SetActive(false);
     }
 }
