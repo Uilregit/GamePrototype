@@ -9,6 +9,8 @@ public class CombatStatsHighlightController : MonoBehaviour
     [Header("Health Bar Colors")]
     public Color healthBarDamageColor;
     public Color healthBarHealingColor;
+    public Color healthBarDamageOverTimeColor;
+    public Color healthBarHealingOverTimeColor;
 
     [Header("ArmorColors")]
     public Color armorColor;
@@ -58,6 +60,8 @@ public class CombatStatsHighlightController : MonoBehaviour
     public Text[] health;
     public Image[] healthBar;
     public Image[] healthDamageBar;
+    public Image[] healthDamageOverTimeBar;
+    public TextMeshProUGUI[] damageOverTimeTexts;
     public Text[] armor;
     public Image[] armorIcon;
     public Text[] attack;
@@ -114,7 +118,7 @@ public class CombatStatsHighlightController : MonoBehaviour
         index2IntentsOriginalPosition[1] = intents2[1].transform.localPosition;
     }
 
-    public void SetStatus(int index, HealthController obj, Sprite sprite, int currentVit, int maxVit, int damage, int currentArmor, int armorDamage, int currentAttack, int bonusAttack, int currentMoverange, int maxMoverange, bool refresh = true)
+    public void SetStatus(int index, HealthController obj, Sprite sprite, int currentVit, int maxVit, int damage, int damageOverTime, int currentArmor, int armorDamage, int currentAttack, int bonusAttack, int currentMoverange, int maxMoverange, bool refresh = true)
     {
         if (damage != 0)
             health[index].text = (currentVit + damage) + " -> " + currentVit;
@@ -125,6 +129,22 @@ public class CombatStatsHighlightController : MonoBehaviour
             healthDamageBar[index].transform.localScale = new Vector3(Mathf.Clamp(-(float)damage / currentVit, -1, 0), 1, 1);
         else
             healthDamageBar[index].transform.localScale = new Vector3(-(float)damage / currentVit, 1, 1);
+
+        int denominator = damage;
+        if (denominator == 0)
+            denominator = currentVit;
+        if (damageOverTime > 0)
+        {
+            healthDamageOverTimeBar[index].transform.localScale = new Vector3(Mathf.Clamp(-(float)damageOverTime / denominator, -1, 0), 1, 1);
+            damageOverTimeTexts[index].text = "<sprite=4>" + (damageOverTime);
+        }
+        else if (damageOverTime < 0)
+        {
+            healthDamageOverTimeBar[index].transform.localScale = new Vector3(-(float)damageOverTime / denominator, 1, 1);
+            damageOverTimeTexts[index].text = "<sprite=3> " + (-damageOverTime);
+        }
+        damageOverTimeTexts[index].gameObject.SetActive(damageOverTime != 0);
+
         if (currentVit <= 0)
         {
             healthBar[index].transform.localScale = new Vector3(Mathf.Clamp((float)(currentVit + damage) / maxVit, 0, 1), 1, 1);
@@ -135,6 +155,17 @@ public class CombatStatsHighlightController : MonoBehaviour
             healthDamageBar[index].color = healthBarHealingColor;
         else
             healthDamageBar[index].color = healthBarDamageColor;
+
+        if (damageOverTime < 0)
+        {
+            healthDamageOverTimeBar[index].color = healthBarHealingOverTimeColor;
+            damageOverTimeTexts[index].color = healthBarHealingOverTimeColor;
+        }
+        else
+        {
+            healthDamageOverTimeBar[index].color = healthBarDamageOverTimeColor;
+            damageOverTimeTexts[index].color = healthBarDamageOverTimeColor;
+        }
 
         armor[index].text = currentArmor.ToString();
         if (armorDamage != 0)

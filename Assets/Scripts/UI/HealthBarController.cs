@@ -67,6 +67,8 @@ public class HealthBarController : MonoBehaviour
     public Text statusText;
     public Image damageImage;
     public Image damageImage2;
+    public Image damageOverTimeImage;
+    public Image damageOverTimeImage2;
     public Text damageText;
 
     [Header("Armor Damage Image")]

@@ -632,6 +632,11 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         return immuneToMana;
     }
 
+    public int GetEndOfTurnDamage()
+    {
+        return 0;
+    }
+
     private void ResetVitText(int value)
     {
         if (isSimulation)
@@ -1568,7 +1573,7 @@ public class HealthController : MonoBehaviour //Eventualy split into buff, effec
         if (isSimulation && originalHealthController != null)
             sprite = originalHealthController.charDisplay.sprite.sprite;
 
-        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit() + GetEquipVit(), damage, GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), GetMoveRangeLeft(), maxMoveRange + bonusMoveRange, refresh);
+        UIController.ui.combatStats.SetStatus(index, this, sprite, GetVit(), GetMaxVit() + GetEquipVit(), damage, GetEndOfTurnDamage(), GetArmor(), armorDamage, GetCurrentAttack(), GetBonusAttack(), GetMoveRangeLeft(), maxMoveRange + bonusMoveRange, refresh);
         UIController.ui.combatStats.SetStatusEnabled(index, true);
     }
 

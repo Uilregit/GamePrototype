@@ -22,8 +22,8 @@ MonoBehaviour:
   range: 0
   radius: 0
   casterColor: 5
-  description: For 3 turns, target takes 2 additional piercing damage whenever they
-    take damage
+  description: For 3 turns, target takes 2 additional <b>Piercing</b> damage whenever
+    they take damage
   art: {fileID: 21300000, guid: 5624afec6157319429ed2ef122fdf14b, type: 3}
   castType: 0
   castShape: 0

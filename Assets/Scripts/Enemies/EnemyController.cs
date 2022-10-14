@@ -194,7 +194,7 @@ public class EnemyController : MonoBehaviour
         enemyInformation.OnMouseUp();
         healthController.charDisplay.outline.enabled = true;
 
-        UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetCurrentMoveRange(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+        UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetEndOfTurnDamage(), healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetCurrentMoveRange(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
         UIController.ui.combatStats.SetStatusEnabled(0, true);
 
         if (!UIRevealController.UIReveal.GetElementState(UIRevealController.UIElement.Intents))         //Before intents are available, always target the nearest player when targeting players
@@ -429,7 +429,7 @@ public class EnemyController : MonoBehaviour
 
             amountMovedthisTurn++;
             healthController.SetCurrentPathLength(amountMovedthisTurn);
-            UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+            UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetEndOfTurnDamage(), healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
             UIController.ui.combatStats.SetStatusEnabled(0, true);
             //yield return new WaitForSeconds(TimeController.time.enemyMoveStepTime * TimeController.time.timerMultiplier);
         }
@@ -522,7 +522,7 @@ public class EnemyController : MonoBehaviour
                 yield return StartCoroutine(enemyInformation.TriggerCard(displayCardIndex, target));
 
             if (desiredTarget[0] == this.gameObject)
-                UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
+                UIController.ui.combatStats.SetStatus(0, healthController, healthController.charDisplay.sprite.sprite, healthController.GetVit(), healthController.GetMaxVit() + healthController.GetEquipVit(), 0, healthController.GetEndOfTurnDamage(), healthController.GetArmor(), 0, healthController.GetCurrentAttack(), healthController.GetBonusAttack(), healthController.GetMoveRangeLeft(), healthController.GetMaxMoveRange() + healthController.GetBonusMoveRange());
 
             TileCreator.tileCreator.DestroyTiles(this.gameObject, 0);
 
